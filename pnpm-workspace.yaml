@@ -2,3 +2,4 @@ packages:
   - "services/*"
   - "gateway"
   - "utils/*"
+  - "clients/*"
