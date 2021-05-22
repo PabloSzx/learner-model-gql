@@ -1,0 +1,30 @@
+{
+  "name": "learner-model-gql",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/PabloSzx/learner-model-gql#readme",
+  "bugs": {
+    "url": "https://github.com/PabloSzx/learner-model-gql/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PabloSzx/learner-model-gql.git"
+  },
+  "license": "MIT",
+  "author": "PabloSzx <pablosaez1995@gmail.com>",
+  "main": "null",
+  "scripts": {
+    "dev": "pnpm dev -r --workspace-concurrency=Infinity --no-sort --no-bail",
+    "pretty": "pretty-quick",
+    "test": "pnpm -r test"
+  },
+  "dependencies": {
+    "@types/node": "^15.6.0",
+    "concurrently": "^6.1.0",
+    "cross-env": "^7.0.3",
+    "husky": "^6.0.0",
+    "prettier": "^2.3.0",
+    "pretty-quick": "^3.1.0",
+    "typescript": "^4.2.4"
+  }
+}

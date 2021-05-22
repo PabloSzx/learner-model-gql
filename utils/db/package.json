@@ -1,0 +1,21 @@
+{
+  "name": "db",
+  "version": "0.0.1",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "concurrently -r \"cross-env NODE_ENV=development tsup --silent --watch src\" \"tsc\"",
+    "prepare": "concurrently -r \"tsup\" \"tsc\""
+  },
+  "dependencies": {
+    "@prisma/client": "^2.23.0",
+    "@types/node": "^15.6.0",
+    "common": "workspace:^0.0.1",
+    "concurrently": "^6.1.0",
+    "cross-env": "^7.0.3",
+    "prisma": "^2.23.0",
+    "tsup": "^4.11.0",
+    "typescript": "^4.2.4"
+  }
+}
