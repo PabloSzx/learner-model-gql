@@ -38,5 +38,11 @@ jobs:
         run: pnpm --version
       - name: Install dependencies
         run: pnpm install
+      - name: Run build scripts
+        run: pnpm build -r --no-sort
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
       - name: Test
         run: pnpm test
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}

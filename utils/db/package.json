@@ -5,8 +5,11 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "dev": "concurrently -r \"cross-env NODE_ENV=development tsup --silent --watch src\" \"tsc\"",
-    "prepare": "concurrently -r \"tsup\" \"tsc\""
+    "build": "prisma db push",
+    "dev": "concurrently -r \"tsup --silent --watch src\" \"tsc --watch\"",
+    "migrate:dev": "prisma migrate dev",
+    "migrate:push": "prisma db push",
+    "prepare": "prisma generate && concurrently -r \"tsup\" \"tsc\""
   },
   "dependencies": {
     "@prisma/client": "^2.23.0",
