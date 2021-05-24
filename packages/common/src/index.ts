@@ -1,5 +1,3 @@
-import "dotenv/config";
-
 import FastifyAuth0 from "fastify-auth0-verify";
 import fp from "fastify-plugin";
 
