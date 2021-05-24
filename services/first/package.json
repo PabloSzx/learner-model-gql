@@ -3,20 +3,22 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development tsup --silent --watch src --onSuccess \"node dist/index.js\"",
+    "dev": "cross-env NODE_ENV=development tsup --silent --watch src --onSuccess \"node -r dotenv/config dist/index.js\"",
     "prepare": "tsup"
   },
   "dependencies": {
-    "@envelop/core": "^0.1.4",
-    "@envelop/graphql-jit": "^0.1.0",
+    "@envelop/core": "^0.2.1",
+    "@envelop/graphql-jit": "^0.1.1",
     "@envelop/types": "^0.1.4",
-    "@pablosz/envelop-app": "^0.1.24",
+    "@pablosz/envelop-app": "^0.1.28",
     "@types/node": "^15.6.0",
     "common": "workspace:^0.0.1",
     "concurrently": "^6.1.0",
     "cross-env": "^7.0.3",
     "db": "workspace:^0.0.1",
+    "dotenv": "^10.0.0",
     "fastify": "^3.15.1",
+    "fastify-auth0-verify": "^0.5.0",
     "graphql": "^15.5.0",
     "tsup": "^4.11.0",
     "typescript": "^4.2.4"

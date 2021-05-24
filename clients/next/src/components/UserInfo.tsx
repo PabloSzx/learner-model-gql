@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { AiOutlineLogin } from "react-icons/ai";
 
 import { useAuth0 } from "@auth0/auth0-react";
@@ -25,6 +26,8 @@ export const UserInfo = () => {
   const { loginWithRedirect } = useAuth0();
   const emailTextColor = useColorModeValue("whiteAlpha.700", "gray.400");
 
+  const [isRedirecting, setIsRedirecting] = useState(false);
+
   const loginVariant = useColorModeValue("solid", "outline");
 
   if (isLoading)
@@ -39,8 +42,11 @@ export const UserInfo = () => {
       <Button
         colorScheme="blue"
         onClick={() => {
+          setIsRedirecting(true);
           loginWithRedirect();
         }}
+        isLoading={isRedirecting}
+        isDisabled={isRedirecting}
         variant={loginVariant}
         width="100%"
         display="flex"
@@ -57,9 +63,8 @@ export const UserInfo = () => {
     <Popover>
       <PopoverTrigger>
         <Box
-          as="a"
-          href="#"
           p="3"
+          cursor="pointer"
           display="block"
           transition="background 0.1s"
           rounded="xl"

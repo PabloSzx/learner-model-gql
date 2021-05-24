@@ -14,7 +14,13 @@
   "author": "PabloSzx <pablosaez1995@gmail.com>",
   "main": "null",
   "scripts": {
-    "dev": "pnpm dev -r --workspace-concurrency=Infinity --no-sort --no-bail",
+    "dev": "concurrently -r pnpm:dev:*",
+    "dev:common": "pnpm dev -r --filter common",
+    "dev:db": "pnpm dev -r --filter db",
+    "dev:first": "pnpm dev -r --filter first",
+    "dev:gateway": "pnpm dev -r --filter gateway",
+    "dev:next": "pnpm dev -r --filter client",
+    "dev:react-gql": "pnpm dev -r --filter react-graphql",
     "pretty": "pretty-quick",
     "test": "pnpm -r test"
   },

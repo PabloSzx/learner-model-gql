@@ -1,0 +1,29 @@
+overwrite: true
+schema: "../../schema.gql"
+documents: graphql/**/*.gql
+generates:
+  src/generated/graphql.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-query
+    config:
+      fetcher:
+        func: "../fetcher#fetcher"
+      exposeQueryKeys: true
+      exposeDocument: true
+      scalars:
+        DateTime: "string"
+        JSONObject: "Record<string,unknown>"
+        Timestamp: "number"
+        URL: "string"
+        NonNegativeInt: "number"
+        NonEmptyString: "string"
+        EmailAddress: "string"
+        Void: "void | undefined | null"
+        IntID: "string"
+        Latitude: "number"
+        Longitude: "number"
+hooks:
+  afterAllFileWrite:
+    - prettier --write

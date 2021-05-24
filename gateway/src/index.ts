@@ -9,7 +9,7 @@ import waitOn from "wait-on";
 import { AsyncExecutor, SubschemaConfig } from "@graphql-tools/delegate";
 import { stitchSchemas } from "@graphql-tools/stitch";
 import { introspectSchema } from "@graphql-tools/wrap";
-import { CreateApp } from "@pablosz/envelop-app/fastify";
+import { CreateApp, EnvelopContext } from "@pablosz/envelop-app/fastify";
 
 function getStreamJSON<T>(stream: import("stream").Readable, encoding: BufferEncoding) {
   return new Promise<T>((resolve, reject) => {
@@ -29,14 +29,21 @@ function getStreamJSON<T>(stream: import("stream").Readable, encoding: BufferEnc
   });
 }
 
-const remoteExecutor: AsyncExecutor = async function remoteExecutor({ document, variables }) {
+const remoteExecutor: AsyncExecutor<Partial<EnvelopContext>> = async function remoteExecutor({
+  document,
+  variables,
+  context,
+}) {
   const query = print(document);
+
+  const authorization = context?.request?.headers.authorization;
 
   const { body, headers } = await request("http://localhost:3001/graphql", {
     body: JSON.stringify({ query, variables }),
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      authorization,
     },
     path: null as any,
   });
@@ -74,6 +81,7 @@ async function main() {
   const { buildApp } = CreateApp({
     schema,
     outputSchema: resolve(__dirname, "../../schema.gql"),
+    cors: true,
   });
 
   const { plugin } = buildApp();

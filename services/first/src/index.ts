@@ -1,10 +1,17 @@
 import Fastify from "fastify";
+
+import { Auth0Verify } from "common";
+
 import { plugin } from "./app";
 
 const app = Fastify({
   logger: true,
 });
 
-app.register(plugin);
+(async () => {
+  await app.register(Auth0Verify);
 
-app.listen(3001);
+  await app.register(plugin);
+
+  app.listen(3001);
+})();

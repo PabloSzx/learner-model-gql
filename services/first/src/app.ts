@@ -16,6 +16,13 @@ const EnvelopApp = CreateApp({
     },
   },
   ide: true,
+  buildContext({ request }) {
+    if (request.headers.authorization) {
+      request.jwtVerify<{}>().then(console.log, console.error);
+    }
+
+    return {};
+  },
 });
 
 export const { plugin } = EnvelopApp.buildApp();
