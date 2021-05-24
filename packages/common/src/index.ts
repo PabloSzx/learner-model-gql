@@ -32,3 +32,5 @@ export const Auth0Verify = fp(async (app) => {
 });
 
 export type {} from "fastify-auth0-verify";
+
+export * from "./auth";

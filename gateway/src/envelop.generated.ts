@@ -1,4 +1,8 @@
-import type { GraphQLResolveInfo } from "graphql";
+import type {
+  GraphQLResolveInfo,
+  GraphQLScalarType,
+  GraphQLScalarTypeConfig,
+} from "graphql";
 import type { EnvelopContext } from "@pablosz/envelop-app/fastify";
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -15,11 +19,32 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
+  DateTime: any;
 };
 
 export type Query = {
   __typename?: "Query";
-  hello: Scalars["String"];
+  currentUser?: Maybe<User>;
+};
+
+export enum UserRole {
+  Admin = "ADMIN",
+  User = "USER",
+}
+
+export type User = {
+  __typename?: "User";
+  id: Scalars["ID"];
+  enabled: Scalars["Boolean"];
+  email: Scalars["String"];
+  name?: Maybe<Scalars["String"]>;
+  locked: Scalars["Boolean"];
+  active: Scalars["Boolean"];
+  lastOnline?: Maybe<Scalars["DateTime"]>;
+  role: UserRole;
+  createdAt: Scalars["DateTime"];
+  updatedAt: Scalars["DateTime"];
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -139,26 +164,65 @@ export type DirectiveResolverFn<
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
-  String: ResolverTypeWrapper<Scalars["String"]>;
+  UserRole: UserRole;
+  User: ResolverTypeWrapper<User>;
+  ID: ResolverTypeWrapper<Scalars["ID"]>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
+  String: ResolverTypeWrapper<Scalars["String"]>;
+  DateTime: ResolverTypeWrapper<Scalars["DateTime"]>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Query: {};
-  String: Scalars["String"];
+  User: User;
+  ID: Scalars["ID"];
   Boolean: Scalars["Boolean"];
+  String: Scalars["String"];
+  DateTime: Scalars["DateTime"];
 };
 
 export type QueryResolvers<
   ContextType = EnvelopContext,
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = {
-  hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  currentUser?: Resolver<
+    Maybe<ResolversTypes["User"]>,
+    ParentType,
+    ContextType
+  >;
 };
+
+export type UserResolvers<
+  ContextType = EnvelopContext,
+  ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
+> = {
+  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  enabled?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  email?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  locked?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  active?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  lastOnline?: Resolver<
+    Maybe<ResolversTypes["DateTime"]>,
+    ParentType,
+    ContextType
+  >;
+  role?: Resolver<ResolversTypes["UserRole"], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export interface DateTimeScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["DateTime"], any> {
+  name: "DateTime";
+}
 
 export type Resolvers<ContextType = EnvelopContext> = {
   Query?: QueryResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
+  DateTime?: GraphQLScalarType;
 };
 
 /**

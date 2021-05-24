@@ -1,10 +1,15 @@
 import { API_URL } from "common";
+import { proxy } from "valtio";
 
 import type { ExecutionResult } from "graphql";
 
-export const headers: Record<string, string> = {
+export const headers = proxy<
+  Record<string, string> & {
+    authorization?: string;
+  }
+>({
   "content-type": "application/json",
-};
+});
 
 export function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
   return async (): Promise<TData> => {

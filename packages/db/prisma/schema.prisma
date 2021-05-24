@@ -21,8 +21,10 @@ model User {
 
   enabled Boolean @default(true)
 
-  email      String    @unique
-  name       String?
+  email   String  @unique
+  name    String?
+  picture String?
+
   locked     Boolean   @default(false)
   active     Boolean   @default(false)
   lastOnline DateTime?

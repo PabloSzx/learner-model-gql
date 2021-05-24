@@ -18,8 +18,7 @@
     "prepare": "concurrently --raw npm:gql npm:build"
   },
   "dependencies": {
-    "prettier": "^2.3.0",
-    "react": "^17.0.2"
+    "prettier": "^2.3.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.21.4",
@@ -32,6 +31,7 @@
     "common": "workspace:^0.0.1",
     "concurrently": "^6.1.0",
     "graphql": "^15.5.0",
+    "react": "^17.0.2",
     "react-query": "^3.16.0",
     "tsup": "^4.11.0",
     "typescript": "^4.2.4",
@@ -40,7 +40,8 @@
   "peerDependencies": {
     "common": "workspace:^0.0.1",
     "graphql": "^15.5.0",
+    "react": "^17.0.2",
     "react-query": "^3.16.0",
-    "valtio": "^1.0.4"
+    "valtio": "^1.0.5"
   }
 }

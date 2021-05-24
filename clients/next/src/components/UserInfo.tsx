@@ -20,9 +20,10 @@ import {
 } from "@chakra-ui/react";
 
 import { Logout } from "./Logout";
+import { useAuth } from "./Auth";
 
 export const UserInfo = () => {
-  const { user, isLoading } = useAuth0();
+  const { isLoading, user, auth0User } = useAuth();
   const { loginWithRedirect } = useAuth0();
   const emailTextColor = useColorModeValue("whiteAlpha.700", "gray.400");
 
@@ -37,7 +38,7 @@ export const UserInfo = () => {
       </Flex>
     );
 
-  if (!user)
+  if (!user || !auth0User)
     return (
       <Button
         colorScheme="blue"
@@ -57,7 +58,8 @@ export const UserInfo = () => {
         Login
       </Button>
     );
-  const { name, picture, email } = user;
+  const { name, email } = user;
+  const { picture } = auth0User;
 
   return (
     <Popover>
@@ -72,7 +74,7 @@ export const UserInfo = () => {
           whiteSpace="nowrap"
         >
           <HStack display="inline-flex">
-            {picture ? <Avatar size="sm" name={name} src={picture} /> : null}
+            {picture ? <Avatar size="sm" name={name || undefined} src={picture} /> : null}
 
             <Box lineHeight="1">
               {name ? <Text fontWeight="semibold">{name}</Text> : null}

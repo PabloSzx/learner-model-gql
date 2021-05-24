@@ -12,6 +12,8 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
+import { AuthState } from "./Auth";
+
 export function Logout() {
   const { logout } = useAuth0();
 
@@ -24,11 +26,7 @@ export function Logout() {
       <Button colorScheme="red" onClick={onOpen}>
         Logout
       </Button>
-      <AlertDialog
-        isOpen={isOpen}
-        onClose={onClose}
-        leastDestructiveRef={cancelRef}
-      >
+      <AlertDialog isOpen={isOpen} onClose={onClose} leastDestructiveRef={cancelRef}>
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
@@ -44,6 +42,7 @@ export function Logout() {
               <Button
                 colorScheme="red"
                 onClick={() => {
+                  AuthState.isLoading = true;
                   logout();
                   onClose();
                 }}

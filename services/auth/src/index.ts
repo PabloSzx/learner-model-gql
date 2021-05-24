@@ -2,7 +2,7 @@ import Fastify from "fastify";
 
 import { Auth0Verify } from "common";
 
-import { plugin } from "./app";
+import { buildApp } from "./app";
 
 const app = Fastify({
   logger: true,
@@ -11,7 +11,13 @@ const app = Fastify({
 (async () => {
   await app.register(Auth0Verify);
 
-  await app.register(plugin);
+  const EnvelopApp = buildApp({
+    async prepare() {
+      await import("./modules");
+    },
+  });
+
+  await app.register(EnvelopApp.plugin);
 
   app.listen(3001);
 })();
