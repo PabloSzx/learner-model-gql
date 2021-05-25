@@ -1,5 +1,11 @@
 # learner-model-gql
 
+## Client-side only
+
+To only use the client-side of this project please checkout the `client` branch.
+
+[https://github.com/PabloSzx/learner-model-gql/tree/client](https://github.com/PabloSzx/learner-model-gql/tree/client)
+
 ## Install
 
 This project uses [pnpm workspaces](https://pnpm.io/workspaces).
