@@ -19,7 +19,7 @@
     "dev:db": "pnpm dev -r --filter db",
     "dev:first": "pnpm dev -r --filter first",
     "dev:gateway": "pnpm dev -r --filter gateway",
-    "dev:next": "pnpm dev -r --filter client",
+    "dev:next": "cross-env NEXT_PUBLIC_API_URL=http://localhost:8080/graphql pnpm dev -r --filter client",
     "dev:react-gql": "pnpm dev -r --filter react-graphql",
     "pretty": "pretty-quick",
     "start": "pm2 start ecosystem.config.js",

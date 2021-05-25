@@ -12,7 +12,8 @@ export const ENV = {
 export const IS_CI = !!process.env.CI;
 export const IS_NOT_CI = !IS_CI;
 
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/graphql";
+export const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "https://learner-model.pablosz.tech/graphql";
 
 export const Auth0Verify = fp(async (app) => {
   const { AUTH0_DOMAIN, AUTH0_CLIENT, AUTH0_SECRET } = process.env;
