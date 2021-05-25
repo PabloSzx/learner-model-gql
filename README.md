@@ -2,7 +2,7 @@
 
 ## Client-side only
 
-To only use the client-side of this project please checkout the `client` branch.
+To only use the client-side of this project, please checkout the `client` branch.
 
 [https://github.com/PabloSzx/learner-model-gql/tree/client](https://github.com/PabloSzx/learner-model-gql/tree/client)
 
@@ -36,7 +36,7 @@ pnpm dev
 
 This project's client's side is recommended to be deployed with [Vercel](https://vercel.com/).
 
-The Vercel deployment settings have to be as:
+The Vercel deployment settings have to be:
 
 ![Vercel Config](https://i.imgur.com/zdpOYyU.png)
 
