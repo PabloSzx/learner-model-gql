@@ -1,25 +1,19 @@
-import type {
-  GraphQLResolveInfo,
-  GraphQLScalarType,
-  GraphQLScalarTypeConfig,
-} from "graphql";
-import type { EnvelopContext } from "@pablosz/envelop-app/fastify";
+import type { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from "graphql";
+import type { EnvelopContext } from "@graphql-ez/fastify";
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
 };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type ResolverFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
   args: TArgs,
   context: TContext,
   info: GraphQLResolveInfo
 ) =>
-  | Promise<import("@pablosz/envelop-app/fastify").DeepPartial<TResult>>
-  | import("@pablosz/envelop-app/fastify").DeepPartial<TResult>;
+  | Promise<import("@graphql-ez/fastify").DeepPartial<TResult>>
+  | import("@graphql-ez/fastify").DeepPartial<TResult>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string | number;
@@ -91,18 +85,8 @@ export interface SubscriptionSubscriberObject<
   TContext,
   TArgs
 > {
-  subscribe: SubscriptionSubscribeFn<
-    { [key in TKey]: TResult },
-    TParent,
-    TContext,
-    TArgs
-  >;
-  resolve?: SubscriptionResolveFn<
-    TResult,
-    { [key in TKey]: TResult },
-    TContext,
-    TArgs
-  >;
+  subscribe: SubscriptionSubscribeFn<{ [key in TKey]: TResult }, TParent, TContext, TArgs>;
+  resolve?: SubscriptionResolveFn<TResult, { [key in TKey]: TResult }, TContext, TArgs>;
 }
 
 export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
@@ -110,13 +94,7 @@ export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
   resolve: SubscriptionResolveFn<TResult, any, TContext, TArgs>;
 }
 
-export type SubscriptionObject<
-  TResult,
-  TKey extends string,
-  TParent,
-  TContext,
-  TArgs
-> =
+export type SubscriptionObject<TResult, TKey extends string, TParent, TContext, TArgs> =
   | SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
   | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
 
@@ -127,9 +105,7 @@ export type SubscriptionResolver<
   TContext = {},
   TArgs = {}
 > =
-  | ((
-      ...args: any[]
-    ) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
+  | ((...args: any[]) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
   | SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>;
 
 export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
@@ -146,12 +122,7 @@ export type IsTypeOfResolverFn<T = {}, TContext = {}> = (
 
 export type NextResolverFn<T> = () => Promise<T>;
 
-export type DirectiveResolverFn<
-  TResult = {},
-  TParent = {},
-  TContext = {},
-  TArgs = {}
-> = (
+export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs = {}> = (
   next: NextResolverFn<TResult>,
   parent: TParent,
   args: TArgs,
@@ -190,11 +161,7 @@ export type UserResolvers<
   name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   locked?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
   active?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
-  lastOnline?: Resolver<
-    Maybe<ResolversTypes["DateTime"]>,
-    ParentType,
-    ContextType
-  >;
+  lastOnline?: Resolver<Maybe<ResolversTypes["DateTime"]>, ParentType, ContextType>;
   role?: Resolver<ResolversTypes["UserRole"], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
@@ -205,11 +172,7 @@ export type QueryResolvers<
   ContextType = EnvelopContext,
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = {
-  currentUser?: Resolver<
-    Maybe<ResolversTypes["User"]>,
-    ParentType,
-    ContextType
-  >;
+  currentUser?: Resolver<Maybe<ResolversTypes["User"]>, ParentType, ContextType>;
 };
 
 export interface DateTimeScalarConfig
@@ -229,7 +192,6 @@ export type Resolvers<ContextType = EnvelopContext> = {
  */
 export type IResolvers<ContextType = EnvelopContext> = Resolvers<ContextType>;
 
-declare module "@pablosz/envelop-app/fastify" {
-  interface EnvelopResolvers
-    extends Resolvers<import("@pablosz/envelop-app/fastify").EnvelopContext> {}
+declare module "@graphql-ez/fastify" {
+  interface EnvelopResolvers extends Resolvers<import("@graphql-ez/fastify").EnvelopContext> {}
 }

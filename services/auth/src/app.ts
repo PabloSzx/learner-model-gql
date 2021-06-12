@@ -1,4 +1,4 @@
-import { BuildContextArgs, CreateApp, InferFunctionReturn } from "@pablosz/envelop-app/fastify";
+import { BuildContextArgs, CreateApp, InferFunctionReturn } from "@graphql-ez/fastify";
 import { GetDBUser } from "db";
 import { GetAuth0User } from "common";
 
@@ -29,6 +29,6 @@ export const { buildApp, gql, registerModule } = CreateApp({
   },
 });
 
-declare module "@pablosz/envelop-app/fastify" {
+declare module "@graphql-ez/fastify" {
   interface EnvelopContext extends InferFunctionReturn<typeof buildContext> {}
 }

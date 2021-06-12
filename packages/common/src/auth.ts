@@ -1,4 +1,4 @@
-import { LazyPromise } from "@pablosz/envelop-app/common/utils/promise";
+import { LazyPromise } from "@graphql-ez/fastify";
 
 import type { FastifyRequest } from "fastify";
 

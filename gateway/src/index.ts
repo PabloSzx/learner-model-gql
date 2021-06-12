@@ -9,7 +9,7 @@ import waitOn from "wait-on";
 import { AsyncExecutor, SubschemaConfig } from "@graphql-tools/delegate";
 import { stitchSchemas } from "@graphql-tools/stitch";
 import { introspectSchema } from "@graphql-tools/wrap";
-import { CreateApp, EnvelopContext } from "@pablosz/envelop-app/fastify";
+import { CreateApp, EnvelopContext } from "@graphql-ez/fastify";
 
 function getStreamJSON<T>(stream: import("stream").Readable, encoding: BufferEncoding) {
   return new Promise<T>((resolve, reject) => {

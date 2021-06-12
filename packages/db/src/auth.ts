@@ -1,4 +1,5 @@
-import { LazyPromise } from "@pablosz/envelop-app/common/utils/promise";
+import { LazyPromise } from "@graphql-ez/fastify";
+
 import { prisma } from "./db";
 
 import type { Auth0User } from "common";
@@ -59,3 +60,5 @@ export function GetDBUser(auth0UserPromise: Promise<Auth0User | null>) {
     UserPromise,
   };
 }
+
+export type {} from "@prisma/client";

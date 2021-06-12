@@ -4,28 +4,28 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development tsup --silent --watch src --onSuccess \"node -r dotenv/config dist/index.js\"",
-    "prepare": "tsup"
+    "prepare": "concurrently \"tsup\" \"tsc\""
   },
   "dependencies": {
-    "@envelop/core": "^0.2.1",
+    "@envelop/core": "^0.2.2",
     "@envelop/graphql-jit": "^0.1.1",
     "@envelop/types": "^0.1.4",
-    "@pablosz/envelop-app": "^0.1.28",
-    "@types/node": "^15.6.0",
+    "@graphql-ez/fastify": "^0.1.1",
+    "@types/node": "^15.12.2",
     "common": "workspace:^0.0.1",
-    "concurrently": "^6.1.0",
+    "concurrently": "^6.2.0",
     "cross-env": "^7.0.3",
     "db": "workspace:^0.0.1",
     "dotenv": "^10.0.0",
-    "fastify": "^3.15.1",
-    "fastify-auth0-verify": "^0.5.0",
+    "fastify": "^3.17.0",
+    "fastify-auth0-verify": "^0.5.2",
     "graphql": "^15.5.0",
-    "tsup": "^4.11.0",
-    "typescript": "^4.2.4"
+    "tsup": "^4.11.2",
+    "typescript": "^4.3.2"
   },
   "devDependencies": {
     "react": "^17.0.2",
-    "valtio": "^1.0.5"
+    "valtio": "^1.0.6"
   },
   "peerDependencies": {
     "react": "^17.0.2",
