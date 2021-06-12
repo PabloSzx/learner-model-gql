@@ -7,7 +7,10 @@ import {
 
 import { fetcher } from "./fetcher";
 
-interface UseQueryFn<TData extends Record<string, any>, TVariables extends Record<string, any>> {
+interface UseQueryFn<
+  TData extends Record<string, any>,
+  TVariables extends Record<string, any>
+> {
   (variables: TVariables, options?: UseQueryOptions<TData>): unknown;
   document: string;
   getKey: (variables: TVariables) => unknown[];
@@ -23,7 +26,11 @@ export function useInfiniteGraphQLQuery<
 ): UseInfiniteQueryResult<TData, Error> {
   return useInfiniteQuery<TData, Error, TData>(
     useQuery.getKey(getVariables({})),
-    ({ pageParam }) => fetcher<TData, TVariables>(useQuery.document, getVariables({ pageParam }))(),
+    ({ pageParam }) =>
+      fetcher<TData, TVariables>(
+        useQuery.document,
+        getVariables({ pageParam })
+      )(),
     options
   );
 }

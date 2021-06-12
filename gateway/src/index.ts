@@ -11,7 +11,10 @@ import { stitchSchemas } from "@graphql-tools/stitch";
 import { introspectSchema } from "@graphql-tools/wrap";
 import { CreateApp, EnvelopContext } from "@graphql-ez/fastify";
 
-function getStreamJSON<T>(stream: import("stream").Readable, encoding: BufferEncoding) {
+function getStreamJSON<T>(
+  stream: import("stream").Readable,
+  encoding: BufferEncoding
+) {
   return new Promise<T>((resolve, reject) => {
     const chunks: Uint8Array[] = [];
 
@@ -21,7 +24,9 @@ function getStreamJSON<T>(stream: import("stream").Readable, encoding: BufferEnc
 
     stream.on("end", () => {
       try {
-        resolve(JSON.parse(Buffer.concat(chunks).toString(encoding || "utf-8")));
+        resolve(
+          JSON.parse(Buffer.concat(chunks).toString(encoding || "utf-8"))
+        );
       } catch (err) {
         reject(err);
       }
@@ -29,34 +34,36 @@ function getStreamJSON<T>(stream: import("stream").Readable, encoding: BufferEnc
   });
 }
 
-const remoteExecutor: AsyncExecutor<Partial<EnvelopContext>> = async function remoteExecutor({
-  document,
-  variables,
-  context,
-}) {
-  const query = print(document);
+const remoteExecutor: AsyncExecutor<Partial<EnvelopContext>> =
+  async function remoteExecutor({ document, variables, context }) {
+    const query = print(document);
 
-  const authorization = context?.request?.headers.authorization;
+    const authorization = context?.request?.headers.authorization;
 
-  const { body, headers } = await request("http://localhost:3001/graphql", {
-    body: JSON.stringify({ query, variables }),
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      authorization,
-    },
-    path: null as any,
-  });
+    const { body, headers } = await request("http://localhost:3001/graphql", {
+      body: JSON.stringify({ query, variables }),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization,
+      },
+      path: null as any,
+    });
 
-  if (!headers["content-type"]) throw Error("No content-type specified!");
+    if (!headers["content-type"]) throw Error("No content-type specified!");
 
-  const { type, parameters } = parse(headers["content-type"]);
+    const { type, parameters } = parse(headers["content-type"]);
 
-  if (type === "application/json")
-    return getStreamJSON(body, (parameters["charset"] as BufferEncoding) || "utf-8");
+    if (type === "application/json")
+      return getStreamJSON(
+        body,
+        (parameters["charset"] as BufferEncoding) || "utf-8"
+      );
 
-  throw Error("Unexpected content-type, expected 'application/json', received: " + type);
-};
+    throw Error(
+      "Unexpected content-type, expected 'application/json', received: " + type
+    );
+  };
 
 const app = Fastify({
   logger: true,
@@ -82,6 +89,11 @@ async function main() {
     schema,
     outputSchema: resolve(__dirname, "../../schema.gql"),
     cors: true,
+    codegen: {
+      onError(err) {
+        console.log(8787, err);
+      },
+    },
   });
 
   const { plugin } = buildApp();

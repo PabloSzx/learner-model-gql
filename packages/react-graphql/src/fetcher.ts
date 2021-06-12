@@ -11,7 +11,10 @@ export const headers = proxy<
   "content-type": "application/json",
 });
 
-export function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
+export function fetcher<TData, TVariables>(
+  query: string,
+  variables?: TVariables
+) {
   return async (): Promise<TData> => {
     const res = await fetch(API_URL, {
       method: "POST",

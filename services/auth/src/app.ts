@@ -1,4 +1,8 @@
-import { BuildContextArgs, CreateApp, InferFunctionReturn } from "@graphql-ez/fastify";
+import {
+  BuildContextArgs,
+  CreateApp,
+  InferFunctionReturn,
+} from "@graphql-ez/fastify";
 import { GetDBUser } from "db";
 import { GetAuth0User } from "common";
 
@@ -26,6 +30,9 @@ export const { buildApp, gql, registerModule } = CreateApp({
     },
     deepPartialResolvers: true,
     enumsAsTypes: true,
+    onError(err) {
+      console.log(3030, err);
+    },
   },
 });
 

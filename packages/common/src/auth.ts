@@ -1,4 +1,4 @@
-import { LazyPromise } from "@graphql-ez/fastify";
+import { LazyPromise } from "@graphql-ez/core/utils/promise";
 
 import type { FastifyRequest } from "fastify";
 
