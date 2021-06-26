@@ -17,20 +17,19 @@
     "gql": "graphql-codegen --config codegen.yml",
     "prepare": "concurrently --raw npm:gql npm:build"
   },
-  "dependencies": {
-    "prettier": "^2.3.1"
-  },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.21.5",
     "@graphql-codegen/core": "^1.17.10",
     "@graphql-codegen/typed-document-node": "^1.18.8",
     "@graphql-codegen/typescript": "^1.22.3",
     "@graphql-codegen/typescript-document-nodes": "1.17.14",
+    "@graphql-codegen/typescript-operations": "^1.18.2",
     "@graphql-codegen/typescript-react-query": "^1.3.3",
     "@types/node": "^15.12.4",
     "common": "workspace:^0.0.1",
     "concurrently": "^6.2.0",
     "graphql": "^15.5.1",
+    "prettier": "^2.3.1",
     "react": "^17.0.2",
     "react-query": "^3.17.2",
     "tsup": "^4.11.2",

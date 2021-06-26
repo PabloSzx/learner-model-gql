@@ -195,6 +195,7 @@ importers:
       '@graphql-codegen/typed-document-node': ^1.18.8
       '@graphql-codegen/typescript': ^1.22.3
       '@graphql-codegen/typescript-document-nodes': 1.17.14
+      '@graphql-codegen/typescript-operations': ^1.18.2
       '@graphql-codegen/typescript-react-query': ^1.3.3
       '@types/node': ^15.12.4
       common: workspace:^0.0.1
@@ -206,19 +207,19 @@ importers:
       tsup: ^4.11.2
       typescript: ^4.3.4
       valtio: ^1.0.6
-    dependencies:
-      prettier: 2.3.1
     devDependencies:
       '@graphql-codegen/cli': 1.21.5_807ddb24d04c66a8fe6f5d1327090948
       '@graphql-codegen/core': 1.17.10_graphql@15.5.1
       '@graphql-codegen/typed-document-node': 1.18.8_graphql@15.5.1
       '@graphql-codegen/typescript': 1.22.3_graphql@15.5.1
       '@graphql-codegen/typescript-document-nodes': 1.17.14_graphql@15.5.1
+      '@graphql-codegen/typescript-operations': 1.18.2_graphql@15.5.1
       '@graphql-codegen/typescript-react-query': 1.3.3_graphql@15.5.1
       '@types/node': 15.12.4
       common: link:../common
       concurrently: 6.2.0
       graphql: 15.5.1
+      prettier: 2.3.1
       react: 17.0.2
       react-query: 3.17.2_react@17.0.2
       tsup: 4.11.2_typescript@4.3.4
@@ -6579,7 +6580,6 @@ packages:
     resolution: {integrity: sha512-p+vNbgpLjif/+D+DwAZAbndtRrR0md0MwfmOVN9N+2RgyACMT+7tfaRnT+WDPkqnuVwleyuBIG2XBxKDme3hPA==}
     engines: {node: '>=10.13.0'}
     hasBin: true
-    dev: false
 
   /pretty-quick/3.1.1_prettier@2.3.1:
     resolution: {integrity: sha512-ZYLGiMoV2jcaas3vTJrLvKAYsxDoXQBUn8OSTxkl67Fyov9lyXivJTl0+2WVh+y6EovGcw7Lm5ThYpH+Sh3XxQ==}
