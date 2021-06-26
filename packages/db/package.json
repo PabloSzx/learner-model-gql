@@ -6,23 +6,23 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "prisma db push",
-    "dev": "concurrently -r \"tsup --silent --watch src\" \"tsc --watch\"",
+    "dev": "concurrently -r \"tsup --watch src\" \"tsc --watch\"",
     "migrate:dev": "prisma migrate dev",
     "migrate:push": "prisma db push",
-    "prepare": "prisma generate && concurrently -r \"tsup\" \"tsc\""
+    "prepare": "prisma generate && concurrently -r tsup tsc"
   },
   "dependencies": {
-    "@graphql-ez/fastify": "^0.1.1",
+    "@graphql-ez/fastify": "^0.2.2",
     "@prisma/client": "2.23.0",
     "common": "workspace:^0.0.1",
     "concurrently": "^6.2.0",
     "cross-env": "^7.0.3",
     "prisma": "2.23.0",
     "tsup": "^4.11.2",
-    "typescript": "^4.3.2"
+    "typescript": "^4.3.4"
   },
   "devDependencies": {
-    "@types/node": "^15.12.2",
+    "@types/node": "^15.12.4",
     "react": "^17.0.2",
     "valtio": "^1.0.6"
   },

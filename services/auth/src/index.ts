@@ -17,7 +17,7 @@ const app = Fastify({
     },
   });
 
-  await app.register(EnvelopApp.plugin);
+  await app.register(EnvelopApp.fastifyPlugin);
 
   app.listen(3001);
 })();

@@ -3,7 +3,7 @@ import type {
   GraphQLScalarType,
   GraphQLScalarTypeConfig,
 } from "graphql";
-import type { EnvelopContext } from "@graphql-ez/fastify";
+import type { EZContext } from "@graphql-ez/fastify";
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
@@ -161,27 +161,32 @@ export type DirectiveResolverFn<
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
+  DateTime: ResolverTypeWrapper<Scalars["DateTime"]>;
   UserRole: UserRole;
   User: ResolverTypeWrapper<User>;
   ID: ResolverTypeWrapper<Scalars["ID"]>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   String: ResolverTypeWrapper<Scalars["String"]>;
   Query: ResolverTypeWrapper<{}>;
-  DateTime: ResolverTypeWrapper<Scalars["DateTime"]>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
+  DateTime: Scalars["DateTime"];
   User: User;
   ID: Scalars["ID"];
   Boolean: Scalars["Boolean"];
   String: Scalars["String"];
   Query: {};
-  DateTime: Scalars["DateTime"];
 };
 
+export interface DateTimeScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["DateTime"], any> {
+  name: "DateTime";
+}
+
 export type UserResolvers<
-  ContextType = EnvelopContext,
+  ContextType = EZContext,
   ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
 > = {
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
@@ -202,7 +207,7 @@ export type UserResolvers<
 };
 
 export type QueryResolvers<
-  ContextType = EnvelopContext,
+  ContextType = EZContext,
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = {
   currentUser?: Resolver<
@@ -212,24 +217,19 @@ export type QueryResolvers<
   >;
 };
 
-export interface DateTimeScalarConfig
-  extends GraphQLScalarTypeConfig<ResolversTypes["DateTime"], any> {
-  name: "DateTime";
-}
-
-export type Resolvers<ContextType = EnvelopContext> = {
+export type Resolvers<ContextType = EZContext> = {
+  DateTime?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
-  DateTime?: GraphQLScalarType;
 };
 
 /**
  * @deprecated
  * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
  */
-export type IResolvers<ContextType = EnvelopContext> = Resolvers<ContextType>;
+export type IResolvers<ContextType = EZContext> = Resolvers<ContextType>;
 
 declare module "@graphql-ez/fastify" {
-  interface EnvelopResolvers
-    extends Resolvers<import("@graphql-ez/fastify").EnvelopContext> {}
+  interface EZResolvers
+    extends Resolvers<import("@graphql-ez/fastify").EZContext> {}
 }
