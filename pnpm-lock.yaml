@@ -15,7 +15,7 @@ importers:
       dotenv: ^10.0.0
       husky: ^6.0.0
       pm2: ^5.1.0
-      prettier: ^2.3.1
+      prettier: ^2.3.2
       pretty-quick: ^3.1.1
       react: ^17.0.2
       typescript: ^4.3.4
@@ -24,8 +24,8 @@ importers:
       concurrently: 6.2.0
       cross-env: 7.0.3
       husky: 6.0.0
-      prettier: 2.3.1
-      pretty-quick: 3.1.1_prettier@2.3.1
+      prettier: 2.3.2
+      pretty-quick: 3.1.1_prettier@2.3.2
       typescript: 4.3.4
     devDependencies:
       '@types/node': 15.12.4
@@ -94,7 +94,7 @@ importers:
       graphql: ^15.5.1
       ms: ^2.1.3
       react: ^17.0.2
-      tsup: ^4.11.2
+      tsup: ^4.12.0
       typescript: ^4.3.4
       undici: ^4.0.0
       valtio: ^1.0.6
@@ -116,7 +116,7 @@ importers:
       fastify-cors: 6.0.1
       graphql: 15.5.1
       ms: 2.1.3
-      tsup: 4.11.2_typescript@4.3.4
+      tsup: 4.12.0_typescript@4.3.4
       typescript: 4.3.4
       undici: 4.0.0
       wait-on: 5.3.0
@@ -141,7 +141,7 @@ importers:
       fastify-plugin: ^3.0.0
       react: ^17.0.2
       require-env-variable: ^3.1.2
-      tsup: ^4.11.2
+      tsup: ^4.12.0
       typescript: ^4.3.4
       valtio: ^1.0.6
     dependencies:
@@ -153,7 +153,7 @@ importers:
       fastify-auth0-verify: 0.5.2
       fastify-plugin: 3.0.0
       require-env-variable: 3.1.2
-      tsup: 4.11.2_typescript@4.3.4
+      tsup: 4.12.0_typescript@4.3.4
       typescript: 4.3.4
     devDependencies:
       '@types/node': 15.12.4
@@ -171,7 +171,7 @@ importers:
       cross-env: ^7.0.3
       prisma: 2.23.0
       react: ^17.0.2
-      tsup: ^4.11.2
+      tsup: ^4.12.0
       typescript: ^4.3.4
       valtio: ^1.0.6
     dependencies:
@@ -181,7 +181,7 @@ importers:
       concurrently: 6.2.0
       cross-env: 7.0.3
       prisma: 2.23.0
-      tsup: 4.11.2_typescript@4.3.4
+      tsup: 4.12.0_typescript@4.3.4
       typescript: 4.3.4
     devDependencies:
       '@types/node': 15.12.4
@@ -201,10 +201,10 @@ importers:
       common: workspace:^0.0.1
       concurrently: ^6.2.0
       graphql: ^15.5.1
-      prettier: ^2.3.1
+      prettier: ^2.3.2
       react: ^17.0.2
       react-query: ^3.17.2
-      tsup: ^4.11.2
+      tsup: ^4.12.0
       typescript: ^4.3.4
       valtio: ^1.0.6
     devDependencies:
@@ -219,10 +219,10 @@ importers:
       common: link:../common
       concurrently: 6.2.0
       graphql: 15.5.1
-      prettier: 2.3.1
+      prettier: 2.3.2
       react: 17.0.2
       react-query: 3.17.2_react@17.0.2
-      tsup: 4.11.2_typescript@4.3.4
+      tsup: 4.12.0_typescript@4.3.4
       typescript: 4.3.4
       valtio: 1.0.6_react@17.0.2
 
@@ -245,7 +245,7 @@ importers:
       fastify-auth0-verify: ^0.5.2
       graphql: ^15.5.1
       react: ^17.0.2
-      tsup: ^4.11.2
+      tsup: ^4.12.0
       typescript: ^4.3.4
       valtio: ^1.0.6
     dependencies:
@@ -264,7 +264,7 @@ importers:
       fastify: 3.18.0
       fastify-auth0-verify: 0.5.2
       graphql: 15.5.1
-      tsup: 4.11.2_typescript@4.3.4
+      tsup: 4.12.0_typescript@4.3.4
       typescript: 4.3.4
     devDependencies:
       '@types/node': 15.12.4
@@ -1962,7 +1962,6 @@ packages:
       tslib: 2.3.0
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /@graphql-codegen/typescript-react-query/1.3.3_graphql@15.5.1:
     resolution: {integrity: sha512-/AqSIsHFSQX8S/QUSattboxVqtNk9pL+SD2+IpPX6kFOcBpjlDgl2sLNFNF431rg0cgT3/e5kAVIOiFR1AR5eQ==}
@@ -2181,7 +2180,7 @@ packages:
       '@graphql-tools/utils': 7.10.0_graphql@15.5.1
       graphql: 15.5.1
       mkdirp: 1.0.4
-      prettier: 2.3.1
+      prettier: 2.3.2
     transitivePeerDependencies:
       - '@types/node'
       - supports-color
@@ -6576,12 +6575,12 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /prettier/2.3.1:
-    resolution: {integrity: sha512-p+vNbgpLjif/+D+DwAZAbndtRrR0md0MwfmOVN9N+2RgyACMT+7tfaRnT+WDPkqnuVwleyuBIG2XBxKDme3hPA==}
+  /prettier/2.3.2:
+    resolution: {integrity: sha512-lnJzDfJ66zkMy58OL5/NY5zp70S7Nz6KqcKkXYzn2tMVrNxvbqaBpg7H3qHaLxCJ5lNMsGuM8+ohS7cZrthdLQ==}
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  /pretty-quick/3.1.1_prettier@2.3.1:
+  /pretty-quick/3.1.1_prettier@2.3.2:
     resolution: {integrity: sha512-ZYLGiMoV2jcaas3vTJrLvKAYsxDoXQBUn8OSTxkl67Fyov9lyXivJTl0+2WVh+y6EovGcw7Lm5ThYpH+Sh3XxQ==}
     engines: {node: '>=10.13'}
     hasBin: true
@@ -6594,7 +6593,7 @@ packages:
       ignore: 5.1.8
       mri: 1.1.6
       multimatch: 4.0.0
-      prettier: 2.3.1
+      prettier: 2.3.2
     dev: false
 
   /prisma/2.23.0:
@@ -7756,8 +7755,8 @@ packages:
   /tslib/2.3.0:
     resolution: {integrity: sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==}
 
-  /tsup/4.11.2_typescript@4.3.4:
-    resolution: {integrity: sha512-cp+gy0TGzFm/3PkPNeiZ2Fvi4MKI8jj6Xq6gVpSQ+Og+6GPqfws2K4zYo11OJoccuk2LnlJIJt8xwnoYCVGpSA==}
+  /tsup/4.12.0_typescript@4.3.4:
+    resolution: {integrity: sha512-TjODlDrJYcMHW8nRVbhf2PBelo2ew3s7zfSdp/17dXlPkMbnYs80ZmITPgR1KRa6cagSqU+9lYZZe/xbRqhWAQ==}
     hasBin: true
     peerDependencies:
       typescript: ^4.2.3
