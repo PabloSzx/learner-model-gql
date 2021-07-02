@@ -22,31 +22,12 @@ export type Scalars = {
   Int: number;
   Float: number;
   /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
-  DateTime: any;
+  DateTime: string | Date;
 };
 
 export type Query = {
   __typename?: "Query";
-  currentUser?: Maybe<User>;
-};
-
-export enum UserRole {
-  Admin = "ADMIN",
-  User = "USER",
-}
-
-export type User = {
-  __typename?: "User";
-  id: Scalars["ID"];
-  enabled: Scalars["Boolean"];
-  email: Scalars["String"];
-  name?: Maybe<Scalars["String"]>;
-  locked: Scalars["Boolean"];
-  active: Scalars["Boolean"];
-  lastOnline?: Maybe<Scalars["DateTime"]>;
-  role: UserRole;
-  createdAt: Scalars["DateTime"];
-  updatedAt: Scalars["DateTime"];
+  hello: Scalars["String"];
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -135,30 +116,18 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Query: ResolverTypeWrapper<{}>;
   DateTime: ResolverTypeWrapper<Scalars["DateTime"]>;
-  UserRole: UserRole;
-  User: ResolverTypeWrapper<User>;
-  ID: ResolverTypeWrapper<Scalars["ID"]>;
-  Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
+  Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars["String"]>;
+  Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Query: {};
   DateTime: Scalars["DateTime"];
-  User: User;
-  ID: Scalars["ID"];
-  Boolean: Scalars["Boolean"];
+  Query: {};
   String: Scalars["String"];
-};
-
-export type QueryResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
-> = {
-  currentUser?: Resolver<Maybe<ResolversTypes["User"]>, ParentType, ContextType>;
+  Boolean: Scalars["Boolean"];
 };
 
 export interface DateTimeScalarConfig
@@ -166,27 +135,16 @@ export interface DateTimeScalarConfig
   name: "DateTime";
 }
 
-export type UserResolvers<
+export type QueryResolvers<
   ContextType = EZContext,
-  ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
+  ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = {
-  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-  enabled?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
-  email?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  locked?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
-  active?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
-  lastOnline?: Resolver<Maybe<ResolversTypes["DateTime"]>, ParentType, ContextType>;
-  role?: Resolver<ResolversTypes["UserRole"], ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
-  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+  hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 };
 
 export type Resolvers<ContextType = EZContext> = {
-  Query?: QueryResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
-  User?: UserResolvers<ContextType>;
+  Query?: QueryResolvers<ContextType>;
 };
 
 /**

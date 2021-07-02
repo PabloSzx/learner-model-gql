@@ -1,5 +1,5 @@
 {
-  "name": "first",
+  "name": "service-auth",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -7,26 +7,22 @@
     "prepare": "concurrently -r tsup tsc"
   },
   "dependencies": {
-    "@envelop/core": "^0.3.1",
-    "@envelop/graphql-jit": "^0.2.0",
-    "@envelop/types": "^0.2.1",
-    "@graphql-ez/fastify": "^0.2.2",
-    "@graphql-ez/plugin-codegen": "^0.1.1",
-    "@graphql-ez/plugin-modules": "^0.1.2",
-    "@graphql-ez/plugin-scalars": "^0.1.1",
+    "@graphql-ez/fastify": "^0.4.1",
+    "api-base": "workspace:^0.0.1",
     "common": "workspace:^0.0.1",
     "concurrently": "^6.2.0",
     "cross-env": "^7.0.3",
     "db": "workspace:^0.0.1",
     "dotenv": "^10.0.0",
-    "fastify": "^3.18.0",
+    "fastify": "^3.18.1",
     "fastify-auth0-verify": "^0.5.2",
     "graphql": "^15.5.1",
+    "graphql-ez": "^0.4.1",
     "tsup": "^4.12.0",
-    "typescript": "^4.3.4"
+    "typescript": "^4.3.5"
   },
   "devDependencies": {
-    "@types/node": "^15.12.4",
+    "@types/node": "^15.14.0",
     "react": "^17.0.2",
     "valtio": "^1.0.6"
   },

@@ -1,33 +1,32 @@
 {
-  "name": "common",
+  "name": "service-users",
   "version": "0.0.1",
   "private": true,
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
-    "dev": "concurrently -r \"cross-env NODE_ENV=development tsup --watch src\" \"tsc\"",
+    "dev": "cross-env NODE_ENV=development tsup --watch src --onSuccess \"node -r dotenv/config dist/index.js\"",
     "prepare": "concurrently -r tsup tsc"
   },
   "dependencies": {
-    "@auth0/auth0-react": "^1.5.0",
-    "@graphql-ez/core": "^0.2.4",
-    "@graphql-ez/core-utils": "^0.2.2",
+    "@graphql-ez/fastify": "^0.4.1",
+    "api-base": "workspace:^0.0.1",
+    "common": "workspace:^0.0.1",
     "concurrently": "^6.2.0",
     "cross-env": "^7.0.3",
+    "db": "workspace:^0.0.1",
+    "dotenv": "^10.0.0",
+    "fastify": "^3.18.1",
     "fastify-auth0-verify": "^0.5.2",
-    "fastify-plugin": "^3.0.0",
-    "require-env-variable": "^3.1.2",
+    "graphql": "^15.5.1",
+    "graphql-ez": "^0.4.1",
     "tsup": "^4.12.0",
     "typescript": "^4.3.5"
   },
   "devDependencies": {
     "@types/node": "^15.14.0",
-    "fastify": "^3.18.1",
     "react": "^17.0.2",
     "valtio": "^1.0.6"
   },
   "peerDependencies": {
-    "fastify": "^3.15.1",
     "react": "^17.0.2",
     "valtio": "^1.0.5"
   }

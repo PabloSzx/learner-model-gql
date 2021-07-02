@@ -25,7 +25,8 @@ model User {
   name    String?
   picture String?
 
-  locked     Boolean   @default(false)
+  locked Boolean @default(false)
+
   active     Boolean   @default(false)
   lastOnline DateTime?
 
@@ -33,6 +34,14 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+
+
+  Statement Statement[]
+
+
+  groups Group[]
+
+
 
   @@unique([id, enabled])
 }
@@ -45,4 +54,53 @@ model UserUID {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Group {
+  id Int @id @default(autoincrement())
+
+  users User[]
+
+  Statement Statement[]
+}
+
+model Statement {
+  id Int @id @default(autoincrement())
+
+  user   User? @relation(fields: [userId], references: [id])
+  userId Int?
+
+  group   Group? @relation(fields: [groupId], references: [id])
+  groupId Int?
+
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId Int
+
+  verb Verb @relation(fields: [verbId], references: [id])
+
+  timestamp DateTime @default(now())
+
+  stored DateTime @default(now())
+  verbId Int
+}
+
+model Verb {
+  id Int @id @default(autoincrement())
+
+  uid String @unique
+
+  Statement Statement[]
+}
+
+model Activity {
+  id Int @id @default(autoincrement())
+
+  uid String @unique
+
+}
+
+model Project {
+  id Int @id @default(autoincrement())
+
+  Statement Statement[]
 }
