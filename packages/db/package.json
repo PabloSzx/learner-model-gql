@@ -6,25 +6,25 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "prisma db push",
-    "dev": "concurrently -r \"tsup --watch src\" \"tsc --watch\"",
+    "dev": "tsup --watch src",
     "migrate:dev": "prisma migrate dev",
     "migrate:push": "prisma db push",
-    "prepare": "prisma generate && concurrently -r tsup tsc"
+    "prepare": "prisma generate &&  tsup"
   },
   "dependencies": {
-    "@graphql-ez/fastify": "^0.4.1",
+    "@graphql-ez/fastify": "^0.6.1",
     "@prisma/client": "2.27.0-integration-fix-sdk-pnpm.1",
     "common": "workspace:^0.0.1",
     "concurrently": "^6.2.0",
     "cross-env": "^7.0.3",
     "prisma": "2.27.0-integration-fix-sdk-pnpm.1",
-    "tsup": "^4.12.0",
+    "tsup": "^4.12.5",
     "typescript": "^4.3.5"
   },
   "devDependencies": {
-    "@types/node": "^15.14.0",
+    "@types/node": "^16.3.1",
     "react": "^17.0.2",
-    "valtio": "^1.0.6"
+    "valtio": "^1.0.7"
   },
   "peerDependencies": {
     "react": "^17.0.2",

@@ -5,26 +5,18 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "dev": "concurrently -r \"cross-env NODE_ENV=development tsup --watch src\" \"tsc\"",
-    "prepare": "concurrently -r tsup tsc"
-  },
-  "dependencies": {
-    "@auth0/auth0-react": "^1.5.0",
-    "@graphql-ez/core": "^0.2.4",
-    "@graphql-ez/core-utils": "^0.2.2",
-    "concurrently": "^6.2.0",
-    "cross-env": "^7.0.3",
-    "fastify-auth0-verify": "^0.5.2",
-    "fastify-plugin": "^3.0.0",
-    "require-env-variable": "^3.1.2",
-    "tsup": "^4.12.0",
-    "typescript": "^4.3.5"
+    "dev": "cross-env NODE_ENV=development tsup --watch src",
+    "prepare": "tsup"
   },
   "devDependencies": {
-    "@types/node": "^15.14.0",
-    "fastify": "^3.18.1",
+    "@types/node": "^16.3.1",
+    "concurrently": "^6.2.0",
+    "fastify": "^3.19.0",
     "react": "^17.0.2",
-    "valtio": "^1.0.6"
+    "typescript": "^4.3.5",
+    "valtio": "^1.0.7",
+    "tsup": "^4.12.5",
+    "cross-env": "^7.0.3"
   },
   "peerDependencies": {
     "fastify": "^3.15.1",

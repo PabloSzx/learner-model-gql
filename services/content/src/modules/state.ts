@@ -1,4 +1,4 @@
-import { gql, registerModule } from "../app";
+import { gql, registerModule } from "../ez";
 
 registerModule(
   gql`

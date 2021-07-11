@@ -33,6 +33,8 @@ export type Scalars = {
   Timestamp: any;
   /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSONObject: any;
+  /** ID that parses as non-negative integer, serializes to string, and can be passed as string or number */
+  IntID: number;
 };
 
 export type Verb = {
@@ -178,6 +180,7 @@ export type ResolversTypes = {
   DateTime: ResolverTypeWrapper<Scalars["DateTime"]>;
   Timestamp: ResolverTypeWrapper<Scalars["Timestamp"]>;
   JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
+  IntID: ResolverTypeWrapper<Scalars["IntID"]>;
   Verb: ResolverTypeWrapper<Verb>;
   ID: ResolverTypeWrapper<Scalars["ID"]>;
   String: ResolverTypeWrapper<Scalars["String"]>;
@@ -193,6 +196,7 @@ export type ResolversParentTypes = {
   DateTime: Scalars["DateTime"];
   Timestamp: Scalars["Timestamp"];
   JSONObject: Scalars["JSONObject"];
+  IntID: Scalars["IntID"];
   Verb: Verb;
   ID: Scalars["ID"];
   String: Scalars["String"];
@@ -216,6 +220,11 @@ export interface TimestampScalarConfig
 export interface JsonObjectScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["JSONObject"], any> {
   name: "JSONObject";
+}
+
+export interface IntIdScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["IntID"], any> {
+  name: "IntID";
 }
 
 export type VerbResolvers<
@@ -268,6 +277,7 @@ export type Resolvers<ContextType = EZContext> = {
   DateTime?: GraphQLScalarType;
   Timestamp?: GraphQLScalarType;
   JSONObject?: GraphQLScalarType;
+  IntID?: GraphQLScalarType;
   Verb?: VerbResolvers<ContextType>;
   Activity?: ActivityResolvers<ContextType>;
   Action?: ActionResolvers<ContextType>;

@@ -1,23 +1,26 @@
 import Fastify from "fastify";
 
-import { Auth0Verify } from "common";
+import { buildApp } from "./ez";
 
-import { buildApp } from "./app";
+import { servicesListPorts } from "api-base";
 
 const app = Fastify({
   logger: true,
 });
 
-(async () => {
-  await app.register(Auth0Verify);
+const ezApp = buildApp({
+  async prepare() {
+    await import("./modules");
+  },
+});
 
-  const EnvelopApp = buildApp({
-    async prepare() {
-      await import("./modules");
-    },
-  });
+app.register(ezApp.fastifyPlugin);
 
-  await app.register(EnvelopApp.fastifyPlugin);
+app.ready((err) => {
+  if (err) {
+    console.error(err);
+    process.exit(1);
+  }
 
-  app.listen(3001);
-})();
+  app.listen(servicesListPorts.auth);
+});

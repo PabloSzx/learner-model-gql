@@ -1,3 +1,4 @@
+import { codegenOptions, servicesListPorts } from "api-base";
 import { parse } from "content-type";
 import Fastify from "fastify";
 import { print } from "graphql";
@@ -7,11 +8,12 @@ import { request } from "undici";
 import waitOn from "wait-on";
 
 import { CreateApp, EZContext } from "@graphql-ez/fastify";
-import { ezCodegen } from "@graphql-ez/plugin-codegen";
 import { ezAltairIDE } from "@graphql-ez/plugin-altair";
-import { AsyncExecutor, SubschemaConfig } from "@graphql-tools/delegate";
+import { ezCodegen } from "@graphql-ez/plugin-codegen";
 import { stitchSchemas } from "@graphql-tools/stitch";
 import { introspectSchema } from "@graphql-tools/wrap";
+
+import type { AsyncExecutor, SubschemaConfig } from "@graphql-tools/delegate";
 
 function getStreamJSON<T>(stream: import("stream").Readable, encoding: BufferEncoding) {
   return new Promise<T>((resolve, reject) => {
@@ -31,52 +33,60 @@ function getStreamJSON<T>(stream: import("stream").Readable, encoding: BufferEnc
   });
 }
 
-const remoteExecutor: AsyncExecutor<Partial<EZContext>> = async function remoteExecutor({
-  document,
-  variables,
-  context,
-}) {
-  const query = print(document);
+async function getServiceSchema([, port]: [name: string, port: number]) {
+  const remoteExecutor: AsyncExecutor<Partial<EZContext>> = async function remoteExecutor({
+    document,
+    variables,
+    context,
+  }) {
+    const query = print(document);
 
-  const authorization = context?.request?.headers.authorization;
+    const authorization = context?.request?.headers.authorization;
 
-  const { body, headers } = await request("http://localhost:3001/graphql", {
-    body: JSON.stringify({ query, variables }),
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      authorization,
-    },
-  });
+    const { body, headers } = await request(`http://localhost:${port}/graphql`, {
+      body: JSON.stringify({ query, variables }),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization,
+      },
+    });
 
-  if (!headers["content-type"]) throw Error("No content-type specified!");
+    if (!headers["content-type"]) throw Error("No content-type specified!");
 
-  const { type, parameters } = parse(headers["content-type"]);
+    const { type, parameters } = parse(headers["content-type"]);
 
-  if (type === "application/json")
-    return getStreamJSON(body, (parameters["charset"] as BufferEncoding) || "utf-8");
+    if (type === "application/json")
+      return getStreamJSON(body, (parameters["charset"] as BufferEncoding) || "utf-8");
 
-  throw Error("Unexpected content-type, expected 'application/json', received: " + type);
-};
+    throw Error("Unexpected content-type, expected 'application/json', received: " + type);
+  };
+
+  const serviceSubschema: SubschemaConfig = {
+    schema: await introspectSchema(remoteExecutor),
+    executor: remoteExecutor,
+    // subscriber: remoteSubscriber
+  };
+
+  return serviceSubschema;
+}
 
 const app = Fastify({
   logger: true,
 });
 
 async function main() {
+  app.log.info("Waiting for services!");
+
+  const services = Object.entries(servicesListPorts);
+
   await waitOn({
-    resources: ["tcp:3001"],
+    resources: services.map(([, port]) => `tcp:${port}`),
     timeout: ms("30 seconds"),
   });
 
-  const service1Subschema: SubschemaConfig = {
-    schema: await introspectSchema(remoteExecutor),
-    executor: remoteExecutor,
-    // subscriber: remoteSubscriber
-  };
-
   const schema = stitchSchemas({
-    subschemas: [service1Subschema],
+    subschemas: await Promise.all(services.map(getServiceSchema)),
   });
 
   const { buildApp } = CreateApp({
@@ -85,6 +95,7 @@ async function main() {
       plugins: [
         ezCodegen({
           outputSchema: resolve(__dirname, "../../schema.gql"),
+          config: codegenOptions.config,
         }),
         ezAltairIDE({}),
       ],

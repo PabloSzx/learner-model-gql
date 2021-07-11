@@ -4,6 +4,8 @@ schema {
 
 type Query {
   currentUser: User
+  hello: String!
+  data: Action!
 }
 
 """
@@ -11,13 +13,28 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 """
 scalar DateTime
 
+"""
+The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSONObject
+
+"""
+ID that parses as non-negative integer, serializes to string, and can be passed as string or number
+"""
+scalar IntID
+
 enum UserRole {
   ADMIN
   USER
 }
 
 type User {
-  id: ID!
+  id: IntID!
   enabled: Boolean!
   email: String!
   name: String
@@ -27,4 +44,27 @@ type User {
   role: UserRole!
   createdAt: DateTime!
   updatedAt: DateTime!
+}
+
+type Verb {
+  id: ID!
+  name: String!
+}
+
+type Activity {
+  contentID: ID
+  domainID: ID
+  stepID: ID
+  hintID: ID
+  amount: Float
+  detail: String
+  extra: JSONObject
+}
+
+type Action {
+  id: ID!
+  verb: Verb!
+  activity: Activity!
+  timestamp: Timestamp!
+  result: Float
 }

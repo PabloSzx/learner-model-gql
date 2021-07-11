@@ -1,43 +1,54 @@
-import type { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from "graphql";
-import type { EZContext } from "@graphql-ez/fastify";
+import type {
+  GraphQLResolveInfo,
+  GraphQLScalarType,
+  GraphQLScalarTypeConfig,
+} from "graphql";
+import type { EZContext } from "graphql-ez";
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
 };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]: Maybe<T[SubKey]> };
 export type ResolverFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
   args: TArgs,
   context: TContext,
   info: GraphQLResolveInfo
 ) =>
-  | Promise<import("@graphql-ez/fastify").DeepPartial<TResult>>
-  | import("@graphql-ez/fastify").DeepPartial<TResult>;
+  | Promise<import("graphql-ez").DeepPartial<TResult>>
+  | import("graphql-ez").DeepPartial<TResult>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
+  ID: string | number;
   String: string;
   Boolean: boolean;
   Int: number;
   Float: number;
   /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
-  DateTime: any;
+  DateTime: string | Date;
+  /** The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
+  Timestamp: any;
+  /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSONObject: any;
+  /** ID that parses as non-negative integer, serializes to string, and can be passed as string or number */
+  IntID: number;
 };
 
 export type Query = {
   __typename?: "Query";
   currentUser?: Maybe<User>;
+  hello: Scalars["String"];
+  data: Action;
 };
 
-export enum UserRole {
-  Admin = "ADMIN",
-  User = "USER",
-}
+export type UserRole = "ADMIN" | "USER";
 
 export type User = {
   __typename?: "User";
-  id: Scalars["ID"];
+  id: Scalars["IntID"];
   enabled: Scalars["Boolean"];
   email: Scalars["String"];
   name?: Maybe<Scalars["String"]>;
@@ -47,6 +58,32 @@ export type User = {
   role: UserRole;
   createdAt: Scalars["DateTime"];
   updatedAt: Scalars["DateTime"];
+};
+
+export type Verb = {
+  __typename?: "Verb";
+  id: Scalars["ID"];
+  name: Scalars["String"];
+};
+
+export type Activity = {
+  __typename?: "Activity";
+  contentID?: Maybe<Scalars["ID"]>;
+  domainID?: Maybe<Scalars["ID"]>;
+  stepID?: Maybe<Scalars["ID"]>;
+  hintID?: Maybe<Scalars["ID"]>;
+  amount?: Maybe<Scalars["Float"]>;
+  detail?: Maybe<Scalars["String"]>;
+  extra?: Maybe<Scalars["JSONObject"]>;
+};
+
+export type Action = {
+  __typename?: "Action";
+  id: Scalars["ID"];
+  verb: Verb;
+  activity: Activity;
+  timestamp: Scalars["Timestamp"];
+  result?: Maybe<Scalars["Float"]>;
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -88,8 +125,18 @@ export interface SubscriptionSubscriberObject<
   TContext,
   TArgs
 > {
-  subscribe: SubscriptionSubscribeFn<{ [key in TKey]: TResult }, TParent, TContext, TArgs>;
-  resolve?: SubscriptionResolveFn<TResult, { [key in TKey]: TResult }, TContext, TArgs>;
+  subscribe: SubscriptionSubscribeFn<
+    { [key in TKey]: TResult },
+    TParent,
+    TContext,
+    TArgs
+  >;
+  resolve?: SubscriptionResolveFn<
+    TResult,
+    { [key in TKey]: TResult },
+    TContext,
+    TArgs
+  >;
 }
 
 export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
@@ -97,7 +144,13 @@ export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
   resolve: SubscriptionResolveFn<TResult, any, TContext, TArgs>;
 }
 
-export type SubscriptionObject<TResult, TKey extends string, TParent, TContext, TArgs> =
+export type SubscriptionObject<
+  TResult,
+  TKey extends string,
+  TParent,
+  TContext,
+  TArgs
+> =
   | SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
   | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
 
@@ -108,7 +161,9 @@ export type SubscriptionResolver<
   TContext = {},
   TArgs = {}
 > =
-  | ((...args: any[]) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
+  | ((
+      ...args: any[]
+    ) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
   | SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>;
 
 export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
@@ -125,7 +180,12 @@ export type IsTypeOfResolverFn<T = {}, TContext = {}> = (
 
 export type NextResolverFn<T> = () => Promise<T>;
 
-export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs = {}> = (
+export type DirectiveResolverFn<
+  TResult = {},
+  TParent = {},
+  TContext = {},
+  TArgs = {}
+> = (
   next: NextResolverFn<TResult>,
   parent: TParent,
   args: TArgs,
@@ -136,29 +196,49 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
+  String: ResolverTypeWrapper<Scalars["String"]>;
   DateTime: ResolverTypeWrapper<Scalars["DateTime"]>;
+  Timestamp: ResolverTypeWrapper<Scalars["Timestamp"]>;
+  JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
+  IntID: ResolverTypeWrapper<Scalars["IntID"]>;
   UserRole: UserRole;
   User: ResolverTypeWrapper<User>;
-  ID: ResolverTypeWrapper<Scalars["ID"]>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
-  String: ResolverTypeWrapper<Scalars["String"]>;
+  Verb: ResolverTypeWrapper<Verb>;
+  ID: ResolverTypeWrapper<Scalars["ID"]>;
+  Activity: ResolverTypeWrapper<Activity>;
+  Float: ResolverTypeWrapper<Scalars["Float"]>;
+  Action: ResolverTypeWrapper<Action>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Query: {};
-  DateTime: Scalars["DateTime"];
-  User: User;
-  ID: Scalars["ID"];
-  Boolean: Scalars["Boolean"];
   String: Scalars["String"];
+  DateTime: Scalars["DateTime"];
+  Timestamp: Scalars["Timestamp"];
+  JSONObject: Scalars["JSONObject"];
+  IntID: Scalars["IntID"];
+  User: User;
+  Boolean: Scalars["Boolean"];
+  Verb: Verb;
+  ID: Scalars["ID"];
+  Activity: Activity;
+  Float: Scalars["Float"];
+  Action: Action;
 };
 
 export type QueryResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = {
-  currentUser?: Resolver<Maybe<ResolversTypes["User"]>, ParentType, ContextType>;
+  currentUser?: Resolver<
+    Maybe<ResolversTypes["User"]>,
+    ParentType,
+    ContextType
+  >;
+  hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  data?: Resolver<ResolversTypes["Action"], ParentType, ContextType>;
 };
 
 export interface DateTimeScalarConfig
@@ -166,27 +246,91 @@ export interface DateTimeScalarConfig
   name: "DateTime";
 }
 
+export interface TimestampScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["Timestamp"], any> {
+  name: "Timestamp";
+}
+
+export interface JsonObjectScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["JSONObject"], any> {
+  name: "JSONObject";
+}
+
+export interface IntIdScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["IntID"], any> {
+  name: "IntID";
+}
+
 export type UserResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
 > = {
-  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
   enabled?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
   email?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   locked?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
   active?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
-  lastOnline?: Resolver<Maybe<ResolversTypes["DateTime"]>, ParentType, ContextType>;
+  lastOnline?: Resolver<
+    Maybe<ResolversTypes["DateTime"]>,
+    ParentType,
+    ContextType
+  >;
   role?: Resolver<ResolversTypes["UserRole"], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type VerbResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Verb"] = ResolversParentTypes["Verb"]
+> = {
+  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ActivityResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Activity"] = ResolversParentTypes["Activity"]
+> = {
+  contentID?: Resolver<Maybe<ResolversTypes["ID"]>, ParentType, ContextType>;
+  domainID?: Resolver<Maybe<ResolversTypes["ID"]>, ParentType, ContextType>;
+  stepID?: Resolver<Maybe<ResolversTypes["ID"]>, ParentType, ContextType>;
+  hintID?: Resolver<Maybe<ResolversTypes["ID"]>, ParentType, ContextType>;
+  amount?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  detail?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  extra?: Resolver<
+    Maybe<ResolversTypes["JSONObject"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ActionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Action"] = ResolversParentTypes["Action"]
+> = {
+  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  verb?: Resolver<ResolversTypes["Verb"], ParentType, ContextType>;
+  activity?: Resolver<ResolversTypes["Activity"], ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes["Timestamp"], ParentType, ContextType>;
+  result?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = EZContext> = {
   Query?: QueryResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
+  Timestamp?: GraphQLScalarType;
+  JSONObject?: GraphQLScalarType;
+  IntID?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;
+  Verb?: VerbResolvers<ContextType>;
+  Activity?: ActivityResolvers<ContextType>;
+  Action?: ActionResolvers<ContextType>;
 };
 
 /**
@@ -196,5 +340,5 @@ export type Resolvers<ContextType = EZContext> = {
 export type IResolvers<ContextType = EZContext> = Resolvers<ContextType>;
 
 declare module "graphql-ez" {
-  interface EZResolvers extends Resolvers<import("@graphql-ez/fastify").EZContext> {}
+  interface EZResolvers extends Resolvers<import("graphql-ez").EZContext> {}
 }
