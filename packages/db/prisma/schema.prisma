@@ -35,13 +35,9 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
-
-  Statement Statement[]
-
-
   groups Group[]
 
-
+  projects Project[]
 
   @@unique([id, enabled])
 }
@@ -59,48 +55,57 @@ model UserUID {
 model Group {
   id Int @id @default(autoincrement())
 
-  users User[]
+  code  String @unique
+  label String
 
-  Statement Statement[]
-}
-
-model Statement {
-  id Int @id @default(autoincrement())
-
-  user   User? @relation(fields: [userId], references: [id])
-  userId Int?
-
-  group   Group? @relation(fields: [groupId], references: [id])
-  groupId Int?
-
-  project   Project @relation(fields: [projectId], references: [id])
-  projectId Int
-
-  verb Verb @relation(fields: [verbId], references: [id])
-
-  timestamp DateTime @default(now())
-
-  stored DateTime @default(now())
-  verbId Int
-}
-
-model Verb {
-  id Int @id @default(autoincrement())
-
-  uid String @unique
-
-  Statement Statement[]
-}
-
-model Activity {
-  id Int @id @default(autoincrement())
-
-  uid String @unique
-
+  users     User[]
+  Project   Project? @relation(fields: [projectId], references: [id])
+  projectId Int?
 }
 
 model Project {
   id Int @id @default(autoincrement())
 
-  Statement Statement[]
+  code  String @unique
+  label String
+
+  users  User[]
+  groups Group[]
+
+  domains Domain[]
+  topics  Topic[]
+}
+
+model Domain {
+  id Int @id @default(autoincrement())
+
+  code  String @unique
+  label String
+
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId Int
+
+  topics Topic[]
+
+
+  @@index([id, projectId])
+}
+
+model Topic {
+  id Int @id @default(autoincrement())
+
+  code  String @unique
+  label String
+
+  domain   Domain @relation(fields: [domainId], references: [id])
+  domainId Int
+
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId Int
+
+  parent    Topic?  @relation("TopicToTopic", fields: [parentId], references: [id])
+  parentId  Int?
+  childrens Topic[] @relation("TopicToTopic")
+
+  @@index([id, projectId])
 }

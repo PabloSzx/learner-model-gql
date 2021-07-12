@@ -21,6 +21,8 @@ export type Scalars = {
   IntID: string;
   /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSONObject: Record<string, unknown>;
+  /** Integers that will have a value of 0 or more. */
+  NonNegativeInt: number;
   /** The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
   Timestamp: number;
 };
@@ -45,16 +47,93 @@ export type Activity = {
   extra?: Maybe<Scalars["JSONObject"]>;
 };
 
+export type AdminMutations = {
+  __typename?: "AdminMutations";
+  createDomain: Domain;
+  createTopic: Topic;
+  updateTopic: Topic;
+};
+
+export type AdminMutationsCreateDomainArgs = {
+  input: CreateDomain;
+};
+
+export type AdminMutationsCreateTopicArgs = {
+  input: CreateTopic;
+};
+
+export type AdminMutationsUpdateTopicArgs = {
+  input: UpdateTopic;
+};
+
+export type AdminQueries = {
+  __typename?: "AdminQueries";
+  allTopics: TopicsConnection;
+  allDomains: DomainsConnection;
+};
+
+export type AdminQueriesAllTopicsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminQueriesAllDomainsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type Connection = {
+  pageInfo?: Maybe<PageInfo>;
+};
+
 export type Content = {
   __typename?: "Content";
   id: Scalars["IntID"];
   json?: Maybe<Scalars["JSONObject"]>;
 };
 
+export type CreateDomain = {
+  code: Scalars["String"];
+  label: Scalars["String"];
+  projectId: Scalars["IntID"];
+};
+
+export type CreateTopic = {
+  code: Scalars["String"];
+  label: Scalars["String"];
+  parentTopicId?: Maybe<Scalars["IntID"]>;
+  domainId: Scalars["IntID"];
+  projectId: Scalars["IntID"];
+};
+
+export type CursorConnectionArgs = {
+  first?: Maybe<Scalars["NonNegativeInt"]>;
+  after?: Maybe<Scalars["IntID"]>;
+  last?: Maybe<Scalars["NonNegativeInt"]>;
+  before?: Maybe<Scalars["IntID"]>;
+};
+
 export type Domain = {
   __typename?: "Domain";
   id: Scalars["IntID"];
-  topic: Array<Topic>;
+  topics: Array<Topic>;
+};
+
+export type DomainsConnection = Connection & {
+  __typename?: "DomainsConnection";
+  nodes: Array<Domain>;
+  pageInfo?: Maybe<PageInfo>;
+};
+
+export type Mutation = {
+  __typename?: "Mutation";
+  admin: AdminMutations;
+};
+
+export type PageInfo = {
+  __typename?: "PageInfo";
+  startCursor?: Maybe<Scalars["String"]>;
+  endCursor?: Maybe<Scalars["String"]>;
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
 };
 
 export type Query = {
@@ -62,13 +141,40 @@ export type Query = {
   currentUser?: Maybe<User>;
   hello: Scalars["String"];
   data: Action;
+  topics: Array<Topic>;
+  domain?: Maybe<Domain>;
+  admin: AdminQueries;
+};
+
+export type QueryTopicsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryDomainArgs = {
+  id: Scalars["IntID"];
 };
 
 export type Topic = {
   __typename?: "Topic";
-  id?: Maybe<Scalars["IntID"]>;
-  parent: Domain;
-  childrens: Array<Domain>;
+  id: Scalars["IntID"];
+  domain: Domain;
+  parent?: Maybe<Topic>;
+  childrens: Array<Topic>;
+};
+
+export type TopicsConnection = Connection & {
+  __typename?: "TopicsConnection";
+  nodes: Array<Topic>;
+  pageInfo?: Maybe<PageInfo>;
+};
+
+export type UpdateTopic = {
+  id: Scalars["IntID"];
+  code: Scalars["String"];
+  label: Scalars["String"];
+  parentTopicId?: Maybe<Scalars["IntID"]>;
+  domainId: Scalars["IntID"];
+  projectId: Scalars["IntID"];
 };
 
 export type User = {

@@ -1,11 +1,15 @@
 schema {
   query: Query
+  mutation: Mutation
 }
 
 type Query {
   currentUser: User
   hello: String!
   data: Action!
+  topics(ids: [IntID!]!): [Topic!]!
+  domain(id: IntID!): Domain
+  admin: AdminQueries!
 }
 
 """
@@ -22,6 +26,11 @@ scalar Timestamp
 The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
 scalar JSONObject
+
+"""
+Integers that will have a value of 0 or more.
+"""
+scalar NonNegativeInt
 
 """
 ID that parses as non-negative integer, serializes to string, and can be passed as string or number
@@ -44,6 +53,24 @@ type User {
   role: UserRole!
   createdAt: DateTime!
   updatedAt: DateTime!
+}
+
+type PageInfo {
+  startCursor: String
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
+interface Connection {
+  pageInfo: PageInfo
+}
+
+input CursorConnectionArgs {
+  first: NonNegativeInt
+  after: IntID
+  last: NonNegativeInt
+  before: IntID
 }
 
 type Verb {
@@ -74,13 +101,62 @@ type Content {
   json: JSONObject
 }
 
+type Mutation {
+  admin: AdminMutations!
+}
+
 type Topic {
-  id: IntID
-  parent: Domain!
-  childrens: [Domain!]!
+  id: IntID!
+  domain: Domain!
+  parent: Topic
+  childrens: [Topic!]!
 }
 
 type Domain {
   id: IntID!
-  topic: [Topic!]!
+  topics: [Topic!]!
+}
+
+type TopicsConnection implements Connection {
+  nodes: [Topic!]!
+  pageInfo: PageInfo
+}
+
+type DomainsConnection implements Connection {
+  nodes: [Domain!]!
+  pageInfo: PageInfo
+}
+
+type AdminQueries {
+  allTopics(pagination: CursorConnectionArgs!): TopicsConnection!
+  allDomains(pagination: CursorConnectionArgs!): DomainsConnection!
+}
+
+input CreateDomain {
+  code: String!
+  label: String!
+  projectId: IntID!
+}
+
+input CreateTopic {
+  code: String!
+  label: String!
+  parentTopicId: IntID
+  domainId: IntID!
+  projectId: IntID!
+}
+
+input UpdateTopic {
+  id: IntID!
+  code: String!
+  label: String!
+  parentTopicId: IntID
+  domainId: IntID!
+  projectId: IntID!
+}
+
+type AdminMutations {
+  createDomain(input: CreateDomain!): Domain!
+  createTopic(input: CreateTopic!): Topic!
+  updateTopic(input: UpdateTopic!): Topic!
 }

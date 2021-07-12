@@ -201,10 +201,13 @@ importers:
     specifiers:
       '@graphql-ez/fastify': ^0.7.0
       '@prisma/client': 2.27.0-integration-fix-sdk-pnpm.2
+      '@types/concurrently': ^6.2.1
       '@types/node': ^16.3.1
+      '@types/react': ^17.0.14
       common: workspace:^0.0.1
       concurrently: ^6.2.0
       cross-env: ^7.0.3
+      dotenv: ^10.0.0
       prisma: 2.27.0-integration-fix-sdk-pnpm.2
       react: ^17.0.2
       tsup: ^4.12.5
@@ -216,11 +219,14 @@ importers:
       common: link:../common
       concurrently: 6.2.0
       cross-env: 7.0.3
+      dotenv: 10.0.0
       prisma: 2.27.0-integration-fix-sdk-pnpm.2
       tsup: 4.12.5_typescript@4.3.5
       typescript: 4.3.5
     devDependencies:
+      '@types/concurrently': 6.2.1
       '@types/node': 16.3.1
+      '@types/react': 17.0.14
       react: 17.0.2
       valtio: 1.0.7_react@17.0.2
 
@@ -3014,7 +3020,6 @@ packages:
 
   /@types/prop-types/15.7.4:
     resolution: {integrity: sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==}
-    dev: false
 
   /@types/react-dom/17.0.9:
     resolution: {integrity: sha512-wIvGxLfgpVDSAMH5utdL9Ngm5Owu0VsGmldro3ORLXV8CShrL8awVj06NuEXFQ5xyaYfdca7Sgbk/50Ri1GdPg==}
@@ -3028,11 +3033,9 @@ packages:
       '@types/prop-types': 15.7.4
       '@types/scheduler': 0.16.2
       csstype: 3.0.8
-    dev: false
 
   /@types/scheduler/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
-    dev: false
 
   /@types/tinycolor2/1.4.2:
     resolution: {integrity: sha512-PeHg/AtdW6aaIO2a+98Xj7rWY4KC1E6yOy7AFknJQ7VXUGNrMlyxDFxJo7HqLtjQms/ZhhQX52mLVW/EX3JGOw==}
@@ -4065,7 +4068,6 @@ packages:
 
   /csstype/3.0.8:
     resolution: {integrity: sha512-jXKhWqXPmlUeoQnF/EhTtTl4C9SnrxSH/jZUih3jmO6lBKr99rP3/+FmrMj4EFpOXzMtXHAZkd3x0E6h6Fgflw==}
-    dev: false
 
   /culvert/0.1.2:
     resolution: {integrity: sha1-lQL18BVKLVoioCPnn3HMk2+m728=}

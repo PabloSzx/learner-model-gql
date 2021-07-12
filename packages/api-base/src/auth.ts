@@ -1,3 +1,4 @@
+import assert from "assert";
 import FastifyAuth0 from "fastify-auth0-verify";
 import fp from "fastify-plugin";
 import { LazyPromise } from "graphql-ez/utils/promise";
@@ -5,6 +6,7 @@ import { LazyPromise } from "graphql-ez/utils/promise";
 import type { FastifyRequest } from "fastify";
 import type { EZPlugin } from "graphql-ez";
 import type { User as Auth0User } from "@auth0/auth0-react";
+import type { DBUser } from "db";
 
 export { Auth0User };
 
@@ -46,4 +48,45 @@ export const AuthPlugin: EZPlugin = {
   onIntegrationRegister(_ctx, integrationCtx) {
     integrationCtx.fastify!.register(Auth0Verify);
   },
+};
+
+export const Authorization = (userPromise: Promise<DBUser | null>) => {
+  const expectUser = LazyPromise(async () => {
+    const user = await userPromise;
+
+    assert(user, "Forbidden!");
+
+    return user;
+  });
+  const expectAdmin = LazyPromise(async () => {
+    const user = await expectUser;
+
+    assert(user.role === "ADMIN", "Forbidden");
+
+    return user;
+  });
+
+  const expectUserProjects = LazyPromise(async () => {
+    const user = await expectUser;
+
+    return user.projects.map((v) => v.id);
+  });
+
+  const expectAllowedUserProject = async (projectIdPromise: number | Promise<number>) => {
+    const [user, projectId] = await Promise.all([expectUser, projectIdPromise]);
+
+    assert(
+      user.projects.find((v) => v.id === projectId),
+      "Forbidden Project!"
+    );
+
+    return { user, projectId };
+  };
+
+  return {
+    expectUser,
+    expectAdmin,
+    expectAllowedUserProject,
+    expectUserProjects,
+  };
 };

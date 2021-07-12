@@ -1,11 +1,13 @@
-import { LazyPromise } from "@graphql-ez/fastify";
+import { LazyPromise, PromiseType } from "@graphql-ez/fastify";
 
-import { prisma, User } from "./db";
+import { prisma } from "./db";
 
 import type { Auth0User } from "api-base";
 
+export type DBUser = PromiseType<ReturnType<typeof GetDBUser>["UserPromise"]>;
+
 export function GetDBUser(auth0UserPromise: Promise<Auth0User | null>) {
-  const UserPromise = LazyPromise(async (): Promise<User | null> => {
+  const UserPromise = LazyPromise(async () => {
     const user = await auth0UserPromise;
 
     if (!user) return null;
@@ -50,7 +52,15 @@ export function GetDBUser(auth0UserPromise: Promise<Auth0User | null>) {
           },
         },
         select: {
-          user: true,
+          user: {
+            include: {
+              projects: {
+                select: {
+                  id: true,
+                },
+              },
+            },
+          },
         },
       })
       .then((data) => data.user);
