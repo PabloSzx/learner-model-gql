@@ -58,7 +58,7 @@
     "overrides": {
       "prisma": "2.27.0-integration-fix-sdk-pnpm.2",
       "@prisma/client": "2.27.0-integration-fix-sdk-pnpm.2",
-      "esbuild": "^0.12.9"
+      "esbuild": "^0.12.15"
     }
   }
 }
