@@ -37,6 +37,12 @@ export type Scalars = {
   IntID: number;
 };
 
+export type Content = {
+  __typename?: "Content";
+  id: Scalars["IntID"];
+  json?: Maybe<Scalars["JSONObject"]>;
+};
+
 export type Query = {
   __typename?: "Query";
   hello: Scalars["String"];
@@ -155,6 +161,7 @@ export type ResolversTypes = {
   Timestamp: ResolverTypeWrapper<Scalars["Timestamp"]>;
   JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
+  Content: ResolverTypeWrapper<Content>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars["String"]>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
@@ -166,6 +173,7 @@ export type ResolversParentTypes = {
   Timestamp: Scalars["Timestamp"];
   JSONObject: Scalars["JSONObject"];
   IntID: Scalars["IntID"];
+  Content: Content;
   Query: {};
   String: Scalars["String"];
   Boolean: Scalars["Boolean"];
@@ -191,6 +199,15 @@ export interface IntIdScalarConfig
   name: "IntID";
 }
 
+export type ContentResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Content"] = ResolversParentTypes["Content"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  json?: Resolver<Maybe<ResolversTypes["JSONObject"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type QueryResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
@@ -203,6 +220,7 @@ export type Resolvers<ContextType = EZContext> = {
   Timestamp?: GraphQLScalarType;
   JSONObject?: GraphQLScalarType;
   IntID?: GraphQLScalarType;
+  Content?: ContentResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
 };
 

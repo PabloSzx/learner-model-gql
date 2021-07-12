@@ -45,11 +45,30 @@ export type Activity = {
   extra?: Maybe<Scalars["JSONObject"]>;
 };
 
+export type Content = {
+  __typename?: "Content";
+  id: Scalars["IntID"];
+  json?: Maybe<Scalars["JSONObject"]>;
+};
+
+export type Domain = {
+  __typename?: "Domain";
+  id: Scalars["IntID"];
+  topic: Array<Topic>;
+};
+
 export type Query = {
   __typename?: "Query";
   currentUser?: Maybe<User>;
   hello: Scalars["String"];
   data: Action;
+};
+
+export type Topic = {
+  __typename?: "Topic";
+  id?: Maybe<Scalars["IntID"]>;
+  parent: Domain;
+  childrens: Array<Domain>;
 };
 
 export type User = {

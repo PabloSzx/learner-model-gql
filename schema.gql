@@ -68,3 +68,19 @@ type Action {
   timestamp: Timestamp!
   result: Float
 }
+
+type Content {
+  id: IntID!
+  json: JSONObject
+}
+
+type Topic {
+  id: IntID
+  parent: Domain!
+  childrens: [Domain!]!
+}
+
+type Domain {
+  id: IntID!
+  topic: [Topic!]!
+}

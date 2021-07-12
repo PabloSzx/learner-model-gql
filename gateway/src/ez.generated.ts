@@ -86,6 +86,25 @@ export type Action = {
   result?: Maybe<Scalars["Float"]>;
 };
 
+export type Content = {
+  __typename?: "Content";
+  id: Scalars["IntID"];
+  json?: Maybe<Scalars["JSONObject"]>;
+};
+
+export type Topic = {
+  __typename?: "Topic";
+  id?: Maybe<Scalars["IntID"]>;
+  parent: Domain;
+  childrens: Array<Domain>;
+};
+
+export type Domain = {
+  __typename?: "Domain";
+  id: Scalars["IntID"];
+  topic: Array<Topic>;
+};
+
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
 export type LegacyStitchingResolver<TResult, TParent, TContext, TArgs> = {
@@ -209,6 +228,9 @@ export type ResolversTypes = {
   Activity: ResolverTypeWrapper<Activity>;
   Float: ResolverTypeWrapper<Scalars["Float"]>;
   Action: ResolverTypeWrapper<Action>;
+  Content: ResolverTypeWrapper<Content>;
+  Topic: ResolverTypeWrapper<Topic>;
+  Domain: ResolverTypeWrapper<Domain>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -226,6 +248,9 @@ export type ResolversParentTypes = {
   Activity: Activity;
   Float: Scalars["Float"];
   Action: Action;
+  Content: Content;
+  Topic: Topic;
+  Domain: Domain;
 };
 
 export type QueryResolvers<
@@ -321,6 +346,38 @@ export type ActionResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type ContentResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Content"] = ResolversParentTypes["Content"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  json?: Resolver<Maybe<ResolversTypes["JSONObject"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type TopicResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Topic"] = ResolversParentTypes["Topic"]
+> = {
+  id?: Resolver<Maybe<ResolversTypes["IntID"]>, ParentType, ContextType>;
+  parent?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
+  childrens?: Resolver<
+    Array<ResolversTypes["Domain"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type DomainResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Domain"] = ResolversParentTypes["Domain"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  topic?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = EZContext> = {
   Query?: QueryResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
@@ -331,6 +388,9 @@ export type Resolvers<ContextType = EZContext> = {
   Verb?: VerbResolvers<ContextType>;
   Activity?: ActivityResolvers<ContextType>;
   Action?: ActionResolvers<ContextType>;
+  Content?: ContentResolvers<ContextType>;
+  Topic?: TopicResolvers<ContextType>;
+  Domain?: DomainResolvers<ContextType>;
 };
 
 /**

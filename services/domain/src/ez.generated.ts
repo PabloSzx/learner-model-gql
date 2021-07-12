@@ -37,6 +37,19 @@ export type Scalars = {
   IntID: number;
 };
 
+export type Topic = {
+  __typename?: "Topic";
+  id?: Maybe<Scalars["IntID"]>;
+  parent: Domain;
+  childrens: Array<Domain>;
+};
+
+export type Domain = {
+  __typename?: "Domain";
+  id: Scalars["IntID"];
+  topic: Array<Topic>;
+};
+
 export type Query = {
   __typename?: "Query";
   hello: Scalars["String"];
@@ -155,6 +168,8 @@ export type ResolversTypes = {
   Timestamp: ResolverTypeWrapper<Scalars["Timestamp"]>;
   JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
+  Topic: ResolverTypeWrapper<Topic>;
+  Domain: ResolverTypeWrapper<Domain>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars["String"]>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
@@ -166,6 +181,8 @@ export type ResolversParentTypes = {
   Timestamp: Scalars["Timestamp"];
   JSONObject: Scalars["JSONObject"];
   IntID: Scalars["IntID"];
+  Topic: Topic;
+  Domain: Domain;
   Query: {};
   String: Scalars["String"];
   Boolean: Scalars["Boolean"];
@@ -191,6 +208,29 @@ export interface IntIdScalarConfig
   name: "IntID";
 }
 
+export type TopicResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Topic"] = ResolversParentTypes["Topic"]
+> = {
+  id?: Resolver<Maybe<ResolversTypes["IntID"]>, ParentType, ContextType>;
+  parent?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
+  childrens?: Resolver<
+    Array<ResolversTypes["Domain"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type DomainResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Domain"] = ResolversParentTypes["Domain"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  topic?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type QueryResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
@@ -203,6 +243,8 @@ export type Resolvers<ContextType = EZContext> = {
   Timestamp?: GraphQLScalarType;
   JSONObject?: GraphQLScalarType;
   IntID?: GraphQLScalarType;
+  Topic?: TopicResolvers<ContextType>;
+  Domain?: DomainResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
 };
 
