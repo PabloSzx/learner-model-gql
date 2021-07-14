@@ -14,6 +14,7 @@
   "author": "PabloSzx <pablosaez1995@gmail.com>",
   "main": "null",
   "scripts": {
+    "clean:dist": "rimraf \"{clients,packages}/*/dist\" gateway/dist",
     "dev": "concurrently pnpm:dev:*",
     "dev:api-base": "pnpm dev -r --filter api-base",
     "dev:common": "pnpm dev -r --filter common",

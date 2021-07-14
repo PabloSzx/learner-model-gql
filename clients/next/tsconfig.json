@@ -69,6 +69,7 @@
     "jsx": "preserve",
     "baseUrl": "../../",
     "paths": {
+      "common": ["packages/common/src/index.ts"],
       "react-graphql": ["packages/react-graphql/src/index.ts"]
     }
   },
