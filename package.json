@@ -44,7 +44,7 @@
     "typescript": "^4.3.5"
   },
   "devDependencies": {
-    "@types/node": "^16.3.1",
+    "@types/node": "^16.3.2",
     "dotenv": "^10.0.0",
     "pm2": "^5.1.0",
     "react": "^17.0.2",
@@ -56,8 +56,6 @@
   },
   "pnpm": {
     "overrides": {
-      "prisma": "2.27.0-integration-fix-sdk-pnpm.2",
-      "@prisma/client": "2.27.0-integration-fix-sdk-pnpm.2",
       "esbuild": "^0.12.15"
     }
   }

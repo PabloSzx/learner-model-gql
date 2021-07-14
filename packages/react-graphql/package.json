@@ -12,20 +12,20 @@
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsup",
+    "build": "pnpm prepare",
     "dev": "concurrently -r \"graphql-codegen --config codegen.yml --watch\" \"tsup --watch\"",
     "gql": "graphql-codegen --config codegen.yml",
-    "prepare": "concurrently --raw -m 1 pnpm:gql pnpm:build"
+    "prepare": "pnpm run gql && tsup"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^1.21.6",
+    "@graphql-codegen/cli": "^1.21.7",
     "@graphql-codegen/core": "^1.17.10",
-    "@graphql-codegen/typed-document-node": "^1.18.9",
-    "@graphql-codegen/typescript": "^1.22.4",
-    "@graphql-codegen/typescript-document-nodes": "1.17.15",
-    "@graphql-codegen/typescript-operations": "^1.18.3",
-    "@graphql-codegen/typescript-react-query": "^1.3.4",
-    "@types/node": "^16.3.1",
+    "@graphql-codegen/typed-document-node": "^1.18.10",
+    "@graphql-codegen/typescript": "^1.23.0",
+    "@graphql-codegen/typescript-document-nodes": "1.17.16",
+    "@graphql-codegen/typescript-operations": "^1.18.4",
+    "@graphql-codegen/typescript-react-query": "^1.3.5",
+    "@types/node": "^16.3.2",
     "common": "workspace:^0.0.1",
     "concurrently": "^6.2.0",
     "graphql": "^15.5.1",
@@ -42,5 +42,16 @@
     "react": "^17.0.2",
     "react-query": "^3.16.0",
     "valtio": "^1.0.5"
+  },
+  "tsup": {
+    "target": "node14",
+    "entryPoints": [
+      "src/index.ts"
+    ],
+    "format": [
+      "cjs",
+      "esm"
+    ],
+    "silent": true
   }
 }

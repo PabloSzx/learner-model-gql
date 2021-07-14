@@ -8,7 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@auth0/auth0-react": "^1.5.0",
+    "@auth0/auth0-react": "^1.6.0",
     "@chakra-ui/react": "^1.6.5",
     "@chakra-ui/system": "^1.7.1",
     "@emotion/react": "^11.4.0",
@@ -23,7 +23,7 @@
     "typescript": "^4.3.5"
   },
   "devDependencies": {
-    "@types/node": "^16.3.1",
+    "@types/node": "^16.3.2",
     "react": "^17.0.2",
     "valtio": "^1.0.7"
   },
