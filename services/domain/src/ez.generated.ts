@@ -130,6 +130,7 @@ export type Query = {
   topics: Array<Topic>;
   domain?: Maybe<Domain>;
   admin: AdminQueries;
+  projects: Array<Project>;
 };
 
 export type QueryTopicsArgs = {
@@ -140,9 +141,19 @@ export type QueryDomainArgs = {
   id: Scalars["IntID"];
 };
 
+export type QueryProjectsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
 export type Mutation = {
   __typename?: "Mutation";
   admin: AdminMutations;
+};
+
+export type Project = {
+  __typename?: "Project";
+  id: Scalars["IntID"];
+  domains: Array<Domain>;
 };
 
 export type PageInfo = {
@@ -295,6 +306,7 @@ export type ResolversTypes = {
   AdminMutations: ResolverTypeWrapper<AdminMutations>;
   Query: ResolverTypeWrapper<{}>;
   Mutation: ResolverTypeWrapper<{}>;
+  Project: ResolverTypeWrapper<Project>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   Connection:
@@ -322,6 +334,7 @@ export type ResolversParentTypes = {
   AdminMutations: AdminMutations;
   Query: {};
   Mutation: {};
+  Project: Project;
   PageInfo: PageInfo;
   Boolean: Scalars["Boolean"];
   Connection:
@@ -462,6 +475,12 @@ export type QueryResolvers<
     RequireFields<QueryDomainArgs, "id">
   >;
   admin?: Resolver<ResolversTypes["AdminQueries"], ParentType, ContextType>;
+  projects?: Resolver<
+    Array<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryProjectsArgs, "ids">
+  >;
 };
 
 export type MutationResolvers<
@@ -469,6 +488,15 @@ export type MutationResolvers<
   ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
 > = {
   admin?: Resolver<ResolversTypes["AdminMutations"], ParentType, ContextType>;
+};
+
+export type ProjectResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Project"] = ResolversParentTypes["Project"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  domains?: Resolver<Array<ResolversTypes["Domain"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type PageInfoResolvers<
@@ -524,6 +552,7 @@ export type Resolvers<ContextType = EZContext> = {
   AdminMutations?: AdminMutationsResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  Project?: ProjectResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
   Connection?: ConnectionResolvers<ContextType>;
 };

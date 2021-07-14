@@ -10,6 +10,8 @@ type Query {
   topics(ids: [IntID!]!): [Topic!]!
   domain(id: IntID!): Domain
   admin: AdminQueries!
+  projects(ids: [IntID!]!): [Project!]!
+  domains(ids: [IntID!]!): [Domain!]!
 }
 
 """
@@ -110,11 +112,13 @@ type Topic {
   domain: Domain!
   parent: Topic
   childrens: [Topic!]!
+  project: Project!
 }
 
 type Domain {
   id: IntID!
   topics: [Topic!]!
+  project: Project!
 }
 
 type TopicsConnection implements Connection {
@@ -130,6 +134,7 @@ type DomainsConnection implements Connection {
 type AdminQueries {
   allTopics(pagination: CursorConnectionArgs!): TopicsConnection!
   allDomains(pagination: CursorConnectionArgs!): DomainsConnection!
+  allProjects: [Project!]!
 }
 
 input CreateDomain {
@@ -159,4 +164,17 @@ type AdminMutations {
   createDomain(input: CreateDomain!): Domain!
   createTopic(input: CreateTopic!): Topic!
   updateTopic(input: UpdateTopic!): Topic!
+  createProject(data: CreateProject!): Project!
+}
+
+type Project {
+  id: IntID!
+  domains: [Domain!]!
+  code: String!
+  label: String!
+}
+
+input CreateProject {
+  code: String!
+  label: String!
 }

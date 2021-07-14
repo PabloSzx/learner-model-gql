@@ -7,7 +7,12 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialActions"]
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
 }
 
 enum UserRole {

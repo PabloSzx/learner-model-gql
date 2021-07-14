@@ -52,6 +52,7 @@ export type AdminMutations = {
   createDomain: Domain;
   createTopic: Topic;
   updateTopic: Topic;
+  createProject: Project;
 };
 
 export type AdminMutationsCreateDomainArgs = {
@@ -66,10 +67,15 @@ export type AdminMutationsUpdateTopicArgs = {
   input: UpdateTopic;
 };
 
+export type AdminMutationsCreateProjectArgs = {
+  data: CreateProject;
+};
+
 export type AdminQueries = {
   __typename?: "AdminQueries";
   allTopics: TopicsConnection;
   allDomains: DomainsConnection;
+  allProjects: Array<Project>;
 };
 
 export type AdminQueriesAllTopicsArgs = {
@@ -96,6 +102,11 @@ export type CreateDomain = {
   projectId: Scalars["IntID"];
 };
 
+export type CreateProject = {
+  code: Scalars["String"];
+  label: Scalars["String"];
+};
+
 export type CreateTopic = {
   code: Scalars["String"];
   label: Scalars["String"];
@@ -115,6 +126,7 @@ export type Domain = {
   __typename?: "Domain";
   id: Scalars["IntID"];
   topics: Array<Topic>;
+  project: Project;
 };
 
 export type DomainsConnection = Connection & {
@@ -136,6 +148,14 @@ export type PageInfo = {
   hasPreviousPage: Scalars["Boolean"];
 };
 
+export type Project = {
+  __typename?: "Project";
+  id: Scalars["IntID"];
+  domains: Array<Domain>;
+  code: Scalars["String"];
+  label: Scalars["String"];
+};
+
 export type Query = {
   __typename?: "Query";
   currentUser?: Maybe<User>;
@@ -144,6 +164,8 @@ export type Query = {
   topics: Array<Topic>;
   domain?: Maybe<Domain>;
   admin: AdminQueries;
+  projects: Array<Project>;
+  domains: Array<Domain>;
 };
 
 export type QueryTopicsArgs = {
@@ -154,12 +176,21 @@ export type QueryDomainArgs = {
   id: Scalars["IntID"];
 };
 
+export type QueryProjectsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryDomainsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
 export type Topic = {
   __typename?: "Topic";
   id: Scalars["IntID"];
   domain: Domain;
   parent?: Maybe<Topic>;
   childrens: Array<Topic>;
+  project: Project;
 };
 
 export type TopicsConnection = Connection & {

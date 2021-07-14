@@ -20,6 +20,10 @@ export type ResolverFn<TResult, TParent, TContext, TArgs> = (
 ) =>
   | Promise<import("graphql-ez").DeepPartial<TResult>>
   | import("graphql-ez").DeepPartial<TResult>;
+export type RequireFields<T, K extends keyof T> = {
+  [X in Exclude<keyof T, K>]?: T[X];
+} &
+  { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -39,9 +43,63 @@ export type Scalars = {
   IntID: number;
 };
 
+export type Domain = {
+  __typename?: "Domain";
+  id: Scalars["IntID"];
+  project: Project;
+};
+
+export type Topic = {
+  __typename?: "Topic";
+  id: Scalars["IntID"];
+  project: Project;
+};
+
+export type Project = {
+  __typename?: "Project";
+  id: Scalars["IntID"];
+  code: Scalars["String"];
+  label: Scalars["String"];
+};
+
+export type AdminQueries = {
+  __typename?: "AdminQueries";
+  allProjects: Array<Project>;
+};
+
+export type CreateProject = {
+  code: Scalars["String"];
+  label: Scalars["String"];
+};
+
+export type AdminMutations = {
+  __typename?: "AdminMutations";
+  createProject: Project;
+};
+
+export type AdminMutationsCreateProjectArgs = {
+  data: CreateProject;
+};
+
 export type Query = {
   __typename?: "Query";
   hello: Scalars["String"];
+  admin: AdminQueries;
+  domains: Array<Domain>;
+  topics: Array<Topic>;
+};
+
+export type QueryDomainsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryTopicsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type Mutation = {
+  __typename?: "Mutation";
+  admin: AdminMutations;
 };
 
 export type PageInfo = {
@@ -182,8 +240,15 @@ export type ResolversTypes = {
   JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
   NonNegativeInt: ResolverTypeWrapper<Scalars["NonNegativeInt"]>;
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
-  Query: ResolverTypeWrapper<{}>;
+  Domain: ResolverTypeWrapper<Domain>;
+  Topic: ResolverTypeWrapper<Topic>;
+  Project: ResolverTypeWrapper<Project>;
   String: ResolverTypeWrapper<Scalars["String"]>;
+  AdminQueries: ResolverTypeWrapper<AdminQueries>;
+  CreateProject: CreateProject;
+  AdminMutations: ResolverTypeWrapper<AdminMutations>;
+  Query: ResolverTypeWrapper<{}>;
+  Mutation: ResolverTypeWrapper<{}>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   Connection: never;
@@ -197,8 +262,15 @@ export type ResolversParentTypes = {
   JSONObject: Scalars["JSONObject"];
   NonNegativeInt: Scalars["NonNegativeInt"];
   IntID: Scalars["IntID"];
-  Query: {};
+  Domain: Domain;
+  Topic: Topic;
+  Project: Project;
   String: Scalars["String"];
+  AdminQueries: AdminQueries;
+  CreateProject: CreateProject;
+  AdminMutations: AdminMutations;
+  Query: {};
+  Mutation: {};
   PageInfo: PageInfo;
   Boolean: Scalars["Boolean"];
   Connection: never;
@@ -230,11 +302,84 @@ export interface IntIdScalarConfig
   name: "IntID";
 }
 
+export type DomainResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Domain"] = ResolversParentTypes["Domain"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  project?: Resolver<ResolversTypes["Project"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type TopicResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Topic"] = ResolversParentTypes["Topic"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  project?: Resolver<ResolversTypes["Project"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProjectResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Project"] = ResolversParentTypes["Project"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type AdminQueriesResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["AdminQueries"] = ResolversParentTypes["AdminQueries"]
+> = {
+  allProjects?: Resolver<
+    Array<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type AdminMutationsResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["AdminMutations"] = ResolversParentTypes["AdminMutations"]
+> = {
+  createProject?: Resolver<
+    ResolversTypes["Project"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminMutationsCreateProjectArgs, "data">
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type QueryResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = {
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  admin?: Resolver<ResolversTypes["AdminQueries"], ParentType, ContextType>;
+  domains?: Resolver<
+    Array<ResolversTypes["Domain"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryDomainsArgs, "ids">
+  >;
+  topics?: Resolver<
+    Array<ResolversTypes["Topic"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryTopicsArgs, "ids">
+  >;
+};
+
+export type MutationResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
+> = {
+  admin?: Resolver<ResolversTypes["AdminMutations"], ParentType, ContextType>;
 };
 
 export type PageInfoResolvers<
@@ -278,7 +423,13 @@ export type Resolvers<ContextType = EZContext> = {
   JSONObject?: GraphQLScalarType;
   NonNegativeInt?: GraphQLScalarType;
   IntID?: GraphQLScalarType;
+  Domain?: DomainResolvers<ContextType>;
+  Topic?: TopicResolvers<ContextType>;
+  Project?: ProjectResolvers<ContextType>;
+  AdminQueries?: AdminQueriesResolvers<ContextType>;
+  AdminMutations?: AdminMutationsResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
   Connection?: ConnectionResolvers<ContextType>;
 };
