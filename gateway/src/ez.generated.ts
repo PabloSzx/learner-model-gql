@@ -47,10 +47,10 @@ export type Query = {
   __typename?: "Query";
   currentUser?: Maybe<User>;
   hello: Scalars["String"];
+  admin: AdminQueries;
   data: Action;
   topics: Array<Topic>;
   domain?: Maybe<Domain>;
-  admin: AdminQueries;
   projects: Array<Project>;
   domains: Array<Domain>;
 };
@@ -85,6 +85,7 @@ export type User = {
   role: UserRole;
   createdAt: Scalars["DateTime"];
   updatedAt: Scalars["DateTime"];
+  groups: Array<Group>;
 };
 
 export type PageInfo = {
@@ -104,6 +105,90 @@ export type CursorConnectionArgs = {
   after?: Maybe<Scalars["IntID"]>;
   last?: Maybe<Scalars["NonNegativeInt"]>;
   before?: Maybe<Scalars["IntID"]>;
+};
+
+export type Mutation = {
+  __typename?: "Mutation";
+  admin: AdminMutations;
+};
+
+export type Group = {
+  __typename?: "Group";
+  id: Scalars["IntID"];
+  code: Scalars["String"];
+  label: Scalars["String"];
+  users: Array<User>;
+  projects: Array<Project>;
+};
+
+export type Project = {
+  __typename?: "Project";
+  id: Scalars["IntID"];
+  domains: Array<Domain>;
+  code: Scalars["String"];
+  label: Scalars["String"];
+};
+
+export type UsersConnection = {
+  __typename?: "UsersConnection";
+  nodes: Array<User>;
+  pageInfo: PageInfo;
+};
+
+export type AdminQueries = {
+  __typename?: "AdminQueries";
+  allUsers: UsersConnection;
+  allTopics: TopicsConnection;
+  allDomains: DomainsConnection;
+  allProjects: Array<Project>;
+};
+
+export type AdminQueriesAllUsersArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminQueriesAllTopicsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminQueriesAllDomainsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminMutations = {
+  __typename?: "AdminMutations";
+  assignProjectsToUsers: Array<User>;
+  unassignProjectsToUsers: Array<User>;
+  createDomain: Domain;
+  createTopic: Topic;
+  updateTopic: Topic;
+  createProject: Project;
+};
+
+export type AdminMutationsAssignProjectsToUsersArgs = {
+  projectIds: Array<Scalars["IntID"]>;
+  userIds: Array<Scalars["IntID"]>;
+};
+
+export type AdminMutationsUnassignProjectsToUsersArgs = {
+  projectIds: Array<Scalars["IntID"]>;
+  userIds: Array<Scalars["IntID"]>;
+};
+
+export type AdminMutationsCreateDomainArgs = {
+  input: CreateDomain;
+};
+
+export type AdminMutationsCreateTopicArgs = {
+  input: CreateTopic;
+};
+
+export type AdminMutationsUpdateTopicArgs = {
+  input: UpdateTopic;
+};
+
+export type AdminMutationsCreateProjectArgs = {
+  data: CreateProject;
 };
 
 export type Verb = {
@@ -138,11 +223,6 @@ export type Content = {
   json?: Maybe<Scalars["JSONObject"]>;
 };
 
-export type Mutation = {
-  __typename?: "Mutation";
-  admin: AdminMutations;
-};
-
 export type Topic = {
   __typename?: "Topic";
   id: Scalars["IntID"];
@@ -171,21 +251,6 @@ export type DomainsConnection = Connection & {
   pageInfo?: Maybe<PageInfo>;
 };
 
-export type AdminQueries = {
-  __typename?: "AdminQueries";
-  allTopics: TopicsConnection;
-  allDomains: DomainsConnection;
-  allProjects: Array<Project>;
-};
-
-export type AdminQueriesAllTopicsArgs = {
-  pagination: CursorConnectionArgs;
-};
-
-export type AdminQueriesAllDomainsArgs = {
-  pagination: CursorConnectionArgs;
-};
-
 export type CreateDomain = {
   code: Scalars["String"];
   label: Scalars["String"];
@@ -207,38 +272,6 @@ export type UpdateTopic = {
   parentTopicId?: Maybe<Scalars["IntID"]>;
   domainId: Scalars["IntID"];
   projectId: Scalars["IntID"];
-};
-
-export type AdminMutations = {
-  __typename?: "AdminMutations";
-  createDomain: Domain;
-  createTopic: Topic;
-  updateTopic: Topic;
-  createProject: Project;
-};
-
-export type AdminMutationsCreateDomainArgs = {
-  input: CreateDomain;
-};
-
-export type AdminMutationsCreateTopicArgs = {
-  input: CreateTopic;
-};
-
-export type AdminMutationsUpdateTopicArgs = {
-  input: UpdateTopic;
-};
-
-export type AdminMutationsCreateProjectArgs = {
-  data: CreateProject;
-};
-
-export type Project = {
-  __typename?: "Project";
-  id: Scalars["IntID"];
-  domains: Array<Domain>;
-  code: Scalars["String"];
-  label: Scalars["String"];
 };
 
 export type CreateProject = {
@@ -375,23 +408,25 @@ export type ResolversTypes = {
     | ResolversTypes["TopicsConnection"]
     | ResolversTypes["DomainsConnection"];
   CursorConnectionArgs: CursorConnectionArgs;
+  Mutation: ResolverTypeWrapper<{}>;
+  Group: ResolverTypeWrapper<Group>;
+  Project: ResolverTypeWrapper<Project>;
+  UsersConnection: ResolverTypeWrapper<UsersConnection>;
+  AdminQueries: ResolverTypeWrapper<AdminQueries>;
+  AdminMutations: ResolverTypeWrapper<AdminMutations>;
   Verb: ResolverTypeWrapper<Verb>;
   ID: ResolverTypeWrapper<Scalars["ID"]>;
   Activity: ResolverTypeWrapper<Activity>;
   Float: ResolverTypeWrapper<Scalars["Float"]>;
   Action: ResolverTypeWrapper<Action>;
   Content: ResolverTypeWrapper<Content>;
-  Mutation: ResolverTypeWrapper<{}>;
   Topic: ResolverTypeWrapper<Topic>;
   Domain: ResolverTypeWrapper<Domain>;
   TopicsConnection: ResolverTypeWrapper<TopicsConnection>;
   DomainsConnection: ResolverTypeWrapper<DomainsConnection>;
-  AdminQueries: ResolverTypeWrapper<AdminQueries>;
   CreateDomain: CreateDomain;
   CreateTopic: CreateTopic;
   UpdateTopic: UpdateTopic;
-  AdminMutations: ResolverTypeWrapper<AdminMutations>;
-  Project: ResolverTypeWrapper<Project>;
   CreateProject: CreateProject;
 };
 
@@ -411,23 +446,25 @@ export type ResolversParentTypes = {
     | ResolversParentTypes["TopicsConnection"]
     | ResolversParentTypes["DomainsConnection"];
   CursorConnectionArgs: CursorConnectionArgs;
+  Mutation: {};
+  Group: Group;
+  Project: Project;
+  UsersConnection: UsersConnection;
+  AdminQueries: AdminQueries;
+  AdminMutations: AdminMutations;
   Verb: Verb;
   ID: Scalars["ID"];
   Activity: Activity;
   Float: Scalars["Float"];
   Action: Action;
   Content: Content;
-  Mutation: {};
   Topic: Topic;
   Domain: Domain;
   TopicsConnection: TopicsConnection;
   DomainsConnection: DomainsConnection;
-  AdminQueries: AdminQueries;
   CreateDomain: CreateDomain;
   CreateTopic: CreateTopic;
   UpdateTopic: UpdateTopic;
-  AdminMutations: AdminMutations;
-  Project: Project;
   CreateProject: CreateProject;
 };
 
@@ -441,6 +478,7 @@ export type QueryResolvers<
     ContextType
   >;
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  admin?: Resolver<ResolversTypes["AdminQueries"], ParentType, ContextType>;
   data?: Resolver<ResolversTypes["Action"], ParentType, ContextType>;
   topics?: Resolver<
     Array<ResolversTypes["Topic"]>,
@@ -454,7 +492,6 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryDomainArgs, "id">
   >;
-  admin?: Resolver<ResolversTypes["AdminQueries"], ParentType, ContextType>;
   projects?: Resolver<
     Array<ResolversTypes["Project"]>,
     ParentType,
@@ -512,6 +549,7 @@ export type UserResolvers<
   role?: Resolver<ResolversTypes["UserRole"], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  groups?: Resolver<Array<ResolversTypes["Group"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -552,6 +590,128 @@ export type ConnectionResolvers<
     ParentType,
     ContextType
   >;
+};
+
+export type MutationResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
+> = {
+  admin?: Resolver<ResolversTypes["AdminMutations"], ParentType, ContextType>;
+};
+
+export type GroupResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Group"] = ResolversParentTypes["Group"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  users?: Resolver<Array<ResolversTypes["User"]>, ParentType, ContextType>;
+  projects?: Resolver<
+    Array<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProjectResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Project"] = ResolversParentTypes["Project"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  domains?: Resolver<Array<ResolversTypes["Domain"]>, ParentType, ContextType>;
+  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type UsersConnectionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["UsersConnection"] = ResolversParentTypes["UsersConnection"]
+> = {
+  nodes?: Resolver<Array<ResolversTypes["User"]>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type AdminQueriesResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["AdminQueries"] = ResolversParentTypes["AdminQueries"]
+> = {
+  allUsers?: Resolver<
+    ResolversTypes["UsersConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminQueriesAllUsersArgs, "pagination">
+  >;
+  allTopics?: Resolver<
+    ResolversTypes["TopicsConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminQueriesAllTopicsArgs, "pagination">
+  >;
+  allDomains?: Resolver<
+    ResolversTypes["DomainsConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminQueriesAllDomainsArgs, "pagination">
+  >;
+  allProjects?: Resolver<
+    Array<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type AdminMutationsResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["AdminMutations"] = ResolversParentTypes["AdminMutations"]
+> = {
+  assignProjectsToUsers?: Resolver<
+    Array<ResolversTypes["User"]>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      AdminMutationsAssignProjectsToUsersArgs,
+      "projectIds" | "userIds"
+    >
+  >;
+  unassignProjectsToUsers?: Resolver<
+    Array<ResolversTypes["User"]>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      AdminMutationsUnassignProjectsToUsersArgs,
+      "projectIds" | "userIds"
+    >
+  >;
+  createDomain?: Resolver<
+    ResolversTypes["Domain"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminMutationsCreateDomainArgs, "input">
+  >;
+  createTopic?: Resolver<
+    ResolversTypes["Topic"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminMutationsCreateTopicArgs, "input">
+  >;
+  updateTopic?: Resolver<
+    ResolversTypes["Topic"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminMutationsUpdateTopicArgs, "input">
+  >;
+  createProject?: Resolver<
+    ResolversTypes["Project"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminMutationsCreateProjectArgs, "data">
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type VerbResolvers<
@@ -602,13 +762,6 @@ export type ContentResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MutationResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
-> = {
-  admin?: Resolver<ResolversTypes["AdminMutations"], ParentType, ContextType>;
-};
-
 export type TopicResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Topic"] = ResolversParentTypes["Topic"]
@@ -657,72 +810,6 @@ export type DomainsConnectionResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type AdminQueriesResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["AdminQueries"] = ResolversParentTypes["AdminQueries"]
-> = {
-  allTopics?: Resolver<
-    ResolversTypes["TopicsConnection"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminQueriesAllTopicsArgs, "pagination">
-  >;
-  allDomains?: Resolver<
-    ResolversTypes["DomainsConnection"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminQueriesAllDomainsArgs, "pagination">
-  >;
-  allProjects?: Resolver<
-    Array<ResolversTypes["Project"]>,
-    ParentType,
-    ContextType
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type AdminMutationsResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["AdminMutations"] = ResolversParentTypes["AdminMutations"]
-> = {
-  createDomain?: Resolver<
-    ResolversTypes["Domain"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminMutationsCreateDomainArgs, "input">
-  >;
-  createTopic?: Resolver<
-    ResolversTypes["Topic"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminMutationsCreateTopicArgs, "input">
-  >;
-  updateTopic?: Resolver<
-    ResolversTypes["Topic"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminMutationsUpdateTopicArgs, "input">
-  >;
-  createProject?: Resolver<
-    ResolversTypes["Project"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminMutationsCreateProjectArgs, "data">
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type ProjectResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Project"] = ResolversParentTypes["Project"]
-> = {
-  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-  domains?: Resolver<Array<ResolversTypes["Domain"]>, ParentType, ContextType>;
-  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type Resolvers<ContextType = EZContext> = {
   Query?: QueryResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
@@ -733,18 +820,20 @@ export type Resolvers<ContextType = EZContext> = {
   User?: UserResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
   Connection?: ConnectionResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
+  Group?: GroupResolvers<ContextType>;
+  Project?: ProjectResolvers<ContextType>;
+  UsersConnection?: UsersConnectionResolvers<ContextType>;
+  AdminQueries?: AdminQueriesResolvers<ContextType>;
+  AdminMutations?: AdminMutationsResolvers<ContextType>;
   Verb?: VerbResolvers<ContextType>;
   Activity?: ActivityResolvers<ContextType>;
   Action?: ActionResolvers<ContextType>;
   Content?: ContentResolvers<ContextType>;
-  Mutation?: MutationResolvers<ContextType>;
   Topic?: TopicResolvers<ContextType>;
   Domain?: DomainResolvers<ContextType>;
   TopicsConnection?: TopicsConnectionResolvers<ContextType>;
   DomainsConnection?: DomainsConnectionResolvers<ContextType>;
-  AdminQueries?: AdminQueriesResolvers<ContextType>;
-  AdminMutations?: AdminMutationsResolvers<ContextType>;
-  Project?: ProjectResolvers<ContextType>;
 };
 
 /**

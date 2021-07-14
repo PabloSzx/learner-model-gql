@@ -36,8 +36,7 @@ Table Group {
   code String [unique, not null]
   label String [not null]
   users User [not null]
-  Project Project
-  projectId Int
+  projects Project [not null]
 }
 
 Table Project {
@@ -82,14 +81,17 @@ Table ProjectToUser {
   usersId Int [ref: > User.id]
 }
 
+Table GroupToProject {
+  projectsId Int [ref: > Project.id]
+  groupsId Int [ref: > Group.id]
+}
+
 Enum UserRole {
   ADMIN
   USER
 }
 
 Ref: UserUID.userId > User.id
-
-Ref: Group.projectId > Project.id
 
 Ref: Domain.projectId > Project.id
 

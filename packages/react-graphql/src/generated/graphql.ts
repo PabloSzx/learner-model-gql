@@ -49,10 +49,22 @@ export type Activity = {
 
 export type AdminMutations = {
   __typename?: "AdminMutations";
+  assignProjectsToUsers: Array<User>;
+  unassignProjectsToUsers: Array<User>;
   createDomain: Domain;
   createTopic: Topic;
   updateTopic: Topic;
   createProject: Project;
+};
+
+export type AdminMutationsAssignProjectsToUsersArgs = {
+  projectIds: Array<Scalars["IntID"]>;
+  userIds: Array<Scalars["IntID"]>;
+};
+
+export type AdminMutationsUnassignProjectsToUsersArgs = {
+  projectIds: Array<Scalars["IntID"]>;
+  userIds: Array<Scalars["IntID"]>;
 };
 
 export type AdminMutationsCreateDomainArgs = {
@@ -73,9 +85,14 @@ export type AdminMutationsCreateProjectArgs = {
 
 export type AdminQueries = {
   __typename?: "AdminQueries";
+  allUsers: UsersConnection;
   allTopics: TopicsConnection;
   allDomains: DomainsConnection;
   allProjects: Array<Project>;
+};
+
+export type AdminQueriesAllUsersArgs = {
+  pagination: CursorConnectionArgs;
 };
 
 export type AdminQueriesAllTopicsArgs = {
@@ -135,6 +152,15 @@ export type DomainsConnection = Connection & {
   pageInfo?: Maybe<PageInfo>;
 };
 
+export type Group = {
+  __typename?: "Group";
+  id: Scalars["IntID"];
+  code: Scalars["String"];
+  label: Scalars["String"];
+  users: Array<User>;
+  projects: Array<Project>;
+};
+
 export type Mutation = {
   __typename?: "Mutation";
   admin: AdminMutations;
@@ -160,10 +186,10 @@ export type Query = {
   __typename?: "Query";
   currentUser?: Maybe<User>;
   hello: Scalars["String"];
+  admin: AdminQueries;
   data: Action;
   topics: Array<Topic>;
   domain?: Maybe<Domain>;
-  admin: AdminQueries;
   projects: Array<Project>;
   domains: Array<Domain>;
 };
@@ -220,12 +246,19 @@ export type User = {
   role: UserRole;
   createdAt: Scalars["DateTime"];
   updatedAt: Scalars["DateTime"];
+  groups: Array<Group>;
 };
 
 export enum UserRole {
   Admin = "ADMIN",
   User = "USER",
 }
+
+export type UsersConnection = {
+  __typename?: "UsersConnection";
+  nodes: Array<User>;
+  pageInfo: PageInfo;
+};
 
 export type Verb = {
   __typename?: "Verb";

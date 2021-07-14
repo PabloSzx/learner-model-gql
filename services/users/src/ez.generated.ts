@@ -20,6 +20,10 @@ export type ResolverFn<TResult, TParent, TContext, TArgs> = (
 ) =>
   | Promise<import("graphql-ez").DeepPartial<TResult>>
   | import("graphql-ez").DeepPartial<TResult>;
+export type RequireFields<T, K extends keyof T> = {
+  [X in Exclude<keyof T, K>]?: T[X];
+} &
+  { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -39,9 +43,66 @@ export type Scalars = {
   IntID: number;
 };
 
+export type Group = {
+  __typename?: "Group";
+  id: Scalars["IntID"];
+  code: Scalars["String"];
+  label: Scalars["String"];
+  users: Array<User>;
+  projects: Array<Project>;
+};
+
+export type Project = {
+  __typename?: "Project";
+  id: Scalars["IntID"];
+};
+
+export type User = {
+  __typename?: "User";
+  id: Scalars["IntID"];
+  groups: Array<Group>;
+};
+
+export type UsersConnection = {
+  __typename?: "UsersConnection";
+  nodes: Array<User>;
+  pageInfo: PageInfo;
+};
+
+export type AdminQueries = {
+  __typename?: "AdminQueries";
+  allUsers: UsersConnection;
+};
+
+export type AdminQueriesAllUsersArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminMutations = {
+  __typename?: "AdminMutations";
+  assignProjectsToUsers: Array<User>;
+  unassignProjectsToUsers: Array<User>;
+};
+
+export type AdminMutationsAssignProjectsToUsersArgs = {
+  projectIds: Array<Scalars["IntID"]>;
+  userIds: Array<Scalars["IntID"]>;
+};
+
+export type AdminMutationsUnassignProjectsToUsersArgs = {
+  projectIds: Array<Scalars["IntID"]>;
+  userIds: Array<Scalars["IntID"]>;
+};
+
 export type Query = {
   __typename?: "Query";
   hello: Scalars["String"];
+  admin: AdminQueries;
+};
+
+export type Mutation = {
+  __typename?: "Mutation";
+  admin: AdminMutations;
 };
 
 export type PageInfo = {
@@ -182,8 +243,15 @@ export type ResolversTypes = {
   JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
   NonNegativeInt: ResolverTypeWrapper<Scalars["NonNegativeInt"]>;
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
-  Query: ResolverTypeWrapper<{}>;
+  Group: ResolverTypeWrapper<Group>;
   String: ResolverTypeWrapper<Scalars["String"]>;
+  Project: ResolverTypeWrapper<Project>;
+  User: ResolverTypeWrapper<User>;
+  UsersConnection: ResolverTypeWrapper<UsersConnection>;
+  AdminQueries: ResolverTypeWrapper<AdminQueries>;
+  AdminMutations: ResolverTypeWrapper<AdminMutations>;
+  Query: ResolverTypeWrapper<{}>;
+  Mutation: ResolverTypeWrapper<{}>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   Connection: never;
@@ -197,8 +265,15 @@ export type ResolversParentTypes = {
   JSONObject: Scalars["JSONObject"];
   NonNegativeInt: Scalars["NonNegativeInt"];
   IntID: Scalars["IntID"];
-  Query: {};
+  Group: Group;
   String: Scalars["String"];
+  Project: Project;
+  User: User;
+  UsersConnection: UsersConnection;
+  AdminQueries: AdminQueries;
+  AdminMutations: AdminMutations;
+  Query: {};
+  Mutation: {};
   PageInfo: PageInfo;
   Boolean: Scalars["Boolean"];
   Connection: never;
@@ -230,11 +305,99 @@ export interface IntIdScalarConfig
   name: "IntID";
 }
 
+export type GroupResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Group"] = ResolversParentTypes["Group"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  users?: Resolver<Array<ResolversTypes["User"]>, ParentType, ContextType>;
+  projects?: Resolver<
+    Array<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProjectResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Project"] = ResolversParentTypes["Project"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type UserResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  groups?: Resolver<Array<ResolversTypes["Group"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type UsersConnectionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["UsersConnection"] = ResolversParentTypes["UsersConnection"]
+> = {
+  nodes?: Resolver<Array<ResolversTypes["User"]>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type AdminQueriesResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["AdminQueries"] = ResolversParentTypes["AdminQueries"]
+> = {
+  allUsers?: Resolver<
+    ResolversTypes["UsersConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminQueriesAllUsersArgs, "pagination">
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type AdminMutationsResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["AdminMutations"] = ResolversParentTypes["AdminMutations"]
+> = {
+  assignProjectsToUsers?: Resolver<
+    Array<ResolversTypes["User"]>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      AdminMutationsAssignProjectsToUsersArgs,
+      "projectIds" | "userIds"
+    >
+  >;
+  unassignProjectsToUsers?: Resolver<
+    Array<ResolversTypes["User"]>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      AdminMutationsUnassignProjectsToUsersArgs,
+      "projectIds" | "userIds"
+    >
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type QueryResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = {
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  admin?: Resolver<ResolversTypes["AdminQueries"], ParentType, ContextType>;
+};
+
+export type MutationResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
+> = {
+  admin?: Resolver<ResolversTypes["AdminMutations"], ParentType, ContextType>;
 };
 
 export type PageInfoResolvers<
@@ -278,7 +441,14 @@ export type Resolvers<ContextType = EZContext> = {
   JSONObject?: GraphQLScalarType;
   NonNegativeInt?: GraphQLScalarType;
   IntID?: GraphQLScalarType;
+  Group?: GroupResolvers<ContextType>;
+  Project?: ProjectResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
+  UsersConnection?: UsersConnectionResolvers<ContextType>;
+  AdminQueries?: AdminQueriesResolvers<ContextType>;
+  AdminMutations?: AdminMutationsResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
   Connection?: ConnectionResolvers<ContextType>;
 };

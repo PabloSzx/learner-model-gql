@@ -6,10 +6,10 @@ schema {
 type Query {
   currentUser: User
   hello: String!
+  admin: AdminQueries!
   data: Action!
   topics(ids: [IntID!]!): [Topic!]!
   domain(id: IntID!): Domain
-  admin: AdminQueries!
   projects(ids: [IntID!]!): [Project!]!
   domains(ids: [IntID!]!): [Domain!]!
 }
@@ -55,6 +55,7 @@ type User {
   role: UserRole!
   createdAt: DateTime!
   updatedAt: DateTime!
+  groups: [Group!]!
 }
 
 type PageInfo {
@@ -73,6 +74,46 @@ input CursorConnectionArgs {
   after: IntID
   last: NonNegativeInt
   before: IntID
+}
+
+type Mutation {
+  admin: AdminMutations!
+}
+
+type Group {
+  id: IntID!
+  code: String!
+  label: String!
+  users: [User!]!
+  projects: [Project!]!
+}
+
+type Project {
+  id: IntID!
+  domains: [Domain!]!
+  code: String!
+  label: String!
+}
+
+type UsersConnection {
+  nodes: [User!]!
+  pageInfo: PageInfo!
+}
+
+type AdminQueries {
+  allUsers(pagination: CursorConnectionArgs!): UsersConnection!
+  allTopics(pagination: CursorConnectionArgs!): TopicsConnection!
+  allDomains(pagination: CursorConnectionArgs!): DomainsConnection!
+  allProjects: [Project!]!
+}
+
+type AdminMutations {
+  assignProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
+  unassignProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
+  createDomain(input: CreateDomain!): Domain!
+  createTopic(input: CreateTopic!): Topic!
+  updateTopic(input: UpdateTopic!): Topic!
+  createProject(data: CreateProject!): Project!
 }
 
 type Verb {
@@ -103,10 +144,6 @@ type Content {
   json: JSONObject
 }
 
-type Mutation {
-  admin: AdminMutations!
-}
-
 type Topic {
   id: IntID!
   domain: Domain!
@@ -131,12 +168,6 @@ type DomainsConnection implements Connection {
   pageInfo: PageInfo
 }
 
-type AdminQueries {
-  allTopics(pagination: CursorConnectionArgs!): TopicsConnection!
-  allDomains(pagination: CursorConnectionArgs!): DomainsConnection!
-  allProjects: [Project!]!
-}
-
 input CreateDomain {
   code: String!
   label: String!
@@ -158,20 +189,6 @@ input UpdateTopic {
   parentTopicId: IntID
   domainId: IntID!
   projectId: IntID!
-}
-
-type AdminMutations {
-  createDomain(input: CreateDomain!): Domain!
-  createTopic(input: CreateTopic!): Topic!
-  updateTopic(input: UpdateTopic!): Topic!
-  createProject(data: CreateProject!): Project!
-}
-
-type Project {
-  id: IntID!
-  domains: [Domain!]!
-  code: String!
-  label: String!
 }
 
 input CreateProject {

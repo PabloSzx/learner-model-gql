@@ -63,9 +63,9 @@ model Group {
   code  String @unique
   label String
 
-  users     User[]
-  Project   Project? @relation(fields: [projectId], references: [id])
-  projectId Int?
+  users User[]
+
+  projects Project[]
 }
 
 model Project {
