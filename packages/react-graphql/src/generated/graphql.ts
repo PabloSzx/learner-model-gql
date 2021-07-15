@@ -25,26 +25,59 @@ export type Scalars = {
   NonNegativeInt: number;
   /** The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
   Timestamp: number;
+  /** Represents NULL values */
+  Void: void | undefined | null;
 };
 
 export type Action = {
   __typename?: "Action";
-  id: Scalars["ID"];
-  verb: Verb;
-  activity: Activity;
+  id: Scalars["IntID"];
+  verb: ActionVerb;
+  activity: ActionActivity;
   timestamp: Scalars["Timestamp"];
   result?: Maybe<Scalars["Float"]>;
+  user?: Maybe<User>;
 };
 
-export type Activity = {
-  __typename?: "Activity";
-  contentID?: Maybe<Scalars["ID"]>;
-  domainID?: Maybe<Scalars["ID"]>;
+export type ActionActivity = {
+  __typename?: "ActionActivity";
+  id: Scalars["IntID"];
+  content?: Maybe<Content>;
+  topic?: Maybe<Topic>;
   stepID?: Maybe<Scalars["ID"]>;
   hintID?: Maybe<Scalars["ID"]>;
   amount?: Maybe<Scalars["Float"]>;
   detail?: Maybe<Scalars["String"]>;
   extra?: Maybe<Scalars["JSONObject"]>;
+};
+
+export type ActionActivityInput = {
+  contentID?: Maybe<Scalars["IntID"]>;
+  topicID?: Maybe<Scalars["IntID"]>;
+  stepID?: Maybe<Scalars["ID"]>;
+  hintID?: Maybe<Scalars["ID"]>;
+  amount?: Maybe<Scalars["Float"]>;
+  detail?: Maybe<Scalars["String"]>;
+  extra?: Maybe<Scalars["JSONObject"]>;
+};
+
+export type ActionInput = {
+  activity: ActionActivityInput;
+  verbName: Scalars["String"];
+  timestamp: Scalars["Timestamp"];
+  projectId: Scalars["IntID"];
+};
+
+export type ActionVerb = {
+  __typename?: "ActionVerb";
+  id: Scalars["IntID"];
+  name: Scalars["String"];
+};
+
+export type ActionsConnection = {
+  __typename?: "ActionsConnection";
+  nodes: Array<Action>;
+  pageInfo: PageInfo;
 };
 
 export type AdminMutations = {
@@ -86,12 +119,17 @@ export type AdminMutationsCreateProjectArgs = {
 export type AdminQueries = {
   __typename?: "AdminQueries";
   allUsers: UsersConnection;
+  allActions: ActionsConnection;
   allTopics: TopicsConnection;
   allDomains: DomainsConnection;
   allProjects: Array<Project>;
 };
 
 export type AdminQueriesAllUsersArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminQueriesAllActionsArgs = {
   pagination: CursorConnectionArgs;
 };
 
@@ -164,6 +202,11 @@ export type Group = {
 export type Mutation = {
   __typename?: "Mutation";
   admin: AdminMutations;
+  action: Scalars["Void"];
+};
+
+export type MutationActionArgs = {
+  data: ActionInput;
 };
 
 export type PageInfo = {
@@ -187,7 +230,6 @@ export type Query = {
   currentUser?: Maybe<User>;
   hello: Scalars["String"];
   admin: AdminQueries;
-  data: Action;
   topics: Array<Topic>;
   domain?: Maybe<Domain>;
   projects: Array<Project>;
@@ -258,12 +300,6 @@ export type UsersConnection = {
   __typename?: "UsersConnection";
   nodes: Array<User>;
   pageInfo: PageInfo;
-};
-
-export type Verb = {
-  __typename?: "Verb";
-  id: Scalars["ID"];
-  name: Scalars["String"];
 };
 
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never }>;

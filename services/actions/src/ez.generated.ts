@@ -20,6 +20,10 @@ export type ResolverFn<TResult, TParent, TContext, TArgs> = (
 ) =>
   | Promise<import("graphql-ez").DeepPartial<TResult>>
   | import("graphql-ez").DeepPartial<TResult>;
+export type RequireFields<T, K extends keyof T> = {
+  [X in Exclude<keyof T, K>]?: T[X];
+} &
+  { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string | number;
@@ -32,23 +36,46 @@ export type Scalars = {
   /** The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
   Timestamp: Date;
   /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
-  JSONObject: Record<string | number, unknown>;
+  JSONObject: any;
   /** Integers that will have a value of 0 or more. */
   NonNegativeInt: number;
+  /** Represents NULL values */
+  Void: void | null | undefined;
   /** ID that parses as non-negative integer, serializes to string, and can be passed as string or number */
   IntID: number;
 };
 
-export type Verb = {
-  __typename?: "Verb";
-  id: Scalars["ID"];
+export type ActionVerb = {
+  __typename?: "ActionVerb";
+  id: Scalars["IntID"];
   name: Scalars["String"];
 };
 
-export type Activity = {
-  __typename?: "Activity";
-  contentID?: Maybe<Scalars["ID"]>;
-  domainID?: Maybe<Scalars["ID"]>;
+export type Content = {
+  __typename?: "Content";
+  id: Scalars["IntID"];
+};
+
+export type Domain = {
+  __typename?: "Domain";
+  id: Scalars["IntID"];
+};
+
+export type Topic = {
+  __typename?: "Topic";
+  id: Scalars["IntID"];
+};
+
+export type User = {
+  __typename?: "User";
+  id: Scalars["IntID"];
+};
+
+export type ActionActivity = {
+  __typename?: "ActionActivity";
+  id: Scalars["IntID"];
+  content?: Maybe<Content>;
+  topic?: Maybe<Topic>;
   stepID?: Maybe<Scalars["ID"]>;
   hintID?: Maybe<Scalars["ID"]>;
   amount?: Maybe<Scalars["Float"]>;
@@ -56,18 +83,61 @@ export type Activity = {
   extra?: Maybe<Scalars["JSONObject"]>;
 };
 
+export type ActionActivityInput = {
+  contentID?: Maybe<Scalars["IntID"]>;
+  topicID?: Maybe<Scalars["IntID"]>;
+  stepID?: Maybe<Scalars["ID"]>;
+  hintID?: Maybe<Scalars["ID"]>;
+  amount?: Maybe<Scalars["Float"]>;
+  detail?: Maybe<Scalars["String"]>;
+  extra?: Maybe<Scalars["JSONObject"]>;
+};
+
+export type ActionInput = {
+  activity: ActionActivityInput;
+  verbName: Scalars["String"];
+  timestamp: Scalars["Timestamp"];
+  projectId: Scalars["IntID"];
+};
+
 export type Action = {
   __typename?: "Action";
-  id: Scalars["ID"];
-  verb: Verb;
-  activity: Activity;
+  id: Scalars["IntID"];
+  verb: ActionVerb;
+  activity: ActionActivity;
   timestamp: Scalars["Timestamp"];
   result?: Maybe<Scalars["Float"]>;
+  user?: Maybe<User>;
+};
+
+export type ActionsConnection = {
+  __typename?: "ActionsConnection";
+  nodes: Array<Action>;
+  pageInfo: PageInfo;
+};
+
+export type AdminQueries = {
+  __typename?: "AdminQueries";
+  allActions: ActionsConnection;
+};
+
+export type AdminQueriesAllActionsArgs = {
+  pagination: CursorConnectionArgs;
 };
 
 export type Query = {
   __typename?: "Query";
-  data: Action;
+  hello: Scalars["String"];
+  admin: AdminQueries;
+};
+
+export type Mutation = {
+  __typename?: "Mutation";
+  action: Scalars["Void"];
+};
+
+export type MutationActionArgs = {
+  data: ActionInput;
 };
 
 export type PageInfo = {
@@ -207,14 +277,24 @@ export type ResolversTypes = {
   Timestamp: ResolverTypeWrapper<Scalars["Timestamp"]>;
   JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
   NonNegativeInt: ResolverTypeWrapper<Scalars["NonNegativeInt"]>;
+  Void: ResolverTypeWrapper<Scalars["Void"]>;
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
-  Verb: ResolverTypeWrapper<Verb>;
-  ID: ResolverTypeWrapper<Scalars["ID"]>;
+  ActionVerb: ResolverTypeWrapper<ActionVerb>;
   String: ResolverTypeWrapper<Scalars["String"]>;
-  Activity: ResolverTypeWrapper<Activity>;
+  Content: ResolverTypeWrapper<Content>;
+  Domain: ResolverTypeWrapper<Domain>;
+  Topic: ResolverTypeWrapper<Topic>;
+  User: ResolverTypeWrapper<User>;
+  ActionActivity: ResolverTypeWrapper<ActionActivity>;
+  ID: ResolverTypeWrapper<Scalars["ID"]>;
   Float: ResolverTypeWrapper<Scalars["Float"]>;
+  ActionActivityInput: ActionActivityInput;
+  ActionInput: ActionInput;
   Action: ResolverTypeWrapper<Action>;
+  ActionsConnection: ResolverTypeWrapper<ActionsConnection>;
+  AdminQueries: ResolverTypeWrapper<AdminQueries>;
   Query: ResolverTypeWrapper<{}>;
+  Mutation: ResolverTypeWrapper<{}>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   Connection: never;
@@ -227,14 +307,24 @@ export type ResolversParentTypes = {
   Timestamp: Scalars["Timestamp"];
   JSONObject: Scalars["JSONObject"];
   NonNegativeInt: Scalars["NonNegativeInt"];
+  Void: Scalars["Void"];
   IntID: Scalars["IntID"];
-  Verb: Verb;
-  ID: Scalars["ID"];
+  ActionVerb: ActionVerb;
   String: Scalars["String"];
-  Activity: Activity;
+  Content: Content;
+  Domain: Domain;
+  Topic: Topic;
+  User: User;
+  ActionActivity: ActionActivity;
+  ID: Scalars["ID"];
   Float: Scalars["Float"];
+  ActionActivityInput: ActionActivityInput;
+  ActionInput: ActionInput;
   Action: Action;
+  ActionsConnection: ActionsConnection;
+  AdminQueries: AdminQueries;
   Query: {};
+  Mutation: {};
   PageInfo: PageInfo;
   Boolean: Scalars["Boolean"];
   Connection: never;
@@ -261,26 +351,64 @@ export interface NonNegativeIntScalarConfig
   name: "NonNegativeInt";
 }
 
+export interface VoidScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["Void"], any> {
+  name: "Void";
+}
+
 export interface IntIdScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["IntID"], any> {
   name: "IntID";
 }
 
-export type VerbResolvers<
+export type ActionVerbResolvers<
   ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Verb"] = ResolversParentTypes["Verb"]
+  ParentType extends ResolversParentTypes["ActionVerb"] = ResolversParentTypes["ActionVerb"]
 > = {
-  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
   name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ActivityResolvers<
+export type ContentResolvers<
   ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Activity"] = ResolversParentTypes["Activity"]
+  ParentType extends ResolversParentTypes["Content"] = ResolversParentTypes["Content"]
 > = {
-  contentID?: Resolver<Maybe<ResolversTypes["ID"]>, ParentType, ContextType>;
-  domainID?: Resolver<Maybe<ResolversTypes["ID"]>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type DomainResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Domain"] = ResolversParentTypes["Domain"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type TopicResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Topic"] = ResolversParentTypes["Topic"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type UserResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ActionActivityResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["ActionActivity"] = ResolversParentTypes["ActionActivity"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  content?: Resolver<Maybe<ResolversTypes["Content"]>, ParentType, ContextType>;
+  topic?: Resolver<Maybe<ResolversTypes["Topic"]>, ParentType, ContextType>;
   stepID?: Resolver<Maybe<ResolversTypes["ID"]>, ParentType, ContextType>;
   hintID?: Resolver<Maybe<ResolversTypes["ID"]>, ParentType, ContextType>;
   amount?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
@@ -297,11 +425,38 @@ export type ActionResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Action"] = ResolversParentTypes["Action"]
 > = {
-  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-  verb?: Resolver<ResolversTypes["Verb"], ParentType, ContextType>;
-  activity?: Resolver<ResolversTypes["Activity"], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  verb?: Resolver<ResolversTypes["ActionVerb"], ParentType, ContextType>;
+  activity?: Resolver<
+    ResolversTypes["ActionActivity"],
+    ParentType,
+    ContextType
+  >;
   timestamp?: Resolver<ResolversTypes["Timestamp"], ParentType, ContextType>;
   result?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  user?: Resolver<Maybe<ResolversTypes["User"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ActionsConnectionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["ActionsConnection"] = ResolversParentTypes["ActionsConnection"]
+> = {
+  nodes?: Resolver<Array<ResolversTypes["Action"]>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type AdminQueriesResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["AdminQueries"] = ResolversParentTypes["AdminQueries"]
+> = {
+  allActions?: Resolver<
+    ResolversTypes["ActionsConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminQueriesAllActionsArgs, "pagination">
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -309,7 +464,20 @@ export type QueryResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = {
-  data?: Resolver<ResolversTypes["Action"], ParentType, ContextType>;
+  hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  admin?: Resolver<ResolversTypes["AdminQueries"], ParentType, ContextType>;
+};
+
+export type MutationResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
+> = {
+  action?: Resolver<
+    ResolversTypes["Void"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationActionArgs, "data">
+  >;
 };
 
 export type PageInfoResolvers<
@@ -352,11 +520,19 @@ export type Resolvers<ContextType = EZContext> = {
   Timestamp?: GraphQLScalarType;
   JSONObject?: GraphQLScalarType;
   NonNegativeInt?: GraphQLScalarType;
+  Void?: GraphQLScalarType;
   IntID?: GraphQLScalarType;
-  Verb?: VerbResolvers<ContextType>;
-  Activity?: ActivityResolvers<ContextType>;
+  ActionVerb?: ActionVerbResolvers<ContextType>;
+  Content?: ContentResolvers<ContextType>;
+  Domain?: DomainResolvers<ContextType>;
+  Topic?: TopicResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
+  ActionActivity?: ActionActivityResolvers<ContextType>;
   Action?: ActionResolvers<ContextType>;
+  ActionsConnection?: ActionsConnectionResolvers<ContextType>;
+  AdminQueries?: AdminQueriesResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
   Connection?: ConnectionResolvers<ContextType>;
 };

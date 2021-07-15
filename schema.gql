@@ -7,7 +7,6 @@ type Query {
   currentUser: User
   hello: String!
   admin: AdminQueries!
-  data: Action!
   topics(ids: [IntID!]!): [Topic!]!
   domain(id: IntID!): Domain
   projects(ids: [IntID!]!): [Project!]!
@@ -33,6 +32,11 @@ scalar JSONObject
 Integers that will have a value of 0 or more.
 """
 scalar NonNegativeInt
+
+"""
+Represents NULL values
+"""
+scalar Void
 
 """
 ID that parses as non-negative integer, serializes to string, and can be passed as string or number
@@ -78,6 +82,7 @@ input CursorConnectionArgs {
 
 type Mutation {
   admin: AdminMutations!
+  action(data: ActionInput!): Void!
 }
 
 type Group {
@@ -102,6 +107,7 @@ type UsersConnection {
 
 type AdminQueries {
   allUsers(pagination: CursorConnectionArgs!): UsersConnection!
+  allActions(pagination: CursorConnectionArgs!): ActionsConnection!
   allTopics(pagination: CursorConnectionArgs!): TopicsConnection!
   allDomains(pagination: CursorConnectionArgs!): DomainsConnection!
   allProjects: [Project!]!
@@ -116,32 +122,20 @@ type AdminMutations {
   createProject(data: CreateProject!): Project!
 }
 
-type Verb {
-  id: ID!
+type ActionVerb {
+  id: IntID!
   name: String!
-}
-
-type Activity {
-  contentID: ID
-  domainID: ID
-  stepID: ID
-  hintID: ID
-  amount: Float
-  detail: String
-  extra: JSONObject
-}
-
-type Action {
-  id: ID!
-  verb: Verb!
-  activity: Activity!
-  timestamp: Timestamp!
-  result: Float
 }
 
 type Content {
   id: IntID!
   json: JSONObject
+}
+
+type Domain {
+  id: IntID!
+  topics: [Topic!]!
+  project: Project!
 }
 
 type Topic {
@@ -152,10 +146,46 @@ type Topic {
   project: Project!
 }
 
-type Domain {
+type ActionActivity {
   id: IntID!
-  topics: [Topic!]!
-  project: Project!
+  content: Content
+  topic: Topic
+  stepID: ID
+  hintID: ID
+  amount: Float
+  detail: String
+  extra: JSONObject
+}
+
+input ActionActivityInput {
+  contentID: IntID
+  topicID: IntID
+  stepID: ID
+  hintID: ID
+  amount: Float
+  detail: String
+  extra: JSONObject
+}
+
+input ActionInput {
+  activity: ActionActivityInput!
+  verbName: String!
+  timestamp: Timestamp!
+  projectId: IntID!
+}
+
+type Action {
+  id: IntID!
+  verb: ActionVerb!
+  activity: ActionActivity!
+  timestamp: Timestamp!
+  result: Float
+  user: User
+}
+
+type ActionsConnection {
+  nodes: [Action!]!
+  pageInfo: PageInfo!
 }
 
 type TopicsConnection implements Connection {

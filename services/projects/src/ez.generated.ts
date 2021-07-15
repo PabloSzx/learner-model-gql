@@ -36,9 +36,11 @@ export type Scalars = {
   /** The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
   Timestamp: Date;
   /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
-  JSONObject: Record<string | number, unknown>;
+  JSONObject: any;
   /** Integers that will have a value of 0 or more. */
   NonNegativeInt: number;
+  /** Represents NULL values */
+  Void: void | null | undefined;
   /** ID that parses as non-negative integer, serializes to string, and can be passed as string or number */
   IntID: number;
 };
@@ -239,6 +241,7 @@ export type ResolversTypes = {
   Timestamp: ResolverTypeWrapper<Scalars["Timestamp"]>;
   JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
   NonNegativeInt: ResolverTypeWrapper<Scalars["NonNegativeInt"]>;
+  Void: ResolverTypeWrapper<Scalars["Void"]>;
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
   Domain: ResolverTypeWrapper<Domain>;
   Topic: ResolverTypeWrapper<Topic>;
@@ -261,6 +264,7 @@ export type ResolversParentTypes = {
   Timestamp: Scalars["Timestamp"];
   JSONObject: Scalars["JSONObject"];
   NonNegativeInt: Scalars["NonNegativeInt"];
+  Void: Scalars["Void"];
   IntID: Scalars["IntID"];
   Domain: Domain;
   Topic: Topic;
@@ -295,6 +299,11 @@ export interface JsonObjectScalarConfig
 export interface NonNegativeIntScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["NonNegativeInt"], any> {
   name: "NonNegativeInt";
+}
+
+export interface VoidScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["Void"], any> {
+  name: "Void";
 }
 
 export interface IntIdScalarConfig
@@ -422,6 +431,7 @@ export type Resolvers<ContextType = EZContext> = {
   Timestamp?: GraphQLScalarType;
   JSONObject?: GraphQLScalarType;
   NonNegativeInt?: GraphQLScalarType;
+  Void?: GraphQLScalarType;
   IntID?: GraphQLScalarType;
   Domain?: DomainResolvers<ContextType>;
   Topic?: TopicResolvers<ContextType>;

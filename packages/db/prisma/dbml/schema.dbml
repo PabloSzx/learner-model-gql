@@ -17,6 +17,7 @@ Table User {
   updatedAt DateTime [default: `now()`, not null]
   groups Group [not null]
   projects Project [not null]
+  actions Action [not null]
 
   indexes {
     (id, enabled) [unique]
@@ -37,6 +38,8 @@ Table Group {
   label String [not null]
   users User [not null]
   projects Project [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [default: `now()`, not null]
 }
 
 Table Project {
@@ -47,6 +50,10 @@ Table Project {
   groups Group [not null]
   domains Domain [not null]
   topics Topic [not null]
+  content Content [not null]
+  actions Action [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [default: `now()`, not null]
 }
 
 Table Domain {
@@ -55,7 +62,10 @@ Table Domain {
   label String [not null]
   project Project [not null]
   projectId Int [not null]
+  content Content [not null]
   topics Topic [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [default: `now()`, not null]
 }
 
 Table Topic {
@@ -69,6 +79,61 @@ Table Topic {
   parent Topic
   parentId Int
   childrens Topic [not null]
+  content Content [not null]
+  actionActivities ActionActivity [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [default: `now()`, not null]
+}
+
+Table ActionVerb {
+  id Int [pk, increment]
+  name String [unique, not null]
+  actions Action [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [default: `now()`, not null]
+}
+
+Table Action {
+  id Int [pk, increment]
+  verb ActionVerb [not null]
+  verbName String [not null]
+  activity ActionActivity [not null]
+  activityId Int [not null]
+  timestamp DateTime [not null]
+  result Float
+  project Project [not null]
+  projectId Int [not null]
+  user User
+  userId Int
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [default: `now()`, not null]
+}
+
+Table ActionActivity {
+  id Int [pk, increment]
+  action Action
+  content Content
+  contentId Int
+  topic Topic
+  topicId Int
+  stepID String
+  hintID String
+  amount Float
+  detail String
+  extra Json
+}
+
+Table Content {
+  id Int [pk, increment]
+  project Project [not null]
+  projectId Int [not null]
+  domain Domain [not null]
+  domainId Int [not null]
+  topic Topic
+  topicId Int
+  actionActivities ActionActivity [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [default: `now()`, not null]
 }
 
 Table GroupToUser {
@@ -100,3 +165,21 @@ Ref: Topic.domainId > Domain.id
 Ref: Topic.projectId > Project.id
 
 Ref: Topic.parentId - Topic.id
+
+Ref: Action.verbName > ActionVerb.name
+
+Ref: Action.activityId - ActionActivity.id
+
+Ref: Action.projectId > Project.id
+
+Ref: Action.userId > User.id
+
+Ref: ActionActivity.contentId > Content.id
+
+Ref: ActionActivity.topicId > Topic.id
+
+Ref: Content.projectId > Project.id
+
+Ref: Content.domainId > Domain.id
+
+Ref: Content.topicId > Topic.id

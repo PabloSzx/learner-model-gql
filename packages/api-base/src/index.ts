@@ -40,8 +40,8 @@ export const codegenOptions: CodegenOptions = {
       ID: "string | number",
       IntID: "number",
       NonNegativeInt: "number",
-      JSONObject: "Record<string | number,unknown>",
       Timestamp: "Date",
+      Void: "void | null | undefined",
     },
     deepPartialResolvers: true,
     enumsAsTypes: true,
@@ -61,6 +61,7 @@ export const ezServicePreset = CreateApp({
           Timestamp: 1,
           JSONObject: 1,
           NonNegativeInt: 1,
+          Void: 1,
         },
         {
           IntID,
