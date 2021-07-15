@@ -13,6 +13,7 @@ import { ezCodegen } from "@graphql-ez/plugin-codegen";
 import { stitchSchemas } from "@graphql-tools/stitch";
 import { introspectSchema } from "@graphql-tools/wrap";
 
+import type { Node } from "./ez.generated";
 import type { AsyncExecutor, SubschemaConfig } from "@graphql-tools/delegate";
 
 function getStreamJSON<T>(stream: import("stream").Readable, encoding: BufferEncoding) {
@@ -33,7 +34,58 @@ function getStreamJSON<T>(stream: import("stream").Readable, encoding: BufferEnc
   });
 }
 
-async function getServiceSchema([, port]: [name: string, port: number]) {
+type ServiceName = keyof typeof servicesListPorts;
+
+const ProjectMerge = {
+  fieldName: "projects",
+  selectionSet: "{ id }",
+  key: ({ id }: Node) => id,
+  args: (originalObject: Node) => ({ id: originalObject.id }),
+};
+
+const DomainMerge = {
+  fieldName: "domains",
+  selectionSet: "{ id }",
+  key: ({ id }: Node) => id,
+  args: (originalObject: Node) => ({ id: originalObject.id }),
+};
+
+const TopicMerge = {
+  fieldName: "topics",
+  selectionSet: "{ id }",
+  key: ({ id }: Node) => id,
+  args: (originalObject: Node) => ({ id: originalObject.id }),
+};
+
+const ContentMerge = {
+  fieldName: "content",
+  selectionSet: "{ id }",
+  key: ({ id }: Node) => id,
+  args: (originalObject: Node) => ({ id: originalObject.id }),
+};
+
+const servicesSubschemaConfig: {
+  [k in ServiceName]?: Partial<SubschemaConfig>;
+} = {
+  domain: {
+    merge: {
+      Project: ProjectMerge,
+      Domain: DomainMerge,
+      Topic: TopicMerge,
+      Content: ContentMerge,
+    },
+  },
+  projects: {
+    merge: {
+      Project: ProjectMerge,
+      Domain: DomainMerge,
+      Topic: TopicMerge,
+      Content: ContentMerge,
+    },
+  },
+};
+
+async function getServiceSchema([name, port]: [name: string, port: number]) {
   const remoteExecutor: AsyncExecutor<Partial<EZContext>> = async function remoteExecutor({
     document,
     variables,
@@ -65,6 +117,7 @@ async function getServiceSchema([, port]: [name: string, port: number]) {
   const serviceSubschema: SubschemaConfig = {
     schema: await introspectSchema(remoteExecutor),
     executor: remoteExecutor,
+    ...servicesSubschemaConfig[name as ServiceName],
     // subscriber: remoteSubscriber
   };
 

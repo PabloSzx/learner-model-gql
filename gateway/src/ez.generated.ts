@@ -100,6 +100,10 @@ export type PageInfo = {
   hasPreviousPage: Scalars["Boolean"];
 };
 
+export type Node = {
+  id: Scalars["IntID"];
+};
+
 export type Connection = {
   pageInfo?: Maybe<PageInfo>;
 };
@@ -469,6 +473,7 @@ export type ResolversTypes = {
   User: ResolverTypeWrapper<User>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
+  Node: never;
   Connection:
     | ResolversTypes["TopicsConnection"]
     | ResolversTypes["DomainsConnection"];
@@ -513,6 +518,7 @@ export type ResolversParentTypes = {
   User: User;
   Boolean: Scalars["Boolean"];
   PageInfo: PageInfo;
+  Node: never;
   Connection:
     | ResolversParentTypes["TopicsConnection"]
     | ResolversParentTypes["DomainsConnection"];
@@ -663,6 +669,14 @@ export type PageInfoResolvers<
     ContextType
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type NodeResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Node"] = ResolversParentTypes["Node"]
+> = {
+  __resolveType: TypeResolveFn<null, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
 };
 
 export type ConnectionResolvers<
@@ -956,6 +970,7 @@ export type Resolvers<ContextType = EZContext> = {
   IntID?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
+  Node?: NodeResolvers<ContextType>;
   Connection?: ConnectionResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Group?: GroupResolvers<ContextType>;

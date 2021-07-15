@@ -234,6 +234,10 @@ export type MutationActionArgs = {
   data: ActionInput;
 };
 
+export type Node = {
+  id: Scalars["IntID"];
+};
+
 export type PageInfo = {
   __typename?: "PageInfo";
   startCursor?: Maybe<Scalars["String"]>;

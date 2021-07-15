@@ -12,6 +12,10 @@ export const ConnectionTypes = gql`
     hasPreviousPage: Boolean!
   }
 
+  interface Node {
+    id: IntID!
+  }
+
   interface Connection {
     pageInfo: PageInfo
   }
