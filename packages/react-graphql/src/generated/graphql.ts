@@ -25,6 +25,8 @@ export type Scalars = {
   NonNegativeInt: number;
   /** The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
   Timestamp: number;
+  /** A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. */
+  URL: string;
   /** Represents NULL values */
   Void: void | undefined | null;
 };
@@ -84,6 +86,7 @@ export type AdminMutations = {
   __typename?: "AdminMutations";
   assignProjectsToUsers: Array<User>;
   unassignProjectsToUsers: Array<User>;
+  createContent: Content;
   createDomain: Domain;
   createTopic: Topic;
   updateTopic: Topic;
@@ -98,6 +101,10 @@ export type AdminMutationsAssignProjectsToUsersArgs = {
 export type AdminMutationsUnassignProjectsToUsersArgs = {
   projectIds: Array<Scalars["IntID"]>;
   userIds: Array<Scalars["IntID"]>;
+};
+
+export type AdminMutationsCreateContentArgs = {
+  data: CreateContent;
 };
 
 export type AdminMutationsCreateDomainArgs = {
@@ -148,7 +155,24 @@ export type Connection = {
 export type Content = {
   __typename?: "Content";
   id: Scalars["IntID"];
+  description: Scalars["String"];
+  binaryBase64?: Maybe<Scalars["String"]>;
   json?: Maybe<Scalars["JSONObject"]>;
+  url?: Maybe<Scalars["String"]>;
+  createdAt: Scalars["DateTime"];
+  updatedAt: Scalars["DateTime"];
+  domain: Domain;
+  project: Project;
+};
+
+export type CreateContent = {
+  description: Scalars["String"];
+  projectId: Scalars["IntID"];
+  domainId: Scalars["IntID"];
+  topicId?: Maybe<Scalars["IntID"]>;
+  binaryBase64?: Maybe<Scalars["String"]>;
+  json?: Maybe<Scalars["JSONObject"]>;
+  url?: Maybe<Scalars["String"]>;
 };
 
 export type CreateDomain = {
@@ -180,6 +204,7 @@ export type CursorConnectionArgs = {
 export type Domain = {
   __typename?: "Domain";
   id: Scalars["IntID"];
+  content: Array<Content>;
   topics: Array<Topic>;
   project: Project;
 };
@@ -230,31 +255,32 @@ export type Query = {
   currentUser?: Maybe<User>;
   hello: Scalars["String"];
   admin: AdminQueries;
-  topics: Array<Topic>;
-  domain?: Maybe<Domain>;
-  projects: Array<Project>;
   domains: Array<Domain>;
-};
-
-export type QueryTopicsArgs = {
-  ids: Array<Scalars["IntID"]>;
-};
-
-export type QueryDomainArgs = {
-  id: Scalars["IntID"];
-};
-
-export type QueryProjectsArgs = {
-  ids: Array<Scalars["IntID"]>;
+  topics: Array<Topic>;
+  content: Array<Content>;
+  projects: Array<Project>;
 };
 
 export type QueryDomainsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+export type QueryTopicsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryContentArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryProjectsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
 export type Topic = {
   __typename?: "Topic";
   id: Scalars["IntID"];
+  content: Array<Content>;
   domain: Domain;
   parent?: Maybe<Topic>;
   childrens: Array<Topic>;
@@ -289,6 +315,7 @@ export type User = {
   createdAt: Scalars["DateTime"];
   updatedAt: Scalars["DateTime"];
   groups: Array<Group>;
+  projects: Array<Project>;
 };
 
 export enum UserRole {

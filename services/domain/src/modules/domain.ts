@@ -75,7 +75,7 @@ registerModule(
 
     type Query {
       topics(ids: [IntID!]!): [Topic!]!
-      domain(id: IntID!): Domain
+      domains(ids: [IntID!]!): [Domain!]!
 
       admin: AdminQueries!
     }
@@ -238,10 +238,12 @@ registerModule(
             },
           });
         },
-        async domain(_root, { id }, { prisma, authorization }) {
-          return prisma.domain.findFirst({
+        async domains(_root, { ids }, { prisma, authorization }) {
+          return prisma.domain.findMany({
             where: {
-              id,
+              id: {
+                in: ids,
+              },
               project: {
                 id: {
                   in: await authorization.expectUserProjects,

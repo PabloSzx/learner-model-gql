@@ -41,6 +41,8 @@ export type Scalars = {
   NonNegativeInt: number;
   /** Represents NULL values */
   Void: void | null | undefined;
+  /** A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. */
+  URL: string;
   /** ID that parses as non-negative integer, serializes to string, and can be passed as string or number */
   IntID: number;
 };
@@ -50,25 +52,25 @@ export type Query = {
   currentUser?: Maybe<User>;
   hello: Scalars["String"];
   admin: AdminQueries;
-  topics: Array<Topic>;
-  domain?: Maybe<Domain>;
-  projects: Array<Project>;
   domains: Array<Domain>;
+  topics: Array<Topic>;
+  content: Array<Content>;
+  projects: Array<Project>;
+};
+
+export type QueryDomainsArgs = {
+  ids: Array<Scalars["IntID"]>;
 };
 
 export type QueryTopicsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-export type QueryDomainArgs = {
-  id: Scalars["IntID"];
-};
-
-export type QueryProjectsArgs = {
+export type QueryContentArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-export type QueryDomainsArgs = {
+export type QueryProjectsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
@@ -87,6 +89,7 @@ export type User = {
   createdAt: Scalars["DateTime"];
   updatedAt: Scalars["DateTime"];
   groups: Array<Group>;
+  projects: Array<Project>;
 };
 
 export type PageInfo = {
@@ -170,6 +173,7 @@ export type AdminMutations = {
   __typename?: "AdminMutations";
   assignProjectsToUsers: Array<User>;
   unassignProjectsToUsers: Array<User>;
+  createContent: Content;
   createDomain: Domain;
   createTopic: Topic;
   updateTopic: Topic;
@@ -184,6 +188,10 @@ export type AdminMutationsAssignProjectsToUsersArgs = {
 export type AdminMutationsUnassignProjectsToUsersArgs = {
   projectIds: Array<Scalars["IntID"]>;
   userIds: Array<Scalars["IntID"]>;
+};
+
+export type AdminMutationsCreateContentArgs = {
+  data: CreateContent;
 };
 
 export type AdminMutationsCreateDomainArgs = {
@@ -211,12 +219,20 @@ export type ActionVerb = {
 export type Content = {
   __typename?: "Content";
   id: Scalars["IntID"];
+  description: Scalars["String"];
+  binaryBase64?: Maybe<Scalars["String"]>;
   json?: Maybe<Scalars["JSONObject"]>;
+  url?: Maybe<Scalars["String"]>;
+  createdAt: Scalars["DateTime"];
+  updatedAt: Scalars["DateTime"];
+  domain: Domain;
+  project: Project;
 };
 
 export type Domain = {
   __typename?: "Domain";
   id: Scalars["IntID"];
+  content: Array<Content>;
   topics: Array<Topic>;
   project: Project;
 };
@@ -224,6 +240,7 @@ export type Domain = {
 export type Topic = {
   __typename?: "Topic";
   id: Scalars["IntID"];
+  content: Array<Content>;
   domain: Domain;
   parent?: Maybe<Topic>;
   childrens: Array<Topic>;
@@ -273,6 +290,16 @@ export type ActionsConnection = {
   __typename?: "ActionsConnection";
   nodes: Array<Action>;
   pageInfo: PageInfo;
+};
+
+export type CreateContent = {
+  description: Scalars["String"];
+  projectId: Scalars["IntID"];
+  domainId: Scalars["IntID"];
+  topicId?: Maybe<Scalars["IntID"]>;
+  binaryBase64?: Maybe<Scalars["String"]>;
+  json?: Maybe<Scalars["JSONObject"]>;
+  url?: Maybe<Scalars["String"]>;
 };
 
 export type TopicsConnection = Connection & {
@@ -436,6 +463,7 @@ export type ResolversTypes = {
   JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
   NonNegativeInt: ResolverTypeWrapper<Scalars["NonNegativeInt"]>;
   Void: ResolverTypeWrapper<Scalars["Void"]>;
+  URL: ResolverTypeWrapper<Scalars["URL"]>;
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
   UserRole: UserRole;
   User: ResolverTypeWrapper<User>;
@@ -462,6 +490,7 @@ export type ResolversTypes = {
   ActionInput: ActionInput;
   Action: ResolverTypeWrapper<Action>;
   ActionsConnection: ResolverTypeWrapper<ActionsConnection>;
+  CreateContent: CreateContent;
   TopicsConnection: ResolverTypeWrapper<TopicsConnection>;
   DomainsConnection: ResolverTypeWrapper<DomainsConnection>;
   CreateDomain: CreateDomain;
@@ -479,6 +508,7 @@ export type ResolversParentTypes = {
   JSONObject: Scalars["JSONObject"];
   NonNegativeInt: Scalars["NonNegativeInt"];
   Void: Scalars["Void"];
+  URL: Scalars["URL"];
   IntID: Scalars["IntID"];
   User: User;
   Boolean: Scalars["Boolean"];
@@ -504,6 +534,7 @@ export type ResolversParentTypes = {
   ActionInput: ActionInput;
   Action: Action;
   ActionsConnection: ActionsConnection;
+  CreateContent: CreateContent;
   TopicsConnection: TopicsConnection;
   DomainsConnection: DomainsConnection;
   CreateDomain: CreateDomain;
@@ -523,29 +554,29 @@ export type QueryResolvers<
   >;
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   admin?: Resolver<ResolversTypes["AdminQueries"], ParentType, ContextType>;
+  domains?: Resolver<
+    Array<ResolversTypes["Domain"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryDomainsArgs, "ids">
+  >;
   topics?: Resolver<
     Array<ResolversTypes["Topic"]>,
     ParentType,
     ContextType,
     RequireFields<QueryTopicsArgs, "ids">
   >;
-  domain?: Resolver<
-    Maybe<ResolversTypes["Domain"]>,
+  content?: Resolver<
+    Array<ResolversTypes["Content"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryDomainArgs, "id">
+    RequireFields<QueryContentArgs, "ids">
   >;
   projects?: Resolver<
     Array<ResolversTypes["Project"]>,
     ParentType,
     ContextType,
     RequireFields<QueryProjectsArgs, "ids">
-  >;
-  domains?: Resolver<
-    Array<ResolversTypes["Domain"]>,
-    ParentType,
-    ContextType,
-    RequireFields<QueryDomainsArgs, "ids">
   >;
 };
 
@@ -574,6 +605,11 @@ export interface VoidScalarConfig
   name: "Void";
 }
 
+export interface UrlScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["URL"], any> {
+  name: "URL";
+}
+
 export interface IntIdScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["IntID"], any> {
   name: "IntID";
@@ -598,6 +634,11 @@ export type UserResolvers<
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   groups?: Resolver<Array<ResolversTypes["Group"]>, ParentType, ContextType>;
+  projects?: Resolver<
+    Array<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -747,6 +788,12 @@ export type AdminMutationsResolvers<
       "projectIds" | "userIds"
     >
   >;
+  createContent?: Resolver<
+    ResolversTypes["Content"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminMutationsCreateContentArgs, "data">
+  >;
   createDomain?: Resolver<
     ResolversTypes["Domain"],
     ParentType,
@@ -788,7 +835,18 @@ export type ContentResolvers<
   ParentType extends ResolversParentTypes["Content"] = ResolversParentTypes["Content"]
 > = {
   id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  description?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  binaryBase64?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
   json?: Resolver<Maybe<ResolversTypes["JSONObject"]>, ParentType, ContextType>;
+  url?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
+  project?: Resolver<ResolversTypes["Project"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -797,6 +855,7 @@ export type DomainResolvers<
   ParentType extends ResolversParentTypes["Domain"] = ResolversParentTypes["Domain"]
 > = {
   id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  content?: Resolver<Array<ResolversTypes["Content"]>, ParentType, ContextType>;
   topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
   project?: Resolver<ResolversTypes["Project"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -807,6 +866,7 @@ export type TopicResolvers<
   ParentType extends ResolversParentTypes["Topic"] = ResolversParentTypes["Topic"]
 > = {
   id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  content?: Resolver<Array<ResolversTypes["Content"]>, ParentType, ContextType>;
   domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
   parent?: Resolver<Maybe<ResolversTypes["Topic"]>, ParentType, ContextType>;
   childrens?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
@@ -892,6 +952,7 @@ export type Resolvers<ContextType = EZContext> = {
   JSONObject?: GraphQLScalarType;
   NonNegativeInt?: GraphQLScalarType;
   Void?: GraphQLScalarType;
+  URL?: GraphQLScalarType;
   IntID?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;

@@ -42,6 +42,7 @@ export const codegenOptions: CodegenOptions = {
       NonNegativeInt: "number",
       Timestamp: "Date",
       Void: "void | null | undefined",
+      URL: "string",
     },
     deepPartialResolvers: true,
     enumsAsTypes: true,
@@ -62,6 +63,7 @@ export const ezServicePreset = CreateApp({
           JSONObject: 1,
           NonNegativeInt: 1,
           Void: 1,
+          URL: 1,
         },
         {
           IntID,

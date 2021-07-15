@@ -132,6 +132,10 @@ Table Content {
   topic Topic
   topicId Int
   actionActivities ActionActivity [not null]
+  description String [not null]
+  binary Bytes
+  json Json
+  url String
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [default: `now()`, not null]
 }

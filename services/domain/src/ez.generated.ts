@@ -41,8 +41,16 @@ export type Scalars = {
   NonNegativeInt: number;
   /** Represents NULL values */
   Void: void | null | undefined;
+  /** A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. */
+  URL: string;
   /** ID that parses as non-negative integer, serializes to string, and can be passed as string or number */
   IntID: number;
+};
+
+export type Content = {
+  __typename?: "Content";
+  id: Scalars["IntID"];
+  domain: Domain;
 };
 
 export type Topic = {
@@ -130,8 +138,9 @@ export type AdminMutationsUpdateTopicArgs = {
 export type Query = {
   __typename?: "Query";
   topics: Array<Topic>;
-  domain?: Maybe<Domain>;
+  domains: Array<Domain>;
   admin: AdminQueries;
+  content: Array<Content>;
   projects: Array<Project>;
 };
 
@@ -139,8 +148,12 @@ export type QueryTopicsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-export type QueryDomainArgs = {
-  id: Scalars["IntID"];
+export type QueryDomainsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryContentArgs = {
+  ids: Array<Scalars["IntID"]>;
 };
 
 export type QueryProjectsArgs = {
@@ -296,7 +309,9 @@ export type ResolversTypes = {
   JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
   NonNegativeInt: ResolverTypeWrapper<Scalars["NonNegativeInt"]>;
   Void: ResolverTypeWrapper<Scalars["Void"]>;
+  URL: ResolverTypeWrapper<Scalars["URL"]>;
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
+  Content: ResolverTypeWrapper<Content>;
   Topic: ResolverTypeWrapper<Topic>;
   Domain: ResolverTypeWrapper<Domain>;
   TopicsConnection: ResolverTypeWrapper<TopicsConnection>;
@@ -325,7 +340,9 @@ export type ResolversParentTypes = {
   JSONObject: Scalars["JSONObject"];
   NonNegativeInt: Scalars["NonNegativeInt"];
   Void: Scalars["Void"];
+  URL: Scalars["URL"];
   IntID: Scalars["IntID"];
+  Content: Content;
   Topic: Topic;
   Domain: Domain;
   TopicsConnection: TopicsConnection;
@@ -372,10 +389,24 @@ export interface VoidScalarConfig
   name: "Void";
 }
 
+export interface UrlScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["URL"], any> {
+  name: "URL";
+}
+
 export interface IntIdScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["IntID"], any> {
   name: "IntID";
 }
+
+export type ContentResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Content"] = ResolversParentTypes["Content"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
 
 export type TopicResolvers<
   ContextType = EZContext,
@@ -477,13 +508,19 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryTopicsArgs, "ids">
   >;
-  domain?: Resolver<
-    Maybe<ResolversTypes["Domain"]>,
+  domains?: Resolver<
+    Array<ResolversTypes["Domain"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryDomainArgs, "id">
+    RequireFields<QueryDomainsArgs, "ids">
   >;
   admin?: Resolver<ResolversTypes["AdminQueries"], ParentType, ContextType>;
+  content?: Resolver<
+    Array<ResolversTypes["Content"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryContentArgs, "ids">
+  >;
   projects?: Resolver<
     Array<ResolversTypes["Project"]>,
     ParentType,
@@ -553,7 +590,9 @@ export type Resolvers<ContextType = EZContext> = {
   JSONObject?: GraphQLScalarType;
   NonNegativeInt?: GraphQLScalarType;
   Void?: GraphQLScalarType;
+  URL?: GraphQLScalarType;
   IntID?: GraphQLScalarType;
+  Content?: ContentResolvers<ContextType>;
   Topic?: TopicResolvers<ContextType>;
   Domain?: DomainResolvers<ContextType>;
   TopicsConnection?: TopicsConnectionResolvers<ContextType>;

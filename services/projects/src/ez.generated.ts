@@ -41,8 +41,16 @@ export type Scalars = {
   NonNegativeInt: number;
   /** Represents NULL values */
   Void: void | null | undefined;
+  /** A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. */
+  URL: string;
   /** ID that parses as non-negative integer, serializes to string, and can be passed as string or number */
   IntID: number;
+};
+
+export type Content = {
+  __typename?: "Content";
+  id: Scalars["IntID"];
+  project: Project;
 };
 
 export type Domain = {
@@ -87,8 +95,14 @@ export type Query = {
   __typename?: "Query";
   hello: Scalars["String"];
   admin: AdminQueries;
+  content: Array<Content>;
   domains: Array<Domain>;
   topics: Array<Topic>;
+  projects: Array<Project>;
+};
+
+export type QueryContentArgs = {
+  ids: Array<Scalars["IntID"]>;
 };
 
 export type QueryDomainsArgs = {
@@ -99,9 +113,19 @@ export type QueryTopicsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+export type QueryProjectsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
 export type Mutation = {
   __typename?: "Mutation";
   admin: AdminMutations;
+};
+
+export type User = {
+  __typename?: "User";
+  id: Scalars["IntID"];
+  projects: Array<Project>;
 };
 
 export type PageInfo = {
@@ -242,7 +266,9 @@ export type ResolversTypes = {
   JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
   NonNegativeInt: ResolverTypeWrapper<Scalars["NonNegativeInt"]>;
   Void: ResolverTypeWrapper<Scalars["Void"]>;
+  URL: ResolverTypeWrapper<Scalars["URL"]>;
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
+  Content: ResolverTypeWrapper<Content>;
   Domain: ResolverTypeWrapper<Domain>;
   Topic: ResolverTypeWrapper<Topic>;
   Project: ResolverTypeWrapper<Project>;
@@ -252,6 +278,7 @@ export type ResolversTypes = {
   AdminMutations: ResolverTypeWrapper<AdminMutations>;
   Query: ResolverTypeWrapper<{}>;
   Mutation: ResolverTypeWrapper<{}>;
+  User: ResolverTypeWrapper<User>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   Connection: never;
@@ -265,7 +292,9 @@ export type ResolversParentTypes = {
   JSONObject: Scalars["JSONObject"];
   NonNegativeInt: Scalars["NonNegativeInt"];
   Void: Scalars["Void"];
+  URL: Scalars["URL"];
   IntID: Scalars["IntID"];
+  Content: Content;
   Domain: Domain;
   Topic: Topic;
   Project: Project;
@@ -275,6 +304,7 @@ export type ResolversParentTypes = {
   AdminMutations: AdminMutations;
   Query: {};
   Mutation: {};
+  User: User;
   PageInfo: PageInfo;
   Boolean: Scalars["Boolean"];
   Connection: never;
@@ -306,10 +336,24 @@ export interface VoidScalarConfig
   name: "Void";
 }
 
+export interface UrlScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["URL"], any> {
+  name: "URL";
+}
+
 export interface IntIdScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["IntID"], any> {
   name: "IntID";
 }
+
+export type ContentResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Content"] = ResolversParentTypes["Content"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  project?: Resolver<ResolversTypes["Project"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
 
 export type DomainResolvers<
   ContextType = EZContext,
@@ -370,6 +414,12 @@ export type QueryResolvers<
 > = {
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   admin?: Resolver<ResolversTypes["AdminQueries"], ParentType, ContextType>;
+  content?: Resolver<
+    Array<ResolversTypes["Content"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryContentArgs, "ids">
+  >;
   domains?: Resolver<
     Array<ResolversTypes["Domain"]>,
     ParentType,
@@ -382,6 +432,12 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryTopicsArgs, "ids">
   >;
+  projects?: Resolver<
+    Array<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryProjectsArgs, "ids">
+  >;
 };
 
 export type MutationResolvers<
@@ -389,6 +445,19 @@ export type MutationResolvers<
   ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
 > = {
   admin?: Resolver<ResolversTypes["AdminMutations"], ParentType, ContextType>;
+};
+
+export type UserResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  projects?: Resolver<
+    Array<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type PageInfoResolvers<
@@ -432,7 +501,9 @@ export type Resolvers<ContextType = EZContext> = {
   JSONObject?: GraphQLScalarType;
   NonNegativeInt?: GraphQLScalarType;
   Void?: GraphQLScalarType;
+  URL?: GraphQLScalarType;
   IntID?: GraphQLScalarType;
+  Content?: ContentResolvers<ContextType>;
   Domain?: DomainResolvers<ContextType>;
   Topic?: TopicResolvers<ContextType>;
   Project?: ProjectResolvers<ContextType>;
@@ -440,6 +511,7 @@ export type Resolvers<ContextType = EZContext> = {
   AdminMutations?: AdminMutationsResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
   Connection?: ConnectionResolvers<ContextType>;
 };

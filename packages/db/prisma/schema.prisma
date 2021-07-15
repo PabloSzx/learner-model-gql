@@ -204,6 +204,12 @@ model Content {
 
   actionActivities ActionActivity[]
 
+  description String
+
+  binary Bytes?
+  json   Json?
+  url    String?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 }

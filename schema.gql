@@ -7,10 +7,10 @@ type Query {
   currentUser: User
   hello: String!
   admin: AdminQueries!
-  topics(ids: [IntID!]!): [Topic!]!
-  domain(id: IntID!): Domain
-  projects(ids: [IntID!]!): [Project!]!
   domains(ids: [IntID!]!): [Domain!]!
+  topics(ids: [IntID!]!): [Topic!]!
+  content(ids: [IntID!]!): [Content!]!
+  projects(ids: [IntID!]!): [Project!]!
 }
 
 """
@@ -39,6 +39,11 @@ Represents NULL values
 scalar Void
 
 """
+A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt.
+"""
+scalar URL
+
+"""
 ID that parses as non-negative integer, serializes to string, and can be passed as string or number
 """
 scalar IntID
@@ -60,6 +65,7 @@ type User {
   createdAt: DateTime!
   updatedAt: DateTime!
   groups: [Group!]!
+  projects: [Project!]!
 }
 
 type PageInfo {
@@ -116,6 +122,7 @@ type AdminQueries {
 type AdminMutations {
   assignProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
   unassignProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
+  createContent(data: CreateContent!): Content!
   createDomain(input: CreateDomain!): Domain!
   createTopic(input: CreateTopic!): Topic!
   updateTopic(input: UpdateTopic!): Topic!
@@ -129,17 +136,26 @@ type ActionVerb {
 
 type Content {
   id: IntID!
+  description: String!
+  binaryBase64: String
   json: JSONObject
+  url: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  domain: Domain!
+  project: Project!
 }
 
 type Domain {
   id: IntID!
+  content: [Content!]!
   topics: [Topic!]!
   project: Project!
 }
 
 type Topic {
   id: IntID!
+  content: [Content!]!
   domain: Domain!
   parent: Topic
   childrens: [Topic!]!
@@ -186,6 +202,16 @@ type Action {
 type ActionsConnection {
   nodes: [Action!]!
   pageInfo: PageInfo!
+}
+
+input CreateContent {
+  description: String!
+  projectId: IntID!
+  domainId: IntID!
+  topicId: IntID
+  binaryBase64: String
+  json: JSONObject
+  url: String
 }
 
 type TopicsConnection implements Connection {

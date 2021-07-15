@@ -41,6 +41,8 @@ export type Scalars = {
   NonNegativeInt: number;
   /** Represents NULL values */
   Void: void | null | undefined;
+  /** A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. */
+  URL: string;
   /** ID that parses as non-negative integer, serializes to string, and can be passed as string or number */
   IntID: number;
 };
@@ -245,6 +247,7 @@ export type ResolversTypes = {
   JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
   NonNegativeInt: ResolverTypeWrapper<Scalars["NonNegativeInt"]>;
   Void: ResolverTypeWrapper<Scalars["Void"]>;
+  URL: ResolverTypeWrapper<Scalars["URL"]>;
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
   Group: ResolverTypeWrapper<Group>;
   String: ResolverTypeWrapper<Scalars["String"]>;
@@ -268,6 +271,7 @@ export type ResolversParentTypes = {
   JSONObject: Scalars["JSONObject"];
   NonNegativeInt: Scalars["NonNegativeInt"];
   Void: Scalars["Void"];
+  URL: Scalars["URL"];
   IntID: Scalars["IntID"];
   Group: Group;
   String: Scalars["String"];
@@ -307,6 +311,11 @@ export interface NonNegativeIntScalarConfig
 export interface VoidScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["Void"], any> {
   name: "Void";
+}
+
+export interface UrlScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["URL"], any> {
+  name: "URL";
 }
 
 export interface IntIdScalarConfig
@@ -450,6 +459,7 @@ export type Resolvers<ContextType = EZContext> = {
   JSONObject?: GraphQLScalarType;
   NonNegativeInt?: GraphQLScalarType;
   Void?: GraphQLScalarType;
+  URL?: GraphQLScalarType;
   IntID?: GraphQLScalarType;
   Group?: GroupResolvers<ContextType>;
   Project?: ProjectResolvers<ContextType>;
