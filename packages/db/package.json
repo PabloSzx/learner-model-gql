@@ -12,7 +12,7 @@
     "prepare": "prisma generate && tsup"
   },
   "dependencies": {
-    "@graphql-ez/fastify": "^0.7.0",
+    "@graphql-ez/fastify": "^0.7.1",
     "@prisma/client": "2.27.0",
     "common": "workspace:^0.0.1",
     "concurrently": "^6.2.0",

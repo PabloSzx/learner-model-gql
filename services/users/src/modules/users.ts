@@ -41,6 +41,9 @@ registerModule(
 
           return {};
         },
+        hello() {
+          return "Hello World!";
+        },
       },
       AdminMutations: {
         async assignProjectsToUsers(_root, { projectIds, userIds }, { prisma }) {

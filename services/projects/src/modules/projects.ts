@@ -51,6 +51,9 @@ registerModule(
 
           return {};
         },
+        hello() {
+          return "Hello World!";
+        },
       },
       Mutation: {
         async admin(_root, _args, { authorization }) {

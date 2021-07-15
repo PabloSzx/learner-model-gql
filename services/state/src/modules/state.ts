@@ -8,7 +8,11 @@ registerModule(
   `,
   {
     resolvers: {
-      Query: {},
+      Query: {
+        hello() {
+          return "Hello World!";
+        },
+      },
     },
   }
 );

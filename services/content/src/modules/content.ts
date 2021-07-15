@@ -81,7 +81,11 @@ registerModule(
           return binary?.toString("base64");
         },
       },
-      Query: {},
+      Query: {
+        hello() {
+          return "Hello World!";
+        },
+      },
     },
   }
 );
