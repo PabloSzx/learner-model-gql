@@ -1,5 +1,4 @@
 export const servicesListPorts = {
-  auth: 3001,
   users: 3002,
   actions: 3003,
   content: 3004,

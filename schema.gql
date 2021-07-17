@@ -4,13 +4,18 @@ schema {
 }
 
 type Query {
-  currentUser: User
   hello: String!
   admin: AdminQueries!
+  currentUser: User
   domains(ids: [IntID!]!): [Domain!]!
   topics(ids: [IntID!]!): [Topic!]!
   content(ids: [IntID!]!): [Content!]!
   projects(ids: [IntID!]!): [Project!]!
+}
+
+type Mutation {
+  admin: AdminMutations!
+  action(data: ActionInput!): Void!
 }
 
 """
@@ -48,6 +53,21 @@ ID that parses as non-negative integer, serializes to string, and can be passed 
 """
 scalar IntID
 
+type Group {
+  id: IntID!
+  code: String!
+  label: String!
+  users: [User!]!
+  projects: [Project!]!
+}
+
+type Project {
+  id: IntID!
+  domains: [Domain!]!
+  code: String!
+  label: String!
+}
+
 enum UserRole {
   ADMIN
   USER
@@ -66,48 +86,6 @@ type User {
   updatedAt: DateTime!
   groups: [Group!]!
   projects: [Project!]!
-}
-
-type PageInfo {
-  startCursor: String
-  endCursor: String
-  hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
-}
-
-interface Node {
-  id: IntID!
-}
-
-interface Connection {
-  pageInfo: PageInfo
-}
-
-input CursorConnectionArgs {
-  first: NonNegativeInt
-  after: IntID
-  last: NonNegativeInt
-  before: IntID
-}
-
-type Mutation {
-  admin: AdminMutations!
-  action(data: ActionInput!): Void!
-}
-
-type Group {
-  id: IntID!
-  code: String!
-  label: String!
-  users: [User!]!
-  projects: [Project!]!
-}
-
-type Project {
-  id: IntID!
-  domains: [Domain!]!
-  code: String!
-  label: String!
 }
 
 type UsersConnection {
@@ -131,6 +109,28 @@ type AdminMutations {
   createTopic(input: CreateTopic!): Topic!
   updateTopic(input: UpdateTopic!): Topic!
   createProject(data: CreateProject!): Project!
+}
+
+type PageInfo {
+  startCursor: String
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
+interface Node {
+  id: IntID!
+}
+
+interface Connection {
+  pageInfo: PageInfo
+}
+
+input CursorConnectionArgs {
+  first: NonNegativeInt
+  after: IntID
+  last: NonNegativeInt
+  before: IntID
 }
 
 type ActionVerb {

@@ -40,7 +40,7 @@ export type Scalars = {
   /** Integers that will have a value of 0 or more. */
   NonNegativeInt: number;
   /** Represents NULL values */
-  Void: void | null | undefined;
+  Void: unknown;
   /** A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. */
   URL: string;
   /** ID that parses as non-negative integer, serializes to string, and can be passed as string or number */
@@ -49,9 +49,9 @@ export type Scalars = {
 
 export type Query = {
   __typename?: "Query";
-  currentUser?: Maybe<User>;
   hello: Scalars["String"];
   admin: AdminQueries;
+  currentUser?: Maybe<User>;
   domains: Array<Domain>;
   topics: Array<Topic>;
   content: Array<Content>;
@@ -72,47 +72,6 @@ export type QueryContentArgs = {
 
 export type QueryProjectsArgs = {
   ids: Array<Scalars["IntID"]>;
-};
-
-export type UserRole = "ADMIN" | "USER";
-
-export type User = {
-  __typename?: "User";
-  id: Scalars["IntID"];
-  enabled: Scalars["Boolean"];
-  email: Scalars["String"];
-  name?: Maybe<Scalars["String"]>;
-  locked: Scalars["Boolean"];
-  active: Scalars["Boolean"];
-  lastOnline?: Maybe<Scalars["DateTime"]>;
-  role: UserRole;
-  createdAt: Scalars["DateTime"];
-  updatedAt: Scalars["DateTime"];
-  groups: Array<Group>;
-  projects: Array<Project>;
-};
-
-export type PageInfo = {
-  __typename?: "PageInfo";
-  startCursor?: Maybe<Scalars["String"]>;
-  endCursor?: Maybe<Scalars["String"]>;
-  hasNextPage: Scalars["Boolean"];
-  hasPreviousPage: Scalars["Boolean"];
-};
-
-export type Node = {
-  id: Scalars["IntID"];
-};
-
-export type Connection = {
-  pageInfo?: Maybe<PageInfo>;
-};
-
-export type CursorConnectionArgs = {
-  first?: Maybe<Scalars["NonNegativeInt"]>;
-  after?: Maybe<Scalars["IntID"]>;
-  last?: Maybe<Scalars["NonNegativeInt"]>;
-  before?: Maybe<Scalars["IntID"]>;
 };
 
 export type Mutation = {
@@ -140,6 +99,24 @@ export type Project = {
   domains: Array<Domain>;
   code: Scalars["String"];
   label: Scalars["String"];
+};
+
+export type UserRole = "ADMIN" | "USER";
+
+export type User = {
+  __typename?: "User";
+  id: Scalars["IntID"];
+  enabled: Scalars["Boolean"];
+  email: Scalars["String"];
+  name?: Maybe<Scalars["String"]>;
+  locked: Scalars["Boolean"];
+  active: Scalars["Boolean"];
+  lastOnline?: Maybe<Scalars["DateTime"]>;
+  role: UserRole;
+  createdAt: Scalars["DateTime"];
+  updatedAt: Scalars["DateTime"];
+  groups: Array<Group>;
+  projects: Array<Project>;
 };
 
 export type UsersConnection = {
@@ -212,6 +189,29 @@ export type AdminMutationsUpdateTopicArgs = {
 
 export type AdminMutationsCreateProjectArgs = {
   data: CreateProject;
+};
+
+export type PageInfo = {
+  __typename?: "PageInfo";
+  startCursor?: Maybe<Scalars["String"]>;
+  endCursor?: Maybe<Scalars["String"]>;
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
+};
+
+export type Node = {
+  id: Scalars["IntID"];
+};
+
+export type Connection = {
+  pageInfo?: Maybe<PageInfo>;
+};
+
+export type CursorConnectionArgs = {
+  first?: Maybe<Scalars["NonNegativeInt"]>;
+  after?: Maybe<Scalars["IntID"]>;
+  last?: Maybe<Scalars["NonNegativeInt"]>;
+  before?: Maybe<Scalars["IntID"]>;
 };
 
 export type ActionVerb = {
@@ -462,6 +462,7 @@ export type DirectiveResolverFn<
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars["String"]>;
+  Mutation: ResolverTypeWrapper<{}>;
   DateTime: ResolverTypeWrapper<Scalars["DateTime"]>;
   Timestamp: ResolverTypeWrapper<Scalars["Timestamp"]>;
   JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
@@ -469,21 +470,20 @@ export type ResolversTypes = {
   Void: ResolverTypeWrapper<Scalars["Void"]>;
   URL: ResolverTypeWrapper<Scalars["URL"]>;
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
+  Group: ResolverTypeWrapper<Group>;
+  Project: ResolverTypeWrapper<Project>;
   UserRole: UserRole;
   User: ResolverTypeWrapper<User>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
+  UsersConnection: ResolverTypeWrapper<UsersConnection>;
+  AdminQueries: ResolverTypeWrapper<AdminQueries>;
+  AdminMutations: ResolverTypeWrapper<AdminMutations>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Node: never;
   Connection:
     | ResolversTypes["TopicsConnection"]
     | ResolversTypes["DomainsConnection"];
   CursorConnectionArgs: CursorConnectionArgs;
-  Mutation: ResolverTypeWrapper<{}>;
-  Group: ResolverTypeWrapper<Group>;
-  Project: ResolverTypeWrapper<Project>;
-  UsersConnection: ResolverTypeWrapper<UsersConnection>;
-  AdminQueries: ResolverTypeWrapper<AdminQueries>;
-  AdminMutations: ResolverTypeWrapper<AdminMutations>;
   ActionVerb: ResolverTypeWrapper<ActionVerb>;
   Content: ResolverTypeWrapper<Content>;
   Domain: ResolverTypeWrapper<Domain>;
@@ -508,6 +508,7 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Query: {};
   String: Scalars["String"];
+  Mutation: {};
   DateTime: Scalars["DateTime"];
   Timestamp: Scalars["Timestamp"];
   JSONObject: Scalars["JSONObject"];
@@ -515,20 +516,19 @@ export type ResolversParentTypes = {
   Void: Scalars["Void"];
   URL: Scalars["URL"];
   IntID: Scalars["IntID"];
+  Group: Group;
+  Project: Project;
   User: User;
   Boolean: Scalars["Boolean"];
+  UsersConnection: UsersConnection;
+  AdminQueries: AdminQueries;
+  AdminMutations: AdminMutations;
   PageInfo: PageInfo;
   Node: never;
   Connection:
     | ResolversParentTypes["TopicsConnection"]
     | ResolversParentTypes["DomainsConnection"];
   CursorConnectionArgs: CursorConnectionArgs;
-  Mutation: {};
-  Group: Group;
-  Project: Project;
-  UsersConnection: UsersConnection;
-  AdminQueries: AdminQueries;
-  AdminMutations: AdminMutations;
   ActionVerb: ActionVerb;
   Content: Content;
   Domain: Domain;
@@ -553,13 +553,13 @@ export type QueryResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = {
+  hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  admin?: Resolver<ResolversTypes["AdminQueries"], ParentType, ContextType>;
   currentUser?: Resolver<
     Maybe<ResolversTypes["User"]>,
     ParentType,
     ContextType
   >;
-  hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  admin?: Resolver<ResolversTypes["AdminQueries"], ParentType, ContextType>;
   domains?: Resolver<
     Array<ResolversTypes["Domain"]>,
     ParentType,
@@ -583,6 +583,19 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     RequireFields<QueryProjectsArgs, "ids">
+  >;
+};
+
+export type MutationResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
+> = {
+  admin?: Resolver<ResolversTypes["AdminMutations"], ParentType, ContextType>;
+  action?: Resolver<
+    ResolversTypes["Void"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationActionArgs, "data">
   >;
 };
 
@@ -621,93 +634,6 @@ export interface IntIdScalarConfig
   name: "IntID";
 }
 
-export type UserResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
-> = {
-  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-  enabled?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
-  email?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  locked?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
-  active?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
-  lastOnline?: Resolver<
-    Maybe<ResolversTypes["DateTime"]>,
-    ParentType,
-    ContextType
-  >;
-  role?: Resolver<ResolversTypes["UserRole"], ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
-  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
-  groups?: Resolver<Array<ResolversTypes["Group"]>, ParentType, ContextType>;
-  projects?: Resolver<
-    Array<ResolversTypes["Project"]>,
-    ParentType,
-    ContextType
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type PageInfoResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["PageInfo"] = ResolversParentTypes["PageInfo"]
-> = {
-  startCursor?: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
-  endCursor?: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
-  hasNextPage?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
-  hasPreviousPage?: Resolver<
-    ResolversTypes["Boolean"],
-    ParentType,
-    ContextType
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type NodeResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Node"] = ResolversParentTypes["Node"]
-> = {
-  __resolveType: TypeResolveFn<null, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-};
-
-export type ConnectionResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Connection"] = ResolversParentTypes["Connection"]
-> = {
-  __resolveType: TypeResolveFn<
-    "TopicsConnection" | "DomainsConnection",
-    ParentType,
-    ContextType
-  >;
-  pageInfo?: Resolver<
-    Maybe<ResolversTypes["PageInfo"]>,
-    ParentType,
-    ContextType
-  >;
-};
-
-export type MutationResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
-> = {
-  admin?: Resolver<ResolversTypes["AdminMutations"], ParentType, ContextType>;
-  action?: Resolver<
-    ResolversTypes["Void"],
-    ParentType,
-    ContextType,
-    RequireFields<MutationActionArgs, "data">
-  >;
-};
-
 export type GroupResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Group"] = ResolversParentTypes["Group"]
@@ -732,6 +658,33 @@ export type ProjectResolvers<
   domains?: Resolver<Array<ResolversTypes["Domain"]>, ParentType, ContextType>;
   code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type UserResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  enabled?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  email?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  locked?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  active?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  lastOnline?: Resolver<
+    Maybe<ResolversTypes["DateTime"]>,
+    ParentType,
+    ContextType
+  >;
+  role?: Resolver<ResolversTypes["UserRole"], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  groups?: Resolver<Array<ResolversTypes["Group"]>, ParentType, ContextType>;
+  projects?: Resolver<
+    Array<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -833,6 +786,53 @@ export type AdminMutationsResolvers<
     RequireFields<AdminMutationsCreateProjectArgs, "data">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type PageInfoResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["PageInfo"] = ResolversParentTypes["PageInfo"]
+> = {
+  startCursor?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  endCursor?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  hasNextPage?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  hasPreviousPage?: Resolver<
+    ResolversTypes["Boolean"],
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type NodeResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Node"] = ResolversParentTypes["Node"]
+> = {
+  __resolveType: TypeResolveFn<null, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+};
+
+export type ConnectionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Connection"] = ResolversParentTypes["Connection"]
+> = {
+  __resolveType: TypeResolveFn<
+    "TopicsConnection" | "DomainsConnection",
+    ParentType,
+    ContextType
+  >;
+  pageInfo?: Resolver<
+    Maybe<ResolversTypes["PageInfo"]>,
+    ParentType,
+    ContextType
+  >;
 };
 
 export type ActionVerbResolvers<
@@ -961,6 +961,7 @@ export type DomainsConnectionResolvers<
 
 export type Resolvers<ContextType = EZContext> = {
   Query?: QueryResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
   Timestamp?: GraphQLScalarType;
   JSONObject?: GraphQLScalarType;
@@ -968,16 +969,15 @@ export type Resolvers<ContextType = EZContext> = {
   Void?: GraphQLScalarType;
   URL?: GraphQLScalarType;
   IntID?: GraphQLScalarType;
-  User?: UserResolvers<ContextType>;
-  PageInfo?: PageInfoResolvers<ContextType>;
-  Node?: NodeResolvers<ContextType>;
-  Connection?: ConnectionResolvers<ContextType>;
-  Mutation?: MutationResolvers<ContextType>;
   Group?: GroupResolvers<ContextType>;
   Project?: ProjectResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
   UsersConnection?: UsersConnectionResolvers<ContextType>;
   AdminQueries?: AdminQueriesResolvers<ContextType>;
   AdminMutations?: AdminMutationsResolvers<ContextType>;
+  PageInfo?: PageInfoResolvers<ContextType>;
+  Node?: NodeResolvers<ContextType>;
+  Connection?: ConnectionResolvers<ContextType>;
   ActionVerb?: ActionVerbResolvers<ContextType>;
   Content?: ContentResolvers<ContextType>;
   Domain?: DomainResolvers<ContextType>;

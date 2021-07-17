@@ -71,7 +71,8 @@
     "paths": {
       "api-base": ["packages/api-base/src/index.ts"],
       "db": ["packages/db/src/index.ts"],
-      "common": ["packages/common/src/index.ts"]
+      "common": ["packages/common/src/index.ts"],
+      "react-graphql": ["packages/react-graphql/src/index.ts"]
     },
     "importsNotUsedAsValues": "error"
   },

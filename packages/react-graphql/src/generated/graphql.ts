@@ -256,9 +256,9 @@ export type Project = {
 
 export type Query = {
   __typename?: "Query";
-  currentUser?: Maybe<User>;
   hello: Scalars["String"];
   admin: AdminQueries;
+  currentUser?: Maybe<User>;
   domains: Array<Domain>;
   topics: Array<Topic>;
   content: Array<Content>;

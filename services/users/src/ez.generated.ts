@@ -40,7 +40,7 @@ export type Scalars = {
   /** Integers that will have a value of 0 or more. */
   NonNegativeInt: number;
   /** Represents NULL values */
-  Void: void | null | undefined;
+  Void: unknown;
   /** A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. */
   URL: string;
   /** ID that parses as non-negative integer, serializes to string, and can be passed as string or number */
@@ -61,10 +61,22 @@ export type Project = {
   id: Scalars["IntID"];
 };
 
+export type UserRole = "ADMIN" | "USER";
+
 export type User = {
   __typename?: "User";
   id: Scalars["IntID"];
+  enabled: Scalars["Boolean"];
+  email: Scalars["String"];
+  name?: Maybe<Scalars["String"]>;
+  locked: Scalars["Boolean"];
+  active: Scalars["Boolean"];
+  lastOnline?: Maybe<Scalars["DateTime"]>;
+  role: UserRole;
+  createdAt: Scalars["DateTime"];
+  updatedAt: Scalars["DateTime"];
   groups: Array<Group>;
+  projects: Array<Project>;
 };
 
 export type UsersConnection = {
@@ -102,6 +114,7 @@ export type Query = {
   __typename?: "Query";
   hello: Scalars["String"];
   admin: AdminQueries;
+  currentUser?: Maybe<User>;
 };
 
 export type Mutation = {
@@ -256,14 +269,15 @@ export type ResolversTypes = {
   Group: ResolverTypeWrapper<Group>;
   String: ResolverTypeWrapper<Scalars["String"]>;
   Project: ResolverTypeWrapper<Project>;
+  UserRole: UserRole;
   User: ResolverTypeWrapper<User>;
+  Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   UsersConnection: ResolverTypeWrapper<UsersConnection>;
   AdminQueries: ResolverTypeWrapper<AdminQueries>;
   AdminMutations: ResolverTypeWrapper<AdminMutations>;
   Query: ResolverTypeWrapper<{}>;
   Mutation: ResolverTypeWrapper<{}>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
-  Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   Node: never;
   Connection: never;
   CursorConnectionArgs: CursorConnectionArgs;
@@ -282,13 +296,13 @@ export type ResolversParentTypes = {
   String: Scalars["String"];
   Project: Project;
   User: User;
+  Boolean: Scalars["Boolean"];
   UsersConnection: UsersConnection;
   AdminQueries: AdminQueries;
   AdminMutations: AdminMutations;
   Query: {};
   Mutation: {};
   PageInfo: PageInfo;
-  Boolean: Scalars["Boolean"];
   Node: never;
   Connection: never;
   CursorConnectionArgs: CursorConnectionArgs;
@@ -358,7 +372,25 @@ export type UserResolvers<
   ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
 > = {
   id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  enabled?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  email?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  locked?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  active?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  lastOnline?: Resolver<
+    Maybe<ResolversTypes["DateTime"]>,
+    ParentType,
+    ContextType
+  >;
+  role?: Resolver<ResolversTypes["UserRole"], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   groups?: Resolver<Array<ResolversTypes["Group"]>, ParentType, ContextType>;
+  projects?: Resolver<
+    Array<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -415,6 +447,11 @@ export type QueryResolvers<
 > = {
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   admin?: Resolver<ResolversTypes["AdminQueries"], ParentType, ContextType>;
+  currentUser?: Resolver<
+    Maybe<ResolversTypes["User"]>,
+    ParentType,
+    ContextType
+  >;
 };
 
 export type MutationResolvers<

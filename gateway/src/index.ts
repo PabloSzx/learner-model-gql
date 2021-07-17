@@ -36,28 +36,28 @@ function getStreamJSON<T>(stream: import("stream").Readable, encoding: BufferEnc
 
 type ServiceName = keyof typeof servicesListPorts;
 
-const ProjectMerge = {
+const ProjectMerge: NonNullable<SubschemaConfig["merge"]>[string] = {
   fieldName: "projects",
   selectionSet: "{ id }",
   key: ({ id }: Node) => id,
   args: (originalObject: Node) => ({ id: originalObject.id }),
 };
 
-const DomainMerge = {
+const DomainMerge: NonNullable<SubschemaConfig["merge"]>[string] = {
   fieldName: "domains",
   selectionSet: "{ id }",
   key: ({ id }: Node) => id,
   args: (originalObject: Node) => ({ id: originalObject.id }),
 };
 
-const TopicMerge = {
+const TopicMerge: NonNullable<SubschemaConfig["merge"]>[string] = {
   fieldName: "topics",
   selectionSet: "{ id }",
   key: ({ id }: Node) => id,
   args: (originalObject: Node) => ({ id: originalObject.id }),
 };
 
-const ContentMerge = {
+const ContentMerge: NonNullable<SubschemaConfig["merge"]>[string] = {
   fieldName: "content",
   selectionSet: "{ id }",
   key: ({ id }: Node) => id,
@@ -92,6 +92,8 @@ async function getServiceSchema([name, port]: [name: string, port: number]) {
     context,
   }) {
     const query = print(document);
+
+    if (query === "mutation\n") throw Error("Error in gateway");
 
     const authorization = context?.request?.headers.authorization;
 

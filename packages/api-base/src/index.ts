@@ -41,7 +41,7 @@ export const codegenOptions: CodegenOptions = {
       IntID: "number",
       NonNegativeInt: "number",
       Timestamp: "Date",
-      Void: "void | null | undefined",
+      Void: "unknown",
       URL: "string",
     },
     deepPartialResolvers: true,

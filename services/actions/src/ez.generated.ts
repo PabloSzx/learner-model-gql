@@ -40,7 +40,7 @@ export type Scalars = {
   /** Integers that will have a value of 0 or more. */
   NonNegativeInt: number;
   /** Represents NULL values */
-  Void: void | null | undefined;
+  Void: unknown;
   /** A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. */
   URL: string;
   /** ID that parses as non-negative integer, serializes to string, and can be passed as string or number */
