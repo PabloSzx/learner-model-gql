@@ -14,7 +14,8 @@ import { stitchSchemas } from "@graphql-tools/stitch";
 import { introspectSchema } from "@graphql-tools/wrap";
 
 import type { Node } from "./ez.generated";
-import type { AsyncExecutor, SubschemaConfig } from "@graphql-tools/delegate";
+import type { AsyncExecutor } from "@graphql-tools/utils";
+import type { SubschemaConfig } from "@graphql-tools/delegate";
 
 function getStreamJSON<T>(stream: import("stream").Readable, encoding: BufferEncoding) {
   return new Promise<T>((resolve, reject) => {
@@ -93,7 +94,7 @@ async function getServiceSchema([name, port]: [name: string, port: number]) {
   }) {
     const query = print(document);
 
-    if (query === "mutation\n") throw Error("Error in gateway");
+    if (query === "mutation\n") throw Error("Error in gateway to service: " + name);
 
     const authorization = context?.request?.headers.authorization;
 
@@ -129,6 +130,7 @@ async function getServiceSchema([name, port]: [name: string, port: number]) {
 const app = Fastify({
   logger: true,
 });
+require("util").inspect.defaultOptions.depth = null;
 
 async function main() {
   app.log.info("Waiting for services!");
