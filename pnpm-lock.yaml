@@ -20,7 +20,7 @@ importers:
       prettier: ^2.3.2
       pretty-quick: ^3.1.1
       react: ^17.0.2
-      typescript: ^4.3.5
+      typescript: ^4.4.1-rc
       valtio: ^1.2.1
     dependencies:
       concurrently: 6.2.1
@@ -30,13 +30,13 @@ importers:
       husky: 7.0.1
       prettier: 2.3.2
       pretty-quick: 3.1.1_prettier@2.3.2
-      typescript: 4.3.5
     devDependencies:
       '@types/node': 16.6.1
       dotenv: 10.0.0
       esbuild: 0.12.20
       pm2: 5.1.0
       react: 17.0.2
+      typescript: 4.4.1-rc
       valtio: 1.2.1_react@17.0.2
 
   clients/next:
@@ -55,7 +55,7 @@ importers:
       react-dom: ^17.0.2
       react-graphql: workspace:^0.0.1
       react-icons: ^4.2.0
-      typescript: ^4.3.5
+      typescript: ^4.4.1-rc
       valtio: ^1.2.1
     dependencies:
       '@auth0/auth0-react': 1.6.0_react-dom@17.0.2+react@17.0.2
@@ -66,14 +66,14 @@ importers:
       '@types/react': 17.0.18
       '@types/react-dom': 17.0.9
       framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
-      next: 11.1.0_f31b35bdaa3b7c2fce82404f09d2dac4
+      next: 11.1.0_fe1bfc5d2510f2017389350f3aea47a5
       react-dom: 17.0.2_react@17.0.2
       react-graphql: link:../../packages/react-graphql
       react-icons: 4.2.0_react@17.0.2
-      typescript: 4.3.5
     devDependencies:
       '@types/node': 16.6.1
       react: 17.0.2
+      typescript: 4.4.1-rc
       valtio: 1.2.1_react@17.0.2
 
   gateway:
@@ -103,7 +103,7 @@ importers:
       ms: ^2.1.3
       react: ^17.0.2
       tsup: ^4.13.1
-      typescript: ^4.3.5
+      typescript: ^4.4.1-rc
       undici: ^4.4.2
       valtio: ^1.2.1
       wait-on: ^6.0.0
@@ -127,8 +127,7 @@ importers:
       graphql: 15.5.1
       graphql-ez: 0.11.0_graphql@15.5.1
       ms: 2.1.3
-      tsup: 4.13.1_typescript@4.3.5
-      typescript: 4.3.5
+      tsup: 4.13.1_typescript@4.4.1-rc
       undici: 4.4.2
       wait-on: 6.0.0
     devDependencies:
@@ -137,6 +136,7 @@ importers:
       '@types/node': 16.6.1
       '@types/wait-on': 5.3.1
       react: 17.0.2
+      typescript: 4.4.1-rc
       valtio: 1.2.1_react@17.0.2
 
   packages/api-base:
@@ -159,7 +159,7 @@ importers:
       graphql: ^15.5.1
       graphql-ez: ^0.11.0
       tsup: ^4.13.1
-      typescript: ^4.3.5
+      typescript: ^4.4.1-rc
       validator: ^13.6.0
     dependencies:
       '@auth0/auth0-react': 1.6.0_react@17.0.2
@@ -181,8 +181,8 @@ importers:
       '@types/node': 16.6.1
       '@types/validator': 13.6.3
       esbuild: 0.12.20
-      tsup: 4.13.1_typescript@4.3.5
-      typescript: 4.3.5
+      tsup: 4.13.1_typescript@4.4.1-rc
+      typescript: 4.4.1-rc
 
   packages/common:
     specifiers:
@@ -192,7 +192,7 @@ importers:
       fastify: ^3.20.2
       react: ^17.0.2
       tsup: ^4.13.1
-      typescript: ^4.3.5
+      typescript: ^4.4.1-rc
       valtio: ^1.2.1
     devDependencies:
       '@types/node': 16.6.1
@@ -200,8 +200,8 @@ importers:
       cross-env: 7.0.3
       fastify: 3.20.2
       react: 17.0.2
-      tsup: 4.13.1_typescript@4.3.5
-      typescript: 4.3.5
+      tsup: 4.13.1_typescript@4.4.1-rc
+      typescript: 4.4.1-rc
       valtio: 1.2.1_react@17.0.2
 
   packages/db:
@@ -219,7 +219,7 @@ importers:
       prisma-dbml-generator: ^0.7.0
       react: ^17.0.2
       tsup: ^4.13.1
-      typescript: ^4.3.5
+      typescript: ^4.4.1-rc
       valtio: ^1.2.1
     dependencies:
       '@graphql-ez/fastify': 0.8.2_cdff34b1e1cde37ed53a8d6e1b5538ff
@@ -230,13 +230,13 @@ importers:
       dotenv: 10.0.0
       prisma: 2.29.1
       prisma-dbml-generator: 0.7.0
-      tsup: 4.13.1_typescript@4.3.5
-      typescript: 4.3.5
+      tsup: 4.13.1_typescript@4.4.1-rc
     devDependencies:
       '@types/concurrently': 6.2.1
       '@types/node': 16.6.1
       '@types/react': 17.0.18
       react: 17.0.2
+      typescript: 4.4.1-rc
       valtio: 1.2.1_react@17.0.2
 
   packages/react-graphql:
@@ -256,10 +256,10 @@ importers:
       react: ^17.0.2
       react-query: ^3.19.6
       tsup: ^4.13.1
-      typescript: ^4.3.5
+      typescript: ^4.4.1-rc
       valtio: ^1.2.1
     devDependencies:
-      '@graphql-codegen/cli': 2.0.1_a3890eca04e33d0e046f994245c782cb
+      '@graphql-codegen/cli': 2.0.1_e70c591470e745422c5522c3da889a88
       '@graphql-codegen/core': 2.0.0_graphql@15.5.1
       '@graphql-codegen/typed-document-node': 2.0.0_graphql@15.5.1
       '@graphql-codegen/typescript': 2.0.0_graphql@15.5.1
@@ -273,8 +273,8 @@ importers:
       prettier: 2.3.2
       react: 17.0.2
       react-query: 3.19.6_react@17.0.2
-      tsup: 4.13.1_typescript@4.3.5
-      typescript: 4.3.5
+      tsup: 4.13.1_typescript@4.4.1-rc
+      typescript: 4.4.1-rc
       valtio: 1.2.1_react@17.0.2
 
   services/actions:
@@ -293,7 +293,7 @@ importers:
       graphql-ez: ^0.11.0
       react: ^17.0.2
       tsup: ^4.13.1
-      typescript: ^4.3.5
+      typescript: ^4.4.1-rc
       valtio: ^1.2.1
     dependencies:
       '@graphql-ez/fastify': 0.8.2_b1844c0dd5b6d33850135ed5540e0d8e
@@ -307,11 +307,11 @@ importers:
       fastify-auth0-verify: 0.5.2
       graphql: 15.5.1
       graphql-ez: 0.11.0_graphql@15.5.1
-      tsup: 4.13.1_typescript@4.3.5
-      typescript: 4.3.5
+      tsup: 4.13.1_typescript@4.4.1-rc
     devDependencies:
       '@types/node': 16.6.1
       react: 17.0.2
+      typescript: 4.4.1-rc
       valtio: 1.2.1_react@17.0.2
 
   services/content:
@@ -330,7 +330,7 @@ importers:
       graphql-ez: ^0.11.0
       react: ^17.0.2
       tsup: ^4.13.1
-      typescript: ^4.3.5
+      typescript: ^4.4.1-rc
       valtio: ^1.2.1
     dependencies:
       '@graphql-ez/fastify': 0.8.2_b1844c0dd5b6d33850135ed5540e0d8e
@@ -344,11 +344,11 @@ importers:
       fastify-auth0-verify: 0.5.2
       graphql: 15.5.1
       graphql-ez: 0.11.0_graphql@15.5.1
-      tsup: 4.13.1_typescript@4.3.5
-      typescript: 4.3.5
+      tsup: 4.13.1_typescript@4.4.1-rc
     devDependencies:
       '@types/node': 16.6.1
       react: 17.0.2
+      typescript: 4.4.1-rc
       valtio: 1.2.1_react@17.0.2
 
   services/domain:
@@ -367,7 +367,7 @@ importers:
       graphql-ez: ^0.11.0
       react: ^17.0.2
       tsup: ^4.13.1
-      typescript: ^4.3.5
+      typescript: ^4.4.1-rc
       valtio: ^1.2.1
     dependencies:
       '@graphql-ez/fastify': 0.8.2_b1844c0dd5b6d33850135ed5540e0d8e
@@ -381,11 +381,11 @@ importers:
       fastify-auth0-verify: 0.5.2
       graphql: 15.5.1
       graphql-ez: 0.11.0_graphql@15.5.1
-      tsup: 4.13.1_typescript@4.3.5
-      typescript: 4.3.5
+      tsup: 4.13.1_typescript@4.4.1-rc
     devDependencies:
       '@types/node': 16.6.1
       react: 17.0.2
+      typescript: 4.4.1-rc
       valtio: 1.2.1_react@17.0.2
 
   services/projects:
@@ -404,7 +404,7 @@ importers:
       graphql-ez: ^0.11.0
       react: ^17.0.2
       tsup: ^4.13.1
-      typescript: ^4.3.5
+      typescript: ^4.4.1-rc
       valtio: ^1.2.1
     dependencies:
       '@graphql-ez/fastify': 0.8.2_b1844c0dd5b6d33850135ed5540e0d8e
@@ -418,11 +418,11 @@ importers:
       fastify-auth0-verify: 0.5.2
       graphql: 15.5.1
       graphql-ez: 0.11.0_graphql@15.5.1
-      tsup: 4.13.1_typescript@4.3.5
-      typescript: 4.3.5
+      tsup: 4.13.1_typescript@4.4.1-rc
     devDependencies:
       '@types/node': 16.6.1
       react: 17.0.2
+      typescript: 4.4.1-rc
       valtio: 1.2.1_react@17.0.2
 
   services/state:
@@ -441,7 +441,7 @@ importers:
       graphql-ez: ^0.11.0
       react: ^17.0.2
       tsup: ^4.13.1
-      typescript: ^4.3.5
+      typescript: ^4.4.1-rc
       valtio: ^1.2.1
     dependencies:
       '@graphql-ez/fastify': 0.8.2_b1844c0dd5b6d33850135ed5540e0d8e
@@ -455,11 +455,11 @@ importers:
       fastify-auth0-verify: 0.5.2
       graphql: 15.5.1
       graphql-ez: 0.11.0_graphql@15.5.1
-      tsup: 4.13.1_typescript@4.3.5
-      typescript: 4.3.5
+      tsup: 4.13.1_typescript@4.4.1-rc
     devDependencies:
       '@types/node': 16.6.1
       react: 17.0.2
+      typescript: 4.4.1-rc
       valtio: 1.2.1_react@17.0.2
 
   services/users:
@@ -478,7 +478,7 @@ importers:
       graphql-ez: ^0.11.0
       react: ^17.0.2
       tsup: ^4.13.1
-      typescript: ^4.3.5
+      typescript: ^4.4.1-rc
       valtio: ^1.2.1
     dependencies:
       '@graphql-ez/fastify': 0.8.2_b1844c0dd5b6d33850135ed5540e0d8e
@@ -492,11 +492,11 @@ importers:
       fastify-auth0-verify: 0.5.2
       graphql: 15.5.1
       graphql-ez: 0.11.0_graphql@15.5.1
-      tsup: 4.13.1_typescript@4.3.5
-      typescript: 4.3.5
+      tsup: 4.13.1_typescript@4.4.1-rc
     devDependencies:
       '@types/node': 16.6.1
       react: 17.0.2
+      typescript: 4.4.1-rc
       valtio: 1.2.1_react@17.0.2
 
 packages:
@@ -1933,7 +1933,7 @@ packages:
     resolution: {integrity: sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==}
     dev: false
 
-  /@endemolshinegroup/cosmiconfig-typescript-loader/3.0.2_d7e37a937920a5f79299d305717794f0:
+  /@endemolshinegroup/cosmiconfig-typescript-loader/3.0.2_66faf49b715a13a1a8d8ad12dd89a460:
     resolution: {integrity: sha512-QRVtqJuS1mcT56oHpVegkKBlgtWjXw/gHNWO3eL9oyB5Sc7HBoc2OLG/nYpVfT/Jejvo3NUrD0Udk7XgoyDKkA==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
@@ -1942,7 +1942,7 @@ packages:
       cosmiconfig: 7.0.0
       lodash.get: 4.4.2
       make-error: 1.3.6
-      ts-node: 9.1.1_typescript@4.3.5
+      ts-node: 9.1.1_typescript@4.4.1-rc
       tslib: 2.3.1
     transitivePeerDependencies:
       - typescript
@@ -2006,7 +2006,7 @@ packages:
     dependencies:
       ajv: 6.12.6
 
-  /@graphql-codegen/cli/2.0.1_a3890eca04e33d0e046f994245c782cb:
+  /@graphql-codegen/cli/2.0.1_e70c591470e745422c5522c3da889a88:
     resolution: {integrity: sha512-ExCS7w0INpeKvIuPq2y1xfb0L6X2p4bP8Ai+CAsMpW7Yp7F2U/oe/2YBJkCi82oXyOkohW9Z04s/TI1f8xzNLQ==}
     hasBin: true
     peerDependencies:
@@ -2036,7 +2036,7 @@ packages:
       glob: 7.1.7
       globby: 11.0.4
       graphql: 15.5.1
-      graphql-config: 4.0.1_a3890eca04e33d0e046f994245c782cb
+      graphql-config: 4.0.1_e70c591470e745422c5522c3da889a88
       inquirer: 7.3.3
       is-glob: 4.0.1
       json-to-pretty-yaml: 1.2.2
@@ -5287,13 +5287,13 @@ packages:
   /graceful-fs/4.2.8:
     resolution: {integrity: sha512-qkIilPUYcNhJpd33n0GBXTB1MMPp14TxEsEs0pTrsSVucApsYzW5V+Q8Qxhik6KU3evy+qkAAowTByymK0avdg==}
 
-  /graphql-config/4.0.1_a3890eca04e33d0e046f994245c782cb:
+  /graphql-config/4.0.1_e70c591470e745422c5522c3da889a88:
     resolution: {integrity: sha512-JdXxFzBwjujJMGLHUZom9SrmP/M4gF57iTDa3fJVm3Q85+Xw2kj9jZIygaaSLpDKhaPnMQZqfJ5Hmc6afKxS9w==}
     engines: {node: '>= 10.0.0'}
     peerDependencies:
       graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
     dependencies:
-      '@endemolshinegroup/cosmiconfig-typescript-loader': 3.0.2_d7e37a937920a5f79299d305717794f0
+      '@endemolshinegroup/cosmiconfig-typescript-loader': 3.0.2_66faf49b715a13a1a8d8ad12dd89a460
       '@graphql-tools/graphql-file-loader': 7.0.3_graphql@15.5.1
       '@graphql-tools/json-file-loader': 7.1.0_graphql@15.5.1
       '@graphql-tools/load': 7.1.5_graphql@15.5.1
@@ -6502,7 +6502,7 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  /next/11.1.0_f31b35bdaa3b7c2fce82404f09d2dac4:
+  /next/11.1.0_fe1bfc5d2510f2017389350f3aea47a5:
     resolution: {integrity: sha512-GHBk/c7Wyr6YbFRFZF37I0X7HKzkHHI8pur/loyXo5AIE8wdkbGPGO0ds3vNAO6f8AxZAKGCRYtAzoGlVLoifA==}
     engines: {node: '>=12.0.0'}
     hasBin: true
@@ -6553,7 +6553,7 @@ packages:
       os-browserify: 0.3.0
       p-limit: 3.1.0
       path-browserify: 1.0.1
-      pnp-webpack-plugin: 1.6.4_typescript@4.3.5
+      pnp-webpack-plugin: 1.6.4_typescript@4.4.1-rc
       postcss: 8.2.15
       process: 0.11.10
       querystring-es3: 0.2.1
@@ -7090,11 +7090,11 @@ packages:
       - utf-8-validate
     dev: true
 
-  /pnp-webpack-plugin/1.6.4_typescript@4.3.5:
+  /pnp-webpack-plugin/1.6.4_typescript@4.4.1-rc:
     resolution: {integrity: sha512-7Wjy+9E3WwLOEL30D+m8TSTF7qJJUJLONBnwQp0518siuMxUQUbgZwssaFX+QKlZkjHZcw/IpZCt/H0srrntSg==}
     engines: {node: '>=6'}
     dependencies:
-      ts-pnp: 1.2.0_typescript@4.3.5
+      ts-pnp: 1.2.0_typescript@4.4.1-rc
     transitivePeerDependencies:
       - typescript
     dev: false
@@ -8412,7 +8412,7 @@ packages:
     resolution: {integrity: sha512-XvB+OdKSJ708Dmf9ore4Uf/q62AYDTzFcAdxc8KNML1mmAWywRFVt/dn1KYJH8Agt5UJNujfM3znU5PxgAzA2w==}
     dev: true
 
-  /ts-node/9.1.1_typescript@4.3.5:
+  /ts-node/9.1.1_typescript@4.4.1-rc:
     resolution: {integrity: sha512-hPlt7ZACERQGf03M253ytLY3dHbGNGrAq9qIHWUY9XHYl1z7wYngSr3OQ5xmui8o2AaxsONxIzjafLUiWBo1Fg==}
     engines: {node: '>=10.0.0'}
     hasBin: true
@@ -8424,11 +8424,11 @@ packages:
       diff: 4.0.2
       make-error: 1.3.6
       source-map-support: 0.5.19
-      typescript: 4.3.5
+      typescript: 4.4.1-rc
       yn: 3.1.1
     dev: true
 
-  /ts-pnp/1.2.0_typescript@4.3.5:
+  /ts-pnp/1.2.0_typescript@4.4.1-rc:
     resolution: {integrity: sha512-csd+vJOb/gkzvcCHgTGSChYpy5f1/XKNsmvBGO4JXS+z1v2HobugDz4s1IeFXM3wZB44uczs+eazB5Q/ccdhQw==}
     engines: {node: '>=6'}
     peerDependencies:
@@ -8437,7 +8437,7 @@ packages:
       typescript:
         optional: true
     dependencies:
-      typescript: 4.3.5
+      typescript: 4.4.1-rc
     dev: false
 
   /tslib/1.14.1:
@@ -8460,7 +8460,7 @@ packages:
   /tslib/2.3.1:
     resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==}
 
-  /tsup/4.13.1_typescript@4.3.5:
+  /tsup/4.13.1_typescript@4.4.1-rc:
     resolution: {integrity: sha512-OSJjTe8Kj+mm0gagg6Ory5vNm2NkQ11IfaDMjgGA3DDco0c2G5kObLkqmRDTmvFqw24mF2knfDMnq7vEuD5+7w==}
     hasBin: true
     peerDependencies:
@@ -8482,7 +8482,7 @@ packages:
       rollup: 2.56.2
       sucrase: 3.20.1
       tree-kill: 1.2.2
-      typescript: 4.3.5
+      typescript: 4.4.1-rc
     transitivePeerDependencies:
       - supports-color
       - ts-node
@@ -8537,10 +8537,11 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /typescript/4.3.5:
-    resolution: {integrity: sha512-DqQgihaQ9cUrskJo9kIyW/+g0Vxsk8cDtZ52a3NGh0YNTfpUSArXSohyUGnvbPazEPLu398C0UxmKSOrPumUzA==}
+  /typescript/4.4.1-rc:
+    resolution: {integrity: sha512-SYdeKrJiOajqNTI+sweR70JET43Z567HFNo7DvvBof8J5/bt2cywy7VoWXqZyrsHEmQ9foraLtLr30mcfpfz9w==}
     engines: {node: '>=4.2.0'}
     hasBin: true
+    dev: true
 
   /ua-parser-js/0.7.28:
     resolution: {integrity: sha512-6Gurc1n//gjp9eQNXjD9O3M/sMwVtN5S8Lv9bvOYBfKfDNiIIhqiyi01vMBO45u4zkDE420w/e0se7Vs+sIg+g==}

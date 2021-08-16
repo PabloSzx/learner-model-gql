@@ -12,7 +12,7 @@
     "@types/validator": "^13.6.3",
     "esbuild": "^0.12.20",
     "tsup": "^4.13.1",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.1-rc"
   },
   "dependencies": {
     "@auth0/auth0-react": "^1.6.0",
