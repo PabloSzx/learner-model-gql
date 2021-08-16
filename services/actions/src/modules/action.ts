@@ -188,7 +188,15 @@ registerModule(
           _root,
           {
             data: {
-              activity: { amount, contentID, detail, extra, hintID, stepID, topicID },
+              activity: {
+                amount,
+                contentID,
+                detail,
+                extra,
+                hintID,
+                stepID,
+                topicID,
+              },
               timestamp,
               verbName,
               projectId,
@@ -211,7 +219,9 @@ registerModule(
               },
               project: {
                 connect: {
-                  id: (await authorization.expectAllowedUserProject(projectId)).projectId,
+                  id: (
+                    await authorization.expectAllowedUserProject(projectId)
+                  ).projectId,
                 },
               },
               activity: {

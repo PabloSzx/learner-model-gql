@@ -34,7 +34,10 @@ registerModule(
     }
     type AdminMutations {
       assignProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
-      unassignProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
+      unassignProjectsToUsers(
+        projectIds: [IntID!]!
+        userIds: [IntID!]!
+      ): [User!]!
     }
 
     type Query {
@@ -69,7 +72,11 @@ registerModule(
         },
       },
       AdminMutations: {
-        async assignProjectsToUsers(_root, { projectIds, userIds }, { prisma }) {
+        async assignProjectsToUsers(
+          _root,
+          { projectIds, userIds },
+          { prisma }
+        ) {
           return prisma.$transaction(
             userIds.map((id) => {
               return prisma.user.update({
@@ -88,7 +95,11 @@ registerModule(
             })
           );
         },
-        async unassignProjectsToUsers(_root, { projectIds, userIds }, { prisma }) {
+        async unassignProjectsToUsers(
+          _root,
+          { projectIds, userIds },
+          { prisma }
+        ) {
           return prisma.$transaction(
             userIds.map((id) => {
               return prisma.user.update({

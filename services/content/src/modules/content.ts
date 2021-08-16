@@ -45,7 +45,17 @@ registerModule(
       AdminMutations: {
         createContent(
           _root,
-          { data: { description, domainId, projectId, binaryBase64, json, topicId, url } },
+          {
+            data: {
+              description,
+              domainId,
+              projectId,
+              binaryBase64,
+              json,
+              topicId,
+              url,
+            },
+          },
           { prisma }
         ) {
           return prisma.content.create({
@@ -53,7 +63,9 @@ registerModule(
               description,
               json,
               url,
-              binary: binaryBase64 ? Buffer.from(binaryBase64, "base64") : undefined,
+              binary: binaryBase64
+                ? Buffer.from(binaryBase64, "base64")
+                : undefined,
               domain: {
                 connect: {
                   id: domainId,

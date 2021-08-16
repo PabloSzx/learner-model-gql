@@ -72,7 +72,9 @@ export const Authorization = (userPromise: Promise<DBUser | null>) => {
     return user.projects.map((v) => v.id);
   });
 
-  const expectAllowedUserProject = async (projectIdPromise: number | Promise<number>) => {
+  const expectAllowedUserProject = async (
+    projectIdPromise: number | Promise<number>
+  ) => {
     const [user, projectId] = await Promise.all([expectUser, projectIdPromise]);
 
     assert(
