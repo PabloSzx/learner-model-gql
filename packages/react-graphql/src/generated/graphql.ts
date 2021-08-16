@@ -335,10 +335,15 @@ export type UsersConnection = {
 
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never }>;
 
-export type CurrentUserQuery = { __typename?: "Query" } & {
-  currentUser?: Maybe<
-    { __typename?: "User" } & Pick<User, "id" | "email" | "name" | "role">
-  >;
+export type CurrentUserQuery = {
+  __typename?: "Query";
+  currentUser?: Maybe<{
+    __typename?: "User";
+    id: string;
+    email: string;
+    name?: Maybe<string>;
+    role: UserRole;
+  }>;
 };
 
 export const CurrentUserDocument = `
