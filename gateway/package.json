@@ -16,7 +16,6 @@
     "@graphql-tools/wrap": "^8.0.13",
     "@types/ms": "^0.7.31",
     "api-base": "workspace:^0.0.1",
-    "common": "workspace:^0.0.1",
     "concurrently": "^6.2.1",
     "content-type": "^1.0.4",
     "cross-env": "^7.0.3",

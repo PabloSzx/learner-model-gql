@@ -15,7 +15,7 @@
     "build": "pnpm prepare",
     "dev": "concurrently -r \"graphql-codegen --config codegen.yml --watch\" \"tsup --watch\"",
     "gql": "graphql-codegen --config codegen.yml",
-    "prepare": "pnpm run gql && tsup"
+    "prepare": "tsup"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.1.1",

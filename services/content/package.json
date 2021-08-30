@@ -9,7 +9,6 @@
   "dependencies": {
     "@graphql-ez/fastify": "^0.9.3",
     "api-base": "workspace:^0.0.1",
-    "common": "workspace:^0.0.1",
     "concurrently": "^6.2.1",
     "cross-env": "^7.0.3",
     "db": "workspace:^0.0.1",

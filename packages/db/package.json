@@ -14,7 +14,7 @@
   "dependencies": {
     "@graphql-ez/fastify": "^0.9.3",
     "@prisma/client": "2.30.2",
-    "common": "workspace:^0.0.1",
+    "common-api": "workspace:^1.0.0",
     "concurrently": "^6.2.1",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",

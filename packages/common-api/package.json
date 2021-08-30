@@ -1,0 +1,24 @@
+{
+  "name": "common-api",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "prepare": "tsup",
+    "dev": "tsup --watch src"
+  },
+  "dependencies": {
+    "common": "workspace:^0.0.1",
+    "dotenv": "^10.0.0",
+    "require-env-variable": "^3.1.2"
+  },
+  "devDependencies": {
+    "tsup": "^4.14.0"
+  },
+  "tsup": {
+    "silent": true,
+    "target": "node14",
+    "entryPoints": [
+      "src/index.ts"
+    ]
+  }
+}

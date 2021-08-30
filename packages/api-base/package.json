@@ -22,7 +22,6 @@
     "@graphql-ez/plugin-scalars": "^0.7.1",
     "@graphql-ez/plugin-schema": "^0.7.1",
     "@graphql-ez/plugin-voyager": "^0.7.0",
-    "common": "workspace:^0.0.1",
     "db": "workspace:^0.0.1",
     "fastify": "^3.20.2",
     "fastify-auth0-verify": "^0.5.2",
