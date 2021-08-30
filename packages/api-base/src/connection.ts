@@ -1,5 +1,5 @@
 import assert from "assert";
-import { gql } from "graphql-ez/utils/gql";
+import { gql } from "graphql-ez/utils";
 
 import { toNonNegativeInteger } from "./casters";
 
@@ -44,9 +44,7 @@ export type PageInfo = {
   hasPreviousPage: boolean;
 };
 
-export async function ResolveCursorConnection<
-  T extends { id: number | string }
->(
+export async function ResolveCursorConnection<T extends { id: number | string }>(
   input: {
     first?: number | null;
     after?: number | null;

@@ -1,7 +1,7 @@
 import assert from "assert";
 import FastifyAuth0 from "fastify-auth0-verify";
 import fp from "fastify-plugin";
-import { LazyPromise } from "graphql-ez/utils/promise";
+import { LazyPromise } from "graphql-ez/utils";
 
 import type { FastifyRequest } from "fastify";
 import type { EZPlugin } from "graphql-ez";
@@ -72,9 +72,7 @@ export const Authorization = (userPromise: Promise<DBUser | null>) => {
     return user.projects.map((v) => v.id);
   });
 
-  const expectAllowedUserProject = async (
-    projectIdPromise: number | Promise<number>
-  ) => {
+  const expectAllowedUserProject = async (projectIdPromise: number | Promise<number>) => {
     const [user, projectId] = await Promise.all([expectUser, projectIdPromise]);
 
     assert(
