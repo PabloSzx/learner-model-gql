@@ -1,13 +1,14 @@
 lockfileVersion: 5.3
 
 overrides:
-  esbuild: ^0.12.20
+  esbuild: '>=0.12.24'
   ws@>=5.0.0 <5.2.3 || >=6.0.0 <6.2.2 || >=7.0.0 <7.4.6: '>=5.2.3 <6.0.0 || >=6.2.2 <7.0.0 || >=7.4.6'
 
 importers:
 
   .:
     specifiers:
+      '@graphql-ez/fastify': ^0.9.3
       '@types/concurrently': ^6.2.1
       '@types/jest': ^27.0.1
       '@types/node': ^16.7.8
@@ -17,7 +18,8 @@ importers:
       cross-env: ^7.0.3
       dotenv: ^10.0.0
       es-jest: ^1.3.0
-      esbuild: ^0.12.20
+      esbuild: '>=0.12.24'
+      fastify: ^3.20.2
       graphql: ^15.5.2
       graphql-ez: ^0.12.6
       husky: ^7.0.2
@@ -31,6 +33,7 @@ importers:
       typescript: ^4.4.2
       valtio: ^1.2.2
     devDependencies:
+      '@graphql-ez/fastify': 0.9.3_000c3718b1f3e5f2d96ff08bffafd513
       '@types/concurrently': 6.2.1
       '@types/jest': 27.0.1
       '@types/node': 16.7.8
@@ -41,6 +44,7 @@ importers:
       dotenv: 10.0.0
       es-jest: 1.3.0
       esbuild: 0.12.24
+      fastify: 3.20.2
       graphql: 15.5.2
       graphql-ez: 0.12.6_f76a59c4baa8250759cad1674d557109
       husky: 7.0.2
@@ -61,17 +65,15 @@ importers:
       '@chakra-ui/system': ^1.7.3
       '@emotion/react': ^11.4.1
       '@emotion/styled': ^11.3.0
-      '@types/node': ^16.7.8
       '@types/react': ^17.0.19
       '@types/react-dom': ^17.0.9
       framer-motion: ^4.1.17
-      next: ^11.1.1
+      next: ^11.1.2
       react: ^17.0.2
       react-dom: ^17.0.2
       react-graphql: workspace:^0.0.1
       react-icons: ^4.2.0
       typescript: ^4.4.2
-      valtio: ^1.2.2
     dependencies:
       '@auth0/auth0-react': 1.6.0_react-dom@17.0.2+react@17.0.2
       '@chakra-ui/react': 1.6.7_8d167c97cec7349161163108e2f2e3ad
@@ -81,15 +83,13 @@ importers:
       '@types/react': 17.0.19
       '@types/react-dom': 17.0.9
       framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
-      next: 11.1.1_01b6e46c81e6fda6a6d233df547d9171
+      next: 11.1.2_01b6e46c81e6fda6a6d233df547d9171
+      react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-graphql: link:../../packages/react-graphql
       react-icons: 4.2.0_react@17.0.2
     devDependencies:
-      '@types/node': 16.7.8
-      react: 17.0.2
       typescript: 4.4.2
-      valtio: 1.2.2_react@17.0.2
 
   gateway:
     specifiers:
@@ -103,7 +103,6 @@ importers:
       '@types/concurrently': ^6.2.1
       '@types/content-type': ^1.1.5
       '@types/ms': ^0.7.31
-      '@types/node': ^16.7.8
       '@types/wait-on': ^5.3.1
       api-base: workspace:^0.0.1
       concurrently: ^6.2.1
@@ -115,11 +114,8 @@ importers:
       graphql: ^15.5.2
       graphql-ez: ^0.12.6
       ms: ^2.1.3
-      react: ^17.0.2
       tsup: ^4.14.0
-      typescript: ^4.4.2
       undici: ^4.5.1
-      valtio: ^1.2.2
       wait-on: ^6.0.0
     dependencies:
       '@graphql-ez/fastify': 0.9.3_000c3718b1f3e5f2d96ff08bffafd513
@@ -146,11 +142,7 @@ importers:
     devDependencies:
       '@types/concurrently': 6.2.1
       '@types/content-type': 1.1.5
-      '@types/node': 16.7.8
       '@types/wait-on': 5.3.1
-      react: 17.0.2
-      typescript: 4.4.2
-      valtio: 1.2.2_react@17.0.2
 
   packages/api-base:
     specifiers:
@@ -161,17 +153,11 @@ importers:
       '@graphql-ez/plugin-scalars': ^0.7.1
       '@graphql-ez/plugin-schema': ^0.7.1
       '@graphql-ez/plugin-voyager': ^0.7.0
-      '@types/node': ^16.7.8
       '@types/validator': ^13.6.3
       db: workspace:^0.0.1
-      esbuild: ^0.12.20
-      fastify: ^3.20.2
       fastify-auth0-verify: ^0.5.2
       fastify-plugin: ^3.0.0
-      graphql: ^15.5.2
-      graphql-ez: ^0.12.6
       tsup: ^4.14.0
-      typescript: ^4.4.2
       validator: ^13.6.0
     dependencies:
       '@auth0/auth0-react': 1.6.0_react@17.0.2
@@ -182,86 +168,48 @@ importers:
       '@graphql-ez/plugin-schema': 0.7.1_b527362af01834cbb6ba474fd2702cb8
       '@graphql-ez/plugin-voyager': 0.7.0_b527362af01834cbb6ba474fd2702cb8
       db: link:../db
-      fastify: 3.20.2
       fastify-auth0-verify: 0.5.2
       fastify-plugin: 3.0.0
-      graphql: 15.5.2
-      graphql-ez: 0.12.6_f76a59c4baa8250759cad1674d557109
       validator: 13.6.0
     devDependencies:
-      '@types/node': 16.7.8
       '@types/validator': 13.6.3
-      esbuild: 0.12.24
       tsup: 4.14.0_typescript@4.4.2
-      typescript: 4.4.2
 
   packages/common:
     specifiers:
-      '@types/node': ^16.7.8
-      concurrently: ^6.2.1
-      cross-env: ^7.0.3
-      fastify: ^3.20.2
-      react: ^17.0.2
       tsup: ^4.14.0
-      typescript: ^4.4.2
-      valtio: ^1.2.2
     devDependencies:
-      '@types/node': 16.7.8
-      concurrently: 6.2.1
-      cross-env: 7.0.3
-      fastify: 3.20.2
-      react: 17.0.2
       tsup: 4.14.0_typescript@4.4.2
-      typescript: 4.4.2
-      valtio: 1.2.2_react@17.0.2
 
   packages/common-api:
     specifiers:
       common: workspace:^0.0.1
-      dotenv: ^10.0.0
       require-env-variable: ^3.1.2
       tsup: ^4.14.0
     dependencies:
       common: link:../common
-      dotenv: 10.0.0
       require-env-variable: 3.1.2
     devDependencies:
       tsup: 4.14.0_typescript@4.4.2
 
   packages/db:
     specifiers:
-      '@graphql-ez/fastify': ^0.9.3
       '@prisma/client': 2.30.2
       '@types/concurrently': ^6.2.1
-      '@types/node': ^16.7.8
       '@types/react': ^17.0.19
       common-api: workspace:^1.0.0
-      concurrently: ^6.2.1
-      cross-env: ^7.0.3
-      dotenv: ^10.0.0
       prisma: 2.30.2
       prisma-dbml-generator: ^0.7.0
-      react: ^17.0.2
       tsup: ^4.14.0
-      typescript: ^4.4.2
-      valtio: ^1.2.2
     dependencies:
-      '@graphql-ez/fastify': 0.9.3_b527362af01834cbb6ba474fd2702cb8
       '@prisma/client': 2.30.2_prisma@2.30.2
       common-api: link:../common-api
-      concurrently: 6.2.1
-      cross-env: 7.0.3
-      dotenv: 10.0.0
       prisma: 2.30.2
       prisma-dbml-generator: 0.7.0
       tsup: 4.14.0_typescript@4.4.2
     devDependencies:
       '@types/concurrently': 6.2.1
-      '@types/node': 16.7.8
       '@types/react': 17.0.19
-      react: 17.0.2
-      typescript: 4.4.2
-      valtio: 1.2.2_react@17.0.2
 
   packages/react-graphql:
     specifiers:
@@ -272,16 +220,12 @@ importers:
       '@graphql-codegen/typescript-document-nodes': 2.1.2
       '@graphql-codegen/typescript-operations': ^2.1.2
       '@graphql-codegen/typescript-react-query': ^2.1.2
-      '@types/node': ^16.7.8
       common: workspace:^0.0.1
       concurrently: ^6.2.1
       graphql: ^15.5.2
       prettier: ^2.3.2
-      react: ^17.0.2
       react-query: ^3.21.1
       tsup: ^4.14.0
-      typescript: ^4.4.2
-      valtio: ^1.2.2
     devDependencies:
       '@graphql-codegen/cli': 2.1.1_6b89cad2c7a6efee578b55de588edda2
       '@graphql-codegen/core': 2.1.0_graphql@15.5.2
@@ -290,226 +234,72 @@ importers:
       '@graphql-codegen/typescript-document-nodes': 2.1.2_graphql@15.5.2
       '@graphql-codegen/typescript-operations': 2.1.2_graphql@15.5.2
       '@graphql-codegen/typescript-react-query': 2.1.2_graphql@15.5.2
-      '@types/node': 16.7.8
       common: link:../common
       concurrently: 6.2.1
       graphql: 15.5.2
       prettier: 2.3.2
-      react: 17.0.2
       react-query: 3.21.1_react@17.0.2
       tsup: 4.14.0_typescript@4.4.2
-      typescript: 4.4.2
-      valtio: 1.2.2_react@17.0.2
 
   services/actions:
     specifiers:
-      '@graphql-ez/fastify': ^0.9.3
-      '@types/node': ^16.7.8
       api-base: workspace:^0.0.1
-      concurrently: ^6.2.1
-      cross-env: ^7.0.3
       db: workspace:^0.0.1
-      dotenv: ^10.0.0
-      fastify: ^3.20.2
-      fastify-auth0-verify: ^0.5.2
-      graphql: ^15.5.2
-      graphql-ez: ^0.12.6
-      react: ^17.0.2
       tsup: ^4.14.0
-      typescript: ^4.4.2
-      valtio: ^1.2.2
     dependencies:
-      '@graphql-ez/fastify': 0.9.3_000c3718b1f3e5f2d96ff08bffafd513
       api-base: link:../../packages/api-base
-      concurrently: 6.2.1
-      cross-env: 7.0.3
       db: link:../../packages/db
-      dotenv: 10.0.0
-      fastify: 3.20.2
-      fastify-auth0-verify: 0.5.2
-      graphql: 15.5.2
-      graphql-ez: 0.12.6_f76a59c4baa8250759cad1674d557109
       tsup: 4.14.0_typescript@4.4.2
-    devDependencies:
-      '@types/node': 16.7.8
-      react: 17.0.2
-      typescript: 4.4.2
-      valtio: 1.2.2_react@17.0.2
 
   services/content:
     specifiers:
-      '@graphql-ez/fastify': ^0.9.3
-      '@types/node': ^16.7.8
       api-base: workspace:^0.0.1
-      concurrently: ^6.2.1
-      cross-env: ^7.0.3
       db: workspace:^0.0.1
-      dotenv: ^10.0.0
-      fastify: ^3.20.2
-      fastify-auth0-verify: ^0.5.2
-      graphql: ^15.5.2
-      graphql-ez: ^0.12.6
-      react: ^17.0.2
       tsup: ^4.14.0
-      typescript: ^4.4.2
-      valtio: ^1.2.2
     dependencies:
-      '@graphql-ez/fastify': 0.9.3_000c3718b1f3e5f2d96ff08bffafd513
       api-base: link:../../packages/api-base
-      concurrently: 6.2.1
-      cross-env: 7.0.3
       db: link:../../packages/db
-      dotenv: 10.0.0
-      fastify: 3.20.2
-      fastify-auth0-verify: 0.5.2
-      graphql: 15.5.2
-      graphql-ez: 0.12.6_f76a59c4baa8250759cad1674d557109
       tsup: 4.14.0_typescript@4.4.2
-    devDependencies:
-      '@types/node': 16.7.8
-      react: 17.0.2
-      typescript: 4.4.2
-      valtio: 1.2.2_react@17.0.2
 
   services/domain:
     specifiers:
-      '@graphql-ez/fastify': ^0.9.3
-      '@types/node': ^16.7.8
       api-base: workspace:^0.0.1
-      concurrently: ^6.2.1
-      cross-env: ^7.0.3
       db: workspace:^0.0.1
-      dotenv: ^10.0.0
-      fastify: ^3.20.2
-      fastify-auth0-verify: ^0.5.2
-      graphql: ^15.5.2
-      graphql-ez: ^0.12.6
-      react: ^17.0.2
       tsup: ^4.14.0
-      typescript: ^4.4.2
-      valtio: ^1.2.2
     dependencies:
-      '@graphql-ez/fastify': 0.9.3_000c3718b1f3e5f2d96ff08bffafd513
       api-base: link:../../packages/api-base
-      concurrently: 6.2.1
-      cross-env: 7.0.3
       db: link:../../packages/db
-      dotenv: 10.0.0
-      fastify: 3.20.2
-      fastify-auth0-verify: 0.5.2
-      graphql: 15.5.2
-      graphql-ez: 0.12.6_f76a59c4baa8250759cad1674d557109
       tsup: 4.14.0_typescript@4.4.2
-    devDependencies:
-      '@types/node': 16.7.8
-      react: 17.0.2
-      typescript: 4.4.2
-      valtio: 1.2.2_react@17.0.2
 
   services/projects:
     specifiers:
-      '@graphql-ez/fastify': ^0.9.3
-      '@types/node': ^16.7.8
       api-base: workspace:^0.0.1
-      concurrently: ^6.2.1
-      cross-env: ^7.0.3
       db: workspace:^0.0.1
-      dotenv: ^10.0.0
-      fastify: ^3.20.2
-      fastify-auth0-verify: ^0.5.2
-      graphql: ^15.5.2
-      graphql-ez: ^0.12.6
-      react: ^17.0.2
       tsup: ^4.14.0
-      typescript: ^4.4.2
-      valtio: ^1.2.2
     dependencies:
-      '@graphql-ez/fastify': 0.9.3_000c3718b1f3e5f2d96ff08bffafd513
       api-base: link:../../packages/api-base
-      concurrently: 6.2.1
-      cross-env: 7.0.3
       db: link:../../packages/db
-      dotenv: 10.0.0
-      fastify: 3.20.2
-      fastify-auth0-verify: 0.5.2
-      graphql: 15.5.2
-      graphql-ez: 0.12.6_f76a59c4baa8250759cad1674d557109
       tsup: 4.14.0_typescript@4.4.2
-    devDependencies:
-      '@types/node': 16.7.8
-      react: 17.0.2
-      typescript: 4.4.2
-      valtio: 1.2.2_react@17.0.2
 
   services/state:
     specifiers:
-      '@graphql-ez/fastify': ^0.9.3
-      '@types/node': ^16.7.8
       api-base: workspace:^0.0.1
-      concurrently: ^6.2.1
-      cross-env: ^7.0.3
       db: workspace:^0.0.1
-      dotenv: ^10.0.0
-      fastify: ^3.20.2
-      fastify-auth0-verify: ^0.5.2
-      graphql: ^15.5.2
-      graphql-ez: ^0.12.6
-      react: ^17.0.2
       tsup: ^4.14.0
-      typescript: ^4.4.2
-      valtio: ^1.2.2
     dependencies:
-      '@graphql-ez/fastify': 0.9.3_000c3718b1f3e5f2d96ff08bffafd513
       api-base: link:../../packages/api-base
-      concurrently: 6.2.1
-      cross-env: 7.0.3
       db: link:../../packages/db
-      dotenv: 10.0.0
-      fastify: 3.20.2
-      fastify-auth0-verify: 0.5.2
-      graphql: 15.5.2
-      graphql-ez: 0.12.6_f76a59c4baa8250759cad1674d557109
       tsup: 4.14.0_typescript@4.4.2
-    devDependencies:
-      '@types/node': 16.7.8
-      react: 17.0.2
-      typescript: 4.4.2
-      valtio: 1.2.2_react@17.0.2
 
   services/users:
     specifiers:
-      '@graphql-ez/fastify': ^0.9.3
-      '@types/node': ^16.7.8
       api-base: workspace:^0.0.1
-      concurrently: ^6.2.1
-      cross-env: ^7.0.3
       db: workspace:^0.0.1
-      dotenv: ^10.0.0
-      fastify: ^3.20.2
-      fastify-auth0-verify: ^0.5.2
-      graphql: ^15.5.2
-      graphql-ez: ^0.12.6
-      react: ^17.0.2
       tsup: ^4.14.0
-      typescript: ^4.4.2
-      valtio: ^1.2.2
     dependencies:
-      '@graphql-ez/fastify': 0.9.3_000c3718b1f3e5f2d96ff08bffafd513
       api-base: link:../../packages/api-base
-      concurrently: 6.2.1
-      cross-env: 7.0.3
       db: link:../../packages/db
-      dotenv: 10.0.0
-      fastify: 3.20.2
-      fastify-auth0-verify: 0.5.2
-      graphql: 15.5.2
-      graphql-ez: 0.12.6_f76a59c4baa8250759cad1674d557109
       tsup: 4.14.0_typescript@4.4.2
-    devDependencies:
-      '@types/node': 16.7.8
-      react: 17.0.2
-      typescript: 4.4.2
-      valtio: 1.2.2_react@17.0.2
 
 packages:
 
@@ -2341,23 +2131,6 @@ packages:
       fastify-cors: 6.0.2
       graphql: 15.5.2
       graphql-ez: 0.12.6_f76a59c4baa8250759cad1674d557109
-    dev: false
-
-  /@graphql-ez/fastify/0.9.3_b527362af01834cbb6ba474fd2702cb8:
-    resolution: {integrity: sha512-ol3Iol69Sih6Hbry6relnK+KNyxYSYX6UX/2c2eYQ1qF9iQ12HrBmpCk7e0akC+p2QY7c27oxi3nixPTlYthvg==}
-    engines: {node: ^12.20.0 || >=14.13.0}
-    peerDependencies:
-      '@types/node': '*'
-      fastify: ^3.17.0
-      graphql: '*'
-      graphql-ez: ^0.12.3
-    dependencies:
-      '@graphql-ez/utils': 0.1.2_f76a59c4baa8250759cad1674d557109
-      '@types/node': 16.7.8
-      fastify-cors: 6.0.2
-      graphql: 15.5.2
-      graphql-ez: 0.12.6_f76a59c4baa8250759cad1674d557109
-    dev: false
 
   /@graphql-ez/plugin-altair/0.7.0_b527362af01834cbb6ba474fd2702cb8:
     resolution: {integrity: sha512-XG2gZUK2xyE+7m4pnvldnyFtWkudFXJW/OtgoUxT9FtnQFhf4oUP81fn1b2p4V7uR7T/xJyC4pnqim3Y3aGE3w==}
@@ -3103,16 +2876,16 @@ packages:
     resolution: {integrity: sha512-jDJTpta+P4p1NZTFVLHJ/TLFVYVcOqv6l8xwOeBKNPMgY/zDYH/YH7SJbvrr/h1RcS9GzbPcLKGzpuK9cV56UA==}
     dev: false
 
-  /@next/env/11.1.1:
-    resolution: {integrity: sha512-UEAzlfKofotLmj9LIgNixAfXpRck9rt/1CU9Q4ZtNDueGBJQP3HUzPHlrLChltWY2TA5MOzDQGL82H0a3+i5Ag==}
+  /@next/env/11.1.2:
+    resolution: {integrity: sha512-+fteyVdQ7C/OoulfcF6vd1Yk0FEli4453gr8kSFbU8sKseNSizYq6df5MKz/AjwLptsxrUeIkgBdAzbziyJ3mA==}
     dev: false
 
-  /@next/polyfill-module/11.1.1:
-    resolution: {integrity: sha512-9FyVSnz00WGdlLsgc2w1xL1Lm/Q25y6FYIyA+1WlJvT6LA2lbR78GKiHgedzUvrAatVGAcg/Og+d0d7B4tsJOg==}
+  /@next/polyfill-module/11.1.2:
+    resolution: {integrity: sha512-xZmixqADM3xxtqBV0TpAwSFzWJP0MOQzRfzItHXf1LdQHWb0yofHHC+7eOrPFic8+ZGz5y7BdPkkgR1S25OymA==}
     dev: false
 
-  /@next/react-dev-overlay/11.1.1_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-CXc/A0DbSk5VXYu4+zr0fHm52Zh/LhPlLyVPEctJOZL64ccxkls5xGoXvgolJCku9L0pLjJzvdfAmhNLOp5dyw==}
+  /@next/react-dev-overlay/11.1.2_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-rDF/mGY2NC69mMg2vDqzVpCOlWqnwPUXB2zkARhvknUHyS6QJphPYv9ozoPJuoT/QBs49JJd9KWaAzVBvq920A==}
     peerDependencies:
       react: ^17.0.2
       react-dom: ^17.0.2
@@ -3132,8 +2905,8 @@ packages:
       strip-ansi: 6.0.0
     dev: false
 
-  /@next/react-refresh-utils/11.1.1_react-refresh@0.8.3:
-    resolution: {integrity: sha512-j186y+lWc8BHAuysAWvlOqO9Bp7E3BLK/d/Ju3W2sP5BCH5ZLyLG/p308zSy/O0MGTag0B038ZA1dCy/msouRQ==}
+  /@next/react-refresh-utils/11.1.2_react-refresh@0.8.3:
+    resolution: {integrity: sha512-hsoJmPfhVqjZ8w4IFzoo8SyECVnN+8WMnImTbTKrRUHOVJcYMmKLL7xf7T0ft00tWwAl/3f3Q3poWIN2Ueql/Q==}
     peerDependencies:
       react-refresh: 0.8.3
       webpack: ^4 || ^5
@@ -3144,39 +2917,35 @@ packages:
       react-refresh: 0.8.3
     dev: false
 
-  /@next/swc-darwin-arm64/11.1.1:
-    resolution: {integrity: sha512-KyB0aLpfQ+B2dsyGYpkM0ZwK3PV0t4C4b9yjgQc1VoTVnIjzXdDPnNOuVvmD849ZNOHfj3x8e2rlbxkj0lPm3A==}
+  /@next/swc-darwin-arm64/11.1.2:
+    resolution: {integrity: sha512-hZuwOlGOwBZADA8EyDYyjx3+4JGIGjSHDHWrmpI7g5rFmQNltjlbaefAbiU5Kk7j3BUSDwt30quJRFv3nyJQ0w==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
-    requiresBuild: true
     dev: false
     optional: true
 
-  /@next/swc-darwin-x64/11.1.1:
-    resolution: {integrity: sha512-B3ZXgrGx0bQplbrk2oggPjKPPsmyg8Fl0PJLMTVQ+erQ8g1m5QzyS9P6tB3SiIZa180JgENuguTHlVK5qEj4UA==}
+  /@next/swc-darwin-x64/11.1.2:
+    resolution: {integrity: sha512-PGOp0E1GisU+EJJlsmJVGE+aPYD0Uh7zqgsrpD3F/Y3766Ptfbe1lEPPWnRDl+OzSSrSrX1lkyM/Jlmh5OwNvA==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
-    requiresBuild: true
     dev: false
     optional: true
 
-  /@next/swc-linux-x64-gnu/11.1.1:
-    resolution: {integrity: sha512-qvZL7gSKF+E+GZ3L1XiTnE3cOh9rk0wkqimT/q+wwcZA4E720Lu4lrT79I3HPuj6i/JPgGvmNskcnYrDeaoFaw==}
+  /@next/swc-linux-x64-gnu/11.1.2:
+    resolution: {integrity: sha512-YcDHTJjn/8RqvyJVB6pvEKXihDcdrOwga3GfMv/QtVeLphTouY4BIcEUfrG5+26Nf37MP1ywN3RRl1TxpurAsQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
-    requiresBuild: true
     dev: false
     optional: true
 
-  /@next/swc-win32-x64-msvc/11.1.1:
-    resolution: {integrity: sha512-jhnCiA1De1L+kA0gmHG1AJijHoxOcrETWziDWy8fcqSrM1NlC4aJ5Mnu6k0QMcM9MnmXTA4TQZOEv3kF7vhJUQ==}
+  /@next/swc-win32-x64-msvc/11.1.2:
+    resolution: {integrity: sha512-e/pIKVdB+tGQYa1cW3sAeHm8gzEri/HYLZHT4WZojrUxgWXqx8pk7S7Xs47uBcFTqBDRvK3EcQpPLf3XdVsDdg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
-    requiresBuild: true
     dev: false
     optional: true
 
@@ -4054,8 +3823,8 @@ packages:
     resolution: {integrity: sha512-Hdw8qdNiqdJ8LqT0iK0sVzkFbzg6fhnQqqfWhBDxcHZvU75+B+ayzTy8x+k5Ix0Y92XOhOUlx74ps+bA6BeYMQ==}
     engines: {node: '>=8'}
 
-  /available-typed-arrays/1.0.4:
-    resolution: {integrity: sha512-SA5mXJWrId1TaQjfxUYghbqQ/hYioKmLJvPJyDuYRtXXenFNMjj4hSSt1Cf1xsuXSXrtxrVC5Ot4eU6cOtBDdA==}
+  /available-typed-arrays/1.0.5:
+    resolution: {integrity: sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==}
     engines: {node: '>= 0.4'}
     dev: false
 
@@ -4361,7 +4130,7 @@ packages:
     dependencies:
       caniuse-lite: 1.0.30001252
       colorette: 1.3.0
-      electron-to-chromium: 1.3.822
+      electron-to-chromium: 1.3.824
       escalade: 3.1.1
       node-releases: 1.1.75
     dev: false
@@ -4373,7 +4142,7 @@ packages:
     dependencies:
       caniuse-lite: 1.0.30001252
       colorette: 1.3.0
-      electron-to-chromium: 1.3.822
+      electron-to-chromium: 1.3.824
       escalade: 3.1.1
       node-releases: 1.1.75
 
@@ -5267,8 +5036,8 @@ packages:
     dependencies:
       safe-buffer: 5.2.1
 
-  /electron-to-chromium/1.3.822:
-    resolution: {integrity: sha512-k7jG5oYYHxF4jx6PcqwHX3JVME/OjzolqOZiIogi9xtsfsmTjTdie4x88OakYFPEa8euciTgCCzvVNwvmjHb1Q==}
+  /electron-to-chromium/1.3.824:
+    resolution: {integrity: sha512-Fk+5aD0HDi9i9ZKt9n2VPOZO1dQy7PV++hz2wJ/KIn+CvVfu4fny39squHtyVDPuHNuoJGAZIbuReEklqYIqfA==}
 
   /elegant-spinner/1.0.1:
     resolution: {integrity: sha1-2wQ1IcldfjA/2PNFvtwzSc+wcp4=}
@@ -5627,7 +5396,6 @@ packages:
     dependencies:
       fastify-plugin: 3.0.0
       vary: 1.1.2
-    dev: false
 
   /fastify-error/0.3.1:
     resolution: {integrity: sha512-oCfpcsDndgnDVgiI7bwFKAun2dO+4h84vBlkWsWnz/OUK9Reff5UFoFl241xTiLeHWX/vU9zkDVXqYUxjOwHcQ==}
@@ -5645,7 +5413,6 @@ packages:
 
   /fastify-plugin/3.0.0:
     resolution: {integrity: sha512-ZdCvKEEd92DNLps5n0v231Bha8bkz1DjnPP/aEz37rz/q42Z5JVLmgnqR4DYuNn3NXAO3IDCPyRvgvxtJ4Ym4w==}
-    dev: false
 
   /fastify-warning/0.2.0:
     resolution: {integrity: sha512-s1EQguBw/9qtc1p/WTY4eq9WMRIACkj+HTcOIK1in4MV5aFaQC9ZCIt0dJ7pr5bIf4lPpHvAtP2ywpTNgs7hqw==}
@@ -6669,7 +6436,7 @@ packages:
     resolution: {integrity: sha512-VxlpTBGknhQ3o7YiVjIhdLU6+oD8dPz/79vvvH4F+S/c8608UCVa9fgDpa1kZgFoUST2DCgacc70UszKgzKuvA==}
     engines: {node: '>= 0.4'}
     dependencies:
-      available-typed-arrays: 1.0.4
+      available-typed-arrays: 1.0.5
       call-bind: 1.0.2
       es-abstract: 1.18.5
       foreach: 2.0.5
@@ -7912,8 +7679,8 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  /next/11.1.1_01b6e46c81e6fda6a6d233df547d9171:
-    resolution: {integrity: sha512-vfLJDkwAHsZUho5R1K4w49nfYhftUMWNmeNSjCtulOvnRBuEFb7ROyRZOQk7f29rMz02eLQrPZ9yiAmPsexL2g==}
+  /next/11.1.2_01b6e46c81e6fda6a6d233df547d9171:
+    resolution: {integrity: sha512-azEYL0L+wFjv8lstLru3bgvrzPvK0P7/bz6B/4EJ9sYkXeW8r5Bjh78D/Ol7VOg0EIPz0CXoe72hzAlSAXo9hw==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     peerDependencies:
@@ -7932,10 +7699,10 @@ packages:
     dependencies:
       '@babel/runtime': 7.15.3
       '@hapi/accept': 5.0.2
-      '@next/env': 11.1.1
-      '@next/polyfill-module': 11.1.1
-      '@next/react-dev-overlay': 11.1.1_react-dom@17.0.2+react@17.0.2
-      '@next/react-refresh-utils': 11.1.1_react-refresh@0.8.3
+      '@next/env': 11.1.2
+      '@next/polyfill-module': 11.1.2
+      '@next/react-dev-overlay': 11.1.2_react-dom@17.0.2+react@17.0.2
+      '@next/react-refresh-utils': 11.1.2_react-refresh@0.8.3
       '@node-rs/helper': 1.2.1
       assert: 2.0.0
       ast-types: 0.13.2
@@ -7975,7 +7742,7 @@ packages:
       stream-browserify: 3.0.0
       stream-http: 3.1.1
       string_decoder: 1.3.0
-      styled-jsx: 4.0.0_react@17.0.2
+      styled-jsx: 4.0.1_react@17.0.2
       timers-browserify: 2.0.12
       tty-browserify: 0.0.1
       use-subscription: 1.5.1_react@17.0.2
@@ -7983,10 +7750,10 @@ packages:
       vm-browserify: 1.1.2
       watchpack: 2.1.1
     optionalDependencies:
-      '@next/swc-darwin-arm64': 11.1.1
-      '@next/swc-darwin-x64': 11.1.1
-      '@next/swc-linux-x64-gnu': 11.1.1
-      '@next/swc-win32-x64-msvc': 11.1.1
+      '@next/swc-darwin-arm64': 11.1.2
+      '@next/swc-darwin-x64': 11.1.2
+      '@next/swc-linux-x64-gnu': 11.1.2
+      '@next/swc-win32-x64-msvc': 11.1.2
     transitivePeerDependencies:
       - '@babel/core'
       - typescript
@@ -8934,7 +8701,6 @@ packages:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
-    dev: true
 
   /read-pkg-up/7.0.1:
     resolution: {integrity: sha512-zK0TB7Xd6JpCLmlLmufqykGE+/TlOePD6qKClNW7hHDKFh/J7/7gCWGR7joEQEW1bKq3a3yUZSObOoWLFQ4ohg==}
@@ -9638,10 +9404,15 @@ packages:
       tslib: 2.3.1
     dev: false
 
-  /styled-jsx/4.0.0_react@17.0.2:
-    resolution: {integrity: sha512-2USeoWMoJ/Lx5s2y1PxuvLy/cz2Yrr8cTySV3ILHU1Vmaw1bnV7suKdblLPjnyhMD+qzN7B1SWyh4UZTARn/WA==}
+  /styled-jsx/4.0.1_react@17.0.2:
+    resolution: {integrity: sha512-Gcb49/dRB1k8B4hdK8vhW27Rlb2zujCk1fISrizCcToIs+55B4vmUM0N9Gi4nnVfFZWe55jRdWpAqH1ldAKWvQ==}
+    engines: {node: '>= 12.0.0'}
     peerDependencies:
+      '@babel/core': '*'
       react: '>= 16.8.0 || 17.x.x || 18.x.x'
+    peerDependenciesMeta:
+      '@babel/core':
+        optional: true
     dependencies:
       '@babel/plugin-syntax-jsx': 7.14.5
       '@babel/types': 7.15.0
@@ -9652,8 +9423,6 @@ packages:
       string-hash: 1.1.3
       stylis: 3.5.4
       stylis-rule-sheet: 0.0.10_stylis@3.5.4
-    transitivePeerDependencies:
-      - '@babel/core'
     dev: false
 
   /stylis-rule-sheet/0.0.10_stylis@3.5.4:
@@ -10269,7 +10038,7 @@ packages:
       is-generator-function: 1.0.10
       is-typed-array: 1.1.7
       safe-buffer: 5.2.1
-      which-typed-array: 1.1.6
+      which-typed-array: 1.1.7
     dev: false
 
   /uuid/3.4.0:
@@ -10339,7 +10108,6 @@ packages:
   /vary/1.1.2:
     resolution: {integrity: sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=}
     engines: {node: '>= 0.8'}
-    dev: false
 
   /vizion/2.2.1:
     resolution: {integrity: sha512-sfAcO2yeSU0CSPFI/DmZp3FsFE9T+8913nv1xWBOyzODv13fwkn6Vl7HqxGpkr9F608M+8SuFId3s+BlZqfXww==}
@@ -10460,11 +10228,11 @@ packages:
   /which-module/2.0.0:
     resolution: {integrity: sha1-2e8H3Od7mQK4o6j6SzHD4/fm6Ho=}
 
-  /which-typed-array/1.1.6:
-    resolution: {integrity: sha512-DdY984dGD5sQ7Tf+x1CkXzdg85b9uEel6nr4UkFg1LoE9OXv3uRuZhe5CoWdawhGACeFpEZXH8fFLQnDhbpm/Q==}
+  /which-typed-array/1.1.7:
+    resolution: {integrity: sha512-vjxaB4nfDqwKI0ws7wZpxIlde1XrLX5uB0ZjpfshgmapJMD7jJWhZI+yToJTqaFByF0eNBcYxbjmCzoRP7CfEw==}
     engines: {node: '>= 0.4'}
     dependencies:
-      available-typed-arrays: 1.0.4
+      available-typed-arrays: 1.0.5
       call-bind: 1.0.2
       es-abstract: 1.18.5
       foreach: 2.0.5

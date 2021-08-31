@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "prepare": "tsup",
-    "dev": "tsup --watch src"
+    "prepare": "tsup-node",
+    "dev": "tsup-node --watch src"
   },
   "dependencies": {
     "common": "workspace:^0.0.1",
-    "dotenv": "^10.0.0",
     "require-env-variable": "^3.1.2"
   },
   "devDependencies": {

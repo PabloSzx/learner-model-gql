@@ -4,15 +4,12 @@
   "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "tsup --watch src",
-    "prepare": "tsup"
+    "dev": "tsup-node --watch src",
+    "prepare": "tsup-node"
   },
   "devDependencies": {
-    "@types/node": "^16.7.8",
     "@types/validator": "^13.6.3",
-    "esbuild": "^0.12.24",
-    "tsup": "^4.14.0",
-    "typescript": "^4.4.2"
+    "tsup": "^4.14.0"
   },
   "dependencies": {
     "@auth0/auth0-react": "^1.6.0",
@@ -23,11 +20,8 @@
     "@graphql-ez/plugin-schema": "^0.7.1",
     "@graphql-ez/plugin-voyager": "^0.7.0",
     "db": "workspace:^0.0.1",
-    "fastify": "^3.20.2",
     "fastify-auth0-verify": "^0.5.2",
     "fastify-plugin": "^3.0.0",
-    "graphql": "^15.5.2",
-    "graphql-ez": "^0.12.6",
     "validator": "^13.6.0"
   },
   "tsup": {

@@ -6,33 +6,21 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "prisma db push",
-    "dev": "tsup --watch src",
+    "dev": "tsup-node --watch src",
     "migrate:dev": "prisma migrate dev",
     "migrate:push": "prisma db push",
     "prepare": "prisma generate && tsup"
   },
   "dependencies": {
-    "@graphql-ez/fastify": "^0.9.3",
     "@prisma/client": "2.30.2",
     "common-api": "workspace:^1.0.0",
-    "concurrently": "^6.2.1",
-    "cross-env": "^7.0.3",
-    "dotenv": "^10.0.0",
     "prisma": "2.30.2",
     "prisma-dbml-generator": "^0.7.0",
     "tsup": "^4.14.0"
   },
   "devDependencies": {
     "@types/concurrently": "^6.2.1",
-    "@types/node": "^16.7.8",
-    "@types/react": "^17.0.19",
-    "react": "^17.0.2",
-    "typescript": "^4.4.2",
-    "valtio": "^1.2.2"
-  },
-  "peerDependencies": {
-    "react": "*",
-    "valtio": "*"
+    "@types/react": "^17.0.19"
   },
   "tsup": {
     "target": "node14",
