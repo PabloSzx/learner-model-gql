@@ -1,21 +1,21 @@
+import { CreateApp, EZContext } from "@graphql-ez/fastify";
+import { ezAltairIDE } from "@graphql-ez/plugin-altair";
+import { ezCodegen } from "@graphql-ez/plugin-codegen";
+import type { SubschemaConfig } from "@graphql-tools/delegate";
+import { stitchSchemas } from "@graphql-tools/stitch";
+import type { AsyncExecutor } from "@graphql-tools/utils";
+import { introspectSchema } from "@graphql-tools/wrap";
 import { codegenOptions, servicesListPorts } from "api-base";
 import { parse } from "content-type";
 import Fastify from "fastify";
 import { print } from "graphql";
+import merge from "lodash/fp/merge.js";
 import ms from "ms";
 import { resolve } from "path";
 import { request } from "undici";
+import { inspect } from "util";
 import waitOn from "wait-on";
-import merge from "lodash/fp/merge";
-import { CreateApp, EZContext } from "@graphql-ez/fastify";
-import { ezAltairIDE } from "@graphql-ez/plugin-altair";
-import { ezCodegen } from "@graphql-ez/plugin-codegen";
-import { stitchSchemas } from "@graphql-tools/stitch";
-import { introspectSchema } from "@graphql-tools/wrap";
-
 import type { Node } from "./ez.generated";
-import type { AsyncExecutor } from "@graphql-tools/utils";
-import type { SubschemaConfig } from "@graphql-tools/delegate";
 
 function getStreamJSON<T>(stream: import("stream").Readable, encoding: BufferEncoding) {
   return new Promise<T>((resolve, reject) => {
@@ -145,7 +145,7 @@ async function getServiceSchema([name, port]: [name: string, port: number]) {
 const app = Fastify({
   logger: true,
 });
-require("util").inspect.defaultOptions.depth = null;
+inspect.defaultOptions.depth = null;
 
 async function main() {
   app.log.info("Waiting for services!");

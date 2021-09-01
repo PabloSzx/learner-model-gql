@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development tsup-node --watch src --watch \"../**/src/**/*.ts\" --onSuccess \"node dist/index.js\"",
-    "prepare": "tsup-node"
+    "dev": "cross-env NODE_ENV=development bob-ts-watch -c \"node dist/src/index.mjs\"",
+    "prepare": "bob-ts"
   },
   "dependencies": {
     "@graphql-ez/fastify": "^0.9.3",
@@ -34,7 +34,8 @@
   "devDependencies": {
     "@types/concurrently": "^6.2.1",
     "@types/content-type": "^1.1.5",
-    "@types/wait-on": "^5.3.1"
+    "@types/wait-on": "^5.3.1",
+    "bob-ts": "^0.0.6"
   },
   "tsup": {
     "target": "node14",
