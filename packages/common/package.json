@@ -2,20 +2,14 @@
   "name": "common",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development tsup-node --watch src",
-    "prepare": "tsup-node"
+    "dev": "bob-ts-watch",
+    "prepare": "bob-ts"
   },
   "devDependencies": {
-    "tsup": "^4.14.0"
-  },
-  "tsup": {
-    "target": "node14",
-    "entryPoints": [
-      "src/index.ts"
-    ],
-    "silent": true
+    "bob-ts": "^1.0.3"
   }
 }

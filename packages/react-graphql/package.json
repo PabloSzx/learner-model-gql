@@ -13,9 +13,9 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "pnpm prepare",
-    "dev": "concurrently -r \"graphql-codegen --config codegen.yml --watch\" \"tsup-node --watch\"",
+    "dev": "concurrently -r \"graphql-codegen --config codegen.yml --watch\" \"bob-ts-watch -f interop\"",
     "gql": "graphql-codegen --config codegen.yml",
-    "prepare": "tsup-node"
+    "prepare": "bob-ts -f interop"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.1.1",
@@ -25,22 +25,11 @@
     "@graphql-codegen/typescript-document-nodes": "2.1.2",
     "@graphql-codegen/typescript-operations": "^2.1.2",
     "@graphql-codegen/typescript-react-query": "^2.1.2",
+    "bob-ts": "^1.0.3",
     "common": "workspace:^0.0.1",
     "concurrently": "^6.2.1",
     "graphql": "^15.5.2",
     "prettier": "^2.3.2",
-    "react-query": "^3.21.1",
-    "tsup": "^4.14.0"
-  },
-  "tsup": {
-    "target": "node14",
-    "entryPoints": [
-      "src/index.ts"
-    ],
-    "format": [
-      "cjs",
-      "esm"
-    ],
-    "silent": true
+    "react-query": "^3.21.1"
   }
 }

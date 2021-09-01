@@ -1,0 +1,16 @@
+{
+  "name": "service-users",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development bob-ts-watch -c \"node dist/index.mjs\"",
+    "prepare": "bob-ts"
+  },
+  "dependencies": {
+    "api-base": "workspace:^0.0.1",
+    "db": "workspace:^0.0.1"
+  },
+  "devDependencies": {
+    "bob-ts": "^1.0.3"
+  }
+}

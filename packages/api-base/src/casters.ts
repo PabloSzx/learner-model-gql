@@ -1,4 +1,4 @@
-import isInt, { IsIntOptions } from "validator/lib/isInt";
+import isInt, { IsIntOptions } from "validator/lib/isInt.js";
 
 const NonNegativeIntOpts: IsIntOptions = {
   min: 0,

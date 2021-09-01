@@ -89,3 +89,5 @@ export * from "@graphql-ez/fastify";
 
 export * from "./casters";
 export * from "./connection";
+
+export * from "common-api";

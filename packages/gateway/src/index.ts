@@ -5,7 +5,7 @@ import type { SubschemaConfig } from "@graphql-tools/delegate";
 import { stitchSchemas } from "@graphql-tools/stitch";
 import type { AsyncExecutor } from "@graphql-tools/utils";
 import { introspectSchema } from "@graphql-tools/wrap";
-import { codegenOptions, servicesListPorts } from "api-base";
+import { codegenOptions, getDirname, servicesListPorts } from "api-base";
 import { parse } from "content-type";
 import Fastify from "fastify";
 import { print } from "graphql";
@@ -16,6 +16,8 @@ import { request } from "undici";
 import { inspect } from "util";
 import waitOn from "wait-on";
 import type { Node } from "./ez.generated";
+
+const __dirname = getDirname(import.meta.url);
 
 function getStreamJSON<T>(stream: import("stream").Readable, encoding: BufferEncoding) {
   return new Promise<T>((resolve, reject) => {
@@ -161,6 +163,8 @@ async function main() {
     subschemas: await Promise.all(services.map(getServiceSchema)),
     mergeTypes: true,
   });
+
+  console.log(resolve(__dirname, "../../schema.gql"));
 
   const { buildApp } = CreateApp({
     schema,

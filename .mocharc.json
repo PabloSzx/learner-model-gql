@@ -1,0 +1,5 @@
+{
+  "enable-source-maps": true,
+  "no-warnings": true,
+  "experimental-loader": "@istanbuljs/esm-loader-hook"
+}

@@ -1,5 +1,3 @@
 packages:
-  - "services/*"
-  - "gateway"
-  - "packages/*"
-  - "clients/*"
+  - packages/*
+  - packages/services/*

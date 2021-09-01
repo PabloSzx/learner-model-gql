@@ -1,5 +1,5 @@
 import { GraphQLError, GraphQLScalarType, Kind } from "graphql";
-import isInt, { IsIntOptions } from "validator/lib/isInt";
+import isInt, { IsIntOptions } from "validator/lib/isInt.js";
 
 import { toNonNegativeInteger, toNonNegativeIntegerString } from "./casters";
 
@@ -29,8 +29,6 @@ export const IntID = new GraphQLScalarType({
 
       throw new GraphQLError(`Invalid Non-Negative Numeric ID: '${ast.value}'`);
     }
-    throw new GraphQLError(
-      `Can only validate Integer-like values but got a: ${ast.kind}`
-    );
+    throw new GraphQLError(`Can only validate Integer-like values but got a: ${ast.kind}`);
   },
 });
