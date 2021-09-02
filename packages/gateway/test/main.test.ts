@@ -1,5 +1,5 @@
-import { equal } from "assert";
+import { strictEqual } from "assert/strict";
 
-it("ok", () => {
-  equal(1, 1);
+it("ok", async () => {
+  strictEqual(1, 1);
 });

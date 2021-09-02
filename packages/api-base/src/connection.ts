@@ -44,7 +44,9 @@ export type PageInfo = {
   hasPreviousPage: boolean;
 };
 
-export async function ResolveCursorConnection<T extends { id: number | string }>(
+export async function ResolveCursorConnection<
+  T extends { id: number | string }
+>(
   input: {
     first?: number | null;
     after?: number | null;

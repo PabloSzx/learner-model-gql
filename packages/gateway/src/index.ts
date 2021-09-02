@@ -19,7 +19,10 @@ import type { Node } from "./ez.generated";
 
 const __dirname = getDirname(import.meta.url);
 
-function getStreamJSON<T>(stream: import("stream").Readable, encoding: BufferEncoding) {
+function getStreamJSON<T>(
+  stream: import("stream").Readable,
+  encoding: BufferEncoding
+) {
   return new Promise<T>((resolve, reject) => {
     const chunks: Uint8Array[] = [];
 
@@ -29,7 +32,9 @@ function getStreamJSON<T>(stream: import("stream").Readable, encoding: BufferEnc
 
     stream.on("end", () => {
       try {
-        resolve(JSON.parse(Buffer.concat(chunks).toString(encoding || "utf-8")));
+        resolve(
+          JSON.parse(Buffer.concat(chunks).toString(encoding || "utf-8"))
+        );
       } catch (err) {
         reject(err);
       }
@@ -95,35 +100,42 @@ const servicesSubschemaConfig: {
 };
 
 async function getServiceSchema([name, port]: [name: string, port: number]) {
-  const remoteExecutor: AsyncExecutor<Partial<EZContext>> = async function remoteExecutor({
-    document,
-    variables,
-    context,
-  }) {
-    const query = print(document);
+  const remoteExecutor: AsyncExecutor<Partial<EZContext>> =
+    async function remoteExecutor({ document, variables, context }) {
+      const query = print(document);
 
-    if (query === "mutation\n") throw Error("Error in gateway to service: " + name);
+      if (query === "mutation\n")
+        throw Error("Error in gateway to service: " + name);
 
-    const authorization = context?.request?.headers.authorization;
+      const authorization = context?.request?.headers.authorization;
 
-    const { body, headers } = await request(`http://localhost:${port}/graphql`, {
-      body: JSON.stringify({ query, variables }),
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization,
-      },
-    });
+      const { body, headers } = await request(
+        `http://localhost:${port}/graphql`,
+        {
+          body: JSON.stringify({ query, variables }),
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            authorization,
+          },
+        }
+      );
 
-    if (!headers["content-type"]) throw Error("No content-type specified!");
+      if (!headers["content-type"]) throw Error("No content-type specified!");
 
-    const { type, parameters } = parse(headers["content-type"]);
+      const { type, parameters } = parse(headers["content-type"]);
 
-    if (type === "application/json")
-      return getStreamJSON(body, (parameters["charset"] as BufferEncoding) || "utf-8");
+      if (type === "application/json")
+        return getStreamJSON(
+          body,
+          (parameters["charset"] as BufferEncoding) || "utf-8"
+        );
 
-    throw Error("Unexpected content-type, expected 'application/json', received: " + type);
-  };
+      throw Error(
+        "Unexpected content-type, expected 'application/json', received: " +
+          type
+      );
+    };
 
   const serviceSubschema: SubschemaConfig = {
     schema: await introspectSchema(remoteExecutor),
