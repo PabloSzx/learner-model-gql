@@ -10,8 +10,5 @@
   "dependencies": {
     "common": "workspace:^0.0.1",
     "require-env-variable": "^3.1.2"
-  },
-  "devDependencies": {
-    "bob-ts": "^1.0.3"
   }
 }

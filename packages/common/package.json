@@ -8,8 +8,5 @@
   "scripts": {
     "dev": "bob-ts-watch",
     "prepare": "bob-ts"
-  },
-  "devDependencies": {
-    "bob-ts": "^1.0.3"
   }
 }

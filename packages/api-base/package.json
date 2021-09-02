@@ -9,8 +9,7 @@
     "prepare": "bob-ts -i src"
   },
   "devDependencies": {
-    "@types/validator": "^13.6.3",
-    "bob-ts": "^1.0.3"
+    "@types/validator": "^13.6.3"
   },
   "dependencies": {
     "@auth0/auth0-react": "^1.6.0",

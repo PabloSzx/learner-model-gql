@@ -1,8 +1,8 @@
-import assert from "assert";
 import { ResolveCursorConnection } from "api-base";
+import assert from "assert";
 import { gql, registerModule } from "../ez";
 
-registerModule(
+export const actionModule = registerModule(
   gql`
     type ActionVerb {
       id: IntID!

@@ -1,0 +1,16 @@
+{
+  "name": "testing",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "prepare": "bob-ts",
+    "dev": "bob-ts-watch"
+  },
+  "devDependencies": {
+    "@graphql-ez/fastify": "^0.9.3",
+    "@graphql-ez/fastify-testing": "^0.1.1",
+    "api-base": "workspace:^0.0.1"
+  }
+}
