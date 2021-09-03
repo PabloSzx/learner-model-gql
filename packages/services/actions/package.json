@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development bob-ts-watch -c \"node dist/src/index.mjs\"",
     "prepare": "bob-ts",
-    "test": "bob-ts && cross-env NODE_ENV=test c8 mocha dist/test",
+    "pretest": "bob-ts",
+    "test": "cross-env NODE_ENV=test c8 mocha dist/test",
     "test:watch": "bob-ts-watch -c \"c8 mocha dist/test\""
   },
   "dependencies": {

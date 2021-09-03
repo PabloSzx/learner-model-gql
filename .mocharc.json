@@ -1,3 +1,5 @@
 {
-  "enable-source-maps": true
+  "enable-source-maps": true,
+  "$schema": "https://json.schemastore.org/mocharc.json",
+  "require": ["testing/pre-test.mjs"]
 }

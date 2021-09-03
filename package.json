@@ -14,24 +14,12 @@
   "license": "MIT",
   "author": "PabloSzx <pablosaez1995@gmail.com>",
   "scripts": {
-    "clean:dist": "rimraf \"{clients,packages}/*/dist\" gateway/dist",
-    "dev": "concurrently pnpm:dev:*",
-    "dev:api-base": "pnpm dev -r --filter api-base",
-    "dev:common": "pnpm dev -r --filter common",
-    "dev:db": "pnpm dev -r --filter db",
-    "dev:gateway": "pnpm dev -r --filter gateway",
-    "dev:next": "cross-env NEXT_PUBLIC_API_URL=http://localhost:8080/graphql pnpm dev -r --filter client",
-    "dev:react-gql": "pnpm dev -r --filter react-graphql",
-    "dev:service-actions": "pnpm dev -r --filter service-actions",
-    "dev:service-content": "pnpm dev -r --filter service-content",
-    "dev:service-domain": "pnpm dev -r --filter service-domain",
-    "dev:service-projects": "pnpm dev -r --filter service-projects",
-    "dev:service-state": "pnpm dev -r --filter service-state",
-    "dev:service-users": "pnpm dev -r --filter service-users",
+    "dev": "cross-env NEXT_PUBLIC_API_URL=http://localhost:8080/graphql pnpm -r dev --no-sort --no-bail",
     "pretty": "pretty-quick",
     "pretty:all": "prettier --write \"**/*.{ts,tsx,gql,json}\"",
     "start": "pm2 start ecosystem.config.js",
     "test": "pnpm -r test --no-sort --no-bail",
+    "test:watch": "pnpm -r test:watch --no-sort --no-bail",
     "tsc": "tsc",
     "tsc:watch": "tsc --watch"
   },
@@ -39,18 +27,18 @@
     "@graphql-ez/fastify": "^0.9.3",
     "@types/concurrently": "^6.2.1",
     "@types/mocha": "^9.0.0",
-    "@types/node": "^16.7.8",
+    "@types/node": "^16.7.10",
     "@types/prettier": "^2.3.2",
     "@types/react": "^17.0.19",
-    "bob-ts": "^1.0.3",
+    "bob-ts": "^1.0.4",
     "c8": "^7.8.0",
     "concurrently": "^6.2.1",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
-    "esbuild": "^0.12.24",
+    "esbuild": "^0.12.25",
     "fastify": "^3.20.2",
     "graphql": "^15.5.2",
-    "graphql-ez": "^0.12.6",
+    "graphql-ez": "^0.12.7",
     "husky": "^7.0.2",
     "json5": "^2.2.0",
     "mocha": "^9.1.1",
@@ -64,8 +52,9 @@
   },
   "pnpm": {
     "overrides": {
-      "esbuild": ">=0.12.24",
-      "ws@>=5.0.0 <5.2.3 || >=6.0.0 <6.2.2 || >=7.0.0 <7.4.6": ">=5.2.3 <6.0.0 || >=6.2.2 <7.0.0 || >=7.4.6"
+      "ws@>=5.0.0 <5.2.3 || >=6.0.0 <6.2.2 || >=7.0.0 <7.4.6": ">=5.2.3 <6.0.0 || >=6.2.2 <7.0.0 || >=7.4.6",
+      "tar@<4.4.16 || >=5.0.0 <5.0.8 || >=6.0.0 <6.1.7": ">=4.4.16 <5.0.0 || >=5.0.8 <6.0.0 || >=6.1.7",
+      "tar@<4.4.18 || >=5.0.0 <5.0.10 || >=6.0.0 <6.1.9": ">=4.4.18 <5.0.0 || >=5.0.10 <6.0.0 || >=6.1.9"
     }
   }
 }

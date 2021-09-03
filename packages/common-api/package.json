@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "prepare": "bob-ts",
-    "dev": "bob-ts-watch"
+    "dev": "bob-ts-watch",
+    "test:watch": "bob-ts-watch"
   },
   "dependencies": {
     "common": "workspace:^0.0.1",

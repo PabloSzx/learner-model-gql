@@ -10,12 +10,13 @@
     "dev": "bob-ts-watch",
     "migrate:dev": "prisma migrate dev",
     "migrate:push": "prisma db push",
-    "prepare": "prisma generate && bob-ts"
+    "prepare": "prisma generate && bob-ts",
+    "test:watch": "bob-ts-watch"
   },
   "dependencies": {
-    "@prisma/client": "2.30.2",
+    "@prisma/client": "2.30.3",
     "common-api": "workspace:^1.0.0",
-    "prisma": "2.30.2",
+    "prisma": "2.30.3",
     "prisma-dbml-generator": "^0.7.0"
   },
   "devDependencies": {

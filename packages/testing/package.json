@@ -6,7 +6,8 @@
   "main": "dist/index.js",
   "scripts": {
     "prepare": "bob-ts",
-    "dev": "bob-ts-watch"
+    "dev": "bob-ts-watch",
+    "test:watch": "bob-ts-watch"
   },
   "devDependencies": {
     "@graphql-ez/fastify": "^0.9.3",
