@@ -11,7 +11,7 @@ import { Auth0Verify, Authorization, GetAuth0User } from "./auth";
 import { IntID } from "./customScalars";
 import { ConnectionTypes } from "./connection";
 
-export * from "../../../services";
+export * from "../../services/list";
 export * from "./auth";
 
 async function buildContext({ fastify }: BuildContextArgs) {
@@ -91,3 +91,4 @@ export * from "./casters";
 export * from "./connection";
 
 export * from "common-api";
+export * from "./logger";

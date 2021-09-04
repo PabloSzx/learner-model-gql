@@ -7,10 +7,10 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "prisma db push",
-    "dev": "bob-ts-watch",
+    "dev": "bob-ts-watch -c \"prisma generate\"",
     "migrate:dev": "prisma migrate dev",
     "migrate:push": "prisma db push",
-    "prepare": "prisma generate && bob-ts",
+    "prepack": "bob-ts",
     "test:watch": "bob-ts-watch"
   },
   "dependencies": {

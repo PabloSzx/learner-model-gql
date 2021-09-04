@@ -15,6 +15,7 @@
   "author": "PabloSzx <pablosaez1995@gmail.com>",
   "scripts": {
     "dev": "cross-env NEXT_PUBLIC_API_URL=http://localhost:8080/graphql pnpm -r dev --no-sort --no-bail",
+    "prepare": "pnpm -r prepack --no-sort --no-bail",
     "pretty": "pretty-quick",
     "pretty:all": "prettier --write \"**/*.{ts,tsx,gql,json}\"",
     "start": "pm2 start ecosystem.config.js",
@@ -32,6 +33,7 @@
     "@types/react": "^17.0.19",
     "bob-ts": "^1.0.5",
     "c8": "^7.8.0",
+    "common": "workspace:^0.0.1",
     "concurrently": "^6.2.1",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",

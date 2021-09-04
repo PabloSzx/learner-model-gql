@@ -7,7 +7,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "dev": "bob-ts-watch",
-    "prepare": "bob-ts",
+    "prepack": "bob-ts",
     "test:watch": "bob-ts-watch"
   }
 }

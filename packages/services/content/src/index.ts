@@ -2,10 +2,10 @@ import Fastify from "fastify";
 
 import { buildApp } from "./ez";
 
-import { servicesListPorts } from "api-base";
+import { baseServicesList, logger } from "api-base";
 
 const app = Fastify({
-  logger: true,
+  logger,
 });
 
 const ezApp = buildApp({
@@ -22,5 +22,5 @@ app.ready((err) => {
     process.exit(1);
   }
 
-  app.listen(servicesListPorts.content);
+  app.listen(baseServicesList.content);
 });

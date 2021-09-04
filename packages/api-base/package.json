@@ -2,14 +2,15 @@
   "name": "api-base",
   "version": "0.0.1",
   "license": "MIT",
-  "main": "dist/packages/api-base/src/index.js",
+  "main": "dist/api-base/src/index.js",
   "type": "module",
   "scripts": {
     "dev": "bob-ts-watch -i src",
-    "prepare": "bob-ts -i src",
+    "prepack": "bob-ts -i src",
     "test:watch": "bob-ts-watch -i src"
   },
   "devDependencies": {
+    "@types/pino": "^6.3.11",
     "@types/validator": "^13.6.3"
   },
   "dependencies": {
@@ -24,6 +25,8 @@
     "db": "workspace:^0.0.1",
     "fastify-auth0-verify": "^0.5.2",
     "fastify-plugin": "^3.0.0",
+    "pino": "^6.13.1",
+    "pino-pretty": "^6.0.0",
     "validator": "^13.6.0"
   }
 }

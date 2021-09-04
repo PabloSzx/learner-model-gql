@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development bob-ts-watch -c \"node dist/src/index.mjs\"",
-    "prepare": "bob-ts -f interop",
+    "prepack": "bob-ts -f interop",
     "pretest": "bob-ts",
     "test": "c8 mocha dist/test",
     "test:watch": "bob-ts-watch -c \"c8 mocha dist/test\""

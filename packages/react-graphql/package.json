@@ -15,7 +15,7 @@
     "build": "pnpm prepare",
     "dev": "concurrently -r \"graphql-codegen --config codegen.yml --watch\" \"bob-ts-watch -f interop\"",
     "gql": "graphql-codegen --config codegen.yml",
-    "prepare": "bob-ts -f interop"
+    "prepack": "bob-ts -f interop"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.1.1",

@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "prepare": "bob-ts",
+    "prepack": "bob-ts",
     "dev": "bob-ts-watch",
     "test:watch": "bob-ts-watch"
   },
