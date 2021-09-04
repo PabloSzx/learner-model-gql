@@ -16,7 +16,7 @@
   "type": "module",
   "scripts": {
     "clean:install": "pnpm dlx rimraf \"**/{node_modules,rimraf,.next,coverage,dist}\" && pnpm i && pnpm generate",
-    "clean:test:db": "docker-compose down && sudo rm -rf postgres-data",
+    "clean:test:db": "docker-compose down && sudo rimraf .test-postgres-data",
     "dev": "cross-env NEXT_PUBLIC_API_URL=http://localhost:8080/graphql pnpm -r dev --no-sort --no-bail",
     "generate": "pnpm -r generate --no-sort --no-bail",
     "prepare": "pnpm -r prepack --no-sort --no-bail",
@@ -56,6 +56,7 @@
     "pretty-quick": "^3.1.1",
     "randomstring": "^1.2.1",
     "react": "^17.0.2",
+    "rimraf": "^3.0.2",
     "testing": "workspace:*",
     "typescript": "^4.4.2",
     "valtio": "^1.2.2",
