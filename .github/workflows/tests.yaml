@@ -25,7 +25,7 @@ jobs:
       - name: Install Docker - 4
         run: sudo chmod +x /usr/local/bin/docker-compose
       - name: Setup node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ^16.8.0
       - name: Cache pnpm modules
