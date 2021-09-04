@@ -1,7 +1,7 @@
 export default {
   github: "https://github.com/PabloSzx/learner-model-gql",
   docsRepositoryBase:
-    "https://github.com/PabloSzx/learner-model-gql/blob/main/docs/",
+    "https://github.com/PabloSzx/learner-model-gql/blob/main/docs/pages/",
 
   titleSuffix: " - Learner Model GQL",
   head: <></>,
