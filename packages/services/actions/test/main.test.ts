@@ -1,4 +1,4 @@
-import { deepEqual, GetTestClient } from "testing";
+import { expectDeepEqual, GetTestClient, HelloDocument } from "testing";
 import { actionModule } from "../src/modules";
 
 describe("Actions service", () => {
@@ -9,7 +9,7 @@ describe("Actions service", () => {
       },
     });
 
-    deepEqual(await query("{hello}"), {
+    expectDeepEqual(await query(HelloDocument), {
       data: {
         hello: "Hello World!",
       },

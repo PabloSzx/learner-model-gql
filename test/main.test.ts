@@ -1,7 +1,10 @@
-import { deepEqual } from "assert/strict";
 import { getStitchedSchema } from "../packages/gateway/src/stitch";
 import { actionModule } from "../packages/services/actions/src/modules";
-import { GetTestClient } from "../packages/testing/src/index";
+import {
+  expectDeepEqual,
+  GetTestClient,
+  HelloDocument,
+} from "../packages/testing/src/index";
 
 describe("gateway", () => {
   it("Gateway Hello World", async () => {
@@ -22,7 +25,7 @@ describe("gateway", () => {
       schema: stitchedSchema,
     });
 
-    deepEqual(await GatewayClient.query("{hello}"), {
+    expectDeepEqual(await GatewayClient.query(HelloDocument), {
       data: {
         hello: "Hello World!",
       },

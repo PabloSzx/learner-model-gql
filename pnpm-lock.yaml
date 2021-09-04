@@ -10,6 +10,7 @@ importers:
   .:
     specifiers:
       '@graphql-ez/fastify': ^0.9.3
+      '@graphql-typed-document-node/core': ^3.1.0
       '@types/concurrently': ^6.2.1
       '@types/mocha': ^9.0.0
       '@types/node': ^16.7.10
@@ -43,6 +44,7 @@ importers:
       wait-on: ^6.0.0
     devDependencies:
       '@graphql-ez/fastify': 0.9.3_938cad229d74bba4dae15e7a9a339ab4
+      '@graphql-typed-document-node/core': 3.1.0_graphql@15.5.2
       '@types/concurrently': 6.2.1
       '@types/mocha': 9.0.0
       '@types/node': 16.7.10
@@ -309,12 +311,24 @@ importers:
 
   packages/testing:
     specifiers:
+      '@graphql-codegen/cli': ^2.1.1
+      '@graphql-codegen/core': ^2.1.0
+      '@graphql-codegen/typed-document-node': ^2.1.3
+      '@graphql-codegen/typescript': ^2.2.0
+      '@graphql-codegen/typescript-operations': ^2.1.3
       '@graphql-ez/fastify': ^0.9.3
       '@graphql-ez/fastify-testing': ^0.1.1
+      '@graphql-typed-document-node/core': ^3.1.0
       api-base: workspace:^0.0.1
     devDependencies:
+      '@graphql-codegen/cli': 2.1.1_fb34256022561d95fb59bff837eb1268
+      '@graphql-codegen/core': 2.1.0_graphql@15.5.2
+      '@graphql-codegen/typed-document-node': 2.1.3_graphql@15.5.2
+      '@graphql-codegen/typescript': 2.2.0_graphql@15.5.2
+      '@graphql-codegen/typescript-operations': 2.1.3_graphql@15.5.2
       '@graphql-ez/fastify': 0.9.3_938cad229d74bba4dae15e7a9a339ab4
       '@graphql-ez/fastify-testing': 0.1.1_a1ff0cc5c3cd193227885fddb0b863d0
+      '@graphql-typed-document-node/core': 3.1.0_graphql@15.5.2
       api-base: link:../api-base
 
 packages:
@@ -867,8 +881,8 @@ packages:
       '@babel/helper-function-name': 7.15.4
       '@babel/helper-hoist-variables': 7.15.4
       '@babel/helper-split-export-declaration': 7.15.4
-      '@babel/parser': 7.15.3
-      '@babel/types': 7.15.0
+      '@babel/parser': 7.15.4
+      '@babel/types': 7.15.4
       debug: 4.3.2
       globals: 11.12.0
     transitivePeerDependencies:
@@ -2466,7 +2480,7 @@ packages:
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
     dependencies:
-      '@graphql-tools/utils': 8.2.1_graphql@15.5.2
+      '@graphql-tools/utils': 8.2.2_graphql@15.5.2
       graphql: 15.5.2
       relay-compiler: 11.0.2_graphql@15.5.2
       tslib: 2.3.1
@@ -2611,7 +2625,6 @@ packages:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
     dependencies:
       graphql: 15.5.2
-    dev: false
 
   /@hapi/accept/5.0.2:
     resolution: {integrity: sha512-CmzBx/bXUR8451fnZRuZAJRlzgm0Jgu5dltTX/bszmR2lheb9BpyN47Q1RbaGTsvFzn0PXAEs+lXDKfshccYZw==}

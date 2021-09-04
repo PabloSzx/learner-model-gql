@@ -5,13 +5,21 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
+    "dev": "concurrently -r bob-ts-watch pnpm:generate:watch",
+    "generate": "graphql-codegen generate --config codegen.yaml",
+    "generate:watch": "graphql-codegen generate --config codegen.yaml --watch",
     "prepack": "bob-ts",
-    "dev": "bob-ts-watch",
     "test:watch": "bob-ts-watch"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^2.1.1",
+    "@graphql-codegen/core": "^2.1.0",
+    "@graphql-codegen/typed-document-node": "^2.1.3",
+    "@graphql-codegen/typescript": "^2.2.0",
+    "@graphql-codegen/typescript-operations": "^2.1.3",
     "@graphql-ez/fastify": "^0.9.3",
     "@graphql-ez/fastify-testing": "^0.1.1",
+    "@graphql-typed-document-node/core": "^3.1.0",
     "api-base": "workspace:^0.0.1"
   }
 }
