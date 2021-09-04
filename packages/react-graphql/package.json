@@ -12,7 +12,7 @@
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "pnpm prepare",
+    "build": "pnpm prepack",
     "dev": "concurrently -r \"graphql-codegen --config codegen.yml --watch\" \"bob-ts-watch -f interop\"",
     "generate": "graphql-codegen --config codegen.yml && bob-ts -f interop",
     "gql": "graphql-codegen --config codegen.yml",

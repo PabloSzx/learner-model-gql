@@ -12,5 +12,8 @@
   "dependencies": {
     "api-base": "workspace:^0.0.1",
     "db": "workspace:^0.0.1"
+  },
+  "devDependencies": {
+    "testing": "workspace:^0.0.1"
   }
 }

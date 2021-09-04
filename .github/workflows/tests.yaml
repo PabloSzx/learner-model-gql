@@ -12,24 +12,34 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node: [14]
         os: [ubuntu-latest]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Install shared libraries
+        run: sudo apt-get update && sudo apt-get install -y libssl-dev curl
+      - name: Install Docker - 1
+        run: curl -fsSL https://get.docker.com -o get-docker.sh
+      - name: Install Docker - 2
+        run: which docker || sh get-docker.sh -y
+      - name: Install Docker - 3
+        run: curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      - name: Install Docker - 4
+        run: sudo chmod +x /usr/local/bin/docker-compose
       - name: Setup node
-        uses: actions/setup-node@v2-beta
+        uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node }}
+          node-version: ^16.8.0
       - name: Cache pnpm modules
         uses: actions/cache@v2
+        if: ${{ !env.ACT }}
         env:
           cache-name: cache-pnpm-modules
         with:
           path: ~/.pnpm-store
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node }}-${{ hashFiles('./pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node }}-
+            ${{ runner.os }}-build-${{ env.cache-name }}-
 
       - run: npm install -g pnpm@latest
       - name: Node version
@@ -38,11 +48,9 @@ jobs:
         run: pnpm --version
       - name: Install dependencies
         run: pnpm install
-      - name: Run build scripts
-        run: pnpm build -r --no-sort
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      - name: Prepare
+        run: pnpm prepare
+      - name: Generate Scripts
+        run: pnpm generate
       - name: Test
         run: pnpm test
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}

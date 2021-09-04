@@ -258,9 +258,12 @@ importers:
     specifiers:
       api-base: workspace:^0.0.1
       db: workspace:^0.0.1
+      testing: workspace:^0.0.1
     dependencies:
       api-base: link:../../api-base
       db: link:../../db
+    devDependencies:
+      testing: link:../../testing
 
   packages/services/content:
     specifiers:
