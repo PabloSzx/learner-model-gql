@@ -105,3 +105,5 @@ dist
 
 
 temp
+
+.test-postgres-data

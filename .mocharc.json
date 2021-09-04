@@ -1,5 +1,0 @@
-{
-  "enable-source-maps": true,
-  "$schema": "https://json.schemastore.org/mocharc.json",
-  "spec": ["dist/**/*.test.js"]
-}

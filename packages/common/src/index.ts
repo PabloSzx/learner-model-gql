@@ -6,6 +6,8 @@ export const ENV = {
   IS_TEST: NODE_ENV === "test",
 };
 
+console.log(ENV);
+
 export const IS_CI = !!process.env.CI;
 export const IS_NOT_CI = !IS_CI;
 

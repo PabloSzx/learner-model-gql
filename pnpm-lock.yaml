@@ -14,6 +14,7 @@ importers:
       '@types/mocha': ^9.0.0
       '@types/node': ^16.7.10
       '@types/prettier': ^2.3.2
+      '@types/randomstring': ^1.1.7
       '@types/react': ^17.0.19
       api-base: workspace:^0.0.1
       bob-ts: ^1.0.5
@@ -23,6 +24,7 @@ importers:
       cross-env: ^7.0.3
       dotenv: ^10.0.0
       esbuild: ^0.12.25
+      execa: ^5.1.1
       fastify: ^3.20.2
       graphql: ^15.5.2
       graphql-ez: ^0.12.7
@@ -32,16 +34,19 @@ importers:
       pm2: ^5.1.1
       prettier: ^2.3.2
       pretty-quick: ^3.1.1
+      randomstring: ^1.2.1
       react: ^17.0.2
       testing: workspace:*
       typescript: ^4.4.2
       valtio: ^1.2.2
+      wait-on: ^6.0.0
     devDependencies:
       '@graphql-ez/fastify': 0.9.3_938cad229d74bba4dae15e7a9a339ab4
       '@types/concurrently': 6.2.1
       '@types/mocha': 9.0.0
       '@types/node': 16.7.10
       '@types/prettier': 2.3.2
+      '@types/randomstring': 1.1.7
       '@types/react': 17.0.19
       api-base: link:packages/api-base
       bob-ts: 1.0.5_127c8c98909eb30b6ef5409fbc915669
@@ -51,6 +56,7 @@ importers:
       cross-env: 7.0.3
       dotenv: 10.0.0
       esbuild: 0.12.25
+      execa: 5.1.1
       fastify: 3.20.2
       graphql: 15.5.2
       graphql-ez: 0.12.7_b217e939e9b0d1017b9ede9ab1ccbd94
@@ -60,10 +66,12 @@ importers:
       pm2: 5.1.1
       prettier: 2.3.2
       pretty-quick: 3.1.1_prettier@2.3.2
+      randomstring: 1.2.1
       react: 17.0.2
       testing: link:packages/testing
       typescript: 4.4.2
       valtio: 1.2.2_react@17.0.2
+      wait-on: 6.0.0
 
   packages/api-base:
     specifiers:
@@ -2619,13 +2627,11 @@ packages:
 
   /@hapi/hoek/9.2.0:
     resolution: {integrity: sha512-sqKVVVOe5ivCaXDWivIJYVSaEgdQK9ul7a4Kity5Iw7u9+wBAPbX1RMSnLLmp7O4Vzj0WOWwMAJsTL00xwaNug==}
-    dev: false
 
   /@hapi/topo/5.1.0:
     resolution: {integrity: sha512-foQZKJig7Ob0BMAYBfcJk8d77QtOe7Wo4ox7ff1lQYoNNAb6jwcY1ncdoy2e9wQZzvNy7ODZCYJkK8kzmcAnAg==}
     dependencies:
       '@hapi/hoek': 9.2.0
-    dev: false
 
   /@iarna/toml/2.2.5:
     resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
@@ -3062,15 +3068,12 @@ packages:
     resolution: {integrity: sha512-idTz8ibqWFrPU8kMirL0CoPH/A29XOzzAzpyN3zQ4kAWnzmNfFmRaoMNN6VI8ske5M73HZyhIaW4OuSFIdM4oA==}
     dependencies:
       '@hapi/hoek': 9.2.0
-    dev: false
 
   /@sideway/formula/3.0.0:
     resolution: {integrity: sha512-vHe7wZ4NOXVfkoRb8T5otiENVlT7a3IAiw7H5M2+GO+9CDgcVUUsX1zalAztCmwyOr2RUTGJdgB+ZvSVqmdHmg==}
-    dev: false
 
   /@sideway/pinpoint/2.0.0:
     resolution: {integrity: sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==}
-    dev: false
 
   /@sindresorhus/is/0.14.0:
     resolution: {integrity: sha512-9NET910DNaIPngYnLLPeg+Ogzqsi9uM4mSboU5y6p8S5DzMTVEsJZrawi+BoDNUVBa2DhJqQYUFvMDfgU062LQ==}
@@ -3203,6 +3206,10 @@ packages:
 
   /@types/prop-types/15.7.4:
     resolution: {integrity: sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==}
+
+  /@types/randomstring/1.1.7:
+    resolution: {integrity: sha512-S6NRYPiH8VGcLW4m9KEMUPtGxXqToCOLLCutQh8sSMaZGrL6/PEQCZAPGBtMP6SKd43ep5eWuPFN732h23h15w==}
+    dev: true
 
   /@types/react-dom/17.0.9:
     resolution: {integrity: sha512-wIvGxLfgpVDSAMH5utdL9Ngm5Owu0VsGmldro3ORLXV8CShrL8awVj06NuEXFQ5xyaYfdca7Sgbk/50Ri1GdPg==}
@@ -3461,6 +3468,11 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
+  /array-uniq/1.0.2:
+    resolution: {integrity: sha1-X8w3OSB3VyPP1k1lxkvvU7+eum0=}
+    engines: {node: '>=0.10.0'}
+    dev: true
+
   /arrify/2.0.1:
     resolution: {integrity: sha512-3duEwti880xqi4eAMN8AyR4a0ByT90zoYdLlevfrvU43vb0YZwZVfxOgxWrLXXXpyugL0hNZc9G6BiB5B3nUug==}
     engines: {node: '>=8'}
@@ -3561,7 +3573,6 @@ packages:
       follow-redirects: 1.14.3
     transitivePeerDependencies:
       - debug
-    dev: false
 
   /axios/0.21.1_debug@4.3.2:
     resolution: {integrity: sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==}
@@ -5212,7 +5223,6 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
-    dev: false
 
   /follow-redirects/1.14.3_debug@4.3.2:
     resolution: {integrity: sha512-3MkHxknWMUtb23apkgz/83fDoe+y+qr0TdgacGIA7bew+QLBo3vdgEN2xEsuXNivpFy4CyDhBBZnNZOtalmenw==}
@@ -6158,7 +6168,6 @@ packages:
       '@sideway/address': 4.1.2
       '@sideway/formula': 3.0.0
       '@sideway/pinpoint': 2.0.0
-    dev: false
 
   /joycon/3.0.1:
     resolution: {integrity: sha512-SJcJNBg32dGgxhPtM0wQqxqV0ax9k/9TaUskGDSJkSFSQOEWWvQ3zzWdGQRIUry2j1zA5+ReH13t0Mf3StuVZA==}
@@ -7606,6 +7615,10 @@ packages:
     resolution: {integrity: sha512-PgIdVpn5y5Yns8vqb8FzBUEYn98V3xcPgawAkkgj0YJ0qDsnHCiNmZYfOGMgOvoB0eWFLpYbhxUR3mxfDIMvpw==}
     dev: false
 
+  /randombytes/2.0.3:
+    resolution: {integrity: sha1-Z0yZdgkBw8QRJ3GjHlIdw0nMCew=}
+    dev: true
+
   /randombytes/2.1.0:
     resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
     dependencies:
@@ -7617,6 +7630,14 @@ packages:
       randombytes: 2.1.0
       safe-buffer: 5.2.1
     dev: false
+
+  /randomstring/1.2.1:
+    resolution: {integrity: sha512-eMnfell9XuU3jfCx3f4xCaFAt0YMFPZhx9R3PSStmLarDKg5j5vivqKhf/8pvG+VX/YkxsckHK/VPUrKa5V07A==}
+    hasBin: true
+    dependencies:
+      array-uniq: 1.0.2
+      randombytes: 2.0.3
+    dev: true
 
   /raw-body/2.4.1:
     resolution: {integrity: sha512-9WmIKF6mkvA0SLmA2Knm9+qj89e+j1zqgyn8aXGd7+nAduPoqgI9lO57SAZNn/Byzo5P7JhXTyg9PzaJbH73bA==}
@@ -8049,7 +8070,6 @@ packages:
     resolution: {integrity: sha512-p2yuGIg9S1epc3vrjKf6iVb3RCaAYjYskkO+jHIaV0IjOPlJop4UnodOoFb2xeNwlguqLYvGw1b1McillYb5Gw==}
     dependencies:
       tslib: 2.1.0
-    dev: false
 
   /safe-buffer/5.1.2:
     resolution: {integrity: sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==}
@@ -8805,7 +8825,6 @@ packages:
 
   /tslib/2.1.0:
     resolution: {integrity: sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==}
-    dev: false
 
   /tslib/2.2.0:
     resolution: {integrity: sha512-gS9GVHRU+RGn5KQM2rllAlR3dU6m7AcpJKdtH8gFvQiC4Otgk98XnmMU+nZenHt/+VhnBPWwgrJsyrdcw6i23w==}
@@ -9117,7 +9136,6 @@ packages:
       rxjs: 7.3.0
     transitivePeerDependencies:
       - debug
-    dev: false
 
   /warning/4.0.3:
     resolution: {integrity: sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==}

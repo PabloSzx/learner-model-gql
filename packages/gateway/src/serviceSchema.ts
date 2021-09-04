@@ -48,7 +48,7 @@ const DocumentPrintCache = new WeakMap<DocumentNode, string>();
 
 export const ServicesClients: Client[] = [];
 
-if (typeof after !== undefined) {
+if (typeof after !== "undefined") {
   after(() => {
     Promise.allSettled(ServicesClients.map((v) => v.close()));
   });
