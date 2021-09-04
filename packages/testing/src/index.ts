@@ -8,17 +8,24 @@ import {
 } from "assert";
 
 if (typeof after !== "undefined") {
-  after(GlobalTeardown);
+  after(() => {
+    GlobalTeardown();
+  });
 }
 
-export const GetTestClient = ({ ez, ...rest }: FastifyAppOptions) => {
-  return CreateTestClient({
+export const GetTestClient = async ({ ez, ...rest }: FastifyAppOptions) => {
+  const TestClient = await CreateTestClient({
     ez: {
       preset: ezServicePreset,
       ...ez,
     },
     ...rest,
   });
+
+  return {
+    ...TestClient,
+    origin: new URL(TestClient.endpoint).origin,
+  };
 };
 
 export * from "@graphql-ez/fastify";

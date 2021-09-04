@@ -15,6 +15,7 @@ importers:
       '@types/node': ^16.7.10
       '@types/prettier': ^2.3.2
       '@types/react': ^17.0.19
+      api-base: workspace:^0.0.1
       bob-ts: ^1.0.5
       c8: ^7.8.0
       common: workspace:^0.0.1
@@ -42,6 +43,7 @@ importers:
       '@types/node': 16.7.10
       '@types/prettier': 2.3.2
       '@types/react': 17.0.19
+      api-base: link:packages/api-base
       bob-ts: 1.0.5_127c8c98909eb30b6ef5409fbc915669
       c8: 7.8.0
       common: link:packages/common

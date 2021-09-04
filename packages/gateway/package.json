@@ -5,9 +5,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development bob-ts-watch -c \"node dist/src/index.mjs\"",
     "prepack": "bob-ts -f interop",
-    "pretest": "bob-ts",
-    "test": "c8 mocha dist/test",
-    "test:watch": "bob-ts-watch -c \"c8 mocha dist/test\""
+    "pretest": "bob-ts"
   },
   "dependencies": {
     "@graphql-ez/fastify": "^0.9.3",

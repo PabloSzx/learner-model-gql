@@ -8,6 +8,7 @@ import type { DocumentNode } from "graphql";
 import { print } from "graphql";
 import merge from "lodash/fp/merge.js";
 import { Client } from "undici";
+import { servicesSubschemaConfig } from "./stitchConfig";
 
 export type ServicesSubSchemasConfig = {
   [k in ServiceName]?: Partial<SubschemaConfig>;
@@ -40,16 +41,24 @@ export type ServiceSchemaConfig = {
   name: ServiceName;
   href?: string;
   port?: number;
-  config: ServicesSubSchemasConfig;
+  config?: ServicesSubSchemasConfig;
 };
 
 const DocumentPrintCache = new WeakMap<DocumentNode, string>();
+
+export const ServicesClients: Client[] = [];
+
+if (typeof after !== undefined) {
+  after(() => {
+    Promise.allSettled(ServicesClients.map((v) => v.close()));
+  });
+}
 
 export async function getServiceSchema({
   name,
   href,
   port,
-  config,
+  config = servicesSubschemaConfig,
 }: ServiceSchemaConfig) {
   const serviceUrl =
     href ||
@@ -63,6 +72,9 @@ export async function getServiceSchema({
   const client = new Client(serviceUrl, {
     pipelining: 10,
   });
+
+  ServicesClients.push(client);
+
   const remoteExecutor: AsyncExecutor<Partial<EZContext>> =
     async function remoteExecutor({ document, variables, context }) {
       let query = DocumentPrintCache.get(document);
