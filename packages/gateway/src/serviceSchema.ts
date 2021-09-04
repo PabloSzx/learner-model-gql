@@ -46,11 +46,11 @@ export type ServiceSchemaConfig = {
 
 const DocumentPrintCache = new WeakMap<DocumentNode, string>();
 
-export const ServicesClients: Client[] = [];
+export const ServicesClients: Record<string, Client> = {};
 
 if (typeof after !== "undefined") {
   after(() => {
-    Promise.allSettled(ServicesClients.map((v) => v.close()));
+    Promise.allSettled(Object.values(ServicesClients).map((v) => v.close()));
   });
 }
 
@@ -69,11 +69,13 @@ export async function getServiceSchema({
       })()
     }`;
 
-  const client = new Client(serviceUrl, {
-    pipelining: 10,
-  });
+  const client =
+    ServicesClients[serviceUrl] ||
+    new Client(serviceUrl, {
+      pipelining: 10,
+    });
 
-  ServicesClients.push(client);
+  ServicesClients[serviceUrl] = client;
 
   const remoteExecutor: AsyncExecutor<Partial<EZContext>> =
     async function remoteExecutor({ document, variables, context }) {
