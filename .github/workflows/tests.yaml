@@ -52,5 +52,7 @@ jobs:
         run: pnpm prepare
       - name: Generate Scripts
         run: pnpm generate
+      - name: Type Check
+        run: pnpm tsc
       - name: Test
         run: pnpm test
