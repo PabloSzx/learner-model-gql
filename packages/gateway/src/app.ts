@@ -27,10 +27,25 @@ export const getGatewayPlugin = async () => {
     ez: {
       plugins: [
         ezCodegen({
-          outputSchema: resolve(__dirname, "../../schema.gql"),
+          outputSchema: resolve(__dirname, "../../../schema.gql"),
           config: codegenOptions.config,
         }),
         ezAltairIDE({}),
+      ],
+    },
+    envelop: {
+      plugins: [
+        {
+          onPluginInit({ setSchema }) {
+            setInterval(() => {
+              getStitchedSchema(servicesConfig)
+                .then((schema) => {
+                  setSchema(schema);
+                })
+                .catch(console.error);
+            }, 5000);
+          },
+        },
       ],
     },
     cors: true,
