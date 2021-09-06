@@ -14,7 +14,7 @@
     "@types/validator": "^13.6.3"
   },
   "dependencies": {
-    "@auth0/auth0-react": "^1.6.0",
+    "@auth0/auth0-react": "^1.7.0",
     "@graphql-ez/fastify": "^0.9.3",
     "@graphql-ez/plugin-codegen": "^0.7.2",
     "@graphql-ez/plugin-modules": "^0.8.1",
