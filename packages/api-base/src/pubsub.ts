@@ -1,0 +1,12 @@
+import { DATABASE_URL } from "common-api";
+import { CreatePubSub } from "pg-gql-pubsub";
+
+declare module "pg-gql-pubsub" {
+  interface PubSubChannels {
+    updateGateway: string;
+  }
+}
+
+export const pubSub = CreatePubSub({
+  connectionString: DATABASE_URL,
+});

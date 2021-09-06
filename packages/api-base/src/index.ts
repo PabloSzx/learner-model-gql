@@ -1,18 +1,23 @@
-import { GetDBUser, prisma } from "db";
-
 import { BuildContextArgs, CreateApp, InferContext } from "@graphql-ez/fastify";
-import { ezCodegen, CodegenOptions } from "@graphql-ez/plugin-codegen";
+import { CodegenOptions, ezCodegen } from "@graphql-ez/plugin-codegen";
 import { ezGraphQLModules } from "@graphql-ez/plugin-modules";
 import { ezScalars } from "@graphql-ez/plugin-scalars";
 import { ezSchema } from "@graphql-ez/plugin-schema";
 import { ezVoyager } from "@graphql-ez/plugin-voyager";
-
+import { GetDBUser, prisma } from "db";
 import { Auth0Verify, Authorization, GetAuth0User } from "./auth";
-import { IntID } from "./customScalars";
 import { ConnectionTypes } from "./connection";
+import { IntID } from "./customScalars";
+import { pubSub } from "./pubsub";
 
+export * from "@graphql-ez/fastify";
+export * from "common-api";
 export * from "../../services/list";
 export * from "./auth";
+export * from "./casters";
+export * from "./connection";
+export * from "./logger";
+export * from "./pubsub";
 
 async function buildContext({ fastify }: BuildContextArgs) {
   const { Auth0UserPromise } = GetAuth0User(fastify?.request);
@@ -26,6 +31,7 @@ async function buildContext({ fastify }: BuildContextArgs) {
     Auth0UserPromise,
     prisma,
     authorization,
+    pubSub,
   };
 }
 
@@ -84,11 +90,3 @@ export const ezServicePreset = CreateApp({
   },
   buildContext,
 }).asPreset;
-
-export * from "@graphql-ez/fastify";
-
-export * from "./casters";
-export * from "./connection";
-
-export * from "common-api";
-export * from "./logger";

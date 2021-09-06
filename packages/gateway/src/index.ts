@@ -2,6 +2,7 @@ import { logger } from "api-base";
 import Fastify from "fastify";
 import { inspect } from "util";
 import { getGatewayPlugin } from "./app";
+import waitOn from "wait-on";
 
 const app = Fastify({
   logger,
@@ -11,6 +12,11 @@ inspect.defaultOptions.depth = null;
 async function main() {
   await app.register(await getGatewayPlugin());
 
+  await waitOn({
+    reverse: true,
+    resources: ["tcp:8080"],
+    timeout: 5000,
+  });
   await app.listen(8080);
 }
 

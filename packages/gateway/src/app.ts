@@ -1,12 +1,12 @@
-import { getServicesConfigFromEnv } from "./services";
-import waitOn from "wait-on";
-import { logger, codegenOptions, getDirname } from "api-base";
-import ms from "ms";
-import { getStitchedSchema } from "./stitch";
 import { CreateApp } from "@graphql-ez/fastify";
-import { ezCodegen } from "@graphql-ez/plugin-codegen";
 import { ezAltairIDE } from "@graphql-ez/plugin-altair";
+import { ezCodegen } from "@graphql-ez/plugin-codegen";
+import { codegenOptions, getDirname, logger, pubSub } from "api-base";
+import ms from "ms";
 import { resolve } from "path";
+import waitOn from "wait-on";
+import { getServicesConfigFromEnv } from "./services";
+import { getStitchedSchema } from "./stitch";
 
 const __dirname = getDirname(import.meta.url);
 
@@ -36,14 +36,15 @@ export const getGatewayPlugin = async () => {
     envelop: {
       plugins: [
         {
-          onPluginInit({ setSchema }) {
-            setInterval(() => {
+          async onPluginInit({ setSchema }) {
+            for await (const data of await pubSub.subscribe("updateGateway")) {
+              logger.info(`Update service ${data}`);
               getStitchedSchema(servicesConfig)
                 .then((schema) => {
                   setSchema(schema);
                 })
                 .catch(console.error);
-            }, 5000);
+            }
           },
         },
       ],

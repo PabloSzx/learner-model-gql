@@ -1,8 +1,7 @@
+import { baseServicesList, logger, pubSub } from "api-base";
 import Fastify from "fastify";
-
+import waitOn from "wait-on";
 import { buildApp } from "./ez";
-
-import { baseServicesList, logger } from "api-base";
 
 const app = Fastify({
   logger,
@@ -16,11 +15,18 @@ const ezApp = buildApp({
 
 app.register(ezApp.fastifyPlugin);
 
-app.ready((err) => {
+app.ready(async (err) => {
   if (err) {
     console.error(err);
     process.exit(1);
   }
+  await waitOn({
+    reverse: true,
+    resources: ["tcp:" + baseServicesList.projects],
+    timeout: 5000,
+  });
 
-  app.listen(baseServicesList.projects);
+  await app.listen(baseServicesList.projects);
+
+  pubSub.publish("projects", "updateGateway");
 });
