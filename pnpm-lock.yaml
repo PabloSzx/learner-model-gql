@@ -92,7 +92,7 @@ importers:
       db: workspace:^0.0.1
       fastify-auth0-verify: ^0.5.2
       fastify-plugin: ^3.0.0
-      pg-gql-pubsub: ^0.1.3
+      pg-gql-pubsub: ^0.1.5
       pino: ^6.13.2
       pino-pretty: ^6.0.0
       validator: ^13.6.0
@@ -108,7 +108,7 @@ importers:
       db: link:../db
       fastify-auth0-verify: 0.5.2
       fastify-plugin: 3.0.0
-      pg-gql-pubsub: 0.1.3_7015bb160524463e6f3a35b8df07c8b6
+      pg-gql-pubsub: 0.1.5_7015bb160524463e6f3a35b8df07c8b6
       pino: 6.13.2
       pino-pretty: 6.0.0
       validator: 13.6.0
@@ -7326,8 +7326,8 @@ packages:
     engines: {node: '>=4.0'}
     dev: false
 
-  /pg-gql-pubsub/0.1.3_7015bb160524463e6f3a35b8df07c8b6:
-    resolution: {integrity: sha512-ABn8nKfZgavRr7B2mTmQdBu3ORKabt/fSBbCRUE91H3TqNirwMkRUkcgdB/nI9CVrRfPuDPOBEIBFFcsto7D2A==}
+  /pg-gql-pubsub/0.1.5_7015bb160524463e6f3a35b8df07c8b6:
+    resolution: {integrity: sha512-Qupe5CFFumwaDIjqNlXB74w4bs7lQGLCIULfacsqC7sE+geoHsL9mbF3nWP+2qz9tXk8o3z4CaIptEWFW1ZrAQ==}
     dependencies:
       '@graphql-ez/utils': 0.1.2_7015bb160524463e6f3a35b8df07c8b6
       '@imqueue/pg-pubsub': 1.5.1

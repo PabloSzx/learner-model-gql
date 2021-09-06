@@ -2,7 +2,7 @@ import { DATABASE_URL } from "common-api";
 import { CreatePubSub } from "pg-gql-pubsub";
 
 declare module "pg-gql-pubsub" {
-  interface PubSubChannels {
+  interface Channels {
     updateGateway: string;
   }
 }

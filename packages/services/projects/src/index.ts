@@ -20,6 +20,7 @@ app.ready(async (err) => {
     console.error(err);
     process.exit(1);
   }
+
   await waitOn({
     reverse: true,
     resources: ["tcp:" + baseServicesList.projects],
@@ -28,5 +29,5 @@ app.ready(async (err) => {
 
   await app.listen(baseServicesList.projects);
 
-  pubSub.publish("projects", "updateGateway");
+  pubSub.publish("updateGateway", "projects");
 });

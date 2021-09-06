@@ -29,5 +29,5 @@ app.ready(async (err) => {
 
   await app.listen(baseServicesList.actions);
 
-  pubSub.publish("actions", "updateGateway");
+  pubSub.publish("updateGateway", "actions");
 });

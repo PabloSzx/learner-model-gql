@@ -29,5 +29,5 @@ app.ready(async (err) => {
 
   await app.listen(baseServicesList.state);
 
-  pubSub.publish("state", "updateGateway");
+  pubSub.publish("updateGateway", "state");
 });
