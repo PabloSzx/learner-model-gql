@@ -79,7 +79,7 @@ importers:
 
   packages/api-base:
     specifiers:
-      '@auth0/auth0-react': ^1.6.0
+      '@auth0/auth0-react': ^1.7.0
       '@graphql-ez/fastify': ^0.9.3
       '@graphql-ez/plugin-codegen': ^0.7.2
       '@graphql-ez/plugin-modules': ^0.8.1
@@ -97,7 +97,7 @@ importers:
       pino-pretty: ^6.0.0
       validator: ^13.6.0
     dependencies:
-      '@auth0/auth0-react': 1.6.0_react@17.0.2
+      '@auth0/auth0-react': 1.7.0_react@17.0.2
       '@graphql-ez/fastify': 0.9.3_eee95c64c9ac73f8baefaae2a4682585
       '@graphql-ez/plugin-codegen': 0.7.2_c681ae4ef4b4c3fb142bd73dd1e8cc7f
       '@graphql-ez/plugin-modules': 0.8.1_c681ae4ef4b4c3fb142bd73dd1e8cc7f
@@ -118,7 +118,7 @@ importers:
 
   packages/client-nextjs:
     specifiers:
-      '@auth0/auth0-react': ^1.6.0
+      '@auth0/auth0-react': ^1.7.0
       '@chakra-ui/react': ^1.6.7
       '@chakra-ui/system': ^1.7.3
       '@emotion/react': ^11.4.1
@@ -133,7 +133,7 @@ importers:
       react-icons: ^4.2.0
       typescript: ^4.4.2
     dependencies:
-      '@auth0/auth0-react': 1.6.0_react-dom@17.0.2+react@17.0.2
+      '@auth0/auth0-react': 1.7.0_react-dom@17.0.2+react@17.0.2
       '@chakra-ui/react': 1.6.7_5169fdecf8b87f3c70d2eb6f5638b7f6
       '@chakra-ui/system': 1.7.3_2305e84770652125202aaa4817ae97a9
       '@emotion/react': 11.4.1_6e44cfea672f844fe365824ce49901bd
@@ -346,8 +346,8 @@ packages:
     resolution: {integrity: sha512-mcpz/wJ7s50PJIVz4OQ1Yim3w/AAchtYtIg0QMWiMR2cZZoI9t23hRyqeumtD5EmyJu0fxtjmQ5WY8GI86V4rQ==}
     dev: true
 
-  /@auth0/auth0-react/1.6.0_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-xjuNJnINMrJFbSpOSr9mjdVwfI9b+JbMKxoZy8R9Tmk3DGpBJ9eo69Im2RAeAWRISdrrxEZxNv9RAh9AQUvxEA==}
+  /@auth0/auth0-react/1.7.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-D0JVqt8kvB8t+KkYAVyfTXxkMx0bJBTPNiQKWbiSwy9rm1PNVKgbS1/ABpf6DNbPeSdpOzVOQp0NVw5s6JivXw==}
     peerDependencies:
       react: ^16.11.0 || ^17
       react-dom: ^16.11.0 || ^17
@@ -357,8 +357,8 @@ packages:
       react-dom: 17.0.2_react@17.0.2
     dev: false
 
-  /@auth0/auth0-react/1.6.0_react@17.0.2:
-    resolution: {integrity: sha512-xjuNJnINMrJFbSpOSr9mjdVwfI9b+JbMKxoZy8R9Tmk3DGpBJ9eo69Im2RAeAWRISdrrxEZxNv9RAh9AQUvxEA==}
+  /@auth0/auth0-react/1.7.0_react@17.0.2:
+    resolution: {integrity: sha512-D0JVqt8kvB8t+KkYAVyfTXxkMx0bJBTPNiQKWbiSwy9rm1PNVKgbS1/ABpf6DNbPeSdpOzVOQp0NVw5s6JivXw==}
     peerDependencies:
       react: ^16.11.0 || ^17
       react-dom: ^16.11.0 || ^17
