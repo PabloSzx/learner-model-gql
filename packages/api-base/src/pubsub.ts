@@ -10,3 +10,9 @@ declare module "pg-gql-pubsub" {
 export const pubSub = CreatePubSub({
   connectionString: DATABASE_URL,
 });
+
+if (typeof after !== "undefined") {
+  after(() => {
+    pubSub.close();
+  });
+}
