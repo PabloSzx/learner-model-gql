@@ -92,7 +92,7 @@ importers:
       db: workspace:^0.0.1
       fastify-auth0-verify: ^0.5.2
       fastify-plugin: ^3.0.0
-      pino: ^6.13.1
+      pino: ^6.13.2
       pino-pretty: ^6.0.0
       validator: ^13.6.0
     dependencies:
@@ -107,7 +107,7 @@ importers:
       db: link:../db
       fastify-auth0-verify: 0.5.2
       fastify-plugin: 3.0.0
-      pino: 6.13.1
+      pino: 6.13.2
       pino-pretty: 6.0.0
       validator: 13.6.0
     devDependencies:
@@ -7324,6 +7324,19 @@ packages:
       pino-std-serializers: 3.2.0
       quick-format-unescaped: 4.0.3
       sonic-boom: 1.4.1
+
+  /pino/6.13.2:
+    resolution: {integrity: sha512-vmD/cabJ4xKqo9GVuAoAEeQhra8XJ7YydPV/JyIP+0zDtFTu5JSKdtt8eksGVWKtTSrNGcRrzJ4/IzvUWep3FA==}
+    hasBin: true
+    dependencies:
+      fast-redact: 3.0.2
+      fast-safe-stringify: 2.0.8
+      fastify-warning: 0.2.0
+      flatstr: 1.0.12
+      pino-std-serializers: 3.2.0
+      quick-format-unescaped: 4.0.3
+      sonic-boom: 1.4.1
+    dev: false
 
   /pkg-dir/4.2.0:
     resolution: {integrity: sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==}
