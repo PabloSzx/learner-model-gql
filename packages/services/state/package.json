@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development bob-ts-watch -c \"node dist/index.mjs\"",
+    "dev:service": "cross-env NODE_ENV=development bob-ts-watch -c \"node dist/index.mjs\"",
     "prepack": "bob-ts"
   },
   "dependencies": {
