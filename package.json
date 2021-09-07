@@ -17,9 +17,10 @@
   "scripts": {
     "clean:install": "pnpm dlx rimraf \"**/{node_modules,rimraf,.next,coverage,dist}\" && pnpm i && pnpm generate",
     "clean:test:db": "docker-compose down && sudo rimraf .test-postgres-data",
-    "dev": "cross-env NEXT_PUBLIC_API_URL=http://localhost:8080/graphql pnpm -r dev --no-sort --no-bail",
+    "dev": "pnpm prepack && pnpm generate && cross-env NEXT_PUBLIC_API_URL=http://localhost:8080/graphql pnpm -r dev --no-sort --no-bail",
     "generate": "pnpm -r generate --no-sort --no-bail",
-    "prepare": "husky install && pnpm -r prepack --no-sort --no-bail",
+    "prepare": "husky install && pnpm prepack",
+    "prepack": "pnpm -r prepack --no-sort --no-bail",
     "pretty": "pretty-quick",
     "pretty:all": "prettier --write \"**/*.{ts,tsx,gql,json}\"",
     "start": "pm2 start ecosystem.config.js",
