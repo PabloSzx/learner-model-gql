@@ -81,11 +81,13 @@ importers:
     specifiers:
       '@auth0/auth0-react': ^1.7.0
       '@graphql-ez/fastify': ^0.9.3
+      '@graphql-ez/plugin-altair': ^0.7.1
       '@graphql-ez/plugin-codegen': ^0.7.2
       '@graphql-ez/plugin-modules': ^0.8.1
       '@graphql-ez/plugin-scalars': ^0.7.2
       '@graphql-ez/plugin-schema': ^0.7.2
       '@graphql-ez/plugin-voyager': ^0.7.1
+      '@graphql-ez/plugin-websockets': ^0.9.3
       '@types/pino': ^6.3.11
       '@types/validator': ^13.6.3
       common-api: workspace:^1.0.0
@@ -99,11 +101,13 @@ importers:
     dependencies:
       '@auth0/auth0-react': 1.7.0_react@17.0.2
       '@graphql-ez/fastify': 0.9.3_529e63eac494bb6895a8cf58a1e4e77d
+      '@graphql-ez/plugin-altair': 0.7.1_565199b548554a2077850e689cdf4206
       '@graphql-ez/plugin-codegen': 0.7.2_565199b548554a2077850e689cdf4206
       '@graphql-ez/plugin-modules': 0.8.1_565199b548554a2077850e689cdf4206
       '@graphql-ez/plugin-scalars': 0.7.2_565199b548554a2077850e689cdf4206
       '@graphql-ez/plugin-schema': 0.7.2_565199b548554a2077850e689cdf4206
       '@graphql-ez/plugin-voyager': 0.7.1_565199b548554a2077850e689cdf4206
+      '@graphql-ez/plugin-websockets': 0.9.3_565199b548554a2077850e689cdf4206
       common-api: link:../common-api
       db: link:../db
       fastify-auth0-verify: 0.5.2
@@ -2228,6 +2232,26 @@ packages:
       - graphql
     dev: false
 
+  /@graphql-ez/plugin-websockets/0.9.3_565199b548554a2077850e689cdf4206:
+    resolution: {integrity: sha512-GQ+cQonUJ3FduJrn7QelaYzQZ24+jW3F5LSpRWNZSdVuQc8OMG5p9Cb0xDcQp4Dy/KVsWqJjPi4bJvpj368Byg==}
+    engines: {node: ^12.20.0 || >=14.13.0}
+    peerDependencies:
+      graphql: '*'
+      graphql-ez: ^0.12.6
+    dependencies:
+      '@graphql-ez/utils': 0.1.2_665410ccc343d2577b943b2f16d32229
+      '@types/ws': 7.4.7
+      graphql: 15.5.3
+      graphql-ez: 0.12.7_665410ccc343d2577b943b2f16d32229
+      graphql-ws: 5.4.1_graphql@15.5.3
+      subscriptions-transport-ws-envelop: 2.0.1_graphql@15.5.3+ws@8.2.1
+      ws: 8.2.1
+    transitivePeerDependencies:
+      - '@types/node'
+      - bufferutil
+      - utf-8-validate
+    dev: false
+
   /@graphql-ez/utils/0.1.2_665410ccc343d2577b943b2f16d32229:
     resolution: {integrity: sha512-kxmKVZYkp2zUEIGLblUrFYxWKPMKWZKaa2CG3AReImFyO5RtOYCCAveyCetY7k6FnbyrSDqSgiJRRpEmdujsGw==}
     peerDependencies:
@@ -3304,7 +3328,6 @@ packages:
     resolution: {integrity: sha512-JQbbmxZTZehdc2iszGKs5oC3NFnjeay7mtAWrdt7qNtAVK0g19muApzAy4bm9byz79xa2ZnO/BOBC2R8RC5Lww==}
     dependencies:
       '@types/node': 16.7.13
-    dev: true
 
   /@ungap/promise-all-settled/1.1.2:
     resolution: {integrity: sha512-sL/cEvJWAnClXw0wHk85/2L0G6Sj8UB0Ctc1TEMbKSsmpRosqhwj9gWgFRZSrBr2f9tiXISwNhCPmlfqUqyb9Q==}
@@ -3681,7 +3704,6 @@ packages:
 
   /backo2/1.0.2:
     resolution: {integrity: sha1-MasayLEpNjRj41s+u2n038+6eUc=}
-    dev: true
 
   /balanced-match/1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
@@ -4944,7 +4966,6 @@ packages:
 
   /eventemitter3/4.0.7:
     resolution: {integrity: sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==}
-    dev: true
 
   /events/3.3.0:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
@@ -5631,7 +5652,6 @@ packages:
       graphql: '>=0.11 <=16'
     dependencies:
       graphql: 15.5.3
-    dev: true
 
   /graphql/15.5.3:
     resolution: {integrity: sha512-sM+jXaO5KinTui6lbK/7b7H/Knj9BpjGxZ+Ki35v7YbUJxxdBCUqNM0h3CRVU1ZF9t5lNiBzvBCSYPvIwxPOQA==}
@@ -6168,7 +6188,6 @@ packages:
       ws: '*'
     dependencies:
       ws: 8.2.1
-    dev: true
 
   /istanbul-lib-coverage/3.0.0:
     resolution: {integrity: sha512-UiUIqxMgRDET6eR+o5HbfRYP1l0hqkWOs7vNxC/mggutCMUIhWMm8gAHb8tHlyfD3/l6rlgNA5cKdDzEAf6hEg==}
@@ -6194,7 +6213,6 @@ packages:
 
   /iterall/1.3.0:
     resolution: {integrity: sha512-QZ9qOMdF+QLHxy1QIpUHUU1D5pS2CG2P69LF6L6CPjPYA/XMOmKV3PZpawHoAjHNyB0swdVTRxdYT4tbBbxqwg==}
-    dev: true
 
   /jest-worker/27.0.0-next.5:
     resolution: {integrity: sha512-mk0umAQ5lT+CaOJ+Qp01N6kz48sJG2kr2n1rX0koqKf6FIygQV0qLOdN9SCYID4IVeSigDOcPeGLozdMLYfb5g==}
@@ -8701,7 +8719,6 @@ packages:
       iterall: 1.3.0
       symbol-observable: 4.0.0
       ws: 8.2.1
-    dev: true
 
   /subscriptions-transport-ws/0.10.0_graphql@15.5.3:
     resolution: {integrity: sha512-k28LhLn3abJ1mowFW+LP4QGggE0e3hrk55zXbMHyAeZkCUYtC0owepiwqMD3zX8DglQVaxnhE760pESrNSEzpg==}
@@ -8763,7 +8780,6 @@ packages:
   /symbol-observable/4.0.0:
     resolution: {integrity: sha512-b19dMThMV4HVFynSAM1++gBHAbk2Tc/osgLIBZMKsyqh34jb2e8Os7T6ZW/Bt3pJFdBTd2JwAnAAEQV7rSNvcQ==}
     engines: {node: '>=0.10'}
-    dev: true
 
   /sync-fetch/0.3.0:
     resolution: {integrity: sha512-dJp4qg+x4JwSEW1HibAuMi0IIrBI3wuQr2GimmqB7OXR50wmwzfdusG+p39R9w3R6aFtZ2mzvxvWKQ3Bd/vx3g==}
@@ -9430,7 +9446,6 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
-    dev: true
 
   /xregexp/2.0.0:
     resolution: {integrity: sha1-UqY+VsoLhKfzpfPWGHLxJq16WUM=}

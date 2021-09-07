@@ -1,23 +1,24 @@
 import { BuildContextArgs, CreateApp, InferContext } from "@graphql-ez/fastify";
+import { ezAltairIDE } from "@graphql-ez/plugin-altair/static";
 import { CodegenOptions, ezCodegen } from "@graphql-ez/plugin-codegen";
 import { ezGraphQLModules } from "@graphql-ez/plugin-modules";
 import { ezScalars } from "@graphql-ez/plugin-scalars";
 import { ezSchema } from "@graphql-ez/plugin-schema";
 import { ezVoyager } from "@graphql-ez/plugin-voyager";
-import { GetDBUser, prisma } from "db";
+import { ezWebSockets } from "@graphql-ez/plugin-websockets";
+import { GetDBUser, prisma, pubSub } from "db";
 import { Auth0Verify, Authorization, GetAuth0User } from "./auth";
 import { ConnectionTypes } from "./connection";
 import { IntID } from "./customScalars";
-import { pubSub } from "./pubsub";
 
 export * from "@graphql-ez/fastify";
 export * from "common-api";
+export * from "db";
 export * from "../../services/list";
 export * from "./auth";
 export * from "./casters";
 export * from "./connection";
 export * from "./logger";
-export * from "./pubsub";
 
 async function buildContext({ fastify }: BuildContextArgs) {
   const { Auth0UserPromise } = GetAuth0User(fastify?.request);
@@ -59,6 +60,8 @@ export const ezServicePreset = CreateApp({
   cors: true,
   ez: {
     plugins: [
+      ezAltairIDE(),
+      ezWebSockets(),
       ezSchema(),
       ezCodegen(codegenOptions),
       ezGraphQLModules(),

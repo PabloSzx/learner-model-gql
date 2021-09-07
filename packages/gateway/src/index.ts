@@ -1,8 +1,9 @@
 import { logger } from "api-base";
 import Fastify from "fastify";
 import { inspect } from "util";
-import { getGatewayPlugin } from "./app";
 import waitOn from "wait-on";
+import { getGatewayPlugin } from "./app";
+import type { Subscription } from "./ez.generated";
 
 const app = Fastify({
   logger,
@@ -18,6 +19,12 @@ async function main() {
     timeout: 5000,
   });
   await app.listen(8080);
+}
+
+type PubSubData = { [k in keyof Subscription]: Pick<Subscription, k> };
+
+declare module "pg-gql-pubsub" {
+  interface Channels extends PubSubData {}
 }
 
 main().catch((err) => {

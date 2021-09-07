@@ -32,41 +32,41 @@ export type Scalars = {
 
 export type Action = {
   __typename?: "Action";
-  id: Scalars["IntID"];
-  verb: ActionVerb;
   activity: ActionActivity;
-  timestamp: Scalars["Timestamp"];
+  id: Scalars["IntID"];
   result?: Maybe<Scalars["Float"]>;
+  timestamp: Scalars["Timestamp"];
   user?: Maybe<User>;
+  verb: ActionVerb;
 };
 
 export type ActionActivity = {
   __typename?: "ActionActivity";
-  id: Scalars["IntID"];
-  content?: Maybe<Content>;
-  topic?: Maybe<Topic>;
-  stepID?: Maybe<Scalars["ID"]>;
-  hintID?: Maybe<Scalars["ID"]>;
   amount?: Maybe<Scalars["Float"]>;
+  content?: Maybe<Content>;
   detail?: Maybe<Scalars["String"]>;
   extra?: Maybe<Scalars["JSONObject"]>;
+  hintID?: Maybe<Scalars["ID"]>;
+  id: Scalars["IntID"];
+  stepID?: Maybe<Scalars["ID"]>;
+  topic?: Maybe<Topic>;
 };
 
 export type ActionActivityInput = {
-  contentID?: Maybe<Scalars["IntID"]>;
-  topicID?: Maybe<Scalars["IntID"]>;
-  stepID?: Maybe<Scalars["ID"]>;
-  hintID?: Maybe<Scalars["ID"]>;
   amount?: Maybe<Scalars["Float"]>;
+  contentID?: Maybe<Scalars["IntID"]>;
   detail?: Maybe<Scalars["String"]>;
   extra?: Maybe<Scalars["JSONObject"]>;
+  hintID?: Maybe<Scalars["ID"]>;
+  stepID?: Maybe<Scalars["ID"]>;
+  topicID?: Maybe<Scalars["IntID"]>;
 };
 
 export type ActionInput = {
   activity: ActionActivityInput;
-  verbName: Scalars["String"];
-  timestamp: Scalars["Timestamp"];
   projectId: Scalars["IntID"];
+  timestamp: Scalars["Timestamp"];
+  verbName: Scalars["String"];
 };
 
 export type ActionVerb = {
@@ -84,20 +84,15 @@ export type ActionsConnection = {
 export type AdminMutations = {
   __typename?: "AdminMutations";
   assignProjectsToUsers: Array<User>;
-  unassignProjectsToUsers: Array<User>;
   createContent: Content;
   createDomain: Domain;
-  createTopic: Topic;
-  updateTopic: Topic;
   createProject: Project;
+  createTopic: Topic;
+  unassignProjectsToUsers: Array<User>;
+  updateTopic: Topic;
 };
 
 export type AdminMutationsAssignProjectsToUsersArgs = {
-  projectIds: Array<Scalars["IntID"]>;
-  userIds: Array<Scalars["IntID"]>;
-};
-
-export type AdminMutationsUnassignProjectsToUsersArgs = {
   projectIds: Array<Scalars["IntID"]>;
   userIds: Array<Scalars["IntID"]>;
 };
@@ -110,32 +105,37 @@ export type AdminMutationsCreateDomainArgs = {
   input: CreateDomain;
 };
 
+export type AdminMutationsCreateProjectArgs = {
+  data: CreateProject;
+};
+
 export type AdminMutationsCreateTopicArgs = {
   input: CreateTopic;
+};
+
+export type AdminMutationsUnassignProjectsToUsersArgs = {
+  projectIds: Array<Scalars["IntID"]>;
+  userIds: Array<Scalars["IntID"]>;
 };
 
 export type AdminMutationsUpdateTopicArgs = {
   input: UpdateTopic;
 };
 
-export type AdminMutationsCreateProjectArgs = {
-  data: CreateProject;
-};
-
 export type AdminQueries = {
   __typename?: "AdminQueries";
-  allUsers: UsersConnection;
   allActions: ActionsConnection;
-  allTopics: TopicsConnection;
   allDomains: DomainsConnection;
   allProjects: Array<Project>;
-};
-
-export type AdminQueriesAllUsersArgs = {
-  pagination: CursorConnectionArgs;
+  allTopics: TopicsConnection;
+  allUsers: UsersConnection;
 };
 
 export type AdminQueriesAllActionsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminQueriesAllDomainsArgs = {
   pagination: CursorConnectionArgs;
 };
 
@@ -143,7 +143,7 @@ export type AdminQueriesAllTopicsArgs = {
   pagination: CursorConnectionArgs;
 };
 
-export type AdminQueriesAllDomainsArgs = {
+export type AdminQueriesAllUsersArgs = {
   pagination: CursorConnectionArgs;
 };
 
@@ -153,24 +153,24 @@ export type Connection = {
 
 export type Content = {
   __typename?: "Content";
-  id: Scalars["IntID"];
-  description: Scalars["String"];
   binaryBase64?: Maybe<Scalars["String"]>;
-  json?: Maybe<Scalars["JSONObject"]>;
-  url?: Maybe<Scalars["String"]>;
   createdAt: Scalars["DateTime"];
-  updatedAt: Scalars["DateTime"];
+  description: Scalars["String"];
   domain: Domain;
+  id: Scalars["IntID"];
+  json?: Maybe<Scalars["JSONObject"]>;
   project: Project;
+  updatedAt: Scalars["DateTime"];
+  url?: Maybe<Scalars["String"]>;
 };
 
 export type CreateContent = {
-  description: Scalars["String"];
-  projectId: Scalars["IntID"];
-  domainId: Scalars["IntID"];
-  topicId?: Maybe<Scalars["IntID"]>;
   binaryBase64?: Maybe<Scalars["String"]>;
+  description: Scalars["String"];
+  domainId: Scalars["IntID"];
   json?: Maybe<Scalars["JSONObject"]>;
+  projectId: Scalars["IntID"];
+  topicId?: Maybe<Scalars["IntID"]>;
   url?: Maybe<Scalars["String"]>;
 };
 
@@ -187,25 +187,25 @@ export type CreateProject = {
 
 export type CreateTopic = {
   code: Scalars["String"];
+  domainId: Scalars["IntID"];
   label: Scalars["String"];
   parentTopicId?: Maybe<Scalars["IntID"]>;
-  domainId: Scalars["IntID"];
   projectId: Scalars["IntID"];
 };
 
 export type CursorConnectionArgs = {
-  first?: Maybe<Scalars["NonNegativeInt"]>;
   after?: Maybe<Scalars["IntID"]>;
-  last?: Maybe<Scalars["NonNegativeInt"]>;
   before?: Maybe<Scalars["IntID"]>;
+  first?: Maybe<Scalars["NonNegativeInt"]>;
+  last?: Maybe<Scalars["NonNegativeInt"]>;
 };
 
 export type Domain = {
   __typename?: "Domain";
-  id: Scalars["IntID"];
   content: Array<Content>;
-  topics: Array<Topic>;
+  id: Scalars["IntID"];
   project: Project;
+  topics: Array<Topic>;
 };
 
 export type DomainsConnection = Connection & {
@@ -216,17 +216,17 @@ export type DomainsConnection = Connection & {
 
 export type Group = {
   __typename?: "Group";
-  id: Scalars["IntID"];
   code: Scalars["String"];
+  id: Scalars["IntID"];
   label: Scalars["String"];
-  users: Array<User>;
   projects: Array<Project>;
+  users: Array<User>;
 };
 
 export type Mutation = {
   __typename?: "Mutation";
-  admin: AdminMutations;
   action: Scalars["Void"];
+  admin: AdminMutations;
 };
 
 export type MutationActionArgs = {
@@ -239,40 +239,36 @@ export type Node = {
 
 export type PageInfo = {
   __typename?: "PageInfo";
-  startCursor?: Maybe<Scalars["String"]>;
   endCursor?: Maybe<Scalars["String"]>;
   hasNextPage: Scalars["Boolean"];
   hasPreviousPage: Scalars["Boolean"];
+  startCursor?: Maybe<Scalars["String"]>;
 };
 
 export type Project = {
   __typename?: "Project";
-  id: Scalars["IntID"];
-  domains: Array<Domain>;
   code: Scalars["String"];
+  domains: Array<Domain>;
+  id: Scalars["IntID"];
   label: Scalars["String"];
 };
 
 export type Query = {
   __typename?: "Query";
-  hello: Scalars["String"];
   admin: AdminQueries;
+  content: Array<Content>;
   currentUser?: Maybe<User>;
   domains: Array<Domain>;
-  topics: Array<Topic>;
-  content: Array<Content>;
+  hello: Scalars["String"];
   projects: Array<Project>;
-};
-
-export type QueryDomainsArgs = {
-  ids: Array<Scalars["IntID"]>;
-};
-
-export type QueryTopicsArgs = {
-  ids: Array<Scalars["IntID"]>;
+  topics: Array<Topic>;
 };
 
 export type QueryContentArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryDomainsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
@@ -280,13 +276,22 @@ export type QueryProjectsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+export type QueryTopicsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type Subscription = {
+  __typename?: "Subscription";
+  hello: Scalars["String"];
+};
+
 export type Topic = {
   __typename?: "Topic";
-  id: Scalars["IntID"];
+  childrens: Array<Topic>;
   content: Array<Content>;
   domain: Domain;
+  id: Scalars["IntID"];
   parent?: Maybe<Topic>;
-  childrens: Array<Topic>;
   project: Project;
 };
 
@@ -297,28 +302,28 @@ export type TopicsConnection = Connection & {
 };
 
 export type UpdateTopic = {
-  id: Scalars["IntID"];
   code: Scalars["String"];
+  domainId: Scalars["IntID"];
+  id: Scalars["IntID"];
   label: Scalars["String"];
   parentTopicId?: Maybe<Scalars["IntID"]>;
-  domainId: Scalars["IntID"];
   projectId: Scalars["IntID"];
 };
 
 export type User = {
   __typename?: "User";
-  id: Scalars["IntID"];
-  enabled: Scalars["Boolean"];
-  email: Scalars["String"];
-  name?: Maybe<Scalars["String"]>;
-  locked: Scalars["Boolean"];
   active: Scalars["Boolean"];
-  lastOnline?: Maybe<Scalars["DateTime"]>;
-  role: UserRole;
   createdAt: Scalars["DateTime"];
-  updatedAt: Scalars["DateTime"];
+  email: Scalars["String"];
+  enabled: Scalars["Boolean"];
   groups: Array<Group>;
+  id: Scalars["IntID"];
+  lastOnline?: Maybe<Scalars["DateTime"]>;
+  locked: Scalars["Boolean"];
+  name?: Maybe<Scalars["String"]>;
   projects: Array<Project>;
+  role: UserRole;
+  updatedAt: Scalars["DateTime"];
 };
 
 export const UserRole = {

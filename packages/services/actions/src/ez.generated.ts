@@ -142,6 +142,11 @@ export type MutationActionArgs = {
   data: ActionInput;
 };
 
+export type Subscription = {
+  __typename?: "Subscription";
+  hello: Scalars["String"];
+};
+
 export type PageInfo = {
   __typename?: "PageInfo";
   startCursor?: Maybe<Scalars["String"]>;
@@ -288,6 +293,7 @@ export type ResolversTypes = {
   AdminQueries: ResolverTypeWrapper<AdminQueries>;
   Query: ResolverTypeWrapper<{}>;
   Mutation: ResolverTypeWrapper<{}>;
+  Subscription: ResolverTypeWrapper<{}>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   Node: never;
@@ -320,6 +326,7 @@ export type ResolversParentTypes = {
   AdminQueries: AdminQueries;
   Query: {};
   Mutation: {};
+  Subscription: {};
   PageInfo: PageInfo;
   Boolean: Scalars["Boolean"];
   Node: never;
@@ -481,6 +488,18 @@ export type MutationResolvers<
   >;
 };
 
+export type SubscriptionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Subscription"] = ResolversParentTypes["Subscription"]
+> = {
+  hello?: SubscriptionResolver<
+    ResolversTypes["String"],
+    "hello",
+    ParentType,
+    ContextType
+  >;
+};
+
 export type PageInfoResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["PageInfo"] = ResolversParentTypes["PageInfo"]
@@ -543,6 +562,7 @@ export type Resolvers<ContextType = EZContext> = {
   AdminQueries?: AdminQueriesResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  Subscription?: SubscriptionResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
   Node?: NodeResolvers<ContextType>;
   Connection?: ConnectionResolvers<ContextType>;

@@ -214,6 +214,11 @@ export type CursorConnectionArgs = {
   before?: Maybe<Scalars["IntID"]>;
 };
 
+export type Subscription = {
+  __typename?: "Subscription";
+  hello: Scalars["String"];
+};
+
 export type ActionVerb = {
   __typename?: "ActionVerb";
   id: Scalars["IntID"];
@@ -470,6 +475,7 @@ export type ResolversTypes = {
     | ResolversTypes["TopicsConnection"]
     | ResolversTypes["DomainsConnection"];
   CursorConnectionArgs: CursorConnectionArgs;
+  Subscription: ResolverTypeWrapper<{}>;
   ActionVerb: ResolverTypeWrapper<ActionVerb>;
   Content: ResolverTypeWrapper<Content>;
   Domain: ResolverTypeWrapper<Domain>;
@@ -515,6 +521,7 @@ export type ResolversParentTypes = {
     | ResolversParentTypes["TopicsConnection"]
     | ResolversParentTypes["DomainsConnection"];
   CursorConnectionArgs: CursorConnectionArgs;
+  Subscription: {};
   ActionVerb: ActionVerb;
   Content: Content;
   Domain: Domain;
@@ -821,6 +828,18 @@ export type ConnectionResolvers<
   >;
 };
 
+export type SubscriptionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Subscription"] = ResolversParentTypes["Subscription"]
+> = {
+  hello?: SubscriptionResolver<
+    ResolversTypes["String"],
+    "hello",
+    ParentType,
+    ContextType
+  >;
+};
+
 export type ActionVerbResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["ActionVerb"] = ResolversParentTypes["ActionVerb"]
@@ -964,6 +983,7 @@ export type Resolvers<ContextType = EZContext> = {
   PageInfo?: PageInfoResolvers<ContextType>;
   Node?: NodeResolvers<ContextType>;
   Connection?: ConnectionResolvers<ContextType>;
+  Subscription?: SubscriptionResolvers<ContextType>;
   ActionVerb?: ActionVerbResolvers<ContextType>;
   Content?: ContentResolvers<ContextType>;
   Domain?: DomainResolvers<ContextType>;

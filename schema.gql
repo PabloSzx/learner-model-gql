@@ -1,6 +1,7 @@
 schema {
   query: Query
   mutation: Mutation
+  subscription: Subscription
 }
 
 type Query {
@@ -131,6 +132,10 @@ input CursorConnectionArgs {
   after: IntID
   last: NonNegativeInt
   before: IntID
+}
+
+type Subscription {
+  hello: String!
 }
 
 type ActionVerb {

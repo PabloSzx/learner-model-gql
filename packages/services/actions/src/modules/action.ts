@@ -104,6 +104,10 @@ export const actionModule = registerModule(
     type Mutation {
       action(data: ActionInput!): Void!
     }
+
+    type Subscription {
+      hello: String!
+    }
   `,
   {
     resolvers: {
@@ -252,6 +256,20 @@ export const actionModule = registerModule(
             },
             select: null,
           });
+        },
+      },
+      Subscription: {
+        hello: {
+          subscribe(_root, _args, { pubSub }) {
+            for (let i = 1; i <= 5; ++i) {
+              setTimeout(() => {
+                pubSub.publish("hello", {
+                  hello: "Hello World" + i,
+                });
+              }, 1000 * i);
+            }
+            return pubSub.subscribe("hello");
+          },
         },
       },
     },
