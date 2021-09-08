@@ -1,5 +1,4 @@
 import Pino from "pino";
-import prettifier from "pino-pretty";
 
 import { ENV } from "common";
 
@@ -9,5 +8,4 @@ export const logger = Pino({
     levelFirst: true,
     translateTime: true,
   },
-  prettifier,
 });
