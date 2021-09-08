@@ -118,24 +118,24 @@ export type ActionsConnection = {
   pageInfo: PageInfo;
 };
 
-export type AdminQueries = {
-  __typename?: "AdminQueries";
+export type AdminActionQueries = {
+  __typename?: "AdminActionQueries";
   allActions: ActionsConnection;
 };
 
-export type AdminQueriesAllActionsArgs = {
+export type AdminActionQueriesAllActionsArgs = {
   pagination: CursorConnectionArgs;
 };
 
 export type Query = {
   __typename?: "Query";
   hello: Scalars["String"];
-  admin: AdminQueries;
+  adminActions: AdminActionQueries;
 };
 
 export type Mutation = {
   __typename?: "Mutation";
-  action: Scalars["Void"];
+  action?: Maybe<Scalars["Void"]>;
 };
 
 export type MutationActionArgs = {
@@ -290,7 +290,7 @@ export type ResolversTypes = {
   ActionInput: ActionInput;
   Action: ResolverTypeWrapper<Action>;
   ActionsConnection: ResolverTypeWrapper<ActionsConnection>;
-  AdminQueries: ResolverTypeWrapper<AdminQueries>;
+  AdminActionQueries: ResolverTypeWrapper<AdminActionQueries>;
   Query: ResolverTypeWrapper<{}>;
   Mutation: ResolverTypeWrapper<{}>;
   Subscription: ResolverTypeWrapper<{}>;
@@ -323,7 +323,7 @@ export type ResolversParentTypes = {
   ActionInput: ActionInput;
   Action: Action;
   ActionsConnection: ActionsConnection;
-  AdminQueries: AdminQueries;
+  AdminActionQueries: AdminActionQueries;
   Query: {};
   Mutation: {};
   Subscription: {};
@@ -455,15 +455,15 @@ export type ActionsConnectionResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type AdminQueriesResolvers<
+export type AdminActionQueriesResolvers<
   ContextType = EZContext,
-  ParentType extends ResolversParentTypes["AdminQueries"] = ResolversParentTypes["AdminQueries"]
+  ParentType extends ResolversParentTypes["AdminActionQueries"] = ResolversParentTypes["AdminActionQueries"]
 > = {
   allActions?: Resolver<
     ResolversTypes["ActionsConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminQueriesAllActionsArgs, "pagination">
+    RequireFields<AdminActionQueriesAllActionsArgs, "pagination">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -473,7 +473,11 @@ export type QueryResolvers<
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = {
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  admin?: Resolver<ResolversTypes["AdminQueries"], ParentType, ContextType>;
+  adminActions?: Resolver<
+    ResolversTypes["AdminActionQueries"],
+    ParentType,
+    ContextType
+  >;
 };
 
 export type MutationResolvers<
@@ -481,7 +485,7 @@ export type MutationResolvers<
   ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
 > = {
   action?: Resolver<
-    ResolversTypes["Void"],
+    Maybe<ResolversTypes["Void"]>,
     ParentType,
     ContextType,
     RequireFields<MutationActionArgs, "data">
@@ -559,7 +563,7 @@ export type Resolvers<ContextType = EZContext> = {
   ActionActivity?: ActionActivityResolvers<ContextType>;
   Action?: ActionResolvers<ContextType>;
   ActionsConnection?: ActionsConnectionResolvers<ContextType>;
-  AdminQueries?: AdminQueriesResolvers<ContextType>;
+  AdminActionQueries?: AdminActionQueriesResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;

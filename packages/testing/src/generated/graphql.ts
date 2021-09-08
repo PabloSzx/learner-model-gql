@@ -81,6 +81,15 @@ export type ActionsConnection = {
   pageInfo: PageInfo;
 };
 
+export type AdminActionQueries = {
+  __typename?: "AdminActionQueries";
+  allActions: ActionsConnection;
+};
+
+export type AdminActionQueriesAllActionsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
 export type AdminMutations = {
   __typename?: "AdminMutations";
   assignProjectsToUsers: Array<User>;
@@ -124,15 +133,10 @@ export type AdminMutationsUpdateTopicArgs = {
 
 export type AdminQueries = {
   __typename?: "AdminQueries";
-  allActions: ActionsConnection;
   allDomains: DomainsConnection;
   allProjects: Array<Project>;
   allTopics: TopicsConnection;
   allUsers: UsersConnection;
-};
-
-export type AdminQueriesAllActionsArgs = {
-  pagination: CursorConnectionArgs;
 };
 
 export type AdminQueriesAllDomainsArgs = {
@@ -225,7 +229,7 @@ export type Group = {
 
 export type Mutation = {
   __typename?: "Mutation";
-  action: Scalars["Void"];
+  action?: Maybe<Scalars["Void"]>;
   admin: AdminMutations;
 };
 
@@ -256,6 +260,7 @@ export type Project = {
 export type Query = {
   __typename?: "Query";
   admin: AdminQueries;
+  adminActions: AdminActionQueries;
   content: Array<Content>;
   currentUser?: Maybe<User>;
   domains: Array<Domain>;
@@ -338,10 +343,196 @@ export type UsersConnection = {
   pageInfo: PageInfo;
 };
 
+export type CreateActionMutationVariables = Exact<{
+  data: ActionInput;
+}>;
+
+export type CreateActionMutation = {
+  __typename?: "Mutation";
+  action?: Maybe<void | undefined | null>;
+};
+
+export type AllActionsQueryVariables = Exact<{
+  pagination: CursorConnectionArgs;
+}>;
+
+export type AllActionsQuery = {
+  __typename?: "Query";
+  adminActions: {
+    __typename?: "AdminActionQueries";
+    allActions: {
+      __typename?: "ActionsConnection";
+      nodes: Array<{
+        __typename?: "Action";
+        result?: Maybe<number>;
+        verb: { __typename?: "ActionVerb"; name: string };
+        user?: Maybe<{ __typename?: "User"; id: string }>;
+      }>;
+      pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean };
+    };
+  };
+};
+
 export type HelloQueryVariables = Exact<{ [key: string]: never }>;
 
 export type HelloQuery = { __typename?: "Query"; hello: string };
 
+export const CreateActionDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "CreateAction" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "ActionInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "action" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "data" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "data" },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  CreateActionMutation,
+  CreateActionMutationVariables
+>;
+export const AllActionsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "AllActions" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "pagination" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "CursorConnectionArgs" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminActions" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "allActions" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "pagination" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "pagination" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "nodes" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "verb" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "name" },
+                                  },
+                                ],
+                              },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "result" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "user" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "id" },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "pageInfo" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "hasNextPage" },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<AllActionsQuery, AllActionsQueryVariables>;
 export const HelloDocument = {
   kind: "Document",
   definitions: [

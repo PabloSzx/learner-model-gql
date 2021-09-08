@@ -7,18 +7,26 @@ import type { FastifyRequest } from "fastify";
 import type { EZPlugin } from "graphql-ez";
 import type { User as Auth0User } from "@auth0/auth0-react";
 import type { DBUser } from "db";
+import { ENV } from "common-api";
 
 export { Auth0User };
 
-export function GetAuth0User(request: FastifyRequest | undefined) {
-  const Auth0UserPromise = LazyPromise(() => {
-    if (!request?.headers.authorization) return null;
+export const MockAuthUser = {
+  user: null as Auth0User | null,
+};
 
-    return request.jwtVerify<Auth0User>().catch((err) => {
-      console.error(err);
-      return null;
-    });
-  });
+export function GetAuth0User(request: FastifyRequest | undefined) {
+  const Auth0UserPromise =
+    ENV.IS_TEST && MockAuthUser.user
+      ? Promise.resolve(MockAuthUser.user)
+      : LazyPromise(() => {
+          if (!request?.headers.authorization) return null;
+
+          return request.jwtVerify<Auth0User>().catch((err) => {
+            console.error(err);
+            return null;
+          });
+        });
 
   return {
     Auth0UserPromise,

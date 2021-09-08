@@ -8,6 +8,7 @@ type Query {
   hello: String!
   admin: AdminQueries!
   currentUser: User
+  adminActions: AdminActionQueries!
   domains(ids: [IntID!]!): [Domain!]!
   topics(ids: [IntID!]!): [Topic!]!
   content(ids: [IntID!]!): [Content!]!
@@ -16,7 +17,7 @@ type Query {
 
 type Mutation {
   admin: AdminMutations!
-  action(data: ActionInput!): Void!
+  action(data: ActionInput!): Void
 }
 
 """
@@ -96,7 +97,6 @@ type UsersConnection {
 
 type AdminQueries {
   allUsers(pagination: CursorConnectionArgs!): UsersConnection!
-  allActions(pagination: CursorConnectionArgs!): ActionsConnection!
   allTopics(pagination: CursorConnectionArgs!): TopicsConnection!
   allDomains(pagination: CursorConnectionArgs!): DomainsConnection!
   allProjects: [Project!]!
@@ -211,6 +211,10 @@ type Action {
 type ActionsConnection {
   nodes: [Action!]!
   pageInfo: PageInfo!
+}
+
+type AdminActionQueries {
+  allActions(pagination: CursorConnectionArgs!): ActionsConnection!
 }
 
 input CreateContent {

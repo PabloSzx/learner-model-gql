@@ -1,0 +1,2 @@
+schema: "schema.gql"
+documents: "**/*.{gql}"

@@ -1,3 +1,4 @@
+import { CheckActionsCreationRetrieval } from "../packages/services/actions/test/main.test";
 import { getStitchedSchema } from "../packages/gateway/src/stitch";
 import { actionModule } from "../packages/services/actions/src/modules";
 import {
@@ -30,5 +31,26 @@ describe("gateway", () => {
         hello: "Hello World!",
       },
     });
+  });
+
+  it("actions", async () => {
+    const ActionService = await GetTestClient({
+      prepare({ registerModule }) {
+        registerModule(actionModule);
+      },
+    });
+
+    const stitchedSchema = await getStitchedSchema([
+      {
+        name: "actions",
+        href: ActionService.origin,
+      },
+    ]);
+
+    const GatewayClient = await GetTestClient({
+      schema: stitchedSchema,
+    });
+
+    await CheckActionsCreationRetrieval(GatewayClient);
   });
 });

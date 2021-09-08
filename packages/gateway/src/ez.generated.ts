@@ -52,6 +52,7 @@ export type Query = {
   hello: Scalars["String"];
   admin: AdminQueries;
   currentUser?: Maybe<User>;
+  adminActions: AdminActionQueries;
   domains: Array<Domain>;
   topics: Array<Topic>;
   content: Array<Content>;
@@ -77,7 +78,7 @@ export type QueryProjectsArgs = {
 export type Mutation = {
   __typename?: "Mutation";
   admin: AdminMutations;
-  action: Scalars["Void"];
+  action?: Maybe<Scalars["Void"]>;
 };
 
 export type MutationActionArgs = {
@@ -128,17 +129,12 @@ export type UsersConnection = {
 export type AdminQueries = {
   __typename?: "AdminQueries";
   allUsers: UsersConnection;
-  allActions: ActionsConnection;
   allTopics: TopicsConnection;
   allDomains: DomainsConnection;
   allProjects: Array<Project>;
 };
 
 export type AdminQueriesAllUsersArgs = {
-  pagination: CursorConnectionArgs;
-};
-
-export type AdminQueriesAllActionsArgs = {
   pagination: CursorConnectionArgs;
 };
 
@@ -299,6 +295,15 @@ export type ActionsConnection = {
   __typename?: "ActionsConnection";
   nodes: Array<Action>;
   pageInfo: PageInfo;
+};
+
+export type AdminActionQueries = {
+  __typename?: "AdminActionQueries";
+  allActions: ActionsConnection;
+};
+
+export type AdminActionQueriesAllActionsArgs = {
+  pagination: CursorConnectionArgs;
 };
 
 export type CreateContent = {
@@ -487,6 +492,7 @@ export type ResolversTypes = {
   ActionInput: ActionInput;
   Action: ResolverTypeWrapper<Action>;
   ActionsConnection: ResolverTypeWrapper<ActionsConnection>;
+  AdminActionQueries: ResolverTypeWrapper<AdminActionQueries>;
   CreateContent: CreateContent;
   TopicsConnection: ResolverTypeWrapper<TopicsConnection>;
   DomainsConnection: ResolverTypeWrapper<DomainsConnection>;
@@ -533,6 +539,7 @@ export type ResolversParentTypes = {
   ActionInput: ActionInput;
   Action: Action;
   ActionsConnection: ActionsConnection;
+  AdminActionQueries: AdminActionQueries;
   CreateContent: CreateContent;
   TopicsConnection: TopicsConnection;
   DomainsConnection: DomainsConnection;
@@ -550,6 +557,11 @@ export type QueryResolvers<
   admin?: Resolver<ResolversTypes["AdminQueries"], ParentType, ContextType>;
   currentUser?: Resolver<
     Maybe<ResolversTypes["User"]>,
+    ParentType,
+    ContextType
+  >;
+  adminActions?: Resolver<
+    ResolversTypes["AdminActionQueries"],
     ParentType,
     ContextType
   >;
@@ -585,7 +597,7 @@ export type MutationResolvers<
 > = {
   admin?: Resolver<ResolversTypes["AdminMutations"], ParentType, ContextType>;
   action?: Resolver<
-    ResolversTypes["Void"],
+    Maybe<ResolversTypes["Void"]>,
     ParentType,
     ContextType,
     RequireFields<MutationActionArgs, "data">
@@ -699,12 +711,6 @@ export type AdminQueriesResolvers<
     ParentType,
     ContextType,
     RequireFields<AdminQueriesAllUsersArgs, "pagination">
-  >;
-  allActions?: Resolver<
-    ResolversTypes["ActionsConnection"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminQueriesAllActionsArgs, "pagination">
   >;
   allTopics?: Resolver<
     ResolversTypes["TopicsConnection"],
@@ -938,6 +944,19 @@ export type ActionsConnectionResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type AdminActionQueriesResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["AdminActionQueries"] = ResolversParentTypes["AdminActionQueries"]
+> = {
+  allActions?: Resolver<
+    ResolversTypes["ActionsConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminActionQueriesAllActionsArgs, "pagination">
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type TopicsConnectionResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["TopicsConnection"] = ResolversParentTypes["TopicsConnection"]
@@ -991,6 +1010,7 @@ export type Resolvers<ContextType = EZContext> = {
   ActionActivity?: ActionActivityResolvers<ContextType>;
   Action?: ActionResolvers<ContextType>;
   ActionsConnection?: ActionsConnectionResolvers<ContextType>;
+  AdminActionQueries?: AdminActionQueriesResolvers<ContextType>;
   TopicsConnection?: TopicsConnectionResolvers<ContextType>;
   DomainsConnection?: DomainsConnectionResolvers<ContextType>;
 };

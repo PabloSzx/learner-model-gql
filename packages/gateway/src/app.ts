@@ -22,12 +22,14 @@ export const getGatewayPlugin = async () => {
 
   const schema = getStitchedSchema(servicesConfig);
 
+  const outputSchema = resolve(__dirname, "../../../schema.gql");
+
   const { buildApp } = CreateApp({
     schema,
     ez: {
       plugins: [
         ezCodegen({
-          outputSchema: resolve(__dirname, "../../../schema.gql"),
+          outputSchema,
           config: codegenOptions.config,
         }),
         ezAltairIDE({}),

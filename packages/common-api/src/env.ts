@@ -10,4 +10,7 @@ console.log({
   GATEWAY_URL,
 });
 
+export const DATABASE_SCHEMA =
+  new URL(DATABASE_URL).searchParams.get("schema") || "public";
+
 export * from "common";

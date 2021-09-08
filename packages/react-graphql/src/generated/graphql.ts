@@ -82,6 +82,15 @@ export type ActionsConnection = {
   pageInfo: PageInfo;
 };
 
+export type AdminActionQueries = {
+  __typename?: "AdminActionQueries";
+  allActions: ActionsConnection;
+};
+
+export type AdminActionQueriesAllActionsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
 export type AdminMutations = {
   __typename?: "AdminMutations";
   assignProjectsToUsers: Array<User>;
@@ -125,15 +134,10 @@ export type AdminMutationsUpdateTopicArgs = {
 
 export type AdminQueries = {
   __typename?: "AdminQueries";
-  allActions: ActionsConnection;
   allDomains: DomainsConnection;
   allProjects: Array<Project>;
   allTopics: TopicsConnection;
   allUsers: UsersConnection;
-};
-
-export type AdminQueriesAllActionsArgs = {
-  pagination: CursorConnectionArgs;
 };
 
 export type AdminQueriesAllDomainsArgs = {
@@ -226,7 +230,7 @@ export type Group = {
 
 export type Mutation = {
   __typename?: "Mutation";
-  action: Scalars["Void"];
+  action?: Maybe<Scalars["Void"]>;
   admin: AdminMutations;
 };
 
@@ -257,6 +261,7 @@ export type Project = {
 export type Query = {
   __typename?: "Query";
   admin: AdminQueries;
+  adminActions: AdminActionQueries;
   content: Array<Content>;
   currentUser?: Maybe<User>;
   domains: Array<Domain>;

@@ -2,6 +2,9 @@ import type { FastifyAppOptions } from "@graphql-ez/fastify";
 import { CreateTestClient, GlobalTeardown } from "@graphql-ez/fastify-testing";
 import { ezServicePreset } from "api-base";
 import { deepEqual, equal, strict as assert } from "assert/strict";
+import { inspect } from "util";
+
+inspect.defaultOptions.depth = null;
 
 if (typeof after !== "undefined") {
   after(() => {
@@ -37,6 +40,7 @@ export type {
 export * from "graphql-ez/utils";
 export * from "./generated/graphql";
 export { assert, equal, deepEqual };
+export { prisma } from "api-base";
 
 export function expectDeepEqual<T>(
   actual: T,

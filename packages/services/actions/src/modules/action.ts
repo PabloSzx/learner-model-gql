@@ -92,17 +92,17 @@ export const actionModule = registerModule(
       pageInfo: PageInfo!
     }
 
-    type AdminQueries {
+    type AdminActionQueries {
       allActions(pagination: CursorConnectionArgs!): ActionsConnection!
     }
 
     type Query {
       hello: String!
-      admin: AdminQueries!
+      adminActions: AdminActionQueries!
     }
 
     type Mutation {
-      action(data: ActionInput!): Void!
+      action(data: ActionInput!): Void
     }
 
     type Subscription {
@@ -111,7 +111,7 @@ export const actionModule = registerModule(
   `,
   {
     resolvers: {
-      AdminQueries: {
+      AdminActionQueries: {
         allActions(_root, { pagination }, { prisma }) {
           return ResolveCursorConnection(pagination, (args) => {
             return prisma.action.findMany({
@@ -181,7 +181,7 @@ export const actionModule = registerModule(
         hello() {
           return "Hello World!";
         },
-        async admin(_root, _args, { authorization }) {
+        async adminActions(_root, _args, { authorization }) {
           await authorization.expectAdmin;
 
           return {};
@@ -251,6 +251,11 @@ export const actionModule = registerModule(
                   extra,
                   hintID: hintID?.toString(),
                   stepID: stepID?.toString(),
+                },
+              },
+              user: {
+                connect: {
+                  id: (await authorization.expectUser).id,
                 },
               },
             },
