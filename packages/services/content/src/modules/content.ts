@@ -1,9 +1,9 @@
-import { gql, registerModule } from "../ez";
-
+import { ResolveCursorConnection } from "api-base";
 import type { Content as DBContent } from "db";
+import { gql, registerModule } from "../ez";
 import type { Content } from "../ez.generated";
 
-registerModule(
+export const contentModule = registerModule(
   gql`
     type Content {
       id: IntID!
@@ -30,19 +30,29 @@ registerModule(
       url: String
     }
 
-    type AdminMutations {
+    type ContentConnection implements Connection {
+      nodes: [Content!]!
+      pageInfo: PageInfo!
+    }
+
+    type AdminContentMutations {
       createContent(data: CreateContent!): Content!
+    }
+
+    type AdminContentQueries {
+      allContent(pagination: CursorConnectionArgs!): ContentConnection!
     }
     type Query {
       hello: String!
+      adminContent: AdminContentQueries!
     }
     type Mutation {
-      admin: AdminMutations!
+      adminContent: AdminContentMutations!
     }
   `,
   {
     resolvers: {
-      AdminMutations: {
+      AdminContentMutations: {
         createContent(
           _root,
           {
@@ -88,6 +98,15 @@ registerModule(
           });
         },
       },
+      AdminContentQueries: {
+        allContent(_root, { pagination }, { prisma }) {
+          return ResolveCursorConnection(pagination, (connection) => {
+            return prisma.content.findMany({
+              ...connection,
+            });
+          });
+        },
+      },
       Content: {
         binaryBase64({ binary }: Partial<Pick<DBContent, "binary">> & Content) {
           return binary?.toString("base64");
@@ -96,6 +115,17 @@ registerModule(
       Query: {
         hello() {
           return "Hello World!";
+        },
+        async adminContent(_root, _args, { authorization }) {
+          await authorization.expectAdmin;
+          return {};
+        },
+      },
+      Mutation: {
+        async adminContent(_root, _args, { authorization }) {
+          await authorization.expectAdmin;
+
+          return {};
         },
       },
     },

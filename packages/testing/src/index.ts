@@ -104,3 +104,38 @@ export const CreateUser = async ({
     userId: user.id.toString(),
   };
 };
+
+export const CreateDomain = async ({
+  project,
+}: {
+  project: { id: number };
+}) => {
+  const domain = await prisma.domain.create({
+    data: {
+      project: {
+        connect: {
+          id: project.id,
+        },
+      },
+      code: generate(),
+      label: generate(),
+      topics: {
+        create: {
+          code: generate(),
+          label: generate(),
+          project: {
+            connect: {
+              id: project.id,
+            },
+          },
+        },
+      },
+    },
+    include: {
+      topics: true,
+      project: true,
+    },
+  });
+
+  return domain;
+};

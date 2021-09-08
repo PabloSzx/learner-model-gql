@@ -91,10 +91,27 @@ export type AdminActionQueriesAllActionsArgs = {
   pagination: CursorConnectionArgs;
 };
 
+export type AdminContentMutations = {
+  __typename?: "AdminContentMutations";
+  createContent: Content;
+};
+
+export type AdminContentMutationsCreateContentArgs = {
+  data: CreateContent;
+};
+
+export type AdminContentQueries = {
+  __typename?: "AdminContentQueries";
+  allContent: ContentConnection;
+};
+
+export type AdminContentQueriesAllContentArgs = {
+  pagination: CursorConnectionArgs;
+};
+
 export type AdminMutations = {
   __typename?: "AdminMutations";
   assignProjectsToUsers: Array<User>;
-  createContent: Content;
   createDomain: Domain;
   createProject: Project;
   createTopic: Topic;
@@ -105,10 +122,6 @@ export type AdminMutations = {
 export type AdminMutationsAssignProjectsToUsersArgs = {
   projectIds: Array<Scalars["IntID"]>;
   userIds: Array<Scalars["IntID"]>;
-};
-
-export type AdminMutationsCreateContentArgs = {
-  data: CreateContent;
 };
 
 export type AdminMutationsCreateDomainArgs = {
@@ -169,6 +182,12 @@ export type Content = {
   url?: Maybe<Scalars["String"]>;
 };
 
+export type ContentConnection = Connection & {
+  __typename?: "ContentConnection";
+  nodes: Array<Content>;
+  pageInfo: PageInfo;
+};
+
 export type CreateContent = {
   binaryBase64?: Maybe<Scalars["String"]>;
   description: Scalars["String"];
@@ -207,10 +226,14 @@ export type CursorConnectionArgs = {
 
 export type Domain = {
   __typename?: "Domain";
-  content: Array<Content>;
+  content: ContentConnection;
   id: Scalars["IntID"];
   project: Project;
   topics: Array<Topic>;
+};
+
+export type DomainContentArgs = {
+  pagination: CursorConnectionArgs;
 };
 
 export type DomainsConnection = Connection & {
@@ -232,6 +255,7 @@ export type Mutation = {
   __typename?: "Mutation";
   action?: Maybe<Scalars["Void"]>;
   admin: AdminMutations;
+  adminContent: AdminContentMutations;
 };
 
 export type MutationActionArgs = {
@@ -262,6 +286,7 @@ export type Query = {
   __typename?: "Query";
   admin: AdminQueries;
   adminActions: AdminActionQueries;
+  adminContent: AdminContentQueries;
   content: Array<Content>;
   currentUser?: Maybe<User>;
   domains: Array<Domain>;
@@ -294,11 +319,15 @@ export type Subscription = {
 export type Topic = {
   __typename?: "Topic";
   childrens: Array<Topic>;
-  content: Array<Content>;
+  content: ContentConnection;
   domain: Domain;
   id: Scalars["IntID"];
   parent?: Maybe<Topic>;
   project: Project;
+};
+
+export type TopicContentArgs = {
+  pagination: CursorConnectionArgs;
 };
 
 export type TopicsConnection = Connection & {

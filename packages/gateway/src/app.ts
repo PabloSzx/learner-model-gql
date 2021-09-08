@@ -1,6 +1,7 @@
 import { CreateApp } from "@graphql-ez/fastify";
 import { ezAltairIDE } from "@graphql-ez/plugin-altair";
 import { ezCodegen } from "@graphql-ez/plugin-codegen";
+import { ezVoyager } from "@graphql-ez/plugin-voyager";
 import { codegenOptions, getDirname, logger, pubSub } from "api-base";
 import ms from "ms";
 import { resolve } from "path";
@@ -28,6 +29,7 @@ export const getGatewayPlugin = async () => {
     schema,
     ez: {
       plugins: [
+        ezVoyager(),
         ezCodegen({
           outputSchema,
           config: codegenOptions.config,

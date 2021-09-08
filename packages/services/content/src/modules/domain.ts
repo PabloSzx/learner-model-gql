@@ -1,17 +1,18 @@
+import { ResolveCursorConnection } from "api-base";
 import { gql, registerModule } from "../ez";
 
-registerModule(
+export const domainModule = registerModule(
   gql`
     type Domain {
       id: IntID!
 
-      content: [Content!]!
+      content(pagination: CursorConnectionArgs!): ContentConnection!
     }
 
     type Topic {
       id: IntID!
 
-      content: [Content!]!
+      content(pagination: CursorConnectionArgs!): ContentConnection!
     }
 
     extend type Query {
@@ -22,29 +23,33 @@ registerModule(
   {
     resolvers: {
       Topic: {
-        async content({ id }, _args, { prisma }) {
-          return (
-            (await prisma.topic
+        async content({ id }, { pagination }, { prisma }) {
+          return ResolveCursorConnection(pagination, (connection) => {
+            return prisma.topic
               .findUnique({
                 where: {
                   id,
                 },
               })
-              .content()) || []
-          );
+              .content({
+                ...connection,
+              });
+          });
         },
       },
       Domain: {
-        async content({ id }, _args, { prisma }) {
-          return (
-            (await prisma.domain
+        async content({ id }, { pagination }, { prisma }) {
+          return ResolveCursorConnection(pagination, (connection) => {
+            return prisma.domain
               .findUnique({
                 where: {
                   id,
                 },
               })
-              .content()) || []
-          );
+              .content({
+                ...connection,
+              });
+          });
         },
       },
       Query: {

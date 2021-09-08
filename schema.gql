@@ -9,6 +9,7 @@ type Query {
   admin: AdminQueries!
   currentUser: User
   adminActions: AdminActionQueries!
+  adminContent: AdminContentQueries!
   domains(ids: [IntID!]!): [Domain!]!
   topics(ids: [IntID!]!): [Topic!]!
   content(ids: [IntID!]!): [Content!]!
@@ -18,6 +19,7 @@ type Query {
 type Mutation {
   admin: AdminMutations!
   action(data: ActionInput!): Void
+  adminContent: AdminContentMutations!
 }
 
 """
@@ -105,7 +107,6 @@ type AdminQueries {
 type AdminMutations {
   assignProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
   unassignProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
-  createContent(data: CreateContent!): Content!
   createDomain(input: CreateDomain!): Domain!
   createTopic(input: CreateTopic!): Topic!
   updateTopic(input: UpdateTopic!): Topic!
@@ -157,14 +158,14 @@ type Content {
 
 type Domain {
   id: IntID!
-  content: [Content!]!
+  content(pagination: CursorConnectionArgs!): ContentConnection!
   topics: [Topic!]!
   project: Project!
 }
 
 type Topic {
   id: IntID!
-  content: [Content!]!
+  content(pagination: CursorConnectionArgs!): ContentConnection!
   domain: Domain!
   parent: Topic
   childrens: [Topic!]!
@@ -225,6 +226,19 @@ input CreateContent {
   binaryBase64: String
   json: JSONObject
   url: String
+}
+
+type ContentConnection implements Connection {
+  nodes: [Content!]!
+  pageInfo: PageInfo!
+}
+
+type AdminContentMutations {
+  createContent(data: CreateContent!): Content!
+}
+
+type AdminContentQueries {
+  allContent(pagination: CursorConnectionArgs!): ContentConnection!
 }
 
 type TopicsConnection implements Connection {
