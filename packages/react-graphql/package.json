@@ -30,6 +30,6 @@
     "concurrently": "^6.2.1",
     "graphql": "^15.5.3",
     "prettier": "^2.3.2",
-    "react-query": "^3.23.0"
+    "react-query": "^3.23.1"
   }
 }
