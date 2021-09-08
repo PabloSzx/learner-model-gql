@@ -1,77 +1,39 @@
-import { MockAuthUser } from "api-base";
-import { generate } from "randomstring";
 import {
   AllActionsDocument,
   CreateActionDocument,
+  CreateProject,
+  CreateUser,
   deepEqual,
   expectDeepEqual,
+  generate,
   GetTestClient,
   HelloDocument,
+  MockAuthUser,
   prisma,
+  TestClient,
 } from "testing";
-import type {
-  QueryFunctionPost,
-  QueryFunctionPostGet,
-} from "@graphql-ez/client";
 import { actionModule } from "../src/modules";
-
-beforeEach(() => {
-  MockAuthUser.user = null;
-});
 
 export async function CheckActionsCreationRetrieval({
   query,
   mutation,
-}: {
-  query: QueryFunctionPostGet;
-  mutation: QueryFunctionPost;
-}) {
+}: Pick<TestClient, "query" | "mutation">) {
   await prisma.$queryRaw`TRUNCATE "Action" CASCADE;`;
 
-  const project = await prisma.project.create({
-    data: {
-      code: generate(),
-      label: generate(),
-    },
-  });
+  const { project, projectId } = await CreateProject();
 
-  const userUid = generate();
-
-  const email = `${generate()}@gmail.com`;
-
-  const user = await prisma.user.create({
-    data: {
-      email,
-      uids: {
-        create: {
-          uid: userUid,
-        },
-      },
-      role: "ADMIN",
-      projects: {
-        connect: {
-          id: project.id,
-        },
-      },
-    },
-    include: {
-      uids: true,
-    },
-  });
+  const { authUser, userId } = await CreateUser({ project });
 
   const verbName = generate();
 
-  MockAuthUser.user = {
-    sub: userUid,
-    email,
-  };
+  MockAuthUser.user = authUser;
 
   {
     const data = await mutation(CreateActionDocument, {
       variables: {
         data: {
           activity: {},
-          projectId: project.id.toString(),
+          projectId,
           timestamp: Date.now(),
           verbName,
         },
@@ -103,7 +65,7 @@ export async function CheckActionsCreationRetrieval({
                 name: verbName,
               },
               user: {
-                id: user.id.toString(),
+                id: userId,
               },
               result: null,
             },
@@ -191,29 +153,9 @@ describe("Actions service", () => {
         },
       });
 
-      const userUid = generate();
+      const { authUser } = await CreateUser();
 
-      const email = `${generate()}@gmail.com`;
-
-      await prisma.user.create({
-        data: {
-          email,
-          uids: {
-            create: {
-              uid: userUid,
-            },
-          },
-          role: "ADMIN",
-        },
-        include: {
-          uids: true,
-        },
-      });
-
-      MockAuthUser.user = {
-        sub: userUid,
-        email,
-      };
+      MockAuthUser.user = authUser;
 
       deepEqual(
         await mutation(CreateActionDocument, {
@@ -253,29 +195,9 @@ describe("Actions service", () => {
         },
       });
 
-      const userUid = generate();
+      const { authUser } = await CreateUser({ role: "USER" });
 
-      const email = `${generate()}@gmail.com`;
-
-      await prisma.user.create({
-        data: {
-          email,
-          uids: {
-            create: {
-              uid: userUid,
-            },
-          },
-          role: "USER",
-        },
-        include: {
-          uids: true,
-        },
-      });
-
-      MockAuthUser.user = {
-        sub: userUid,
-        email,
-      };
+      MockAuthUser.user = authUser;
 
       deepEqual(
         await query(AllActionsDocument, {
