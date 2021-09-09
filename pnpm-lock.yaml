@@ -84,7 +84,7 @@ importers:
       '@graphql-ez/plugin-altair': ^0.7.1
       '@graphql-ez/plugin-codegen': ^0.7.3
       '@graphql-ez/plugin-modules': ^0.8.2
-      '@graphql-ez/plugin-scalars': ^0.7.2
+      '@graphql-ez/plugin-scalars': ^0.7.3
       '@graphql-ez/plugin-schema': ^0.7.2
       '@graphql-ez/plugin-voyager': ^0.7.1
       '@graphql-ez/plugin-websockets': ^0.9.3
@@ -104,7 +104,7 @@ importers:
       '@graphql-ez/plugin-altair': 0.7.1_565199b548554a2077850e689cdf4206
       '@graphql-ez/plugin-codegen': 0.7.3_565199b548554a2077850e689cdf4206
       '@graphql-ez/plugin-modules': 0.8.2_565199b548554a2077850e689cdf4206
-      '@graphql-ez/plugin-scalars': 0.7.2_565199b548554a2077850e689cdf4206
+      '@graphql-ez/plugin-scalars': 0.7.3_565199b548554a2077850e689cdf4206
       '@graphql-ez/plugin-schema': 0.7.2_565199b548554a2077850e689cdf4206
       '@graphql-ez/plugin-voyager': 0.7.1_565199b548554a2077850e689cdf4206
       '@graphql-ez/plugin-websockets': 0.9.3_565199b548554a2077850e689cdf4206
@@ -2189,12 +2189,12 @@ packages:
       - '@types/node'
     dev: false
 
-  /@graphql-ez/plugin-scalars/0.7.2_565199b548554a2077850e689cdf4206:
-    resolution: {integrity: sha512-Hwj+doWuDHZ5JQKxO0MW9oY1QgdqayAmjc5JDZEPNE8EcKCI41lK3MjNd2mmAA1AnkIKj1SpdIUeN0ZnBdVsnA==}
+  /@graphql-ez/plugin-scalars/0.7.3_565199b548554a2077850e689cdf4206:
+    resolution: {integrity: sha512-vwYc8j3BS/GQdlndDwhOo/f92g3pLST8lbcmivWOTM1L3ZI7dqujTIICiUIGUQOmGGzAbaAcIJu+uac0xTmV/A==}
     engines: {node: ^12.20.0 || >=14.13.0}
     peerDependencies:
       graphql: '*'
-      graphql-ez: ^0.12.5
+      graphql-ez: ^0.13.0
     dependencies:
       '@graphql-ez/utils': 0.1.2_665410ccc343d2577b943b2f16d32229
       '@graphql-tools/utils': 8.2.2_graphql@15.5.3
