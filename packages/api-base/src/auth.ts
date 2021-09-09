@@ -41,7 +41,7 @@ export const Auth0Verify = fp(async (app) => {
       secret: AUTH0_SECRET,
       secretsTtl: 1000 * 60,
     });
-  } else {
+  } else if (!ENV.IS_TEST) {
     console.warn(
       "NO AUTH0_DOMAIN, AUTH0_CLIENT, AUTH0_SECRET PROVIDED, NO AUTH0 VERIFICATION ENABLED"
     );
