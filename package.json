@@ -26,16 +26,14 @@
     "start": "pm2 start ecosystem.config.js",
     "test": "bob-ts -i packages -i test && cross-env NODE_ENV=test c8 mocha",
     "test:watch": "concurrently -r pnpm:test:watch:cmd \"pnpm dev -r --no-sort --no-bail\"",
-    "test:watch:cmd": "bob-ts-watch -i packages -i test -c \"cross-env NODE_ENV=test mocha\"",
-    "tsc": "tsc",
-    "tsc:watch": "tsc --watch"
+    "test:watch:cmd": "bob-ts-watch -i packages -i test -c \"cross-env NODE_ENV=test mocha\""
   },
   "devDependencies": {
     "@graphql-ez/fastify": "^0.9.4",
     "@graphql-typed-document-node/core": "^3.1.0",
     "@types/concurrently": "^6.2.1",
     "@types/mocha": "^9.0.0",
-    "@types/node": "^16.9.0",
+    "@types/node": "^16.9.1",
     "@types/prettier": "^2.3.2",
     "@types/randomstring": "^1.1.7",
     "@types/react": "^17.0.20",

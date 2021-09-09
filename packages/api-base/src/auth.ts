@@ -1,13 +1,11 @@
+import type { User as Auth0User } from "@auth0/auth0-react";
 import assert from "assert";
+import { ENV } from "common-api";
+import type { DBUser } from "db";
+import type { FastifyRequest } from "fastify";
 import FastifyAuth0 from "fastify-auth0-verify";
 import fp from "fastify-plugin";
 import { LazyPromise } from "graphql-ez/utils";
-
-import type { FastifyRequest } from "fastify";
-import type { EZPlugin } from "graphql-ez";
-import type { User as Auth0User } from "@auth0/auth0-react";
-import type { DBUser } from "db";
-import { ENV } from "common-api";
 
 export { Auth0User };
 
@@ -49,14 +47,6 @@ export const Auth0Verify = fp(async (app) => {
     );
   }
 });
-
-export const AuthPlugin: EZPlugin = {
-  name: "Auth",
-  compatibilityList: ["fastify"],
-  onIntegrationRegister(_ctx, integrationCtx) {
-    integrationCtx.fastify!.register(Auth0Verify);
-  },
-};
 
 export const Authorization = (userPromise: Promise<DBUser | null>) => {
   const expectUser = LazyPromise(async () => {

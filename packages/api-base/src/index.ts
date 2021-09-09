@@ -81,12 +81,18 @@ export const ezServicePreset = CreateApp({
       ezVoyager(),
       {
         name: "LearnerModelGQL",
-        compatibilityList: ["fastify"],
+        compatibilityList: {
+          fastify: true,
+        },
         onPreBuild(ctx) {
           ctx.appBuilder.registerModule(ConnectionTypes);
         },
-        onIntegrationRegister(_ctx, integrationCtx) {
-          integrationCtx.fastify!.register(Auth0Verify);
+        onIntegrationRegister() {
+          return {
+            fastify({ integration }) {
+              integration.register(Auth0Verify);
+            },
+          };
         },
       },
     ],

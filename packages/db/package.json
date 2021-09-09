@@ -15,9 +15,9 @@
     "test:watch": "bob-ts-watch"
   },
   "dependencies": {
-    "@prisma/client": "3.0.1",
+    "@prisma/client": "^3.0.2",
     "common-api": "workspace:^1.0.0",
-    "prisma": "3.0.1",
+    "prisma": "^3.0.2",
     "prisma-dbml-generator": "^0.7.0"
   },
   "devDependencies": {
