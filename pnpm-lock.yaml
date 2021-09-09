@@ -82,7 +82,7 @@ importers:
       '@auth0/auth0-react': ^1.7.0
       '@graphql-ez/fastify': ^0.9.4
       '@graphql-ez/plugin-altair': ^0.7.1
-      '@graphql-ez/plugin-codegen': ^0.7.2
+      '@graphql-ez/plugin-codegen': ^0.7.3
       '@graphql-ez/plugin-modules': ^0.8.1
       '@graphql-ez/plugin-scalars': ^0.7.2
       '@graphql-ez/plugin-schema': ^0.7.2
@@ -102,7 +102,7 @@ importers:
       '@auth0/auth0-react': 1.7.0_react@17.0.2
       '@graphql-ez/fastify': 0.9.4_529e63eac494bb6895a8cf58a1e4e77d
       '@graphql-ez/plugin-altair': 0.7.1_565199b548554a2077850e689cdf4206
-      '@graphql-ez/plugin-codegen': 0.7.2_565199b548554a2077850e689cdf4206
+      '@graphql-ez/plugin-codegen': 0.7.3_565199b548554a2077850e689cdf4206
       '@graphql-ez/plugin-modules': 0.8.1_565199b548554a2077850e689cdf4206
       '@graphql-ez/plugin-scalars': 0.7.2_565199b548554a2077850e689cdf4206
       '@graphql-ez/plugin-schema': 0.7.2_565199b548554a2077850e689cdf4206
@@ -185,7 +185,7 @@ importers:
     specifiers:
       '@graphql-ez/fastify': ^0.9.4
       '@graphql-ez/plugin-altair': ^0.7.1
-      '@graphql-ez/plugin-codegen': ^0.7.2
+      '@graphql-ez/plugin-codegen': ^0.7.3
       '@graphql-ez/plugin-voyager': ^0.7.1
       '@graphql-tools/delegate': ^8.2.1
       '@graphql-tools/stitch': ^8.3.1
@@ -212,7 +212,7 @@ importers:
     dependencies:
       '@graphql-ez/fastify': 0.9.4_529e63eac494bb6895a8cf58a1e4e77d
       '@graphql-ez/plugin-altair': 0.7.1_565199b548554a2077850e689cdf4206
-      '@graphql-ez/plugin-codegen': 0.7.2_565199b548554a2077850e689cdf4206
+      '@graphql-ez/plugin-codegen': 0.7.3_565199b548554a2077850e689cdf4206
       '@graphql-ez/plugin-voyager': 0.7.1_565199b548554a2077850e689cdf4206
       '@graphql-tools/delegate': 8.2.1_graphql@15.5.3
       '@graphql-tools/stitch': 8.3.1_graphql@15.5.3
@@ -2146,12 +2146,12 @@ packages:
       - graphql
     dev: false
 
-  /@graphql-ez/plugin-codegen/0.7.2_565199b548554a2077850e689cdf4206:
-    resolution: {integrity: sha512-VbdAhKx5n+M0lOaJZDpadunWFf9gWxWrc9+tZVY8ekXbxuSZAlz8vl5rqdBjbroJmE2782WoT8qjwTZRBLSm7Q==}
+  /@graphql-ez/plugin-codegen/0.7.3_565199b548554a2077850e689cdf4206:
+    resolution: {integrity: sha512-vmVXVBFOoIyjjt7UQmTLY2SVfBNoPVn5sy28WgvqRuVQ1/Zaiamhrz2wVqRejZeHJKZMS36WCy+w/W9OlUu6sw==}
     engines: {node: ^12.20.0 || >=14.13.0}
     peerDependencies:
       graphql: '*'
-      graphql-ez: ^0.12.0
+      graphql-ez: ^0.13.0
     dependencies:
       '@graphql-codegen/core': 2.1.0_graphql@15.5.3
       '@graphql-codegen/plugin-helpers': 2.1.1_graphql@15.5.3
@@ -2508,7 +2508,7 @@ packages:
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
     dependencies:
-      '@graphql-tools/utils': 8.2.1_graphql@15.5.3
+      '@graphql-tools/utils': 8.2.2_graphql@15.5.3
       graphql: 15.5.3
       relay-compiler: 11.0.2_graphql@15.5.3
       tslib: 2.3.1
