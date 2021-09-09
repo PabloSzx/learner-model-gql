@@ -86,7 +86,7 @@ importers:
       '@graphql-ez/plugin-modules': ^0.8.2
       '@graphql-ez/plugin-scalars': ^0.7.3
       '@graphql-ez/plugin-schema': ^0.7.3
-      '@graphql-ez/plugin-voyager': ^0.7.1
+      '@graphql-ez/plugin-voyager': ^0.8.0
       '@graphql-ez/plugin-websockets': ^0.9.3
       '@types/pino': ^6.3.11
       '@types/validator': ^13.6.3
@@ -106,7 +106,7 @@ importers:
       '@graphql-ez/plugin-modules': 0.8.2_565199b548554a2077850e689cdf4206
       '@graphql-ez/plugin-scalars': 0.7.3_565199b548554a2077850e689cdf4206
       '@graphql-ez/plugin-schema': 0.7.3_565199b548554a2077850e689cdf4206
-      '@graphql-ez/plugin-voyager': 0.7.1_565199b548554a2077850e689cdf4206
+      '@graphql-ez/plugin-voyager': 0.8.0_565199b548554a2077850e689cdf4206
       '@graphql-ez/plugin-websockets': 0.9.3_565199b548554a2077850e689cdf4206
       common-api: link:../common-api
       db: link:../db
@@ -186,7 +186,7 @@ importers:
       '@graphql-ez/fastify': ^0.9.4
       '@graphql-ez/plugin-altair': ^0.7.1
       '@graphql-ez/plugin-codegen': ^0.7.3
-      '@graphql-ez/plugin-voyager': ^0.7.1
+      '@graphql-ez/plugin-voyager': ^0.8.0
       '@graphql-tools/delegate': ^8.2.1
       '@graphql-tools/stitch': ^8.3.1
       '@graphql-tools/utils': ^8.2.2
@@ -213,7 +213,7 @@ importers:
       '@graphql-ez/fastify': 0.9.4_529e63eac494bb6895a8cf58a1e4e77d
       '@graphql-ez/plugin-altair': 0.7.1_565199b548554a2077850e689cdf4206
       '@graphql-ez/plugin-codegen': 0.7.3_565199b548554a2077850e689cdf4206
-      '@graphql-ez/plugin-voyager': 0.7.1_565199b548554a2077850e689cdf4206
+      '@graphql-ez/plugin-voyager': 0.8.0_565199b548554a2077850e689cdf4206
       '@graphql-tools/delegate': 8.2.1_graphql@15.5.3
       '@graphql-tools/stitch': 8.3.1_graphql@15.5.3
       '@graphql-tools/utils': 8.2.2_graphql@15.5.3
@@ -2221,11 +2221,11 @@ packages:
       - '@types/node'
     dev: false
 
-  /@graphql-ez/plugin-voyager/0.7.1_565199b548554a2077850e689cdf4206:
-    resolution: {integrity: sha512-28cf6GRSwYtlzbpWfi4Y71rSEgLVhLph9Y7Yvy24dt0rMd9DuVuqU/GONnhpjS9cvfu7ehPgFuBs9uNlXXpfWg==}
+  /@graphql-ez/plugin-voyager/0.8.0_565199b548554a2077850e689cdf4206:
+    resolution: {integrity: sha512-/aq0wwbvk1av6B8L8nOsHEgc1WXB8waax6mLhTLiT8MD4L+IofY3zmE8YhLyAXUzCQhLawKFOjd85SARsJLxdw==}
     engines: {node: ^12.20.0 || >=14.13.0}
     peerDependencies:
-      graphql-ez: ^0.12.7
+      graphql-ez: ^0.13.0
     dependencies:
       '@graphql-ez/utils': 0.1.2_665410ccc343d2577b943b2f16d32229
       graphql-ez: 0.12.7_665410ccc343d2577b943b2f16d32229
