@@ -24,7 +24,7 @@ importers:
       concurrently: ^6.2.1
       cross-env: ^7.0.3
       dotenv: ^10.0.0
-      esbuild: ^0.12.25
+      esbuild: ^0.12.26
       execa: ^5.1.1
       fastify: ^3.21.0
       graphql: ^15.5.3
@@ -52,13 +52,13 @@ importers:
       '@types/randomstring': 1.1.7
       '@types/react': 17.0.20
       api-base: link:packages/api-base
-      bob-ts: 1.0.5_d6aeec4b8091afd4c59abcc29aed5d13
+      bob-ts: 1.0.5_efe57d6a2713d237750961b3169d1efb
       c8: 7.8.0
       common: link:packages/common
       concurrently: 6.2.1
       cross-env: 7.0.3
       dotenv: 10.0.0
-      esbuild: 0.12.25
+      esbuild: 0.12.26
       execa: 5.1.1
       fastify: 3.21.0
       graphql: 15.5.3
@@ -3758,7 +3758,7 @@ packages:
       rollup: 2.56.3
     dev: true
 
-  /bob-ts/1.0.5_d6aeec4b8091afd4c59abcc29aed5d13:
+  /bob-ts/1.0.5_efe57d6a2713d237750961b3169d1efb:
     resolution: {integrity: sha512-T+lwSOC0oM0e4GLUygnpC3PLc0h6vHFrMcRRzCVVgqF8El8SKwr8ZrUGmGZnESCWddvQzv3oB+9s5RgKxIsCSA==}
     engines: {node: ^12.20.0 || >=14.13.0}
     hasBin: true
@@ -3769,7 +3769,7 @@ packages:
       '@types/node': 16.7.13
       bob-esbuild-plugin: 1.0.0_a7739b162477be34e1adf55969796cd2
       commander: 8.1.0
-      esbuild: 0.12.25
+      esbuild: 0.12.26
       execa: 5.1.1
       globby: 12.0.2
       rollup: 2.56.3
@@ -4887,6 +4887,12 @@ packages:
 
   /esbuild/0.12.25:
     resolution: {integrity: sha512-woie0PosbRSoN8gQytrdCzUbS2ByKgO8nD1xCZkEup3D9q92miCze4PqEI9TZDYAuwn6CruEnQpJxgTRWdooAg==}
+    hasBin: true
+    requiresBuild: true
+    dev: true
+
+  /esbuild/0.12.26:
+    resolution: {integrity: sha512-YmTkhPKjvTJ+G5e96NyhGf69bP+hzO0DscqaVJTi5GM34uaD4Ecj7omu5lJO+NrxCUBRhy2chONLK1h/2LwoXA==}
     hasBin: true
     requiresBuild: true
     dev: true
