@@ -87,7 +87,7 @@ importers:
       '@graphql-ez/plugin-scalars': ^0.7.3
       '@graphql-ez/plugin-schema': ^0.7.3
       '@graphql-ez/plugin-voyager': ^0.7.1
-      '@graphql-ez/plugin-websockets': ^0.9.3
+      '@graphql-ez/plugin-websockets': ^0.10.0
       '@types/pino': ^6.3.11
       '@types/validator': ^13.6.3
       common-api: workspace:^1.0.0
@@ -107,7 +107,7 @@ importers:
       '@graphql-ez/plugin-scalars': 0.7.3_565199b548554a2077850e689cdf4206
       '@graphql-ez/plugin-schema': 0.7.3_565199b548554a2077850e689cdf4206
       '@graphql-ez/plugin-voyager': 0.7.1_565199b548554a2077850e689cdf4206
-      '@graphql-ez/plugin-websockets': 0.9.3_565199b548554a2077850e689cdf4206
+      '@graphql-ez/plugin-websockets': 0.10.0_565199b548554a2077850e689cdf4206
       common-api: link:../common-api
       db: link:../db
       fastify-auth0-verify: 0.5.2
@@ -2234,20 +2234,20 @@ packages:
       - graphql
     dev: false
 
-  /@graphql-ez/plugin-websockets/0.9.3_565199b548554a2077850e689cdf4206:
-    resolution: {integrity: sha512-GQ+cQonUJ3FduJrn7QelaYzQZ24+jW3F5LSpRWNZSdVuQc8OMG5p9Cb0xDcQp4Dy/KVsWqJjPi4bJvpj368Byg==}
+  /@graphql-ez/plugin-websockets/0.10.0_565199b548554a2077850e689cdf4206:
+    resolution: {integrity: sha512-iuZ+BIf6VKMrtaaQEcx4y0fvRzmBHZKvfLMR3wv6coM/Ctnc1MORJfewYOWiSJ9JRkNG+Rverhe0A0jdonvBEg==}
     engines: {node: ^12.20.0 || >=14.13.0}
     peerDependencies:
       graphql: '*'
-      graphql-ez: ^0.12.6
+      graphql-ez: ^0.13.0
     dependencies:
       '@graphql-ez/utils': 0.1.2_665410ccc343d2577b943b2f16d32229
       '@types/ws': 7.4.7
       graphql: 15.5.3
       graphql-ez: 0.12.7_665410ccc343d2577b943b2f16d32229
-      graphql-ws: 5.4.1_graphql@15.5.3
-      subscriptions-transport-ws-envelop: 2.0.1_graphql@15.5.3+ws@8.2.1
-      ws: 8.2.1
+      graphql-ws: 5.5.0_graphql@15.5.3
+      subscriptions-transport-ws-envelop: 2.0.1_graphql@15.5.3+ws@8.2.2
+      ws: 8.2.2
     transitivePeerDependencies:
       - '@types/node'
       - bufferutil
@@ -5656,6 +5656,16 @@ packages:
       graphql: '>=0.11 <=16'
     dependencies:
       graphql: 15.5.3
+    dev: true
+
+  /graphql-ws/5.5.0_graphql@15.5.3:
+    resolution: {integrity: sha512-WQepPMGQQoqS2VsrI2I3RMLCVz3CW4/6ZqGV6ABDOwH4R62DzjxwMlwZbj6vhSI/7IM3/C911yITwgs77iO/hw==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      graphql: '>=0.11 <=16'
+    dependencies:
+      graphql: 15.5.3
+    dev: false
 
   /graphql/15.5.3:
     resolution: {integrity: sha512-sM+jXaO5KinTui6lbK/7b7H/Knj9BpjGxZ+Ki35v7YbUJxxdBCUqNM0h3CRVU1ZF9t5lNiBzvBCSYPvIwxPOQA==}
@@ -6192,6 +6202,15 @@ packages:
       ws: '*'
     dependencies:
       ws: 8.2.1
+    dev: true
+
+  /isomorphic-ws/4.0.1_ws@8.2.2:
+    resolution: {integrity: sha512-BhBvN2MBpWTaSHdWRb/bwdZJ1WaehQ2L1KngkCkfLUGF0mAWAT1sQUQacEmQ0jXkFw/czDXPNQSL5u2/Krsz1w==}
+    peerDependencies:
+      ws: '*'
+    dependencies:
+      ws: 8.2.2
+    dev: false
 
   /istanbul-lib-coverage/3.0.0:
     resolution: {integrity: sha512-UiUIqxMgRDET6eR+o5HbfRYP1l0hqkWOs7vNxC/mggutCMUIhWMm8gAHb8tHlyfD3/l6rlgNA5cKdDzEAf6hEg==}
@@ -8723,6 +8742,22 @@ packages:
       iterall: 1.3.0
       symbol-observable: 4.0.0
       ws: 8.2.1
+    dev: true
+
+  /subscriptions-transport-ws-envelop/2.0.1_graphql@15.5.3+ws@8.2.2:
+    resolution: {integrity: sha512-Y3olO759E5as/nTdFVkSC45q0TOe3OaEQIUzINg0mIXM6cggvJ4Tb0OExHVt6ASKJP7mXHmitFyI/XGkI1dYmw==}
+    peerDependencies:
+      graphql: '>=0.10.0'
+      ws: ^7.5.0
+    dependencies:
+      backo2: 1.0.2
+      eventemitter3: 4.0.7
+      graphql: 15.5.3
+      isomorphic-ws: 4.0.1_ws@8.2.2
+      iterall: 1.3.0
+      symbol-observable: 4.0.0
+      ws: 8.2.2
+    dev: false
 
   /subscriptions-transport-ws/0.10.0_graphql@15.5.3:
     resolution: {integrity: sha512-k28LhLn3abJ1mowFW+LP4QGggE0e3hrk55zXbMHyAeZkCUYtC0owepiwqMD3zX8DglQVaxnhE760pESrNSEzpg==}
@@ -9450,6 +9485,20 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
+    dev: true
+
+  /ws/8.2.2:
+    resolution: {integrity: sha512-Q6B6H2oc8QY3llc3cB8kVmQ6pnJWVQbP7Q5algTcIxx7YEpc0oU4NBVHlztA7Ekzfhw2r0rPducMUiCGWKQRzw==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: ^5.0.2
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+    dev: false
 
   /xregexp/2.0.0:
     resolution: {integrity: sha1-UqY+VsoLhKfzpfPWGHLxJq16WUM=}
