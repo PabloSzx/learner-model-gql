@@ -699,6 +699,19 @@ export type DomainFromContentQuery = {
   }>;
 };
 
+export type DomainsFromProjectsQueryVariables = Exact<{
+  ids: Array<Scalars["IntID"]> | Scalars["IntID"];
+}>;
+
+export type DomainsFromProjectsQuery = {
+  __typename?: "Query";
+  projects: Array<{
+    __typename?: "Project";
+    id: string;
+    domains: Array<{ __typename?: "Domain"; id: string }>;
+  }>;
+};
+
 export type HelloQueryVariables = Exact<{ [key: string]: never }>;
 
 export type HelloQuery = { __typename?: "Query"; hello: string };
@@ -1879,6 +1892,73 @@ export const DomainFromContentDocument = {
 } as unknown as DocumentNode<
   DomainFromContentQuery,
   DomainFromContentQueryVariables
+>;
+export const DomainsFromProjectsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "DomainsFromProjects" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "ids" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "ListType",
+              type: {
+                kind: "NonNullType",
+                type: {
+                  kind: "NamedType",
+                  name: { kind: "Name", value: "IntID" },
+                },
+              },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "projects" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "ids" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "ids" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "domains" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  DomainsFromProjectsQuery,
+  DomainsFromProjectsQueryVariables
 >;
 export const HelloDocument = {
   kind: "Document",

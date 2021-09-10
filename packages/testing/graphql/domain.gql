@@ -91,3 +91,12 @@ query DomainFromContent($ids: [IntID!]!) {
     }
   }
 }
+
+query DomainsFromProjects($ids: [IntID!]!) {
+  projects(ids: $ids) {
+    id
+    domains {
+      id
+    }
+  }
+}

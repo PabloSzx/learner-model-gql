@@ -9,6 +9,7 @@ import {
   CreateTopicDocument,
   CreateUser,
   DomainFromContentDocument,
+  DomainsFromProjectsDocument,
   expectDeepEqual,
   generate,
   GetTestClient,
@@ -449,6 +450,45 @@ export async function CheckDomainOfContent({
   });
 }
 
+export async function CheckDomainsOfProjects({
+  query,
+}: Pick<TestClient, "query">) {
+  await prisma.$queryRaw`TRUNCATE "Domain" CASCADE;`;
+  await prisma.$queryRaw`TRUNCATE "Project" CASCADE;`;
+  await prisma.$queryRaw`TRUNCATE "User" CASCADE;`;
+
+  const { project, projectId } = await CreateProject();
+
+  const { authUser } = await CreateUser({ project });
+
+  MockAuthUser.user = authUser;
+
+  const { domainId } = await CreateDomain({
+    project,
+  });
+
+  const ProjectDomainResult = await query(DomainsFromProjectsDocument, {
+    variables: {
+      ids: [projectId],
+    },
+  });
+
+  expectDeepEqual(ProjectDomainResult, {
+    data: {
+      projects: [
+        {
+          id: projectId,
+          domains: [
+            {
+              id: domainId,
+            },
+          ],
+        },
+      ],
+    },
+  });
+}
+
 describe("Domain service", () => {
   it("hello world", async () => {
     const { query } = await GetTestClient({
@@ -500,5 +540,17 @@ describe("Domain service", () => {
     });
 
     await CheckDomainOfContent(testClient);
+  });
+
+  it("domain of project", async () => {
+    const testClient = await GetTestClient({
+      prepare({ registerModule }) {
+        registerModule(contentModule);
+        registerModule(domainModule);
+        registerModule(projectModule);
+      },
+    });
+
+    await CheckDomainsOfProjects(testClient);
   });
 });

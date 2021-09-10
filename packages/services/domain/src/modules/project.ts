@@ -26,6 +26,9 @@ export const projectModule = registerModule(
                 ),
               },
             },
+            select: {
+              id: true,
+            },
           });
         },
       },
