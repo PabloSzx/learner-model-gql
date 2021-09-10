@@ -26,6 +26,18 @@ export const TestStitchedSchema = async () => {
     },
   });
 
+  const DomainService = await GetTestClient({
+    async prepare({ registerModule }) {
+      const { contentModule, domainModule, projectModule } = await import(
+        "../packages/services/domain/src/modules"
+      );
+
+      registerModule(contentModule);
+      registerModule(domainModule);
+      registerModule(projectModule);
+    },
+  });
+
   const stitchedSchema = await getStitchedSchema([
     {
       name: "actions",
@@ -34,6 +46,10 @@ export const TestStitchedSchema = async () => {
     {
       name: "content",
       href: ContentService.origin,
+    },
+    {
+      name: "domain",
+      href: DomainService.origin,
     },
   ]);
 

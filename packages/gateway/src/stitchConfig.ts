@@ -6,53 +6,74 @@ export const ProjectMerge: NonNullable<SubschemaConfig["merge"]>[string] = {
   fieldName: "projects",
   selectionSet: "{ id }",
   key: ({ id }: Node) => id,
-  args: (originalObject: Node) => ({ id: originalObject.id }),
+  argsFromKeys: (ids) => ({ ids }),
 };
 
 export const DomainMerge: NonNullable<SubschemaConfig["merge"]>[string] = {
   fieldName: "domains",
   selectionSet: "{ id }",
   key: ({ id }: Node) => id,
-  args: (originalObject: Node) => ({ id: originalObject.id }),
+  argsFromKeys: (ids) => ({ ids }),
 };
 
 export const TopicMerge: NonNullable<SubschemaConfig["merge"]>[string] = {
   fieldName: "topics",
   selectionSet: "{ id }",
   key: ({ id }: Node) => id,
-  args: (originalObject: Node) => ({ id: originalObject.id }),
+  argsFromKeys: (ids) => ({ ids }),
 };
 
 export const ContentMerge: NonNullable<SubschemaConfig["merge"]>[string] = {
   fieldName: "content",
   selectionSet: "{ id }",
   key: ({ id }: Node) => id,
-  args: (originalObject: Node) => ({ id: originalObject.id }),
+  argsFromKeys: (ids) => ({ ids }),
+};
+
+const defaultMergeConfig = {
+  Project: ProjectMerge,
+  Domain: DomainMerge,
+  Topic: TopicMerge,
+  Content: ContentMerge,
 };
 
 export const servicesSubschemaConfig: {
   [k in ServiceName]?: Partial<SubschemaConfig>;
 } = {
   domain: {
+    batch: true,
     merge: {
-      Project: ProjectMerge,
-      Domain: DomainMerge,
-      Topic: TopicMerge,
-      Content: ContentMerge,
-      AdminQueries: {},
+      ...defaultMergeConfig,
     },
   },
   users: {
+    batch: true,
     merge: {
-      AdminQueries: {},
+      ...defaultMergeConfig,
     },
   },
   projects: {
+    batch: true,
     merge: {
-      Project: ProjectMerge,
-      Domain: DomainMerge,
-      Topic: TopicMerge,
-      Content: ContentMerge,
+      ...defaultMergeConfig,
+    },
+  },
+  content: {
+    batch: true,
+    merge: {
+      ...defaultMergeConfig,
+    },
+  },
+  actions: {
+    batch: true,
+    merge: {
+      ...defaultMergeConfig,
+    },
+  },
+  state: {
+    batch: true,
+    merge: {
+      ...defaultMergeConfig,
     },
   },
 };
