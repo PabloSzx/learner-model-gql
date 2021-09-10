@@ -81,7 +81,7 @@ importers:
     specifiers:
       '@auth0/auth0-react': ^1.7.0
       '@graphql-ez/fastify': ^0.9.4
-      '@graphql-ez/plugin-altair': ^0.9.0
+      '@graphql-ez/plugin-altair': ^0.9.1
       '@graphql-ez/plugin-codegen': ^0.7.3
       '@graphql-ez/plugin-modules': ^0.8.2
       '@graphql-ez/plugin-scalars': ^0.7.3
@@ -101,7 +101,7 @@ importers:
     dependencies:
       '@auth0/auth0-react': 1.7.0_react@17.0.2
       '@graphql-ez/fastify': 0.9.4_98b6cce732a3c1d787413d4373b23244
-      '@graphql-ez/plugin-altair': 0.9.0_9c485d4f28f9e110ea5a547b40e45574
+      '@graphql-ez/plugin-altair': 0.9.1_9c485d4f28f9e110ea5a547b40e45574
       '@graphql-ez/plugin-codegen': 0.7.3_9c485d4f28f9e110ea5a547b40e45574
       '@graphql-ez/plugin-modules': 0.8.2_9c485d4f28f9e110ea5a547b40e45574
       '@graphql-ez/plugin-scalars': 0.7.3_9c485d4f28f9e110ea5a547b40e45574
@@ -184,7 +184,7 @@ importers:
   packages/gateway:
     specifiers:
       '@graphql-ez/fastify': ^0.9.4
-      '@graphql-ez/plugin-altair': ^0.9.0
+      '@graphql-ez/plugin-altair': ^0.9.1
       '@graphql-ez/plugin-codegen': ^0.7.3
       '@graphql-ez/plugin-voyager': ^0.9.0
       '@graphql-tools/delegate': ^8.2.1
@@ -211,7 +211,7 @@ importers:
       wait-on: ^6.0.0
     dependencies:
       '@graphql-ez/fastify': 0.9.4_98b6cce732a3c1d787413d4373b23244
-      '@graphql-ez/plugin-altair': 0.9.0_9c485d4f28f9e110ea5a547b40e45574
+      '@graphql-ez/plugin-altair': 0.9.1_9c485d4f28f9e110ea5a547b40e45574
       '@graphql-ez/plugin-codegen': 0.7.3_9c485d4f28f9e110ea5a547b40e45574
       '@graphql-ez/plugin-voyager': 0.9.0_9c485d4f28f9e110ea5a547b40e45574
       '@graphql-tools/delegate': 8.2.1_graphql@15.5.3
@@ -2129,8 +2129,8 @@ packages:
       graphql: 15.5.3
       graphql-ez: 0.13.0_d3519dc9a0071c199aaddbc626174dae
 
-  /@graphql-ez/plugin-altair/0.9.0_9c485d4f28f9e110ea5a547b40e45574:
-    resolution: {integrity: sha512-IqFvjEiJvfzo1UumofdikDYFYZZi3O6NCZlxIvc0n9mv6hGU4QhmhNBOoF/iEtjq6pNLgQ8RypivVb1sZyYsZw==}
+  /@graphql-ez/plugin-altair/0.9.1_9c485d4f28f9e110ea5a547b40e45574:
+    resolution: {integrity: sha512-B+eUbe6UtUecu/zqtO9mztcBz4qlSQEyzGu4Pu5SQOM1VOwu1RQdYKivn8DV/rN9OcfUjRB2bDQCX1pgZhu6Bw==}
     engines: {node: ^12.20.0 || >=14.13.0}
     peerDependencies:
       '@types/node': '*'
