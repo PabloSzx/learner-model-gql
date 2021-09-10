@@ -42,6 +42,9 @@ export const contentModule = registerModule(
                 in: await authorization.expectUserProjects,
               },
             },
+            select: {
+              id: true,
+            },
           });
         },
       },

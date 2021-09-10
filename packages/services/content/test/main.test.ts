@@ -30,7 +30,7 @@ export async function CheckContentCreationRetrieval({
 
   MockAuthUser.user = authUser;
 
-  const domain = await CreateDomain({
+  const { domain, domainId } = await CreateDomain({
     project,
   });
 
@@ -45,7 +45,7 @@ export async function CheckContentCreationRetrieval({
       data: {
         projectId,
         description: "Hello World",
-        domainId: domain.id.toString(),
+        domainId,
         binaryBase64: binaryContent.toString("base64"),
         json: {
           hello: {
@@ -300,7 +300,7 @@ describe("Content service", () => {
     }
 
     const { project } = await CreateProject();
-    const domain = await CreateDomain({
+    const { domain, domainId } = await CreateDomain({
       project,
     });
 
@@ -314,7 +314,7 @@ describe("Content service", () => {
     withUserAllowedProject: {
       const result = await query(ContentFromDomainDocument, {
         variables: {
-          ids: [domain.id.toString()],
+          ids: [domainId],
           pagination: {
             first: 10,
           },
@@ -325,7 +325,7 @@ describe("Content service", () => {
         data: {
           domains: [
             {
-              id: domain.id.toString(),
+              id: domainId,
               content: {
                 nodes: [],
                 pageInfo: {
@@ -380,7 +380,7 @@ describe("Content service", () => {
     withUserWithoutAllowedProject: {
       const result = await query(ContentFromDomainDocument, {
         variables: {
-          ids: [domain.id.toString()],
+          ids: [domainId],
           pagination: {
             first: 10,
           },
