@@ -1,11 +1,11 @@
 import { getStitchedSchema } from "../packages/gateway/src/stitch";
 import { actionModule } from "../packages/services/actions/src/modules";
-import { CheckActionsCreationRetrieval } from "../packages/services/actions/test/main.test";
+import { CheckActionsCreationRetrieval } from "../packages/services/actions/test/test";
 import {
   contentModule,
   domainModule,
 } from "../packages/services/content/src/modules";
-import { CheckContentCreationRetrieval } from "../packages/services/content/test/main.test";
+import { CheckContentCreationRetrieval } from "../packages/services/content/test/test";
 import {
   expectDeepEqual,
   GetTestClient,
