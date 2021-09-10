@@ -17,7 +17,7 @@ export const ConnectionTypes = gql`
   }
 
   interface Connection {
-    pageInfo: PageInfo
+    pageInfo: PageInfo!
   }
 
   input CursorConnectionArgs {

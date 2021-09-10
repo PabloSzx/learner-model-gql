@@ -1,4 +1,9 @@
-import { BuildContextArgs, CreateApp, InferContext } from "@graphql-ez/fastify";
+import {
+  BuildContextArgs,
+  CreateApp,
+  gql,
+  InferContext,
+} from "@graphql-ez/fastify";
 import { ezAltairIDE } from "@graphql-ez/plugin-altair/static";
 import { CodegenOptions, ezCodegen } from "@graphql-ez/plugin-codegen";
 import { ezGraphQLModules } from "@graphql-ez/plugin-modules";
@@ -19,6 +24,7 @@ export * from "./auth";
 export * from "./casters";
 export * from "./connection";
 export * from "./logger";
+export * from "./utils";
 
 async function buildContext({ fastify }: BuildContextArgs) {
   const { Auth0UserPromise } = GetAuth0User(fastify?.request);
@@ -85,7 +91,54 @@ export const ezServicePreset = CreateApp({
           fastify: true,
         },
         onPreBuild(ctx) {
-          ctx.appBuilder.registerModule(ConnectionTypes);
+          ctx.appBuilder.registerModule(
+            [
+              ConnectionTypes,
+              gql`
+                type Query {
+                  hello: String!
+                }
+
+                type Mutation {
+                  hello: String!
+                }
+
+                type Subscription {
+                  hello: String!
+                }
+              `,
+            ],
+            {
+              id: "Base",
+              dirname: import.meta.url,
+              resolvers: {
+                Query: {
+                  hello() {
+                    return "Hello World!";
+                  },
+                },
+                Mutation: {
+                  hello() {
+                    return "Hello World!";
+                  },
+                },
+                Subscription: {
+                  hello: {
+                    subscribe(_root, _args, { pubSub }) {
+                      for (let i = 1; i <= 5; ++i) {
+                        setTimeout(() => {
+                          pubSub.publish("hello", {
+                            hello: "Hello World" + i,
+                          });
+                        }, 500 * i);
+                      }
+                      return pubSub.subscribe("hello");
+                    },
+                  },
+                },
+              },
+            }
+          );
         },
         onIntegrationRegister() {
           return {

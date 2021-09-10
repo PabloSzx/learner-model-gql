@@ -321,6 +321,7 @@ importers:
     specifiers:
       '@graphql-codegen/cli': ^2.2.0
       '@graphql-codegen/core': ^2.1.0
+      '@graphql-codegen/gql-tag-operations-preset': ^1.1.5
       '@graphql-codegen/typed-document-node': ^2.1.4
       '@graphql-codegen/typescript': ^2.2.2
       '@graphql-codegen/typescript-operations': ^2.1.4
@@ -331,6 +332,7 @@ importers:
     devDependencies:
       '@graphql-codegen/cli': 2.2.0_a0d51f28557c53d51e566172fe194534
       '@graphql-codegen/core': 2.1.0_graphql@15.5.3
+      '@graphql-codegen/gql-tag-operations-preset': 1.1.5_graphql@15.5.3
       '@graphql-codegen/typed-document-node': 2.1.4_graphql@15.5.3
       '@graphql-codegen/typescript': 2.2.2_graphql@15.5.3
       '@graphql-codegen/typescript-operations': 2.1.4_graphql@15.5.3
@@ -1881,6 +1883,16 @@ packages:
     dependencies:
       ajv: 6.12.6
 
+  /@graphql-codegen/add/3.1.0_graphql@15.5.3:
+    resolution: {integrity: sha512-vRRHpuUFadYXnPrb5RNiIzm3Ao39UxjvrdX760lEfXh2qeG7YddM5QFC+ev2BH3X452R15gv/gf/rXy0+Hqm1A==}
+    peerDependencies:
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
+    dependencies:
+      '@graphql-codegen/plugin-helpers': 2.1.1_graphql@15.5.3
+      graphql: 15.5.3
+      tslib: 2.3.1
+    dev: true
+
   /@graphql-codegen/cli/2.2.0_a0d51f28557c53d51e566172fe194534:
     resolution: {integrity: sha512-f4EsScASza57aPM1z6eKAaYmwz83B/LsmiyBb8phy1NfbWea2IBUCfEgtvOHN85xbiMpdQfNtckE2mC84yH80w==}
     hasBin: true
@@ -1947,6 +1959,39 @@ packages:
       '@graphql-tools/utils': 8.2.2_graphql@15.5.3
       graphql: 15.5.3
       tslib: 2.3.1
+
+  /@graphql-codegen/gql-tag-operations-preset/1.1.5_graphql@15.5.3:
+    resolution: {integrity: sha512-I5pwrAOU28+7fHyHgq+tHABvxJNvjG7i6AnSP7fX/QtJnxbbK7h7fhj1JhsVAwOsLL848FW4ZAuPnf26UABapQ==}
+    peerDependencies:
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
+    dependencies:
+      '@graphql-codegen/add': 3.1.0_graphql@15.5.3
+      '@graphql-codegen/gql-tag-operations': 1.1.4_graphql@15.5.3
+      '@graphql-codegen/typed-document-node': 2.1.4_graphql@15.5.3
+      '@graphql-codegen/typescript': 2.2.2_graphql@15.5.3
+      '@graphql-codegen/typescript-operations': 2.1.4_graphql@15.5.3
+      graphql: 15.5.3
+      tslib: 2.3.1
+    transitivePeerDependencies:
+      - graphql-tag
+      - supports-color
+    dev: true
+
+  /@graphql-codegen/gql-tag-operations/1.1.4_graphql@15.5.3:
+    resolution: {integrity: sha512-eM6lVNrqck1tI1DDaTfG6IU81L+LzChJ22P10pNleP+L2SEVyPM/mnNrE68qXMinLNgzt5c3VHnsI+d62LrPFw==}
+    peerDependencies:
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
+      graphql-tag: ^2.0.0
+    dependencies:
+      '@graphql-codegen/plugin-helpers': 2.1.1_graphql@15.5.3
+      '@graphql-codegen/visitor-plugin-common': 2.2.1_graphql@15.5.3
+      '@graphql-tools/utils': 8.2.2_graphql@15.5.3
+      auto-bind: 4.0.0
+      graphql: 15.5.3
+      tslib: 2.3.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
 
   /@graphql-codegen/plugin-helpers/2.1.1_graphql@15.5.3:
     resolution: {integrity: sha512-7jjN9fekMQkpd7cRTbaBxgqt/hkR3CXeOUSsEyHFDDHKtvCrnev3iyc75IeWXpO9tOwDE8mVPTzEZnu4QukrNA==}

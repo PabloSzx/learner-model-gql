@@ -96,17 +96,12 @@ export const actionModule = registerModule(
       allActions(pagination: CursorConnectionArgs!): ActionsConnection!
     }
 
-    type Query {
-      hello: String!
+    extend type Query {
       adminActions: AdminActionQueries!
     }
 
-    type Mutation {
+    extend type Mutation {
       action(data: ActionInput!): Void
-    }
-
-    type Subscription {
-      hello: String!
     }
   `,
   {
@@ -178,9 +173,6 @@ export const actionModule = registerModule(
         },
       },
       Query: {
-        hello() {
-          return "Hello World!";
-        },
         async adminActions(_root, _args, { authorization }) {
           await authorization.expectAdmin;
 
@@ -261,20 +253,6 @@ export const actionModule = registerModule(
             },
             select: null,
           });
-        },
-      },
-      Subscription: {
-        hello: {
-          subscribe(_root, _args, { pubSub }) {
-            for (let i = 1; i <= 5; ++i) {
-              setTimeout(() => {
-                pubSub.publish("hello", {
-                  hello: "Hello World" + i,
-                });
-              }, 1000 * i);
-            }
-            return pubSub.subscribe("hello");
-          },
         },
       },
     },

@@ -92,37 +92,6 @@ export type AdminMutationsCreateProjectArgs = {
   data: CreateProject;
 };
 
-export type Query = {
-  __typename?: "Query";
-  hello: Scalars["String"];
-  admin: AdminQueries;
-  content: Array<Content>;
-  domains: Array<Domain>;
-  topics: Array<Topic>;
-  projects: Array<Project>;
-};
-
-export type QueryContentArgs = {
-  ids: Array<Scalars["IntID"]>;
-};
-
-export type QueryDomainsArgs = {
-  ids: Array<Scalars["IntID"]>;
-};
-
-export type QueryTopicsArgs = {
-  ids: Array<Scalars["IntID"]>;
-};
-
-export type QueryProjectsArgs = {
-  ids: Array<Scalars["IntID"]>;
-};
-
-export type Mutation = {
-  __typename?: "Mutation";
-  admin: AdminMutations;
-};
-
 export type User = {
   __typename?: "User";
   id: Scalars["IntID"];
@@ -150,6 +119,43 @@ export type CursorConnectionArgs = {
   after?: Maybe<Scalars["IntID"]>;
   last?: Maybe<Scalars["NonNegativeInt"]>;
   before?: Maybe<Scalars["IntID"]>;
+};
+
+export type Query = {
+  __typename?: "Query";
+  hello: Scalars["String"];
+  content: Array<Content>;
+  domains: Array<Domain>;
+  topics: Array<Topic>;
+  admin: AdminQueries;
+  projects: Array<Project>;
+};
+
+export type QueryContentArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryDomainsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryTopicsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryProjectsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type Mutation = {
+  __typename?: "Mutation";
+  hello: Scalars["String"];
+  admin: AdminMutations;
+};
+
+export type Subscription = {
+  __typename?: "Subscription";
+  hello: Scalars["String"];
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -267,14 +273,15 @@ export type ResolversTypes = {
   AdminQueries: ResolverTypeWrapper<AdminQueries>;
   CreateProject: CreateProject;
   AdminMutations: ResolverTypeWrapper<AdminMutations>;
-  Query: ResolverTypeWrapper<{}>;
-  Mutation: ResolverTypeWrapper<{}>;
   User: ResolverTypeWrapper<User>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   Node: never;
   Connection: never;
   CursorConnectionArgs: CursorConnectionArgs;
+  Query: ResolverTypeWrapper<{}>;
+  Mutation: ResolverTypeWrapper<{}>;
+  Subscription: ResolverTypeWrapper<{}>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -294,14 +301,15 @@ export type ResolversParentTypes = {
   AdminQueries: AdminQueries;
   CreateProject: CreateProject;
   AdminMutations: AdminMutations;
-  Query: {};
-  Mutation: {};
   User: User;
   PageInfo: PageInfo;
   Boolean: Scalars["Boolean"];
   Node: never;
   Connection: never;
   CursorConnectionArgs: CursorConnectionArgs;
+  Query: {};
+  Mutation: {};
+  Subscription: {};
 };
 
 export interface DateTimeScalarConfig
@@ -401,45 +409,6 @@ export type AdminMutationsResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type QueryResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
-> = {
-  hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  admin?: Resolver<ResolversTypes["AdminQueries"], ParentType, ContextType>;
-  content?: Resolver<
-    Array<ResolversTypes["Content"]>,
-    ParentType,
-    ContextType,
-    RequireFields<QueryContentArgs, "ids">
-  >;
-  domains?: Resolver<
-    Array<ResolversTypes["Domain"]>,
-    ParentType,
-    ContextType,
-    RequireFields<QueryDomainsArgs, "ids">
-  >;
-  topics?: Resolver<
-    Array<ResolversTypes["Topic"]>,
-    ParentType,
-    ContextType,
-    RequireFields<QueryTopicsArgs, "ids">
-  >;
-  projects?: Resolver<
-    Array<ResolversTypes["Project"]>,
-    ParentType,
-    ContextType,
-    RequireFields<QueryProjectsArgs, "ids">
-  >;
-};
-
-export type MutationResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
-> = {
-  admin?: Resolver<ResolversTypes["AdminMutations"], ParentType, ContextType>;
-};
-
 export type UserResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
@@ -496,6 +465,58 @@ export type ConnectionResolvers<
   >;
 };
 
+export type QueryResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
+> = {
+  hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  content?: Resolver<
+    Array<ResolversTypes["Content"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryContentArgs, "ids">
+  >;
+  domains?: Resolver<
+    Array<ResolversTypes["Domain"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryDomainsArgs, "ids">
+  >;
+  topics?: Resolver<
+    Array<ResolversTypes["Topic"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryTopicsArgs, "ids">
+  >;
+  admin?: Resolver<ResolversTypes["AdminQueries"], ParentType, ContextType>;
+  projects?: Resolver<
+    Array<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryProjectsArgs, "ids">
+  >;
+};
+
+export type MutationResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
+> = {
+  hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  admin?: Resolver<ResolversTypes["AdminMutations"], ParentType, ContextType>;
+};
+
+export type SubscriptionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Subscription"] = ResolversParentTypes["Subscription"]
+> = {
+  hello?: SubscriptionResolver<
+    ResolversTypes["String"],
+    "hello",
+    ParentType,
+    ContextType
+  >;
+};
+
 export type Resolvers<ContextType = EZContext> = {
   DateTime?: GraphQLScalarType;
   Timestamp?: GraphQLScalarType;
@@ -510,12 +531,13 @@ export type Resolvers<ContextType = EZContext> = {
   Project?: ProjectResolvers<ContextType>;
   AdminQueries?: AdminQueriesResolvers<ContextType>;
   AdminMutations?: AdminMutationsResolvers<ContextType>;
-  Query?: QueryResolvers<ContextType>;
-  Mutation?: MutationResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
   Node?: NodeResolvers<ContextType>;
   Connection?: ConnectionResolvers<ContextType>;
+  Query?: QueryResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
+  Subscription?: SubscriptionResolvers<ContextType>;
 };
 
 declare module "graphql-ez" {

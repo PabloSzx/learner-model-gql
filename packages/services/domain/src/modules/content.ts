@@ -1,8 +1,7 @@
 import assert from "assert";
-
 import { gql, registerModule } from "../ez";
 
-registerModule(
+export const contentModule = registerModule(
   gql`
     type Content {
       id: IntID!
@@ -15,6 +14,7 @@ registerModule(
     }
   `,
   {
+    id: "Domain Content",
     resolvers: {
       Content: {
         async domain({ id }, _args, { prisma }) {
@@ -35,18 +35,12 @@ registerModule(
         async content(_root, { ids }, { prisma, authorization }) {
           return prisma.content.findMany({
             where: {
-              AND: [
-                {
-                  id: {
-                    in: ids,
-                  },
-                },
-                {
-                  id: {
-                    in: await authorization.expectUserProjects,
-                  },
-                },
-              ],
+              id: {
+                in: ids,
+              },
+              projectId: {
+                in: await authorization.expectUserProjects,
+              },
             },
           });
         },

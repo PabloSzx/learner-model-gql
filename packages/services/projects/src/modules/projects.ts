@@ -22,12 +22,11 @@ registerModule(
       createProject(data: CreateProject!): Project!
     }
 
-    type Query {
-      hello: String!
+    extend type Query {
       admin: AdminQueries!
     }
 
-    type Mutation {
+    extend type Mutation {
       admin: AdminMutations!
     }
   `,
@@ -50,9 +49,6 @@ registerModule(
           await authorization.expectAdmin;
 
           return {};
-        },
-        hello() {
-          return "Hello World!";
         },
       },
       Mutation: {

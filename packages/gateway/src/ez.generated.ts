@@ -58,7 +58,9 @@ export type Query = {
   domains: Array<Domain>;
   topics: Array<Topic>;
   content: Array<Content>;
+  adminDomain: AdminDomainQueries;
   projects: Array<Project>;
+  hello2: Scalars["String"];
 };
 
 export type QueryDomainsArgs = {
@@ -79,13 +81,20 @@ export type QueryProjectsArgs = {
 
 export type Mutation = {
   __typename?: "Mutation";
+  hello: Scalars["String"];
   admin: AdminMutations;
   action?: Maybe<Scalars["Void"]>;
   adminContent: AdminContentMutations;
+  adminDomain: AdminDomainMutations;
 };
 
 export type MutationActionArgs = {
   data: ActionInput;
+};
+
+export type Subscription = {
+  __typename?: "Subscription";
+  hello: Scalars["String"];
 };
 
 export type Group = {
@@ -132,8 +141,6 @@ export type UsersConnection = {
 export type AdminQueries = {
   __typename?: "AdminQueries";
   allUsers: UsersConnection;
-  allTopics: TopicsConnection;
-  allDomains: DomainsConnection;
   allProjects: Array<Project>;
 };
 
@@ -141,21 +148,10 @@ export type AdminQueriesAllUsersArgs = {
   pagination: CursorConnectionArgs;
 };
 
-export type AdminQueriesAllTopicsArgs = {
-  pagination: CursorConnectionArgs;
-};
-
-export type AdminQueriesAllDomainsArgs = {
-  pagination: CursorConnectionArgs;
-};
-
 export type AdminMutations = {
   __typename?: "AdminMutations";
   assignProjectsToUsers: Array<User>;
   unassignProjectsToUsers: Array<User>;
-  createDomain: Domain;
-  createTopic: Topic;
-  updateTopic: Topic;
   createProject: Project;
 };
 
@@ -167,18 +163,6 @@ export type AdminMutationsAssignProjectsToUsersArgs = {
 export type AdminMutationsUnassignProjectsToUsersArgs = {
   projectIds: Array<Scalars["IntID"]>;
   userIds: Array<Scalars["IntID"]>;
-};
-
-export type AdminMutationsCreateDomainArgs = {
-  input: CreateDomain;
-};
-
-export type AdminMutationsCreateTopicArgs = {
-  input: CreateTopic;
-};
-
-export type AdminMutationsUpdateTopicArgs = {
-  input: UpdateTopic;
 };
 
 export type AdminMutationsCreateProjectArgs = {
@@ -208,11 +192,6 @@ export type CursorConnectionArgs = {
   before?: Maybe<Scalars["IntID"]>;
 };
 
-export type Subscription = {
-  __typename?: "Subscription";
-  hello: Scalars["String"];
-};
-
 export type ActionVerb = {
   __typename?: "ActionVerb";
   id: Scalars["IntID"];
@@ -236,6 +215,8 @@ export type Domain = {
   __typename?: "Domain";
   id: Scalars["IntID"];
   content: ContentConnection;
+  code: Scalars["String"];
+  label: Scalars["String"];
   topics: Array<Topic>;
   project: Project;
 };
@@ -248,6 +229,8 @@ export type Topic = {
   __typename?: "Topic";
   id: Scalars["IntID"];
   content: ContentConnection;
+  code: Scalars["String"];
+  label: Scalars["String"];
   domain: Domain;
   parent?: Maybe<Topic>;
   childrens: Array<Topic>;
@@ -349,19 +332,38 @@ export type AdminContentQueriesAllContentArgs = {
 export type TopicsConnection = Connection & {
   __typename?: "TopicsConnection";
   nodes: Array<Topic>;
-  pageInfo?: Maybe<PageInfo>;
+  pageInfo: PageInfo;
 };
 
 export type DomainsConnection = Connection & {
   __typename?: "DomainsConnection";
   nodes: Array<Domain>;
-  pageInfo?: Maybe<PageInfo>;
+  pageInfo: PageInfo;
+};
+
+export type AdminDomainQueries = {
+  __typename?: "AdminDomainQueries";
+  allTopics: TopicsConnection;
+  allDomains: DomainsConnection;
+};
+
+export type AdminDomainQueriesAllTopicsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminDomainQueriesAllDomainsArgs = {
+  pagination: CursorConnectionArgs;
 };
 
 export type CreateDomain = {
   code: Scalars["String"];
   label: Scalars["String"];
   projectId: Scalars["IntID"];
+};
+
+export type UpdateDomain = {
+  id: Scalars["IntID"];
+  label: Scalars["String"];
 };
 
 export type CreateTopic = {
@@ -379,6 +381,30 @@ export type UpdateTopic = {
   parentTopicId?: Maybe<Scalars["IntID"]>;
   domainId: Scalars["IntID"];
   projectId: Scalars["IntID"];
+};
+
+export type AdminDomainMutations = {
+  __typename?: "AdminDomainMutations";
+  createDomain: Domain;
+  updateDomain: Domain;
+  createTopic: Topic;
+  updateTopic: Topic;
+};
+
+export type AdminDomainMutationsCreateDomainArgs = {
+  input: CreateDomain;
+};
+
+export type AdminDomainMutationsUpdateDomainArgs = {
+  input: UpdateDomain;
+};
+
+export type AdminDomainMutationsCreateTopicArgs = {
+  input: CreateTopic;
+};
+
+export type AdminDomainMutationsUpdateTopicArgs = {
+  input: UpdateTopic;
 };
 
 export type CreateProject = {
@@ -489,6 +515,7 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars["String"]>;
   Mutation: ResolverTypeWrapper<{}>;
+  Subscription: ResolverTypeWrapper<{}>;
   DateTime: ResolverTypeWrapper<Scalars["DateTime"]>;
   Timestamp: ResolverTypeWrapper<Scalars["Timestamp"]>;
   JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
@@ -511,7 +538,6 @@ export type ResolversTypes = {
     | ResolversTypes["TopicsConnection"]
     | ResolversTypes["DomainsConnection"];
   CursorConnectionArgs: CursorConnectionArgs;
-  Subscription: ResolverTypeWrapper<{}>;
   ActionVerb: ResolverTypeWrapper<ActionVerb>;
   Content: ResolverTypeWrapper<Content>;
   Domain: ResolverTypeWrapper<Domain>;
@@ -530,9 +556,12 @@ export type ResolversTypes = {
   AdminContentQueries: ResolverTypeWrapper<AdminContentQueries>;
   TopicsConnection: ResolverTypeWrapper<TopicsConnection>;
   DomainsConnection: ResolverTypeWrapper<DomainsConnection>;
+  AdminDomainQueries: ResolverTypeWrapper<AdminDomainQueries>;
   CreateDomain: CreateDomain;
+  UpdateDomain: UpdateDomain;
   CreateTopic: CreateTopic;
   UpdateTopic: UpdateTopic;
+  AdminDomainMutations: ResolverTypeWrapper<AdminDomainMutations>;
   CreateProject: CreateProject;
 };
 
@@ -541,6 +570,7 @@ export type ResolversParentTypes = {
   Query: {};
   String: Scalars["String"];
   Mutation: {};
+  Subscription: {};
   DateTime: Scalars["DateTime"];
   Timestamp: Scalars["Timestamp"];
   JSONObject: Scalars["JSONObject"];
@@ -562,7 +592,6 @@ export type ResolversParentTypes = {
     | ResolversParentTypes["TopicsConnection"]
     | ResolversParentTypes["DomainsConnection"];
   CursorConnectionArgs: CursorConnectionArgs;
-  Subscription: {};
   ActionVerb: ActionVerb;
   Content: Content;
   Domain: Domain;
@@ -581,9 +610,12 @@ export type ResolversParentTypes = {
   AdminContentQueries: AdminContentQueries;
   TopicsConnection: TopicsConnection;
   DomainsConnection: DomainsConnection;
+  AdminDomainQueries: AdminDomainQueries;
   CreateDomain: CreateDomain;
+  UpdateDomain: UpdateDomain;
   CreateTopic: CreateTopic;
   UpdateTopic: UpdateTopic;
+  AdminDomainMutations: AdminDomainMutations;
   CreateProject: CreateProject;
 };
 
@@ -626,18 +658,25 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryContentArgs, "ids">
   >;
+  adminDomain?: Resolver<
+    ResolversTypes["AdminDomainQueries"],
+    ParentType,
+    ContextType
+  >;
   projects?: Resolver<
     Array<ResolversTypes["Project"]>,
     ParentType,
     ContextType,
     RequireFields<QueryProjectsArgs, "ids">
   >;
+  hello2?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 };
 
 export type MutationResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
 > = {
+  hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   admin?: Resolver<ResolversTypes["AdminMutations"], ParentType, ContextType>;
   action?: Resolver<
     Maybe<ResolversTypes["Void"]>,
@@ -647,6 +686,23 @@ export type MutationResolvers<
   >;
   adminContent?: Resolver<
     ResolversTypes["AdminContentMutations"],
+    ParentType,
+    ContextType
+  >;
+  adminDomain?: Resolver<
+    ResolversTypes["AdminDomainMutations"],
+    ParentType,
+    ContextType
+  >;
+};
+
+export type SubscriptionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Subscription"] = ResolversParentTypes["Subscription"]
+> = {
+  hello?: SubscriptionResolver<
+    ResolversTypes["String"],
+    "hello",
     ParentType,
     ContextType
   >;
@@ -760,18 +816,6 @@ export type AdminQueriesResolvers<
     ContextType,
     RequireFields<AdminQueriesAllUsersArgs, "pagination">
   >;
-  allTopics?: Resolver<
-    ResolversTypes["TopicsConnection"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminQueriesAllTopicsArgs, "pagination">
-  >;
-  allDomains?: Resolver<
-    ResolversTypes["DomainsConnection"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminQueriesAllDomainsArgs, "pagination">
-  >;
   allProjects?: Resolver<
     Array<ResolversTypes["Project"]>,
     ParentType,
@@ -801,24 +845,6 @@ export type AdminMutationsResolvers<
       AdminMutationsUnassignProjectsToUsersArgs,
       "projectIds" | "userIds"
     >
-  >;
-  createDomain?: Resolver<
-    ResolversTypes["Domain"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminMutationsCreateDomainArgs, "input">
-  >;
-  createTopic?: Resolver<
-    ResolversTypes["Topic"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminMutationsCreateTopicArgs, "input">
-  >;
-  updateTopic?: Resolver<
-    ResolversTypes["Topic"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminMutationsUpdateTopicArgs, "input">
   >;
   createProject?: Resolver<
     ResolversTypes["Project"],
@@ -876,18 +902,6 @@ export type ConnectionResolvers<
   >;
 };
 
-export type SubscriptionResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Subscription"] = ResolversParentTypes["Subscription"]
-> = {
-  hello?: SubscriptionResolver<
-    ResolversTypes["String"],
-    "hello",
-    ParentType,
-    ContextType
-  >;
-};
-
 export type ActionVerbResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["ActionVerb"] = ResolversParentTypes["ActionVerb"]
@@ -928,6 +942,8 @@ export type DomainResolvers<
     ContextType,
     RequireFields<DomainContentArgs, "pagination">
   >;
+  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
   project?: Resolver<ResolversTypes["Project"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -944,6 +960,8 @@ export type TopicResolvers<
     ContextType,
     RequireFields<TopicContentArgs, "pagination">
   >;
+  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
   parent?: Resolver<Maybe<ResolversTypes["Topic"]>, ParentType, ContextType>;
   childrens?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
@@ -1049,11 +1067,7 @@ export type TopicsConnectionResolvers<
   ParentType extends ResolversParentTypes["TopicsConnection"] = ResolversParentTypes["TopicsConnection"]
 > = {
   nodes?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
-  pageInfo?: Resolver<
-    Maybe<ResolversTypes["PageInfo"]>,
-    ParentType,
-    ContextType
-  >;
+  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1062,10 +1076,56 @@ export type DomainsConnectionResolvers<
   ParentType extends ResolversParentTypes["DomainsConnection"] = ResolversParentTypes["DomainsConnection"]
 > = {
   nodes?: Resolver<Array<ResolversTypes["Domain"]>, ParentType, ContextType>;
-  pageInfo?: Resolver<
-    Maybe<ResolversTypes["PageInfo"]>,
+  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type AdminDomainQueriesResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["AdminDomainQueries"] = ResolversParentTypes["AdminDomainQueries"]
+> = {
+  allTopics?: Resolver<
+    ResolversTypes["TopicsConnection"],
     ParentType,
-    ContextType
+    ContextType,
+    RequireFields<AdminDomainQueriesAllTopicsArgs, "pagination">
+  >;
+  allDomains?: Resolver<
+    ResolversTypes["DomainsConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminDomainQueriesAllDomainsArgs, "pagination">
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type AdminDomainMutationsResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["AdminDomainMutations"] = ResolversParentTypes["AdminDomainMutations"]
+> = {
+  createDomain?: Resolver<
+    ResolversTypes["Domain"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminDomainMutationsCreateDomainArgs, "input">
+  >;
+  updateDomain?: Resolver<
+    ResolversTypes["Domain"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminDomainMutationsUpdateDomainArgs, "input">
+  >;
+  createTopic?: Resolver<
+    ResolversTypes["Topic"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminDomainMutationsCreateTopicArgs, "input">
+  >;
+  updateTopic?: Resolver<
+    ResolversTypes["Topic"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminDomainMutationsUpdateTopicArgs, "input">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -1073,6 +1133,7 @@ export type DomainsConnectionResolvers<
 export type Resolvers<ContextType = EZContext> = {
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  Subscription?: SubscriptionResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
   Timestamp?: GraphQLScalarType;
   JSONObject?: GraphQLScalarType;
@@ -1089,7 +1150,6 @@ export type Resolvers<ContextType = EZContext> = {
   PageInfo?: PageInfoResolvers<ContextType>;
   Node?: NodeResolvers<ContextType>;
   Connection?: ConnectionResolvers<ContextType>;
-  Subscription?: SubscriptionResolvers<ContextType>;
   ActionVerb?: ActionVerbResolvers<ContextType>;
   Content?: ContentResolvers<ContextType>;
   Domain?: DomainResolvers<ContextType>;
@@ -1103,6 +1163,8 @@ export type Resolvers<ContextType = EZContext> = {
   AdminContentQueries?: AdminContentQueriesResolvers<ContextType>;
   TopicsConnection?: TopicsConnectionResolvers<ContextType>;
   DomainsConnection?: DomainsConnectionResolvers<ContextType>;
+  AdminDomainQueries?: AdminDomainQueriesResolvers<ContextType>;
+  AdminDomainMutations?: AdminDomainMutationsResolvers<ContextType>;
 };
 
 declare module "graphql-ez" {

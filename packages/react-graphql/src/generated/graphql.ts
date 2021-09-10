@@ -111,14 +111,49 @@ export type AdminContentQueriesAllContentArgs = {
   pagination: CursorConnectionArgs;
 };
 
+export type AdminDomainMutations = {
+  __typename?: "AdminDomainMutations";
+  createDomain: Domain;
+  createTopic: Topic;
+  updateDomain: Domain;
+  updateTopic: Topic;
+};
+
+export type AdminDomainMutationsCreateDomainArgs = {
+  input: CreateDomain;
+};
+
+export type AdminDomainMutationsCreateTopicArgs = {
+  input: CreateTopic;
+};
+
+export type AdminDomainMutationsUpdateDomainArgs = {
+  input: UpdateDomain;
+};
+
+export type AdminDomainMutationsUpdateTopicArgs = {
+  input: UpdateTopic;
+};
+
+export type AdminDomainQueries = {
+  __typename?: "AdminDomainQueries";
+  allDomains: DomainsConnection;
+  allTopics: TopicsConnection;
+};
+
+export type AdminDomainQueriesAllDomainsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminDomainQueriesAllTopicsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
 export type AdminMutations = {
   __typename?: "AdminMutations";
   assignProjectsToUsers: Array<User>;
-  createDomain: Domain;
   createProject: Project;
-  createTopic: Topic;
   unassignProjectsToUsers: Array<User>;
-  updateTopic: Topic;
 };
 
 export type AdminMutationsAssignProjectsToUsersArgs = {
@@ -126,16 +161,8 @@ export type AdminMutationsAssignProjectsToUsersArgs = {
   userIds: Array<Scalars["IntID"]>;
 };
 
-export type AdminMutationsCreateDomainArgs = {
-  input: CreateDomain;
-};
-
 export type AdminMutationsCreateProjectArgs = {
   data: CreateProject;
-};
-
-export type AdminMutationsCreateTopicArgs = {
-  input: CreateTopic;
 };
 
 export type AdminMutationsUnassignProjectsToUsersArgs = {
@@ -143,24 +170,10 @@ export type AdminMutationsUnassignProjectsToUsersArgs = {
   userIds: Array<Scalars["IntID"]>;
 };
 
-export type AdminMutationsUpdateTopicArgs = {
-  input: UpdateTopic;
-};
-
 export type AdminQueries = {
   __typename?: "AdminQueries";
-  allDomains: DomainsConnection;
   allProjects: Array<Project>;
-  allTopics: TopicsConnection;
   allUsers: UsersConnection;
-};
-
-export type AdminQueriesAllDomainsArgs = {
-  pagination: CursorConnectionArgs;
-};
-
-export type AdminQueriesAllTopicsArgs = {
-  pagination: CursorConnectionArgs;
 };
 
 export type AdminQueriesAllUsersArgs = {
@@ -228,8 +241,10 @@ export type CursorConnectionArgs = {
 
 export type Domain = {
   __typename?: "Domain";
+  code: Scalars["String"];
   content: ContentConnection;
   id: Scalars["IntID"];
+  label: Scalars["String"];
   project: Project;
   topics: Array<Topic>;
 };
@@ -241,7 +256,7 @@ export type DomainContentArgs = {
 export type DomainsConnection = Connection & {
   __typename?: "DomainsConnection";
   nodes: Array<Domain>;
-  pageInfo?: Maybe<PageInfo>;
+  pageInfo: PageInfo;
 };
 
 export type Group = {
@@ -258,6 +273,8 @@ export type Mutation = {
   action?: Maybe<Scalars["Void"]>;
   admin: AdminMutations;
   adminContent: AdminContentMutations;
+  adminDomain: AdminDomainMutations;
+  hello: Scalars["String"];
 };
 
 export type MutationActionArgs = {
@@ -289,10 +306,12 @@ export type Query = {
   admin: AdminQueries;
   adminActions: AdminActionQueries;
   adminContent: AdminContentQueries;
+  adminDomain: AdminDomainQueries;
   content: Array<Content>;
   currentUser?: Maybe<User>;
   domains: Array<Domain>;
   hello: Scalars["String"];
+  hello2: Scalars["String"];
   projects: Array<Project>;
   topics: Array<Topic>;
 };
@@ -321,9 +340,11 @@ export type Subscription = {
 export type Topic = {
   __typename?: "Topic";
   childrens: Array<Topic>;
+  code: Scalars["String"];
   content: ContentConnection;
   domain: Domain;
   id: Scalars["IntID"];
+  label: Scalars["String"];
   parent?: Maybe<Topic>;
   project: Project;
 };
@@ -335,7 +356,12 @@ export type TopicContentArgs = {
 export type TopicsConnection = Connection & {
   __typename?: "TopicsConnection";
   nodes: Array<Topic>;
-  pageInfo?: Maybe<PageInfo>;
+  pageInfo: PageInfo;
+};
+
+export type UpdateDomain = {
+  id: Scalars["IntID"];
+  label: Scalars["String"];
 };
 
 export type UpdateTopic = {

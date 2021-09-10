@@ -45,11 +45,6 @@ export type Scalars = {
   IntID: number;
 };
 
-export type Query = {
-  __typename?: "Query";
-  hello: Scalars["String"];
-};
-
 export type PageInfo = {
   __typename?: "PageInfo";
   startCursor?: Maybe<Scalars["String"]>;
@@ -71,6 +66,22 @@ export type CursorConnectionArgs = {
   after?: Maybe<Scalars["IntID"]>;
   last?: Maybe<Scalars["NonNegativeInt"]>;
   before?: Maybe<Scalars["IntID"]>;
+};
+
+export type Query = {
+  __typename?: "Query";
+  hello: Scalars["String"];
+  hello2: Scalars["String"];
+};
+
+export type Mutation = {
+  __typename?: "Mutation";
+  hello: Scalars["String"];
+};
+
+export type Subscription = {
+  __typename?: "Subscription";
+  hello: Scalars["String"];
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -180,13 +191,15 @@ export type ResolversTypes = {
   Void: ResolverTypeWrapper<Scalars["Void"]>;
   URL: ResolverTypeWrapper<Scalars["URL"]>;
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
-  Query: ResolverTypeWrapper<{}>;
-  String: ResolverTypeWrapper<Scalars["String"]>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
+  String: ResolverTypeWrapper<Scalars["String"]>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   Node: never;
   Connection: never;
   CursorConnectionArgs: CursorConnectionArgs;
+  Query: ResolverTypeWrapper<{}>;
+  Mutation: ResolverTypeWrapper<{}>;
+  Subscription: ResolverTypeWrapper<{}>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -198,13 +211,15 @@ export type ResolversParentTypes = {
   Void: Scalars["Void"];
   URL: Scalars["URL"];
   IntID: Scalars["IntID"];
-  Query: {};
-  String: Scalars["String"];
   PageInfo: PageInfo;
+  String: Scalars["String"];
   Boolean: Scalars["Boolean"];
   Node: never;
   Connection: never;
   CursorConnectionArgs: CursorConnectionArgs;
+  Query: {};
+  Mutation: {};
+  Subscription: {};
 };
 
 export interface DateTimeScalarConfig
@@ -241,13 +256,6 @@ export interface IntIdScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["IntID"], any> {
   name: "IntID";
 }
-
-export type QueryResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
-> = {
-  hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-};
 
 export type PageInfoResolvers<
   ContextType = EZContext,
@@ -292,6 +300,33 @@ export type ConnectionResolvers<
   >;
 };
 
+export type QueryResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
+> = {
+  hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  hello2?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+};
+
+export type MutationResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
+> = {
+  hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+};
+
+export type SubscriptionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Subscription"] = ResolversParentTypes["Subscription"]
+> = {
+  hello?: SubscriptionResolver<
+    ResolversTypes["String"],
+    "hello",
+    ParentType,
+    ContextType
+  >;
+};
+
 export type Resolvers<ContextType = EZContext> = {
   DateTime?: GraphQLScalarType;
   Timestamp?: GraphQLScalarType;
@@ -300,10 +335,12 @@ export type Resolvers<ContextType = EZContext> = {
   Void?: GraphQLScalarType;
   URL?: GraphQLScalarType;
   IntID?: GraphQLScalarType;
-  Query?: QueryResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
   Node?: NodeResolvers<ContextType>;
   Connection?: ConnectionResolvers<ContextType>;
+  Query?: QueryResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
+  Subscription?: SubscriptionResolvers<ContextType>;
 };
 
 declare module "graphql-ez" {

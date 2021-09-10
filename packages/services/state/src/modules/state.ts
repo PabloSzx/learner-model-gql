@@ -2,14 +2,14 @@ import { gql, registerModule } from "../ez";
 
 registerModule(
   gql`
-    type Query {
-      hello: String!
+    extend type Query {
+      hello2: String!
     }
   `,
   {
     resolvers: {
       Query: {
-        hello() {
+        hello2() {
           return "Hello World!";
         },
       },

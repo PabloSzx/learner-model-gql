@@ -42,11 +42,10 @@ export const contentModule = registerModule(
     type AdminContentQueries {
       allContent(pagination: CursorConnectionArgs!): ContentConnection!
     }
-    type Query {
-      hello: String!
+    extend type Query {
       adminContent: AdminContentQueries!
     }
-    type Mutation {
+    extend type Mutation {
       adminContent: AdminContentMutations!
     }
   `,
@@ -113,9 +112,6 @@ export const contentModule = registerModule(
         },
       },
       Query: {
-        hello() {
-          return "Hello World!";
-        },
         async adminContent(_root, _args, { authorization }) {
           await authorization.expectAdmin;
           return {};

@@ -3,10 +3,13 @@ import { ResolveCursorConnection } from "api-base";
 
 import { gql, registerModule } from "../ez";
 
-registerModule(
+export const domainModule = registerModule(
   gql`
     type Topic {
       id: IntID!
+
+      code: String!
+      label: String!
 
       domain: Domain!
 
@@ -18,20 +21,23 @@ registerModule(
     type Domain {
       id: IntID!
 
+      code: String!
+      label: String!
+
       topics: [Topic!]!
     }
 
     type TopicsConnection implements Connection {
       nodes: [Topic!]!
-      pageInfo: PageInfo
+      pageInfo: PageInfo!
     }
 
     type DomainsConnection implements Connection {
       nodes: [Domain!]!
-      pageInfo: PageInfo
+      pageInfo: PageInfo!
     }
 
-    type AdminQueries {
+    type AdminDomainQueries {
       allTopics(pagination: CursorConnectionArgs!): TopicsConnection!
       allDomains(pagination: CursorConnectionArgs!): DomainsConnection!
     }
@@ -41,6 +47,12 @@ registerModule(
       label: String!
 
       projectId: IntID!
+    }
+
+    input UpdateDomain {
+      id: IntID!
+
+      label: String!
     }
 
     input CreateTopic {
@@ -67,26 +79,28 @@ registerModule(
       projectId: IntID!
     }
 
-    type AdminMutations {
+    type AdminDomainMutations {
       createDomain(input: CreateDomain!): Domain!
+      updateDomain(input: UpdateDomain!): Domain!
       createTopic(input: CreateTopic!): Topic!
       updateTopic(input: UpdateTopic!): Topic!
     }
 
-    type Query {
+    extend type Query {
       topics(ids: [IntID!]!): [Topic!]!
       domains(ids: [IntID!]!): [Domain!]!
 
-      admin: AdminQueries!
+      adminDomain: AdminDomainQueries!
     }
 
-    type Mutation {
-      admin: AdminMutations!
+    extend type Mutation {
+      adminDomain: AdminDomainMutations!
     }
   `,
   {
+    id: "Domain Domain",
     resolvers: {
-      AdminMutations: {
+      AdminDomainMutations: {
         createDomain(_root, { input: { code, label, projectId } }, { prisma }) {
           return prisma.domain.create({
             data: {
@@ -97,6 +111,16 @@ registerModule(
                   id: projectId,
                 },
               },
+            },
+          });
+        },
+        updateDomain(_root, { input: { id, label } }, { prisma }) {
+          return prisma.domain.update({
+            where: {
+              id,
+            },
+            data: {
+              label,
             },
           });
         },
@@ -130,12 +154,12 @@ registerModule(
             },
           });
         },
-        updateTopic(
+        async updateTopic(
           _root,
           { input: { code, label, projectId, parentTopicId, domainId, id } },
           { prisma }
         ) {
-          return prisma.topic.update({
+          const topic = await prisma.topic.update({
             where: {
               id,
             },
@@ -162,9 +186,23 @@ registerModule(
                   : undefined,
             },
           });
+
+          if (parentTopicId == null) {
+            await prisma.topic.update({
+              where: {
+                id,
+              },
+              data: {
+                parentId: null,
+              },
+              select: null,
+            });
+          }
+
+          return topic;
         },
       },
-      AdminQueries: {
+      AdminDomainQueries: {
         allTopics(_root, { pagination }, { prisma }) {
           return ResolveCursorConnection(pagination, (args) => {
             return prisma.topic.findMany(args);
@@ -212,14 +250,14 @@ registerModule(
         },
       },
       Mutation: {
-        async admin(_root, _args, { authorization }) {
+        async adminDomain(_root, _args, { authorization }) {
           await authorization.expectAdmin;
 
           return {};
         },
       },
       Query: {
-        async admin(_root, _args, { authorization }) {
+        async adminDomain(_root, _args, { authorization }) {
           await authorization.expectAdmin;
 
           return {};

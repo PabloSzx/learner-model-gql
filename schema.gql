@@ -13,13 +13,21 @@ type Query {
   domains(ids: [IntID!]!): [Domain!]!
   topics(ids: [IntID!]!): [Topic!]!
   content(ids: [IntID!]!): [Content!]!
+  adminDomain: AdminDomainQueries!
   projects(ids: [IntID!]!): [Project!]!
+  hello2: String!
 }
 
 type Mutation {
+  hello: String!
   admin: AdminMutations!
   action(data: ActionInput!): Void
   adminContent: AdminContentMutations!
+  adminDomain: AdminDomainMutations!
+}
+
+type Subscription {
+  hello: String!
 }
 
 """
@@ -99,17 +107,12 @@ type UsersConnection {
 
 type AdminQueries {
   allUsers(pagination: CursorConnectionArgs!): UsersConnection!
-  allTopics(pagination: CursorConnectionArgs!): TopicsConnection!
-  allDomains(pagination: CursorConnectionArgs!): DomainsConnection!
   allProjects: [Project!]!
 }
 
 type AdminMutations {
   assignProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
   unassignProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
-  createDomain(input: CreateDomain!): Domain!
-  createTopic(input: CreateTopic!): Topic!
-  updateTopic(input: UpdateTopic!): Topic!
   createProject(data: CreateProject!): Project!
 }
 
@@ -135,10 +138,6 @@ input CursorConnectionArgs {
   before: IntID
 }
 
-type Subscription {
-  hello: String!
-}
-
 type ActionVerb {
   id: IntID!
   name: String!
@@ -159,6 +158,8 @@ type Content {
 type Domain {
   id: IntID!
   content(pagination: CursorConnectionArgs!): ContentConnection!
+  code: String!
+  label: String!
   topics: [Topic!]!
   project: Project!
 }
@@ -166,6 +167,8 @@ type Domain {
 type Topic {
   id: IntID!
   content(pagination: CursorConnectionArgs!): ContentConnection!
+  code: String!
+  label: String!
   domain: Domain!
   parent: Topic
   childrens: [Topic!]!
@@ -243,18 +246,28 @@ type AdminContentQueries {
 
 type TopicsConnection implements Connection {
   nodes: [Topic!]!
-  pageInfo: PageInfo
+  pageInfo: PageInfo!
 }
 
 type DomainsConnection implements Connection {
   nodes: [Domain!]!
-  pageInfo: PageInfo
+  pageInfo: PageInfo!
+}
+
+type AdminDomainQueries {
+  allTopics(pagination: CursorConnectionArgs!): TopicsConnection!
+  allDomains(pagination: CursorConnectionArgs!): DomainsConnection!
 }
 
 input CreateDomain {
   code: String!
   label: String!
   projectId: IntID!
+}
+
+input UpdateDomain {
+  id: IntID!
+  label: String!
 }
 
 input CreateTopic {
@@ -272,6 +285,13 @@ input UpdateTopic {
   parentTopicId: IntID
   domainId: IntID!
   projectId: IntID!
+}
+
+type AdminDomainMutations {
+  createDomain(input: CreateDomain!): Domain!
+  updateDomain(input: UpdateDomain!): Domain!
+  createTopic(input: CreateTopic!): Topic!
+  updateTopic(input: UpdateTopic!): Topic!
 }
 
 input CreateProject {

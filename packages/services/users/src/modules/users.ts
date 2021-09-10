@@ -40,12 +40,11 @@ registerModule(
       ): [User!]!
     }
 
-    type Query {
-      hello: String!
+    extend type Query {
       admin: AdminQueries!
       currentUser: User
     }
-    type Mutation {
+    extend type Mutation {
       admin: AdminMutations!
     }
   `,
@@ -66,9 +65,6 @@ registerModule(
         },
         async currentUser(_root, _args, { UserPromise }) {
           return await UserPromise;
-        },
-        hello() {
-          return "Hello World!";
         },
       },
       AdminMutations: {

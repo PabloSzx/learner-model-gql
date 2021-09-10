@@ -71,7 +71,13 @@ export const CreateProject = async () => {
 export const CreateUser = async ({
   project,
   role = "ADMIN",
-}: { project?: { id: number }; role?: UserRole } = {}) => {
+}: {
+  project?: { id: number };
+  /**
+   * @default "ADMIN"
+   */
+  role?: UserRole;
+} = {}) => {
   const userUid = generate();
 
   const email = `${generate()}@gmail.com`;

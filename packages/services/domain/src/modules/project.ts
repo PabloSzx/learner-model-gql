@@ -1,6 +1,7 @@
+import { getIdsIntersection } from "api-base";
 import { gql, registerModule } from "../ez";
 
-registerModule(
+export const projectModule = registerModule(
   gql`
     type Project {
       id: IntID!
@@ -18,24 +19,20 @@ registerModule(
         async projects(_root, { ids }, { authorization, prisma }) {
           return prisma.project.findMany({
             where: {
-              AND: [
-                {
-                  id: {
-                    in: ids,
-                  },
-                },
-                {
-                  id: {
-                    in: await authorization.expectUserProjects,
-                  },
-                },
-              ],
+              id: {
+                in: await getIdsIntersection(
+                  ids,
+                  authorization.expectUserProjects
+                ),
+              },
             },
           });
         },
       },
       Project: {
-        async domains({ id }, _args, { prisma }) {
+        async domains({ id }, _args, { prisma, authorization }) {
+          await authorization.expectAllowedUserProject(id);
+
           return (
             (await prisma.project
               .findUnique({
@@ -48,5 +45,6 @@ registerModule(
         },
       },
     },
+    id: "Domain Project",
   }
 );
