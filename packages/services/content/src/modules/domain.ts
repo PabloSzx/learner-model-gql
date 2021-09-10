@@ -59,11 +59,12 @@ export const domainModule = registerModule(
               id: {
                 in: ids,
               },
-              project: {
-                id: {
-                  in: await authorization.expectUserProjects,
-                },
+              projectId: {
+                in: await authorization.expectUserProjects,
               },
+            },
+            select: {
+              id: true,
             },
           });
         },
@@ -73,11 +74,12 @@ export const domainModule = registerModule(
               id: {
                 in: ids,
               },
-              project: {
-                id: {
-                  in: await authorization.expectUserProjects,
-                },
+              projectId: {
+                in: await authorization.expectUserProjects,
               },
+            },
+            select: {
+              id: true,
             },
           });
         },
