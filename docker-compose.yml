@@ -9,4 +9,6 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
     volumes:
-      - ./.test-postgres-data:/var/lib/postgresql/data
+      - test-learner-model-gql:/var/lib/postgresql/data
+volumes:
+  test-learner-model-gql:
