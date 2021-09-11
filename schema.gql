@@ -15,6 +15,7 @@ type Query {
   content(ids: [IntID!]!): [Content!]!
   adminDomain: AdminDomainQueries!
   projects(ids: [IntID!]!): [Project!]!
+  adminProjects: AdminProjectsQueries!
   hello2: String!
 }
 
@@ -24,6 +25,7 @@ type Mutation {
   action(data: ActionInput!): Void
   adminContent: AdminContentMutations!
   adminDomain: AdminDomainMutations!
+  adminProjects: AdminProjectsMutations!
 }
 
 type Subscription {
@@ -107,13 +109,11 @@ type UsersConnection {
 
 type AdminQueries {
   allUsers(pagination: CursorConnectionArgs!): UsersConnection!
-  allProjects: [Project!]!
 }
 
 type AdminMutations {
   assignProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
   unassignProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
-  createProject(data: CreateProject!): Project!
 }
 
 type PageInfo {
@@ -294,7 +294,27 @@ type AdminDomainMutations {
   updateTopic(input: UpdateTopic!): Topic!
 }
 
+type ProjectsConnection implements Connection {
+  nodes: [Project!]!
+  pageInfo: PageInfo!
+}
+
+type AdminProjectsQueries {
+  allProjects(pagination: CursorConnectionArgs!): ProjectsConnection!
+}
+
 input CreateProject {
   code: String!
   label: String!
+}
+
+input UpdateProject {
+  id: IntID!
+  code: String!
+  label: String!
+}
+
+type AdminProjectsMutations {
+  createProject(data: CreateProject!): Project!
+  updateProject(data: UpdateProject!): Project!
 }

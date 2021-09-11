@@ -1,6 +1,6 @@
 import { gql, registerModule } from "../ez";
 
-registerModule(
+export const usersModule = registerModule(
   gql`
     type User {
       id: IntID!
@@ -13,6 +13,8 @@ registerModule(
     }
   `,
   {
+    id: "Users",
+    dirname: import.meta.url,
     resolvers: {
       Query: {
         async projects(_root, { ids }, { prisma, authorization }) {

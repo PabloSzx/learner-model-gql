@@ -7,6 +7,7 @@ import {
   CheckDomainsOfProjects,
   CheckTopicsCreationRetrieval,
 } from "../packages/services/domain/test/test";
+import { CheckProjectCreationRetrieval } from "../packages/services/projects/test/test";
 import {
   expectDeepEqual,
   GetTestClient,
@@ -14,7 +15,7 @@ import {
 } from "../packages/testing/src/index";
 
 export const TestStitchedSchema = async () => {
-  const ActionService = await GetTestClient({
+  const ActionService = GetTestClient({
     async prepare({ registerModule }) {
       const { actionModule } = await import(
         "../packages/services/actions/src/modules"
@@ -23,7 +24,7 @@ export const TestStitchedSchema = async () => {
     },
   });
 
-  const ContentService = await GetTestClient({
+  const ContentService = GetTestClient({
     async prepare({ registerModule }) {
       const { contentModule, domainModule } = await import(
         "../packages/services/content/src/modules"
@@ -33,7 +34,7 @@ export const TestStitchedSchema = async () => {
     },
   });
 
-  const DomainService = await GetTestClient({
+  const DomainService = GetTestClient({
     async prepare({ registerModule }) {
       const { contentModule, domainModule, projectModule } = await import(
         "../packages/services/domain/src/modules"
@@ -45,18 +46,34 @@ export const TestStitchedSchema = async () => {
     },
   });
 
+  const ProjectsService = GetTestClient({
+    async prepare({ registerModule }) {
+      const { contentModule, domainModule, projectsModule, usersModule } =
+        await import("../packages/services/projects/src/modules");
+
+      registerModule(contentModule);
+      registerModule(domainModule);
+      registerModule(projectsModule);
+      registerModule(usersModule);
+    },
+  });
+
   const stitchedSchema = await getStitchedSchema([
     {
       name: "actions",
-      href: ActionService.origin,
+      href: (await ActionService).origin,
     },
     {
       name: "content",
-      href: ContentService.origin,
+      href: (await ContentService).origin,
     },
     {
       name: "domain",
-      href: DomainService.origin,
+      href: (await DomainService).origin,
+    },
+    {
+      name: "projects",
+      href: (await ProjectsService).origin,
     },
   ]);
 
@@ -113,6 +130,14 @@ describe("gateway", () => {
       const { GatewayClient } = await TestStitchedSchema();
 
       await CheckDomainsOfProjects(GatewayClient);
+    });
+  });
+
+  describe("projects gateway", async () => {
+    it("projects", async () => {
+      const { GatewayClient } = await TestStitchedSchema();
+
+      await CheckProjectCreationRetrieval(GatewayClient);
     });
   });
 });

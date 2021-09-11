@@ -73,9 +73,19 @@ export type Project = {
   label: Scalars["String"];
 };
 
-export type AdminQueries = {
-  __typename?: "AdminQueries";
-  allProjects: Array<Project>;
+export type ProjectsConnection = Connection & {
+  __typename?: "ProjectsConnection";
+  nodes: Array<Project>;
+  pageInfo: PageInfo;
+};
+
+export type AdminProjectsQueries = {
+  __typename?: "AdminProjectsQueries";
+  allProjects: ProjectsConnection;
+};
+
+export type AdminProjectsQueriesAllProjectsArgs = {
+  pagination: CursorConnectionArgs;
 };
 
 export type CreateProject = {
@@ -83,13 +93,24 @@ export type CreateProject = {
   label: Scalars["String"];
 };
 
-export type AdminMutations = {
-  __typename?: "AdminMutations";
-  createProject: Project;
+export type UpdateProject = {
+  id: Scalars["IntID"];
+  code: Scalars["String"];
+  label: Scalars["String"];
 };
 
-export type AdminMutationsCreateProjectArgs = {
+export type AdminProjectsMutations = {
+  __typename?: "AdminProjectsMutations";
+  createProject: Project;
+  updateProject: Project;
+};
+
+export type AdminProjectsMutationsCreateProjectArgs = {
   data: CreateProject;
+};
+
+export type AdminProjectsMutationsUpdateProjectArgs = {
+  data: UpdateProject;
 };
 
 export type User = {
@@ -127,7 +148,7 @@ export type Query = {
   content: Array<Content>;
   domains: Array<Domain>;
   topics: Array<Topic>;
-  admin: AdminQueries;
+  adminProjects: AdminProjectsQueries;
   projects: Array<Project>;
 };
 
@@ -150,7 +171,7 @@ export type QueryProjectsArgs = {
 export type Mutation = {
   __typename?: "Mutation";
   hello: Scalars["String"];
-  admin: AdminMutations;
+  adminProjects: AdminProjectsMutations;
 };
 
 export type Subscription = {
@@ -270,14 +291,16 @@ export type ResolversTypes = {
   Topic: ResolverTypeWrapper<Topic>;
   Project: ResolverTypeWrapper<Project>;
   String: ResolverTypeWrapper<Scalars["String"]>;
-  AdminQueries: ResolverTypeWrapper<AdminQueries>;
+  ProjectsConnection: ResolverTypeWrapper<ProjectsConnection>;
+  AdminProjectsQueries: ResolverTypeWrapper<AdminProjectsQueries>;
   CreateProject: CreateProject;
-  AdminMutations: ResolverTypeWrapper<AdminMutations>;
+  UpdateProject: UpdateProject;
+  AdminProjectsMutations: ResolverTypeWrapper<AdminProjectsMutations>;
   User: ResolverTypeWrapper<User>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   Node: never;
-  Connection: never;
+  Connection: ResolversTypes["ProjectsConnection"];
   CursorConnectionArgs: CursorConnectionArgs;
   Query: ResolverTypeWrapper<{}>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -298,14 +321,16 @@ export type ResolversParentTypes = {
   Topic: Topic;
   Project: Project;
   String: Scalars["String"];
-  AdminQueries: AdminQueries;
+  ProjectsConnection: ProjectsConnection;
+  AdminProjectsQueries: AdminProjectsQueries;
   CreateProject: CreateProject;
-  AdminMutations: AdminMutations;
+  UpdateProject: UpdateProject;
+  AdminProjectsMutations: AdminProjectsMutations;
   User: User;
   PageInfo: PageInfo;
   Boolean: Scalars["Boolean"];
   Node: never;
-  Connection: never;
+  Connection: ResolversParentTypes["ProjectsConnection"];
   CursorConnectionArgs: CursorConnectionArgs;
   Query: {};
   Mutation: {};
@@ -384,27 +409,43 @@ export type ProjectResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type AdminQueriesResolvers<
+export type ProjectsConnectionResolvers<
   ContextType = EZContext,
-  ParentType extends ResolversParentTypes["AdminQueries"] = ResolversParentTypes["AdminQueries"]
+  ParentType extends ResolversParentTypes["ProjectsConnection"] = ResolversParentTypes["ProjectsConnection"]
+> = {
+  nodes?: Resolver<Array<ResolversTypes["Project"]>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type AdminProjectsQueriesResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["AdminProjectsQueries"] = ResolversParentTypes["AdminProjectsQueries"]
 > = {
   allProjects?: Resolver<
-    Array<ResolversTypes["Project"]>,
+    ResolversTypes["ProjectsConnection"],
     ParentType,
-    ContextType
+    ContextType,
+    RequireFields<AdminProjectsQueriesAllProjectsArgs, "pagination">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type AdminMutationsResolvers<
+export type AdminProjectsMutationsResolvers<
   ContextType = EZContext,
-  ParentType extends ResolversParentTypes["AdminMutations"] = ResolversParentTypes["AdminMutations"]
+  ParentType extends ResolversParentTypes["AdminProjectsMutations"] = ResolversParentTypes["AdminProjectsMutations"]
 > = {
   createProject?: Resolver<
     ResolversTypes["Project"],
     ParentType,
     ContextType,
-    RequireFields<AdminMutationsCreateProjectArgs, "data">
+    RequireFields<AdminProjectsMutationsCreateProjectArgs, "data">
+  >;
+  updateProject?: Resolver<
+    ResolversTypes["Project"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminProjectsMutationsUpdateProjectArgs, "data">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -457,7 +498,7 @@ export type ConnectionResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Connection"] = ResolversParentTypes["Connection"]
 > = {
-  __resolveType: TypeResolveFn<null, ParentType, ContextType>;
+  __resolveType: TypeResolveFn<"ProjectsConnection", ParentType, ContextType>;
   pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
 };
 
@@ -484,7 +525,11 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryTopicsArgs, "ids">
   >;
-  admin?: Resolver<ResolversTypes["AdminQueries"], ParentType, ContextType>;
+  adminProjects?: Resolver<
+    ResolversTypes["AdminProjectsQueries"],
+    ParentType,
+    ContextType
+  >;
   projects?: Resolver<
     Array<ResolversTypes["Project"]>,
     ParentType,
@@ -498,7 +543,11 @@ export type MutationResolvers<
   ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
 > = {
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  admin?: Resolver<ResolversTypes["AdminMutations"], ParentType, ContextType>;
+  adminProjects?: Resolver<
+    ResolversTypes["AdminProjectsMutations"],
+    ParentType,
+    ContextType
+  >;
 };
 
 export type SubscriptionResolvers<
@@ -525,8 +574,9 @@ export type Resolvers<ContextType = EZContext> = {
   Domain?: DomainResolvers<ContextType>;
   Topic?: TopicResolvers<ContextType>;
   Project?: ProjectResolvers<ContextType>;
-  AdminQueries?: AdminQueriesResolvers<ContextType>;
-  AdminMutations?: AdminMutationsResolvers<ContextType>;
+  ProjectsConnection?: ProjectsConnectionResolvers<ContextType>;
+  AdminProjectsQueries?: AdminProjectsQueriesResolvers<ContextType>;
+  AdminProjectsMutations?: AdminProjectsMutationsResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
   Node?: NodeResolvers<ContextType>;

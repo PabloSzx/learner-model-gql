@@ -9,9 +9,15 @@ import { LazyPromise } from "graphql-ez/utils";
 
 export { Auth0User };
 
-export const MockAuthUser = {
-  user: null as Auth0User | null,
-};
+export const MockAuthUser: {
+  user: Auth0User | null;
+} = ENV.IS_TEST
+  ? {
+      user: null,
+    }
+  : Object.freeze({
+      user: null,
+    });
 
 export function GetAuth0User(request: FastifyRequest | undefined) {
   const Auth0UserPromise =

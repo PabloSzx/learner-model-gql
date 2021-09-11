@@ -1,0 +1,34 @@
+mutation AdminCreateProject($data: CreateProject!) {
+  adminProjects {
+    createProject(data: $data) {
+      id
+      code
+      label
+    }
+  }
+}
+
+mutation AdminUpdateProject($data: UpdateProject!) {
+  adminProjects {
+    updateProject(data: $data) {
+      id
+      code
+      label
+    }
+  }
+}
+
+query AdminAllProjects($pagination: CursorConnectionArgs!) {
+  adminProjects {
+    allProjects(pagination: $pagination) {
+      nodes {
+        id
+        code
+        label
+      }
+      pageInfo {
+        hasNextPage
+      }
+    }
+  }
+}

@@ -152,7 +152,6 @@ export type AdminDomainQueriesAllTopicsArgs = {
 export type AdminMutations = {
   __typename?: "AdminMutations";
   assignProjectsToUsers: Array<User>;
-  createProject: Project;
   unassignProjectsToUsers: Array<User>;
 };
 
@@ -161,18 +160,36 @@ export type AdminMutationsAssignProjectsToUsersArgs = {
   userIds: Array<Scalars["IntID"]>;
 };
 
-export type AdminMutationsCreateProjectArgs = {
-  data: CreateProject;
-};
-
 export type AdminMutationsUnassignProjectsToUsersArgs = {
   projectIds: Array<Scalars["IntID"]>;
   userIds: Array<Scalars["IntID"]>;
 };
 
+export type AdminProjectsMutations = {
+  __typename?: "AdminProjectsMutations";
+  createProject: Project;
+  updateProject: Project;
+};
+
+export type AdminProjectsMutationsCreateProjectArgs = {
+  data: CreateProject;
+};
+
+export type AdminProjectsMutationsUpdateProjectArgs = {
+  data: UpdateProject;
+};
+
+export type AdminProjectsQueries = {
+  __typename?: "AdminProjectsQueries";
+  allProjects: ProjectsConnection;
+};
+
+export type AdminProjectsQueriesAllProjectsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
 export type AdminQueries = {
   __typename?: "AdminQueries";
-  allProjects: Array<Project>;
   allUsers: UsersConnection;
 };
 
@@ -274,6 +291,7 @@ export type Mutation = {
   admin: AdminMutations;
   adminContent: AdminContentMutations;
   adminDomain: AdminDomainMutations;
+  adminProjects: AdminProjectsMutations;
   hello: Scalars["String"];
 };
 
@@ -301,12 +319,19 @@ export type Project = {
   label: Scalars["String"];
 };
 
+export type ProjectsConnection = Connection & {
+  __typename?: "ProjectsConnection";
+  nodes: Array<Project>;
+  pageInfo: PageInfo;
+};
+
 export type Query = {
   __typename?: "Query";
   admin: AdminQueries;
   adminActions: AdminActionQueries;
   adminContent: AdminContentQueries;
   adminDomain: AdminDomainQueries;
+  adminProjects: AdminProjectsQueries;
   content: Array<Content>;
   currentUser?: Maybe<User>;
   domains: Array<Domain>;
@@ -360,6 +385,12 @@ export type TopicsConnection = Connection & {
 };
 
 export type UpdateDomain = {
+  id: Scalars["IntID"];
+  label: Scalars["String"];
+};
+
+export type UpdateProject = {
+  code: Scalars["String"];
   id: Scalars["IntID"];
   label: Scalars["String"];
 };

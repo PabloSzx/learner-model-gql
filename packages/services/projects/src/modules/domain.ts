@@ -2,7 +2,7 @@ import assert from "assert";
 
 import { gql, registerModule } from "../ez";
 
-registerModule(
+export const domainModule = registerModule(
   gql`
     type Domain {
       id: IntID!
@@ -22,6 +22,8 @@ registerModule(
     }
   `,
   {
+    id: "Domain",
+    dirname: import.meta.url,
     resolvers: {
       Query: {
         async domains(_root, { ids }, { prisma, authorization }) {
@@ -30,11 +32,12 @@ registerModule(
               id: {
                 in: ids,
               },
-              project: {
-                id: {
-                  in: await authorization.expectUserProjects,
-                },
+              projectId: {
+                in: await authorization.expectUserProjects,
               },
+            },
+            select: {
+              id: true,
             },
           });
         },
@@ -44,11 +47,12 @@ registerModule(
               id: {
                 in: ids,
               },
-              project: {
-                id: {
-                  in: await authorization.expectUserProjects,
-                },
+              projectId: {
+                in: await authorization.expectUserProjects,
               },
+            },
+            select: {
+              id: true,
             },
           });
         },

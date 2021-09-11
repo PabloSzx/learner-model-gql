@@ -151,7 +151,6 @@ export type AdminDomainQueriesAllTopicsArgs = {
 export type AdminMutations = {
   __typename?: "AdminMutations";
   assignProjectsToUsers: Array<User>;
-  createProject: Project;
   unassignProjectsToUsers: Array<User>;
 };
 
@@ -160,18 +159,36 @@ export type AdminMutationsAssignProjectsToUsersArgs = {
   userIds: Array<Scalars["IntID"]>;
 };
 
-export type AdminMutationsCreateProjectArgs = {
-  data: CreateProject;
-};
-
 export type AdminMutationsUnassignProjectsToUsersArgs = {
   projectIds: Array<Scalars["IntID"]>;
   userIds: Array<Scalars["IntID"]>;
 };
 
+export type AdminProjectsMutations = {
+  __typename?: "AdminProjectsMutations";
+  createProject: Project;
+  updateProject: Project;
+};
+
+export type AdminProjectsMutationsCreateProjectArgs = {
+  data: CreateProject;
+};
+
+export type AdminProjectsMutationsUpdateProjectArgs = {
+  data: UpdateProject;
+};
+
+export type AdminProjectsQueries = {
+  __typename?: "AdminProjectsQueries";
+  allProjects: ProjectsConnection;
+};
+
+export type AdminProjectsQueriesAllProjectsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
 export type AdminQueries = {
   __typename?: "AdminQueries";
-  allProjects: Array<Project>;
   allUsers: UsersConnection;
 };
 
@@ -273,6 +290,7 @@ export type Mutation = {
   admin: AdminMutations;
   adminContent: AdminContentMutations;
   adminDomain: AdminDomainMutations;
+  adminProjects: AdminProjectsMutations;
   hello: Scalars["String"];
 };
 
@@ -300,12 +318,19 @@ export type Project = {
   label: Scalars["String"];
 };
 
+export type ProjectsConnection = Connection & {
+  __typename?: "ProjectsConnection";
+  nodes: Array<Project>;
+  pageInfo: PageInfo;
+};
+
 export type Query = {
   __typename?: "Query";
   admin: AdminQueries;
   adminActions: AdminActionQueries;
   adminContent: AdminContentQueries;
   adminDomain: AdminDomainQueries;
+  adminProjects: AdminProjectsQueries;
   content: Array<Content>;
   currentUser?: Maybe<User>;
   domains: Array<Domain>;
@@ -359,6 +384,12 @@ export type TopicsConnection = Connection & {
 };
 
 export type UpdateDomain = {
+  id: Scalars["IntID"];
+  label: Scalars["String"];
+};
+
+export type UpdateProject = {
+  code: Scalars["String"];
   id: Scalars["IntID"];
   label: Scalars["String"];
 };
@@ -715,6 +746,61 @@ export type DomainsFromProjectsQuery = {
 export type HelloQueryVariables = Exact<{ [key: string]: never }>;
 
 export type HelloQuery = { __typename?: "Query"; hello: string };
+
+export type AdminCreateProjectMutationVariables = Exact<{
+  data: CreateProject;
+}>;
+
+export type AdminCreateProjectMutation = {
+  __typename?: "Mutation";
+  adminProjects: {
+    __typename?: "AdminProjectsMutations";
+    createProject: {
+      __typename?: "Project";
+      id: string;
+      code: string;
+      label: string;
+    };
+  };
+};
+
+export type AdminUpdateProjectMutationVariables = Exact<{
+  data: UpdateProject;
+}>;
+
+export type AdminUpdateProjectMutation = {
+  __typename?: "Mutation";
+  adminProjects: {
+    __typename?: "AdminProjectsMutations";
+    updateProject: {
+      __typename?: "Project";
+      id: string;
+      code: string;
+      label: string;
+    };
+  };
+};
+
+export type AdminAllProjectsQueryVariables = Exact<{
+  pagination: CursorConnectionArgs;
+}>;
+
+export type AdminAllProjectsQuery = {
+  __typename?: "Query";
+  adminProjects: {
+    __typename?: "AdminProjectsQueries";
+    allProjects: {
+      __typename?: "ProjectsConnection";
+      nodes: Array<{
+        __typename?: "Project";
+        id: string;
+        code: string;
+        label: string;
+      }>;
+      pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean };
+    };
+  };
+};
 
 export const IsolatedDomainFieldsFragmentDoc = {
   kind: "Document",
@@ -1974,3 +2060,223 @@ export const HelloDocument = {
     },
   ],
 } as unknown as DocumentNode<HelloQuery, HelloQueryVariables>;
+export const AdminCreateProjectDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "AdminCreateProject" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "CreateProject" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminProjects" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "createProject" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "data" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "data" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      { kind: "Field", name: { kind: "Name", value: "label" } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  AdminCreateProjectMutation,
+  AdminCreateProjectMutationVariables
+>;
+export const AdminUpdateProjectDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "AdminUpdateProject" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "UpdateProject" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminProjects" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "updateProject" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "data" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "data" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      { kind: "Field", name: { kind: "Name", value: "label" } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  AdminUpdateProjectMutation,
+  AdminUpdateProjectMutationVariables
+>;
+export const AdminAllProjectsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "AdminAllProjects" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "pagination" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "CursorConnectionArgs" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminProjects" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "allProjects" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "pagination" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "pagination" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "nodes" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "code" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "label" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "pageInfo" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "hasNextPage" },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  AdminAllProjectsQuery,
+  AdminAllProjectsQueryVariables
+>;
