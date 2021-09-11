@@ -38,7 +38,7 @@
     "@types/randomstring": "^1.1.7",
     "@types/react": "^17.0.20",
     "api-base": "workspace:^0.0.1",
-    "bob-ts": "^1.0.6",
+    "bob-ts": "^1.0.5",
     "c8": "^7.9.0",
     "common": "workspace:^0.0.1",
     "concurrently": "^6.2.1",
