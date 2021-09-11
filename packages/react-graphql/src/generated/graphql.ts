@@ -181,7 +181,7 @@ export type AdminQueriesAllUsersArgs = {
 };
 
 export type Connection = {
-  pageInfo?: Maybe<PageInfo>;
+  pageInfo: PageInfo;
 };
 
 export type Content = {

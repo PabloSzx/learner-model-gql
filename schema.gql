@@ -128,7 +128,7 @@ interface Node {
 }
 
 interface Connection {
-  pageInfo: PageInfo
+  pageInfo: PageInfo!
 }
 
 input CursorConnectionArgs {

@@ -58,7 +58,7 @@ export type Node = {
 };
 
 export type Connection = {
-  pageInfo?: Maybe<PageInfo>;
+  pageInfo: PageInfo;
 };
 
 export type CursorConnectionArgs = {
@@ -293,11 +293,7 @@ export type ConnectionResolvers<
   ParentType extends ResolversParentTypes["Connection"] = ResolversParentTypes["Connection"]
 > = {
   __resolveType: TypeResolveFn<null, ParentType, ContextType>;
-  pageInfo?: Resolver<
-    Maybe<ResolversTypes["PageInfo"]>,
-    ParentType,
-    ContextType
-  >;
+  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
 };
 
 export type QueryResolvers<
