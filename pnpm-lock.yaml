@@ -18,7 +18,7 @@ importers:
       '@types/randomstring': ^1.1.7
       '@types/react': ^17.0.20
       api-base: workspace:^0.0.1
-      bob-ts: ^1.0.5
+      bob-ts: ^1.0.6
       c8: ^7.9.0
       common: workspace:^0.0.1
       concurrently: ^6.2.1
@@ -52,7 +52,7 @@ importers:
       '@types/randomstring': 1.1.7
       '@types/react': 17.0.20
       api-base: link:packages/api-base
-      bob-ts: 1.0.5_20d3465f61e9ae46be180acdafcf2dc2
+      bob-ts: 1.0.6_20d3465f61e9ae46be180acdafcf2dc2
       c8: 7.9.0
       common: link:packages/common
       concurrently: 6.2.1
@@ -3795,8 +3795,8 @@ packages:
       rollup: 2.56.3
     dev: true
 
-  /bob-ts/1.0.5_20d3465f61e9ae46be180acdafcf2dc2:
-    resolution: {integrity: sha512-T+lwSOC0oM0e4GLUygnpC3PLc0h6vHFrMcRRzCVVgqF8El8SKwr8ZrUGmGZnESCWddvQzv3oB+9s5RgKxIsCSA==}
+  /bob-ts/1.0.6_20d3465f61e9ae46be180acdafcf2dc2:
+    resolution: {integrity: sha512-CcgS1A1qWCzdOr+XxaVCLVCfG4N7boPunCaeSPCqOHeaO7ssr6V7+O6apKnEHNc9kb4NXKaI8jNCXXGcpHPDcA==}
     engines: {node: ^12.20.0 || >=14.13.0}
     hasBin: true
     peerDependencies:
