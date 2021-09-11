@@ -54,7 +54,12 @@ export function expectDeepEqual<T>(
   actual: T,
   expected: T
 ): asserts actual is T {
-  deepEqual(actual, expected);
+  try {
+    deepEqual(actual, expected);
+  } catch (err) {
+    if (err instanceof Error) Error.captureStackTrace(err, expectDeepEqual);
+    throw err;
+  }
 }
 
 export const CreateProject = async () => {

@@ -1,11 +1,12 @@
 import { getStitchedSchema } from "../packages/gateway/src/stitch";
-import { actionModule } from "../packages/services/actions/src/modules";
 import { CheckActionsCreationRetrieval } from "../packages/services/actions/test/test";
-import {
-  contentModule,
-  domainModule,
-} from "../packages/services/content/src/modules";
 import { CheckContentCreationRetrieval } from "../packages/services/content/test/test";
+import {
+  CheckDomainCreationRetrieval,
+  CheckDomainOfContent,
+  CheckDomainsOfProjects,
+  CheckTopicsCreationRetrieval,
+} from "../packages/services/domain/test/test";
 import {
   expectDeepEqual,
   GetTestClient,
@@ -14,13 +15,19 @@ import {
 
 export const TestStitchedSchema = async () => {
   const ActionService = await GetTestClient({
-    prepare({ registerModule }) {
+    async prepare({ registerModule }) {
+      const { actionModule } = await import(
+        "../packages/services/actions/src/modules"
+      );
       registerModule(actionModule);
     },
   });
 
   const ContentService = await GetTestClient({
-    prepare({ registerModule }) {
+    async prepare({ registerModule }) {
+      const { contentModule, domainModule } = await import(
+        "../packages/services/content/src/modules"
+      );
       registerModule(contentModule);
       registerModule(domainModule);
     },
@@ -83,5 +90,29 @@ describe("gateway", () => {
     const { GatewayClient } = await TestStitchedSchema();
 
     await CheckContentCreationRetrieval(GatewayClient);
+  });
+
+  describe("domain gateway", async () => {
+    it("domain", async () => {
+      const { GatewayClient } = await TestStitchedSchema();
+
+      await CheckDomainCreationRetrieval(GatewayClient);
+    });
+    it("topics", async () => {
+      const { GatewayClient } = await TestStitchedSchema();
+
+      await CheckTopicsCreationRetrieval(GatewayClient);
+    });
+    it("content", async () => {
+      const { GatewayClient } = await TestStitchedSchema();
+
+      await CheckDomainOfContent(GatewayClient);
+    });
+
+    it("projects", async () => {
+      const { GatewayClient } = await TestStitchedSchema();
+
+      await CheckDomainsOfProjects(GatewayClient);
+    });
   });
 });
