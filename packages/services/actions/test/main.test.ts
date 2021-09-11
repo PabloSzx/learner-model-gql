@@ -1,12 +1,10 @@
 import {
-  AllActionsDocument,
-  CreateActionDocument,
   CreateUser,
   deepEqual,
   expectDeepEqual,
   GetTestClient,
-  HelloDocument,
   MockAuthUser,
+  gql,
 } from "testing";
 import { actionModule } from "../src/modules";
 import { CheckActionsCreationRetrieval } from "./test";
@@ -19,11 +17,20 @@ describe("Actions service", () => {
       },
     });
 
-    expectDeepEqual(await query(HelloDocument), {
-      data: {
-        hello: "Hello World!",
-      },
-    });
+    expectDeepEqual(
+      await query(
+        gql(/* GraphQL */ `
+          query hello {
+            hello
+          }
+        `)
+      ),
+      {
+        data: {
+          hello: "Hello World!",
+        },
+      }
+    );
   });
 
   it("actions creation and retrieval", async () => {
@@ -48,16 +55,23 @@ describe("Actions service", () => {
       });
 
       deepEqual(
-        await mutation(CreateActionDocument, {
-          variables: {
-            data: {
-              activity: {},
-              projectId: "55",
-              timestamp: Date.now(),
-              verbName: "zxczx",
+        await mutation(
+          gql(/* GraphQL */ `
+            mutation CreateAction($data: ActionInput!) {
+              action(data: $data)
+            }
+          `),
+          {
+            variables: {
+              data: {
+                activity: {},
+                projectId: "55",
+                timestamp: Date.now(),
+                verbName: "zxczx",
+              },
             },
-          },
-        }),
+          }
+        ),
         {
           data: {
             action: null,
@@ -90,16 +104,23 @@ describe("Actions service", () => {
       MockAuthUser.user = authUser;
 
       deepEqual(
-        await mutation(CreateActionDocument, {
-          variables: {
-            data: {
-              activity: {},
-              projectId: "55",
-              timestamp: Date.now(),
-              verbName: "zxczx",
+        await mutation(
+          gql(/* GraphQL */ `
+            mutation CreateAction($data: ActionInput!) {
+              action(data: $data)
+            }
+          `),
+          {
+            variables: {
+              data: {
+                activity: {},
+                projectId: "55",
+                timestamp: Date.now(),
+                verbName: "zxczx",
+              },
             },
-          },
-        }),
+          }
+        ),
         {
           data: {
             action: null,
@@ -132,13 +153,36 @@ describe("Actions service", () => {
       MockAuthUser.user = authUser;
 
       deepEqual(
-        await query(AllActionsDocument, {
-          variables: {
-            pagination: {
-              first: 10,
+        await query(
+          gql(/* GraphQL */ `
+            query AllActions($pagination: CursorConnectionArgs!) {
+              adminActions {
+                allActions(pagination: $pagination) {
+                  nodes {
+                    verb {
+                      name
+                    }
+
+                    result
+                    user {
+                      id
+                    }
+                  }
+                  pageInfo {
+                    hasNextPage
+                  }
+                }
+              }
+            }
+          `),
+          {
+            variables: {
+              pagination: {
+                first: 10,
+              },
             },
-          },
-        }),
+          }
+        ),
         {
           data: null,
           errors: [

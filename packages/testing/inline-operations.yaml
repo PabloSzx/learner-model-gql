@@ -1,0 +1,8 @@
+schema: ../../schema.gql
+documents:
+  - "../../**/{src,test,!gql}/**/*.ts"
+generates:
+  ./src/gql/:
+    preset: gql-tag-operations-preset
+    options:
+      useTypeImports: true

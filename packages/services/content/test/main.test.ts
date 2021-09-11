@@ -1,14 +1,11 @@
 import { MockAuthUser } from "api-base";
 import {
-  AllContentDocument,
-  ContentFromDomainDocument,
-  ContentFromTopicDocument,
-  CreateContentDocument,
   CreateDomain,
   CreateProject,
   CreateUser,
   expectDeepEqual,
   GetTestClient,
+  gql,
   HelloDocument,
   prisma,
 } from "testing";
@@ -51,27 +48,60 @@ describe("Content service", () => {
     });
 
     {
-      const result = await query(AllContentDocument, {
-        variables: {
-          pagination: {
-            first: 10,
+      const result = await query(
+        gql(/* GraphQL */ `
+          query AllContent($pagination: CursorConnectionArgs!) {
+            adminContent {
+              allContent(pagination: $pagination) {
+                nodes {
+                  id
+                  description
+                  binaryBase64
+                  json
+                }
+                pageInfo {
+                  hasNextPage
+                }
+              }
+            }
+          }
+        `),
+        {
+          variables: {
+            pagination: {
+              first: 10,
+            },
           },
-        },
-      });
+        }
+      );
 
       expectDeepEqual(result.errors?.[0]?.message, "Forbidden!");
     }
 
     {
-      const result = await mutation(CreateContentDocument, {
-        variables: {
-          data: {
-            description: "asd",
-            domainId: "123",
-            projectId: "123",
+      const result = await mutation(
+        gql(/* GraphQL */ `
+          mutation CreateContent($data: CreateContent!) {
+            adminContent {
+              createContent(data: $data) {
+                id
+                description
+                binaryBase64
+                json
+              }
+            }
+          }
+        `),
+        {
+          variables: {
+            data: {
+              description: "asd",
+              domainId: "123",
+              projectId: "123",
+            },
           },
-        },
-      });
+        }
+      );
 
       expectDeepEqual(result.errors?.[0]?.message, "Forbidden!");
     }
@@ -86,27 +116,73 @@ describe("Content service", () => {
     });
 
     withoutUser: {
-      const result = await query(ContentFromDomainDocument, {
-        variables: {
-          ids: [],
-          pagination: {
-            first: 10,
+      const result = await query(
+        gql(/* GraphQL */ `
+          query ContentFromDomain(
+            $ids: [IntID!]!
+            $pagination: CursorConnectionArgs!
+          ) {
+            domains(ids: $ids) {
+              id
+              content(pagination: $pagination) {
+                nodes {
+                  id
+                  description
+                  binaryBase64
+                  json
+                }
+                pageInfo {
+                  hasNextPage
+                }
+              }
+            }
+          }
+        `),
+        {
+          variables: {
+            ids: [],
+            pagination: {
+              first: 10,
+            },
           },
-        },
-      });
+        }
+      );
 
       expectDeepEqual(result.errors?.[0]?.message, "Forbidden!");
     }
 
     withoutUser: {
-      const result = await query(ContentFromTopicDocument, {
-        variables: {
-          ids: [],
-          pagination: {
-            first: 10,
+      const result = await query(
+        gql(/* GraphQL */ `
+          query ContentFromTopic(
+            $ids: [IntID!]!
+            $pagination: CursorConnectionArgs!
+          ) {
+            topics(ids: $ids) {
+              id
+              content(pagination: $pagination) {
+                nodes {
+                  id
+                  description
+                  binaryBase64
+                  json
+                }
+                pageInfo {
+                  hasNextPage
+                }
+              }
+            }
+          }
+        `),
+        {
+          variables: {
+            ids: [],
+            pagination: {
+              first: 10,
+            },
           },
-        },
-      });
+        }
+      );
 
       expectDeepEqual(result.errors?.[0]?.message, "Forbidden!");
     }
@@ -124,14 +200,37 @@ describe("Content service", () => {
     MockAuthUser.user = authUser;
 
     withUserAllowedProject: {
-      const result = await query(ContentFromDomainDocument, {
-        variables: {
-          ids: [domainId],
-          pagination: {
-            first: 10,
+      const result = await query(
+        gql(/* GraphQL */ `
+          query ContentFromDomain(
+            $ids: [IntID!]!
+            $pagination: CursorConnectionArgs!
+          ) {
+            domains(ids: $ids) {
+              id
+              content(pagination: $pagination) {
+                nodes {
+                  id
+                  description
+                  binaryBase64
+                  json
+                }
+                pageInfo {
+                  hasNextPage
+                }
+              }
+            }
+          }
+        `),
+        {
+          variables: {
+            ids: [domainId],
+            pagination: {
+              first: 10,
+            },
           },
-        },
-      });
+        }
+      );
 
       expectDeepEqual(result, {
         data: {
@@ -151,14 +250,37 @@ describe("Content service", () => {
     }
 
     withUserAllowedProject: {
-      const result = await query(ContentFromTopicDocument, {
-        variables: {
-          ids: domain.topics.map((v) => v.id.toString()),
-          pagination: {
-            first: 10,
+      const result = await query(
+        gql(/* GraphQL */ `
+          query ContentFromTopic(
+            $ids: [IntID!]!
+            $pagination: CursorConnectionArgs!
+          ) {
+            topics(ids: $ids) {
+              id
+              content(pagination: $pagination) {
+                nodes {
+                  id
+                  description
+                  binaryBase64
+                  json
+                }
+                pageInfo {
+                  hasNextPage
+                }
+              }
+            }
+          }
+        `),
+        {
+          variables: {
+            ids: domain.topics.map((v) => v.id.toString()),
+            pagination: {
+              first: 10,
+            },
           },
-        },
-      });
+        }
+      );
 
       expectDeepEqual(result, {
         data: {
@@ -190,14 +312,37 @@ describe("Content service", () => {
     });
 
     withUserWithoutAllowedProject: {
-      const result = await query(ContentFromDomainDocument, {
-        variables: {
-          ids: [domainId],
-          pagination: {
-            first: 10,
+      const result = await query(
+        gql(/* GraphQL */ `
+          query ContentFromDomain(
+            $ids: [IntID!]!
+            $pagination: CursorConnectionArgs!
+          ) {
+            domains(ids: $ids) {
+              id
+              content(pagination: $pagination) {
+                nodes {
+                  id
+                  description
+                  binaryBase64
+                  json
+                }
+                pageInfo {
+                  hasNextPage
+                }
+              }
+            }
+          }
+        `),
+        {
+          variables: {
+            ids: [domainId],
+            pagination: {
+              first: 10,
+            },
           },
-        },
-      });
+        }
+      );
 
       expectDeepEqual(result, {
         data: {
@@ -207,14 +352,37 @@ describe("Content service", () => {
     }
 
     withUserWithoutAllowedProject: {
-      const result = await query(ContentFromTopicDocument, {
-        variables: {
-          ids: domain.topics.map((v) => v.id.toString()),
-          pagination: {
-            first: 10,
+      const result = await query(
+        gql(/* GraphQL */ `
+          query ContentFromTopic(
+            $ids: [IntID!]!
+            $pagination: CursorConnectionArgs!
+          ) {
+            topics(ids: $ids) {
+              id
+              content(pagination: $pagination) {
+                nodes {
+                  id
+                  description
+                  binaryBase64
+                  json
+                }
+                pageInfo {
+                  hasNextPage
+                }
+              }
+            }
+          }
+        `),
+        {
+          variables: {
+            ids: domain.topics.map((v) => v.id.toString()),
+            pagination: {
+              first: 10,
+            },
           },
-        },
-      });
+        }
+      );
 
       expectDeepEqual(result, {
         data: {

@@ -1,15 +1,12 @@
 import { MockAuthUser } from "api-base";
 import {
-  AllContentDocument,
   assert,
-  ContentFromDomainDocument,
-  ContentFromTopicDocument,
-  CreateContentDocument,
   CreateDomain,
   CreateProject,
   CreateUser,
   equal,
   expectDeepEqual,
+  gql,
   prisma,
   TestClient,
 } from "testing";
@@ -36,22 +33,36 @@ export async function CheckContentCreationRetrieval({
 
   const binaryContent = Buffer.from("hello world in base64", "utf-8");
 
-  const contentResult = await mutation(CreateContentDocument, {
-    variables: {
-      data: {
-        projectId,
-        description: "Hello World",
-        domainId,
-        binaryBase64: binaryContent.toString("base64"),
-        json: {
-          hello: {
-            world: "json",
+  const contentResult = await mutation(
+    gql(/* GraphQL */ `
+      mutation CreateContent($data: CreateContent!) {
+        adminContent {
+          createContent(data: $data) {
+            id
+            description
+            binaryBase64
+            json
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        data: {
+          projectId,
+          description: "Hello World",
+          domainId,
+          binaryBase64: binaryContent.toString("base64"),
+          json: {
+            hello: {
+              world: "json",
+            },
           },
+          topicId,
         },
-        topicId,
       },
-    },
-  });
+    }
+  );
 
   const contentId = contentResult.data?.adminContent.createContent.id;
 
@@ -75,13 +86,32 @@ export async function CheckContentCreationRetrieval({
   });
 
   {
-    const result = await query(AllContentDocument, {
-      variables: {
-        pagination: {
-          first: 10,
+    const result = await query(
+      gql(/* GraphQL */ `
+        query AllContent($pagination: CursorConnectionArgs!) {
+          adminContent {
+            allContent(pagination: $pagination) {
+              nodes {
+                id
+                description
+                binaryBase64
+                json
+              }
+              pageInfo {
+                hasNextPage
+              }
+            }
+          }
+        }
+      `),
+      {
+        variables: {
+          pagination: {
+            first: 10,
+          },
         },
-      },
-    });
+      }
+    );
 
     equal(result.data?.adminContent.allContent.nodes.length, 1);
 
@@ -115,14 +145,37 @@ export async function CheckContentCreationRetrieval({
   }
 
   {
-    const result = await query(ContentFromDomainDocument, {
-      variables: {
-        ids: [domain.id.toString()],
-        pagination: {
-          first: 10,
+    const result = await query(
+      gql(/* GraphQL */ `
+        query ContentFromDomain(
+          $ids: [IntID!]!
+          $pagination: CursorConnectionArgs!
+        ) {
+          domains(ids: $ids) {
+            id
+            content(pagination: $pagination) {
+              nodes {
+                id
+                description
+                binaryBase64
+                json
+              }
+              pageInfo {
+                hasNextPage
+              }
+            }
+          }
+        }
+      `),
+      {
+        variables: {
+          ids: [domain.id.toString()],
+          pagination: {
+            first: 10,
+          },
         },
-      },
-    });
+      }
+    );
 
     equal(result.errors, undefined);
 
@@ -157,14 +210,37 @@ export async function CheckContentCreationRetrieval({
   }
 
   {
-    const result = await query(ContentFromTopicDocument, {
-      variables: {
-        ids: [topicId],
-        pagination: {
-          first: 10,
+    const result = await query(
+      gql(/* GraphQL */ `
+        query ContentFromTopic(
+          $ids: [IntID!]!
+          $pagination: CursorConnectionArgs!
+        ) {
+          topics(ids: $ids) {
+            id
+            content(pagination: $pagination) {
+              nodes {
+                id
+                description
+                binaryBase64
+                json
+              }
+              pageInfo {
+                hasNextPage
+              }
+            }
+          }
+        }
+      `),
+      {
+        variables: {
+          ids: [topicId],
+          pagination: {
+            first: 10,
+          },
         },
-      },
-    });
+      }
+    );
 
     equal(result.errors, undefined);
 

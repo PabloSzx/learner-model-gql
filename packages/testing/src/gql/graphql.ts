@@ -1,0 +1,697 @@
+/* eslint-disable */
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+export type Maybe<T> = T | null;
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string;
+  String: string;
+  Boolean: boolean;
+  Int: number;
+  Float: number;
+  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
+  DateTime: any;
+  /** ID that parses as non-negative integer, serializes to string, and can be passed as string or number */
+  IntID: any;
+  /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSONObject: any;
+  /** Integers that will have a value of 0 or more. */
+  NonNegativeInt: any;
+  /** The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
+  Timestamp: any;
+  /** A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. */
+  URL: any;
+  /** Represents NULL values */
+  Void: any;
+};
+
+export type Action = {
+  __typename?: 'Action';
+  activity: ActionActivity;
+  id: Scalars['IntID'];
+  result?: Maybe<Scalars['Float']>;
+  timestamp: Scalars['Timestamp'];
+  user?: Maybe<User>;
+  verb: ActionVerb;
+};
+
+export type ActionActivity = {
+  __typename?: 'ActionActivity';
+  amount?: Maybe<Scalars['Float']>;
+  content?: Maybe<Content>;
+  detail?: Maybe<Scalars['String']>;
+  extra?: Maybe<Scalars['JSONObject']>;
+  hintID?: Maybe<Scalars['ID']>;
+  id: Scalars['IntID'];
+  stepID?: Maybe<Scalars['ID']>;
+  topic?: Maybe<Topic>;
+};
+
+export type ActionActivityInput = {
+  amount?: Maybe<Scalars['Float']>;
+  contentID?: Maybe<Scalars['IntID']>;
+  detail?: Maybe<Scalars['String']>;
+  extra?: Maybe<Scalars['JSONObject']>;
+  hintID?: Maybe<Scalars['ID']>;
+  stepID?: Maybe<Scalars['ID']>;
+  topicID?: Maybe<Scalars['IntID']>;
+};
+
+export type ActionInput = {
+  activity: ActionActivityInput;
+  projectId: Scalars['IntID'];
+  timestamp: Scalars['Timestamp'];
+  verbName: Scalars['String'];
+};
+
+export type ActionVerb = {
+  __typename?: 'ActionVerb';
+  id: Scalars['IntID'];
+  name: Scalars['String'];
+};
+
+export type ActionsConnection = {
+  __typename?: 'ActionsConnection';
+  nodes: Array<Action>;
+  pageInfo: PageInfo;
+};
+
+export type AdminActionQueries = {
+  __typename?: 'AdminActionQueries';
+  allActions: ActionsConnection;
+};
+
+
+export type AdminActionQueriesAllActionsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminContentMutations = {
+  __typename?: 'AdminContentMutations';
+  createContent: Content;
+};
+
+
+export type AdminContentMutationsCreateContentArgs = {
+  data: CreateContent;
+};
+
+export type AdminContentQueries = {
+  __typename?: 'AdminContentQueries';
+  allContent: ContentConnection;
+};
+
+
+export type AdminContentQueriesAllContentArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminDomainMutations = {
+  __typename?: 'AdminDomainMutations';
+  createDomain: Domain;
+  createKC: Kc;
+  createTopic: Topic;
+  updateDomain: Domain;
+  updateKC: Kc;
+  updateTopic: Topic;
+};
+
+
+export type AdminDomainMutationsCreateDomainArgs = {
+  input: CreateDomain;
+};
+
+
+export type AdminDomainMutationsCreateKcArgs = {
+  data: CreateKcInput;
+};
+
+
+export type AdminDomainMutationsCreateTopicArgs = {
+  input: CreateTopic;
+};
+
+
+export type AdminDomainMutationsUpdateDomainArgs = {
+  input: UpdateDomain;
+};
+
+
+export type AdminDomainMutationsUpdateKcArgs = {
+  data: UpdateKcInput;
+};
+
+
+export type AdminDomainMutationsUpdateTopicArgs = {
+  input: UpdateTopic;
+};
+
+export type AdminDomainQueries = {
+  __typename?: 'AdminDomainQueries';
+  allDomains: DomainsConnection;
+  allKCs: KCsConnection;
+  allTopics: TopicsConnection;
+};
+
+
+export type AdminDomainQueriesAllDomainsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+
+export type AdminDomainQueriesAllKCsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+
+export type AdminDomainQueriesAllTopicsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminProjectsMutations = {
+  __typename?: 'AdminProjectsMutations';
+  createProject: Project;
+  updateProject: Project;
+};
+
+
+export type AdminProjectsMutationsCreateProjectArgs = {
+  data: CreateProject;
+};
+
+
+export type AdminProjectsMutationsUpdateProjectArgs = {
+  data: UpdateProject;
+};
+
+export type AdminProjectsQueries = {
+  __typename?: 'AdminProjectsQueries';
+  allProjects: ProjectsConnection;
+};
+
+
+export type AdminProjectsQueriesAllProjectsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminUserMutations = {
+  __typename?: 'AdminUserMutations';
+  createGroup: Group;
+  setProjectsToUsers: Array<User>;
+  setUserGroups: Array<User>;
+  updateGroup: Group;
+  updateUser: User;
+  /** Upsert specified users, if user with specified email already exists, updates it with the specified name */
+  upsertUsers: Array<User>;
+};
+
+
+export type AdminUserMutationsCreateGroupArgs = {
+  data: CreateGroupInput;
+};
+
+
+export type AdminUserMutationsSetProjectsToUsersArgs = {
+  projectIds: Array<Scalars['IntID']>;
+  userIds: Array<Scalars['IntID']>;
+};
+
+
+export type AdminUserMutationsSetUserGroupsArgs = {
+  groupIds: Array<Scalars['IntID']>;
+  userIds: Array<Scalars['IntID']>;
+};
+
+
+export type AdminUserMutationsUpdateGroupArgs = {
+  data: UpdateGroupInput;
+};
+
+
+export type AdminUserMutationsUpdateUserArgs = {
+  data: UpdateUserInput;
+};
+
+
+export type AdminUserMutationsUpsertUsersArgs = {
+  data: Array<UpsertUserInput>;
+};
+
+export type AdminUserQueries = {
+  __typename?: 'AdminUserQueries';
+  allGroups: GroupsConnection;
+  allUsers: UsersConnection;
+};
+
+
+export type AdminUserQueriesAllGroupsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+
+export type AdminUserQueriesAllUsersArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type Connection = {
+  pageInfo: PageInfo;
+};
+
+export type Content = {
+  __typename?: 'Content';
+  binaryBase64?: Maybe<Scalars['String']>;
+  createdAt: Scalars['DateTime'];
+  description: Scalars['String'];
+  domain: Domain;
+  id: Scalars['IntID'];
+  json?: Maybe<Scalars['JSONObject']>;
+  project: Project;
+  updatedAt: Scalars['DateTime'];
+  url?: Maybe<Scalars['String']>;
+};
+
+export type ContentConnection = Connection & {
+  __typename?: 'ContentConnection';
+  nodes: Array<Content>;
+  pageInfo: PageInfo;
+};
+
+export type CreateContent = {
+  binaryBase64?: Maybe<Scalars['String']>;
+  description: Scalars['String'];
+  domainId: Scalars['IntID'];
+  json?: Maybe<Scalars['JSONObject']>;
+  projectId: Scalars['IntID'];
+  topicId?: Maybe<Scalars['IntID']>;
+  url?: Maybe<Scalars['String']>;
+};
+
+export type CreateDomain = {
+  code: Scalars['String'];
+  label: Scalars['String'];
+  projectId: Scalars['IntID'];
+};
+
+export type CreateGroupInput = {
+  code: Scalars['String'];
+  label: Scalars['String'];
+  projectIds: Array<Scalars['IntID']>;
+};
+
+export type CreateKcInput = {
+  code: Scalars['String'];
+  domainId: Scalars['IntID'];
+  label: Scalars['String'];
+};
+
+export type CreateProject = {
+  code: Scalars['String'];
+  label: Scalars['String'];
+};
+
+export type CreateTopic = {
+  code: Scalars['String'];
+  domainId: Scalars['IntID'];
+  label: Scalars['String'];
+  parentTopicId?: Maybe<Scalars['IntID']>;
+  projectId: Scalars['IntID'];
+};
+
+export type CursorConnectionArgs = {
+  after?: Maybe<Scalars['IntID']>;
+  before?: Maybe<Scalars['IntID']>;
+  first?: Maybe<Scalars['NonNegativeInt']>;
+  last?: Maybe<Scalars['NonNegativeInt']>;
+};
+
+export type Domain = {
+  __typename?: 'Domain';
+  code: Scalars['String'];
+  content: ContentConnection;
+  id: Scalars['IntID'];
+  kcs: Array<Kc>;
+  label: Scalars['String'];
+  project: Project;
+  topics: Array<Topic>;
+};
+
+
+export type DomainContentArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type DomainsConnection = Connection & {
+  __typename?: 'DomainsConnection';
+  nodes: Array<Domain>;
+  pageInfo: PageInfo;
+};
+
+export type Group = {
+  __typename?: 'Group';
+  code: Scalars['String'];
+  id: Scalars['IntID'];
+  label: Scalars['String'];
+  projects: Array<Project>;
+  projectsIds: Array<Scalars['IntID']>;
+  users: Array<User>;
+};
+
+export type GroupsConnection = Connection & {
+  __typename?: 'GroupsConnection';
+  nodes: Array<Group>;
+  pageInfo: PageInfo;
+};
+
+export type Kc = {
+  __typename?: 'KC';
+  code: Scalars['String'];
+  domain: Domain;
+  id: Scalars['IntID'];
+  label: Scalars['String'];
+  topics: Array<Topic>;
+};
+
+export type KCsConnection = Connection & {
+  __typename?: 'KCsConnection';
+  nodes: Array<Kc>;
+  pageInfo: PageInfo;
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  action?: Maybe<Scalars['Void']>;
+  adminContent: AdminContentMutations;
+  adminDomain: AdminDomainMutations;
+  adminProjects: AdminProjectsMutations;
+  adminUsers: AdminUserMutations;
+  hello: Scalars['String'];
+};
+
+
+export type MutationActionArgs = {
+  data: ActionInput;
+};
+
+export type Node = {
+  id: Scalars['IntID'];
+};
+
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  endCursor?: Maybe<Scalars['String']>;
+  hasNextPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean'];
+  startCursor?: Maybe<Scalars['String']>;
+};
+
+export type Project = {
+  __typename?: 'Project';
+  code: Scalars['String'];
+  domains: Array<Domain>;
+  id: Scalars['IntID'];
+  label: Scalars['String'];
+};
+
+export type ProjectsConnection = Connection & {
+  __typename?: 'ProjectsConnection';
+  nodes: Array<Project>;
+  pageInfo: PageInfo;
+};
+
+export type Query = {
+  __typename?: 'Query';
+  adminActions: AdminActionQueries;
+  adminContent: AdminContentQueries;
+  adminDomain: AdminDomainQueries;
+  adminProjects: AdminProjectsQueries;
+  adminUsers: AdminUserQueries;
+  content: Array<Content>;
+  currentUser?: Maybe<User>;
+  domains: Array<Domain>;
+  groups: Array<Group>;
+  hello: Scalars['String'];
+  hello2: Scalars['String'];
+  projects: Array<Project>;
+  topics: Array<Topic>;
+  users: Array<User>;
+};
+
+
+export type QueryContentArgs = {
+  ids: Array<Scalars['IntID']>;
+};
+
+
+export type QueryDomainsArgs = {
+  ids: Array<Scalars['IntID']>;
+};
+
+
+export type QueryGroupsArgs = {
+  ids: Array<Scalars['IntID']>;
+};
+
+
+export type QueryProjectsArgs = {
+  ids: Array<Scalars['IntID']>;
+};
+
+
+export type QueryTopicsArgs = {
+  ids: Array<Scalars['IntID']>;
+};
+
+
+export type QueryUsersArgs = {
+  ids: Array<Scalars['IntID']>;
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  hello: Scalars['String'];
+};
+
+export type Topic = {
+  __typename?: 'Topic';
+  childrens: Array<Topic>;
+  code: Scalars['String'];
+  content: ContentConnection;
+  domain: Domain;
+  id: Scalars['IntID'];
+  kcs: Array<Kc>;
+  label: Scalars['String'];
+  parent?: Maybe<Topic>;
+  project: Project;
+};
+
+
+export type TopicContentArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type TopicsConnection = Connection & {
+  __typename?: 'TopicsConnection';
+  nodes: Array<Topic>;
+  pageInfo: PageInfo;
+};
+
+export type UpdateDomain = {
+  id: Scalars['IntID'];
+  label: Scalars['String'];
+};
+
+export type UpdateGroupInput = {
+  code: Scalars['String'];
+  id: Scalars['IntID'];
+  label: Scalars['String'];
+  projectIds: Array<Scalars['IntID']>;
+};
+
+export type UpdateKcInput = {
+  code: Scalars['String'];
+  id: Scalars['IntID'];
+  label: Scalars['String'];
+};
+
+export type UpdateProject = {
+  code: Scalars['String'];
+  id: Scalars['IntID'];
+  label: Scalars['String'];
+};
+
+export type UpdateTopic = {
+  code: Scalars['String'];
+  domainId: Scalars['IntID'];
+  id: Scalars['IntID'];
+  label: Scalars['String'];
+  parentTopicId?: Maybe<Scalars['IntID']>;
+  projectId: Scalars['IntID'];
+};
+
+export type UpdateUserInput = {
+  id: Scalars['IntID'];
+  locked: Scalars['Boolean'];
+  role: UserRole;
+};
+
+export type UpsertUserInput = {
+  email: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
+};
+
+export type User = {
+  __typename?: 'User';
+  active: Scalars['Boolean'];
+  createdAt: Scalars['DateTime'];
+  email: Scalars['String'];
+  enabled: Scalars['Boolean'];
+  groups: Array<Group>;
+  id: Scalars['IntID'];
+  lastOnline?: Maybe<Scalars['DateTime']>;
+  locked: Scalars['Boolean'];
+  name?: Maybe<Scalars['String']>;
+  projects: Array<Project>;
+  projectsIds: Array<Scalars['IntID']>;
+  role: UserRole;
+  updatedAt: Scalars['DateTime'];
+};
+
+export enum UserRole {
+  Admin = 'ADMIN',
+  User = 'USER'
+}
+
+export type UsersConnection = {
+  __typename?: 'UsersConnection';
+  nodes: Array<User>;
+  pageInfo: PageInfo;
+};
+
+export type HelloQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type HelloQuery = { __typename?: 'Query', hello: string };
+
+export type CreateActionMutationVariables = Exact<{
+  data: ActionInput;
+}>;
+
+
+export type CreateActionMutation = { __typename?: 'Mutation', action?: any | null | undefined };
+
+export type AllActionsQueryVariables = Exact<{
+  pagination: CursorConnectionArgs;
+}>;
+
+
+export type AllActionsQuery = { __typename?: 'Query', adminActions: { __typename?: 'AdminActionQueries', allActions: { __typename?: 'ActionsConnection', nodes: Array<{ __typename?: 'Action', result?: number | null | undefined, verb: { __typename?: 'ActionVerb', name: string }, user?: { __typename?: 'User', id: any } | null | undefined }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean } } } };
+
+export type AllContentQueryVariables = Exact<{
+  pagination: CursorConnectionArgs;
+}>;
+
+
+export type AllContentQuery = { __typename?: 'Query', adminContent: { __typename?: 'AdminContentQueries', allContent: { __typename?: 'ContentConnection', nodes: Array<{ __typename?: 'Content', id: any, description: string, binaryBase64?: string | null | undefined, json?: any | null | undefined }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean } } } };
+
+export type CreateContentMutationVariables = Exact<{
+  data: CreateContent;
+}>;
+
+
+export type CreateContentMutation = { __typename?: 'Mutation', adminContent: { __typename?: 'AdminContentMutations', createContent: { __typename?: 'Content', id: any, description: string, binaryBase64?: string | null | undefined, json?: any | null | undefined } } };
+
+export type ContentFromDomainQueryVariables = Exact<{
+  ids: Array<Scalars['IntID']> | Scalars['IntID'];
+  pagination: CursorConnectionArgs;
+}>;
+
+
+export type ContentFromDomainQuery = { __typename?: 'Query', domains: Array<{ __typename?: 'Domain', id: any, content: { __typename?: 'ContentConnection', nodes: Array<{ __typename?: 'Content', id: any, description: string, binaryBase64?: string | null | undefined, json?: any | null | undefined }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean } } }> };
+
+export type ContentFromTopicQueryVariables = Exact<{
+  ids: Array<Scalars['IntID']> | Scalars['IntID'];
+  pagination: CursorConnectionArgs;
+}>;
+
+
+export type ContentFromTopicQuery = { __typename?: 'Query', topics: Array<{ __typename?: 'Topic', id: any, content: { __typename?: 'ContentConnection', nodes: Array<{ __typename?: 'Content', id: any, description: string, binaryBase64?: string | null | undefined, json?: any | null | undefined }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean } } }> };
+
+export type IsolatedDomainFieldsFragment = { __typename?: 'Domain', id: any, code: string, label: string };
+
+export type IsolatedTopicFieldsFragment = { __typename?: 'Topic', id: any, code: string, label: string, domain: { __typename?: 'Domain', id: any }, parent?: { __typename?: 'Topic', id: any, domain: { __typename?: 'Domain', id: any } } | null | undefined, childrens: Array<{ __typename?: 'Topic', id: any, domain: { __typename?: 'Domain', id: any } }> };
+
+export type CreateDomainMutationVariables = Exact<{
+  input: CreateDomain;
+}>;
+
+
+export type CreateDomainMutation = { __typename?: 'Mutation', adminDomain: { __typename?: 'AdminDomainMutations', createDomain: { __typename?: 'Domain', id: any, code: string, label: string } } };
+
+export type AllDomainsQueryVariables = Exact<{
+  pagination: CursorConnectionArgs;
+}>;
+
+
+export type AllDomainsQuery = { __typename?: 'Query', adminDomain: { __typename?: 'AdminDomainQueries', allDomains: { __typename?: 'DomainsConnection', nodes: Array<{ __typename?: 'Domain', id: any, code: string, label: string }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean } } } };
+
+export type UpdateDomainMutationVariables = Exact<{
+  input: UpdateDomain;
+}>;
+
+
+export type UpdateDomainMutation = { __typename?: 'Mutation', adminDomain: { __typename?: 'AdminDomainMutations', updateDomain: { __typename?: 'Domain', id: any, code: string, label: string } } };
+
+export type CreateTopicMutationVariables = Exact<{
+  input: CreateTopic;
+}>;
+
+
+export type CreateTopicMutation = { __typename?: 'Mutation', adminDomain: { __typename?: 'AdminDomainMutations', createTopic: { __typename?: 'Topic', id: any, code: string, label: string, domain: { __typename?: 'Domain', id: any }, parent?: { __typename?: 'Topic', id: any, domain: { __typename?: 'Domain', id: any } } | null | undefined, childrens: Array<{ __typename?: 'Topic', id: any, domain: { __typename?: 'Domain', id: any } }> } } };
+
+export type AllTopicsQueryVariables = Exact<{
+  pagination: CursorConnectionArgs;
+}>;
+
+
+export type AllTopicsQuery = { __typename?: 'Query', adminDomain: { __typename?: 'AdminDomainQueries', allTopics: { __typename?: 'TopicsConnection', nodes: Array<{ __typename?: 'Topic', id: any, code: string, label: string, domain: { __typename?: 'Domain', id: any }, parent?: { __typename?: 'Topic', id: any, domain: { __typename?: 'Domain', id: any } } | null | undefined, childrens: Array<{ __typename?: 'Topic', id: any, domain: { __typename?: 'Domain', id: any } }> }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean } } } };
+
+export type UpdateTopicMutationVariables = Exact<{
+  input: UpdateTopic;
+}>;
+
+
+export type UpdateTopicMutation = { __typename?: 'Mutation', adminDomain: { __typename?: 'AdminDomainMutations', updateTopic: { __typename?: 'Topic', id: any, code: string, label: string, domain: { __typename?: 'Domain', id: any }, parent?: { __typename?: 'Topic', id: any, domain: { __typename?: 'Domain', id: any } } | null | undefined, childrens: Array<{ __typename?: 'Topic', id: any, domain: { __typename?: 'Domain', id: any } }> } } };
+
+export type DomainFromContentQueryVariables = Exact<{
+  ids: Array<Scalars['IntID']> | Scalars['IntID'];
+}>;
+
+
+export type DomainFromContentQuery = { __typename?: 'Query', content: Array<{ __typename?: 'Content', id: any, domain: { __typename?: 'Domain', id: any } }> };
+
+export type DomainsFromProjectsQueryVariables = Exact<{
+  ids: Array<Scalars['IntID']> | Scalars['IntID'];
+}>;
+
+
+export type DomainsFromProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', id: any, domains: Array<{ __typename?: 'Domain', id: any }> }> };
+
+export const IsolatedDomainFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"IsolatedDomainFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Domain"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"label"}}]}}]} as unknown as DocumentNode<IsolatedDomainFieldsFragment, unknown>;
+export const IsolatedTopicFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"IsolatedTopicFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Topic"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"domain"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"parent"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"domain"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"childrens"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"domain"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<IsolatedTopicFieldsFragment, unknown>;
+export const HelloDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"hello"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hello"}}]}}]} as unknown as DocumentNode<HelloQuery, HelloQueryVariables>;
+export const CreateActionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateAction"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ActionInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"action"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}]}]}}]} as unknown as DocumentNode<CreateActionMutation, CreateActionMutationVariables>;
+export const AllActionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllActions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CursorConnectionArgs"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"adminActions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allActions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"verb"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"result"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}}]}}]}}]}}]}}]} as unknown as DocumentNode<AllActionsQuery, AllActionsQueryVariables>;
+export const AllContentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllContent"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CursorConnectionArgs"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"adminContent"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allContent"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"binaryBase64"}},{"kind":"Field","name":{"kind":"Name","value":"json"}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}}]}}]}}]}}]}}]} as unknown as DocumentNode<AllContentQuery, AllContentQueryVariables>;
+export const CreateContentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateContent"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateContent"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"adminContent"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createContent"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"binaryBase64"}},{"kind":"Field","name":{"kind":"Name","value":"json"}}]}}]}}]}}]} as unknown as DocumentNode<CreateContentMutation, CreateContentMutationVariables>;
+export const ContentFromDomainDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ContentFromDomain"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ids"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"IntID"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CursorConnectionArgs"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"domains"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ids"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"binaryBase64"}},{"kind":"Field","name":{"kind":"Name","value":"json"}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}}]}}]}}]}}]}}]} as unknown as DocumentNode<ContentFromDomainQuery, ContentFromDomainQueryVariables>;
+export const ContentFromTopicDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ContentFromTopic"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ids"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"IntID"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CursorConnectionArgs"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"topics"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ids"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"binaryBase64"}},{"kind":"Field","name":{"kind":"Name","value":"json"}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}}]}}]}}]}}]}}]} as unknown as DocumentNode<ContentFromTopicQuery, ContentFromTopicQueryVariables>;
+export const CreateDomainDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateDomain"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateDomain"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"adminDomain"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createDomain"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"IsolatedDomainFields"}}]}}]}}]}},...IsolatedDomainFieldsFragmentDoc.definitions]} as unknown as DocumentNode<CreateDomainMutation, CreateDomainMutationVariables>;
+export const AllDomainsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllDomains"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CursorConnectionArgs"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"adminDomain"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allDomains"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"IsolatedDomainFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}}]}}]}}]}}]}},...IsolatedDomainFieldsFragmentDoc.definitions]} as unknown as DocumentNode<AllDomainsQuery, AllDomainsQueryVariables>;
+export const UpdateDomainDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateDomain"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateDomain"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"adminDomain"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateDomain"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"IsolatedDomainFields"}}]}}]}}]}},...IsolatedDomainFieldsFragmentDoc.definitions]} as unknown as DocumentNode<UpdateDomainMutation, UpdateDomainMutationVariables>;
+export const CreateTopicDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateTopic"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateTopic"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"adminDomain"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createTopic"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"IsolatedTopicFields"}}]}}]}}]}},...IsolatedTopicFieldsFragmentDoc.definitions]} as unknown as DocumentNode<CreateTopicMutation, CreateTopicMutationVariables>;
+export const AllTopicsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllTopics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CursorConnectionArgs"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"adminDomain"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allTopics"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"IsolatedTopicFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}}]}}]}}]}}]}},...IsolatedTopicFieldsFragmentDoc.definitions]} as unknown as DocumentNode<AllTopicsQuery, AllTopicsQueryVariables>;
+export const UpdateTopicDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateTopic"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateTopic"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"adminDomain"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateTopic"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"IsolatedTopicFields"}}]}}]}}]}},...IsolatedTopicFieldsFragmentDoc.definitions]} as unknown as DocumentNode<UpdateTopicMutation, UpdateTopicMutationVariables>;
+export const DomainFromContentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"DomainFromContent"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ids"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"IntID"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"content"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ids"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"domain"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<DomainFromContentQuery, DomainFromContentQueryVariables>;
+export const DomainsFromProjectsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"DomainsFromProjects"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ids"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"IntID"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"projects"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ids"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"domains"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<DomainsFromProjectsQuery, DomainsFromProjectsQueryVariables>;

@@ -1,5 +1,4 @@
 import {
-  AllActionsDocument,
   CreateActionDocument,
   CreateProject,
   CreateUser,
@@ -8,6 +7,7 @@ import {
   MockAuthUser,
   prisma,
   TestClient,
+  gql,
 } from "testing";
 
 export async function CheckActionsCreationRetrieval({
@@ -43,13 +43,36 @@ export async function CheckActionsCreationRetrieval({
     });
   }
 
-  const actions = await query(AllActionsDocument, {
-    variables: {
-      pagination: {
-        first: 20,
+  const actions = await query(
+    gql(/* GraphQL */ `
+      query AllActions($pagination: CursorConnectionArgs!) {
+        adminActions {
+          allActions(pagination: $pagination) {
+            nodes {
+              verb {
+                name
+              }
+
+              result
+              user {
+                id
+              }
+            }
+            pageInfo {
+              hasNextPage
+            }
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        pagination: {
+          first: 20,
+        },
       },
-    },
-  });
+    }
+  );
 
   expectDeepEqual(actions, {
     data: {

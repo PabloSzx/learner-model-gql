@@ -18,7 +18,7 @@ import { CheckGroups, CheckUsers } from "../packages/services/users/test/test";
 import {
   expectDeepEqual,
   GetTestClient,
-  HelloDocument,
+  gql,
 } from "../packages/testing/src/index";
 
 export const TestStitchedSchema = async () => {
@@ -113,11 +113,20 @@ describe("gateway", () => {
   it("Gateway Hello World", async () => {
     const { GatewayClient } = await TestStitchedSchema();
 
-    expectDeepEqual(await GatewayClient.query(HelloDocument), {
-      data: {
-        hello: "Hello World!",
-      },
-    });
+    expectDeepEqual(
+      await GatewayClient.query(
+        gql(/* GraphQL */ `
+          query hello {
+            hello
+          }
+        `)
+      ),
+      {
+        data: {
+          hello: "Hello World!",
+        },
+      }
+    );
 
     expectDeepEqual(
       await GatewayClient.gqty.resolved(({ query }) => query.hello),

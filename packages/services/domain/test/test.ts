@@ -1,24 +1,17 @@
 import { getArrayFields, getFields, selectFields } from "gqty";
 import {
-  AllDomainsDocument,
-  AllTopicsDocument,
   assert,
   CreateDomain,
-  CreateDomainDocument,
   CreateEmptyContent,
   CreateProject,
-  CreateTopicDocument,
   CreateUser,
-  DomainFromContentDocument,
-  DomainsFromProjectsDocument,
   expectDeepEqual,
   generate,
   GetTestClient,
+  gql,
   MockAuthUser,
   prisma,
   TestClient,
-  UpdateDomainDocument,
-  UpdateTopicDocument,
 } from "testing";
 import {
   contentModule,
@@ -26,6 +19,37 @@ import {
   kcModule,
   projectModule,
 } from "../src/modules";
+
+export const IsolatedDomainFields = gql(/* GraphQL */ `
+  fragment IsolatedDomainFields on Domain {
+    id
+    code
+    label
+  }
+`);
+
+export const IsolatedTopicFields = gql(/* GraphQL */ `
+  fragment IsolatedTopicFields on Topic {
+    id
+    code
+    label
+    domain {
+      id
+    }
+    parent {
+      id
+      domain {
+        id
+      }
+    }
+    childrens {
+      id
+      domain {
+        id
+      }
+    }
+  }
+`);
 
 export const DomainClient = () => {
   return GetTestClient({
@@ -53,15 +77,26 @@ export async function CheckDomainCreationRetrieval({
   const domainCode = generate();
   const domainLabel = generate();
 
-  const domainResult = await mutation(CreateDomainDocument, {
-    variables: {
-      input: {
-        code: domainCode,
-        label: domainLabel,
-        projectId,
+  const domainResult = await mutation(
+    gql(/* GraphQL */ `
+      mutation CreateDomain($input: CreateDomain!) {
+        adminDomain {
+          createDomain(input: $input) {
+            ...IsolatedDomainFields
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        input: {
+          code: domainCode,
+          label: domainLabel,
+          projectId,
+        },
       },
-    },
-  });
+    }
+  );
 
   expectDeepEqual(domainResult.errors, undefined);
 
@@ -76,13 +111,29 @@ export async function CheckDomainCreationRetrieval({
   });
 
   expectDeepEqual(
-    await query(AllDomainsDocument, {
-      variables: {
-        pagination: {
-          first: 10,
+    await query(
+      gql(/* GraphQL */ `
+        query AllDomains($pagination: CursorConnectionArgs!) {
+          adminDomain {
+            allDomains(pagination: $pagination) {
+              nodes {
+                ...IsolatedDomainFields
+              }
+              pageInfo {
+                hasNextPage
+              }
+            }
+          }
+        }
+      `),
+      {
+        variables: {
+          pagination: {
+            first: 10,
+          },
         },
-      },
-    }),
+      }
+    ),
     {
       data: {
         adminDomain: {
@@ -101,14 +152,25 @@ export async function CheckDomainCreationRetrieval({
 
   assert(tempDomainLabel !== domainLabel);
 
-  const tempDomainResult = await mutation(UpdateDomainDocument, {
-    variables: {
-      input: {
-        id: domain.id,
-        label: tempDomainLabel,
+  const tempDomainResult = await mutation(
+    gql(/* GraphQL */ `
+      mutation UpdateDomain($input: UpdateDomain!) {
+        adminDomain {
+          updateDomain(input: $input) {
+            ...IsolatedDomainFields
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        input: {
+          id: domain.id,
+          label: tempDomainLabel,
+        },
       },
-    },
-  });
+    }
+  );
 
   expectDeepEqual(tempDomainResult.errors, undefined);
 
@@ -123,13 +185,29 @@ export async function CheckDomainCreationRetrieval({
   });
 
   expectDeepEqual(
-    await query(AllDomainsDocument, {
-      variables: {
-        pagination: {
-          first: 10,
+    await query(
+      gql(/* GraphQL */ `
+        query AllDomains($pagination: CursorConnectionArgs!) {
+          adminDomain {
+            allDomains(pagination: $pagination) {
+              nodes {
+                ...IsolatedDomainFields
+              }
+              pageInfo {
+                hasNextPage
+              }
+            }
+          }
+        }
+      `),
+      {
+        variables: {
+          pagination: {
+            first: 10,
+          },
         },
-      },
-    }),
+      }
+    ),
     {
       data: {
         adminDomain: {
@@ -144,14 +222,25 @@ export async function CheckDomainCreationRetrieval({
     }
   );
 
-  const backResult = await mutation(UpdateDomainDocument, {
-    variables: {
-      input: {
-        id: domain.id,
-        label: domainLabel,
+  const backResult = await mutation(
+    gql(/* GraphQL */ `
+      mutation UpdateDomain($input: UpdateDomain!) {
+        adminDomain {
+          updateDomain(input: $input) {
+            ...IsolatedDomainFields
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        input: {
+          id: domain.id,
+          label: domainLabel,
+        },
       },
-    },
-  });
+    }
+  );
 
   expectDeepEqual(backResult.errors, undefined);
   assert(backResult.data);
@@ -182,16 +271,27 @@ export async function CheckTopicsCreationRetrieval({
   const firstTopicCode = generate();
   const firstTopicLabel = generate();
 
-  const firstTopicResult = await mutation(CreateTopicDocument, {
-    variables: {
-      input: {
-        domainId,
-        code: firstTopicCode,
-        label: firstTopicLabel,
-        projectId,
+  const firstTopicResult = await mutation(
+    gql(/* GraphQL */ `
+      mutation CreateTopic($input: CreateTopic!) {
+        adminDomain {
+          createTopic(input: $input) {
+            ...IsolatedTopicFields
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        input: {
+          domainId,
+          code: firstTopicCode,
+          label: firstTopicLabel,
+          projectId,
+        },
       },
-    },
-  });
+    }
+  );
 
   expectDeepEqual(firstTopicResult.errors, undefined);
 
@@ -213,17 +313,28 @@ export async function CheckTopicsCreationRetrieval({
   const secondTopicCode = generate();
   const secondTopicLabel = generate();
 
-  const secondTopicResult = await mutation(CreateTopicDocument, {
-    variables: {
-      input: {
-        domainId,
-        code: secondTopicCode,
-        label: secondTopicLabel,
-        projectId,
-        parentTopicId: firstTopic.id,
+  const secondTopicResult = await mutation(
+    gql(/* GraphQL */ `
+      mutation CreateTopic($input: CreateTopic!) {
+        adminDomain {
+          createTopic(input: $input) {
+            ...IsolatedTopicFields
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        input: {
+          domainId,
+          code: secondTopicCode,
+          label: secondTopicLabel,
+          projectId,
+          parentTopicId: firstTopic.id,
+        },
       },
-    },
-  });
+    }
+  );
 
   expectDeepEqual(secondTopicResult.errors, undefined);
 
@@ -247,13 +358,29 @@ export async function CheckTopicsCreationRetrieval({
     childrens: [],
   });
 
-  const allTopicsResult = await query(AllTopicsDocument, {
-    variables: {
-      pagination: {
-        first: 10,
+  const allTopicsResult = await query(
+    gql(/* GraphQL */ `
+      query AllTopics($pagination: CursorConnectionArgs!) {
+        adminDomain {
+          allTopics(pagination: $pagination) {
+            nodes {
+              ...IsolatedTopicFields
+            }
+            pageInfo {
+              hasNextPage
+            }
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        pagination: {
+          first: 10,
+        },
       },
-    },
-  });
+    }
+  );
 
   expectDeepEqual(allTopicsResult.errors, undefined);
 
@@ -294,18 +421,29 @@ export async function CheckTopicsCreationRetrieval({
   {
     const firstTopicNewLabel = generate();
     const firstTopicNewCode = generate();
-    const updatedFirstTopicResult = await mutation(UpdateTopicDocument, {
-      variables: {
-        input: {
-          label: firstTopicNewLabel,
-          code: firstTopicNewCode,
-          id: firstTopic.id,
-          domainId,
-          projectId,
-          parentTopicId: secondTopic.id,
+    const updatedFirstTopicResult = await mutation(
+      gql(/* GraphQL */ `
+        mutation UpdateTopic($input: UpdateTopic!) {
+          adminDomain {
+            updateTopic(input: $input) {
+              ...IsolatedTopicFields
+            }
+          }
+        }
+      `),
+      {
+        variables: {
+          input: {
+            label: firstTopicNewLabel,
+            code: firstTopicNewCode,
+            id: firstTopic.id,
+            domainId,
+            projectId,
+            parentTopicId: secondTopic.id,
+          },
         },
-      },
-    });
+      }
+    );
 
     expectDeepEqual(updatedFirstTopicResult.errors, undefined);
 
@@ -340,18 +478,29 @@ export async function CheckTopicsCreationRetrieval({
     const secondTopicNewLabel = generate();
     const secondTopicNewCode = generate();
 
-    const updatedSecondTopicResult = await mutation(UpdateTopicDocument, {
-      variables: {
-        input: {
-          label: secondTopicNewLabel,
-          code: secondTopicNewCode,
-          id: secondTopic.id,
-          domainId,
-          projectId,
-          parentTopicId: null,
+    const updatedSecondTopicResult = await mutation(
+      gql(/* GraphQL */ `
+        mutation UpdateTopic($input: UpdateTopic!) {
+          adminDomain {
+            updateTopic(input: $input) {
+              ...IsolatedTopicFields
+            }
+          }
+        }
+      `),
+      {
+        variables: {
+          input: {
+            label: secondTopicNewLabel,
+            code: secondTopicNewCode,
+            id: secondTopic.id,
+            domainId,
+            projectId,
+            parentTopicId: null,
+          },
         },
-      },
-    });
+      }
+    );
     expectDeepEqual(updatedSecondTopicResult.errors, undefined);
 
     const updatedSecondTopic =
@@ -377,13 +526,29 @@ export async function CheckTopicsCreationRetrieval({
       ],
     });
 
-    const allTopicsResult = await query(AllTopicsDocument, {
-      variables: {
-        pagination: {
-          first: 10,
+    const allTopicsResult = await query(
+      gql(/* GraphQL */ `
+        query AllTopics($pagination: CursorConnectionArgs!) {
+          adminDomain {
+            allTopics(pagination: $pagination) {
+              nodes {
+                ...IsolatedTopicFields
+              }
+              pageInfo {
+                hasNextPage
+              }
+            }
+          }
+        }
+      `),
+      {
+        variables: {
+          pagination: {
+            first: 10,
+          },
         },
-      },
-    });
+      }
+    );
 
     expectDeepEqual(allTopicsResult.errors, undefined);
 
@@ -443,11 +608,23 @@ export async function CheckDomainOfContent({
     domain,
   });
 
-  const ContentDomainResult = await query(DomainFromContentDocument, {
-    variables: {
-      ids: [contentId],
-    },
-  });
+  const ContentDomainResult = await query(
+    gql(/* GraphQL */ `
+      query DomainFromContent($ids: [IntID!]!) {
+        content(ids: $ids) {
+          id
+          domain {
+            id
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        ids: [contentId],
+      },
+    }
+  );
 
   expectDeepEqual(ContentDomainResult, {
     data: {
@@ -478,11 +655,23 @@ export async function CheckDomainsOfProjects({
     project,
   });
 
-  const ProjectDomainResult = await query(DomainsFromProjectsDocument, {
-    variables: {
-      ids: [projectId],
-    },
-  });
+  const ProjectDomainResult = await query(
+    gql(/* GraphQL */ `
+      query DomainsFromProjects($ids: [IntID!]!) {
+        projects(ids: $ids) {
+          id
+          domains {
+            id
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        ids: [projectId],
+      },
+    }
+  );
 
   expectDeepEqual(ProjectDomainResult, {
     data: {

@@ -21,7 +21,7 @@
       "*": ["*/src/index.ts", "*.ts", "*/index.ts"],
       "graph/*": ["graph/src/*.ts", "graph/src/*/index.ts"]
     },
-    "importsNotUsedAsValues": "error",
+    "importsNotUsedAsValues": "remove",
     "types": ["@types/mocha"]
   },
   "include": ["**/*.ts", "**/*.tsx"],

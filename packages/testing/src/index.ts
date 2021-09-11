@@ -37,9 +37,10 @@ export type {
   PromiseOrValue,
   PromiseType,
 } from "graphql-ez";
-export * from "graphql-ez/utils";
+export { createDeferredPromise, LazyPromise, PLazy } from "graphql-ez/utils";
 export { generate } from "randomstring";
 export * from "./generated/graphql";
+export * from "./gql";
 export { MockAuthUser };
 export { assert, equal, deepEqual, notDeepEqual, notEqual };
 
