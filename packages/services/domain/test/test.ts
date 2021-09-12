@@ -23,8 +23,7 @@ export async function CheckDomainCreationRetrieval({
   mutation,
   query,
 }: Pick<TestClient, "mutation" | "query">) {
-  await prisma.$queryRaw`TRUNCATE "Domain" CASCADE;`;
-  await prisma.$queryRaw`TRUNCATE "User" CASCADE;`;
+  await prisma.$queryRaw`TRUNCATE "Domain","User" CASCADE;`;
 
   const { project, projectId } = await CreateProject();
 
@@ -408,9 +407,7 @@ export async function CheckTopicsCreationRetrieval({
 export async function CheckDomainOfContent({
   query,
 }: Pick<TestClient, "query">) {
-  await prisma.$queryRaw`TRUNCATE "Domain" CASCADE;`;
-  await prisma.$queryRaw`TRUNCATE "Content" CASCADE;`;
-  await prisma.$queryRaw`TRUNCATE "User" CASCADE;`;
+  await prisma.$queryRaw`TRUNCATE "Domain","Content","User" CASCADE;`;
 
   const { project } = await CreateProject();
 
@@ -450,9 +447,7 @@ export async function CheckDomainOfContent({
 export async function CheckDomainsOfProjects({
   query,
 }: Pick<TestClient, "query">) {
-  await prisma.$queryRaw`TRUNCATE "Domain" CASCADE;`;
-  await prisma.$queryRaw`TRUNCATE "Project" CASCADE;`;
-  await prisma.$queryRaw`TRUNCATE "User" CASCADE;`;
+  await prisma.$queryRaw`TRUNCATE "Domain","Project","User" CASCADE;`;
 
   const { project, projectId } = await CreateProject();
 

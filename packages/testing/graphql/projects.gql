@@ -32,3 +32,14 @@ query AdminAllProjects($pagination: CursorConnectionArgs!) {
     }
   }
 }
+
+query AdminProjectFromContent($ids: [IntID!]!) {
+  content(ids: $ids) {
+    id
+    project {
+      id
+      code
+      label
+    }
+  }
+}

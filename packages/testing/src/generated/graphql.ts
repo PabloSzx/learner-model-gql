@@ -802,6 +802,24 @@ export type AdminAllProjectsQuery = {
   };
 };
 
+export type AdminProjectFromContentQueryVariables = Exact<{
+  ids: Array<Scalars["IntID"]> | Scalars["IntID"];
+}>;
+
+export type AdminProjectFromContentQuery = {
+  __typename?: "Query";
+  content: Array<{
+    __typename?: "Content";
+    id: string;
+    project: {
+      __typename?: "Project";
+      id: string;
+      code: string;
+      label: string;
+    };
+  }>;
+};
+
 export const IsolatedDomainFieldsFragmentDoc = {
   kind: "Document",
   definitions: [
@@ -2279,4 +2297,73 @@ export const AdminAllProjectsDocument = {
 } as unknown as DocumentNode<
   AdminAllProjectsQuery,
   AdminAllProjectsQueryVariables
+>;
+export const AdminProjectFromContentDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "AdminProjectFromContent" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "ids" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "ListType",
+              type: {
+                kind: "NonNullType",
+                type: {
+                  kind: "NamedType",
+                  name: { kind: "Name", value: "IntID" },
+                },
+              },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "content" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "ids" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "ids" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "project" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      { kind: "Field", name: { kind: "Name", value: "label" } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  AdminProjectFromContentQuery,
+  AdminProjectFromContentQueryVariables
 >;

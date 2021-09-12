@@ -1,13 +1,18 @@
 import {
   AdminAllProjectsDocument,
   AdminCreateProjectDocument,
+  AdminProjectFromContentDocument,
   AdminUpdateProjectDocument,
   assert,
+  CreateDomain,
+  CreateEmptyContent,
+  CreateProject,
   CreateUser,
   expectDeepEqual,
   generate,
   MockAuthUser,
   prisma,
+  PromiseAllCallbacks,
   TestClient,
 } from "testing";
 
@@ -15,8 +20,7 @@ export async function CheckProjectCreationRetrieval({
   mutation,
   query,
 }: Pick<TestClient, "query" | "mutation">) {
-  await prisma.$queryRaw`TRUNCATE "Project" CASCADE;`;
-  await prisma.$queryRaw`TRUNCATE "User" CASCADE;`;
+  await prisma.$queryRaw`TRUNCATE "Project","User" CASCADE;`;
 
   const { authUser } = await CreateUser({
     role: "ADMIN",
@@ -121,4 +125,53 @@ export async function CheckProjectCreationRetrieval({
       },
     });
   }
+}
+
+export async function CheckProjectFromContent({
+  query,
+}: Pick<TestClient, "query">) {
+  const { project, projectId } = await CreateProject();
+
+  const [, { contentId }] = await PromiseAllCallbacks(
+    async () => {
+      const { authUser } = await CreateUser({
+        project,
+        role: "USER",
+      });
+
+      MockAuthUser.user = authUser;
+    },
+    async () => {
+      const { domain } = await CreateDomain({ project });
+      const { contentId } = await CreateEmptyContent({
+        project,
+        domain,
+      });
+
+      return {
+        contentId,
+      };
+    }
+  );
+
+  const result = await query(AdminProjectFromContentDocument, {
+    variables: {
+      ids: [contentId],
+    },
+  });
+
+  expectDeepEqual(result, {
+    data: {
+      content: [
+        {
+          id: contentId,
+          project: {
+            id: projectId,
+            code: project.code,
+            label: project.label,
+          },
+        },
+      ],
+    },
+  });
 }

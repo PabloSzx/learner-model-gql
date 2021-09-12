@@ -18,7 +18,7 @@ beforeEach(() => {
 
 export { CreateApp } from "@graphql-ez/fastify";
 export * from "@graphql-ez/fastify-testing";
-export { prisma } from "api-base";
+export { prisma, getIdsIntersection, PromiseAllCallbacks } from "api-base";
 export type {
   DeepPartial,
   EZContext,

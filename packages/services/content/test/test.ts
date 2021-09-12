@@ -18,8 +18,7 @@ export async function CheckContentCreationRetrieval({
   mutation,
   query,
 }: Pick<TestClient, "mutation" | "query">) {
-  await prisma.$queryRaw`TRUNCATE "Content" CASCADE;`;
-  await prisma.$queryRaw`TRUNCATE "User" CASCADE;`;
+  await prisma.$queryRaw`TRUNCATE "Content","User" CASCADE;`;
 
   const { project, projectId } = await CreateProject();
 

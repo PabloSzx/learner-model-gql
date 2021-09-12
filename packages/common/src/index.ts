@@ -14,3 +14,5 @@ export const IS_NOT_CI = !IS_CI;
 export const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||
   "https://learner-model.pablosz.tech/graphql";
+
+export * from "./utils";

@@ -7,7 +7,10 @@ import {
   CheckDomainsOfProjects,
   CheckTopicsCreationRetrieval,
 } from "../packages/services/domain/test/test";
-import { CheckProjectCreationRetrieval } from "../packages/services/projects/test/test";
+import {
+  CheckProjectCreationRetrieval,
+  CheckProjectFromContent,
+} from "../packages/services/projects/test/test";
 import {
   expectDeepEqual,
   GetTestClient,
@@ -138,6 +141,12 @@ describe("gateway", () => {
       const { GatewayClient } = await TestStitchedSchema();
 
       await CheckProjectCreationRetrieval(GatewayClient);
+    });
+
+    it("content", async () => {
+      const { GatewayClient } = await TestStitchedSchema();
+
+      await CheckProjectFromContent(GatewayClient);
     });
   });
 });
