@@ -43,3 +43,25 @@ query AdminProjectFromContent($ids: [IntID!]!) {
     }
   }
 }
+
+query AdminProjectFromDomain($ids: [IntID!]!) {
+  domains(ids: $ids) {
+    id
+    project {
+      id
+      code
+      label
+    }
+  }
+}
+
+query AdminProjectFromTopic($ids: [IntID!]!) {
+  topics(ids: $ids) {
+    id
+    project {
+      id
+      code
+      label
+    }
+  }
+}

@@ -10,6 +10,7 @@ import {
 import {
   CheckProjectCreationRetrieval,
   CheckProjectFromContent,
+  CheckProjectFromDomainAndTopic,
 } from "../packages/services/projects/test/test";
 import {
   expectDeepEqual,
@@ -147,6 +148,11 @@ describe("gateway", () => {
       const { GatewayClient } = await TestStitchedSchema();
 
       await CheckProjectFromContent(GatewayClient);
+    });
+    it("domain", async () => {
+      const { GatewayClient } = await TestStitchedSchema();
+
+      await CheckProjectFromDomainAndTopic(GatewayClient);
     });
   });
 });

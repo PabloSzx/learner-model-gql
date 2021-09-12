@@ -5,18 +5,25 @@ import {
   projectsModule,
   usersModule,
 } from "../src/modules";
-import { CheckProjectCreationRetrieval, CheckProjectFromContent } from "./test";
+import {
+  CheckProjectCreationRetrieval,
+  CheckProjectFromContent,
+  CheckProjectFromDomainAndTopic,
+} from "./test";
+
+const ProjectsClient = () =>
+  GetTestClient({
+    prepare({ registerModule }) {
+      registerModule(projectsModule);
+      registerModule(contentModule);
+      registerModule(domainModule);
+      registerModule(usersModule);
+    },
+  });
 
 describe("Projects service", () => {
   it("hello world", async () => {
-    const { query } = await GetTestClient({
-      prepare({ registerModule }) {
-        registerModule(projectsModule);
-        registerModule(contentModule);
-        registerModule(domainModule);
-        registerModule(usersModule);
-      },
-    });
+    const { query } = await ProjectsClient();
 
     expectDeepEqual(await query(HelloDocument), {
       data: {
@@ -26,28 +33,20 @@ describe("Projects service", () => {
   });
 
   it("project creation & retrieval", async () => {
-    const testClient = await GetTestClient({
-      prepare({ registerModule }) {
-        registerModule(projectsModule);
-        registerModule(contentModule);
-        registerModule(domainModule);
-        registerModule(usersModule);
-      },
-    });
+    const testClient = await ProjectsClient();
 
     await CheckProjectCreationRetrieval(testClient);
   });
 
   it("project from content", async () => {
-    const testClient = await GetTestClient({
-      prepare({ registerModule }) {
-        registerModule(projectsModule);
-        registerModule(contentModule);
-        registerModule(domainModule);
-        registerModule(usersModule);
-      },
-    });
+    const testClient = await ProjectsClient();
 
     await CheckProjectFromContent(testClient);
+  });
+
+  it("project from domain & topic", async () => {
+    const testClient = await ProjectsClient();
+
+    await CheckProjectFromDomainAndTopic(testClient);
   });
 });

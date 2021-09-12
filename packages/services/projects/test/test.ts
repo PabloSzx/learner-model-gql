@@ -2,6 +2,8 @@ import {
   AdminAllProjectsDocument,
   AdminCreateProjectDocument,
   AdminProjectFromContentDocument,
+  AdminProjectFromDomainDocument,
+  AdminProjectFromTopicDocument,
   AdminUpdateProjectDocument,
   assert,
   CreateDomain,
@@ -174,4 +176,80 @@ export async function CheckProjectFromContent({
       ],
     },
   });
+}
+
+export async function CheckProjectFromDomainAndTopic({
+  query,
+}: Pick<TestClient, "query">) {
+  const { project, projectId } = await CreateProject();
+
+  const [, { topicId, domainId }] = await PromiseAllCallbacks(
+    async () => {
+      const { authUser } = await CreateUser({
+        project,
+        role: "USER",
+      });
+
+      MockAuthUser.user = authUser;
+    },
+    async () => {
+      const { domain, domainId } = await CreateDomain({ project });
+
+      const topicId = domain.topics[0]?.id.toString();
+
+      assert(topicId);
+
+      return {
+        domain,
+        domainId,
+        topicId,
+      };
+    }
+  );
+
+  {
+    const result = await query(AdminProjectFromDomainDocument, {
+      variables: {
+        ids: [domainId],
+      },
+    });
+
+    expectDeepEqual(result, {
+      data: {
+        domains: [
+          {
+            id: domainId,
+            project: {
+              id: projectId,
+              code: project.code,
+              label: project.label,
+            },
+          },
+        ],
+      },
+    });
+  }
+
+  {
+    const result = await query(AdminProjectFromTopicDocument, {
+      variables: {
+        ids: [topicId],
+      },
+    });
+
+    expectDeepEqual(result, {
+      data: {
+        topics: [
+          {
+            id: topicId,
+            project: {
+              id: projectId,
+              code: project.code,
+              label: project.label,
+            },
+          },
+        ],
+      },
+    });
+  }
 }
