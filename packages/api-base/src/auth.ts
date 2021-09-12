@@ -70,21 +70,37 @@ export const Authorization = (userPromise: Promise<DBUser | null>) => {
     return user;
   });
 
-  const expectUserProjects = LazyPromise(async () => {
+  const expectUserProjectsSet = LazyPromise(async () => {
     const user = await expectUser;
 
-    return user.projects.map((v) => v.id);
+    const projectIds = new Set<number>();
+
+    for (const { id } of user.projects) {
+      projectIds.add(id);
+    }
+    for (const { projects } of user.groups) {
+      for (const { id } of projects) {
+        projectIds.add(id);
+      }
+    }
+
+    return projectIds;
+  });
+
+  const expectUserProjects = LazyPromise(async () => {
+    return Array.from(await expectUserProjectsSet);
   });
 
   const expectAllowedUserProject = async (
     projectIdPromise: number | Promise<number>
   ) => {
-    const [user, projectId] = await Promise.all([expectUser, projectIdPromise]);
+    const [user, usersProjectsSet, projectId] = await Promise.all([
+      expectUser,
+      expectUserProjectsSet,
+      projectIdPromise,
+    ]);
 
-    assert(
-      user.projects.find((v) => v.id === projectId),
-      "Forbidden Project!"
-    );
+    assert(usersProjectsSet.has(projectId), "Forbidden Project!");
 
     return { user, projectId };
   };
@@ -94,5 +110,6 @@ export const Authorization = (userPromise: Promise<DBUser | null>) => {
     expectAdmin,
     expectAllowedUserProject,
     expectUserProjects,
+    expectUserProjectsSet,
   };
 };

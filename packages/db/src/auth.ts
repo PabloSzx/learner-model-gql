@@ -16,6 +16,7 @@ export function GetDBUser(auth0UserPromise: Promise<Auth0User | null>) {
 
     if (!uid || !email) return null;
 
+    const lastOnline = new Date();
     return prisma.userUID
       .upsert({
         where: {
@@ -32,12 +33,12 @@ export function GetDBUser(auth0UserPromise: Promise<Auth0User | null>) {
                 email,
                 name,
                 picture,
+                lastOnline,
               },
             },
           },
         },
         update: {
-          uid,
           user: {
             connectOrCreate: {
               where: {
@@ -47,7 +48,11 @@ export function GetDBUser(auth0UserPromise: Promise<Auth0User | null>) {
                 email,
                 name,
                 picture,
+                lastOnline,
               },
+            },
+            update: {
+              lastOnline,
             },
           },
         },
@@ -57,6 +62,15 @@ export function GetDBUser(auth0UserPromise: Promise<Auth0User | null>) {
               projects: {
                 select: {
                   id: true,
+                },
+              },
+              groups: {
+                select: {
+                  projects: {
+                    select: {
+                      id: true,
+                    },
+                  },
                 },
               },
             },
