@@ -150,6 +150,7 @@ export type Query = {
   topics: Array<Topic>;
   adminProjects: AdminProjectsQueries;
   projects: Array<Project>;
+  users: Array<User>;
 };
 
 export type QueryContentArgs = {
@@ -165,6 +166,10 @@ export type QueryTopicsArgs = {
 };
 
 export type QueryProjectsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryUsersArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
@@ -535,6 +540,12 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     RequireFields<QueryProjectsArgs, "ids">
+  >;
+  users?: Resolver<
+    Array<ResolversTypes["User"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryUsersArgs, "ids">
   >;
 };
 

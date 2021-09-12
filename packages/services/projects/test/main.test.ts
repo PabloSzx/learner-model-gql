@@ -9,6 +9,7 @@ import {
   CheckProjectCreationRetrieval,
   CheckProjectFromContent,
   CheckProjectFromDomainAndTopic,
+  CheckProjectFromUser,
 } from "./test";
 
 const ProjectsClient = () =>
@@ -48,5 +49,11 @@ describe("Projects service", () => {
     const testClient = await ProjectsClient();
 
     await CheckProjectFromDomainAndTopic(testClient);
+  });
+
+  it("project from users", async () => {
+    const testClient = await ProjectsClient();
+
+    await CheckProjectFromUser(testClient);
   });
 });

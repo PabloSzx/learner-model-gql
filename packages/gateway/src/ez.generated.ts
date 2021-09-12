@@ -61,6 +61,7 @@ export type Query = {
   adminDomain: AdminDomainQueries;
   projects: Array<Project>;
   adminProjects: AdminProjectsQueries;
+  users: Array<User>;
   hello2: Scalars["String"];
 };
 
@@ -77,6 +78,10 @@ export type QueryContentArgs = {
 };
 
 export type QueryProjectsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryUsersArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
@@ -714,6 +719,12 @@ export type QueryResolvers<
     ResolversTypes["AdminProjectsQueries"],
     ParentType,
     ContextType
+  >;
+  users?: Resolver<
+    Array<ResolversTypes["User"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryUsersArgs, "ids">
   >;
   hello2?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 };

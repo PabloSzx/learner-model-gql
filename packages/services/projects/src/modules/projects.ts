@@ -1,4 +1,4 @@
-import { ResolveCursorConnection } from "api-base";
+import { getIdsIntersection, ResolveCursorConnection } from "api-base";
 import { gql, registerModule } from "../ez";
 
 export const projectsModule = registerModule(
@@ -38,6 +38,8 @@ export const projectsModule = registerModule(
 
     extend type Query {
       adminProjects: AdminProjectsQueries!
+
+      projects(ids: [IntID!]!): [Project!]!
     }
 
     extend type Mutation {
@@ -77,6 +79,19 @@ export const projectsModule = registerModule(
           await authorization.expectAdmin;
 
           return {};
+        },
+
+        async projects(_root, { ids }, { prisma, authorization }) {
+          return prisma.project.findMany({
+            where: {
+              id: {
+                in: await getIdsIntersection(
+                  ids,
+                  authorization.expectUserProjects
+                ),
+              },
+            },
+          });
         },
       },
       Mutation: {

@@ -9,29 +9,43 @@ export const usersModule = registerModule(
     }
 
     extend type Query {
-      projects(ids: [IntID!]!): [Project!]!
+      users(ids: [IntID!]!): [User!]!
     }
   `,
   {
     id: "Users",
     dirname: import.meta.url,
     resolvers: {
-      Query: {
-        async projects(_root, { ids }, { prisma, authorization }) {
-          return prisma.project.findMany({
-            where: {
-              AND: [
-                {
-                  id: {
-                    in: ids,
-                  },
+      User: {
+        async projects({ id }, _args, { prisma }) {
+          return (
+            (await prisma.user
+              .findUnique({
+                where: {
+                  id,
                 },
-                {
+              })
+              .projects()) || []
+          );
+        },
+      },
+      Query: {
+        async users(_root, { ids }, { prisma, authorization }) {
+          return prisma.user.findMany({
+            where: {
+              id: {
+                in: ids,
+              },
+              projects: {
+                some: {
                   id: {
                     in: await authorization.expectUserProjects,
                   },
                 },
-              ],
+              },
+            },
+            select: {
+              id: true,
             },
           });
         },

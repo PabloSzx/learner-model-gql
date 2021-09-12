@@ -65,3 +65,14 @@ query AdminProjectFromTopic($ids: [IntID!]!) {
     }
   }
 }
+
+query AdminProjectFromUser($ids: [IntID!]!) {
+  users(ids: $ids) {
+    id
+    projects {
+      id
+      code
+      label
+    }
+  }
+}

@@ -339,6 +339,7 @@ export type Query = {
   hello2: Scalars["String"];
   projects: Array<Project>;
   topics: Array<Topic>;
+  users: Array<User>;
 };
 
 export type QueryContentArgs = {
@@ -354,6 +355,10 @@ export type QueryProjectsArgs = {
 };
 
 export type QueryTopicsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryUsersArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 

@@ -16,6 +16,7 @@ type Query {
   adminDomain: AdminDomainQueries!
   projects(ids: [IntID!]!): [Project!]!
   adminProjects: AdminProjectsQueries!
+  users(ids: [IntID!]!): [User!]!
   hello2: String!
 }
 

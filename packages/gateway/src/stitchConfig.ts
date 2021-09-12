@@ -30,11 +30,19 @@ export const ContentMerge: NonNullable<SubschemaConfig["merge"]>[string] = {
   argsFromKeys: (ids) => ({ ids }),
 };
 
+export const UsersMerge: NonNullable<SubschemaConfig["merge"]>[string] = {
+  fieldName: "users",
+  selectionSet: "{ id }",
+  key: ({ id }: Node) => id,
+  argsFromKeys: (ids) => ({ ids }),
+};
+
 const defaultMergeConfig = {
   Project: ProjectMerge,
   Domain: DomainMerge,
   Topic: TopicMerge,
   Content: ContentMerge,
+  User: UsersMerge,
 };
 
 export const servicesSubschemaConfig: {

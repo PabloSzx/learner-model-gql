@@ -4,6 +4,7 @@ import {
   AdminProjectFromContentDocument,
   AdminProjectFromDomainDocument,
   AdminProjectFromTopicDocument,
+  AdminProjectFromUserDocument,
   AdminUpdateProjectDocument,
   assert,
   CreateDomain,
@@ -247,6 +248,44 @@ export async function CheckProjectFromDomainAndTopic({
               code: project.code,
               label: project.label,
             },
+          },
+        ],
+      },
+    });
+  }
+}
+
+export async function CheckProjectFromUser({
+  query,
+}: Pick<TestClient, "query">) {
+  const { project, projectId } = await CreateProject();
+
+  const { authUser, userId } = await CreateUser({
+    project,
+    role: "USER",
+  });
+
+  MockAuthUser.user = authUser;
+
+  {
+    const result = await query(AdminProjectFromUserDocument, {
+      variables: {
+        ids: [userId],
+      },
+    });
+
+    expectDeepEqual(result, {
+      data: {
+        users: [
+          {
+            id: userId,
+            projects: [
+              {
+                id: projectId,
+                code: project.code,
+                label: project.label,
+              },
+            ],
           },
         ],
       },
