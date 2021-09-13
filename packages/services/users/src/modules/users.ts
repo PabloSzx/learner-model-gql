@@ -1,5 +1,4 @@
-import { ResolveCursorConnection } from "api-base";
-
+import { Prisma, ResolveCursorConnection } from "api-base";
 import { gql, registerModule } from "../ez";
 
 export const usersModule = registerModule(
@@ -40,11 +39,7 @@ export const usersModule = registerModule(
     }
 
     type AdminUserMutations {
-      assignProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
-      unassignProjectsToUsers(
-        projectIds: [IntID!]!
-        userIds: [IntID!]!
-      ): [User!]!
+      setProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
       "Upsert specified users, if user with specified email already exists, updates it with the specified name"
       upsertUsers(data: [UpsertUserInput!]!): [User!]!
     }
@@ -97,48 +92,23 @@ export const usersModule = registerModule(
         },
       },
       AdminUserMutations: {
-        async assignProjectsToUsers(
-          _root,
-          { projectIds, userIds },
-          { prisma }
-        ) {
+        setProjectsToUsers(_root, { projectIds, userIds }, { prisma }) {
+          const projectsIdsDataSet: Prisma.UserUpdateInput = {
+            projects: {
+              set: projectIds.map((projectId) => {
+                return {
+                  id: projectId,
+                };
+              }),
+            },
+          };
           return prisma.$transaction(
             userIds.map((id) => {
               return prisma.user.update({
                 where: {
-                  id_enabled: {
-                    id,
-                    enabled: true,
-                  },
+                  id,
                 },
-                data: {
-                  projects: {
-                    connect: projectIds.map((id) => ({ id })),
-                  },
-                },
-              });
-            })
-          );
-        },
-        async unassignProjectsToUsers(
-          _root,
-          { projectIds, userIds },
-          { prisma }
-        ) {
-          return prisma.$transaction(
-            userIds.map((id) => {
-              return prisma.user.update({
-                where: {
-                  id_enabled: {
-                    id,
-                    enabled: true,
-                  },
-                },
-                data: {
-                  projects: {
-                    disconnect: projectIds.map((id) => ({ id })),
-                  },
-                },
+                data: projectsIdsDataSet,
               });
             })
           );

@@ -119,6 +119,12 @@ export type User = {
   projects: Array<Project>;
 };
 
+export type Group = {
+  __typename?: "Group";
+  id: Scalars["IntID"];
+  projects: Array<Project>;
+};
+
 export type PageInfo = {
   __typename?: "PageInfo";
   startCursor?: Maybe<Scalars["String"]>;
@@ -151,6 +157,7 @@ export type Query = {
   adminProjects: AdminProjectsQueries;
   projects: Array<Project>;
   users: Array<User>;
+  groups: Array<Group>;
 };
 
 export type QueryContentArgs = {
@@ -170,6 +177,10 @@ export type QueryProjectsArgs = {
 };
 
 export type QueryUsersArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryGroupsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
@@ -302,6 +313,7 @@ export type ResolversTypes = {
   UpdateProject: UpdateProject;
   AdminProjectsMutations: ResolverTypeWrapper<AdminProjectsMutations>;
   User: ResolverTypeWrapper<User>;
+  Group: ResolverTypeWrapper<Group>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   Node: never;
@@ -332,6 +344,7 @@ export type ResolversParentTypes = {
   UpdateProject: UpdateProject;
   AdminProjectsMutations: AdminProjectsMutations;
   User: User;
+  Group: Group;
   PageInfo: PageInfo;
   Boolean: Scalars["Boolean"];
   Node: never;
@@ -468,6 +481,19 @@ export type UserResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type GroupResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Group"] = ResolversParentTypes["Group"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  projects?: Resolver<
+    Array<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type PageInfoResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["PageInfo"] = ResolversParentTypes["PageInfo"]
@@ -547,6 +573,12 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryUsersArgs, "ids">
   >;
+  groups?: Resolver<
+    Array<ResolversTypes["Group"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryGroupsArgs, "ids">
+  >;
 };
 
 export type MutationResolvers<
@@ -589,6 +621,7 @@ export type Resolvers<ContextType = EZContext> = {
   AdminProjectsQueries?: AdminProjectsQueriesResolvers<ContextType>;
   AdminProjectsMutations?: AdminProjectsMutationsResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
+  Group?: GroupResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
   Node?: NodeResolvers<ContextType>;
   Connection?: ConnectionResolvers<ContextType>;

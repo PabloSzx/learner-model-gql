@@ -8,8 +8,15 @@ export const usersModule = registerModule(
       projects: [Project!]!
     }
 
+    type Group {
+      id: IntID!
+
+      projects: [Project!]!
+    }
+
     extend type Query {
       users(ids: [IntID!]!): [User!]!
+      groups(ids: [IntID!]!): [Group!]!
     }
   `,
   {
@@ -29,9 +36,42 @@ export const usersModule = registerModule(
           );
         },
       },
+      Group: {
+        async projects({ id }, _args, { prisma }) {
+          return (
+            (await prisma.group
+              .findUnique({
+                where: {
+                  id,
+                },
+              })
+              .projects()) || []
+          );
+        },
+      },
       Query: {
         async users(_root, { ids }, { prisma, authorization }) {
           return prisma.user.findMany({
+            where: {
+              id: {
+                in: ids,
+              },
+              projects: {
+                some: {
+                  id: {
+                    in: await authorization.expectUserProjects,
+                  },
+                },
+              },
+            },
+            select: {
+              id: true,
+            },
+          });
+        },
+
+        async groups(_root, { ids }, { prisma, authorization }) {
+          return prisma.group.findMany({
             where: {
               id: {
                 in: ids,

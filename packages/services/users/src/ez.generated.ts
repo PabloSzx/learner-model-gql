@@ -54,12 +54,6 @@ export type Group = {
   code: Scalars["String"];
   label: Scalars["String"];
   users: Array<User>;
-  projects: Array<Project>;
-};
-
-export type Project = {
-  __typename?: "Project";
-  id: Scalars["IntID"];
 };
 
 export type UserRole = "ADMIN" | "USER";
@@ -77,7 +71,6 @@ export type User = {
   createdAt: Scalars["DateTime"];
   updatedAt: Scalars["DateTime"];
   groups: Array<Group>;
-  projects: Array<Project>;
 };
 
 export type UsersConnection = {
@@ -102,18 +95,12 @@ export type UpsertUserInput = {
 
 export type AdminUserMutations = {
   __typename?: "AdminUserMutations";
-  assignProjectsToUsers: Array<User>;
-  unassignProjectsToUsers: Array<User>;
+  setProjectsToUsers: Array<User>;
   /** Upsert specified users, if user with specified email already exists, updates it with the specified name */
   upsertUsers: Array<User>;
 };
 
-export type AdminUserMutationsAssignProjectsToUsersArgs = {
-  projectIds: Array<Scalars["IntID"]>;
-  userIds: Array<Scalars["IntID"]>;
-};
-
-export type AdminUserMutationsUnassignProjectsToUsersArgs = {
+export type AdminUserMutationsSetProjectsToUsersArgs = {
   projectIds: Array<Scalars["IntID"]>;
   userIds: Array<Scalars["IntID"]>;
 };
@@ -277,7 +264,6 @@ export type ResolversTypes = {
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
   Group: ResolverTypeWrapper<Group>;
   String: ResolverTypeWrapper<Scalars["String"]>;
-  Project: ResolverTypeWrapper<Project>;
   UserRole: UserRole;
   User: ResolverTypeWrapper<User>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
@@ -305,7 +291,6 @@ export type ResolversParentTypes = {
   IntID: Scalars["IntID"];
   Group: Group;
   String: Scalars["String"];
-  Project: Project;
   User: User;
   Boolean: Scalars["Boolean"];
   UsersConnection: UsersConnection;
@@ -364,19 +349,6 @@ export type GroupResolvers<
   code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   users?: Resolver<Array<ResolversTypes["User"]>, ParentType, ContextType>;
-  projects?: Resolver<
-    Array<ResolversTypes["Project"]>,
-    ParentType,
-    ContextType
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type ProjectResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Project"] = ResolversParentTypes["Project"]
-> = {
-  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -399,11 +371,6 @@ export type UserResolvers<
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   groups?: Resolver<Array<ResolversTypes["Group"]>, ParentType, ContextType>;
-  projects?: Resolver<
-    Array<ResolversTypes["Project"]>,
-    ParentType,
-    ContextType
-  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -433,21 +400,12 @@ export type AdminUserMutationsResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["AdminUserMutations"] = ResolversParentTypes["AdminUserMutations"]
 > = {
-  assignProjectsToUsers?: Resolver<
+  setProjectsToUsers?: Resolver<
     Array<ResolversTypes["User"]>,
     ParentType,
     ContextType,
     RequireFields<
-      AdminUserMutationsAssignProjectsToUsersArgs,
-      "projectIds" | "userIds"
-    >
-  >;
-  unassignProjectsToUsers?: Resolver<
-    Array<ResolversTypes["User"]>,
-    ParentType,
-    ContextType,
-    RequireFields<
-      AdminUserMutationsUnassignProjectsToUsersArgs,
+      AdminUserMutationsSetProjectsToUsersArgs,
       "projectIds" | "userIds"
     >
   >;
@@ -555,7 +513,6 @@ export type Resolvers<ContextType = EZContext> = {
   URL?: GraphQLScalarType;
   IntID?: GraphQLScalarType;
   Group?: GroupResolvers<ContextType>;
-  Project?: ProjectResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   UsersConnection?: UsersConnectionResolvers<ContextType>;
   AdminUserQueries?: AdminUserQueriesResolvers<ContextType>;

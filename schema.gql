@@ -17,6 +17,7 @@ type Query {
   adminDomain: AdminDomainQueries!
   projects(ids: [IntID!]!): [Project!]!
   adminProjects: AdminProjectsQueries!
+  groups(ids: [IntID!]!): [Group!]!
   hello2: String!
 }
 
@@ -76,13 +77,6 @@ type Group {
   projects: [Project!]!
 }
 
-type Project {
-  id: IntID!
-  domains: [Domain!]!
-  code: String!
-  label: String!
-}
-
 enum UserRole {
   ADMIN
   USER
@@ -118,8 +112,7 @@ input UpsertUserInput {
 }
 
 type AdminUserMutations {
-  assignProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
-  unassignProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
+  setProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
   """
   Upsert specified users, if user with specified email already exists, updates it with the specified name
   """
@@ -302,6 +295,13 @@ type AdminDomainMutations {
   updateDomain(input: UpdateDomain!): Domain!
   createTopic(input: CreateTopic!): Topic!
   updateTopic(input: UpdateTopic!): Topic!
+}
+
+type Project {
+  id: IntID!
+  domains: [Domain!]!
+  code: String!
+  label: String!
 }
 
 type ProjectsConnection implements Connection {

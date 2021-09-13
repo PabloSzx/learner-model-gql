@@ -76,3 +76,12 @@ query AdminProjectFromUser($ids: [IntID!]!) {
     }
   }
 }
+
+query AdminProjectFromGroup($ids: [IntID!]!) {
+  groups(ids: $ids) {
+    id
+    projects {
+      id
+    }
+  }
+}

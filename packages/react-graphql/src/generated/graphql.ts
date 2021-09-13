@@ -174,18 +174,12 @@ export type AdminProjectsQueriesAllProjectsArgs = {
 
 export type AdminUserMutations = {
   __typename?: "AdminUserMutations";
-  assignProjectsToUsers: Array<User>;
-  unassignProjectsToUsers: Array<User>;
+  setProjectsToUsers: Array<User>;
   /** Upsert specified users, if user with specified email already exists, updates it with the specified name */
   upsertUsers: Array<User>;
 };
 
-export type AdminUserMutationsAssignProjectsToUsersArgs = {
-  projectIds: Array<Scalars["IntID"]>;
-  userIds: Array<Scalars["IntID"]>;
-};
-
-export type AdminUserMutationsUnassignProjectsToUsersArgs = {
+export type AdminUserMutationsSetProjectsToUsersArgs = {
   projectIds: Array<Scalars["IntID"]>;
   userIds: Array<Scalars["IntID"]>;
 };
@@ -341,6 +335,7 @@ export type Query = {
   content: Array<Content>;
   currentUser?: Maybe<User>;
   domains: Array<Domain>;
+  groups: Array<Group>;
   hello: Scalars["String"];
   hello2: Scalars["String"];
   projects: Array<Project>;
@@ -353,6 +348,10 @@ export type QueryContentArgs = {
 };
 
 export type QueryDomainsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryGroupsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 

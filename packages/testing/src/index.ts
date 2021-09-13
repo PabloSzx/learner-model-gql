@@ -196,3 +196,23 @@ export const CreateEmptyContent = async ({
 
   return { content, contentId: content.id.toString() };
 };
+
+export const CreateGroup = async ({
+  project,
+}: { project?: { id: number } } = {}) => {
+  const group = await prisma.group.create({
+    data: {
+      code: generate(),
+      label: generate(),
+      projects: project
+        ? {
+            connect: {
+              id: project.id,
+            },
+          }
+        : undefined,
+    },
+  });
+
+  return { group, groupId: group.id.toString() };
+};

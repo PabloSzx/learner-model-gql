@@ -9,6 +9,7 @@ import {
   assert,
   CreateDomain,
   CreateEmptyContent,
+  CreateGroup,
   CreateProject,
   CreateUser,
   expectDeepEqual,
@@ -17,6 +18,7 @@ import {
   prisma,
   PromiseAllCallbacks,
   TestClient,
+  AdminProjectFromGroupDocument,
 } from "testing";
 
 export async function CheckProjectCreationRetrieval({
@@ -267,28 +269,56 @@ export async function CheckProjectFromUser({
 
   MockAuthUser.user = authUser;
 
-  {
-    const result = await query(AdminProjectFromUserDocument, {
-      variables: {
-        ids: [userId],
-      },
-    });
+  await PromiseAllCallbacks(
+    async () => {
+      const result = await query(AdminProjectFromUserDocument, {
+        variables: {
+          ids: [userId],
+        },
+      });
 
-    expectDeepEqual(result, {
-      data: {
-        users: [
-          {
-            id: userId,
-            projects: [
-              {
-                id: projectId,
-                code: project.code,
-                label: project.label,
-              },
-            ],
-          },
-        ],
-      },
-    });
-  }
+      expectDeepEqual(result, {
+        data: {
+          users: [
+            {
+              id: userId,
+              projects: [
+                {
+                  id: projectId,
+                  code: project.code,
+                  label: project.label,
+                },
+              ],
+            },
+          ],
+        },
+      });
+    },
+    async () => {
+      const { groupId } = await CreateGroup({
+        project,
+      });
+
+      const result = await query(AdminProjectFromGroupDocument, {
+        variables: {
+          ids: [groupId],
+        },
+      });
+
+      expectDeepEqual(result, {
+        data: {
+          groups: [
+            {
+              id: groupId,
+              projects: [
+                {
+                  id: projectId,
+                },
+              ],
+            },
+          ],
+        },
+      });
+    }
+  );
 }
