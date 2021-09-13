@@ -6,6 +6,7 @@ schema {
 
 type Query {
   hello: String!
+  groups(ids: [IntID!]!): [Group!]!
   adminUsers: AdminUserQueries!
   currentUser: User
   users(ids: [IntID!]!): [User!]!
@@ -17,7 +18,6 @@ type Query {
   adminDomain: AdminDomainQueries!
   projects(ids: [IntID!]!): [Project!]!
   adminProjects: AdminProjectsQueries!
-  groups(ids: [IntID!]!): [Group!]!
   hello2: String!
 }
 
@@ -74,7 +74,26 @@ type Group {
   code: String!
   label: String!
   users: [User!]!
+  projectsIds: [IntID!]!
   projects: [Project!]!
+}
+
+input CreateGroupInput {
+  code: String!
+  label: String!
+  projectIds: [IntID!]!
+}
+
+input UpdateGroupInput {
+  id: IntID!
+  code: String!
+  label: String!
+  projectIds: [IntID!]!
+}
+
+type GroupsConnection implements Connection {
+  nodes: [Group!]!
+  pageInfo: PageInfo!
 }
 
 enum UserRole {
@@ -94,6 +113,7 @@ type User {
   createdAt: DateTime!
   updatedAt: DateTime!
   groups: [Group!]!
+  projectsIds: [IntID!]!
   projects: [Project!]!
 }
 
@@ -104,6 +124,7 @@ type UsersConnection {
 
 type AdminUserQueries {
   allUsers(pagination: CursorConnectionArgs!): UsersConnection!
+  allGroups(pagination: CursorConnectionArgs!): GroupsConnection!
 }
 
 input UpsertUserInput {
@@ -112,11 +133,14 @@ input UpsertUserInput {
 }
 
 type AdminUserMutations {
-  setProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
   """
   Upsert specified users, if user with specified email already exists, updates it with the specified name
   """
   upsertUsers(data: [UpsertUserInput!]!): [User!]!
+  setUserGroups(userIds: [IntID!]!, groupIds: [IntID!]!): [User!]!
+  createGroup(data: CreateGroupInput!): Group!
+  updateGroup(data: UpdateGroupInput!): Group!
+  setProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
 }
 
 type PageInfo {

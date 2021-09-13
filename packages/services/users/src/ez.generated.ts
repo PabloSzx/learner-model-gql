@@ -54,6 +54,26 @@ export type Group = {
   code: Scalars["String"];
   label: Scalars["String"];
   users: Array<User>;
+  projectsIds: Array<Scalars["IntID"]>;
+};
+
+export type CreateGroupInput = {
+  code: Scalars["String"];
+  label: Scalars["String"];
+  projectIds: Array<Scalars["IntID"]>;
+};
+
+export type UpdateGroupInput = {
+  id: Scalars["IntID"];
+  code: Scalars["String"];
+  label: Scalars["String"];
+  projectIds: Array<Scalars["IntID"]>;
+};
+
+export type GroupsConnection = Connection & {
+  __typename?: "GroupsConnection";
+  nodes: Array<Group>;
+  pageInfo: PageInfo;
 };
 
 export type UserRole = "ADMIN" | "USER";
@@ -71,6 +91,7 @@ export type User = {
   createdAt: Scalars["DateTime"];
   updatedAt: Scalars["DateTime"];
   groups: Array<Group>;
+  projectsIds: Array<Scalars["IntID"]>;
 };
 
 export type UsersConnection = {
@@ -82,9 +103,14 @@ export type UsersConnection = {
 export type AdminUserQueries = {
   __typename?: "AdminUserQueries";
   allUsers: UsersConnection;
+  allGroups: GroupsConnection;
 };
 
 export type AdminUserQueriesAllUsersArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminUserQueriesAllGroupsArgs = {
   pagination: CursorConnectionArgs;
 };
 
@@ -95,18 +121,34 @@ export type UpsertUserInput = {
 
 export type AdminUserMutations = {
   __typename?: "AdminUserMutations";
-  setProjectsToUsers: Array<User>;
   /** Upsert specified users, if user with specified email already exists, updates it with the specified name */
   upsertUsers: Array<User>;
+  setUserGroups: Array<User>;
+  createGroup: Group;
+  updateGroup: Group;
+  setProjectsToUsers: Array<User>;
+};
+
+export type AdminUserMutationsUpsertUsersArgs = {
+  data: Array<UpsertUserInput>;
+};
+
+export type AdminUserMutationsSetUserGroupsArgs = {
+  userIds: Array<Scalars["IntID"]>;
+  groupIds: Array<Scalars["IntID"]>;
+};
+
+export type AdminUserMutationsCreateGroupArgs = {
+  data: CreateGroupInput;
+};
+
+export type AdminUserMutationsUpdateGroupArgs = {
+  data: UpdateGroupInput;
 };
 
 export type AdminUserMutationsSetProjectsToUsersArgs = {
   projectIds: Array<Scalars["IntID"]>;
   userIds: Array<Scalars["IntID"]>;
-};
-
-export type AdminUserMutationsUpsertUsersArgs = {
-  data: Array<UpsertUserInput>;
 };
 
 export type PageInfo = {
@@ -135,9 +177,14 @@ export type CursorConnectionArgs = {
 export type Query = {
   __typename?: "Query";
   hello: Scalars["String"];
+  groups: Array<Group>;
   adminUsers: AdminUserQueries;
   currentUser?: Maybe<User>;
   users: Array<User>;
+};
+
+export type QueryGroupsArgs = {
+  ids: Array<Scalars["IntID"]>;
 };
 
 export type QueryUsersArgs = {
@@ -264,6 +311,9 @@ export type ResolversTypes = {
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
   Group: ResolverTypeWrapper<Group>;
   String: ResolverTypeWrapper<Scalars["String"]>;
+  CreateGroupInput: CreateGroupInput;
+  UpdateGroupInput: UpdateGroupInput;
+  GroupsConnection: ResolverTypeWrapper<GroupsConnection>;
   UserRole: UserRole;
   User: ResolverTypeWrapper<User>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
@@ -273,7 +323,7 @@ export type ResolversTypes = {
   AdminUserMutations: ResolverTypeWrapper<AdminUserMutations>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Node: never;
-  Connection: never;
+  Connection: ResolversTypes["GroupsConnection"];
   CursorConnectionArgs: CursorConnectionArgs;
   Query: ResolverTypeWrapper<{}>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -291,6 +341,9 @@ export type ResolversParentTypes = {
   IntID: Scalars["IntID"];
   Group: Group;
   String: Scalars["String"];
+  CreateGroupInput: CreateGroupInput;
+  UpdateGroupInput: UpdateGroupInput;
+  GroupsConnection: GroupsConnection;
   User: User;
   Boolean: Scalars["Boolean"];
   UsersConnection: UsersConnection;
@@ -299,7 +352,7 @@ export type ResolversParentTypes = {
   AdminUserMutations: AdminUserMutations;
   PageInfo: PageInfo;
   Node: never;
-  Connection: never;
+  Connection: ResolversParentTypes["GroupsConnection"];
   CursorConnectionArgs: CursorConnectionArgs;
   Query: {};
   Mutation: {};
@@ -349,6 +402,20 @@ export type GroupResolvers<
   code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   users?: Resolver<Array<ResolversTypes["User"]>, ParentType, ContextType>;
+  projectsIds?: Resolver<
+    Array<ResolversTypes["IntID"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type GroupsConnectionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["GroupsConnection"] = ResolversParentTypes["GroupsConnection"]
+> = {
+  nodes?: Resolver<Array<ResolversTypes["Group"]>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -371,6 +438,11 @@ export type UserResolvers<
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   groups?: Resolver<Array<ResolversTypes["Group"]>, ParentType, ContextType>;
+  projectsIds?: Resolver<
+    Array<ResolversTypes["IntID"]>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -393,6 +465,12 @@ export type AdminUserQueriesResolvers<
     ContextType,
     RequireFields<AdminUserQueriesAllUsersArgs, "pagination">
   >;
+  allGroups?: Resolver<
+    ResolversTypes["GroupsConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminUserQueriesAllGroupsArgs, "pagination">
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -400,6 +478,30 @@ export type AdminUserMutationsResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["AdminUserMutations"] = ResolversParentTypes["AdminUserMutations"]
 > = {
+  upsertUsers?: Resolver<
+    Array<ResolversTypes["User"]>,
+    ParentType,
+    ContextType,
+    RequireFields<AdminUserMutationsUpsertUsersArgs, "data">
+  >;
+  setUserGroups?: Resolver<
+    Array<ResolversTypes["User"]>,
+    ParentType,
+    ContextType,
+    RequireFields<AdminUserMutationsSetUserGroupsArgs, "userIds" | "groupIds">
+  >;
+  createGroup?: Resolver<
+    ResolversTypes["Group"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminUserMutationsCreateGroupArgs, "data">
+  >;
+  updateGroup?: Resolver<
+    ResolversTypes["Group"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminUserMutationsUpdateGroupArgs, "data">
+  >;
   setProjectsToUsers?: Resolver<
     Array<ResolversTypes["User"]>,
     ParentType,
@@ -408,12 +510,6 @@ export type AdminUserMutationsResolvers<
       AdminUserMutationsSetProjectsToUsersArgs,
       "projectIds" | "userIds"
     >
-  >;
-  upsertUsers?: Resolver<
-    Array<ResolversTypes["User"]>,
-    ParentType,
-    ContextType,
-    RequireFields<AdminUserMutationsUpsertUsersArgs, "data">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -453,7 +549,7 @@ export type ConnectionResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Connection"] = ResolversParentTypes["Connection"]
 > = {
-  __resolveType: TypeResolveFn<null, ParentType, ContextType>;
+  __resolveType: TypeResolveFn<"GroupsConnection", ParentType, ContextType>;
   pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
 };
 
@@ -462,6 +558,12 @@ export type QueryResolvers<
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = {
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  groups?: Resolver<
+    Array<ResolversTypes["Group"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryGroupsArgs, "ids">
+  >;
   adminUsers?: Resolver<
     ResolversTypes["AdminUserQueries"],
     ParentType,
@@ -513,6 +615,7 @@ export type Resolvers<ContextType = EZContext> = {
   URL?: GraphQLScalarType;
   IntID?: GraphQLScalarType;
   Group?: GroupResolvers<ContextType>;
+  GroupsConnection?: GroupsConnectionResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   UsersConnection?: UsersConnectionResolvers<ContextType>;
   AdminUserQueries?: AdminUserQueriesResolvers<ContextType>;

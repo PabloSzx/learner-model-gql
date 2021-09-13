@@ -173,14 +173,30 @@ export type AdminProjectsQueriesAllProjectsArgs = {
 
 export type AdminUserMutations = {
   __typename?: "AdminUserMutations";
+  createGroup: Group;
   setProjectsToUsers: Array<User>;
+  setUserGroups: Array<User>;
+  updateGroup: Group;
   /** Upsert specified users, if user with specified email already exists, updates it with the specified name */
   upsertUsers: Array<User>;
+};
+
+export type AdminUserMutationsCreateGroupArgs = {
+  data: CreateGroupInput;
 };
 
 export type AdminUserMutationsSetProjectsToUsersArgs = {
   projectIds: Array<Scalars["IntID"]>;
   userIds: Array<Scalars["IntID"]>;
+};
+
+export type AdminUserMutationsSetUserGroupsArgs = {
+  groupIds: Array<Scalars["IntID"]>;
+  userIds: Array<Scalars["IntID"]>;
+};
+
+export type AdminUserMutationsUpdateGroupArgs = {
+  data: UpdateGroupInput;
 };
 
 export type AdminUserMutationsUpsertUsersArgs = {
@@ -189,7 +205,12 @@ export type AdminUserMutationsUpsertUsersArgs = {
 
 export type AdminUserQueries = {
   __typename?: "AdminUserQueries";
+  allGroups: GroupsConnection;
   allUsers: UsersConnection;
+};
+
+export type AdminUserQueriesAllGroupsArgs = {
+  pagination: CursorConnectionArgs;
 };
 
 export type AdminUserQueriesAllUsersArgs = {
@@ -233,6 +254,12 @@ export type CreateDomain = {
   code: Scalars["String"];
   label: Scalars["String"];
   projectId: Scalars["IntID"];
+};
+
+export type CreateGroupInput = {
+  code: Scalars["String"];
+  label: Scalars["String"];
+  projectIds: Array<Scalars["IntID"]>;
 };
 
 export type CreateProject = {
@@ -281,7 +308,14 @@ export type Group = {
   id: Scalars["IntID"];
   label: Scalars["String"];
   projects: Array<Project>;
+  projectsIds: Array<Scalars["IntID"]>;
   users: Array<User>;
+};
+
+export type GroupsConnection = Connection & {
+  __typename?: "GroupsConnection";
+  nodes: Array<Group>;
+  pageInfo: PageInfo;
 };
 
 export type Mutation = {
@@ -398,6 +432,13 @@ export type UpdateDomain = {
   label: Scalars["String"];
 };
 
+export type UpdateGroupInput = {
+  code: Scalars["String"];
+  id: Scalars["IntID"];
+  label: Scalars["String"];
+  projectIds: Array<Scalars["IntID"]>;
+};
+
 export type UpdateProject = {
   code: Scalars["String"];
   id: Scalars["IntID"];
@@ -430,6 +471,7 @@ export type User = {
   locked: Scalars["Boolean"];
   name?: Maybe<Scalars["String"]>;
   projects: Array<Project>;
+  projectsIds: Array<Scalars["IntID"]>;
   role: UserRole;
   updatedAt: Scalars["DateTime"];
 };
@@ -1008,6 +1050,135 @@ export type UpsertUsersMutation = {
   };
 };
 
+export type SetUserProjectsMutationVariables = Exact<{
+  projectIds: Array<Scalars["IntID"]> | Scalars["IntID"];
+  userIds: Array<Scalars["IntID"]> | Scalars["IntID"];
+}>;
+
+export type SetUserProjectsMutation = {
+  __typename?: "Mutation";
+  adminUsers: {
+    __typename?: "AdminUserMutations";
+    setProjectsToUsers: Array<{
+      __typename?: "User";
+      id: string;
+      email: string;
+      projectsIds: Array<string>;
+    }>;
+  };
+};
+
+export type GroupInfoFragment = {
+  __typename?: "Group";
+  id: string;
+  code: string;
+  label: string;
+  projectsIds: Array<string>;
+  users: Array<{ __typename?: "User"; id: string; email: string }>;
+};
+
+export type AdminAllGroupsQueryVariables = Exact<{
+  pagination: CursorConnectionArgs;
+}>;
+
+export type AdminAllGroupsQuery = {
+  __typename?: "Query";
+  adminUsers: {
+    __typename?: "AdminUserQueries";
+    allGroups: {
+      __typename?: "GroupsConnection";
+      nodes: Array<{
+        __typename?: "Group";
+        id: string;
+        code: string;
+        label: string;
+        projectsIds: Array<string>;
+        users: Array<{ __typename?: "User"; id: string; email: string }>;
+      }>;
+      pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean };
+    };
+  };
+};
+
+export type GetGroupsQueryVariables = Exact<{
+  ids: Array<Scalars["IntID"]> | Scalars["IntID"];
+}>;
+
+export type GetGroupsQuery = {
+  __typename?: "Query";
+  groups: Array<{
+    __typename?: "Group";
+    id: string;
+    code: string;
+    label: string;
+    projectsIds: Array<string>;
+    users: Array<{ __typename?: "User"; id: string; email: string }>;
+  }>;
+};
+
+export type SetUserGroupsMutationVariables = Exact<{
+  userIds: Array<Scalars["IntID"]> | Scalars["IntID"];
+  groupIds: Array<Scalars["IntID"]> | Scalars["IntID"];
+}>;
+
+export type SetUserGroupsMutation = {
+  __typename?: "Mutation";
+  adminUsers: {
+    __typename?: "AdminUserMutations";
+    setUserGroups: Array<{
+      __typename?: "User";
+      id: string;
+      email: string;
+      groups: Array<{
+        __typename?: "Group";
+        id: string;
+        code: string;
+        label: string;
+        projectsIds: Array<string>;
+        users: Array<{ __typename?: "User"; id: string; email: string }>;
+      }>;
+    }>;
+  };
+};
+
+export type AdminCreateGroupMutationVariables = Exact<{
+  data: CreateGroupInput;
+}>;
+
+export type AdminCreateGroupMutation = {
+  __typename?: "Mutation";
+  adminUsers: {
+    __typename?: "AdminUserMutations";
+    createGroup: {
+      __typename?: "Group";
+      id: string;
+      code: string;
+      label: string;
+      projectsIds: Array<string>;
+      users: Array<{ __typename?: "User"; id: string; email: string }>;
+    };
+  };
+};
+
+export type AdminUpdateGroupMutationVariables = Exact<{
+  data: UpdateGroupInput;
+}>;
+
+export type AdminUpdateGroupMutation = {
+  __typename?: "Mutation";
+  adminUsers: {
+    __typename?: "AdminUserMutations";
+    updateGroup: {
+      __typename?: "Group";
+      id: string;
+      code: string;
+      label: string;
+      projectsIds: Array<string>;
+      users: Array<{ __typename?: "User"; id: string; email: string }>;
+    };
+  };
+};
+
 export const IsolatedDomainFieldsFragmentDoc = {
   kind: "Document",
   definitions: [
@@ -1128,6 +1299,39 @@ export const UserInfoFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<UserInfoFragment, unknown>;
+export const GroupInfoFragmentDoc = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "GroupInfo" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Group" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "code" } },
+          { kind: "Field", name: { kind: "Name", value: "label" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "users" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "email" } },
+              ],
+            },
+          },
+          { kind: "Field", name: { kind: "Name", value: "projectsIds" } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GroupInfoFragment, unknown>;
 export const CreateActionDocument = {
   kind: "Document",
   definitions: [
@@ -3097,3 +3301,489 @@ export const UpsertUsersDocument = {
     ...UserInfoFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<UpsertUsersMutation, UpsertUsersMutationVariables>;
+export const SetUserProjectsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "SetUserProjects" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "projectIds" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "ListType",
+              type: {
+                kind: "NonNullType",
+                type: {
+                  kind: "NamedType",
+                  name: { kind: "Name", value: "IntID" },
+                },
+              },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "userIds" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "ListType",
+              type: {
+                kind: "NonNullType",
+                type: {
+                  kind: "NamedType",
+                  name: { kind: "Name", value: "IntID" },
+                },
+              },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminUsers" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "setProjectsToUsers" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "projectIds" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "projectIds" },
+                      },
+                    },
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "userIds" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "userIds" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "email" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "projectsIds" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  SetUserProjectsMutation,
+  SetUserProjectsMutationVariables
+>;
+export const AdminAllGroupsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "AdminAllGroups" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "pagination" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "CursorConnectionArgs" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminUsers" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "allGroups" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "pagination" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "pagination" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "nodes" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "FragmentSpread",
+                              name: { kind: "Name", value: "GroupInfo" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "pageInfo" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "hasNextPage" },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...GroupInfoFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<AdminAllGroupsQuery, AdminAllGroupsQueryVariables>;
+export const GetGroupsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "GetGroups" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "ids" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "ListType",
+              type: {
+                kind: "NonNullType",
+                type: {
+                  kind: "NamedType",
+                  name: { kind: "Name", value: "IntID" },
+                },
+              },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "groups" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "ids" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "ids" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "GroupInfo" },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...GroupInfoFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<GetGroupsQuery, GetGroupsQueryVariables>;
+export const SetUserGroupsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "SetUserGroups" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "userIds" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "ListType",
+              type: {
+                kind: "NonNullType",
+                type: {
+                  kind: "NamedType",
+                  name: { kind: "Name", value: "IntID" },
+                },
+              },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "groupIds" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "ListType",
+              type: {
+                kind: "NonNullType",
+                type: {
+                  kind: "NamedType",
+                  name: { kind: "Name", value: "IntID" },
+                },
+              },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminUsers" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "setUserGroups" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "userIds" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "userIds" },
+                      },
+                    },
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "groupIds" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "groupIds" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "email" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "groups" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "FragmentSpread",
+                              name: { kind: "Name", value: "GroupInfo" },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...GroupInfoFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<
+  SetUserGroupsMutation,
+  SetUserGroupsMutationVariables
+>;
+export const AdminCreateGroupDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "AdminCreateGroup" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "CreateGroupInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminUsers" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "createGroup" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "data" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "data" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "FragmentSpread",
+                        name: { kind: "Name", value: "GroupInfo" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...GroupInfoFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<
+  AdminCreateGroupMutation,
+  AdminCreateGroupMutationVariables
+>;
+export const AdminUpdateGroupDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "AdminUpdateGroup" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "UpdateGroupInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminUsers" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "updateGroup" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "data" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "data" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "FragmentSpread",
+                        name: { kind: "Name", value: "GroupInfo" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...GroupInfoFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<
+  AdminUpdateGroupMutation,
+  AdminUpdateGroupMutationVariables
+>;

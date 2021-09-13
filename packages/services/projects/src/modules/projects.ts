@@ -80,7 +80,6 @@ export const projectsModule = registerModule(
 
           return {};
         },
-
         async projects(_root, { ids }, { prisma, authorization }) {
           return prisma.project.findMany({
             where: {

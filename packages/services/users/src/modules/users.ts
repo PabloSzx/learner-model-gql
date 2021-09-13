@@ -1,5 +1,4 @@
-import { Prisma, ResolveCursorConnection } from "api-base";
-import { gql, registerModule } from "../ez";
+import { gql, registerModule, ResolveCursorConnection } from "../ez";
 
 export const usersModule = registerModule(
   gql`
@@ -39,7 +38,6 @@ export const usersModule = registerModule(
     }
 
     type AdminUserMutations {
-      setProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
       "Upsert specified users, if user with specified email already exists, updates it with the specified name"
       upsertUsers(data: [UpsertUserInput!]!): [User!]!
     }
@@ -92,27 +90,6 @@ export const usersModule = registerModule(
         },
       },
       AdminUserMutations: {
-        setProjectsToUsers(_root, { projectIds, userIds }, { prisma }) {
-          const projectsIdsDataSet: Prisma.UserUpdateInput = {
-            projects: {
-              set: projectIds.map((projectId) => {
-                return {
-                  id: projectId,
-                };
-              }),
-            },
-          };
-          return prisma.$transaction(
-            userIds.map((id) => {
-              return prisma.user.update({
-                where: {
-                  id,
-                },
-                data: projectsIdsDataSet,
-              });
-            })
-          );
-        },
         async upsertUsers(_root, { data }, { prisma }) {
           return Promise.all(
             data.map(async ({ email, name }) => {

@@ -43,3 +43,71 @@ mutation UpsertUsers($data: [UpsertUserInput!]!) {
     }
   }
 }
+
+mutation SetUserProjects($projectIds: [IntID!]!, $userIds: [IntID!]!) {
+  adminUsers {
+    setProjectsToUsers(projectIds: $projectIds, userIds: $userIds) {
+      id
+      email
+      projectsIds
+    }
+  }
+}
+
+fragment GroupInfo on Group {
+  id
+  code
+  label
+  users {
+    id
+    email
+  }
+  projectsIds
+}
+
+query AdminAllGroups($pagination: CursorConnectionArgs!) {
+  adminUsers {
+    allGroups(pagination: $pagination) {
+      nodes {
+        ...GroupInfo
+      }
+      pageInfo {
+        hasNextPage
+      }
+    }
+  }
+}
+
+query GetGroups($ids: [IntID!]!) {
+  groups(ids: $ids) {
+    ...GroupInfo
+  }
+}
+
+mutation SetUserGroups($userIds: [IntID!]!, $groupIds: [IntID!]!) {
+  adminUsers {
+    setUserGroups(userIds: $userIds, groupIds: $groupIds) {
+      id
+      email
+      groups {
+        ...GroupInfo
+      }
+    }
+  }
+}
+
+mutation AdminCreateGroup($data: CreateGroupInput!) {
+  adminUsers {
+    createGroup(data: $data) {
+      ...GroupInfo
+    }
+  }
+}
+
+mutation AdminUpdateGroup($data: UpdateGroupInput!) {
+  adminUsers {
+    updateGroup(data: $data) {
+      ...GroupInfo
+    }
+  }
+}

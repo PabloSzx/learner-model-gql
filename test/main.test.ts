@@ -66,12 +66,13 @@ export const TestStitchedSchema = async () => {
 
   const UsersService = GetTestClient({
     async prepare({ registerModule }) {
-      const { usersModule, groupsModule } = await import(
+      const { usersModule, groupsModule, projectsModule } = await import(
         "../packages/services/users/src/modules"
       );
 
       registerModule(groupsModule);
       registerModule(usersModule);
+      registerModule(projectsModule);
     },
   });
 

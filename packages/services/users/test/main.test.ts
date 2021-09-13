@@ -1,12 +1,13 @@
 import { expectDeepEqual, GetTestClient, HelloDocument } from "testing";
-import { groupsModule, usersModule } from "../src/modules";
-import { CheckUsers } from "./test";
+import { groupsModule, projectsModule, usersModule } from "../src/modules";
+import { CheckGroups, CheckUsers } from "./test";
 
 const UsersClient = () => {
   return GetTestClient({
     prepare({ registerModule }) {
       registerModule(groupsModule);
       registerModule(usersModule);
+      registerModule(projectsModule);
     },
   });
 };
@@ -26,5 +27,11 @@ describe("Users service", () => {
     const testClient = await UsersClient();
 
     await CheckUsers(testClient);
+  });
+
+  it("groups", async () => {
+    const testClient = await UsersClient();
+
+    await CheckGroups(testClient);
   });
 });

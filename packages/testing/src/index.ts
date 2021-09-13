@@ -199,7 +199,8 @@ export const CreateEmptyContent = async ({
 
 export const CreateGroup = async ({
   project,
-}: { project?: { id: number } } = {}) => {
+  user,
+}: { project?: { id: number }; user?: { id: number } } = {}) => {
   const group = await prisma.group.create({
     data: {
       code: generate(),
@@ -208,6 +209,13 @@ export const CreateGroup = async ({
         ? {
             connect: {
               id: project.id,
+            },
+          }
+        : undefined,
+      users: user
+        ? {
+            connect: {
+              id: user.id,
             },
           }
         : undefined,

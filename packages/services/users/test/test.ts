@@ -13,6 +13,8 @@ import {
   TestClient,
   UpsertUsersDocument,
   UsersByIdDocument,
+  CreateGroup,
+  AdminAllGroupsDocument,
 } from "testing";
 
 export async function CheckUsers({
@@ -260,4 +262,59 @@ export async function CheckUsers({
       },
     });
   }
+}
+
+export async function CheckGroups({
+  query,
+}: Pick<TestClient, "mutation" | "query">) {
+  await prisma.$queryRaw`TRUNCATE "Project","User","Group" CASCADE;`;
+
+  const { project, projectId } = await CreateProject();
+  const { authUser, user } = await CreateUser({
+    project,
+    role: "ADMIN",
+  });
+
+  MockAuthUser.user = authUser;
+
+  const { group: firstGroup, groupId: firstGroupId } = await CreateGroup({
+    project,
+    user,
+  });
+
+  await PromiseAllCallbacks(async () => {
+    const result = await query(AdminAllGroupsDocument, {
+      variables: {
+        pagination: {
+          first: 10,
+        },
+      },
+    });
+
+    expectDeepEqual(result, {
+      data: {
+        adminUsers: {
+          allGroups: {
+            nodes: [
+              {
+                id: firstGroupId,
+                code: firstGroup.code,
+                label: firstGroup.label,
+                projectsIds: [projectId],
+                users: [
+                  {
+                    id: user.id.toString(),
+                    email: user.email,
+                  },
+                ],
+              },
+            ],
+            pageInfo: {
+              hasNextPage: false,
+            },
+          },
+        },
+      },
+    });
+  });
 }

@@ -174,14 +174,30 @@ export type AdminProjectsQueriesAllProjectsArgs = {
 
 export type AdminUserMutations = {
   __typename?: "AdminUserMutations";
+  createGroup: Group;
   setProjectsToUsers: Array<User>;
+  setUserGroups: Array<User>;
+  updateGroup: Group;
   /** Upsert specified users, if user with specified email already exists, updates it with the specified name */
   upsertUsers: Array<User>;
+};
+
+export type AdminUserMutationsCreateGroupArgs = {
+  data: CreateGroupInput;
 };
 
 export type AdminUserMutationsSetProjectsToUsersArgs = {
   projectIds: Array<Scalars["IntID"]>;
   userIds: Array<Scalars["IntID"]>;
+};
+
+export type AdminUserMutationsSetUserGroupsArgs = {
+  groupIds: Array<Scalars["IntID"]>;
+  userIds: Array<Scalars["IntID"]>;
+};
+
+export type AdminUserMutationsUpdateGroupArgs = {
+  data: UpdateGroupInput;
 };
 
 export type AdminUserMutationsUpsertUsersArgs = {
@@ -190,7 +206,12 @@ export type AdminUserMutationsUpsertUsersArgs = {
 
 export type AdminUserQueries = {
   __typename?: "AdminUserQueries";
+  allGroups: GroupsConnection;
   allUsers: UsersConnection;
+};
+
+export type AdminUserQueriesAllGroupsArgs = {
+  pagination: CursorConnectionArgs;
 };
 
 export type AdminUserQueriesAllUsersArgs = {
@@ -234,6 +255,12 @@ export type CreateDomain = {
   code: Scalars["String"];
   label: Scalars["String"];
   projectId: Scalars["IntID"];
+};
+
+export type CreateGroupInput = {
+  code: Scalars["String"];
+  label: Scalars["String"];
+  projectIds: Array<Scalars["IntID"]>;
 };
 
 export type CreateProject = {
@@ -282,7 +309,14 @@ export type Group = {
   id: Scalars["IntID"];
   label: Scalars["String"];
   projects: Array<Project>;
+  projectsIds: Array<Scalars["IntID"]>;
   users: Array<User>;
+};
+
+export type GroupsConnection = Connection & {
+  __typename?: "GroupsConnection";
+  nodes: Array<Group>;
+  pageInfo: PageInfo;
 };
 
 export type Mutation = {
@@ -399,6 +433,13 @@ export type UpdateDomain = {
   label: Scalars["String"];
 };
 
+export type UpdateGroupInput = {
+  code: Scalars["String"];
+  id: Scalars["IntID"];
+  label: Scalars["String"];
+  projectIds: Array<Scalars["IntID"]>;
+};
+
 export type UpdateProject = {
   code: Scalars["String"];
   id: Scalars["IntID"];
@@ -431,6 +472,7 @@ export type User = {
   locked: Scalars["Boolean"];
   name?: Maybe<Scalars["String"]>;
   projects: Array<Project>;
+  projectsIds: Array<Scalars["IntID"]>;
   role: UserRole;
   updatedAt: Scalars["DateTime"];
 };
