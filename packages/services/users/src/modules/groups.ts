@@ -1,6 +1,6 @@
 import { registerModule, gql } from "../ez";
 
-registerModule(
+export const groupsModule = registerModule(
   gql`
     type Group {
       id: IntID!
@@ -16,6 +16,8 @@ registerModule(
     }
   `,
   {
+    id: "Groups",
+    dirname: import.meta.url,
     resolvers: {
       User: {
         async groups({ id }, _args, { prisma }) {

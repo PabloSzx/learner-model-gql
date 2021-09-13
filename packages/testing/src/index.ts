@@ -1,7 +1,13 @@
 import type { FastifyAppOptions, PromiseType } from "@graphql-ez/fastify";
 import { CreateTestClient, GlobalTeardown } from "@graphql-ez/fastify-testing";
 import { ezServicePreset, MockAuthUser, prisma } from "api-base";
-import { deepEqual, equal, strict as assert } from "assert/strict";
+import {
+  deepEqual,
+  equal,
+  strict as assert,
+  notDeepEqual,
+  notEqual,
+} from "assert/strict";
 import type { UserRole } from "db";
 import { generate } from "randomstring";
 import { inspect } from "util";
@@ -31,7 +37,7 @@ export * from "graphql-ez/utils";
 export { generate } from "randomstring";
 export * from "./generated/graphql";
 export { MockAuthUser };
-export { assert, equal, deepEqual };
+export { assert, equal, deepEqual, notDeepEqual, notEqual };
 
 export type TestClient = PromiseType<ReturnType<typeof GetTestClient>>;
 
@@ -50,10 +56,10 @@ export const GetTestClient = async ({ ez, ...rest }: FastifyAppOptions) => {
   };
 };
 
-export function expectDeepEqual<T>(
+export function expectDeepEqual<T, U extends T>(
   actual: T,
-  expected: T
-): asserts actual is T {
+  expected: U
+): asserts actual is U {
   try {
     deepEqual(actual, expected);
   } catch (err) {

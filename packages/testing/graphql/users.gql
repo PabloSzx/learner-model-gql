@@ -1,0 +1,45 @@
+fragment UserInfo on User {
+  id
+  enabled
+  email
+  name
+  locked
+  active
+  lastOnline
+  role
+  createdAt
+  updatedAt
+}
+
+query CurrentUser {
+  currentUser {
+    ...UserInfo
+  }
+}
+
+query UsersById($ids: [IntID!]!) {
+  users(ids: $ids) {
+    ...UserInfo
+  }
+}
+
+query AdminAllUsers($pagination: CursorConnectionArgs!) {
+  adminUsers {
+    allUsers(pagination: $pagination) {
+      nodes {
+        ...UserInfo
+      }
+      pageInfo {
+        hasNextPage
+      }
+    }
+  }
+}
+
+mutation UpsertUsers($data: [UpsertUserInput!]!) {
+  adminUsers {
+    upsertUsers(data: $data) {
+      ...UserInfo
+    }
+  }
+}

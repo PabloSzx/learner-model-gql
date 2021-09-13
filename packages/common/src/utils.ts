@@ -34,7 +34,7 @@ export async function PromiseAllCallbacks<T1, T2, T3, T4, T5, T6>(
     () => Promise<T6>
   ]
 ): Promise<readonly [T1, T2, T3, T4, T5, T6]>;
-export async function PromiseAllCallbacks(
+export function PromiseAllCallbacks(
   ...args: Array<() => Promise<unknown>>
 ): Promise<readonly any[]> {
   return Promise.all(args.map((v) => v()));

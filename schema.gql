@@ -6,8 +6,9 @@ schema {
 
 type Query {
   hello: String!
-  admin: AdminQueries!
+  adminUsers: AdminUserQueries!
   currentUser: User
+  users(ids: [IntID!]!): [User!]!
   adminActions: AdminActionQueries!
   adminContent: AdminContentQueries!
   domains(ids: [IntID!]!): [Domain!]!
@@ -16,13 +17,12 @@ type Query {
   adminDomain: AdminDomainQueries!
   projects(ids: [IntID!]!): [Project!]!
   adminProjects: AdminProjectsQueries!
-  users(ids: [IntID!]!): [User!]!
   hello2: String!
 }
 
 type Mutation {
   hello: String!
-  admin: AdminMutations!
+  adminUsers: AdminUserMutations!
   action(data: ActionInput!): Void
   adminContent: AdminContentMutations!
   adminDomain: AdminDomainMutations!
@@ -108,13 +108,22 @@ type UsersConnection {
   pageInfo: PageInfo!
 }
 
-type AdminQueries {
+type AdminUserQueries {
   allUsers(pagination: CursorConnectionArgs!): UsersConnection!
 }
 
-type AdminMutations {
+input UpsertUserInput {
+  email: String!
+  name: String
+}
+
+type AdminUserMutations {
   assignProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
   unassignProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
+  """
+  Upsert specified users, if user with specified email already exists, updates it with the specified name
+  """
+  upsertUsers(data: [UpsertUserInput!]!): [User!]!
 }
 
 type PageInfo {

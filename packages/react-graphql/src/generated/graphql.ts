@@ -149,22 +149,6 @@ export type AdminDomainQueriesAllTopicsArgs = {
   pagination: CursorConnectionArgs;
 };
 
-export type AdminMutations = {
-  __typename?: "AdminMutations";
-  assignProjectsToUsers: Array<User>;
-  unassignProjectsToUsers: Array<User>;
-};
-
-export type AdminMutationsAssignProjectsToUsersArgs = {
-  projectIds: Array<Scalars["IntID"]>;
-  userIds: Array<Scalars["IntID"]>;
-};
-
-export type AdminMutationsUnassignProjectsToUsersArgs = {
-  projectIds: Array<Scalars["IntID"]>;
-  userIds: Array<Scalars["IntID"]>;
-};
-
 export type AdminProjectsMutations = {
   __typename?: "AdminProjectsMutations";
   createProject: Project;
@@ -188,12 +172,34 @@ export type AdminProjectsQueriesAllProjectsArgs = {
   pagination: CursorConnectionArgs;
 };
 
-export type AdminQueries = {
-  __typename?: "AdminQueries";
+export type AdminUserMutations = {
+  __typename?: "AdminUserMutations";
+  assignProjectsToUsers: Array<User>;
+  unassignProjectsToUsers: Array<User>;
+  /** Upsert specified users, if user with specified email already exists, updates it with the specified name */
+  upsertUsers: Array<User>;
+};
+
+export type AdminUserMutationsAssignProjectsToUsersArgs = {
+  projectIds: Array<Scalars["IntID"]>;
+  userIds: Array<Scalars["IntID"]>;
+};
+
+export type AdminUserMutationsUnassignProjectsToUsersArgs = {
+  projectIds: Array<Scalars["IntID"]>;
+  userIds: Array<Scalars["IntID"]>;
+};
+
+export type AdminUserMutationsUpsertUsersArgs = {
+  data: Array<UpsertUserInput>;
+};
+
+export type AdminUserQueries = {
+  __typename?: "AdminUserQueries";
   allUsers: UsersConnection;
 };
 
-export type AdminQueriesAllUsersArgs = {
+export type AdminUserQueriesAllUsersArgs = {
   pagination: CursorConnectionArgs;
 };
 
@@ -288,10 +294,10 @@ export type Group = {
 export type Mutation = {
   __typename?: "Mutation";
   action?: Maybe<Scalars["Void"]>;
-  admin: AdminMutations;
   adminContent: AdminContentMutations;
   adminDomain: AdminDomainMutations;
   adminProjects: AdminProjectsMutations;
+  adminUsers: AdminUserMutations;
   hello: Scalars["String"];
 };
 
@@ -327,11 +333,11 @@ export type ProjectsConnection = Connection & {
 
 export type Query = {
   __typename?: "Query";
-  admin: AdminQueries;
   adminActions: AdminActionQueries;
   adminContent: AdminContentQueries;
   adminDomain: AdminDomainQueries;
   adminProjects: AdminProjectsQueries;
+  adminUsers: AdminUserQueries;
   content: Array<Content>;
   currentUser?: Maybe<User>;
   domains: Array<Domain>;
@@ -407,6 +413,11 @@ export type UpdateTopic = {
   label: Scalars["String"];
   parentTopicId?: Maybe<Scalars["IntID"]>;
   projectId: Scalars["IntID"];
+};
+
+export type UpsertUserInput = {
+  email: Scalars["String"];
+  name?: Maybe<Scalars["String"]>;
 };
 
 export type User = {

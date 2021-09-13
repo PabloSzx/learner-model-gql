@@ -13,6 +13,7 @@ import {
   CheckProjectFromDomainAndTopic,
   CheckProjectFromUser,
 } from "../packages/services/projects/test/test";
+import { CheckUsers } from "../packages/services/users/test/test";
 import {
   expectDeepEqual,
   GetTestClient,
@@ -63,6 +64,17 @@ export const TestStitchedSchema = async () => {
     },
   });
 
+  const UsersService = GetTestClient({
+    async prepare({ registerModule }) {
+      const { usersModule, groupsModule } = await import(
+        "../packages/services/users/src/modules"
+      );
+
+      registerModule(groupsModule);
+      registerModule(usersModule);
+    },
+  });
+
   const stitchedSchema = await getStitchedSchema([
     {
       name: "actions",
@@ -79,6 +91,10 @@ export const TestStitchedSchema = async () => {
     {
       name: "projects",
       href: (await ProjectsService).origin,
+    },
+    {
+      name: "users",
+      href: (await UsersService).origin,
     },
   ]);
 
@@ -159,6 +175,14 @@ describe("gateway", () => {
       const { GatewayClient } = await TestStitchedSchema();
 
       await CheckProjectFromUser(GatewayClient);
+    });
+  });
+
+  describe("users gateway", async () => {
+    it("users", async () => {
+      const { GatewayClient } = await TestStitchedSchema();
+
+      await CheckUsers(GatewayClient);
     });
   });
 });

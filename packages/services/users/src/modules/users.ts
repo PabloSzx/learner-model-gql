@@ -2,7 +2,7 @@ import { ResolveCursorConnection } from "api-base";
 
 import { gql, registerModule } from "../ez";
 
-registerModule(
+export const usersModule = registerModule(
   gql`
     enum UserRole {
       ADMIN
@@ -29,36 +29,65 @@ registerModule(
       nodes: [User!]!
       pageInfo: PageInfo!
     }
-    type AdminQueries {
+
+    type AdminUserQueries {
       allUsers(pagination: CursorConnectionArgs!): UsersConnection!
     }
-    type AdminMutations {
+
+    input UpsertUserInput {
+      email: String!
+      name: String
+    }
+
+    type AdminUserMutations {
       assignProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
       unassignProjectsToUsers(
         projectIds: [IntID!]!
         userIds: [IntID!]!
       ): [User!]!
+      "Upsert specified users, if user with specified email already exists, updates it with the specified name"
+      upsertUsers(data: [UpsertUserInput!]!): [User!]!
     }
 
     extend type Query {
-      admin: AdminQueries!
+      adminUsers: AdminUserQueries!
       currentUser: User
+      users(ids: [IntID!]!): [User!]!
     }
+
     extend type Mutation {
-      admin: AdminMutations!
+      adminUsers: AdminUserMutations!
     }
   `,
   {
+    id: "Users",
+    dirname: import.meta.url,
     resolvers: {
       Mutation: {
-        async admin(_root, _args, { authorization }) {
+        async adminUsers(_root, _args, { authorization }) {
           await authorization.expectAdmin;
 
           return {};
         },
       },
       Query: {
-        async admin(_root, _args, { authorization }) {
+        async users(_root, { ids }, { prisma, authorization }) {
+          return prisma.user.findMany({
+            where: {
+              id: {
+                in: ids,
+              },
+              projects: {
+                some: {
+                  id: {
+                    in: await authorization.expectUserProjects,
+                  },
+                },
+              },
+            },
+          });
+        },
+        async adminUsers(_root, _args, { authorization }) {
           await authorization.expectAdmin;
 
           return {};
@@ -67,7 +96,7 @@ registerModule(
           return await UserPromise;
         },
       },
-      AdminMutations: {
+      AdminUserMutations: {
         async assignProjectsToUsers(
           _root,
           { projectIds, userIds },
@@ -114,12 +143,30 @@ registerModule(
             })
           );
         },
+        async upsertUsers(_root, { data }, { prisma }) {
+          return Promise.all(
+            data.map(async ({ email, name }) => {
+              return prisma.user.upsert({
+                create: {
+                  email,
+                  name,
+                },
+                update: {
+                  name,
+                },
+                where: {
+                  email,
+                },
+              });
+            })
+          );
+        },
       },
-      AdminQueries: {
+      AdminUserQueries: {
         allUsers(_root, { pagination }, { prisma }) {
-          return ResolveCursorConnection(pagination, (args) => {
+          return ResolveCursorConnection(pagination, (connection) => {
             return prisma.user.findMany({
-              ...args,
+              ...connection,
             });
           });
         },

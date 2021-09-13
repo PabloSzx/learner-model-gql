@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev:service": "cross-env NODE_ENV=development bob-ts-watch -c \"node dist/index.mjs\"",
-    "prepack": "bob-ts"
+    "dev:service": "cross-env NODE_ENV=development bob-ts-watch -c \"node dist/src/index.mjs\"",
+    "prepack": "bob-ts",
+    "test": "bob-ts && c8 mocha",
+    "test:watch": "bob-ts-watch -c \"mocha\""
   },
   "dependencies": {
     "api-base": "workspace:^0.0.1",

@@ -67,7 +67,7 @@ export const ezServicePreset = CreateApp({
   ez: {
     plugins: [
       ezAltairIDE(),
-      ezWebSockets(),
+      ezWebSockets("new"),
       ezSchema(),
       ezCodegen(codegenOptions),
       ezGraphQLModules(),
