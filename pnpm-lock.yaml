@@ -24,7 +24,7 @@ importers:
       concurrently: ^6.2.1
       cross-env: ^7.0.3
       dotenv: ^10.0.0
-      esbuild: ^0.12.27
+      esbuild: ^0.12.28
       execa: ^5.1.1
       fastify: ^3.21.0
       graphql: ^15.5.3
@@ -52,13 +52,13 @@ importers:
       '@types/randomstring': 1.1.7
       '@types/react': 17.0.20
       api-base: link:packages/api-base
-      bob-ts: 1.0.6_bc1e8283700cc172a6682d653b4622c0
+      bob-ts: 1.0.6_8e734d9076a29db464efeb45429f0bff
       c8: 7.9.0
       common: link:packages/common
       concurrently: 6.2.1
       cross-env: 7.0.3
       dotenv: 10.0.0
-      esbuild: 0.12.27
+      esbuild: 0.12.28
       execa: 5.1.1
       fastify: 3.21.0
       graphql: 15.5.3
@@ -1746,6 +1746,7 @@ packages:
 
   /@emotion/is-prop-valid/0.8.8:
     resolution: {integrity: sha512-u5WtneEAr5IDG2Wv65yhunPSMLIpuKsbuOktRojfrEiEvRyC85LgPMZI63cr7NUqT8ZIGdSVg8ZKGxIug4lXcA==}
+    requiresBuild: true
     dependencies:
       '@emotion/memoize': 0.7.4
     dev: false
@@ -2792,6 +2793,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -2800,6 +2802,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -2808,6 +2811,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -2816,6 +2820,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -3795,7 +3800,7 @@ packages:
       rollup: 2.56.3
     dev: true
 
-  /bob-ts/1.0.6_bc1e8283700cc172a6682d653b4622c0:
+  /bob-ts/1.0.6_8e734d9076a29db464efeb45429f0bff:
     resolution: {integrity: sha512-CcgS1A1qWCzdOr+XxaVCLVCfG4N7boPunCaeSPCqOHeaO7ssr6V7+O6apKnEHNc9kb4NXKaI8jNCXXGcpHPDcA==}
     engines: {node: ^12.20.0 || >=14.13.0}
     hasBin: true
@@ -3806,7 +3811,7 @@ packages:
       '@types/node': 16.9.1
       bob-esbuild-plugin: 1.0.0_@types+node@16.9.1+rollup@2.56.3
       commander: 8.2.0
-      esbuild: 0.12.27
+      esbuild: 0.12.28
       execa: 5.1.1
       globby: 12.0.2
       rollup: 2.56.3
@@ -4929,6 +4934,12 @@ packages:
     requiresBuild: true
     dev: true
 
+  /esbuild/0.12.28:
+    resolution: {integrity: sha512-pZ0FrWZXlvQOATlp14lRSk1N9GkeJ3vLIwOcUoo3ICQn9WNR4rWoNi81pbn6sC1iYUy7QPqNzI3+AEzokwyVcA==}
+    hasBin: true
+    requiresBuild: true
+    dev: true
+
   /escalade/3.1.1:
     resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
     engines: {node: '>=6'}
@@ -5427,6 +5438,7 @@ packages:
     resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
+    requiresBuild: true
     optional: true
 
   /ftp/0.3.10:
@@ -7548,6 +7560,7 @@ packages:
 
   /pm2-sysmonit/1.2.8:
     resolution: {integrity: sha512-ACOhlONEXdCTVwKieBIQLSi2tQZ8eKinhcr9JpZSUAL8Qy0ajIgRtsLxG/lwPOW3JEKqPyw/UaHmTWhUzpP4kA==}
+    requiresBuild: true
     dependencies:
       async: 3.2.1
       debug: 4.3.2
