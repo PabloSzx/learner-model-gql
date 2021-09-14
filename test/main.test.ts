@@ -13,7 +13,7 @@ import {
   CheckProjectFromDomainAndTopic,
   CheckProjectFromUser,
 } from "../packages/services/projects/test/test";
-import { CheckUsers } from "../packages/services/users/test/test";
+import { CheckGroups, CheckUsers } from "../packages/services/users/test/test";
 import {
   expectDeepEqual,
   GetTestClient,
@@ -184,6 +184,12 @@ describe("gateway", () => {
       const { GatewayClient } = await TestStitchedSchema();
 
       await CheckUsers(GatewayClient);
+    });
+
+    it("groups", async () => {
+      const { GatewayClient } = await TestStitchedSchema();
+
+      await CheckGroups(GatewayClient);
     });
   });
 });

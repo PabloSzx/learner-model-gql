@@ -84,14 +84,18 @@ query GetGroups($ids: [IntID!]!) {
   }
 }
 
+fragment UserGroupsInfo on User {
+  id
+  email
+  groups {
+    ...GroupInfo
+  }
+}
+
 mutation SetUserGroups($userIds: [IntID!]!, $groupIds: [IntID!]!) {
   adminUsers {
     setUserGroups(userIds: $userIds, groupIds: $groupIds) {
-      id
-      email
-      groups {
-        ...GroupInfo
-      }
+      ...UserGroupsInfo
     }
   }
 }
@@ -109,5 +113,11 @@ mutation AdminUpdateGroup($data: UpdateGroupInput!) {
     updateGroup(data: $data) {
       ...GroupInfo
     }
+  }
+}
+
+query UsersGroups($ids: [IntID!]!) {
+  users(ids: $ids) {
+    ...UserGroupsInfo
   }
 }

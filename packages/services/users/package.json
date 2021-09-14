@@ -6,7 +6,7 @@
     "dev:service": "cross-env NODE_ENV=development bob-ts-watch -c \"node dist/src/index.mjs\"",
     "prepack": "bob-ts",
     "test": "bob-ts && c8 mocha",
-    "test:watch": "bob-ts-watch -c \"mocha\""
+    "test:watch": "bob-ts-watch -c \"c8 mocha\""
   },
   "dependencies": {
     "api-base": "workspace:^0.0.1",
