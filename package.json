@@ -35,7 +35,7 @@
     "@types/node": "^16.9.1",
     "@types/prettier": "^2.3.2",
     "@types/randomstring": "^1.1.7",
-    "@types/react": "^17.0.20",
+    "@types/react": "^17.0.21",
     "api-base": "workspace:^0.0.1",
     "bob-ts": "^1.0.6",
     "c8": "^7.9.0",
