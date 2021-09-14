@@ -7,7 +7,8 @@
     "prepack": "bob-ts",
     "pretest": "bob-ts",
     "test": "c8 mocha",
-    "test:watch": "bob-ts-watch -c \"mocha\""
+    "test:watch": "bob-ts-watch -c \"mocha\"",
+    "start": "node dist/src/index.mjs"
   },
   "dependencies": {
     "api-base": "workspace:^0.0.1",

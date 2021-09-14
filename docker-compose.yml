@@ -1,14 +1,18 @@
 version: "3.7"
-
 services:
-  testing-db:
-    image: postgres:13.4-alpine
+  dev:
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: .
+    image: pabloszx/learner-model-gql
     ports:
-      - 5789:5432
-    restart: "no"
+      - 3002:3002
+      - 3003:3003
+      - 3004:3004
+      - 3005:3005
+      - 3006:3006
+      - 3007:3007
+      - 8080:8080
     environment:
-      POSTGRES_PASSWORD: postgres
-    volumes:
-      - test-learner-model-gql:/var/lib/postgresql/data
-volumes:
-  test-learner-model-gql:
+      DATABASE_URL: ${DATABASE_URL}

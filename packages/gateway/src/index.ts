@@ -18,7 +18,7 @@ async function main() {
     resources: ["tcp:8080"],
     timeout: 5000,
   });
-  await app.listen(8080);
+  await app.listen(8080, "0.0.0.0");
 }
 
 type PubSubData = { [k in keyof Subscription]: Pick<Subscription, k> };

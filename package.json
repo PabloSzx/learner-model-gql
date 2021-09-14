@@ -23,7 +23,6 @@
     "prepack": "pnpm -r prepack",
     "pretty": "pretty-quick",
     "pretty:all": "prettier --write \"**/*.{ts,tsx,gql,json}\"",
-    "start": "pm2 start ecosystem.config.js",
     "test": "bob-ts -i packages -i test && c8 mocha",
     "test:watch": "concurrently -r pnpm:test:watch:cmd \"pnpm dev -r\"",
     "test:watch:cmd": "bob-ts-watch -i packages -i test -c \"mocha\""
@@ -52,7 +51,6 @@
     "husky": "^7.0.2",
     "json5": "^2.2.0",
     "mocha": "^9.1.1",
-    "pm2": "^5.1.1",
     "prettier": "^2.4.0",
     "pretty-quick": "^3.1.1",
     "randomstring": "^1.2.1",

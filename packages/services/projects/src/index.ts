@@ -27,7 +27,7 @@ app.ready(async (err) => {
     timeout: 5000,
   });
 
-  await app.listen(baseServicesList.projects);
+  await app.listen(baseServicesList.projects, "0.0.0.0");
 
   pubSub.publish("updateGateway", "projects");
 });

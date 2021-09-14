@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  testing-db:
+    image: postgres:13.4-alpine
+    ports:
+      - 5789:5432
+    restart: "no"
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - test-learner-model-gql:/var/lib/postgresql/data
+volumes:
+  test-learner-model-gql:

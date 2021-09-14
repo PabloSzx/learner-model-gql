@@ -1,9 +1,17 @@
 import { command } from "execa";
+import { dirname, resolve } from "path";
 import { generate } from "randomstring";
+import { fileURLToPath } from "url";
 
-await command("docker-compose up -d");
+const testDir = resolve(dirname(fileURLToPath(import.meta.url)), "./test");
 
-await command("docker-compose logs");
+await command("docker-compose up -d", {
+  cwd: testDir,
+});
+
+await command("docker-compose logs", {
+  cwd: testDir,
+});
 
 const DATABASE_URL =
   (process.env.DATABASE_URL = `postgresql://postgres:postgres@localhost:5789/${generate(
