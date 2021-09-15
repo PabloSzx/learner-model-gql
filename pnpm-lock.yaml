@@ -191,7 +191,7 @@ importers:
       '@graphql-tools/wrap': ^8.1.0
       '@types/concurrently': ^6.2.1
       '@types/content-type': ^1.1.5
-      '@types/lodash': ^4.14.172
+      '@types/lodash': ^4.14.173
       '@types/ms': ^0.7.31
       '@types/wait-on': ^5.3.1
       api-base: workspace:^0.0.1
@@ -233,7 +233,7 @@ importers:
     devDependencies:
       '@types/concurrently': 6.2.1
       '@types/content-type': 1.1.5
-      '@types/lodash': 4.14.172
+      '@types/lodash': 4.14.173
       '@types/wait-on': 5.3.1
 
   packages/react-graphql:
@@ -3138,6 +3138,11 @@ packages:
 
   /@types/lodash/4.14.172:
     resolution: {integrity: sha512-/BHF5HAx3em7/KkzVKm3LrsD6HZAXuXO1AJZQ3cRRBZj4oHZDviWPYu0aEplAqDFNHZPW6d3G7KN+ONcCCC7pw==}
+    dev: false
+
+  /@types/lodash/4.14.173:
+    resolution: {integrity: sha512-vv0CAYoaEjCw/mLy96GBTnRoZrSxkGE0BKzKimdR8P3OzrNYNvBgtW7p055A+E8C31vXNUhWKoFCbhq7gbyhFg==}
+    dev: true
 
   /@types/minimatch/3.0.5:
     resolution: {integrity: sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==}
