@@ -29,7 +29,7 @@
     "common": "workspace:^0.0.1",
     "concurrently": "^6.2.1",
     "graphql": "^15.5.3",
-    "prettier": "^2.4.0",
+    "prettier": "^2.4.1",
     "react-query": "^3.23.2"
   }
 }
