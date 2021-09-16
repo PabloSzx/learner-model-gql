@@ -27,7 +27,7 @@
     "db": "workspace:^0.0.1",
     "fastify-auth0-verify": "^0.5.2",
     "fastify-plugin": "^3.0.0",
-    "pg-gql-pubsub": "^0.2.0",
+    "pg-gql-pubsub": "^0.3.0",
     "pino": "^6.13.2",
     "pino-pretty": "^7.0.0",
     "validator": "^13.6.0"

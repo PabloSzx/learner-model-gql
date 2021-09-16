@@ -92,7 +92,7 @@ importers:
       db: workspace:^0.0.1
       fastify-auth0-verify: ^0.5.2
       fastify-plugin: ^3.0.0
-      pg-gql-pubsub: ^0.2.0
+      pg-gql-pubsub: ^0.3.0
       pino: ^6.13.2
       pino-pretty: ^7.0.0
       validator: ^13.6.0
@@ -110,7 +110,7 @@ importers:
       db: link:../db
       fastify-auth0-verify: 0.5.2
       fastify-plugin: 3.0.0
-      pg-gql-pubsub: 0.2.0_d3519dc9a0071c199aaddbc626174dae
+      pg-gql-pubsub: 0.3.0
       pino: 6.13.2
       pino-pretty: 7.0.0
       validator: 13.6.0
@@ -192,7 +192,6 @@ importers:
       '@types/concurrently': ^6.2.1
       '@types/content-type': ^1.1.5
       '@types/lodash': ^4.14.173
-      '@types/ms': ^0.7.31
       '@types/wait-on': ^5.3.1
       api-base: workspace:^0.0.1
       concurrently: ^6.2.1
@@ -204,7 +203,7 @@ importers:
       graphql: ^15.5.3
       graphql-ez: ^0.13.0
       lodash: ^4.17.21
-      ms: ^2.1.3
+      ms: ^3.0.0-canary.1
       undici: ^4.6.0
       wait-on: ^6.0.0
     dependencies:
@@ -216,7 +215,6 @@ importers:
       '@graphql-tools/stitch': 8.3.1_graphql@15.5.3
       '@graphql-tools/utils': 8.2.2_graphql@15.5.3
       '@graphql-tools/wrap': 8.1.0_graphql@15.5.3
-      '@types/ms': 0.7.31
       api-base: link:../api-base
       concurrently: 6.2.1
       content-type: 1.0.4
@@ -227,7 +225,7 @@ importers:
       graphql: 15.5.3
       graphql-ez: 0.13.0_d3519dc9a0071c199aaddbc626174dae
       lodash: 4.17.21
-      ms: 2.1.3
+      ms: 3.0.0-canary.1
       undici: 4.6.0
       wait-on: 6.0.0
     devDependencies:
@@ -3151,10 +3149,6 @@ packages:
   /@types/mocha/9.0.0:
     resolution: {integrity: sha512-scN0hAWyLVAvLR9AyW7HoFF5sJZglyBsbPuHO4fv7JRvfmPBMfp1ozWqOf/e4wwPNxezBZXRfWzMb6iFLgEVRA==}
     dev: true
-
-  /@types/ms/0.7.31:
-    resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
-    dev: false
 
   /@types/node/16.9.1:
     resolution: {integrity: sha512-QpLcX9ZSsq3YYUUnD3nFDY8H7wctAhQj/TFKL8Ya8v5fMm3CFXxo8zStsLAl780ltoYoo1WvKUVGBQK+1ifr7g==}
@@ -6453,6 +6447,11 @@ packages:
   /ms/2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
+  /ms/3.0.0-canary.1:
+    resolution: {integrity: sha512-kh8ARjh8rMN7Du2igDRO9QJnqCb2xYTJxyQYK7vJJS4TvLLmsbyhiKpSW+t+y26gyOyMd0riphX0GeWKU3ky5g==}
+    engines: {node: '>=12.13'}
+    dev: false
+
   /multimatch/4.0.0:
     resolution: {integrity: sha512-lDmx79y1z6i7RNx0ZGCPq1bzJ6ZoDDKbvh7jxr9SJcWLkShMzXrHbYVpTdnhNM5MXpDUxCQ4DgqVttVXlBgiBQ==}
     engines: {node: '>=8'}
@@ -6934,14 +6933,11 @@ packages:
     engines: {node: '>=4.0'}
     dev: false
 
-  /pg-gql-pubsub/0.2.0_d3519dc9a0071c199aaddbc626174dae:
-    resolution: {integrity: sha512-7lE3n1IH9yaDo0FTgH0kuxAz4jarer2gD2afLoRdVELxYY5uqu7kPSriEyWevXxyNIJe5gZaAvzYqud3MD4gsA==}
+  /pg-gql-pubsub/0.3.0:
+    resolution: {integrity: sha512-Sui2pnD6Ha9x8UBaBmkJCWCxc/vnXl95Qi5ERNK5xI5hjcmE9Y9ctPsunfk7ZuPx42cLcSxW5d4lhf6PoMg+mA==}
     dependencies:
-      '@graphql-ez/utils': 0.1.2_d3519dc9a0071c199aaddbc626174dae
       '@imqueue/pg-pubsub': 1.5.2
     transitivePeerDependencies:
-      - '@types/node'
-      - graphql
       - pg-native
     dev: false
 
