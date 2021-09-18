@@ -39,7 +39,7 @@ importers:
       rimraf: ^3.0.2
       testing: workspace:*
       typescript: ^4.4.3
-      valtio: ^1.2.2
+      valtio: ^1.2.3
       wait-on: ^6.0.0
     devDependencies:
       '@graphql-ez/fastify': 0.9.4_e4a105108751326b6754afe1531a91c3
@@ -72,7 +72,7 @@ importers:
       rimraf: 3.0.2
       testing: link:packages/testing
       typescript: 4.4.3
-      valtio: 1.2.2_react@17.0.2
+      valtio: 1.2.3_react@17.0.2
       wait-on: 6.0.0
 
   packages/api-base:
@@ -8618,8 +8618,9 @@ packages:
     engines: {node: '>= 0.10'}
     dev: false
 
-  /valtio/1.2.2_react@17.0.2:
-    resolution: {integrity: sha512-r0gJjtJanckdn1uFwJWedlMor5wj9kqzv7aajMQL4Im6ZVhcjZC4DwNoEAznZO9WF9cgiWlhotB2n3o1Z7ntog==}
+  /valtio/1.2.3_react@17.0.2:
+    resolution: {integrity: sha512-ci74EjmFwSoF4jLugz3I0BmSAK9S0+splzikIDdKuixPBkAFt+ez4KNKLiS6kihGe6L0vTyEgm/oDutXrPlKpA==}
+    engines: {node: '>=12'}
     peerDependencies:
       '@babel/helper-module-imports': '>=7.12'
       '@babel/types': '>=7.13'
