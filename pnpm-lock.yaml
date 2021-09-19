@@ -247,7 +247,7 @@ importers:
       concurrently: ^6.2.1
       graphql: ^15.5.3
       prettier: ^2.4.1
-      react-query: ^3.24.1
+      react-query: ^3.24.2
     devDependencies:
       '@graphql-codegen/cli': 2.2.0_51905b7b230095b2294ce56a5d97dd26
       '@graphql-codegen/core': 2.1.0_graphql@15.5.3
@@ -260,7 +260,7 @@ importers:
       concurrently: 6.2.1
       graphql: 15.5.3
       prettier: 2.4.1
-      react-query: 3.24.1_react@17.0.2
+      react-query: 3.24.2_react@17.0.2
 
   packages/services/actions:
     specifiers:
@@ -7364,8 +7364,8 @@ packages:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
     dev: false
 
-  /react-query/3.24.1_react@17.0.2:
-    resolution: {integrity: sha512-NQQBJnbdKel6eCWLgkci7WJJ6hO1cSi5ogK5b474MTFrY3lIMb7SL1WOj172t3sqvnDVe9fJFAEiYVx4qoUIaA==}
+  /react-query/3.24.2_react@17.0.2:
+    resolution: {integrity: sha512-rsM9PP/c/pDlaMB9Z7KQPzYgbWwDiVZuz0hiYACzBp4+LLNPynIZAqxfSswen033Rl0CSBpm6yQ6IDD2OL6l+A==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0
       react-dom: '*'
