@@ -77,7 +77,7 @@ importers:
 
   packages/api-base:
     specifiers:
-      '@auth0/auth0-react': ^1.7.0
+      '@auth0/auth0-react': ^1.8.0
       '@graphql-ez/fastify': ^0.9.4
       '@graphql-ez/plugin-altair': ^0.9.1
       '@graphql-ez/plugin-codegen': ^0.7.3
@@ -97,7 +97,7 @@ importers:
       pino-pretty: ^7.0.1
       validator: ^13.6.0
     dependencies:
-      '@auth0/auth0-react': 1.7.0_react@17.0.2
+      '@auth0/auth0-react': 1.8.0_react@17.0.2
       '@graphql-ez/fastify': 0.9.4_f85cbde119a8725b691b681ecbd89bad
       '@graphql-ez/plugin-altair': 0.9.1_99f7afe173312bf9f69bfeaef119fe47
       '@graphql-ez/plugin-codegen': 0.7.3_99f7afe173312bf9f69bfeaef119fe47
@@ -120,7 +120,7 @@ importers:
 
   packages/client-nextjs:
     specifiers:
-      '@auth0/auth0-react': ^1.7.0
+      '@auth0/auth0-react': ^1.8.0
       '@chakra-ui/react': ^1.6.8
       '@chakra-ui/system': ^1.7.3
       '@emotion/react': ^11.4.1
@@ -135,7 +135,7 @@ importers:
       react-icons: ^4.2.0
       typescript: ^4.4.3
     dependencies:
-      '@auth0/auth0-react': 1.7.0_react-dom@17.0.2+react@17.0.2
+      '@auth0/auth0-react': 1.8.0_react-dom@17.0.2+react@17.0.2
       '@chakra-ui/react': 1.6.8_3a3cad6e6afe74ebae0966f40538c4c9
       '@chakra-ui/system': 1.7.3_2305e84770652125202aaa4817ae97a9
       '@emotion/react': 11.4.1_4726f45725de6dc318b8ee59ad7f5865
@@ -350,29 +350,29 @@ packages:
     resolution: {integrity: sha512-mcpz/wJ7s50PJIVz4OQ1Yim3w/AAchtYtIg0QMWiMR2cZZoI9t23hRyqeumtD5EmyJu0fxtjmQ5WY8GI86V4rQ==}
     dev: true
 
-  /@auth0/auth0-react/1.7.0_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-D0JVqt8kvB8t+KkYAVyfTXxkMx0bJBTPNiQKWbiSwy9rm1PNVKgbS1/ABpf6DNbPeSdpOzVOQp0NVw5s6JivXw==}
+  /@auth0/auth0-react/1.8.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-tlrabVy4mB07Jbw41S2Ze2a7eGLyL32xs5OURGHXrCCxPXOYpBMeV9FdPssIK6vbAVRiUgwoeiemFAGhLRLZ0w==}
     peerDependencies:
       react: ^16.11.0 || ^17
       react-dom: ^16.11.0 || ^17
     dependencies:
-      '@auth0/auth0-spa-js': 1.17.1
+      '@auth0/auth0-spa-js': 1.18.0
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     dev: false
 
-  /@auth0/auth0-react/1.7.0_react@17.0.2:
-    resolution: {integrity: sha512-D0JVqt8kvB8t+KkYAVyfTXxkMx0bJBTPNiQKWbiSwy9rm1PNVKgbS1/ABpf6DNbPeSdpOzVOQp0NVw5s6JivXw==}
+  /@auth0/auth0-react/1.8.0_react@17.0.2:
+    resolution: {integrity: sha512-tlrabVy4mB07Jbw41S2Ze2a7eGLyL32xs5OURGHXrCCxPXOYpBMeV9FdPssIK6vbAVRiUgwoeiemFAGhLRLZ0w==}
     peerDependencies:
       react: ^16.11.0 || ^17
       react-dom: ^16.11.0 || ^17
     dependencies:
-      '@auth0/auth0-spa-js': 1.17.1
+      '@auth0/auth0-spa-js': 1.18.0
       react: 17.0.2
     dev: false
 
-  /@auth0/auth0-spa-js/1.17.1:
-    resolution: {integrity: sha512-1XfySBfqZnqrWeaCROZ2IMLD+8rQ9TlfttLv0utS91d4rjIKX1g/zTcLYqP68QnqKKGHaMOIee/eQJLnk/o+ow==}
+  /@auth0/auth0-spa-js/1.18.0:
+    resolution: {integrity: sha512-Z8ZIzrZJKBHa3yFY/vRJYqg9CbLPwb2sRnouBdfPj8Pas08fwig63mfJKaTusIJC3gQ8xCIwfw4QFo83wpmFkg==}
     dependencies:
       abortcontroller-polyfill: 1.7.3
       browser-tabs-lock: 1.2.15
