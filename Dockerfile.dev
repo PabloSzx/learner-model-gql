@@ -1,10 +1,10 @@
 FROM quay.io/bitnami/node:16-prod
 
-RUN npm install -g pnpm@latest
-
 WORKDIR /home/learner-model-gql
 
 COPY pnpm-lock.yaml ./
+
+RUN npm install -g pnpm@latest
 
 RUN pnpm fetch
 
@@ -22,7 +22,7 @@ ENV CI="true"
 
 RUN pnpm i
 
-RUN pnpm -r prepack
+RUN pnpm -r prepare
 
 RUN pnpm generate
 
