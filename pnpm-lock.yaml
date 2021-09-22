@@ -231,7 +231,7 @@ importers:
       '@graphql-ez/plugin-voyager': ^0.9.0
       '@graphql-tools/delegate': ^8.2.1
       '@graphql-tools/stitch': ^8.3.1
-      '@graphql-tools/utils': ^8.2.2
+      '@graphql-tools/utils': ^8.2.3
       '@graphql-tools/wrap': ^8.1.1
       '@types/concurrently': ^6.2.1
       '@types/content-type': ^1.1.5
@@ -257,7 +257,7 @@ importers:
       '@graphql-ez/plugin-voyager': 0.9.0_af18ee91127463319bf0730d93422af5
       '@graphql-tools/delegate': 8.2.1_graphql@15.6.0
       '@graphql-tools/stitch': 8.3.1_graphql@15.6.0
-      '@graphql-tools/utils': 8.2.2_graphql@15.6.0
+      '@graphql-tools/utils': 8.2.3_graphql@15.6.0
       '@graphql-tools/wrap': 8.1.1_graphql@15.6.0
       api-base: link:../api-base
       concurrently: 6.2.1
@@ -2727,6 +2727,15 @@ packages:
     dependencies:
       graphql: 15.6.0
       tslib: 2.3.1
+
+  /@graphql-tools/utils/8.2.3_graphql@15.6.0:
+    resolution: {integrity: sha512-RR+aiusf2gIfnPmrDIH1uA45QuPiHB54RD+BmWyMcl88tWAjeJtqZeWPqUTq/1EXrNeocJAJQqogHV4Fbbzx3A==}
+    peerDependencies:
+      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
+    dependencies:
+      graphql: 15.6.0
+      tslib: 2.3.1
+    dev: false
 
   /@graphql-tools/wrap/7.0.8_graphql@15.6.0:
     resolution: {integrity: sha512-1NDUymworsOlb53Qfh7fonDi2STvqCtbeE68ntKY9K/Ju/be2ZNxrFSbrBHwnxWcN9PjISNnLcAyJ1L5tCUyhg==}
