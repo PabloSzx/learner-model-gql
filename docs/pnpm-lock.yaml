@@ -13,10 +13,10 @@ importers:
       open-cli: ^7.0.1
       react: ^17.0.2
       react-dom: ^17.0.2
-      typescript: ^4.4.2
+      typescript: ^4.4.3
       wait-on: ^6.0.0
     dependencies:
-      next: 11.1.2_01b6e46c81e6fda6a6d233df547d9171
+      next: 11.1.2_bd7797d63db473de6e2318609a63c933
       nextra: 1.1.0_react@17.0.2
       nextra-theme-docs: 1.2.6_19768113098b79ed09a8e70eda15ae30
       react: 17.0.2
@@ -26,7 +26,7 @@ importers:
       '@types/react': 17.0.24
       concurrently: 6.2.1
       open-cli: 7.0.1
-      typescript: 4.4.2
+      typescript: 4.4.3
       wait-on: 6.0.0
 
 packages:
@@ -2627,12 +2627,12 @@ packages:
       react: ^16.13.1
       react-dom: ^16.13.1
     dependencies:
-      next: 11.1.2_01b6e46c81e6fda6a6d233df547d9171
+      next: 11.1.2_bd7797d63db473de6e2318609a63c933
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     dev: false
 
-  /next/11.1.2_01b6e46c81e6fda6a6d233df547d9171:
+  /next/11.1.2_bd7797d63db473de6e2318609a63c933:
     resolution: {integrity: sha512-azEYL0L+wFjv8lstLru3bgvrzPvK0P7/bz6B/4EJ9sYkXeW8r5Bjh78D/Ol7VOg0EIPz0CXoe72hzAlSAXo9hw==}
     engines: {node: '>=12.0.0'}
     hasBin: true
@@ -2683,7 +2683,7 @@ packages:
       os-browserify: 0.3.0
       p-limit: 3.1.0
       path-browserify: 1.0.1
-      pnp-webpack-plugin: 1.6.4_typescript@4.4.2
+      pnp-webpack-plugin: 1.6.4_typescript@4.4.3
       postcss: 8.2.15
       process: 0.11.10
       querystring-es3: 0.2.1
@@ -2728,7 +2728,7 @@ packages:
       grapheme-splitter: 1.0.4
       intersection-observer: 0.12.0
       match-sorter: 4.2.1
-      next: 11.1.2_01b6e46c81e6fda6a6d233df547d9171
+      next: 11.1.2_bd7797d63db473de6e2318609a63c933
       next-themes: 0.0.8_6fbf59523517da779df50d355b375324
       parse-git-url: 1.0.1
       prism-react-renderer: 1.2.1_react@17.0.2
@@ -3111,11 +3111,11 @@ packages:
     resolution: {integrity: sha512-fnWVljUchTro6RiCFvCXBbNhJc2NijN7oIQxbwsyL0buWJPG85v81ehlHI9fXrJsMNgTofEoWIQeClKpgxFLrg==}
     dev: false
 
-  /pnp-webpack-plugin/1.6.4_typescript@4.4.2:
+  /pnp-webpack-plugin/1.6.4_typescript@4.4.3:
     resolution: {integrity: sha512-7Wjy+9E3WwLOEL30D+m8TSTF7qJJUJLONBnwQp0518siuMxUQUbgZwssaFX+QKlZkjHZcw/IpZCt/H0srrntSg==}
     engines: {node: '>=6'}
     dependencies:
-      ts-pnp: 1.2.0_typescript@4.4.2
+      ts-pnp: 1.2.0_typescript@4.4.3
     transitivePeerDependencies:
       - typescript
     dev: false
@@ -4002,7 +4002,7 @@ packages:
     resolution: {integrity: sha512-rvuRbTarPXmMb79SmzEp8aqXNKcK+y0XaB298IXueQ8I2PsrATcPBCSPyK/dDNa2iWOhKlfNnOjdAOTBU/nkFA==}
     dev: false
 
-  /ts-pnp/1.2.0_typescript@4.4.2:
+  /ts-pnp/1.2.0_typescript@4.4.3:
     resolution: {integrity: sha512-csd+vJOb/gkzvcCHgTGSChYpy5f1/XKNsmvBGO4JXS+z1v2HobugDz4s1IeFXM3wZB44uczs+eazB5Q/ccdhQw==}
     engines: {node: '>=6'}
     peerDependencies:
@@ -4011,7 +4011,7 @@ packages:
       typescript:
         optional: true
     dependencies:
-      typescript: 4.4.2
+      typescript: 4.4.3
     dev: false
 
   /tslib/1.14.1:
@@ -4054,8 +4054,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /typescript/4.4.2:
-    resolution: {integrity: sha512-gzP+t5W4hdy4c+68bfcv0t400HVJMMd2+H9B7gae1nQlBzCqvrXX+6GL/b3GAgyTH966pzrZ70/fRjwAtZksSQ==}
+  /typescript/4.4.3:
+    resolution: {integrity: sha512-4xfscpisVgqqDfPaJo5vkd+Qd/ItkoagnHpufr+i2QCHBsNYp+G7UAoyFl8aPtx879u38wPV65rZ8qbGZijalA==}
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true
