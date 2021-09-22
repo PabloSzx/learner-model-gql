@@ -248,7 +248,7 @@ importers:
       graphql-ez: ^0.13.1
       lodash: ^4.17.21
       ms: ^3.0.0-canary.1
-      undici: ^4.6.0
+      undici: ^4.7.0
       wait-on: ^6.0.0
     dependencies:
       '@graphql-ez/fastify': 0.9.4_97739919331e8bbb80cb58cff56606ef
@@ -270,7 +270,7 @@ importers:
       graphql-ez: 0.13.1_c85b5f95e7937b8b8c51e0f5f9a73f6f
       lodash: 4.17.21
       ms: 3.0.0-canary.1
-      undici: 4.6.0
+      undici: 4.7.0
       wait-on: 6.0.0
     devDependencies:
       '@types/concurrently': 6.2.1
@@ -8572,6 +8572,12 @@ packages:
   /undici/4.6.0:
     resolution: {integrity: sha512-KjpmnKG8+WfmRlY5X3mEVASUdhxzdy4KdHFXDw+kChco8XaXAttBcPZDCJ8YlC/2WihWx+LYpF+pCJUhN71Ffg==}
     engines: {node: '>=12.18'}
+    dev: true
+
+  /undici/4.7.0:
+    resolution: {integrity: sha512-O1q+/EIs4g0HnVMH8colei3qODGiYBLpavWYv3kI+JazBBsBIndnZfUqZ2MEfPJ12H9d56yVdwZG1/nV/xcoSQ==}
+    engines: {node: '>=12.18'}
+    dev: false
 
   /unfetch/4.2.0:
     resolution: {integrity: sha512-F9p7yYCn6cIW9El1zi0HI6vqpeIvBsr3dSuRO6Xuppb1u5rXpCPmMvLSyECLhybr9isec8Ohl0hPekMVrEinDA==}
