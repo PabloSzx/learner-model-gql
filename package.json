@@ -44,7 +44,7 @@
     "concurrently": "^6.2.1",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
-    "esbuild": "^0.12.28",
+    "esbuild": "^0.12.29",
     "execa": "^5.1.1",
     "fastify": "^3.21.3",
     "graphql": "^15.6.0",
