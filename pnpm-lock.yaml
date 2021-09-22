@@ -20,7 +20,7 @@ importers:
       '@types/randomstring': ^1.1.7
       '@types/react': ^17.0.24
       api-base: workspace:^0.0.1
-      bob-ts: ^1.1.0
+      bob-ts: ^1.1.1
       c8: ^7.9.0
       common: workspace:^0.0.1
       concurrently: ^6.2.1
@@ -58,7 +58,7 @@ importers:
       '@types/randomstring': 1.1.7
       '@types/react': 17.0.24
       api-base: link:packages/api-base
-      bob-ts: 1.1.0_e4164beef9bfa15a1535d40419eb0241
+      bob-ts: 1.1.1_e4164beef9bfa15a1535d40419eb0241
       c8: 7.9.0
       common: link:packages/common
       concurrently: 6.2.1
@@ -3728,22 +3728,23 @@ packages:
     resolution: {integrity: sha512-D7iWRBvnZE8ecXiLj/9wbxH7Tk79fAh8IHaTNq1RWRixsS02W+5qS+iE9yq6RYl0asXx5tw0bLhmT5pIfbSquw==}
     dev: false
 
-  /bob-esbuild-plugin/1.0.0_@types+node@16.9.6+rollup@2.56.3:
-    resolution: {integrity: sha512-Mbp9xC/Fcfi6Fs4A8Q9e9toP63Bp3pMf+U8Q8BFwPQrPTQusvpQPVYdpkyzf4vEdR0beK0bF7vdOMi0WGumi/w==}
+  /bob-esbuild-plugin/2.0.0_6d98b951b5864a627c34fdac3819559d:
+    resolution: {integrity: sha512-dUhZeis0XDmLbg6F7XoPqglbMiYSTtHqj1SN3/NkqLjys4R4bTueuVuU94Ew5F2bPBCO1e6XNwkqAU/wNdlvyQ==}
     peerDependencies:
       '@types/node': '*'
+      esbuild: '*'
       rollup: '*'
     dependencies:
       '@rollup/pluginutils': 4.1.1
       '@types/node': 16.9.6
-      esbuild: 0.12.28
+      esbuild: 0.12.29
       joycon: 3.0.1
       jsonc-parser: 3.0.0
-      rollup: 2.56.3
+      rollup: 2.57.0
     dev: true
 
-  /bob-ts/1.1.0_e4164beef9bfa15a1535d40419eb0241:
-    resolution: {integrity: sha512-Vzt4KmheC8yDVHFquW2UiZoggGIoaDkQZPCNMXVimRv4JCWyXnBejhYQ4P/LnXOkEM4DshW+G9Z8dMhHdUrwIw==}
+  /bob-ts/1.1.1_e4164beef9bfa15a1535d40419eb0241:
+    resolution: {integrity: sha512-e7IdkvT3Jhk0p+Hiijc4m21vYtq3hlnk8fihyr2TCQm37t8QVSofdGn3AZ8eK+SGq3M0nxX1T0qG+OLwdnU9hA==}
     engines: {node: ^12.20.0 || >=14.13.0}
     hasBin: true
     peerDependencies:
@@ -3751,12 +3752,12 @@ packages:
       esbuild: '*'
     dependencies:
       '@types/node': 16.9.6
-      bob-esbuild-plugin: 1.0.0_@types+node@16.9.6+rollup@2.56.3
+      bob-esbuild-plugin: 2.0.0_6d98b951b5864a627c34fdac3819559d
       commander: 8.2.0
       esbuild: 0.12.29
       execa: 5.1.1
       globby: 12.0.2
-      rollup: 2.56.3
+      rollup: 2.57.0
       rollup-plugin-delete: 2.0.0
       tree-kill: 1.2.2
     dev: true
@@ -4805,12 +4806,6 @@ packages:
   /es6-object-assign/1.1.0:
     resolution: {integrity: sha1-wsNYJlYkfDnqEHyx5mUrb58kUjw=}
     dev: false
-
-  /esbuild/0.12.28:
-    resolution: {integrity: sha512-pZ0FrWZXlvQOATlp14lRSk1N9GkeJ3vLIwOcUoo3ICQn9WNR4rWoNi81pbn6sC1iYUy7QPqNzI3+AEzokwyVcA==}
-    hasBin: true
-    requiresBuild: true
-    dev: true
 
   /esbuild/0.12.29:
     resolution: {integrity: sha512-w/XuoBCSwepyiZtIRsKsetiLDUVGPVw1E/R3VTFSecIy8UR7Cq3SOtwKHJMFoVqqVG36aGkzh4e8BvpO1Fdc7g==}
@@ -7797,8 +7792,8 @@ packages:
       del: 5.1.0
     dev: true
 
-  /rollup/2.56.3:
-    resolution: {integrity: sha512-Au92NuznFklgQCUcV96iXlxUbHuB1vQMaH76DHl5M11TotjOHwqk9CwcrT78+Tnv4FN9uTBxq6p4EJoYkpyekg==}
+  /rollup/2.57.0:
+    resolution: {integrity: sha512-bKQIh1rWKofRee6mv8SrF2HdP6pea5QkwBZSMImJysFj39gQuiV8MEPBjXOCpzk3wSYp63M2v2wkWBmFC8O/rg==}
     engines: {node: '>=10.0.0'}
     hasBin: true
     optionalDependencies:
