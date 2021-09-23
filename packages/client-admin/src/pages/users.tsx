@@ -48,7 +48,7 @@ const UserCard = ({ user }: { user: User }) => {
       role,
       locked,
     });
-  }, [role, enabled]);
+  }, [role, locked]);
 
   const [userState, produceUserState] = useImmer(() => {
     return {
@@ -154,7 +154,7 @@ const UserCard = ({ user }: { user: User }) => {
           value={
             isEdit ? (
               <Switch
-                checked={userState.locked}
+                isChecked={userState.locked}
                 isDisabled={updateUserState.isLoading}
                 onChange={() => {
                   produceUserState((draft) => {
