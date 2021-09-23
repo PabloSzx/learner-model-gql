@@ -29,8 +29,18 @@ export default withAuth(function IndexPage() {
           },
         })
         .nodes.map((user) => {
-          const { __typename, id, email, name, active, lastOnline, createdAt } =
-            user;
+          const {
+            __typename,
+            id,
+            email,
+            name,
+            active,
+            lastOnline,
+            createdAt,
+            role,
+            enabled,
+            updatedAt,
+          } = user;
 
           if (!__typename) return null;
 
@@ -40,6 +50,7 @@ export default withAuth(function IndexPage() {
               <CardContent>
                 <Property label="ID" value={id} />
                 {name && <Property label="Nombre" value={name} />}
+                <Property label="Rol" value={role} />
                 <Property
                   label="Activo"
                   value={active ? <MdCheck /> : <MdClose />}
@@ -53,8 +64,16 @@ export default withAuth(function IndexPage() {
                   }
                 />
                 <Property
+                  label="Habilitado"
+                  value={enabled ? <MdCheck /> : <MdClose />}
+                />
+                <Property
                   label="Fecha de creación"
                   value={formatSpanish(new Date(createdAt!), "PPpp")}
+                />
+                <Property
+                  label="Fecha de última actualización"
+                  value={formatSpanish(new Date(updatedAt!), "PPpp")}
                 />
               </CardContent>
             </Card>

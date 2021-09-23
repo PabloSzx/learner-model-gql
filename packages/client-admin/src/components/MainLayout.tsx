@@ -1,12 +1,9 @@
 import { Box, Flex, useColorModeValue as mode } from "@chakra-ui/react";
-
+import type { ReactNode } from "react";
 import { MobileMenuButton } from "./MobileMenuButton";
 import { Navigation } from "./Navigation";
-import { SearchInput } from "./SearchInput";
 import { useMobileMenuState } from "./useMobileMenuState";
 import { UserInfo } from "./UserInfo";
-
-import type { ReactNode } from "react";
 
 export function MainLayout({ children }: { children: ReactNode }) {
   const { isOpen, toggle } = useMobileMenuState();
@@ -57,11 +54,11 @@ export function MainLayout({ children }: { children: ReactNode }) {
               justify="space-between"
               align="center"
               px="10"
+              display={{ base: "block", md: "none" }}
             >
               <Flex align="center" minH="8">
                 <MobileMenuButton onClick={toggle} isOpen={isOpen} />
               </Flex>
-              <SearchInput />
             </Flex>
             <Flex
               overflowY="auto"

@@ -134,12 +134,14 @@ importers:
       '@emotion/styled': ^11.3.0
       '@gqty/logger': ^2.0.0
       '@gqty/react': ^2.0.0
+      '@types/nprogress': ^0.2.0
       '@types/react': ^17.0.24
       '@types/react-dom': ^17.0.9
       date-fns: ^2.24.0
       framer-motion: ^4.1.17
       gqty: ^2.0.1
       next: ^11.1.2
+      nprogress: ^0.2.0
       react: ^17.0.2
       react-dom: ^17.0.2
       react-graphql: workspace:^0.0.1
@@ -159,11 +161,13 @@ importers:
       framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
       gqty: 2.0.1_graphql@15.6.0
       next: 11.1.2_bd7797d63db473de6e2318609a63c933
+      nprogress: 0.2.0
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-graphql: link:../react-graphql
       react-icons: 4.2.0_react@17.0.2
     devDependencies:
+      '@types/nprogress': 0.2.0
       typescript: 4.4.3
 
   packages/client-nextjs:
@@ -3284,6 +3288,10 @@ packages:
 
   /@types/normalize-package-data/2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
+
+  /@types/nprogress/0.2.0:
+    resolution: {integrity: sha512-1cYJrqq9GezNFPsWTZpFut/d4CjpZqA0vhqDUPFWYKF1oIyBz5qnoYMzR+0C/T96t3ebLAC1SSnwrVOm5/j74A==}
+    dev: true
 
   /@types/parse-json/4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
@@ -6952,6 +6960,10 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       path-key: 3.1.1
+
+  /nprogress/0.2.0:
+    resolution: {integrity: sha1-y480xTIT2JVyP8urkH6UIq28r7E=}
+    dev: false
 
   /nullthrows/1.1.1:
     resolution: {integrity: sha512-2vPPEi+Z7WqML2jZYddDIfy5Dqb0r2fze2zTxNNknZaFpVHU3mFB3R+DWeJWGVx0ecvttSGlJTI+WG+8Z4cDWw==}

@@ -1,12 +1,10 @@
-import { ReactQuery } from "react-graphql";
-
 import { Auth0Provider } from "@auth0/auth0-react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-
+import type { AppProps } from "next/app";
+import { ReactQuery } from "react-graphql";
 import { SyncAuth } from "../components/Auth";
 import { MainLayout } from "../components/MainLayout";
-
-import type { AppProps } from "next/app";
+import { NextNProgress } from "../components/NextNProgress";
 
 const theme = extendTheme({});
 
@@ -25,6 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <ReactQuery.QueryClientProvider client={reactQueryClient}>
           <SyncAuth />
           <ChakraProvider theme={theme}>
+            <NextNProgress color="#10b9cf" />
             <MainLayout>
               <Component {...pageProps} />
             </MainLayout>
