@@ -60,6 +60,12 @@ export interface UpsertUserInput {
   name?: Maybe<Scalars["String"]>;
 }
 
+export interface UpdateUserInput {
+  id: Scalars["IntID"];
+  role: UserRole;
+  locked: Scalars["Boolean"];
+}
+
 export interface CursorConnectionArgs {
   first?: Maybe<Scalars["NonNegativeInt"]>;
   after?: Maybe<Scalars["IntID"]>;
@@ -236,12 +242,18 @@ export const generatedSchema = {
     },
   },
   UpsertUserInput: { email: { __type: "String!" }, name: { __type: "String" } },
+  UpdateUserInput: {
+    id: { __type: "IntID!" },
+    role: { __type: "UserRole!" },
+    locked: { __type: "Boolean!" },
+  },
   AdminUserMutations: {
     __typename: { __type: "String!" },
     upsertUsers: {
       __type: "[User!]!",
       __args: { data: "[UpsertUserInput!]!" },
     },
+    updateUser: { __type: "User!", __args: { data: "UpdateUserInput!" } },
     setUserGroups: {
       __type: "[User!]!",
       __args: { userIds: "[IntID!]!", groupIds: "[IntID!]!" },
@@ -561,6 +573,7 @@ export interface AdminUserMutations {
    * Upsert specified users, if user with specified email already exists, updates it with the specified name
    */
   upsertUsers: (args: { data: Array<UpsertUserInput> }) => Array<User>;
+  updateUser: (args: { data: UpdateUserInput }) => User;
   setUserGroups: (args: {
     userIds: Array<Scalars["IntID"]>;
     groupIds: Array<Scalars["IntID"]>;

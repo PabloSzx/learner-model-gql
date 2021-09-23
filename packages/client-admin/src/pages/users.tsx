@@ -1,12 +1,186 @@
-import { HStack, Spinner } from "@chakra-ui/react";
 import { formatSpanish } from "common";
-import { MdCheck, MdClose } from "react-icons/md";
-import { withAuth } from "../components/Auth";
+import { useEffect, useState } from "react";
+import {
+  MdCheck,
+  MdClose,
+  MdEdit,
+  MdLock,
+  MdLockOpen,
+  MdSave,
+} from "react-icons/md";
+import { useImmer } from "use-immer";
+
+import {
+  HStack,
+  IconButton,
+  Select,
+  Spinner,
+  Switch,
+  useToast,
+} from "@chakra-ui/react";
+
+import { useAuth, withAuth } from "../components/Auth";
 import { Card } from "../components/Card/Card";
 import { CardContent } from "../components/Card/CardContent";
 import { CardHeader } from "../components/Card/CardHeader";
 import { Property } from "../components/Card/Property";
-import { useQuery } from "../gqty";
+import { useMutation, useQuery, User, UserRole } from "../gqty";
+
+const UserCard = ({ user }: { user: User }) => {
+  const {
+    __typename,
+    id,
+    email,
+    name,
+    active,
+    lastOnline,
+    createdAt,
+    role,
+    enabled,
+    updatedAt,
+    locked,
+  } = user;
+
+  const toast = useToast();
+
+  useEffect(() => {
+    produceUserState({
+      role,
+      locked,
+    });
+  }, [role, enabled]);
+
+  const [userState, produceUserState] = useImmer(() => {
+    return {
+      role,
+      locked,
+    };
+  });
+
+  const [updateUser, updateUserState] = useMutation(
+    (mutation) => {
+      return mutation.adminUsers.updateUser({
+        data: {
+          id,
+          role: userState.role!,
+          locked: userState.locked!,
+        },
+      }).__typename;
+    },
+    {
+      refetchQueries: [user],
+      awaitRefetchQueries: true,
+    }
+  );
+
+  const { user: authUser } = useAuth();
+
+  const [isEdit, setIsEdit] = useState(false);
+
+  if (!__typename) return null;
+
+  return (
+    <Card key={user.id} margin="0.5em !important">
+      <CardHeader
+        title={email!}
+        action={
+          <IconButton
+            aria-label="Edit"
+            isLoading={updateUserState.isLoading}
+            isDisabled={updateUserState.isLoading || authUser?.id === user.id}
+            onClick={() => {
+              if (
+                isEdit &&
+                (role !== userState.role || locked !== userState.locked)
+              ) {
+                updateUser()
+                  .then(() => {
+                    setIsEdit(false);
+                  })
+                  .catch((err) => {
+                    toast({
+                      status: "error",
+                      title: err.message,
+                    });
+                  });
+              } else {
+                setIsEdit((v) => !v);
+              }
+            }}
+            icon={isEdit ? <MdSave /> : <MdEdit />}
+          />
+        }
+      />
+      <CardContent>
+        <Property label="ID" value={id} />
+        {name && <Property label="Nombre" value={name} />}
+        <Property
+          label="Rol"
+          value={
+            isEdit ? (
+              <Select
+                value={userState.role}
+                onChange={(ev) => {
+                  produceUserState((draft) => {
+                    draft.role =
+                      ev.target.value === UserRole.ADMIN
+                        ? UserRole.ADMIN
+                        : UserRole.USER;
+                  });
+                }}
+                isDisabled={updateUserState.isLoading}
+              >
+                <option value={UserRole.ADMIN}>ADMIN</option>
+                <option value={UserRole.USER}>USER</option>
+              </Select>
+            ) : (
+              role
+            )
+          }
+        />
+        <Property label="Activo" value={active ? <MdCheck /> : <MdClose />} />
+        <Property
+          label="Última conexión"
+          value={
+            lastOnline ? formatSpanish(new Date(lastOnline), "PPpp") : "---"
+          }
+        />
+        <Property
+          label="Habilitado"
+          value={enabled ? <MdCheck /> : <MdClose />}
+        />
+        <Property
+          label="Bloqueado"
+          value={
+            isEdit ? (
+              <Switch
+                checked={userState.locked}
+                isDisabled={updateUserState.isLoading}
+                onChange={() => {
+                  produceUserState((draft) => {
+                    draft.locked = !draft.locked;
+                  });
+                }}
+              />
+            ) : locked ? (
+              <MdLock />
+            ) : (
+              <MdLockOpen />
+            )
+          }
+        />
+        <Property
+          label="Fecha de creación"
+          value={formatSpanish(new Date(createdAt!), "PPpp")}
+        />
+        <Property
+          label="Fecha de última actualización"
+          value={formatSpanish(new Date(updatedAt!), "PPpp")}
+        />
+      </CardContent>
+    </Card>
+  );
+};
 
 export default withAuth(function IndexPage() {
   const query = useQuery();
@@ -14,7 +188,6 @@ export default withAuth(function IndexPage() {
     <HStack
       wrap="wrap"
       width="100%"
-      Ø
       paddingX="1em"
       paddingY="0.2em"
       alignItems="flex-start"
@@ -29,55 +202,7 @@ export default withAuth(function IndexPage() {
           },
         })
         .nodes.map((user) => {
-          const {
-            __typename,
-            id,
-            email,
-            name,
-            active,
-            lastOnline,
-            createdAt,
-            role,
-            enabled,
-            updatedAt,
-          } = user;
-
-          if (!__typename) return null;
-
-          return (
-            <Card key={user.id} margin="0.5em">
-              <CardHeader title={email!} />
-              <CardContent>
-                <Property label="ID" value={id} />
-                {name && <Property label="Nombre" value={name} />}
-                <Property label="Rol" value={role} />
-                <Property
-                  label="Activo"
-                  value={active ? <MdCheck /> : <MdClose />}
-                />
-                <Property
-                  label="Última conexión"
-                  value={
-                    lastOnline
-                      ? formatSpanish(new Date(lastOnline), "PPpp")
-                      : "---"
-                  }
-                />
-                <Property
-                  label="Habilitado"
-                  value={enabled ? <MdCheck /> : <MdClose />}
-                />
-                <Property
-                  label="Fecha de creación"
-                  value={formatSpanish(new Date(createdAt!), "PPpp")}
-                />
-                <Property
-                  label="Fecha de última actualización"
-                  value={formatSpanish(new Date(updatedAt!), "PPpp")}
-                />
-              </CardContent>
-            </Card>
-          );
+          return <UserCard user={user} key={user.id || 0} />;
         })}
     </HStack>
   );

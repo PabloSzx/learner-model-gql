@@ -140,6 +140,7 @@ importers:
       date-fns: ^2.24.0
       framer-motion: ^4.1.17
       gqty: ^2.0.1
+      immer: ^9.0.6
       next: ^11.1.2
       nprogress: ^0.2.0
       react: ^17.0.2
@@ -147,6 +148,7 @@ importers:
       react-graphql: workspace:^0.0.1
       react-icons: ^4.2.0
       typescript: ^4.4.3
+      use-immer: ^0.6.0
     dependencies:
       '@auth0/auth0-react': 1.8.0_react-dom@17.0.2+react@17.0.2
       '@chakra-ui/react': 1.6.8_59921ceaa90c07ca44cf1bf1806f1044
@@ -160,12 +162,14 @@ importers:
       date-fns: 2.24.0
       framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
       gqty: 2.0.1_graphql@15.6.0
+      immer: 9.0.6
       next: 11.1.2_bd7797d63db473de6e2318609a63c933
       nprogress: 0.2.0
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-graphql: link:../react-graphql
       react-icons: 4.2.0_react@17.0.2
+      use-immer: 0.6.0_immer@9.0.6+react@17.0.2
     devDependencies:
       '@types/nprogress': 0.2.0
       typescript: 4.4.3
@@ -5862,6 +5866,10 @@ packages:
       queue: 6.0.2
     dev: false
 
+  /immer/9.0.6:
+    resolution: {integrity: sha512-G95ivKpy+EvVAnAab4fVa4YGYn24J1SpEktnJX7JJ45Bd7xqME/SCplFzYFmTbrkwZbQ4xJK1xMTUYBkN6pWsQ==}
+    dev: false
+
   /immutable/3.7.6:
     resolution: {integrity: sha1-E7TTyxK++hVIKib+Gy665kAHHks=}
     engines: {node: '>=0.8.0'}
@@ -8834,6 +8842,16 @@ packages:
         optional: true
     dependencies:
       '@types/react': 17.0.24
+      react: 17.0.2
+    dev: false
+
+  /use-immer/0.6.0_immer@9.0.6+react@17.0.2:
+    resolution: {integrity: sha512-dFGRfvWCqPDTOt/S431ETYTg6+uxbpb7A1pptufwXVzGJY3RlXr38+3wyLNpc6SbbmAKjWl6+EP6uW74fkEsXQ==}
+    peerDependencies:
+      immer: '>=2.0.0'
+      react: ^16.8.0 || ^17.0.1
+    dependencies:
+      immer: 9.0.6
       react: 17.0.2
     dev: false
 
