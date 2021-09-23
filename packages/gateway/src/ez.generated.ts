@@ -182,10 +182,17 @@ export type UpsertUserInput = {
   name?: Maybe<Scalars["String"]>;
 };
 
+export type UpdateUserInput = {
+  id: Scalars["IntID"];
+  role: UserRole;
+  locked: Scalars["Boolean"];
+};
+
 export type AdminUserMutations = {
   __typename?: "AdminUserMutations";
   /** Upsert specified users, if user with specified email already exists, updates it with the specified name */
   upsertUsers: Array<User>;
+  updateUser: User;
   setUserGroups: Array<User>;
   createGroup: Group;
   updateGroup: Group;
@@ -194,6 +201,10 @@ export type AdminUserMutations = {
 
 export type AdminUserMutationsUpsertUsersArgs = {
   data: Array<UpsertUserInput>;
+};
+
+export type AdminUserMutationsUpdateUserArgs = {
+  data: UpdateUserInput;
 };
 
 export type AdminUserMutationsSetUserGroupsArgs = {
@@ -621,6 +632,7 @@ export type ResolversTypes = {
   UsersConnection: ResolverTypeWrapper<UsersConnection>;
   AdminUserQueries: ResolverTypeWrapper<AdminUserQueries>;
   UpsertUserInput: UpsertUserInput;
+  UpdateUserInput: UpdateUserInput;
   AdminUserMutations: ResolverTypeWrapper<AdminUserMutations>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Node: never;
@@ -685,6 +697,7 @@ export type ResolversParentTypes = {
   UsersConnection: UsersConnection;
   AdminUserQueries: AdminUserQueries;
   UpsertUserInput: UpsertUserInput;
+  UpdateUserInput: UpdateUserInput;
   AdminUserMutations: AdminUserMutations;
   PageInfo: PageInfo;
   Node: never;
@@ -980,6 +993,12 @@ export type AdminUserMutationsResolvers<
     ParentType,
     ContextType,
     RequireFields<AdminUserMutationsUpsertUsersArgs, "data">
+  >;
+  updateUser?: Resolver<
+    ResolversTypes["User"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminUserMutationsUpdateUserArgs, "data">
   >;
   setUserGroups?: Resolver<
     Array<ResolversTypes["User"]>,

@@ -37,9 +37,17 @@ export const usersModule = registerModule(
       name: String
     }
 
+    input UpdateUserInput {
+      id: IntID!
+      role: UserRole!
+      locked: Boolean!
+    }
+
     type AdminUserMutations {
       "Upsert specified users, if user with specified email already exists, updates it with the specified name"
       upsertUsers(data: [UpsertUserInput!]!): [User!]!
+
+      updateUser(data: UpdateUserInput!): User!
     }
 
     extend type Query {
@@ -107,6 +115,14 @@ export const usersModule = registerModule(
               });
             })
           );
+        },
+        updateUser(_root, { data: { id, ...data } }, { prisma }) {
+          return prisma.user.update({
+            where: {
+              id,
+            },
+            data,
+          });
         },
       },
       AdminUserQueries: {

@@ -177,6 +177,7 @@ export type AdminUserMutations = {
   setProjectsToUsers: Array<User>;
   setUserGroups: Array<User>;
   updateGroup: Group;
+  updateUser: User;
   /** Upsert specified users, if user with specified email already exists, updates it with the specified name */
   upsertUsers: Array<User>;
 };
@@ -197,6 +198,10 @@ export type AdminUserMutationsSetUserGroupsArgs = {
 
 export type AdminUserMutationsUpdateGroupArgs = {
   data: UpdateGroupInput;
+};
+
+export type AdminUserMutationsUpdateUserArgs = {
+  data: UpdateUserInput;
 };
 
 export type AdminUserMutationsUpsertUsersArgs = {
@@ -452,6 +457,12 @@ export type UpdateTopic = {
   label: Scalars["String"];
   parentTopicId?: Maybe<Scalars["IntID"]>;
   projectId: Scalars["IntID"];
+};
+
+export type UpdateUserInput = {
+  id: Scalars["IntID"];
+  locked: Scalars["Boolean"];
+  role: UserRole;
 };
 
 export type UpsertUserInput = {

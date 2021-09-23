@@ -132,11 +132,18 @@ input UpsertUserInput {
   name: String
 }
 
+input UpdateUserInput {
+  id: IntID!
+  role: UserRole!
+  locked: Boolean!
+}
+
 type AdminUserMutations {
   """
   Upsert specified users, if user with specified email already exists, updates it with the specified name
   """
   upsertUsers(data: [UpsertUserInput!]!): [User!]!
+  updateUser(data: UpdateUserInput!): User!
   setUserGroups(userIds: [IntID!]!, groupIds: [IntID!]!): [User!]!
   createGroup(data: CreateGroupInput!): Group!
   updateGroup(data: UpdateGroupInput!): Group!
