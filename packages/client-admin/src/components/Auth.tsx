@@ -1,8 +1,9 @@
 import { useAuth0, User as Auth0User } from "@auth0/auth0-react";
-import { useEffect } from "react";
+import { Spinner } from "@chakra-ui/react";
+import Router from "next/router";
+import { FC, useEffect } from "react";
 import { CurrentUserQuery, headers, useCurrentUserQuery } from "react-graphql";
 import { proxy, useSnapshot } from "valtio";
-
 export const AuthState = proxy({
   auth0User: null as Auth0User | null,
   user: null as CurrentUserQuery["currentUser"],
@@ -14,14 +15,14 @@ export function SyncAuth() {
   const headersSnap = useSnapshot(headers);
 
   useEffect(() => {
-    AuthState.isLoading = isLoading;
+    AuthState.isLoading = currentUser.isLoading || isLoading;
   }, [isLoading]);
 
   useEffect(() => {
     AuthState.auth0User = user || null;
   }, [user]);
 
-  useCurrentUserQuery(undefined, {
+  const currentUser = useCurrentUserQuery(undefined, {
     enabled: !!headersSnap.authorization,
     onSuccess(data) {
       AuthState.user = data.currentUser;
@@ -33,6 +34,7 @@ export function SyncAuth() {
 
   useEffect(() => {
     if (user) {
+      AuthState.isLoading = true;
       getIdTokenClaims().then((data) => {
         headers.authorization = `Bearer ${data.__raw}`;
 
@@ -45,3 +47,19 @@ export function SyncAuth() {
 }
 
 export const useAuth = () => useSnapshot(AuthState);
+
+export function withAuth<Props extends Record<string, unknown>>(
+  Cmp: FC<Props>
+) {
+  return function WithAuth(props: Props) {
+    const { isLoading, user } = useAuth();
+
+    if (isLoading) return <Spinner />;
+
+    if (user) return <Cmp {...props} />;
+
+    Router.replace("/");
+
+    return <Spinner />;
+  };
+}

@@ -23,7 +23,8 @@
     "paths": {
       "common": ["common/src/index.ts"],
       "react-graphql": ["react-graphql/src/index.ts"]
-    }
+    },
+    "importsNotUsedAsValues": "error"
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

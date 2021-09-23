@@ -1,25 +1,20 @@
-/**
- * GQTY: You can safely modify this file and Query Fetcher based on your needs
- */
-
+import { createLogger } from "@gqty/logger";
 import { createReactClient } from "@gqty/react";
-
+import { API_URL } from "common";
 import { createClient, QueryFetcher } from "gqty";
+import { headers } from "react-graphql";
 import {
   generatedSchema,
-  scalarsEnumsHash,
   GeneratedSchema,
+  scalarsEnumsHash,
   SchemaObjectTypes,
   SchemaObjectTypesNames,
 } from "./schema.generated";
 
 const queryFetcher: QueryFetcher = async function (query, variables) {
-  // Modify "./schema.gql" if needed
-  const response = await fetch("./schema.gql", {
+  const response = await fetch(API_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers,
     body: JSON.stringify({
       query,
       variables,
@@ -41,6 +36,12 @@ export const client = createClient<
   scalarsEnumsHash,
   queryFetcher,
 });
+
+if (process.env.NODE_ENV === "development" && typeof window !== "undefined") {
+  const logger = createLogger(client);
+
+  logger.start();
+}
 
 export const {
   query,

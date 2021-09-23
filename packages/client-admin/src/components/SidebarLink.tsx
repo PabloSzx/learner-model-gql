@@ -3,20 +3,27 @@ import {
   BoxProps,
   createIcon,
   HStack,
-  Text,
+  LinkBox,
+  LinkOverlay,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 interface SidebarLinkProps extends BoxProps {
   icon?: React.ReactElement;
   avatar?: React.ReactElement;
+  href: string;
 }
 
 export const SidebarLink = (props: SidebarLinkProps) => {
-  const { children, icon = <ArrowRight />, avatar, ...rest } = props;
+  const { children, icon = <ArrowRight />, avatar, href, ...rest } = props;
+  const { push, prefetch, pathname } = useRouter();
+
+  const activeBg = mode("blue.900", "gray.700");
+  const hoverBg = mode("blue.700", "gray.600");
+
   return (
-    <Box
-      as="a"
+    <LinkBox
       marginEnd="2"
       fontSize="sm"
       display="block"
@@ -24,7 +31,8 @@ export const SidebarLink = (props: SidebarLinkProps) => {
       py="1"
       rounded="md"
       cursor="pointer"
-      _hover={{ color: "white", bg: mode("blue.700", "gray.600") }}
+      bg={pathname === href ? activeBg : undefined}
+      _hover={{ color: "white", bg: hoverBg }}
       className="group"
       fontWeight="medium"
       transition="background .1s ease-out"
@@ -34,9 +42,22 @@ export const SidebarLink = (props: SidebarLinkProps) => {
         <Box opacity={avatar ? 1 : 0.5} _groupHover={{ opacity: 1 }}>
           {avatar || icon}
         </Box>
-        <Text>{children}</Text>
+
+        <LinkOverlay
+          onClick={(ev) => {
+            ev.preventDefault();
+
+            pathname !== href && push(href);
+          }}
+          onMouseOver={() => {
+            pathname !== href && prefetch(href);
+          }}
+          href={href}
+        >
+          {children}
+        </LinkOverlay>
       </HStack>
-    </Box>
+    </LinkBox>
   );
 };
 
