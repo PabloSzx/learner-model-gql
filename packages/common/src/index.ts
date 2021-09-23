@@ -16,3 +16,4 @@ export const API_URL =
   "https://learner-model.pablosz.tech/graphql";
 
 export * from "./utils";
+export * from "./date";

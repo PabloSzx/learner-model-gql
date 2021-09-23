@@ -9,5 +9,8 @@
     "dev": "bob-ts-watch",
     "prepack": "bob-ts",
     "test:watch": "bob-ts-watch"
+  },
+  "dependencies": {
+    "date-fns": "^2.24.0"
   }
 }
