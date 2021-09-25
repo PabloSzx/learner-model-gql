@@ -16,7 +16,7 @@ importers:
       '@types/concurrently': ^6.2.1
       '@types/mocha': ^9.0.0
       '@types/node': ^16.9.6
-      '@types/prettier': ^2.3.2
+      '@types/prettier': ^2.4.0
       '@types/randomstring': ^1.1.7
       '@types/react': ^17.0.24
       api-base: workspace:^0.0.1
@@ -54,7 +54,7 @@ importers:
       '@types/concurrently': 6.2.1
       '@types/mocha': 9.0.0
       '@types/node': 16.9.6
-      '@types/prettier': 2.3.2
+      '@types/prettier': 2.4.0
       '@types/randomstring': 1.1.7
       '@types/react': 17.0.24
       api-base: link:packages/api-base
@@ -3333,8 +3333,8 @@ packages:
       sonic-boom: 2.2.3
     dev: true
 
-  /@types/prettier/2.3.2:
-    resolution: {integrity: sha512-eI5Yrz3Qv4KPUa/nSIAi0h+qX0XyewOliug5F2QAtuRg6Kjg6jfmxe1GIwoIRhZspD1A0RP8ANrPwvEXXtRFog==}
+  /@types/prettier/2.4.0:
+    resolution: {integrity: sha512-WHRsy5nMpjXfU9B0LqOqPT06EI2+8Xv5NERy0pLxJLbU98q7uhcGogQzfX+rXpU7S5mgHsLxHrLCufZcV/P8TQ==}
     dev: true
 
   /@types/prop-types/15.7.4:
