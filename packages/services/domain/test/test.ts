@@ -12,12 +12,30 @@ import {
   DomainsFromProjectsDocument,
   expectDeepEqual,
   generate,
+  GetTestClient,
   MockAuthUser,
   prisma,
   TestClient,
   UpdateDomainDocument,
   UpdateTopicDocument,
 } from "testing";
+import {
+  contentModule,
+  domainModule,
+  projectModule,
+  kcModule,
+} from "../src/modules";
+
+export const DomainClient = () => {
+  return GetTestClient({
+    prepare({ registerModule }) {
+      registerModule(contentModule);
+      registerModule(domainModule);
+      registerModule(projectModule);
+      registerModule(kcModule);
+    },
+  });
+};
 
 export async function CheckDomainCreationRetrieval({
   mutation,

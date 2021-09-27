@@ -1,20 +1,15 @@
-import { expectDeepEqual, GetTestClient, HelloDocument } from "testing";
-import { contentModule, domainModule, projectModule } from "../src/modules";
+import { expectDeepEqual, HelloDocument } from "testing";
 import {
   CheckDomainCreationRetrieval,
   CheckDomainOfContent,
   CheckDomainsOfProjects,
   CheckTopicsCreationRetrieval,
+  DomainClient,
 } from "./test";
+
 describe("Domain service", () => {
   it("hello world", async () => {
-    const { query } = await GetTestClient({
-      prepare({ registerModule }) {
-        registerModule(contentModule);
-        registerModule(domainModule);
-        registerModule(projectModule);
-      },
-    });
+    const { query } = await DomainClient();
 
     expectDeepEqual(await query(HelloDocument), {
       data: {
@@ -24,49 +19,25 @@ describe("Domain service", () => {
   });
 
   it("domain creation & retrieval", async () => {
-    const testClient = await GetTestClient({
-      prepare({ registerModule }) {
-        registerModule(contentModule);
-        registerModule(domainModule);
-        registerModule(projectModule);
-      },
-    });
+    const testClient = await DomainClient();
 
     await CheckDomainCreationRetrieval(testClient);
   });
 
   it("topic creation & retrieval", async () => {
-    const testClient = await GetTestClient({
-      prepare({ registerModule }) {
-        registerModule(contentModule);
-        registerModule(domainModule);
-        registerModule(projectModule);
-      },
-    });
+    const testClient = await DomainClient();
 
     await CheckTopicsCreationRetrieval(testClient);
   });
 
   it("domain of content", async () => {
-    const testClient = await GetTestClient({
-      prepare({ registerModule }) {
-        registerModule(contentModule);
-        registerModule(domainModule);
-        registerModule(projectModule);
-      },
-    });
+    const testClient = await DomainClient();
 
     await CheckDomainOfContent(testClient);
   });
 
   it("domain of project", async () => {
-    const testClient = await GetTestClient({
-      prepare({ registerModule }) {
-        registerModule(contentModule);
-        registerModule(domainModule);
-        registerModule(projectModule);
-      },
-    });
+    const testClient = await DomainClient();
 
     await CheckDomainsOfProjects(testClient);
   });

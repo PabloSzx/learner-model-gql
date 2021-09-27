@@ -292,6 +292,7 @@ export type Domain = {
   code: Scalars["String"];
   content: ContentConnection;
   id: Scalars["IntID"];
+  kcs: Array<Kc>;
   label: Scalars["String"];
   project: Project;
   topics: Array<Topic>;
@@ -321,6 +322,15 @@ export type GroupsConnection = Connection & {
   __typename?: "GroupsConnection";
   nodes: Array<Group>;
   pageInfo: PageInfo;
+};
+
+export type Kc = {
+  __typename?: "KC";
+  code: Scalars["String"];
+  domain: Domain;
+  id: Scalars["IntID"];
+  label: Scalars["String"];
+  topics: Array<Topic>;
 };
 
 export type Mutation = {
@@ -417,6 +427,7 @@ export type Topic = {
   content: ContentConnection;
   domain: Domain;
   id: Scalars["IntID"];
+  kcs: Array<Kc>;
   label: Scalars["String"];
   parent?: Maybe<Topic>;
   project: Project;

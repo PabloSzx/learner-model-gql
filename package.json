@@ -33,7 +33,7 @@
     "@graphql-typed-document-node/core": "^3.1.0",
     "@types/concurrently": "^6.2.1",
     "@types/mocha": "^9.0.0",
-    "@types/node": "^16.9.6",
+    "@types/node": "^16.10.1",
     "@types/prettier": "^2.4.0",
     "@types/randomstring": "^1.1.7",
     "@types/react": "^17.0.24",

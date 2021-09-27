@@ -18,6 +18,12 @@ export const domainModule = registerModule(
       childrens: [Topic!]!
     }
 
+    extend type KC {
+      domain: Domain!
+
+      topics: [Topic!]!
+    }
+
     type Domain {
       id: IntID!
 
@@ -98,7 +104,7 @@ export const domainModule = registerModule(
     }
   `,
   {
-    id: "Domain Domain",
+    id: "Domain Module",
     resolvers: {
       AdminDomainMutations: {
         createDomain(_root, { input: { code, label, projectId } }, { prisma }) {

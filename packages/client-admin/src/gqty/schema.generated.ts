@@ -311,6 +311,7 @@ export const generatedSchema = {
     code: { __type: "String!" },
     label: { __type: "String!" },
     topics: { __type: "[Topic!]!" },
+    kcs: { __type: "[KC!]!" },
     project: { __type: "Project!" },
   },
   Topic: {
@@ -325,6 +326,7 @@ export const generatedSchema = {
     domain: { __type: "Domain!" },
     parent: { __type: "Topic" },
     childrens: { __type: "[Topic!]!" },
+    kcs: { __type: "[KC!]!" },
     project: { __type: "Project!" },
   },
   ActionActivity: {
@@ -447,6 +449,14 @@ export const generatedSchema = {
     updateDomain: { __type: "Domain!", __args: { input: "UpdateDomain!" } },
     createTopic: { __type: "Topic!", __args: { input: "CreateTopic!" } },
     updateTopic: { __type: "Topic!", __args: { input: "UpdateTopic!" } },
+  },
+  KC: {
+    __typename: { __type: "String!" },
+    id: { __type: "IntID!" },
+    code: { __type: "String!" },
+    label: { __type: "String!" },
+    domain: { __type: "Domain!" },
+    topics: { __type: "[Topic!]!" },
   },
   Project: {
     __typename: { __type: "String!" },
@@ -636,6 +646,7 @@ export interface Domain {
   code: ScalarsEnums["String"];
   label: ScalarsEnums["String"];
   topics: Array<Topic>;
+  kcs: Array<KC>;
   project: Project;
 }
 
@@ -648,6 +659,7 @@ export interface Topic {
   domain: Domain;
   parent?: Maybe<Topic>;
   childrens: Array<Topic>;
+  kcs: Array<KC>;
   project: Project;
 }
 
@@ -726,6 +738,15 @@ export interface AdminDomainMutations {
   updateTopic: (args: { input: UpdateTopic }) => Topic;
 }
 
+export interface KC {
+  __typename?: "KC";
+  id: ScalarsEnums["IntID"];
+  code: ScalarsEnums["String"];
+  label: ScalarsEnums["String"];
+  domain: Domain;
+  topics: Array<Topic>;
+}
+
 export interface Project {
   __typename?: "Project";
   id: ScalarsEnums["IntID"];
@@ -780,6 +801,7 @@ export interface SchemaObjectTypes {
   DomainsConnection: DomainsConnection;
   AdminDomainQueries: AdminDomainQueries;
   AdminDomainMutations: AdminDomainMutations;
+  KC: KC;
   Project: Project;
   ProjectsConnection: ProjectsConnection;
   AdminProjectsQueries: AdminProjectsQueries;
@@ -812,6 +834,7 @@ export type SchemaObjectTypesNames =
   | "DomainsConnection"
   | "AdminDomainQueries"
   | "AdminDomainMutations"
+  | "KC"
   | "Project"
   | "ProjectsConnection"
   | "AdminProjectsQueries"

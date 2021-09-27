@@ -274,6 +274,7 @@ export type Domain = {
   code: Scalars["String"];
   label: Scalars["String"];
   topics: Array<Topic>;
+  kcs: Array<Kc>;
   project: Project;
 };
 
@@ -290,6 +291,7 @@ export type Topic = {
   domain: Domain;
   parent?: Maybe<Topic>;
   childrens: Array<Topic>;
+  kcs: Array<Kc>;
   project: Project;
 };
 
@@ -461,6 +463,15 @@ export type AdminDomainMutationsCreateTopicArgs = {
 
 export type AdminDomainMutationsUpdateTopicArgs = {
   input: UpdateTopic;
+};
+
+export type Kc = {
+  __typename?: "KC";
+  id: Scalars["IntID"];
+  code: Scalars["String"];
+  label: Scalars["String"];
+  domain: Domain;
+  topics: Array<Topic>;
 };
 
 export type Project = {
@@ -667,6 +678,7 @@ export type ResolversTypes = {
   CreateTopic: CreateTopic;
   UpdateTopic: UpdateTopic;
   AdminDomainMutations: ResolverTypeWrapper<AdminDomainMutations>;
+  KC: ResolverTypeWrapper<Kc>;
   Project: ResolverTypeWrapper<Project>;
   ProjectsConnection: ResolverTypeWrapper<ProjectsConnection>;
   AdminProjectsQueries: ResolverTypeWrapper<AdminProjectsQueries>;
@@ -732,6 +744,7 @@ export type ResolversParentTypes = {
   CreateTopic: CreateTopic;
   UpdateTopic: UpdateTopic;
   AdminDomainMutations: AdminDomainMutations;
+  KC: Kc;
   Project: Project;
   ProjectsConnection: ProjectsConnection;
   AdminProjectsQueries: AdminProjectsQueries;
@@ -1120,6 +1133,7 @@ export type DomainResolvers<
   code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
+  kcs?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
   project?: Resolver<ResolversTypes["Project"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -1140,6 +1154,7 @@ export type TopicResolvers<
   domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
   parent?: Resolver<Maybe<ResolversTypes["Topic"]>, ParentType, ContextType>;
   childrens?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
+  kcs?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
   project?: Resolver<ResolversTypes["Project"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -1305,6 +1320,18 @@ export type AdminDomainMutationsResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type KcResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["KC"] = ResolversParentTypes["KC"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
+  topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type ProjectResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Project"] = ResolversParentTypes["Project"]
@@ -1392,6 +1419,7 @@ export type Resolvers<ContextType = EZContext> = {
   DomainsConnection?: DomainsConnectionResolvers<ContextType>;
   AdminDomainQueries?: AdminDomainQueriesResolvers<ContextType>;
   AdminDomainMutations?: AdminDomainMutationsResolvers<ContextType>;
+  KC?: KcResolvers<ContextType>;
   Project?: ProjectResolvers<ContextType>;
   ProjectsConnection?: ProjectsConnectionResolvers<ContextType>;
   AdminProjectsQueries?: AdminProjectsQueriesResolvers<ContextType>;

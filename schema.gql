@@ -195,6 +195,7 @@ type Domain {
   code: String!
   label: String!
   topics: [Topic!]!
+  kcs: [KC!]!
   project: Project!
 }
 
@@ -206,6 +207,7 @@ type Topic {
   domain: Domain!
   parent: Topic
   childrens: [Topic!]!
+  kcs: [KC!]!
   project: Project!
 }
 
@@ -326,6 +328,14 @@ type AdminDomainMutations {
   updateDomain(input: UpdateDomain!): Domain!
   createTopic(input: CreateTopic!): Topic!
   updateTopic(input: UpdateTopic!): Topic!
+}
+
+type KC {
+  id: IntID!
+  code: String!
+  label: String!
+  domain: Domain!
+  topics: [Topic!]!
 }
 
 type Project {
