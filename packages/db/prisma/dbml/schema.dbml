@@ -64,6 +64,7 @@ Table Domain {
   projectId Int [not null]
   content Content [not null]
   topics Topic [not null]
+  kcs KC [not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [default: `now()`, not null]
 }
@@ -80,9 +81,19 @@ Table Topic {
   parentId Int
   childrens Topic [not null]
   content Content [not null]
+  kcs KC [not null]
   actionActivities ActionActivity [not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [default: `now()`, not null]
+}
+
+Table KC {
+  id Int [pk, increment]
+  code String [unique, not null]
+  label String [not null]
+  domain Domain [not null]
+  domainId Int [not null]
+  topics Topic [not null]
 }
 
 Table ActionVerb {
@@ -155,6 +166,11 @@ Table GroupToProject {
   groupsId Int [ref: > Group.id]
 }
 
+Table KCToTopic {
+  kcsId Int [ref: > KC.id]
+  topicsId Int [ref: > Topic.id]
+}
+
 Enum UserRole {
   ADMIN
   USER
@@ -169,6 +185,8 @@ Ref: Topic.domainId > Domain.id
 Ref: Topic.projectId > Project.id
 
 Ref: Topic.parentId - Topic.id
+
+Ref: KC.domainId > Domain.id
 
 Ref: Action.verbName > ActionVerb.name
 

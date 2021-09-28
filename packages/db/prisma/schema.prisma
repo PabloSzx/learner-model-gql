@@ -102,6 +102,8 @@ model Domain {
 
   topics Topic[]
 
+  kcs KC[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
@@ -126,12 +128,26 @@ model Topic {
 
   content Content[]
 
+  kcs KC[]
+
   actionActivities ActionActivity[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
   @@index([id, projectId])
+}
+
+model KC {
+  id Int @id @default(autoincrement())
+
+  code  String @unique
+  label String
+
+  domain   Domain @relation(fields: [domainId], references: [id])
+  domainId Int
+
+  topics Topic[]
 }
 
 model ActionVerb {
