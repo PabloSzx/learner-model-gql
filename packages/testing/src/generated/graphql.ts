@@ -113,13 +113,19 @@ export type AdminContentQueriesAllContentArgs = {
 export type AdminDomainMutations = {
   __typename?: "AdminDomainMutations";
   createDomain: Domain;
+  createKC: Kc;
   createTopic: Topic;
   updateDomain: Domain;
+  updateKC: Kc;
   updateTopic: Topic;
 };
 
 export type AdminDomainMutationsCreateDomainArgs = {
   input: CreateDomain;
+};
+
+export type AdminDomainMutationsCreateKcArgs = {
+  data: CreateKcInput;
 };
 
 export type AdminDomainMutationsCreateTopicArgs = {
@@ -130,6 +136,10 @@ export type AdminDomainMutationsUpdateDomainArgs = {
   input: UpdateDomain;
 };
 
+export type AdminDomainMutationsUpdateKcArgs = {
+  data: UpdateKcInput;
+};
+
 export type AdminDomainMutationsUpdateTopicArgs = {
   input: UpdateTopic;
 };
@@ -137,10 +147,15 @@ export type AdminDomainMutationsUpdateTopicArgs = {
 export type AdminDomainQueries = {
   __typename?: "AdminDomainQueries";
   allDomains: DomainsConnection;
+  allKCs: KCsConnection;
   allTopics: TopicsConnection;
 };
 
 export type AdminDomainQueriesAllDomainsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminDomainQueriesAllKCsArgs = {
   pagination: CursorConnectionArgs;
 };
 
@@ -267,6 +282,12 @@ export type CreateGroupInput = {
   projectIds: Array<Scalars["IntID"]>;
 };
 
+export type CreateKcInput = {
+  code: Scalars["String"];
+  domainId: Scalars["IntID"];
+  label: Scalars["String"];
+};
+
 export type CreateProject = {
   code: Scalars["String"];
   label: Scalars["String"];
@@ -331,6 +352,12 @@ export type Kc = {
   id: Scalars["IntID"];
   label: Scalars["String"];
   topics: Array<Topic>;
+};
+
+export type KCsConnection = Connection & {
+  __typename?: "KCsConnection";
+  nodes: Array<Kc>;
+  pageInfo: PageInfo;
 };
 
 export type Mutation = {
@@ -453,6 +480,12 @@ export type UpdateGroupInput = {
   id: Scalars["IntID"];
   label: Scalars["String"];
   projectIds: Array<Scalars["IntID"]>;
+};
+
+export type UpdateKcInput = {
+  code: Scalars["String"];
+  id: Scalars["IntID"];
+  label: Scalars["String"];
 };
 
 export type UpdateProject = {

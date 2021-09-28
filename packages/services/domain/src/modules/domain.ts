@@ -255,6 +255,32 @@ export const domainModule = registerModule(
           );
         },
       },
+      KC: {
+        async domain({ id }, _args, { prisma }) {
+          const domain = await prisma.kC
+            .findUnique({
+              where: {
+                id,
+              },
+            })
+            .domain();
+
+          assert(domain, "Domain could not be found for KC " + id);
+
+          return domain;
+        },
+        async topics({ id }, _args, { prisma }) {
+          return (
+            (await prisma.kC
+              .findUnique({
+                where: {
+                  id,
+                },
+              })
+              .topics()) || []
+          );
+        },
+      },
       Mutation: {
         async adminDomain(_root, _args, { authorization }) {
           await authorization.expectAdmin;

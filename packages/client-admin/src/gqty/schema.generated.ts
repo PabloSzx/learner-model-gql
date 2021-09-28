@@ -128,6 +128,18 @@ export interface UpdateTopic {
   projectId: Scalars["IntID"];
 }
 
+export interface CreateKCInput {
+  code: Scalars["String"];
+  label: Scalars["String"];
+  domainId: Scalars["IntID"];
+}
+
+export interface UpdateKCInput {
+  id: Scalars["IntID"];
+  code: Scalars["String"];
+  label: Scalars["String"];
+}
+
 export interface CreateProject {
   code: Scalars["String"];
   label: Scalars["String"];
@@ -421,6 +433,10 @@ export const generatedSchema = {
       __type: "DomainsConnection!",
       __args: { pagination: "CursorConnectionArgs!" },
     },
+    allKCs: {
+      __type: "KCsConnection!",
+      __args: { pagination: "CursorConnectionArgs!" },
+    },
   },
   CreateDomain: {
     code: { __type: "String!" },
@@ -449,6 +465,8 @@ export const generatedSchema = {
     updateDomain: { __type: "Domain!", __args: { input: "UpdateDomain!" } },
     createTopic: { __type: "Topic!", __args: { input: "CreateTopic!" } },
     updateTopic: { __type: "Topic!", __args: { input: "UpdateTopic!" } },
+    createKC: { __type: "KC!", __args: { data: "CreateKCInput!" } },
+    updateKC: { __type: "KC!", __args: { data: "UpdateKCInput!" } },
   },
   KC: {
     __typename: { __type: "String!" },
@@ -457,6 +475,21 @@ export const generatedSchema = {
     label: { __type: "String!" },
     domain: { __type: "Domain!" },
     topics: { __type: "[Topic!]!" },
+  },
+  KCsConnection: {
+    __typename: { __type: "String!" },
+    nodes: { __type: "[KC!]!" },
+    pageInfo: { __type: "PageInfo!" },
+  },
+  CreateKCInput: {
+    code: { __type: "String!" },
+    label: { __type: "String!" },
+    domainId: { __type: "IntID!" },
+  },
+  UpdateKCInput: {
+    id: { __type: "IntID!" },
+    code: { __type: "String!" },
+    label: { __type: "String!" },
   },
   Project: {
     __typename: { __type: "String!" },
@@ -494,6 +527,7 @@ export const generatedSchema = {
       "ContentConnection",
       "TopicsConnection",
       "DomainsConnection",
+      "KCsConnection",
       "ProjectsConnection",
     ],
   },
@@ -615,6 +649,7 @@ export interface Connection {
     | "ContentConnection"
     | "TopicsConnection"
     | "DomainsConnection"
+    | "KCsConnection"
     | "ProjectsConnection";
   pageInfo: PageInfo;
   $on: $Connection;
@@ -728,6 +763,7 @@ export interface AdminDomainQueries {
   __typename?: "AdminDomainQueries";
   allTopics: (args: { pagination: CursorConnectionArgs }) => TopicsConnection;
   allDomains: (args: { pagination: CursorConnectionArgs }) => DomainsConnection;
+  allKCs: (args: { pagination: CursorConnectionArgs }) => KCsConnection;
 }
 
 export interface AdminDomainMutations {
@@ -736,6 +772,8 @@ export interface AdminDomainMutations {
   updateDomain: (args: { input: UpdateDomain }) => Domain;
   createTopic: (args: { input: CreateTopic }) => Topic;
   updateTopic: (args: { input: UpdateTopic }) => Topic;
+  createKC: (args: { data: CreateKCInput }) => KC;
+  updateKC: (args: { data: UpdateKCInput }) => KC;
 }
 
 export interface KC {
@@ -745,6 +783,12 @@ export interface KC {
   label: ScalarsEnums["String"];
   domain: Domain;
   topics: Array<Topic>;
+}
+
+export interface KCsConnection {
+  __typename?: "KCsConnection";
+  nodes: Array<KC>;
+  pageInfo: PageInfo;
 }
 
 export interface Project {
@@ -802,6 +846,7 @@ export interface SchemaObjectTypes {
   AdminDomainQueries: AdminDomainQueries;
   AdminDomainMutations: AdminDomainMutations;
   KC: KC;
+  KCsConnection: KCsConnection;
   Project: Project;
   ProjectsConnection: ProjectsConnection;
   AdminProjectsQueries: AdminProjectsQueries;
@@ -835,6 +880,7 @@ export type SchemaObjectTypesNames =
   | "AdminDomainQueries"
   | "AdminDomainMutations"
   | "KC"
+  | "KCsConnection"
   | "Project"
   | "ProjectsConnection"
   | "AdminProjectsQueries"
@@ -845,6 +891,7 @@ export interface $Connection {
   ContentConnection?: ContentConnection;
   TopicsConnection?: TopicsConnection;
   DomainsConnection?: DomainsConnection;
+  KCsConnection?: KCsConnection;
   ProjectsConnection?: ProjectsConnection;
 }
 

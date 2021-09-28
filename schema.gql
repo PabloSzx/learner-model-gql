@@ -293,6 +293,7 @@ type DomainsConnection implements Connection {
 type AdminDomainQueries {
   allTopics(pagination: CursorConnectionArgs!): TopicsConnection!
   allDomains(pagination: CursorConnectionArgs!): DomainsConnection!
+  allKCs(pagination: CursorConnectionArgs!): KCsConnection!
 }
 
 input CreateDomain {
@@ -328,6 +329,8 @@ type AdminDomainMutations {
   updateDomain(input: UpdateDomain!): Domain!
   createTopic(input: CreateTopic!): Topic!
   updateTopic(input: UpdateTopic!): Topic!
+  createKC(data: CreateKCInput!): KC!
+  updateKC(data: UpdateKCInput!): KC!
 }
 
 type KC {
@@ -336,6 +339,23 @@ type KC {
   label: String!
   domain: Domain!
   topics: [Topic!]!
+}
+
+type KCsConnection implements Connection {
+  nodes: [KC!]!
+  pageInfo: PageInfo!
+}
+
+input CreateKCInput {
+  code: String!
+  label: String!
+  domainId: IntID!
+}
+
+input UpdateKCInput {
+  id: IntID!
+  code: String!
+  label: String!
 }
 
 type Project {

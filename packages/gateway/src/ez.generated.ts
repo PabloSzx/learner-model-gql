@@ -403,6 +403,7 @@ export type AdminDomainQueries = {
   __typename?: "AdminDomainQueries";
   allTopics: TopicsConnection;
   allDomains: DomainsConnection;
+  allKCs: KCsConnection;
 };
 
 export type AdminDomainQueriesAllTopicsArgs = {
@@ -410,6 +411,10 @@ export type AdminDomainQueriesAllTopicsArgs = {
 };
 
 export type AdminDomainQueriesAllDomainsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminDomainQueriesAllKCsArgs = {
   pagination: CursorConnectionArgs;
 };
 
@@ -447,6 +452,8 @@ export type AdminDomainMutations = {
   updateDomain: Domain;
   createTopic: Topic;
   updateTopic: Topic;
+  createKC: Kc;
+  updateKC: Kc;
 };
 
 export type AdminDomainMutationsCreateDomainArgs = {
@@ -465,6 +472,14 @@ export type AdminDomainMutationsUpdateTopicArgs = {
   input: UpdateTopic;
 };
 
+export type AdminDomainMutationsCreateKcArgs = {
+  data: CreateKcInput;
+};
+
+export type AdminDomainMutationsUpdateKcArgs = {
+  data: UpdateKcInput;
+};
+
 export type Kc = {
   __typename?: "KC";
   id: Scalars["IntID"];
@@ -472,6 +487,24 @@ export type Kc = {
   label: Scalars["String"];
   domain: Domain;
   topics: Array<Topic>;
+};
+
+export type KCsConnection = Connection & {
+  __typename?: "KCsConnection";
+  nodes: Array<Kc>;
+  pageInfo: PageInfo;
+};
+
+export type CreateKcInput = {
+  code: Scalars["String"];
+  label: Scalars["String"];
+  domainId: Scalars["IntID"];
+};
+
+export type UpdateKcInput = {
+  id: Scalars["IntID"];
+  code: Scalars["String"];
+  label: Scalars["String"];
 };
 
 export type Project = {
@@ -652,6 +685,7 @@ export type ResolversTypes = {
     | ResolversTypes["ContentConnection"]
     | ResolversTypes["TopicsConnection"]
     | ResolversTypes["DomainsConnection"]
+    | ResolversTypes["KCsConnection"]
     | ResolversTypes["ProjectsConnection"];
   CursorConnectionArgs: CursorConnectionArgs;
   ActionVerb: ResolverTypeWrapper<ActionVerb>;
@@ -679,6 +713,9 @@ export type ResolversTypes = {
   UpdateTopic: UpdateTopic;
   AdminDomainMutations: ResolverTypeWrapper<AdminDomainMutations>;
   KC: ResolverTypeWrapper<Kc>;
+  KCsConnection: ResolverTypeWrapper<KCsConnection>;
+  CreateKCInput: CreateKcInput;
+  UpdateKCInput: UpdateKcInput;
   Project: ResolverTypeWrapper<Project>;
   ProjectsConnection: ResolverTypeWrapper<ProjectsConnection>;
   AdminProjectsQueries: ResolverTypeWrapper<AdminProjectsQueries>;
@@ -718,6 +755,7 @@ export type ResolversParentTypes = {
     | ResolversParentTypes["ContentConnection"]
     | ResolversParentTypes["TopicsConnection"]
     | ResolversParentTypes["DomainsConnection"]
+    | ResolversParentTypes["KCsConnection"]
     | ResolversParentTypes["ProjectsConnection"];
   CursorConnectionArgs: CursorConnectionArgs;
   ActionVerb: ActionVerb;
@@ -745,6 +783,9 @@ export type ResolversParentTypes = {
   UpdateTopic: UpdateTopic;
   AdminDomainMutations: AdminDomainMutations;
   KC: Kc;
+  KCsConnection: KCsConnection;
+  CreateKCInput: CreateKcInput;
+  UpdateKCInput: UpdateKcInput;
   Project: Project;
   ProjectsConnection: ProjectsConnection;
   AdminProjectsQueries: AdminProjectsQueries;
@@ -1083,6 +1124,7 @@ export type ConnectionResolvers<
     | "ContentConnection"
     | "TopicsConnection"
     | "DomainsConnection"
+    | "KCsConnection"
     | "ProjectsConnection",
     ParentType,
     ContextType
@@ -1286,6 +1328,12 @@ export type AdminDomainQueriesResolvers<
     ContextType,
     RequireFields<AdminDomainQueriesAllDomainsArgs, "pagination">
   >;
+  allKCs?: Resolver<
+    ResolversTypes["KCsConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminDomainQueriesAllKCsArgs, "pagination">
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1317,6 +1365,18 @@ export type AdminDomainMutationsResolvers<
     ContextType,
     RequireFields<AdminDomainMutationsUpdateTopicArgs, "input">
   >;
+  createKC?: Resolver<
+    ResolversTypes["KC"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminDomainMutationsCreateKcArgs, "data">
+  >;
+  updateKC?: Resolver<
+    ResolversTypes["KC"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminDomainMutationsUpdateKcArgs, "data">
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1329,6 +1389,15 @@ export type KcResolvers<
   label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
   topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type KCsConnectionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["KCsConnection"] = ResolversParentTypes["KCsConnection"]
+> = {
+  nodes?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1420,6 +1489,7 @@ export type Resolvers<ContextType = EZContext> = {
   AdminDomainQueries?: AdminDomainQueriesResolvers<ContextType>;
   AdminDomainMutations?: AdminDomainMutationsResolvers<ContextType>;
   KC?: KcResolvers<ContextType>;
+  KCsConnection?: KCsConnectionResolvers<ContextType>;
   Project?: ProjectResolvers<ContextType>;
   ProjectsConnection?: ProjectsConnectionResolvers<ContextType>;
   AdminProjectsQueries?: AdminProjectsQueriesResolvers<ContextType>;
