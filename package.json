@@ -41,7 +41,7 @@
     "bob-ts": "^1.1.1",
     "c8": "^7.9.0",
     "common": "workspace:^0.0.1",
-    "concurrently": "^6.2.1",
+    "concurrently": "^6.2.2",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
     "esbuild": "^0.13.2",
