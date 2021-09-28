@@ -2,14 +2,14 @@ overwrite: true
 schema: "../../schema.gql"
 documents: graphql/**/*.gql
 generates:
-  src/generated/graphql.ts:
+  src/rq/graphql.ts:
     plugins:
       - typescript
       - typescript-operations
       - typescript-react-query
     config:
       fetcher:
-        func: "../fetcher#fetcher"
+        func: "./fetcher#fetcher"
       exposeQueryKeys: true
       exposeDocument: true
       scalars:

@@ -2,7 +2,7 @@ import { createLogger } from "@gqty/logger";
 import { createReactClient } from "@gqty/react";
 import { API_URL } from "common";
 import { createClient, QueryFetcher } from "gqty";
-import { headers } from "react-graphql";
+import { headers } from "../headers";
 import {
   generatedSchema,
   GeneratedSchema,
@@ -77,3 +77,5 @@ export const {
 });
 
 export * from "./schema.generated";
+
+export * from "../headers";

@@ -1,7 +1,7 @@
 import { Auth0Provider } from "@auth0/auth0-react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
-import { ReactQuery } from "react-graphql";
+import { ReactQuery } from "graph/rq";
 import { SyncAuth } from "../components/Auth";
 import { MainLayout } from "../components/MainLayout";
 import { NextNProgress } from "../components/NextNProgress";

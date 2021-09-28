@@ -2,7 +2,12 @@ import { useAuth0, User as Auth0User } from "@auth0/auth0-react";
 import { Spinner } from "@chakra-ui/react";
 import Router from "next/router";
 import { FC, useEffect } from "react";
-import { CurrentUserQuery, headers, useCurrentUserQuery } from "react-graphql";
+import {
+  CurrentUserQuery,
+  useHeaders,
+  headers,
+  useCurrentUserQuery,
+} from "graph/rq";
 import { proxy, useSnapshot } from "valtio";
 export const AuthState = proxy({
   auth0User: null as Auth0User | null,
@@ -12,7 +17,7 @@ export const AuthState = proxy({
 
 export function SyncAuth() {
   const { user, getIdTokenClaims, isLoading } = useAuth0();
-  const headersSnap = useSnapshot(headers);
+  const headersSnap = useHeaders();
 
   useEffect(() => {
     AuthState.isLoading = currentUser.isLoading || isLoading;

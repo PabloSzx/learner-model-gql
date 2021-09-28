@@ -24,7 +24,7 @@ import { Card } from "../components/Card/Card";
 import { CardContent } from "../components/Card/CardContent";
 import { CardHeader } from "../components/Card/CardHeader";
 import { Property } from "../components/Card/Property";
-import { useMutation, useQuery, User, UserRole } from "../gqty";
+import { useMutation, useQuery, User, UserRole } from "graph/gqty";
 
 const UserCard = ({ user }: { user: User }) => {
   const {

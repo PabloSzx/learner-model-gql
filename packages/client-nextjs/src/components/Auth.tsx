@@ -1,6 +1,6 @@
 import { useAuth0, User as Auth0User } from "@auth0/auth0-react";
 import { useEffect } from "react";
-import { CurrentUserQuery, headers, useCurrentUserQuery } from "react-graphql";
+import { CurrentUserQuery, headers, useCurrentUserQuery } from "graph/rq";
 import { proxy, useSnapshot } from "valtio";
 
 export const AuthState = proxy({

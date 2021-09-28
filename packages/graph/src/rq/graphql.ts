@@ -1,5 +1,5 @@
 import { useQuery, UseQueryOptions } from "react-query";
-import { fetcher } from "../fetcher";
+import { fetcher } from "./fetcher";
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];

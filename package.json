@@ -19,13 +19,20 @@
     "clean:test:db": "docker-compose down && sudo rimraf .test-postgres-data",
     "dev:service": "pnpm prepack && pnpm generate && concurrently -r \"pnpm -r dev\" \"cross-env NEXT_PUBLIC_API_URL=http://localhost:8080/graphql pnpm -r dev:service\"",
     "generate": "pnpm -r generate",
-    "prepare": "husky install && pnpm prepack",
     "prepack": "pnpm -r prepack",
+    "prepare": "husky install && pnpm prepack",
     "pretty": "pretty-quick",
     "pretty:all": "prettier --write \"**/*.{ts,tsx,gql,json}\"",
     "test": "bob-ts -i packages -i test && c8 mocha",
     "test:watch": "concurrently -r pnpm:test:watch:cmd \"pnpm dev -r\"",
     "test:watch:cmd": "bob-ts-watch -i packages -i test -c \"mocha\""
+  },
+  "dependencies": {
+    "@gqty/react": "^2.0.0",
+    "api-base": "workspace:^0.0.1",
+    "common": "workspace:^0.0.1",
+    "gqty": "^2.0.1",
+    "graph": "workspace:^0.0.1"
   },
   "devDependencies": {
     "@gqty/cli": "^2.0.1",
@@ -37,10 +44,8 @@
     "@types/prettier": "^2.4.1",
     "@types/randomstring": "^1.1.7",
     "@types/react": "^17.0.24",
-    "api-base": "workspace:^0.0.1",
     "bob-ts": "^1.1.1",
     "c8": "^7.9.0",
-    "common": "workspace:^0.0.1",
     "concurrently": "^6.2.2",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
@@ -71,9 +76,5 @@
       "tar@<4.4.16 || >=5.0.0 <5.0.8 || >=6.0.0 <6.1.7": ">=4.4.16 <5.0.0 || >=5.0.8 <6.0.0 || >=6.1.7",
       "tar@<4.4.18 || >=5.0.0 <5.0.10 || >=6.0.0 <6.1.9": ">=4.4.18 <5.0.0 || >=5.0.10 <6.0.0 || >=6.1.9"
     }
-  },
-  "dependencies": {
-    "@gqty/react": "^2.0.0",
-    "gqty": "^2.0.1"
   }
 }

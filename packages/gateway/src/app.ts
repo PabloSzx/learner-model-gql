@@ -8,7 +8,7 @@ import { resolve } from "path";
 import waitOn from "wait-on";
 import { getServicesConfigFromEnv } from "./services";
 import { getStitchedSchema } from "./stitch";
-import { writeGenerate } from "@gqty/cli";
+import { writeGenerate, gqtyConfigPromise } from "@gqty/cli";
 
 const __dirname = getDirname(import.meta.url);
 
@@ -41,10 +41,13 @@ export const getGatewayPlugin = async () => {
     envelop: {
       plugins: [
         {
-          onSchemaChange({ schema }) {
+          async onSchemaChange({ schema }) {
             writeGenerate(
               schema,
-              resolve(__dirname, "../../client-admin/src/gqty/index.ts")
+              (await gqtyConfigPromise).config.destination ||
+                (() => {
+                  throw Error("GQty destination could not be found!");
+                })()
             ).catch(console.error);
           },
           async onPluginInit({ setSchema }) {
