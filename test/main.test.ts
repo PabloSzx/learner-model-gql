@@ -42,13 +42,13 @@ export const TestStitchedSchema = async () => {
 
   const DomainService = GetTestClient({
     async prepare({ registerModule }) {
-      const { contentModule, domainModule, projectModule } = await import(
-        "../packages/services/domain/src/modules"
-      );
+      const { contentModule, domainModule, projectModule, kcModule } =
+        await import("../packages/services/domain/src/modules");
 
       registerModule(contentModule);
       registerModule(domainModule);
       registerModule(projectModule);
+      registerModule(kcModule);
     },
   });
 
