@@ -1,4 +1,4 @@
-FROM quay.io/bitnami/node:16-prod
+FROM quay.io/bitnami/node:16.10.0-prod
 
 WORKDIR /home/learner-model-gql
 
@@ -14,6 +14,7 @@ COPY packages/api-base ./packages/api-base
 COPY packages/common ./packages/common
 COPY packages/common-api ./packages/common-api
 COPY packages/db ./packages/db
+COPY packages/graph ./packages/graph
 COPY packages/gateway ./packages/gateway
 COPY packages/testing ./packages/testing
 COPY packages/services ./packages/services
