@@ -15,7 +15,7 @@
     "@emotion/styled": "^11.3.0",
     "@gqty/logger": "^2.0.0",
     "@gqty/react": "^2.0.0",
-    "@types/react": "^17.0.24",
+    "@types/react": "^17.0.25",
     "@types/react-dom": "^17.0.9",
     "date-fns": "^2.24.0",
     "framer-motion": "^4.1.17",
