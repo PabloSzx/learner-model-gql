@@ -549,7 +549,7 @@ export type CreateActionMutationVariables = Exact<{
 
 export type CreateActionMutation = {
   __typename?: "Mutation";
-  action?: Maybe<void | undefined | null>;
+  action?: void | undefined | null | null | undefined;
 };
 
 export type AllActionsQueryVariables = Exact<{
@@ -564,9 +564,9 @@ export type AllActionsQuery = {
       __typename?: "ActionsConnection";
       nodes: Array<{
         __typename?: "Action";
-        result?: Maybe<number>;
+        result?: number | null | undefined;
         verb: { __typename?: "ActionVerb"; name: string };
-        user?: Maybe<{ __typename?: "User"; id: string }>;
+        user?: { __typename?: "User"; id: string } | null | undefined;
       }>;
       pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean };
     };
@@ -585,8 +585,8 @@ export type CreateContentMutation = {
       __typename?: "Content";
       id: string;
       description: string;
-      binaryBase64?: Maybe<string>;
-      json?: Maybe<Record<string, unknown>>;
+      binaryBase64?: string | null | undefined;
+      json?: Record<string, unknown> | null | undefined;
     };
   };
 };
@@ -605,8 +605,8 @@ export type AllContentQuery = {
         __typename?: "Content";
         id: string;
         description: string;
-        binaryBase64?: Maybe<string>;
-        json?: Maybe<Record<string, unknown>>;
+        binaryBase64?: string | null | undefined;
+        json?: Record<string, unknown> | null | undefined;
       }>;
       pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean };
     };
@@ -629,8 +629,8 @@ export type ContentFromDomainQuery = {
         __typename?: "Content";
         id: string;
         description: string;
-        binaryBase64?: Maybe<string>;
-        json?: Maybe<Record<string, unknown>>;
+        binaryBase64?: string | null | undefined;
+        json?: Record<string, unknown> | null | undefined;
       }>;
       pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean };
     };
@@ -653,8 +653,8 @@ export type ContentFromTopicQuery = {
         __typename?: "Content";
         id: string;
         description: string;
-        binaryBase64?: Maybe<string>;
-        json?: Maybe<Record<string, unknown>>;
+        binaryBase64?: string | null | undefined;
+        json?: Record<string, unknown> | null | undefined;
       }>;
       pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean };
     };
@@ -708,11 +708,14 @@ export type IsolatedTopicFieldsFragment = {
   code: string;
   label: string;
   domain: { __typename?: "Domain"; id: string };
-  parent?: Maybe<{
-    __typename?: "Topic";
-    id: string;
-    domain: { __typename?: "Domain"; id: string };
-  }>;
+  parent?:
+    | {
+        __typename?: "Topic";
+        id: string;
+        domain: { __typename?: "Domain"; id: string };
+      }
+    | null
+    | undefined;
   childrens: Array<{
     __typename?: "Topic";
     id: string;
@@ -734,11 +737,14 @@ export type CreateTopicMutation = {
       code: string;
       label: string;
       domain: { __typename?: "Domain"; id: string };
-      parent?: Maybe<{
-        __typename?: "Topic";
-        id: string;
-        domain: { __typename?: "Domain"; id: string };
-      }>;
+      parent?:
+        | {
+            __typename?: "Topic";
+            id: string;
+            domain: { __typename?: "Domain"; id: string };
+          }
+        | null
+        | undefined;
       childrens: Array<{
         __typename?: "Topic";
         id: string;
@@ -762,11 +768,14 @@ export type UpdateTopicMutation = {
       code: string;
       label: string;
       domain: { __typename?: "Domain"; id: string };
-      parent?: Maybe<{
-        __typename?: "Topic";
-        id: string;
-        domain: { __typename?: "Domain"; id: string };
-      }>;
+      parent?:
+        | {
+            __typename?: "Topic";
+            id: string;
+            domain: { __typename?: "Domain"; id: string };
+          }
+        | null
+        | undefined;
       childrens: Array<{
         __typename?: "Topic";
         id: string;
@@ -813,11 +822,14 @@ export type AllTopicsQuery = {
         code: string;
         label: string;
         domain: { __typename?: "Domain"; id: string };
-        parent?: Maybe<{
-          __typename?: "Topic";
-          id: string;
-          domain: { __typename?: "Domain"; id: string };
-        }>;
+        parent?:
+          | {
+              __typename?: "Topic";
+              id: string;
+              domain: { __typename?: "Domain"; id: string };
+            }
+          | null
+          | undefined;
         childrens: Array<{
           __typename?: "Topic";
           id: string;
@@ -1004,10 +1016,10 @@ export type UserInfoFragment = {
   id: string;
   enabled: boolean;
   email: string;
-  name?: Maybe<string>;
+  name?: string | null | undefined;
   locked: boolean;
   active: boolean;
-  lastOnline?: Maybe<string>;
+  lastOnline?: string | null | undefined;
   role: UserRole;
   createdAt: string;
   updatedAt: string;
@@ -1017,19 +1029,22 @@ export type CurrentUserQueryVariables = Exact<{ [key: string]: never }>;
 
 export type CurrentUserQuery = {
   __typename?: "Query";
-  currentUser?: Maybe<{
-    __typename?: "User";
-    id: string;
-    enabled: boolean;
-    email: string;
-    name?: Maybe<string>;
-    locked: boolean;
-    active: boolean;
-    lastOnline?: Maybe<string>;
-    role: UserRole;
-    createdAt: string;
-    updatedAt: string;
-  }>;
+  currentUser?:
+    | {
+        __typename?: "User";
+        id: string;
+        enabled: boolean;
+        email: string;
+        name?: string | null | undefined;
+        locked: boolean;
+        active: boolean;
+        lastOnline?: string | null | undefined;
+        role: UserRole;
+        createdAt: string;
+        updatedAt: string;
+      }
+    | null
+    | undefined;
 };
 
 export type UsersByIdQueryVariables = Exact<{
@@ -1043,10 +1058,10 @@ export type UsersByIdQuery = {
     id: string;
     enabled: boolean;
     email: string;
-    name?: Maybe<string>;
+    name?: string | null | undefined;
     locked: boolean;
     active: boolean;
-    lastOnline?: Maybe<string>;
+    lastOnline?: string | null | undefined;
     role: UserRole;
     createdAt: string;
     updatedAt: string;
@@ -1068,10 +1083,10 @@ export type AdminAllUsersQuery = {
         id: string;
         enabled: boolean;
         email: string;
-        name?: Maybe<string>;
+        name?: string | null | undefined;
         locked: boolean;
         active: boolean;
-        lastOnline?: Maybe<string>;
+        lastOnline?: string | null | undefined;
         role: UserRole;
         createdAt: string;
         updatedAt: string;
@@ -1094,10 +1109,10 @@ export type UpsertUsersMutation = {
       id: string;
       enabled: boolean;
       email: string;
-      name?: Maybe<string>;
+      name?: string | null | undefined;
       locked: boolean;
       active: boolean;
-      lastOnline?: Maybe<string>;
+      lastOnline?: string | null | undefined;
       role: UserRole;
       createdAt: string;
       updatedAt: string;

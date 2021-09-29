@@ -25,6 +25,7 @@ export * from "./casters";
 export * from "./connection";
 export * from "./logger";
 export * from "./utils";
+export * from "./listen";
 
 async function buildContext({ fastify }: BuildContextArgs) {
   const { Auth0UserPromise } = GetAuth0User(fastify?.request);

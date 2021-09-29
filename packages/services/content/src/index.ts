@@ -1,6 +1,5 @@
-import { baseServicesList, logger, pubSub } from "api-base";
+import { baseServicesList, logger, pubSub, smartListen } from "api-base";
 import Fastify from "fastify";
-import waitOn from "wait-on";
 import { buildApp } from "./ez";
 
 const app = Fastify({
@@ -21,13 +20,7 @@ app.ready(async (err) => {
     process.exit(1);
   }
 
-  await waitOn({
-    reverse: true,
-    resources: ["tcp:" + baseServicesList.content],
-    timeout: 5000,
-  });
-
-  await app.listen(baseServicesList.content, "0.0.0.0");
+  await smartListen(app, baseServicesList.content);
 
   pubSub.publish("updateGateway", "content");
 });

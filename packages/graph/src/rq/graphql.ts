@@ -547,13 +547,16 @@ export type CurrentUserQueryVariables = Exact<{ [key: string]: never }>;
 
 export type CurrentUserQuery = {
   __typename?: "Query";
-  currentUser?: Maybe<{
-    __typename?: "User";
-    id: string;
-    email: string;
-    name?: Maybe<string>;
-    role: UserRole;
-  }>;
+  currentUser?:
+    | {
+        __typename?: "User";
+        id: string;
+        email: string;
+        name?: string | null | undefined;
+        role: UserRole;
+      }
+    | null
+    | undefined;
 };
 
 export const CurrentUserDocument = `

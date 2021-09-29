@@ -107,6 +107,7 @@ importers:
       pino: ^6.13.3
       pino-pretty: ^7.0.1
       validator: ^13.6.0
+      wait-on: ^6.0.0
     dependencies:
       '@auth0/auth0-react': 1.8.0_react@17.0.2
       '@graphql-ez/fastify': 0.9.4_cee478f8f304f56d1aaa22792a720e27
@@ -125,6 +126,7 @@ importers:
       pino: 6.13.3
       pino-pretty: 7.0.1
       validator: 13.6.0
+      wait-on: 6.0.0
     devDependencies:
       '@types/pino': 6.3.11
       '@types/validator': 13.6.3

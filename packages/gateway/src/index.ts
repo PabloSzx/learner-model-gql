@@ -1,7 +1,6 @@
-import { logger } from "api-base";
+import { logger, smartListen } from "api-base";
 import Fastify from "fastify";
 import { inspect } from "util";
-import waitOn from "wait-on";
 import { getGatewayPlugin } from "./app";
 import type { Subscription } from "./ez.generated";
 
@@ -13,12 +12,7 @@ inspect.defaultOptions.depth = null;
 async function main() {
   await app.register(await getGatewayPlugin());
 
-  await waitOn({
-    reverse: true,
-    resources: ["tcp:8080"],
-    timeout: 5000,
-  });
-  await app.listen(8080, "0.0.0.0");
+  await smartListen(app, 8080);
 }
 
 type PubSubData = { [k in keyof Subscription]: Pick<Subscription, k> };
