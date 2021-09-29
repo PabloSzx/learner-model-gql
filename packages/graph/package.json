@@ -19,7 +19,7 @@
     "prepack": "bob-ts"
   },
   "dependencies": {
-    "@gqty/logger": "^2.0.0",
+    "@gqty/logger": "^2.0.1",
     "@gqty/react": "^2.0.0",
     "common": "workspace:^0.0.1",
     "gqty": "^2.0.1",

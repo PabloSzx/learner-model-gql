@@ -136,7 +136,7 @@ importers:
       '@chakra-ui/system': ^1.7.3
       '@emotion/react': ^11.4.1
       '@emotion/styled': ^11.3.0
-      '@gqty/logger': ^2.0.0
+      '@gqty/logger': ^2.0.1
       '@gqty/react': ^2.0.0
       '@types/nprogress': ^0.2.0
       '@types/react': ^17.0.25
@@ -159,7 +159,7 @@ importers:
       '@chakra-ui/system': 1.7.3_2305e84770652125202aaa4817ae97a9
       '@emotion/react': 11.4.1_22037d013abe15e26e130e884ef05f92
       '@emotion/styled': 11.3.0_12f3d821aed79474c74e462fa3daafd8
-      '@gqty/logger': 2.0.0_gqty@2.0.1
+      '@gqty/logger': 2.0.1_gqty@2.0.1
       '@gqty/react': 2.0.0_7b06ee5df0e558647f103e66fb3c2b5e
       '@types/react': 17.0.25
       '@types/react-dom': 17.0.9
@@ -299,7 +299,7 @@ importers:
 
   packages/graph:
     specifiers:
-      '@gqty/logger': ^2.0.0
+      '@gqty/logger': ^2.0.1
       '@gqty/react': ^2.0.0
       '@graphql-codegen/cli': ^2.2.0
       '@graphql-codegen/core': ^2.1.0
@@ -316,7 +316,7 @@ importers:
       react-query: ^3.24.4
       valtio: ^1.2.3
     dependencies:
-      '@gqty/logger': 2.0.0_gqty@2.0.1
+      '@gqty/logger': 2.0.1_gqty@2.0.1
       '@gqty/react': 2.0.0_7b06ee5df0e558647f103e66fb3c2b5e
       common: link:../common
       gqty: 2.0.1_graphql@15.6.0
@@ -1967,11 +1967,11 @@ packages:
       - supports-color
     dev: true
 
-  /@gqty/logger/2.0.0_gqty@2.0.1:
-    resolution: {integrity: sha512-oMdlHb1Mfvrv4stwulkfPtGLEiz8vOlFL1A3WSmMazAIOQddFPTjbfA/DjaOcGw6ILxMUeLEvckn/wOeTB1apg==}
-    engines: {node: '>=12'}
+  /@gqty/logger/2.0.1_gqty@2.0.1:
+    resolution: {integrity: sha512-o/hhrqOEuiiT5qFnXf1GO+WBOMp55e+l3AilynTFoSsjLInYMPvwERsObZ/7X2YJObGTkVb12ECdcZ5iRsQLgg==}
+    engines: {node: ^12.20.0 || >=14.13.0}
     peerDependencies:
-      gqty: ^2.0.0
+      gqty: ^2.0.2
     dependencies:
       gqty: 2.0.1_graphql@15.6.0
       prettier: 2.4.1
