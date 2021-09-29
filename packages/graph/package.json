@@ -34,7 +34,7 @@
     "@graphql-codegen/typed-document-node": "^2.1.4",
     "@graphql-codegen/typescript": "^2.2.2",
     "@graphql-codegen/typescript-document-nodes": "2.1.4",
-    "@graphql-codegen/typescript-operations": "^2.1.4",
+    "@graphql-codegen/typescript-operations": "^2.1.5",
     "@graphql-codegen/typescript-react-query": "^3.0.1",
     "bob-ts": "^1.1.1"
   }
