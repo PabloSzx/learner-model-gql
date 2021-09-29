@@ -32,7 +32,8 @@
     "api-base": "workspace:^0.0.1",
     "common": "workspace:^0.0.1",
     "gqty": "^2.0.1",
-    "graph": "workspace:^0.0.1"
+    "graph": "workspace:^0.0.1",
+    "undici": "^4.7.0"
   },
   "devDependencies": {
     "@gqty/cli": "^2.0.1",

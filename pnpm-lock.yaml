@@ -43,6 +43,7 @@ importers:
       rimraf: ^3.0.2
       testing: workspace:*
       typescript: ^4.4.3
+      undici: ^4.7.0
       valtio: ^1.2.3
       wait-on: ^6.0.0
     dependencies:
@@ -51,6 +52,7 @@ importers:
       common: link:packages/common
       gqty: 2.0.1_graphql@15.6.0
       graph: link:packages/graph
+      undici: 4.7.0
     devDependencies:
       '@gqty/cli': 2.0.1_graphql@15.6.0
       '@graphql-ez/fastify': 0.9.4_6affd6973429f1c8ef85b22e491eedfb
@@ -395,6 +397,7 @@ importers:
       '@graphql-ez/fastify-testing': ^0.1.2
       '@graphql-typed-document-node/core': ^3.1.0
       api-base: workspace:^0.0.1
+      graph: workspace:^0.0.1
     devDependencies:
       '@graphql-codegen/cli': 2.2.0_5b329862a24cab64a15a9ca7e97d8cfa
       '@graphql-codegen/core': 2.1.0_graphql@15.6.0
@@ -406,6 +409,7 @@ importers:
       '@graphql-ez/fastify-testing': 0.1.2_4ebbd6e64372617cd49e42aca764f282
       '@graphql-typed-document-node/core': 3.1.0_graphql@15.6.0
       api-base: link:../api-base
+      graph: link:../graph
 
 packages:
 

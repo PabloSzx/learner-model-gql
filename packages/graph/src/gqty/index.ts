@@ -1,7 +1,7 @@
 import { createLogger } from "@gqty/logger";
 import { createReactClient } from "@gqty/react";
 import { API_URL } from "common";
-import { createClient, QueryFetcher } from "gqty";
+import { createClient, QueryFetcher, ResolveOptions } from "gqty";
 import { headers } from "../headers";
 import {
   generatedSchema,
@@ -35,7 +35,41 @@ export const client = createClient<
   schema: generatedSchema,
   scalarsEnumsHash,
   queryFetcher,
+  defaults: {
+    resolved: {
+      refetch: true,
+    },
+  },
 });
+
+export const getGqtyClient = (queryFetcher: QueryFetcher) => {
+  const { resolved, ...client } = createClient<
+    GeneratedSchema,
+    SchemaObjectTypesNames,
+    SchemaObjectTypes
+  >({
+    schema: generatedSchema,
+    scalarsEnumsHash,
+    queryFetcher,
+    defaults: {
+      resolved: {
+        refetch: true,
+        noCache: true,
+        retry: false,
+      },
+    },
+  });
+
+  return {
+    ...client,
+    resolved<TData>(
+      cb: (data: typeof client) => TData,
+      opts?: ResolveOptions<TData>
+    ) {
+      return resolved<TData>(() => cb(client), opts);
+    },
+  };
+};
 
 if (process.env.NODE_ENV === "development" && typeof window !== "undefined") {
   const logger = createLogger(client);

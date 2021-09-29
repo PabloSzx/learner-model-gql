@@ -4,11 +4,12 @@ import { ezServicePreset, MockAuthUser, prisma } from "api-base";
 import {
   deepEqual,
   equal,
-  strict as assert,
   notDeepEqual,
   notEqual,
+  strict as assert,
 } from "assert/strict";
 import type { UserRole } from "db";
+import { getGqtyClient } from "graph/gqty";
 import { generate } from "randomstring";
 import { inspect } from "util";
 
@@ -24,7 +25,8 @@ beforeEach(() => {
 
 export { CreateApp } from "@graphql-ez/fastify";
 export * from "@graphql-ez/fastify-testing";
-export { prisma, getIdsIntersection, PromiseAllCallbacks } from "api-base";
+export { getIdsIntersection, prisma, PromiseAllCallbacks } from "api-base";
+export * as gqty from "graph/gqty";
 export type {
   DeepPartial,
   EZContext,
@@ -53,6 +55,11 @@ export const GetTestClient = async ({ ez, ...rest }: FastifyAppOptions) => {
   return {
     ...TestClient,
     origin: new URL(TestClient.endpoint).origin,
+    gqty: getGqtyClient((query, variables) => {
+      return TestClient.query(query, {
+        variables,
+      });
+    }),
   };
 };
 

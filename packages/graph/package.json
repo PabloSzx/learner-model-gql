@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./*": {
-      "import": "./dist/*.js"
-    }
+    "./*": "./dist/*.js",
+    "./gqty": "./dist/gqty/index.js",
+    "./rq": "./dist/rq/index.js"
   },
   "scripts": {
     "build": "pnpm prepack",
