@@ -1,3 +1,4 @@
+import { getArrayFields, getFields, selectFields } from "gqty";
 import {
   AllDomainsDocument,
   AllTopicsDocument,
@@ -22,8 +23,8 @@ import {
 import {
   contentModule,
   domainModule,
-  projectModule,
   kcModule,
+  projectModule,
 } from "../src/modules";
 
 export const DomainClient = () => {
@@ -497,4 +498,99 @@ export async function CheckDomainsOfProjects({
       ],
     },
   });
+}
+
+export async function CheckKCs({
+  gqty: { resolved, query, mutation },
+}: Pick<TestClient, "gqty">) {
+  const { project } = await CreateProject();
+
+  const { authUser } = await CreateUser({ project });
+
+  const { domain } = await CreateDomain({
+    project,
+  });
+
+  MockAuthUser.user = authUser;
+  {
+    const kcs = await resolved(() => {
+      const kcs = query.adminDomain.allKCs({
+        pagination: {
+          first: 10,
+        },
+      });
+
+      getArrayFields(kcs.nodes);
+      getFields(kcs.pageInfo);
+
+      return kcs;
+    });
+
+    expectDeepEqual(kcs.nodes.length, 0);
+    expectDeepEqual(kcs.pageInfo.hasNextPage, false);
+  }
+
+  const newKcCode = generate();
+  const newKcLabel = generate();
+
+  const newKc = await resolved(() => {
+    return selectFields(
+      mutation.adminDomain.createKC({
+        data: {
+          code: newKcCode,
+          label: newKcLabel,
+          domainId: domain.id,
+        },
+      })
+    );
+  });
+
+  expectDeepEqual(newKc.code, newKcCode);
+  expectDeepEqual(newKc.label, newKcLabel);
+
+  {
+    const kcs = await resolved(() => {
+      const kcs = query.adminDomain.allKCs({
+        pagination: {
+          first: 10,
+        },
+      });
+
+      getArrayFields(kcs.nodes);
+      getFields(kcs.pageInfo);
+
+      return kcs;
+    });
+
+    expectDeepEqual(kcs.nodes.length, 1);
+    expectDeepEqual(kcs.nodes[0]?.code, newKcCode);
+    expectDeepEqual(kcs.nodes[0]?.label, newKcLabel);
+    expectDeepEqual(kcs.nodes[0].id, newKc.id);
+    expectDeepEqual(kcs.pageInfo.hasNextPage, false);
+  }
+
+  const updatedKcCode = generate();
+
+  const updatedKc = await resolved(() => {
+    const kc = getFields(
+      mutation.adminDomain.updateKC({
+        data: {
+          id: newKc.id,
+          code: updatedKcCode,
+          label: newKc.label!,
+        },
+      })
+    );
+
+    getFields(kc.domain);
+    getArrayFields(kc.topics);
+
+    return kc;
+  });
+
+  expectDeepEqual(updatedKc.code, updatedKcCode);
+
+  expectDeepEqual(updatedKc.domain.code, domain.code);
+
+  expectDeepEqual(updatedKc.topics.length, 0);
 }

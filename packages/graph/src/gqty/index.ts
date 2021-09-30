@@ -54,10 +54,11 @@ export const getGqtyClient = (queryFetcher: QueryFetcher) => {
     defaults: {
       resolved: {
         refetch: true,
-        noCache: true,
+        noCache: false,
         retry: false,
       },
     },
+    retry: false,
   });
 
   return {

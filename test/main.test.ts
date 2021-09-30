@@ -6,6 +6,7 @@ import {
   CheckDomainOfContent,
   CheckDomainsOfProjects,
   CheckTopicsCreationRetrieval,
+  CheckKCs,
 } from "../packages/services/domain/test/test";
 import {
   CheckProjectCreationRetrieval,
@@ -157,6 +158,12 @@ describe("gateway", () => {
       const { GatewayClient } = await TestStitchedSchema();
 
       await CheckDomainsOfProjects(GatewayClient);
+    });
+
+    it.skip("kcs", async () => {
+      const { GatewayClient } = await TestStitchedSchema();
+
+      await CheckKCs(GatewayClient);
     });
   });
 

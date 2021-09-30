@@ -3,6 +3,7 @@ import {
   CheckDomainCreationRetrieval,
   CheckDomainOfContent,
   CheckDomainsOfProjects,
+  CheckKCs,
   CheckTopicsCreationRetrieval,
   DomainClient,
 } from "./test";
@@ -40,5 +41,11 @@ describe("Domain service", () => {
     const testClient = await DomainClient();
 
     await CheckDomainsOfProjects(testClient);
+  });
+
+  it("kcs", async () => {
+    const testClient = await DomainClient();
+
+    await CheckKCs(testClient);
   });
 });
