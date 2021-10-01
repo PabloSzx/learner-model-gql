@@ -1,11 +1,9 @@
 schema: ../../schema.gql
-documents: graphql/**/*.gql
+documents:
+  - "../../**/test/**/*.ts"
 generates:
-  src/generated/graphql.ts:
-    plugins:
-      - typescript
-      - typescript-operations
-      - typed-document-node
+  ./src/generated/:
+    preset: gql-tag-operations-preset
     config:
       useTypeImports: true
       enumsAsConst: true
@@ -23,4 +21,4 @@ generates:
         Longitude: "number"
 hooks:
   afterAllFileWrite:
-    - prettier --write
+    - node after-codegen-write.mjs

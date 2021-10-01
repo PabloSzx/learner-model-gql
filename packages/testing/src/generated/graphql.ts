@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/core";
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -543,6 +544,10 @@ export type UsersConnection = {
   pageInfo: PageInfo;
 };
 
+export type HelloQueryVariables = Exact<{ [key: string]: never }>;
+
+export type HelloQuery = { __typename?: "Query"; hello: string };
+
 export type CreateActionMutationVariables = Exact<{
   data: ActionInput;
 }>;
@@ -573,24 +578,6 @@ export type AllActionsQuery = {
   };
 };
 
-export type CreateContentMutationVariables = Exact<{
-  data: CreateContent;
-}>;
-
-export type CreateContentMutation = {
-  __typename?: "Mutation";
-  adminContent: {
-    __typename?: "AdminContentMutations";
-    createContent: {
-      __typename?: "Content";
-      id: string;
-      description: string;
-      binaryBase64?: string | null | undefined;
-      json?: Record<string, unknown> | null | undefined;
-    };
-  };
-};
-
 export type AllContentQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
 }>;
@@ -609,6 +596,24 @@ export type AllContentQuery = {
         json?: Record<string, unknown> | null | undefined;
       }>;
       pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean };
+    };
+  };
+};
+
+export type CreateContentMutationVariables = Exact<{
+  data: CreateContent;
+}>;
+
+export type CreateContentMutation = {
+  __typename?: "Mutation";
+  adminContent: {
+    __typename?: "AdminContentMutations";
+    createContent: {
+      __typename?: "Content";
+      id: string;
+      description: string;
+      binaryBase64?: string | null | undefined;
+      json?: Record<string, unknown> | null | undefined;
     };
   };
 };
@@ -668,40 +673,6 @@ export type IsolatedDomainFieldsFragment = {
   label: string;
 };
 
-export type CreateDomainMutationVariables = Exact<{
-  input: CreateDomain;
-}>;
-
-export type CreateDomainMutation = {
-  __typename?: "Mutation";
-  adminDomain: {
-    __typename?: "AdminDomainMutations";
-    createDomain: {
-      __typename?: "Domain";
-      id: string;
-      code: string;
-      label: string;
-    };
-  };
-};
-
-export type UpdateDomainMutationVariables = Exact<{
-  input: UpdateDomain;
-}>;
-
-export type UpdateDomainMutation = {
-  __typename?: "Mutation";
-  adminDomain: {
-    __typename?: "AdminDomainMutations";
-    updateDomain: {
-      __typename?: "Domain";
-      id: string;
-      code: string;
-      label: string;
-    };
-  };
-};
-
 export type IsolatedTopicFieldsFragment = {
   __typename?: "Topic";
   id: string;
@@ -721,6 +692,61 @@ export type IsolatedTopicFieldsFragment = {
     id: string;
     domain: { __typename?: "Domain"; id: string };
   }>;
+};
+
+export type CreateDomainMutationVariables = Exact<{
+  input: CreateDomain;
+}>;
+
+export type CreateDomainMutation = {
+  __typename?: "Mutation";
+  adminDomain: {
+    __typename?: "AdminDomainMutations";
+    createDomain: {
+      __typename?: "Domain";
+      id: string;
+      code: string;
+      label: string;
+    };
+  };
+};
+
+export type AllDomainsQueryVariables = Exact<{
+  pagination: CursorConnectionArgs;
+}>;
+
+export type AllDomainsQuery = {
+  __typename?: "Query";
+  adminDomain: {
+    __typename?: "AdminDomainQueries";
+    allDomains: {
+      __typename?: "DomainsConnection";
+      nodes: Array<{
+        __typename?: "Domain";
+        id: string;
+        code: string;
+        label: string;
+      }>;
+      pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean };
+    };
+  };
+};
+
+export type UpdateDomainMutationVariables = Exact<{
+  input: UpdateDomain;
+}>;
+
+export type UpdateDomainMutation = {
+  __typename?: "Mutation";
+  adminDomain: {
+    __typename?: "AdminDomainMutations";
+    updateDomain: {
+      __typename?: "Domain";
+      id: string;
+      code: string;
+      label: string;
+    };
+  };
 };
 
 export type CreateTopicMutationVariables = Exact<{
@@ -750,58 +776,6 @@ export type CreateTopicMutation = {
         id: string;
         domain: { __typename?: "Domain"; id: string };
       }>;
-    };
-  };
-};
-
-export type UpdateTopicMutationVariables = Exact<{
-  input: UpdateTopic;
-}>;
-
-export type UpdateTopicMutation = {
-  __typename?: "Mutation";
-  adminDomain: {
-    __typename?: "AdminDomainMutations";
-    updateTopic: {
-      __typename?: "Topic";
-      id: string;
-      code: string;
-      label: string;
-      domain: { __typename?: "Domain"; id: string };
-      parent?:
-        | {
-            __typename?: "Topic";
-            id: string;
-            domain: { __typename?: "Domain"; id: string };
-          }
-        | null
-        | undefined;
-      childrens: Array<{
-        __typename?: "Topic";
-        id: string;
-        domain: { __typename?: "Domain"; id: string };
-      }>;
-    };
-  };
-};
-
-export type AllDomainsQueryVariables = Exact<{
-  pagination: CursorConnectionArgs;
-}>;
-
-export type AllDomainsQuery = {
-  __typename?: "Query";
-  adminDomain: {
-    __typename?: "AdminDomainQueries";
-    allDomains: {
-      __typename?: "DomainsConnection";
-      nodes: Array<{
-        __typename?: "Domain";
-        id: string;
-        code: string;
-        label: string;
-      }>;
-      pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean };
     };
   };
 };
@@ -841,6 +815,37 @@ export type AllTopicsQuery = {
   };
 };
 
+export type UpdateTopicMutationVariables = Exact<{
+  input: UpdateTopic;
+}>;
+
+export type UpdateTopicMutation = {
+  __typename?: "Mutation";
+  adminDomain: {
+    __typename?: "AdminDomainMutations";
+    updateTopic: {
+      __typename?: "Topic";
+      id: string;
+      code: string;
+      label: string;
+      domain: { __typename?: "Domain"; id: string };
+      parent?:
+        | {
+            __typename?: "Topic";
+            id: string;
+            domain: { __typename?: "Domain"; id: string };
+          }
+        | null
+        | undefined;
+      childrens: Array<{
+        __typename?: "Topic";
+        id: string;
+        domain: { __typename?: "Domain"; id: string };
+      }>;
+    };
+  };
+};
+
 export type DomainFromContentQueryVariables = Exact<{
   ids: Array<Scalars["IntID"]> | Scalars["IntID"];
 }>;
@@ -867,10 +872,6 @@ export type DomainsFromProjectsQuery = {
   }>;
 };
 
-export type HelloQueryVariables = Exact<{ [key: string]: never }>;
-
-export type HelloQuery = { __typename?: "Query"; hello: string };
-
 export type AdminCreateProjectMutationVariables = Exact<{
   data: CreateProject;
 }>;
@@ -880,23 +881,6 @@ export type AdminCreateProjectMutation = {
   adminProjects: {
     __typename?: "AdminProjectsMutations";
     createProject: {
-      __typename?: "Project";
-      id: string;
-      code: string;
-      label: string;
-    };
-  };
-};
-
-export type AdminUpdateProjectMutationVariables = Exact<{
-  data: UpdateProject;
-}>;
-
-export type AdminUpdateProjectMutation = {
-  __typename?: "Mutation";
-  adminProjects: {
-    __typename?: "AdminProjectsMutations";
-    updateProject: {
       __typename?: "Project";
       id: string;
       code: string;
@@ -922,6 +906,23 @@ export type AdminAllProjectsQuery = {
         label: string;
       }>;
       pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean };
+    };
+  };
+};
+
+export type AdminUpdateProjectMutationVariables = Exact<{
+  data: UpdateProject;
+}>;
+
+export type AdminUpdateProjectMutation = {
+  __typename?: "Mutation";
+  adminProjects: {
+    __typename?: "AdminProjectsMutations";
+    updateProject: {
+      __typename?: "Project";
+      id: string;
+      code: string;
+      label: string;
     };
   };
 };
@@ -1025,26 +1026,27 @@ export type UserInfoFragment = {
   updatedAt: string;
 };
 
-export type CurrentUserQueryVariables = Exact<{ [key: string]: never }>;
+export type GroupInfoFragment = {
+  __typename?: "Group";
+  id: string;
+  code: string;
+  label: string;
+  projectsIds: Array<string>;
+  users: Array<{ __typename?: "User"; id: string; email: string }>;
+};
 
-export type CurrentUserQuery = {
-  __typename?: "Query";
-  currentUser?:
-    | {
-        __typename?: "User";
-        id: string;
-        enabled: boolean;
-        email: string;
-        name?: string | null | undefined;
-        locked: boolean;
-        active: boolean;
-        lastOnline?: string | null | undefined;
-        role: UserRole;
-        createdAt: string;
-        updatedAt: string;
-      }
-    | null
-    | undefined;
+export type UserGroupsInfoFragment = {
+  __typename?: "User";
+  id: string;
+  email: string;
+  groups: Array<{
+    __typename?: "Group";
+    id: string;
+    code: string;
+    label: string;
+    projectsIds: Array<string>;
+    users: Array<{ __typename?: "User"; id: string; email: string }>;
+  }>;
 };
 
 export type UsersByIdQueryVariables = Exact<{
@@ -1120,31 +1122,26 @@ export type UpsertUsersMutation = {
   };
 };
 
-export type SetUserProjectsMutationVariables = Exact<{
-  projectIds: Array<Scalars["IntID"]> | Scalars["IntID"];
-  userIds: Array<Scalars["IntID"]> | Scalars["IntID"];
-}>;
+export type CurrentUserQueryVariables = Exact<{ [key: string]: never }>;
 
-export type SetUserProjectsMutation = {
-  __typename?: "Mutation";
-  adminUsers: {
-    __typename?: "AdminUserMutations";
-    setProjectsToUsers: Array<{
-      __typename?: "User";
-      id: string;
-      email: string;
-      projectsIds: Array<string>;
-    }>;
-  };
-};
-
-export type GroupInfoFragment = {
-  __typename?: "Group";
-  id: string;
-  code: string;
-  label: string;
-  projectsIds: Array<string>;
-  users: Array<{ __typename?: "User"; id: string; email: string }>;
+export type CurrentUserQuery = {
+  __typename?: "Query";
+  currentUser?:
+    | {
+        __typename?: "User";
+        id: string;
+        enabled: boolean;
+        email: string;
+        name?: string | null | undefined;
+        locked: boolean;
+        active: boolean;
+        lastOnline?: string | null | undefined;
+        role: UserRole;
+        createdAt: string;
+        updatedAt: string;
+      }
+    | null
+    | undefined;
 };
 
 export type AdminAllGroupsQueryVariables = Exact<{
@@ -1186,17 +1183,24 @@ export type GetGroupsQuery = {
   }>;
 };
 
-export type UserGroupsInfoFragment = {
-  __typename?: "User";
-  id: string;
-  email: string;
-  groups: Array<{
-    __typename?: "Group";
+export type UsersGroupsQueryVariables = Exact<{
+  ids: Array<Scalars["IntID"]> | Scalars["IntID"];
+}>;
+
+export type UsersGroupsQuery = {
+  __typename?: "Query";
+  users: Array<{
+    __typename?: "User";
     id: string;
-    code: string;
-    label: string;
-    projectsIds: Array<string>;
-    users: Array<{ __typename?: "User"; id: string; email: string }>;
+    email: string;
+    groups: Array<{
+      __typename?: "Group";
+      id: string;
+      code: string;
+      label: string;
+      projectsIds: Array<string>;
+      users: Array<{ __typename?: "User"; id: string; email: string }>;
+    }>;
   }>;
 };
 
@@ -1263,25 +1267,22 @@ export type AdminUpdateGroupMutation = {
   };
 };
 
-export type UsersGroupsQueryVariables = Exact<{
-  ids: Array<Scalars["IntID"]> | Scalars["IntID"];
+export type SetUserProjectsMutationVariables = Exact<{
+  projectIds: Array<Scalars["IntID"]> | Scalars["IntID"];
+  userIds: Array<Scalars["IntID"]> | Scalars["IntID"];
 }>;
 
-export type UsersGroupsQuery = {
-  __typename?: "Query";
-  users: Array<{
-    __typename?: "User";
-    id: string;
-    email: string;
-    groups: Array<{
-      __typename?: "Group";
+export type SetUserProjectsMutation = {
+  __typename?: "Mutation";
+  adminUsers: {
+    __typename?: "AdminUserMutations";
+    setProjectsToUsers: Array<{
+      __typename?: "User";
       id: string;
-      code: string;
-      label: string;
+      email: string;
       projectsIds: Array<string>;
-      users: Array<{ __typename?: "User"; id: string; email: string }>;
     }>;
-  }>;
+  };
 };
 
 export const IsolatedDomainFieldsFragmentDoc = {
@@ -1471,6 +1472,20 @@ export const UserGroupsInfoFragmentDoc = {
     ...GroupInfoFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<UserGroupsInfoFragment, unknown>;
+export const HelloDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "hello" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [{ kind: "Field", name: { kind: "Name", value: "hello" } }],
+      },
+    },
+  ],
+} as unknown as DocumentNode<HelloQuery, HelloQueryVariables>;
 export const CreateActionDocument = {
   kind: "Document",
   definitions: [
@@ -1627,75 +1642,6 @@ export const AllActionsDocument = {
     },
   ],
 } as unknown as DocumentNode<AllActionsQuery, AllActionsQueryVariables>;
-export const CreateContentDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "CreateContent" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "CreateContent" },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "adminContent" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "createContent" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "data" },
-                      value: {
-                        kind: "Variable",
-                        name: { kind: "Name", value: "data" },
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "description" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "binaryBase64" },
-                      },
-                      { kind: "Field", name: { kind: "Name", value: "json" } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  CreateContentMutation,
-  CreateContentMutationVariables
->;
 export const AllContentDocument = {
   kind: "Document",
   definitions: [
@@ -1793,6 +1739,75 @@ export const AllContentDocument = {
     },
   ],
 } as unknown as DocumentNode<AllContentQuery, AllContentQueryVariables>;
+export const CreateContentDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "CreateContent" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "CreateContent" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminContent" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "createContent" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "data" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "data" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "description" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "binaryBase64" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "json" } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  CreateContentMutation,
+  CreateContentMutationVariables
+>;
 export const ContentFromDomainDocument = {
   kind: "Document",
   definitions: [
@@ -2116,6 +2131,95 @@ export const CreateDomainDocument = {
   CreateDomainMutation,
   CreateDomainMutationVariables
 >;
+export const AllDomainsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "AllDomains" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "pagination" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "CursorConnectionArgs" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminDomain" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "allDomains" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "pagination" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "pagination" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "nodes" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "FragmentSpread",
+                              name: {
+                                kind: "Name",
+                                value: "IsolatedDomainFields",
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "pageInfo" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "hasNextPage" },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...IsolatedDomainFieldsFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<AllDomainsQuery, AllDomainsQueryVariables>;
 export const UpdateDomainDocument = {
   kind: "Document",
   definitions: [
@@ -2247,159 +2351,6 @@ export const CreateTopicDocument = {
     ...IsolatedTopicFieldsFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<CreateTopicMutation, CreateTopicMutationVariables>;
-export const UpdateTopicDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "UpdateTopic" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "input" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "UpdateTopic" },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "adminDomain" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "updateTopic" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "input" },
-                      value: {
-                        kind: "Variable",
-                        name: { kind: "Name", value: "input" },
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "FragmentSpread",
-                        name: { kind: "Name", value: "IsolatedTopicFields" },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-    ...IsolatedTopicFieldsFragmentDoc.definitions,
-  ],
-} as unknown as DocumentNode<UpdateTopicMutation, UpdateTopicMutationVariables>;
-export const AllDomainsDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "AllDomains" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "pagination" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "CursorConnectionArgs" },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "adminDomain" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "allDomains" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "pagination" },
-                      value: {
-                        kind: "Variable",
-                        name: { kind: "Name", value: "pagination" },
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "nodes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: {
-                                kind: "Name",
-                                value: "IsolatedDomainFields",
-                              },
-                            },
-                          ],
-                        },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "pageInfo" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "hasNextPage" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-    ...IsolatedDomainFieldsFragmentDoc.definitions,
-  ],
-} as unknown as DocumentNode<AllDomainsQuery, AllDomainsQueryVariables>;
 export const AllTopicsDocument = {
   kind: "Document",
   definitions: [
@@ -2489,6 +2440,70 @@ export const AllTopicsDocument = {
     ...IsolatedTopicFieldsFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<AllTopicsQuery, AllTopicsQueryVariables>;
+export const UpdateTopicDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpdateTopic" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "input" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "UpdateTopic" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminDomain" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "updateTopic" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "input" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "input" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "FragmentSpread",
+                        name: { kind: "Name", value: "IsolatedTopicFields" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...IsolatedTopicFieldsFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<UpdateTopicMutation, UpdateTopicMutationVariables>;
 export const DomainFromContentDocument = {
   kind: "Document",
   definitions: [
@@ -2623,20 +2638,6 @@ export const DomainsFromProjectsDocument = {
   DomainsFromProjectsQuery,
   DomainsFromProjectsQueryVariables
 >;
-export const HelloDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "hello" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [{ kind: "Field", name: { kind: "Name", value: "hello" } }],
-      },
-    },
-  ],
-} as unknown as DocumentNode<HelloQuery, HelloQueryVariables>;
 export const AdminCreateProjectDocument = {
   kind: "Document",
   definitions: [
@@ -2698,68 +2699,6 @@ export const AdminCreateProjectDocument = {
 } as unknown as DocumentNode<
   AdminCreateProjectMutation,
   AdminCreateProjectMutationVariables
->;
-export const AdminUpdateProjectDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "AdminUpdateProject" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "UpdateProject" },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "adminProjects" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "updateProject" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "data" },
-                      value: {
-                        kind: "Variable",
-                        name: { kind: "Name", value: "data" },
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      { kind: "Field", name: { kind: "Name", value: "code" } },
-                      { kind: "Field", name: { kind: "Name", value: "label" } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  AdminUpdateProjectMutation,
-  AdminUpdateProjectMutationVariables
 >;
 export const AdminAllProjectsDocument = {
   kind: "Document",
@@ -2856,6 +2795,68 @@ export const AdminAllProjectsDocument = {
 } as unknown as DocumentNode<
   AdminAllProjectsQuery,
   AdminAllProjectsQueryVariables
+>;
+export const AdminUpdateProjectDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "AdminUpdateProject" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "UpdateProject" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminProjects" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "updateProject" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "data" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "data" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      { kind: "Field", name: { kind: "Name", value: "label" } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  AdminUpdateProjectMutation,
+  AdminUpdateProjectMutationVariables
 >;
 export const AdminProjectFromContentDocument = {
   kind: "Document",
@@ -3200,35 +3201,6 @@ export const AdminProjectFromGroupDocument = {
   AdminProjectFromGroupQuery,
   AdminProjectFromGroupQueryVariables
 >;
-export const CurrentUserDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "CurrentUser" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "currentUser" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "FragmentSpread",
-                  name: { kind: "Name", value: "UserInfo" },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-    ...UserInfoFragmentDoc.definitions,
-  ],
-} as unknown as DocumentNode<CurrentUserQuery, CurrentUserQueryVariables>;
 export const UsersByIdDocument = {
   kind: "Document",
   definitions: [
@@ -3440,96 +3412,25 @@ export const UpsertUsersDocument = {
     ...UserInfoFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<UpsertUsersMutation, UpsertUsersMutationVariables>;
-export const SetUserProjectsDocument = {
+export const CurrentUserDocument = {
   kind: "Document",
   definitions: [
     {
       kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "SetUserProjects" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "projectIds" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "ListType",
-              type: {
-                kind: "NonNullType",
-                type: {
-                  kind: "NamedType",
-                  name: { kind: "Name", value: "IntID" },
-                },
-              },
-            },
-          },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "userIds" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "ListType",
-              type: {
-                kind: "NonNullType",
-                type: {
-                  kind: "NamedType",
-                  name: { kind: "Name", value: "IntID" },
-                },
-              },
-            },
-          },
-        },
-      ],
+      operation: "query",
+      name: { kind: "Name", value: "CurrentUser" },
       selectionSet: {
         kind: "SelectionSet",
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "adminUsers" },
+            name: { kind: "Name", value: "currentUser" },
             selectionSet: {
               kind: "SelectionSet",
               selections: [
                 {
-                  kind: "Field",
-                  name: { kind: "Name", value: "setProjectsToUsers" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "projectIds" },
-                      value: {
-                        kind: "Variable",
-                        name: { kind: "Name", value: "projectIds" },
-                      },
-                    },
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "userIds" },
-                      value: {
-                        kind: "Variable",
-                        name: { kind: "Name", value: "userIds" },
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      { kind: "Field", name: { kind: "Name", value: "email" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "projectsIds" },
-                      },
-                    ],
-                  },
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "UserInfo" },
                 },
               ],
             },
@@ -3537,11 +3438,9 @@ export const SetUserProjectsDocument = {
         ],
       },
     },
+    ...UserInfoFragmentDoc.definitions,
   ],
-} as unknown as DocumentNode<
-  SetUserProjectsMutation,
-  SetUserProjectsMutationVariables
->;
+} as unknown as DocumentNode<CurrentUserQuery, CurrentUserQueryVariables>;
 export const AdminAllGroupsDocument = {
   kind: "Document",
   definitions: [
@@ -3686,6 +3585,64 @@ export const GetGroupsDocument = {
     ...GroupInfoFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<GetGroupsQuery, GetGroupsQueryVariables>;
+export const UsersGroupsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "UsersGroups" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "ids" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "ListType",
+              type: {
+                kind: "NonNullType",
+                type: {
+                  kind: "NamedType",
+                  name: { kind: "Name", value: "IntID" },
+                },
+              },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "users" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "ids" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "ids" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "UserGroupsInfo" },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...UserGroupsInfoFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<UsersGroupsQuery, UsersGroupsQueryVariables>;
 export const SetUserGroupsDocument = {
   kind: "Document",
   definitions: [
@@ -3915,17 +3872,40 @@ export const AdminUpdateGroupDocument = {
   AdminUpdateGroupMutation,
   AdminUpdateGroupMutationVariables
 >;
-export const UsersGroupsDocument = {
+export const SetUserProjectsDocument = {
   kind: "Document",
   definitions: [
     {
       kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "UsersGroups" },
+      operation: "mutation",
+      name: { kind: "Name", value: "SetUserProjects" },
       variableDefinitions: [
         {
           kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "ids" } },
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "projectIds" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "ListType",
+              type: {
+                kind: "NonNullType",
+                type: {
+                  kind: "NamedType",
+                  name: { kind: "Name", value: "IntID" },
+                },
+              },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "userIds" },
+          },
           type: {
             kind: "NonNullType",
             type: {
@@ -3946,23 +3926,42 @@ export const UsersGroupsDocument = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "users" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "ids" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "ids" },
-                },
-              },
-            ],
+            name: { kind: "Name", value: "adminUsers" },
             selectionSet: {
               kind: "SelectionSet",
               selections: [
                 {
-                  kind: "FragmentSpread",
-                  name: { kind: "Name", value: "UserGroupsInfo" },
+                  kind: "Field",
+                  name: { kind: "Name", value: "setProjectsToUsers" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "projectIds" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "projectIds" },
+                      },
+                    },
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "userIds" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "userIds" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "email" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "projectsIds" },
+                      },
+                    ],
+                  },
                 },
               ],
             },
@@ -3970,6 +3969,8 @@ export const UsersGroupsDocument = {
         ],
       },
     },
-    ...UserGroupsInfoFragmentDoc.definitions,
   ],
-} as unknown as DocumentNode<UsersGroupsQuery, UsersGroupsQueryVariables>;
+} as unknown as DocumentNode<
+  SetUserProjectsMutation,
+  SetUserProjectsMutationVariables
+>;

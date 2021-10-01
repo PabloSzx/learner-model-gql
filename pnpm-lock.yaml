@@ -22,7 +22,7 @@ importers:
       '@types/randomstring': ^1.1.7
       '@types/react': ^17.0.26
       api-base: workspace:^0.0.1
-      bob-ts: ^1.1.1
+      bob-ts: ^1.1.2
       c8: ^7.9.0
       common: workspace:^0.0.1
       concurrently: ^6.2.2
@@ -67,7 +67,7 @@ importers:
       '@types/prettier': 2.4.1
       '@types/randomstring': 1.1.7
       '@types/react': 17.0.26
-      bob-ts: 1.1.1_a23e2eaf95a191fd44cf6be087b17a98
+      bob-ts: 1.1.2_a23e2eaf95a191fd44cf6be087b17a98
       c8: 7.9.0
       concurrently: 6.2.2
       cross-env: 7.0.3
@@ -314,7 +314,7 @@ importers:
       '@graphql-codegen/typescript-document-nodes': 2.1.4
       '@graphql-codegen/typescript-operations': ^2.1.5
       '@graphql-codegen/typescript-react-query': ^3.0.1
-      bob-ts: ^1.1.1
+      bob-ts: ^1.1.2
       common: workspace:^0.0.1
       gqty: ^2.0.2
       graphql: ^15.6.0
@@ -338,7 +338,7 @@ importers:
       '@graphql-codegen/typescript-document-nodes': 2.1.4_graphql@15.6.0
       '@graphql-codegen/typescript-operations': 2.1.5_graphql@15.6.0
       '@graphql-codegen/typescript-react-query': 3.0.1_graphql@15.6.0
-      bob-ts: 1.1.1_a23e2eaf95a191fd44cf6be087b17a98
+      bob-ts: 1.1.2_a23e2eaf95a191fd44cf6be087b17a98
 
   packages/services/actions:
     specifiers:
@@ -3793,8 +3793,8 @@ packages:
       rollup: 2.57.0
     dev: true
 
-  /bob-ts/1.1.1_a23e2eaf95a191fd44cf6be087b17a98:
-    resolution: {integrity: sha512-e7IdkvT3Jhk0p+Hiijc4m21vYtq3hlnk8fihyr2TCQm37t8QVSofdGn3AZ8eK+SGq3M0nxX1T0qG+OLwdnU9hA==}
+  /bob-ts/1.1.2_a23e2eaf95a191fd44cf6be087b17a98:
+    resolution: {integrity: sha512-ar5D9pge9FnfGtx+lzrte9ES/d3VUG1UIGov+ATMSWI+Mta0h2u2b59CmGJyfMG07nG7gxEXUyloSn03CFxwpQ==}
     engines: {node: ^12.20.0 || >=14.13.0}
     hasBin: true
     peerDependencies:

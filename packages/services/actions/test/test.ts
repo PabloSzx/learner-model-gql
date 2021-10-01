@@ -1,13 +1,12 @@
 import {
-  CreateActionDocument,
   CreateProject,
   CreateUser,
   expectDeepEqual,
   generate,
+  gql,
   MockAuthUser,
   prisma,
   TestClient,
-  gql,
 } from "testing";
 
 export async function CheckActionsCreationRetrieval({
@@ -25,16 +24,23 @@ export async function CheckActionsCreationRetrieval({
   MockAuthUser.user = authUser;
 
   {
-    const data = await mutation(CreateActionDocument, {
-      variables: {
-        data: {
-          activity: {},
-          projectId,
-          timestamp: Date.now(),
-          verbName,
+    const data = await mutation(
+      gql(/* GraphQL */ `
+        mutation CreateAction($data: ActionInput!) {
+          action(data: $data)
+        }
+      `),
+      {
+        variables: {
+          data: {
+            activity: {},
+            projectId,
+            timestamp: Date.now(),
+            verbName,
+          },
         },
-      },
-    });
+      }
+    );
 
     expectDeepEqual(data, {
       data: {

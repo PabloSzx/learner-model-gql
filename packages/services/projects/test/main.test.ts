@@ -1,4 +1,5 @@
-import { expectDeepEqual, GetTestClient, HelloDocument } from "testing";
+import { expectDeepEqual, GetTestClient, gql } from "testing";
+
 import {
   contentModule,
   domainModule,
@@ -26,11 +27,20 @@ describe("Projects service", () => {
   it("hello world", async () => {
     const { query } = await ProjectsClient();
 
-    expectDeepEqual(await query(HelloDocument), {
-      data: {
-        hello: "Hello World!",
-      },
-    });
+    expectDeepEqual(
+      await query(
+        gql(/* GraphQL */ `
+          query hello {
+            hello
+          }
+        `)
+      ),
+      {
+        data: {
+          hello: "Hello World!",
+        },
+      }
+    );
   });
 
   it("project creation & retrieval", async () => {

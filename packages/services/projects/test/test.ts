@@ -1,11 +1,4 @@
 import {
-  AdminAllProjectsDocument,
-  AdminCreateProjectDocument,
-  AdminProjectFromContentDocument,
-  AdminProjectFromDomainDocument,
-  AdminProjectFromTopicDocument,
-  AdminProjectFromUserDocument,
-  AdminUpdateProjectDocument,
   assert,
   CreateDomain,
   CreateEmptyContent,
@@ -14,11 +7,11 @@ import {
   CreateUser,
   expectDeepEqual,
   generate,
+  gql,
   MockAuthUser,
   prisma,
   PromiseAllCallbacks,
   TestClient,
-  AdminProjectFromGroupDocument,
 } from "testing";
 
 export async function CheckProjectCreationRetrieval({
@@ -36,14 +29,27 @@ export async function CheckProjectCreationRetrieval({
   const projectCode = generate();
   const projectLabel = generate();
 
-  const resultProject = await mutation(AdminCreateProjectDocument, {
-    variables: {
-      data: {
-        code: projectCode,
-        label: projectLabel,
+  const resultProject = await mutation(
+    gql(/* GraphQL */ `
+      mutation AdminCreateProject($data: CreateProject!) {
+        adminProjects {
+          createProject(data: $data) {
+            id
+            code
+            label
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        data: {
+          code: projectCode,
+          label: projectLabel,
+        },
       },
-    },
-  });
+    }
+  );
 
   expectDeepEqual(resultProject.errors, undefined);
   assert(resultProject.data);
@@ -58,13 +64,31 @@ export async function CheckProjectCreationRetrieval({
     id: project.id,
   });
 
-  const projectsList = await query(AdminAllProjectsDocument, {
-    variables: {
-      pagination: {
-        first: 10,
+  const projectsList = await query(
+    gql(/* GraphQL */ `
+      query AdminAllProjects($pagination: CursorConnectionArgs!) {
+        adminProjects {
+          allProjects(pagination: $pagination) {
+            nodes {
+              id
+              code
+              label
+            }
+            pageInfo {
+              hasNextPage
+            }
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        pagination: {
+          first: 10,
+        },
       },
-    },
-  });
+    }
+  );
 
   expectDeepEqual(projectsList, {
     data: {
@@ -86,15 +110,28 @@ export async function CheckProjectCreationRetrieval({
   assert(updatedLabel !== projectLabel);
 
   {
-    const resultProject = await mutation(AdminUpdateProjectDocument, {
-      variables: {
-        data: {
-          id: projectId,
-          code: updatedCode,
-          label: updatedLabel,
+    const resultProject = await mutation(
+      gql(/* GraphQL */ `
+        mutation AdminUpdateProject($data: UpdateProject!) {
+          adminProjects {
+            updateProject(data: $data) {
+              id
+              code
+              label
+            }
+          }
+        }
+      `),
+      {
+        variables: {
+          data: {
+            id: projectId,
+            code: updatedCode,
+            label: updatedLabel,
+          },
         },
-      },
-    });
+      }
+    );
 
     expectDeepEqual(resultProject.errors, undefined);
     assert(resultProject.data);
@@ -109,13 +146,31 @@ export async function CheckProjectCreationRetrieval({
       id: project.id,
     });
 
-    const projectsList = await query(AdminAllProjectsDocument, {
-      variables: {
-        pagination: {
-          first: 10,
+    const projectsList = await query(
+      gql(/* GraphQL */ `
+        query AdminAllProjects($pagination: CursorConnectionArgs!) {
+          adminProjects {
+            allProjects(pagination: $pagination) {
+              nodes {
+                id
+                code
+                label
+              }
+              pageInfo {
+                hasNextPage
+              }
+            }
+          }
+        }
+      `),
+      {
+        variables: {
+          pagination: {
+            first: 10,
+          },
         },
-      },
-    });
+      }
+    );
 
     expectDeepEqual(projectsList, {
       data: {
@@ -159,11 +214,25 @@ export async function CheckProjectFromContent({
     }
   );
 
-  const result = await query(AdminProjectFromContentDocument, {
-    variables: {
-      ids: [contentId],
-    },
-  });
+  const result = await query(
+    gql(/* GraphQL */ `
+      query AdminProjectFromContent($ids: [IntID!]!) {
+        content(ids: $ids) {
+          id
+          project {
+            id
+            code
+            label
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        ids: [contentId],
+      },
+    }
+  );
 
   expectDeepEqual(result, {
     data: {
@@ -211,11 +280,25 @@ export async function CheckProjectFromDomainAndTopic({
   );
 
   {
-    const result = await query(AdminProjectFromDomainDocument, {
-      variables: {
-        ids: [domainId],
-      },
-    });
+    const result = await query(
+      gql(/* GraphQL */ `
+        query AdminProjectFromDomain($ids: [IntID!]!) {
+          domains(ids: $ids) {
+            id
+            project {
+              id
+              code
+              label
+            }
+          }
+        }
+      `),
+      {
+        variables: {
+          ids: [domainId],
+        },
+      }
+    );
 
     expectDeepEqual(result, {
       data: {
@@ -234,11 +317,25 @@ export async function CheckProjectFromDomainAndTopic({
   }
 
   {
-    const result = await query(AdminProjectFromTopicDocument, {
-      variables: {
-        ids: [topicId],
-      },
-    });
+    const result = await query(
+      gql(/* GraphQL */ `
+        query AdminProjectFromTopic($ids: [IntID!]!) {
+          topics(ids: $ids) {
+            id
+            project {
+              id
+              code
+              label
+            }
+          }
+        }
+      `),
+      {
+        variables: {
+          ids: [topicId],
+        },
+      }
+    );
 
     expectDeepEqual(result, {
       data: {
@@ -271,11 +368,25 @@ export async function CheckProjectFromUser({
 
   await PromiseAllCallbacks(
     async () => {
-      const result = await query(AdminProjectFromUserDocument, {
-        variables: {
-          ids: [userId],
-        },
-      });
+      const result = await query(
+        gql(/* GraphQL */ `
+          query AdminProjectFromUser($ids: [IntID!]!) {
+            users(ids: $ids) {
+              id
+              projects {
+                id
+                code
+                label
+              }
+            }
+          }
+        `),
+        {
+          variables: {
+            ids: [userId],
+          },
+        }
+      );
 
       expectDeepEqual(result, {
         data: {
@@ -299,11 +410,23 @@ export async function CheckProjectFromUser({
         project,
       });
 
-      const result = await query(AdminProjectFromGroupDocument, {
-        variables: {
-          ids: [groupId],
-        },
-      });
+      const result = await query(
+        gql(/* GraphQL */ `
+          query AdminProjectFromGroup($ids: [IntID!]!) {
+            groups(ids: $ids) {
+              id
+              projects {
+                id
+              }
+            }
+          }
+        `),
+        {
+          variables: {
+            ids: [groupId],
+          },
+        }
+      );
 
       expectDeepEqual(result, {
         data: {

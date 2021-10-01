@@ -1,28 +1,56 @@
 import {
-  AdminAllUsersDocument,
   assert,
+  CreateGroup,
   CreateProject,
   CreateUser,
-  CurrentUserDocument,
   expectDeepEqual,
   generate,
+  gql,
   MockAuthUser,
+  notDeepEqual,
   notEqual,
   prisma,
   PromiseAllCallbacks,
   TestClient,
-  UpsertUsersDocument,
-  UsersByIdDocument,
-  CreateGroup,
-  AdminAllGroupsDocument,
-  GetGroupsDocument,
-  UsersGroupsDocument,
-  SetUserGroupsDocument,
-  AdminCreateGroupDocument,
-  notDeepEqual,
-  AdminUpdateGroupDocument,
-  SetUserProjectsDocument,
 } from "testing";
+
+export const UserInfo = gql(/* GraphQL */ `
+  fragment UserInfo on User {
+    id
+    enabled
+    email
+    name
+    locked
+    active
+    lastOnline
+    role
+    createdAt
+    updatedAt
+  }
+`);
+
+export const GroupInfo = gql(/* GraphQL */ `
+  fragment GroupInfo on Group {
+    id
+    code
+    label
+    users {
+      id
+      email
+    }
+    projectsIds
+  }
+`);
+
+export const UsersGroupsInfo = gql(/* GraphQL */ `
+  fragment UserGroupsInfo on User {
+    id
+    email
+    groups {
+      ...GroupInfo
+    }
+  }
+`);
 
 export async function CheckUsers({
   query,
@@ -40,11 +68,20 @@ export async function CheckUsers({
 
   const [resultAuthUser] = await PromiseAllCallbacks(
     async () => {
-      const result = await query(UsersByIdDocument, {
-        variables: {
-          ids: [authUser.userId],
-        },
-      });
+      const result = await query(
+        gql(/* GraphQL */ `
+          query UsersById($ids: [IntID!]!) {
+            users(ids: $ids) {
+              ...UserInfo
+            }
+          }
+        `),
+        {
+          variables: {
+            ids: [authUser.userId],
+          },
+        }
+      );
 
       expectDeepEqual(result.errors, undefined);
 
@@ -75,13 +112,29 @@ export async function CheckUsers({
       return resultUser;
     },
     async () => {
-      const result = await query(AdminAllUsersDocument, {
-        variables: {
-          pagination: {
-            first: 10,
+      const result = await query(
+        gql(/* GraphQL */ `
+          query AdminAllUsers($pagination: CursorConnectionArgs!) {
+            adminUsers {
+              allUsers(pagination: $pagination) {
+                nodes {
+                  ...UserInfo
+                }
+                pageInfo {
+                  hasNextPage
+                }
+              }
+            }
+          }
+        `),
+        {
+          variables: {
+            pagination: {
+              first: 10,
+            },
           },
-        },
-      });
+        }
+      );
 
       expectDeepEqual(result.errors, undefined);
 
@@ -120,15 +173,26 @@ export async function CheckUsers({
 
   const newEmail = generate() + "@gmail.com";
 
-  const upsertedResult = await mutation(UpsertUsersDocument, {
-    variables: {
-      data: [
-        {
-          email: newEmail,
-        },
-      ],
-    },
-  });
+  const upsertedResult = await mutation(
+    gql(/* GraphQL */ `
+      mutation UpsertUsers($data: [UpsertUserInput!]!) {
+        adminUsers {
+          upsertUsers(data: $data) {
+            ...UserInfo
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        data: [
+          {
+            email: newEmail,
+          },
+        ],
+      },
+    }
+  );
 
   expectDeepEqual(upsertedResult.errors, undefined);
 
@@ -159,16 +223,27 @@ export async function CheckUsers({
 
   const newName = generate();
 
-  const updatedResult = await mutation(UpsertUsersDocument, {
-    variables: {
-      data: [
-        {
-          email: newEmail,
-          name: newName,
-        },
-      ],
-    },
-  });
+  const updatedResult = await mutation(
+    gql(/* GraphQL */ `
+      mutation UpsertUsers($data: [UpsertUserInput!]!) {
+        adminUsers {
+          upsertUsers(data: $data) {
+            ...UserInfo
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        data: [
+          {
+            email: newEmail,
+            name: newName,
+          },
+        ],
+      },
+    }
+  );
 
   expectDeepEqual(updatedResult.errors, undefined);
 
@@ -200,13 +275,29 @@ export async function CheckUsers({
   });
 
   {
-    const allUsers = await query(AdminAllUsersDocument, {
-      variables: {
-        pagination: {
-          first: 10,
+    const allUsers = await query(
+      gql(/* GraphQL */ `
+        query AdminAllUsers($pagination: CursorConnectionArgs!) {
+          adminUsers {
+            allUsers(pagination: $pagination) {
+              nodes {
+                ...UserInfo
+              }
+              pageInfo {
+                hasNextPage
+              }
+            }
+          }
+        }
+      `),
+      {
+        variables: {
+          pagination: {
+            first: 10,
+          },
         },
-      },
-    });
+      }
+    );
 
     const authUserUpdatedDates = await prisma.user.findUnique({
       where: {
@@ -243,7 +334,15 @@ export async function CheckUsers({
     });
   }
   {
-    const currentUserResult = await query(CurrentUserDocument);
+    const currentUserResult = await query(
+      gql(/* GraphQL */ `
+        query CurrentUser {
+          currentUser {
+            ...UserInfo
+          }
+        }
+      `)
+    );
 
     const authUserUpdatedDates = await prisma.user.findUnique({
       where: {
@@ -292,13 +391,29 @@ export async function CheckGroups({
 
   await PromiseAllCallbacks(
     async () => {
-      const result = await query(AdminAllGroupsDocument, {
-        variables: {
-          pagination: {
-            first: 10,
+      const result = await query(
+        gql(/* GraphQL */ `
+          query AdminAllGroups($pagination: CursorConnectionArgs!) {
+            adminUsers {
+              allGroups(pagination: $pagination) {
+                nodes {
+                  ...GroupInfo
+                }
+                pageInfo {
+                  hasNextPage
+                }
+              }
+            }
+          }
+        `),
+        {
+          variables: {
+            pagination: {
+              first: 10,
+            },
           },
-        },
-      });
+        }
+      );
 
       expectDeepEqual(result, {
         data: {
@@ -327,11 +442,20 @@ export async function CheckGroups({
       });
     },
     async () => {
-      const result = await query(GetGroupsDocument, {
-        variables: {
-          ids: [firstGroupId],
-        },
-      });
+      const result = await query(
+        gql(/* GraphQL */ `
+          query GetGroups($ids: [IntID!]!) {
+            groups(ids: $ids) {
+              ...GroupInfo
+            }
+          }
+        `),
+        {
+          variables: {
+            ids: [firstGroupId],
+          },
+        }
+      );
 
       expectDeepEqual(result, {
         data: {
@@ -353,11 +477,20 @@ export async function CheckGroups({
       });
     },
     async () => {
-      const result = await query(UsersGroupsDocument, {
-        variables: {
-          ids: [userId],
-        },
-      });
+      const result = await query(
+        gql(/* GraphQL */ `
+          query UsersGroups($ids: [IntID!]!) {
+            users(ids: $ids) {
+              ...UserGroupsInfo
+            }
+          }
+        `),
+        {
+          variables: {
+            ids: [userId],
+          },
+        }
+      );
 
       expectDeepEqual(result, {
         data: {
@@ -388,12 +521,23 @@ export async function CheckGroups({
 
   const user2 = await CreateUser({});
 
-  const setUserGroupResult = await mutation(SetUserGroupsDocument, {
-    variables: {
-      userIds: [user2.userId],
-      groupIds: [firstGroupId],
-    },
-  });
+  const setUserGroupResult = await mutation(
+    gql(/* GraphQL */ `
+      mutation SetUserGroups($userIds: [IntID!]!, $groupIds: [IntID!]!) {
+        adminUsers {
+          setUserGroups(userIds: $userIds, groupIds: $groupIds) {
+            ...UserGroupsInfo
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        userIds: [user2.userId],
+        groupIds: [firstGroupId],
+      },
+    }
+  );
 
   expectDeepEqual(setUserGroupResult, {
     data: {
@@ -429,15 +573,26 @@ export async function CheckGroups({
   const group2Code = generate();
   const group2Label = generate();
 
-  const group2Result = await mutation(AdminCreateGroupDocument, {
-    variables: {
-      data: {
-        code: group2Code,
-        label: group2Label,
-        projectIds: [projectId],
+  const group2Result = await mutation(
+    gql(/* GraphQL */ `
+      mutation AdminCreateGroup($data: CreateGroupInput!) {
+        adminUsers {
+          createGroup(data: $data) {
+            ...GroupInfo
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        data: {
+          code: group2Code,
+          label: group2Label,
+          projectIds: [projectId],
+        },
       },
-    },
-  });
+    }
+  );
 
   expectDeepEqual(group2Result.errors, undefined);
 
@@ -464,16 +619,27 @@ export async function CheckGroups({
   notDeepEqual(updatedGroup2Code, group2.code);
   notDeepEqual(updatedGroup2Label, group2.label);
 
-  const updatedGroup2Result = await mutation(AdminUpdateGroupDocument, {
-    variables: {
-      data: {
-        id: group2.id.toString(),
-        code: updatedGroup2Code,
-        label: updatedGroup2Label,
-        projectIds: [],
+  const updatedGroup2Result = await mutation(
+    gql(/* GraphQL */ `
+      mutation AdminUpdateGroup($data: UpdateGroupInput!) {
+        adminUsers {
+          updateGroup(data: $data) {
+            ...GroupInfo
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        data: {
+          id: group2.id.toString(),
+          code: updatedGroup2Code,
+          label: updatedGroup2Label,
+          projectIds: [],
+        },
       },
-    },
-  });
+    }
+  );
 
   expectDeepEqual(updatedGroup2Result, {
     data: {
@@ -489,12 +655,25 @@ export async function CheckGroups({
     },
   });
 
-  const updatedUser2 = await mutation(SetUserProjectsDocument, {
-    variables: {
-      projectIds: [projectId],
-      userIds: [user2.userId],
-    },
-  });
+  const updatedUser2 = await mutation(
+    gql(/* GraphQL */ `
+      mutation SetUserProjects($projectIds: [IntID!]!, $userIds: [IntID!]!) {
+        adminUsers {
+          setProjectsToUsers(projectIds: $projectIds, userIds: $userIds) {
+            id
+            email
+            projectsIds
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        projectIds: [projectId],
+        userIds: [user2.userId],
+      },
+    }
+  );
 
   expectDeepEqual(updatedUser2, {
     data: {

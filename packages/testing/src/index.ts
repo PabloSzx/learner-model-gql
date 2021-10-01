@@ -1,5 +1,4 @@
 import type { FastifyAppOptions, PromiseType } from "@graphql-ez/fastify";
-import { CreateTestClient, GlobalTeardown } from "@graphql-ez/fastify-testing";
 import { ezServicePreset, MockAuthUser, prisma } from "api-base";
 import {
   deepEqual,
@@ -8,11 +7,13 @@ import {
   notEqual,
   strict as assert,
 } from "assert/strict";
-import type { UserRole } from "db";
 import { getGqtyClient } from "graph/gqty";
 import { generate } from "randomstring";
 import { inspect } from "util";
 
+import { CreateTestClient, GlobalTeardown } from "@graphql-ez/fastify-testing";
+
+import type { UserRole } from "db";
 inspect.defaultOptions.depth = null;
 
 typeof after !== "undefined" &&
@@ -39,8 +40,8 @@ export type {
 } from "graphql-ez";
 export { createDeferredPromise, LazyPromise, PLazy } from "graphql-ez/utils";
 export { generate } from "randomstring";
+export * from "./generated";
 export * from "./generated/graphql";
-export * from "./gql";
 export { MockAuthUser };
 export { assert, equal, deepEqual, notDeepEqual, notEqual };
 

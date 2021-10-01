@@ -1,4 +1,5 @@
-import { expectDeepEqual, HelloDocument } from "testing";
+import { expectDeepEqual, gql } from "testing";
+
 import {
   CheckDomainCreationRetrieval,
   CheckDomainOfContent,
@@ -12,11 +13,20 @@ describe("Domain service", () => {
   it("hello world", async () => {
     const { query } = await DomainClient();
 
-    expectDeepEqual(await query(HelloDocument), {
-      data: {
-        hello: "Hello World!",
-      },
-    });
+    expectDeepEqual(
+      await query(
+        gql(/* GraphQL */ `
+          query hello {
+            hello
+          }
+        `)
+      ),
+      {
+        data: {
+          hello: "Hello World!",
+        },
+      }
+    );
   });
 
   it("domain creation & retrieval", async () => {

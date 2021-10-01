@@ -1,4 +1,5 @@
-import { expectDeepEqual, GetTestClient, HelloDocument } from "testing";
+import { expectDeepEqual, GetTestClient, gql } from "testing";
+
 import { groupsModule, projectsModule, usersModule } from "../src/modules";
 import { CheckGroups, CheckUsers } from "./test";
 
@@ -16,11 +17,20 @@ describe("Users service", () => {
   it("hello world", async () => {
     const { query } = await UsersClient();
 
-    expectDeepEqual(await query(HelloDocument), {
-      data: {
-        hello: "Hello World!",
-      },
-    });
+    expectDeepEqual(
+      await query(
+        gql(/* GraphQL */ `
+          query hello {
+            hello
+          }
+        `)
+      ),
+      {
+        data: {
+          hello: "Hello World!",
+        },
+      }
+    );
   });
 
   it("users creation & retrieval", async () => {

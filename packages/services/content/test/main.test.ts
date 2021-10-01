@@ -6,9 +6,9 @@ import {
   expectDeepEqual,
   GetTestClient,
   gql,
-  HelloDocument,
   prisma,
 } from "testing";
+
 import { contentModule, domainModule } from "../src/modules";
 import { CheckContentCreationRetrieval } from "./test";
 
@@ -21,11 +21,20 @@ describe("Content service", () => {
       },
     });
 
-    expectDeepEqual(await query(HelloDocument), {
-      data: {
-        hello: "Hello World!",
-      },
-    });
+    expectDeepEqual(
+      await query(
+        gql(/* GraphQL */ `
+          query hello {
+            hello
+          }
+        `)
+      ),
+      {
+        data: {
+          hello: "Hello World!",
+        },
+      }
+    );
   });
 
   it("create & retrieve content", async () => {

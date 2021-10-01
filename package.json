@@ -25,7 +25,7 @@
     "pretty:all": "prettier --write \"**/*.{ts,tsx,gql,json}\"",
     "test": "bob-ts -i packages -i test && c8 mocha",
     "test:watch": "concurrently -r pnpm:test:watch:cmd \"pnpm dev -r\"",
-    "test:watch:cmd": "bob-ts-watch -i packages -i test -c \"mocha\""
+    "test:watch:cmd": "bob-ts-watch -i packages -i test -c \"mocha\" --ignore \"**/generated/**\""
   },
   "dependencies": {
     "@gqty/react": "^2.0.0",
@@ -47,7 +47,7 @@
     "@types/prettier": "^2.4.1",
     "@types/randomstring": "^1.1.7",
     "@types/react": "^17.0.26",
-    "bob-ts": "^1.1.1",
+    "bob-ts": "^1.1.2",
     "c8": "^7.9.0",
     "concurrently": "^6.2.2",
     "cross-env": "^7.0.3",
