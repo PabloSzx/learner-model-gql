@@ -169,7 +169,7 @@ describe("gateway", () => {
       await CheckDomainsOfProjects(GatewayClient);
     });
 
-    it.skip("kcs", async () => {
+    it("kcs", async () => {
       const { GatewayClient } = await TestStitchedSchema();
 
       await CheckKCs(GatewayClient);

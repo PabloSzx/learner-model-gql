@@ -872,6 +872,61 @@ export type DomainsFromProjectsQuery = {
   }>;
 };
 
+export type AllKcsFirst10QueryVariables = Exact<{ [key: string]: never }>;
+
+export type AllKcsFirst10Query = {
+  __typename?: "Query";
+  adminDomain: {
+    __typename?: "AdminDomainQueries";
+    allKCs: {
+      __typename?: "KCsConnection";
+      nodes: Array<{
+        __typename?: "KC";
+        id: string;
+        code: string;
+        label: string;
+      }>;
+      pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean };
+    };
+  };
+};
+
+export type CreateKcMutationVariables = Exact<{
+  data: CreateKcInput;
+}>;
+
+export type CreateKcMutation = {
+  __typename?: "Mutation";
+  adminDomain: {
+    __typename?: "AdminDomainMutations";
+    createKC: {
+      __typename?: "KC";
+      id: string;
+      code: string;
+      label: string;
+      domain: { __typename?: "Domain"; id: string };
+    };
+  };
+};
+
+export type UpdateKcMutationVariables = Exact<{
+  data: UpdateKcInput;
+}>;
+
+export type UpdateKcMutation = {
+  __typename?: "Mutation";
+  adminDomain: {
+    __typename?: "AdminDomainMutations";
+    updateKC: {
+      __typename?: "KC";
+      id: string;
+      code: string;
+      label: string;
+      domain: { __typename?: "Domain"; id: string };
+    };
+  };
+};
+
 export type AdminCreateProjectMutationVariables = Exact<{
   data: CreateProject;
 }>;
@@ -2638,6 +2693,233 @@ export const DomainsFromProjectsDocument = {
   DomainsFromProjectsQuery,
   DomainsFromProjectsQueryVariables
 >;
+export const AllKcsFirst10Document = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "AllKcsFirst10" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminDomain" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "allKCs" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "pagination" },
+                      value: {
+                        kind: "ObjectValue",
+                        fields: [
+                          {
+                            kind: "ObjectField",
+                            name: { kind: "Name", value: "first" },
+                            value: { kind: "IntValue", value: "10" },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "nodes" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "code" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "label" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "pageInfo" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "hasNextPage" },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<AllKcsFirst10Query, AllKcsFirst10QueryVariables>;
+export const CreateKcDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "CreateKC" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "CreateKCInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminDomain" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "createKC" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "data" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "data" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      { kind: "Field", name: { kind: "Name", value: "label" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "domain" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<CreateKcMutation, CreateKcMutationVariables>;
+export const UpdateKcDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpdateKC" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "UpdateKCInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminDomain" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "updateKC" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "data" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "data" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      { kind: "Field", name: { kind: "Name", value: "label" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "domain" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UpdateKcMutation, UpdateKcMutationVariables>;
 export const AdminCreateProjectDocument = {
   kind: "Document",
   definitions: [

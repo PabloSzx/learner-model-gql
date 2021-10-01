@@ -1,4 +1,3 @@
-import { getArrayFields, getFields, selectFields } from "gqty";
 import {
   assert,
   CreateDomain,
@@ -13,6 +12,7 @@ import {
   prisma,
   TestClient,
 } from "testing";
+
 import {
   contentModule,
   domainModule,
@@ -689,9 +689,7 @@ export async function CheckDomainsOfProjects({
   });
 }
 
-export async function CheckKCs({
-  gqty: { resolved, query, mutation },
-}: Pick<TestClient, "gqty">) {
+export async function CheckKCs({ query }: Pick<TestClient, "query">) {
   const { project } = await CreateProject();
 
   const { authUser } = await CreateUser({ project });
@@ -702,84 +700,143 @@ export async function CheckKCs({
 
   MockAuthUser.user = authUser;
   {
-    const kcs = await resolved(() => {
-      const kcs = query.adminDomain.allKCs({
-        pagination: {
-          first: 10,
-        },
-      });
+    const kcs = await query(
+      gql(/* GraphQL */ `
+        query AllKcsFirst10 {
+          adminDomain {
+            allKCs(pagination: { first: 10 }) {
+              nodes {
+                id
+                code
+                label
+              }
+              pageInfo {
+                hasNextPage
+              }
+            }
+          }
+        }
+      `)
+    );
 
-      getArrayFields(kcs.nodes);
-      getFields(kcs.pageInfo);
+    expectDeepEqual(kcs.errors, undefined);
 
-      return kcs;
-    });
-
-    expectDeepEqual(kcs.nodes.length, 0);
-    expectDeepEqual(kcs.pageInfo.hasNextPage, false);
+    expectDeepEqual(kcs.data?.adminDomain.allKCs.nodes.length, 0);
+    expectDeepEqual(kcs.data?.adminDomain.allKCs.pageInfo.hasNextPage, false);
   }
 
   const newKcCode = generate();
   const newKcLabel = generate();
 
-  const newKc = await resolved(() => {
-    return selectFields(
-      mutation.adminDomain.createKC({
+  const newKc = await query(
+    gql(/* GraphQL */ `
+      mutation CreateKC($data: CreateKCInput!) {
+        adminDomain {
+          createKC(data: $data) {
+            id
+            code
+            label
+            domain {
+              id
+            }
+          }
+        }
+      }
+    `),
+    {
+      variables: {
         data: {
           code: newKcCode,
           label: newKcLabel,
-          domainId: domain.id,
+          domainId: domain.id.toString(),
         },
-      })
-    );
+      },
+    }
+  );
+
+  expectDeepEqual(newKc.errors, undefined);
+
+  expectDeepEqual(newKc.data, {
+    adminDomain: {
+      createKC: {
+        id: newKc.data?.adminDomain.createKC.id!,
+        code: newKcCode,
+        domain: {
+          id: domain.id.toString(),
+        },
+        label: newKcLabel,
+      },
+    },
   });
 
-  expectDeepEqual(newKc.code, newKcCode);
-  expectDeepEqual(newKc.label, newKcLabel);
-
   {
-    const kcs = await resolved(() => {
-      const kcs = query.adminDomain.allKCs({
-        pagination: {
-          first: 10,
-        },
-      });
+    const kcs = await query(
+      gql(/* GraphQL */ `
+        query AllKcsFirst10 {
+          adminDomain {
+            allKCs(pagination: { first: 10 }) {
+              nodes {
+                id
+                code
+                label
+              }
+              pageInfo {
+                hasNextPage
+              }
+            }
+          }
+        }
+      `)
+    );
 
-      getArrayFields(kcs.nodes);
-      getFields(kcs.pageInfo);
-
-      return kcs;
-    });
-
-    expectDeepEqual(kcs.nodes.length, 1);
-    expectDeepEqual(kcs.nodes[0]?.code, newKcCode);
-    expectDeepEqual(kcs.nodes[0]?.label, newKcLabel);
-    expectDeepEqual(kcs.nodes[0].id, newKc.id);
-    expectDeepEqual(kcs.pageInfo.hasNextPage, false);
+    expectDeepEqual(kcs.data?.adminDomain.allKCs.nodes.length, 1);
+    expectDeepEqual(kcs.data?.adminDomain.allKCs.nodes[0]?.code, newKcCode);
+    expectDeepEqual(kcs.data?.adminDomain.allKCs.nodes[0]?.label, newKcLabel);
+    expectDeepEqual(
+      kcs.data?.adminDomain.allKCs.nodes[0].id,
+      newKc.data.adminDomain.createKC.id
+    );
+    expectDeepEqual(kcs.data?.adminDomain.allKCs.pageInfo.hasNextPage, false);
   }
 
   const updatedKcCode = generate();
 
-  const updatedKc = await resolved(() => {
-    const kc = getFields(
-      mutation.adminDomain.updateKC({
+  const updatedKc = await query(
+    gql(/* GraphQL */ `
+      mutation UpdateKC($data: UpdateKCInput!) {
+        adminDomain {
+          updateKC(data: $data) {
+            id
+            code
+            label
+            domain {
+              id
+            }
+          }
+        }
+      }
+    `),
+    {
+      variables: {
         data: {
-          id: newKc.id,
+          id: newKc.data?.adminDomain.createKC.id!,
           code: updatedKcCode,
-          label: newKc.label!,
+          label: newKc.data?.adminDomain.createKC.label!,
         },
-      })
-    );
+      },
+    }
+  );
 
-    getFields(kc.domain);
-    getArrayFields(kc.topics);
-
-    return kc;
+  expectDeepEqual(updatedKc.data, {
+    adminDomain: {
+      updateKC: {
+        code: updatedKcCode,
+        domain: {
+          id: domain.id.toString(),
+        },
+        id: newKc.data?.adminDomain.createKC.id!,
+        label: newKc.data?.adminDomain.createKC.label!,
+      },
+    },
   });
-
-  expectDeepEqual(updatedKc.code, updatedKcCode);
-
-  expectDeepEqual(updatedKc.domain.code, domain.code);
-
-  expectDeepEqual(updatedKc.topics.length, 0);
 }

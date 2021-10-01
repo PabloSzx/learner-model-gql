@@ -51,6 +51,12 @@ const documents = {
     graphql.DomainFromContentDocument,
   "\n      query DomainsFromProjects($ids: [IntID!]!) {\n        projects(ids: $ids) {\n          id\n          domains {\n            id\n          }\n        }\n      }\n    ":
     graphql.DomainsFromProjectsDocument,
+  "\n        query AllKcsFirst10 {\n          adminDomain {\n            allKCs(pagination: { first: 10 }) {\n              nodes {\n                id\n                code\n                label\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      ":
+    graphql.AllKcsFirst10Document,
+  "\n      mutation CreateKC($data: CreateKCInput!) {\n        adminDomain {\n          createKC(data: $data) {\n            id\n            code\n            label\n            domain {\n              id\n            }\n          }\n        }\n      }\n    ":
+    graphql.CreateKcDocument,
+  "\n      mutation UpdateKC($data: UpdateKCInput!) {\n        adminDomain {\n          updateKC(data: $data) {\n            id\n            code\n            label\n            domain {\n              id\n            }\n          }\n        }\n      }\n    ":
+    graphql.UpdateKcDocument,
   "\n      mutation AdminCreateProject($data: CreateProject!) {\n        adminProjects {\n          createProject(data: $data) {\n            id\n            code\n            label\n          }\n        }\n      }\n    ":
     graphql.AdminCreateProjectDocument,
   "\n      query AdminAllProjects($pagination: CursorConnectionArgs!) {\n        adminProjects {\n          allProjects(pagination: $pagination) {\n            nodes {\n              id\n              code\n              label\n            }\n            pageInfo {\n              hasNextPage\n            }\n          }\n        }\n      }\n    ":
@@ -173,6 +179,15 @@ export function gql(
 export function gql(
   source: "\n      query DomainsFromProjects($ids: [IntID!]!) {\n        projects(ids: $ids) {\n          id\n          domains {\n            id\n          }\n        }\n      }\n    "
 ): typeof documents["\n      query DomainsFromProjects($ids: [IntID!]!) {\n        projects(ids: $ids) {\n          id\n          domains {\n            id\n          }\n        }\n      }\n    "];
+export function gql(
+  source: "\n        query AllKcsFirst10 {\n          adminDomain {\n            allKCs(pagination: { first: 10 }) {\n              nodes {\n                id\n                code\n                label\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      "
+): typeof documents["\n        query AllKcsFirst10 {\n          adminDomain {\n            allKCs(pagination: { first: 10 }) {\n              nodes {\n                id\n                code\n                label\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      "];
+export function gql(
+  source: "\n      mutation CreateKC($data: CreateKCInput!) {\n        adminDomain {\n          createKC(data: $data) {\n            id\n            code\n            label\n            domain {\n              id\n            }\n          }\n        }\n      }\n    "
+): typeof documents["\n      mutation CreateKC($data: CreateKCInput!) {\n        adminDomain {\n          createKC(data: $data) {\n            id\n            code\n            label\n            domain {\n              id\n            }\n          }\n        }\n      }\n    "];
+export function gql(
+  source: "\n      mutation UpdateKC($data: UpdateKCInput!) {\n        adminDomain {\n          updateKC(data: $data) {\n            id\n            code\n            label\n            domain {\n              id\n            }\n          }\n        }\n      }\n    "
+): typeof documents["\n      mutation UpdateKC($data: UpdateKCInput!) {\n        adminDomain {\n          updateKC(data: $data) {\n            id\n            code\n            label\n            domain {\n              id\n            }\n          }\n        }\n      }\n    "];
 export function gql(
   source: "\n      mutation AdminCreateProject($data: CreateProject!) {\n        adminProjects {\n          createProject(data: $data) {\n            id\n            code\n            label\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation AdminCreateProject($data: CreateProject!) {\n        adminProjects {\n          createProject(data: $data) {\n            id\n            code\n            label\n          }\n        }\n      }\n    "];
