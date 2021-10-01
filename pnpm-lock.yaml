@@ -238,12 +238,12 @@ importers:
       '@types/react': ^17.0.26
       common-api: workspace:^1.0.0
       prisma: ^3.1.1
-      prisma-dbml-generator: ^0.8.0
+      prisma-dbml-generator: ^0.8.1
     dependencies:
       '@prisma/client': 3.1.1_prisma@3.1.1
       common-api: link:../common-api
       prisma: 3.1.1
-      prisma-dbml-generator: 0.8.0
+      prisma-dbml-generator: 0.8.1
     devDependencies:
       '@types/concurrently': 6.2.1
       '@types/react': 17.0.26
@@ -3060,7 +3060,7 @@ packages:
       http-proxy-agent: 4.0.1
       https-proxy-agent: 5.0.0
       make-dir: 3.1.0
-      node-fetch: 2.6.1
+      node-fetch: 2.6.5
       p-filter: 2.1.0
       p-map: 4.0.0
       p-retry: 4.6.1
@@ -4230,7 +4230,7 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       slice-ansi: 3.0.0
-      string-width: 4.2.2
+      string-width: 4.2.3
     dev: false
 
   /cli-width/3.0.0:
@@ -7470,8 +7470,8 @@ packages:
     resolution: {integrity: sha512-VVtxR7sOh0VsG8o06Ttq5TrI1aiZKmC+ClSn4eBPaNf4SHr5lzbYW+kYGX3HocBL/MfpVrRfFZ9V3vCbLaiplg==}
     dev: false
 
-  /prisma-dbml-generator/0.8.0:
-    resolution: {integrity: sha512-ESwG+YTQduC0H9pQ9U2xhh5unjnTn8izN307FD7M5/VpeqxEKlUHJjNhvfPecKzrYW2s+veCDTSYpqbLL7ZtPQ==}
+  /prisma-dbml-generator/0.8.1:
+    resolution: {integrity: sha512-hxsDNj9LATYKP968peHzMRoSKuYEz36HxvvfZ/HacTbnD1YdjdDhDA8CPDDo/uKynBv+Q2Utxggcyl32Kr3P0w==}
     hasBin: true
     dependencies:
       '@prisma/generator-helper': 3.0.2
@@ -8349,7 +8349,7 @@ packages:
     dependencies:
       emoji-regex: 8.0.0
       is-fullwidth-code-point: 3.0.0
-      strip-ansi: 6.0.0
+      strip-ansi: 6.0.1
     dev: false
 
   /string-width/4.2.3:
