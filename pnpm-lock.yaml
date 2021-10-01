@@ -46,7 +46,7 @@ importers:
       testing: workspace:*
       typescript: ^4.4.3
       undici: ^4.7.0
-      valtio: ^1.2.3
+      valtio: ^1.2.4
       wait-on: ^6.0.0
     dependencies:
       '@gqty/react': 2.0.0_f5955bd3be1149a4bd41c48673680eeb
@@ -87,7 +87,7 @@ importers:
       rimraf: 3.0.2
       testing: link:packages/testing
       typescript: 4.4.3
-      valtio: 1.2.3_react@17.0.2
+      valtio: 1.2.4_react@17.0.2
       wait-on: 6.0.0
 
   packages/api-base:
@@ -320,7 +320,7 @@ importers:
       graphql: ^15.6.0
       prettier: ^2.4.1
       react-query: ^3.24.5
-      valtio: ^1.2.3
+      valtio: ^1.2.4
     dependencies:
       '@gqty/logger': 2.0.1_gqty@2.0.2
       '@gqty/react': 2.0.0_f5955bd3be1149a4bd41c48673680eeb
@@ -329,7 +329,7 @@ importers:
       graphql: 15.6.0
       prettier: 2.4.1
       react-query: 3.24.5_react@17.0.2
-      valtio: 1.2.3_react@17.0.2
+      valtio: 1.2.4_react@17.0.2
     devDependencies:
       '@graphql-codegen/cli': 2.2.0_282d702737718240fbf0ccc852cde709
       '@graphql-codegen/core': 2.1.0_graphql@15.6.0
@@ -8997,9 +8997,9 @@ packages:
     engines: {node: '>= 0.10'}
     dev: false
 
-  /valtio/1.2.3_react@17.0.2:
-    resolution: {integrity: sha512-ci74EjmFwSoF4jLugz3I0BmSAK9S0+splzikIDdKuixPBkAFt+ez4KNKLiS6kihGe6L0vTyEgm/oDutXrPlKpA==}
-    engines: {node: '>=12'}
+  /valtio/1.2.4_react@17.0.2:
+    resolution: {integrity: sha512-FipYZHGJXsSKObKNGOHwqqiA6T84T7LHhrPfM7ptt3e2uFao4djD5/u4JEb/z2O14fv1CFxIO05UWCuk3VT/qg==}
+    engines: {node: '>=12.7.0'}
     peerDependencies:
       '@babel/helper-module-imports': '>=7.12'
       '@babel/types': '>=7.13'
