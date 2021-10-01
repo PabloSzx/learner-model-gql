@@ -15,13 +15,15 @@ import { inspect } from "util";
 
 inspect.defaultOptions.depth = null;
 
-after(() => {
-  GlobalTeardown();
-});
+typeof after !== "undefined" &&
+  after(() => {
+    GlobalTeardown();
+  });
 
-beforeEach(() => {
-  MockAuthUser.user = null;
-});
+typeof beforeEach !== "undefined" &&
+  beforeEach(() => {
+    MockAuthUser.user = null;
+  });
 
 export { CreateApp } from "@graphql-ez/fastify";
 export * from "@graphql-ez/fastify-testing";

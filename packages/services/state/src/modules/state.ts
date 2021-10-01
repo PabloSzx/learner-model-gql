@@ -1,6 +1,6 @@
 import { gql, registerModule } from "../ez";
 
-registerModule(
+export const stateModule = registerModule(
   gql`
     extend type Query {
       hello2: String!

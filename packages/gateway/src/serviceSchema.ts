@@ -14,27 +14,17 @@ export type ServicesSubSchemasConfig = {
   [k in ServiceName]?: Partial<SubschemaConfig>;
 };
 
-function getStreamJSON<T>(
+async function getStreamJSON<T>(
   stream: import("stream").Readable,
   encoding: BufferEncoding
-) {
-  return new Promise<T>((resolve, reject) => {
-    const chunks: Uint8Array[] = [];
+): Promise<T> {
+  const chunks: Uint8Array[] = [];
 
-    stream.on("data", (chunk) => {
-      chunks.push(chunk);
-    });
+  for await (const chunk of stream) {
+    chunks.push(chunk);
+  }
 
-    stream.on("end", () => {
-      try {
-        resolve(
-          JSON.parse(Buffer.concat(chunks).toString(encoding || "utf-8"))
-        );
-      } catch (err) {
-        reject(err);
-      }
-    });
-  });
+  return JSON.parse(Buffer.concat(chunks).toString(encoding || "utf-8"));
 }
 
 export type ServiceSchemaConfig = {
@@ -69,13 +59,9 @@ export async function getServiceSchema({
       })()
     }`;
 
-  const client =
-    ServicesClients[serviceUrl] ||
-    new Client(serviceUrl, {
-      pipelining: 10,
-    });
-
-  ServicesClients[serviceUrl] = client;
+  const client = (ServicesClients[serviceUrl] ||= new Client(serviceUrl, {
+    pipelining: 10,
+  }));
 
   const remoteExecutor: AsyncExecutor<Partial<EZContext>> =
     async function remoteExecutor({ document, variables, context }) {
@@ -121,9 +107,6 @@ export async function getServiceSchema({
     ...merge(
       {
         batch: true,
-        merge: {
-          AdminQueries: {},
-        },
       } as Partial<SubschemaConfig>,
       config[name]
     ),
