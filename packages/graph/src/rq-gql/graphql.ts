@@ -596,6 +596,8 @@ export type AdminUsersQuery = {
       pageInfo: {
         __typename?: "PageInfo";
         hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null | undefined;
         endCursor?: string | null | undefined;
       };
     };
@@ -761,6 +763,14 @@ export const AdminUsersDocument = {
                             {
                               kind: "Field",
                               name: { kind: "Name", value: "hasNextPage" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "hasPreviousPage" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "startCursor" },
                             },
                             {
                               kind: "Field",

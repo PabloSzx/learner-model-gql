@@ -2,22 +2,24 @@ import {
   HStack,
   IconButton,
   Select,
-  Spinner,
   Switch,
   useToast,
+  VStack,
 } from "@chakra-ui/react";
 import { formatSpanish } from "common";
 import {
   DocumentType,
   getKey,
   gql,
-  useGQLInfiniteQuery,
   useGQLMutation,
+  useGQLQuery,
   UserRole,
 } from "graph/rq-gql";
 import { useEffect, useState } from "react";
 import {
   MdCheck,
+  MdChevronLeft,
+  MdChevronRight,
   MdClose,
   MdEdit,
   MdLock,
@@ -30,6 +32,7 @@ import { Card } from "../components/Card/Card";
 import { CardContent } from "../components/Card/CardContent";
 import { CardHeader } from "../components/Card/CardHeader";
 import { Property } from "../components/Card/Property";
+import { useCursorPagination } from "../hooks/pagination";
 import { queryClient } from "../utils/rqClient";
 
 const UserInfo = gql(/* GraphQL */ `
@@ -221,6 +224,8 @@ const AdminUsers = gql(/* GraphQL */ `
         }
         pageInfo {
           hasNextPage
+          hasPreviousPage
+          startCursor
           endCursor
         }
       }
@@ -229,47 +234,32 @@ const AdminUsers = gql(/* GraphQL */ `
 `);
 
 export default withAuth(function IndexPage() {
-  const { data, isLoading } = useGQLInfiniteQuery(
-    AdminUsers,
-    (pageParam) => {
-      return {
-        pagination: {
-          first: 20,
-          after: pageParam,
-        },
-      };
-    },
-    {
-      getNextPageParam(lastPage) {
-        return lastPage.adminUsers.allUsers.pageInfo.hasNextPage
-          ? lastPage.adminUsers.allUsers.pageInfo.endCursor
-          : undefined;
-      },
-    }
-  );
+  const { pagination, leftPagination, rightPagination, pageInfo } =
+    useCursorPagination();
+
+  const { data } = useGQLQuery(AdminUsers, { pagination });
+  pageInfo.current = data?.adminUsers.allUsers.pageInfo;
 
   return (
-    <HStack
-      wrap="wrap"
-      width="100%"
-      paddingX="1em"
-      paddingY="0.2em"
-      alignItems="flex-start"
-      fontSize="0.8em"
-      justifyContent="space-around"
-    >
-      {isLoading && <Spinner />}
-      {data?.pages.flatMap(
-        ({
-          adminUsers: {
-            allUsers: { nodes },
-          },
-        }) => {
-          return nodes.map((user) => {
-            return <UserCard user={user} key={user.id || 0} />;
-          });
-        }
-      )}
-    </HStack>
+    <VStack>
+      <HStack>
+        <IconButton icon={<MdChevronLeft />} {...leftPagination} />
+        <IconButton icon={<MdChevronRight />} {...rightPagination} />
+      </HStack>
+
+      <HStack
+        wrap="wrap"
+        width="100%"
+        paddingX="1em"
+        paddingY="0.2em"
+        alignItems="flex-start"
+        fontSize="0.8em"
+        justifyContent="space-around"
+      >
+        {data?.adminUsers.allUsers.nodes.map((user) => {
+          return <UserCard user={user} key={user.id} />;
+        })}
+      </HStack>
+    </VStack>
   );
 });

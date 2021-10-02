@@ -320,7 +320,7 @@ importers:
       graphql: ^15.6.0
       prettier: ^2.4.1
       react-query: ^3.25.0
-      rq-gql: ^0.1.5
+      rq-gql: ^0.1.6
       valtio: ^1.2.4
     dependencies:
       '@gqty/logger': 2.0.1_gqty@2.0.2
@@ -330,7 +330,7 @@ importers:
       graphql: 15.6.0
       prettier: 2.4.1
       react-query: 3.25.0_react@17.0.2
-      rq-gql: 0.1.5_99ba804fc69238b03dc16911a66c9542
+      rq-gql: 0.1.6_99ba804fc69238b03dc16911a66c9542
       valtio: 1.2.4_react@17.0.2
     devDependencies:
       '@graphql-codegen/cli': 2.2.0_282d702737718240fbf0ccc852cde709
@@ -8032,8 +8032,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /rq-gql/0.1.5_99ba804fc69238b03dc16911a66c9542:
-    resolution: {integrity: sha512-wLje1GHY3heuIrfkCsW51XBPiFwsi4JCgvfcbwAM3NLnSwFhDcRvi0vXD2aHmjK+ZZnr3s903JCo6SMQY5XWWA==}
+  /rq-gql/0.1.6_99ba804fc69238b03dc16911a66c9542:
+    resolution: {integrity: sha512-TztyBq6etCyBF6X64TKi6omgOTDpTABWvAiFY7yoXn6Zob32wmZDZ5zw4JEo7GnKLDr0TOCOv8WbWkbNKBisUA==}
     peerDependencies:
       '@graphql-typed-document-node/core': ^3.1.0
       graphql: ^15.6.0
