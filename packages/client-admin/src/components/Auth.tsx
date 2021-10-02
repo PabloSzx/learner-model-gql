@@ -8,6 +8,7 @@ import {
   headers,
   useCurrentUserQuery,
 } from "graph/rq";
+import { headers as rqHeaders } from "graph/rq-gql";
 import { proxy, useSnapshot } from "valtio";
 export const AuthState = proxy({
   auth0User: null as Auth0User | null,
@@ -41,7 +42,8 @@ export function SyncAuth() {
     if (user) {
       AuthState.isLoading = true;
       getIdTokenClaims().then((data) => {
-        headers.authorization = `Bearer ${data.__raw}`;
+        headers.authorization =
+          rqHeaders.authorization = `Bearer ${data.__raw}`;
 
         AuthState.isLoading = true;
       });

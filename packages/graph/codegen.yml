@@ -1,17 +1,15 @@
 overwrite: true
 schema: "../../schema.gql"
-documents: graphql/**/*.gql
+documents:
+  - "../../**/src/**/*.tsx"
+  - "!**/node_modules/**"
+  - "!**/graph/**"
 generates:
-  src/rq/graphql.ts:
-    plugins:
-      - typescript
-      - typescript-operations
-      - typescript-react-query
+  src/rq-gql/:
+    preset: rq-gql/preset
     config:
-      fetcher:
-        func: "./fetcher#fetcher"
-      exposeQueryKeys: true
-      exposeDocument: true
+      useTypeImports: true
+      enumsAsConst: true
       scalars:
         DateTime: "string"
         JSONObject: "Record<string,unknown>"
@@ -24,6 +22,7 @@ generates:
         IntID: "string"
         Latitude: "number"
         Longitude: "number"
+
 hooks:
   afterAllFileWrite:
     - prettier --write

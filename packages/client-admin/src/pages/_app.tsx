@@ -1,14 +1,12 @@
 import { Auth0Provider } from "@auth0/auth0-react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
-import { ReactQuery } from "graph/rq";
 import { SyncAuth } from "../components/Auth";
 import { MainLayout } from "../components/MainLayout";
 import { NextNProgress } from "../components/NextNProgress";
+import { queryClient, QueryClientProvider } from "../utils/rqClient";
 
 const theme = extendTheme({});
-
-const reactQueryClient = new ReactQuery.QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -20,7 +18,7 @@ export default function App({ Component, pageProps }: AppProps) {
           typeof window !== "undefined" ? window.location.origin : undefined
         }
       >
-        <ReactQuery.QueryClientProvider client={reactQueryClient}>
+        <QueryClientProvider client={queryClient}>
           <SyncAuth />
           <ChakraProvider theme={theme}>
             <NextNProgress color="#10b9cf" />
@@ -28,7 +26,7 @@ export default function App({ Component, pageProps }: AppProps) {
               <Component {...pageProps} />
             </MainLayout>
           </ChakraProvider>
-        </ReactQuery.QueryClientProvider>
+        </QueryClientProvider>
       </Auth0Provider>
     </>
   );

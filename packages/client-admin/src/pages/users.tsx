@@ -1,4 +1,20 @@
+import {
+  HStack,
+  IconButton,
+  Select,
+  Spinner,
+  Switch,
+  useToast,
+} from "@chakra-ui/react";
 import { formatSpanish } from "common";
+import {
+  DocumentType,
+  getKey,
+  gql,
+  useGQLInfiniteQuery,
+  useGQLMutation,
+  UserRole,
+} from "graph/rq-gql";
 import { useEffect, useState } from "react";
 import {
   MdCheck,
@@ -9,24 +25,30 @@ import {
   MdSave,
 } from "react-icons/md";
 import { useImmer } from "use-immer";
-
-import {
-  HStack,
-  IconButton,
-  Select,
-  Spinner,
-  Switch,
-  useToast,
-} from "@chakra-ui/react";
-
 import { useAuth, withAuth } from "../components/Auth";
 import { Card } from "../components/Card/Card";
 import { CardContent } from "../components/Card/CardContent";
 import { CardHeader } from "../components/Card/CardHeader";
 import { Property } from "../components/Card/Property";
-import { useMutation, useQuery, User, UserRole } from "graph/gqty";
+import { queryClient } from "../utils/rqClient";
 
-const UserCard = ({ user }: { user: User }) => {
+const UserInfo = gql(/* GraphQL */ `
+  fragment UserInfo on User {
+    __typename
+    id
+    email
+    name
+    active
+    lastOnline
+    createdAt
+    role
+    enabled
+    updatedAt
+    locked
+  }
+`);
+
+const UserCard = ({ user }: { user: DocumentType<typeof UserInfo> }) => {
   const {
     __typename,
     id,
@@ -57,19 +79,20 @@ const UserCard = ({ user }: { user: User }) => {
     };
   });
 
-  const [updateUser, updateUserState] = useMutation(
-    (mutation) => {
-      return mutation.adminUsers.updateUser({
-        data: {
-          id,
-          role: userState.role!,
-          locked: userState.locked!,
-        },
-      }).__typename;
-    },
+  const updateUser = useGQLMutation(
+    gql(/* GraphQL */ `
+      mutation UpdateUser($data: UpdateUserInput!) {
+        adminUsers {
+          updateUser(data: $data) {
+            __typename
+          }
+        }
+      }
+    `),
     {
-      refetchQueries: [user],
-      awaitRefetchQueries: true,
+      async onSuccess() {
+        await queryClient.invalidateQueries(getKey(AdminUsers));
+      },
     }
   );
 
@@ -86,14 +109,21 @@ const UserCard = ({ user }: { user: User }) => {
         action={
           <IconButton
             aria-label="Edit"
-            isLoading={updateUserState.isLoading}
-            isDisabled={updateUserState.isLoading || authUser?.id === user.id}
+            isLoading={updateUser.isLoading}
+            isDisabled={updateUser.isLoading || authUser?.id === user.id}
             onClick={() => {
               if (
                 isEdit &&
                 (role !== userState.role || locked !== userState.locked)
               ) {
-                updateUser()
+                updateUser
+                  .mutateAsync({
+                    data: {
+                      id,
+                      role: userState.role,
+                      locked: userState.locked,
+                    },
+                  })
                   .then(() => {
                     setIsEdit(false);
                   })
@@ -123,15 +153,15 @@ const UserCard = ({ user }: { user: User }) => {
                 onChange={(ev) => {
                   produceUserState((draft) => {
                     draft.role =
-                      ev.target.value === UserRole.ADMIN
-                        ? UserRole.ADMIN
-                        : UserRole.USER;
+                      ev.target.value === UserRole.Admin
+                        ? UserRole.Admin
+                        : UserRole.User;
                   });
                 }}
-                isDisabled={updateUserState.isLoading}
+                isDisabled={updateUser.isLoading}
               >
-                <option value={UserRole.ADMIN}>ADMIN</option>
-                <option value={UserRole.USER}>USER</option>
+                <option value={UserRole.Admin}>ADMIN</option>
+                <option value={UserRole.User}>USER</option>
               </Select>
             ) : (
               role
@@ -155,7 +185,7 @@ const UserCard = ({ user }: { user: User }) => {
             isEdit ? (
               <Switch
                 isChecked={userState.locked}
-                isDisabled={updateUserState.isLoading}
+                isDisabled={updateUser.isLoading}
                 onChange={() => {
                   produceUserState((draft) => {
                     draft.locked = !draft.locked;
@@ -182,8 +212,42 @@ const UserCard = ({ user }: { user: User }) => {
   );
 };
 
+const AdminUsers = gql(/* GraphQL */ `
+  query AdminUsers($pagination: CursorConnectionArgs!) {
+    adminUsers {
+      allUsers(pagination: $pagination) {
+        nodes {
+          ...UserInfo
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  }
+`);
+
 export default withAuth(function IndexPage() {
-  const query = useQuery();
+  const { data, isLoading } = useGQLInfiniteQuery(
+    AdminUsers,
+    (pageParam) => {
+      return {
+        pagination: {
+          first: 20,
+          after: pageParam,
+        },
+      };
+    },
+    {
+      getNextPageParam(lastPage) {
+        return lastPage.adminUsers.allUsers.pageInfo.hasNextPage
+          ? lastPage.adminUsers.allUsers.pageInfo.endCursor
+          : undefined;
+      },
+    }
+  );
+
   return (
     <HStack
       wrap="wrap"
@@ -194,16 +258,18 @@ export default withAuth(function IndexPage() {
       fontSize="0.8em"
       justifyContent="space-around"
     >
-      {query.$state.isLoading && <Spinner />}
-      {query.adminUsers
-        .allUsers({
-          pagination: {
-            first: 10,
+      {isLoading && <Spinner />}
+      {data?.pages.flatMap(
+        ({
+          adminUsers: {
+            allUsers: { nodes },
           },
-        })
-        .nodes.map((user) => {
-          return <UserCard user={user} key={user.id || 0} />;
-        })}
+        }) => {
+          return nodes.map((user) => {
+            return <UserCard user={user} key={user.id || 0} />;
+          });
+        }
+      )}
     </HStack>
   );
 });
