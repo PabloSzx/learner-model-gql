@@ -25,7 +25,7 @@ importers:
       bob-ts: ^1.1.2
       c8: ^7.9.0
       common: workspace:^0.0.1
-      concurrently: ^6.2.2
+      concurrently: ^6.3.0
       cross-env: ^7.0.3
       dotenv: ^10.0.0
       esbuild: ^0.13.3
@@ -69,7 +69,7 @@ importers:
       '@types/react': 17.0.26
       bob-ts: 1.1.2_a23e2eaf95a191fd44cf6be087b17a98
       c8: 7.9.0
-      concurrently: 6.2.2
+      concurrently: 6.3.0
       cross-env: 7.0.3
       dotenv: 10.0.0
       esbuild: 0.13.3
@@ -263,7 +263,7 @@ importers:
       '@types/lodash': ^4.14.175
       '@types/wait-on': ^5.3.1
       api-base: workspace:^0.0.1
-      concurrently: ^6.2.2
+      concurrently: ^6.3.0
       content-type: ^1.0.4
       cross-env: ^7.0.3
       db: workspace:^0.0.1
@@ -285,7 +285,7 @@ importers:
       '@graphql-tools/utils': 8.2.4_graphql@15.6.0
       '@graphql-tools/wrap': 8.1.1_graphql@15.6.0
       api-base: link:../api-base
-      concurrently: 6.2.2
+      concurrently: 6.3.0
       content-type: 1.0.4
       cross-env: 7.0.3
       db: link:../db
@@ -4339,8 +4339,8 @@ packages:
   /concat-map/0.0.1:
     resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
 
-  /concurrently/6.2.2:
-    resolution: {integrity: sha512-7a45BjVakAl3pprLOeqaOoZfIWZRmdC68NkjyzPbKu0/pE6CRmqS3l8RG7Q2cX9LnRHkB0oPM6af8PS7NEQvYQ==}
+  /concurrently/6.3.0:
+    resolution: {integrity: sha512-k4k1jQGHHKsfbqzkUszVf29qECBrkvBKkcPJEUDTyVR7tZd1G/JOfnst4g1sYbFvJ4UjHZisj1aWQR8yLKpGPw==}
     engines: {node: '>=10.0.0'}
     hasBin: true
     dependencies:
