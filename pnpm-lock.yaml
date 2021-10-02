@@ -156,7 +156,7 @@ importers:
       nprogress: ^0.2.0
       react: ^17.0.2
       react-dom: ^17.0.2
-      react-icons: 4.2.0
+      react-icons: 4.3.0
       typescript: ^4.4.3
       use-immer: ^0.6.0
     dependencies:
@@ -178,7 +178,7 @@ importers:
       nprogress: 0.2.0
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      react-icons: 4.2.0_react@17.0.2
+      react-icons: 4.3.0_react@17.0.2
       use-immer: 0.6.0_immer@9.0.6+react@17.0.2
     devDependencies:
       '@types/nprogress': 0.2.0
@@ -198,7 +198,7 @@ importers:
       next: ^11.1.2
       react: ^17.0.2
       react-dom: ^17.0.2
-      react-icons: 4.2.0
+      react-icons: 4.3.0
       typescript: ^4.4.3
     dependencies:
       '@auth0/auth0-react': 1.8.0_react-dom@17.0.2+react@17.0.2
@@ -213,7 +213,7 @@ importers:
       next: 11.1.2_bd7797d63db473de6e2318609a63c933
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      react-icons: 4.2.0_react@17.0.2
+      react-icons: 4.3.0_react@17.0.2
     devDependencies:
       typescript: 4.4.3
 
@@ -7700,8 +7700,8 @@ packages:
       - '@types/react'
     dev: false
 
-  /react-icons/4.2.0_react@17.0.2:
-    resolution: {integrity: sha512-rmzEDFt+AVXRzD7zDE21gcxyBizD/3NqjbX6cmViAgdqfJ2UiLer8927/QhhrXQV7dEj/1EGuOTPp7JnLYVJKQ==}
+  /react-icons/4.3.0_react@17.0.2:
+    resolution: {integrity: sha512-Rb0pqr5vp7RR8K6QLWjcjvhlxUhQTmnBxTcIdA/8YIsLqZn0BB2kCm1K/5T63Hx/G/omvntxAnMkvwv2a6ojRA==}
     peerDependencies:
       react: '*'
     dependencies:
