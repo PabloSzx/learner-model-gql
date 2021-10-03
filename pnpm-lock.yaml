@@ -312,7 +312,7 @@ importers:
       '@graphql-codegen/typed-document-node': ^2.1.4
       '@graphql-codegen/typescript': ^2.2.2
       '@graphql-codegen/typescript-document-nodes': 2.1.4
-      '@graphql-codegen/typescript-operations': ^2.1.5
+      '@graphql-codegen/typescript-operations': ^2.1.6
       '@graphql-codegen/typescript-react-query': ^3.0.1
       bob-ts: ^1.1.2
       common: workspace:^0.0.1
@@ -338,7 +338,7 @@ importers:
       '@graphql-codegen/typed-document-node': 2.1.4_graphql@15.6.0
       '@graphql-codegen/typescript': 2.2.2_graphql@15.6.0
       '@graphql-codegen/typescript-document-nodes': 2.1.4_graphql@15.6.0
-      '@graphql-codegen/typescript-operations': 2.1.5_graphql@15.6.0
+      '@graphql-codegen/typescript-operations': 2.1.6_graphql@15.6.0
       '@graphql-codegen/typescript-react-query': 3.0.1_graphql@15.6.0
       bob-ts: 1.1.2_a23e2eaf95a191fd44cf6be087b17a98
 
@@ -397,10 +397,10 @@ importers:
     specifiers:
       '@graphql-codegen/cli': ^2.2.0
       '@graphql-codegen/core': ^2.1.0
-      '@graphql-codegen/gql-tag-operations-preset': ^1.1.6
+      '@graphql-codegen/gql-tag-operations-preset': ^1.1.7
       '@graphql-codegen/typed-document-node': ^2.1.4
       '@graphql-codegen/typescript': ^2.2.2
-      '@graphql-codegen/typescript-operations': ^2.1.5
+      '@graphql-codegen/typescript-operations': ^2.1.6
       '@graphql-ez/fastify': ^0.9.4
       '@graphql-ez/fastify-testing': ^0.1.2
       '@graphql-typed-document-node/core': ^3.1.0
@@ -409,10 +409,10 @@ importers:
     devDependencies:
       '@graphql-codegen/cli': 2.2.0_282d702737718240fbf0ccc852cde709
       '@graphql-codegen/core': 2.1.0_graphql@15.6.0
-      '@graphql-codegen/gql-tag-operations-preset': 1.1.6_graphql@15.6.0
+      '@graphql-codegen/gql-tag-operations-preset': 1.1.7_graphql@15.6.0
       '@graphql-codegen/typed-document-node': 2.1.4_graphql@15.6.0
       '@graphql-codegen/typescript': 2.2.2_graphql@15.6.0
-      '@graphql-codegen/typescript-operations': 2.1.5_graphql@15.6.0
+      '@graphql-codegen/typescript-operations': 2.1.6_graphql@15.6.0
       '@graphql-ez/fastify': 0.9.4_64200b8945dbc8fa68ca0b6389fffdcc
       '@graphql-ez/fastify-testing': 0.1.2_4d1f18da92fe08d7c05e53853cbd63e0
       '@graphql-typed-document-node/core': 3.1.0_graphql@15.6.0
@@ -661,6 +661,7 @@ packages:
     resolution: {integrity: sha512-S/TSCcsRuCkmpUuoWijua0Snt+f3ewU/8spLo+4AXJCZfT0bVCzLD5MuOKdrx0mlAptbKzn5AdgEIIKXxXkz9Q==}
     engines: {node: '>=6.0.0'}
     hasBin: true
+    dev: true
 
   /@babel/parser/7.15.7:
     resolution: {integrity: sha512-rycZXvQ+xS9QyIcJ9HXeDWf1uxqlbVFAUq0Rq0dbc50Zb/+wUe/ehyfzGfm9KZZF0kBejYgxltBXocP+gKdL2g==}
@@ -956,7 +957,7 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/code-frame': 7.14.5
-      '@babel/parser': 7.15.6
+      '@babel/parser': 7.15.7
       '@babel/types': 7.15.6
 
   /@babel/traverse/7.15.4:
@@ -968,7 +969,7 @@ packages:
       '@babel/helper-function-name': 7.15.4
       '@babel/helper-hoist-variables': 7.15.4
       '@babel/helper-split-export-declaration': 7.15.4
-      '@babel/parser': 7.15.6
+      '@babel/parser': 7.15.7
       '@babel/types': 7.15.6
       debug: 4.3.2
       globals: 11.12.0
@@ -2075,8 +2076,8 @@ packages:
       graphql: 15.6.0
       tslib: 2.3.1
 
-  /@graphql-codegen/gql-tag-operations-preset/1.1.6_graphql@15.6.0:
-    resolution: {integrity: sha512-1zpg9U1JCduewm8pXhuh/hLFNQGPnOcqf9unvPJCKtn6HL7sHRjEXvTVlG0GwAi4+mEQbKnebc8QpSWio5MAlA==}
+  /@graphql-codegen/gql-tag-operations-preset/1.1.7_graphql@15.6.0:
+    resolution: {integrity: sha512-LlDsmuEGuHQk9n3VDC9okR56DhV8fgUtIAK+DwBP0+rkGPKe+TZ590H//uwi2hnFcIIQxRfaSdmZxZ/2WcocNg==}
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
     dependencies:
@@ -2084,7 +2085,7 @@ packages:
       '@graphql-codegen/gql-tag-operations': 1.1.5_graphql@15.6.0
       '@graphql-codegen/typed-document-node': 2.1.4_graphql@15.6.0
       '@graphql-codegen/typescript': 2.2.2_graphql@15.6.0
-      '@graphql-codegen/typescript-operations': 2.1.5_graphql@15.6.0
+      '@graphql-codegen/typescript-operations': 2.1.6_graphql@15.6.0
       graphql: 15.6.0
       tslib: 2.3.1
     transitivePeerDependencies:
@@ -2162,6 +2163,22 @@ packages:
       tslib: 2.3.1
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@graphql-codegen/typescript-operations/2.1.6_graphql@15.6.0:
+    resolution: {integrity: sha512-TtvrlLcZNNotxz3UAKBDrPeT1eL2bi1CWwDSzKiViX5lEDiMp40p/Gxa7P/n9n0n5ZfYzrl06Id6l/WMlUy6Kw==}
+    peerDependencies:
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
+    dependencies:
+      '@graphql-codegen/plugin-helpers': 2.1.1_graphql@15.6.0
+      '@graphql-codegen/typescript': 2.2.2_graphql@15.6.0
+      '@graphql-codegen/visitor-plugin-common': 2.2.1_graphql@15.6.0
+      auto-bind: 4.0.0
+      graphql: 15.6.0
+      tslib: 2.3.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
 
   /@graphql-codegen/typescript-react-query/3.0.1_graphql@15.6.0:
     resolution: {integrity: sha512-KD7Rq/FabJP/WJQWUC0/4D8qsaYFzV8FK7dtfVJupEkFqr593JQEB4ADcwVR2LcPteU9lHwAqZAeGmREYO6cQA==}
@@ -2668,7 +2685,7 @@ packages:
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
     dependencies:
-      '@graphql-tools/utils': 8.2.2_graphql@15.6.0
+      '@graphql-tools/utils': 8.2.4_graphql@15.6.0
       graphql: 15.6.0
       relay-compiler: 11.0.2_graphql@15.6.0
       tslib: 2.3.1
