@@ -46,12 +46,7 @@ const AdminUsers = gql(/* GraphQL */ `
         nodes {
           ...UserInfo
         }
-        pageInfo {
-          hasNextPage
-          hasPreviousPage
-          startCursor
-          endCursor
-        }
+        ...Pagination
       }
     }
   }

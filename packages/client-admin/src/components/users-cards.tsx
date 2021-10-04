@@ -217,7 +217,7 @@ const UserCard = ({ user }: { user: DocumentType<typeof UserInfo> }) => {
 };
 
 const AdminUsers = gql(/* GraphQL */ `
-  query AdminUsers($pagination: CursorConnectionArgs!) {
+  query AdminUsersCards($pagination: CursorConnectionArgs!) {
     adminUsers {
       allUsers(pagination: $pagination) {
         nodes {

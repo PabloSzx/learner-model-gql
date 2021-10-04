@@ -1,5 +1,16 @@
-import type { CursorConnectionArgs, PageInfo } from "graph/rq-gql";
+import { CursorConnectionArgs, PageInfo, gql } from "graph/rq-gql";
 import { useMemo, useRef, useState } from "react";
+
+gql(/* GraphQL */ `
+  fragment Pagination on Connection {
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+  }
+`);
 
 export function useCursorPagination({ amount = 20 }: { amount?: number } = {}) {
   const [pagination, setPagination] = useState<CursorConnectionArgs>(() => {

@@ -1,5 +1,6 @@
 import { Stack } from "@chakra-ui/react";
-import { FiUsers } from "react-icons/fi";
+import { FiBook, FiUsers } from "react-icons/fi";
+import { VscProject } from "react-icons/vsc";
 import { useAuth } from "./Auth";
 import { DarkModeToggle } from "./DarkModeToggle";
 import { ScrollArea } from "./ScrollArea";
@@ -11,9 +12,17 @@ export function Navigation() {
     <ScrollArea pt="5" pb="6">
       <Stack pb="6">
         {user?.role === "ADMIN" && (
-          <SidebarLink href="/users" icon={<FiUsers />}>
-            Usuarios
-          </SidebarLink>
+          <>
+            <SidebarLink href="/users" icon={<FiUsers />}>
+              Users
+            </SidebarLink>
+            <SidebarLink href="/domains" icon={<FiBook />}>
+              Domains
+            </SidebarLink>
+            <SidebarLink href="/projects" icon={<VscProject />}>
+              Projects
+            </SidebarLink>
+          </>
         )}
       </Stack>
 
