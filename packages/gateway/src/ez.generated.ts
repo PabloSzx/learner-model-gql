@@ -513,6 +513,8 @@ export type Project = {
   domains: Array<Domain>;
   code: Scalars["String"];
   label: Scalars["String"];
+  createdAt: Scalars["DateTime"];
+  updatedAt: Scalars["DateTime"];
 };
 
 export type ProjectsConnection = Connection & {
@@ -1409,6 +1411,8 @@ export type ProjectResolvers<
   domains?: Resolver<Array<ResolversTypes["Domain"]>, ParentType, ContextType>;
   code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

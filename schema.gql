@@ -363,6 +363,8 @@ type Project {
   domains: [Domain!]!
   code: String!
   label: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type ProjectsConnection implements Connection {

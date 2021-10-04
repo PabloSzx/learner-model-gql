@@ -497,6 +497,8 @@ export const generatedSchema = {
     domains: { __type: "[Domain!]!" },
     code: { __type: "String!" },
     label: { __type: "String!" },
+    createdAt: { __type: "DateTime!" },
+    updatedAt: { __type: "DateTime!" },
   },
   ProjectsConnection: {
     __typename: { __type: "String!" },
@@ -797,6 +799,8 @@ export interface Project {
   domains: Array<Domain>;
   code: ScalarsEnums["String"];
   label: ScalarsEnums["String"];
+  createdAt: ScalarsEnums["DateTime"];
+  updatedAt: ScalarsEnums["DateTime"];
 }
 
 export interface ProjectsConnection {

@@ -8,6 +8,9 @@ export const projectsModule = registerModule(
 
       code: String!
       label: String!
+
+      createdAt: DateTime!
+      updatedAt: DateTime!
     }
 
     type ProjectsConnection implements Connection {
