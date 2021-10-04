@@ -2,7 +2,6 @@
   "name": "learner-model-gql",
   "version": "1.0.0",
   "private": true,
-  "description": "",
   "homepage": "https://github.com/PabloSzx/learner-model-gql#readme",
   "bugs": {
     "url": "https://github.com/PabloSzx/learner-model-gql/issues"
@@ -17,15 +16,16 @@
   "scripts": {
     "clean:install": "pnpm dlx rimraf \"**/{node_modules,rimraf,.next,coverage,dist}\" && pnpm i && pnpm generate",
     "clean:test:db": "docker-compose down && sudo rimraf .test-postgres-data",
-    "dev:service": "pnpm prepack && pnpm generate && concurrently -r \"pnpm -r dev\" \"cross-env NEXT_PUBLIC_API_URL=http://localhost:8080/graphql pnpm -r dev:service\"",
+    "predev": "pnpm prepack && pnpm generate",
+    "dev": "cross-env NEXT_PUBLIC_API_URL=http://localhost:8080/graphql pnpm -r dev",
     "generate": "pnpm -r generate",
     "prepack": "pnpm -r prepack",
     "prepare": "husky install && pnpm prepack",
     "pretty": "pretty-quick",
     "pretty:all": "prettier --write \"**/*.{ts,tsx,gql,json}\"",
-    "test": "bob-ts -i packages -i test && c8 mocha",
-    "test:watch": "concurrently -r pnpm:test:watch:cmd \"pnpm dev -r\"",
-    "test:watch:cmd": "bob-ts-watch -i packages -i test -c \"mocha\" --ignore \"**/generated/**\""
+    "pretest": "pnpm prepack",
+    "test": "bob-ts -i packages test && c8 mocha",
+    "test:watch": "bob-ts-watch -i packages test -c \"pnpm prepack && mocha\" --ignore \"**/generated/**\""
   },
   "dependencies": {
     "@gqty/react": "^2.0.0",

@@ -23,5 +23,5 @@ And it will install all the required dependencies
 You can execute in the root repo folder:
 
 ```bash
-pnpm dev:service
+pnpm dev
 ```

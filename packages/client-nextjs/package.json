@@ -1,10 +1,10 @@
 {
-  "name": "client",
+  "name": "client-nextjs",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev:service": "next dev",
+    "dev": "next dev",
     "start": "next start"
   },
   "dependencies": {
