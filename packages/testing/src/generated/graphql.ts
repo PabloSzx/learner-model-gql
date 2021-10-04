@@ -313,11 +313,13 @@ export type Domain = {
   __typename?: "Domain";
   code: Scalars["String"];
   content: ContentConnection;
+  createdAt: Scalars["DateTime"];
   id: Scalars["IntID"];
   kcs: Array<Kc>;
   label: Scalars["String"];
   project: Project;
   topics: Array<Topic>;
+  updatedAt: Scalars["DateTime"];
 };
 
 export type DomainContentArgs = {
@@ -349,10 +351,12 @@ export type GroupsConnection = Connection & {
 export type Kc = {
   __typename?: "KC";
   code: Scalars["String"];
+  createdAt: Scalars["DateTime"];
   domain: Domain;
   id: Scalars["IntID"];
   label: Scalars["String"];
   topics: Array<Topic>;
+  updatedAt: Scalars["DateTime"];
 };
 
 export type KCsConnection = Connection & {
@@ -390,9 +394,11 @@ export type PageInfo = {
 export type Project = {
   __typename?: "Project";
   code: Scalars["String"];
+  createdAt: Scalars["DateTime"];
   domains: Array<Domain>;
   id: Scalars["IntID"];
   label: Scalars["String"];
+  updatedAt: Scalars["DateTime"];
 };
 
 export type ProjectsConnection = Connection & {
@@ -453,12 +459,14 @@ export type Topic = {
   childrens: Array<Topic>;
   code: Scalars["String"];
   content: ContentConnection;
+  createdAt: Scalars["DateTime"];
   domain: Domain;
   id: Scalars["IntID"];
   kcs: Array<Kc>;
   label: Scalars["String"];
   parent?: Maybe<Topic>;
   project: Project;
+  updatedAt: Scalars["DateTime"];
 };
 
 export type TopicContentArgs = {
@@ -538,7 +546,7 @@ export const UserRole = {
 } as const;
 
 export type UserRole = typeof UserRole[keyof typeof UserRole];
-export type UsersConnection = {
+export type UsersConnection = Connection & {
   __typename?: "UsersConnection";
   nodes: Array<User>;
   pageInfo: PageInfo;

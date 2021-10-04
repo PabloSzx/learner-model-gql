@@ -8,6 +8,9 @@ export const kcModule = registerModule(
 
       code: String!
       label: String!
+
+      createdAt: DateTime!
+      updatedAt: DateTime!
     }
 
     extend type Topic {

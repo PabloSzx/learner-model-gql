@@ -323,6 +323,8 @@ export const generatedSchema = {
     code: { __type: "String!" },
     label: { __type: "String!" },
     topics: { __type: "[Topic!]!" },
+    createdAt: { __type: "DateTime!" },
+    updatedAt: { __type: "DateTime!" },
     kcs: { __type: "[KC!]!" },
     project: { __type: "Project!" },
   },
@@ -338,6 +340,8 @@ export const generatedSchema = {
     domain: { __type: "Domain!" },
     parent: { __type: "Topic" },
     childrens: { __type: "[Topic!]!" },
+    createdAt: { __type: "DateTime!" },
+    updatedAt: { __type: "DateTime!" },
     kcs: { __type: "[KC!]!" },
     project: { __type: "Project!" },
   },
@@ -473,6 +477,8 @@ export const generatedSchema = {
     id: { __type: "IntID!" },
     code: { __type: "String!" },
     label: { __type: "String!" },
+    createdAt: { __type: "DateTime!" },
+    updatedAt: { __type: "DateTime!" },
     domain: { __type: "Domain!" },
     topics: { __type: "[Topic!]!" },
   },
@@ -526,6 +532,7 @@ export const generatedSchema = {
   [SchemaUnionsKey]: {
     Connection: [
       "GroupsConnection",
+      "UsersConnection",
       "ContentConnection",
       "TopicsConnection",
       "DomainsConnection",
@@ -648,6 +655,7 @@ export interface Node {
 export interface Connection {
   __typename?:
     | "GroupsConnection"
+    | "UsersConnection"
     | "ContentConnection"
     | "TopicsConnection"
     | "DomainsConnection"
@@ -683,6 +691,8 @@ export interface Domain {
   code: ScalarsEnums["String"];
   label: ScalarsEnums["String"];
   topics: Array<Topic>;
+  createdAt: ScalarsEnums["DateTime"];
+  updatedAt: ScalarsEnums["DateTime"];
   kcs: Array<KC>;
   project: Project;
 }
@@ -696,6 +706,8 @@ export interface Topic {
   domain: Domain;
   parent?: Maybe<Topic>;
   childrens: Array<Topic>;
+  createdAt: ScalarsEnums["DateTime"];
+  updatedAt: ScalarsEnums["DateTime"];
   kcs: Array<KC>;
   project: Project;
 }
@@ -783,6 +795,8 @@ export interface KC {
   id: ScalarsEnums["IntID"];
   code: ScalarsEnums["String"];
   label: ScalarsEnums["String"];
+  createdAt: ScalarsEnums["DateTime"];
+  updatedAt: ScalarsEnums["DateTime"];
   domain: Domain;
   topics: Array<Topic>;
 }
@@ -892,6 +906,7 @@ export type SchemaObjectTypesNames =
 
 export interface $Connection {
   GroupsConnection?: GroupsConnection;
+  UsersConnection?: UsersConnection;
   ContentConnection?: ContentConnection;
   TopicsConnection?: TopicsConnection;
   DomainsConnection?: DomainsConnection;

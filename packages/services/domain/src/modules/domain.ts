@@ -16,6 +16,9 @@ export const domainModule = registerModule(
       parent: Topic
 
       childrens: [Topic!]!
+
+      createdAt: DateTime!
+      updatedAt: DateTime!
     }
 
     extend type KC {
@@ -31,6 +34,9 @@ export const domainModule = registerModule(
       label: String!
 
       topics: [Topic!]!
+
+      createdAt: DateTime!
+      updatedAt: DateTime!
     }
 
     type TopicsConnection implements Connection {

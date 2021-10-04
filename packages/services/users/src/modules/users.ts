@@ -23,7 +23,7 @@ export const usersModule = registerModule(
       updatedAt: DateTime!
     }
 
-    type UsersConnection {
+    type UsersConnection implements Connection {
       nodes: [User!]!
       pageInfo: PageInfo!
     }

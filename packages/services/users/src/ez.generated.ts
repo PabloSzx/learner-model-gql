@@ -94,7 +94,7 @@ export type User = {
   projectsIds: Array<Scalars["IntID"]>;
 };
 
-export type UsersConnection = {
+export type UsersConnection = Connection & {
   __typename?: "UsersConnection";
   nodes: Array<User>;
   pageInfo: PageInfo;
@@ -335,7 +335,9 @@ export type ResolversTypes = {
   AdminUserMutations: ResolverTypeWrapper<AdminUserMutations>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Node: never;
-  Connection: ResolversTypes["GroupsConnection"];
+  Connection:
+    | ResolversTypes["GroupsConnection"]
+    | ResolversTypes["UsersConnection"];
   CursorConnectionArgs: CursorConnectionArgs;
   Query: ResolverTypeWrapper<{}>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -365,7 +367,9 @@ export type ResolversParentTypes = {
   AdminUserMutations: AdminUserMutations;
   PageInfo: PageInfo;
   Node: never;
-  Connection: ResolversParentTypes["GroupsConnection"];
+  Connection:
+    | ResolversParentTypes["GroupsConnection"]
+    | ResolversParentTypes["UsersConnection"];
   CursorConnectionArgs: CursorConnectionArgs;
   Query: {};
   Mutation: {};
@@ -568,7 +572,11 @@ export type ConnectionResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Connection"] = ResolversParentTypes["Connection"]
 > = {
-  __resolveType: TypeResolveFn<"GroupsConnection", ParentType, ContextType>;
+  __resolveType: TypeResolveFn<
+    "GroupsConnection" | "UsersConnection",
+    ParentType,
+    ContextType
+  >;
   pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
 };
 

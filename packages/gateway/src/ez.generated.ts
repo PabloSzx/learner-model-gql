@@ -157,7 +157,7 @@ export type User = {
   projects: Array<Project>;
 };
 
-export type UsersConnection = {
+export type UsersConnection = Connection & {
   __typename?: "UsersConnection";
   nodes: Array<User>;
   pageInfo: PageInfo;
@@ -274,6 +274,8 @@ export type Domain = {
   code: Scalars["String"];
   label: Scalars["String"];
   topics: Array<Topic>;
+  createdAt: Scalars["DateTime"];
+  updatedAt: Scalars["DateTime"];
   kcs: Array<Kc>;
   project: Project;
 };
@@ -291,6 +293,8 @@ export type Topic = {
   domain: Domain;
   parent?: Maybe<Topic>;
   childrens: Array<Topic>;
+  createdAt: Scalars["DateTime"];
+  updatedAt: Scalars["DateTime"];
   kcs: Array<Kc>;
   project: Project;
 };
@@ -485,6 +489,8 @@ export type Kc = {
   id: Scalars["IntID"];
   code: Scalars["String"];
   label: Scalars["String"];
+  createdAt: Scalars["DateTime"];
+  updatedAt: Scalars["DateTime"];
   domain: Domain;
   topics: Array<Topic>;
 };
@@ -684,6 +690,7 @@ export type ResolversTypes = {
   Node: never;
   Connection:
     | ResolversTypes["GroupsConnection"]
+    | ResolversTypes["UsersConnection"]
     | ResolversTypes["ContentConnection"]
     | ResolversTypes["TopicsConnection"]
     | ResolversTypes["DomainsConnection"]
@@ -754,6 +761,7 @@ export type ResolversParentTypes = {
   Node: never;
   Connection:
     | ResolversParentTypes["GroupsConnection"]
+    | ResolversParentTypes["UsersConnection"]
     | ResolversParentTypes["ContentConnection"]
     | ResolversParentTypes["TopicsConnection"]
     | ResolversParentTypes["DomainsConnection"]
@@ -1123,6 +1131,7 @@ export type ConnectionResolvers<
 > = {
   __resolveType: TypeResolveFn<
     | "GroupsConnection"
+    | "UsersConnection"
     | "ContentConnection"
     | "TopicsConnection"
     | "DomainsConnection"
@@ -1177,6 +1186,8 @@ export type DomainResolvers<
   code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   kcs?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
   project?: Resolver<ResolversTypes["Project"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -1198,6 +1209,8 @@ export type TopicResolvers<
   domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
   parent?: Resolver<Maybe<ResolversTypes["Topic"]>, ParentType, ContextType>;
   childrens?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   kcs?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
   project?: Resolver<ResolversTypes["Project"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -1389,6 +1402,8 @@ export type KcResolvers<
   id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
   code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
   topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
