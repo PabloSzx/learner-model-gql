@@ -8,7 +8,6 @@ import {
 } from "@chakra-ui/react";
 import { formatSpanish } from "common";
 import {
-  AdminUsersQuery,
   DocumentType,
   getKey,
   gql,
@@ -16,7 +15,6 @@ import {
   useGQLQuery,
   UserRole,
 } from "graph/rq-gql";
-import { proxy, useSnapshot } from "valtio";
 import { useEffect, useState } from "react";
 import {
   MdCheck,
@@ -36,9 +34,8 @@ import { CardHeader } from "../components/Card/CardHeader";
 import { Property } from "../components/Card/Property";
 import { useCursorPagination } from "../hooks/pagination";
 import { queryClient } from "../utils/rqClient";
-import { DataTable } from "../components/DataTable";
 
-const UserInfoFragment = gql(/* GraphQL */ `
+const UserInfo = gql(/* GraphQL */ `
   fragment UserInfo on User {
     __typename
     id
@@ -54,9 +51,7 @@ const UserInfoFragment = gql(/* GraphQL */ `
   }
 `);
 
-type UserInfo = DocumentType<typeof UserInfoFragment>;
-
-const UserCard = ({ user }: { user: UserInfo }) => {
+const UserCard = ({ user }: { user: DocumentType<typeof UserInfo> }) => {
   const {
     __typename,
     id,
@@ -238,52 +233,12 @@ const AdminUsers = gql(/* GraphQL */ `
   }
 `);
 
-const UsersState = proxy<
-  Record<
-    string,
-    {
-      isEditing?: boolean;
-    } & UserInfo
-  >
->({});
-
 export default withAuth(function IndexPage() {
   const { pagination, leftPagination, rightPagination, pageInfo } =
     useCursorPagination();
 
-  const usersState = useSnapshot(UsersState);
-
   const { data } = useGQLQuery(AdminUsers, { pagination });
   pageInfo.current = data?.adminUsers.allUsers.pageInfo;
-
-  useEffect(() => {
-    for (const user of data?.adminUsers.allUsers.nodes || []) {
-      const isEditing = UsersState[user.id];
-      if (isEditing) continue;
-      Object.assign((UsersState[user.id] ||= user), user);
-    }
-  }, [data]);
-
-  const updateUser = useGQLMutation(
-    gql(/* GraphQL */ `
-      mutation UpdateUser($data: UpdateUserInput!) {
-        adminUsers {
-          updateUser(data: $data) {
-            __typename
-          }
-        }
-      }
-    `),
-    {
-      async onSuccess() {
-        await queryClient.invalidateQueries(getKey(AdminUsers));
-      },
-    }
-  );
-
-  const { user: authUser } = useAuth();
-
-  const toast = useToast();
 
   return (
     <VStack>
@@ -292,91 +247,7 @@ export default withAuth(function IndexPage() {
         <IconButton icon={<MdChevronRight />} {...rightPagination} />
       </HStack>
 
-      <DataTable<AdminUsersQuery["adminUsers"]["allUsers"]["nodes"][number]>
-        data={data?.adminUsers.allUsers.nodes || []}
-        columns={[
-          {
-            Header: "ID",
-            accessor: "id",
-          },
-          {
-            Header: "Email",
-            accessor: "email",
-          },
-          {
-            Header: "Nombre",
-            accessor: "name",
-          },
-          {
-            Header: "Activo",
-            accessor: "active",
-            Cell({
-              row: {
-                original: { active },
-              },
-            }) {
-              return active ? <MdCheck /> : <MdClose />;
-            },
-          },
-          {
-            id: "edit",
-            Header: "Editar",
-            defaultCanSort: false,
-            defaultCanFilter: false,
-            defaultCanGroupBy: false,
-            accessor: "id",
-            Cell({
-              value,
-              row: {
-                original: { role, id, locked },
-              },
-            }) {
-              const userState = usersState[value];
-
-              if (!userState) return null;
-
-              const { isEditing } = userState;
-
-              return (
-                <IconButton
-                  aria-label="Edit"
-                  isLoading={updateUser.isLoading}
-                  isDisabled={updateUser.isLoading || authUser?.id === id}
-                  onClick={() => {
-                    if (
-                      isEditing &&
-                      (role !== userState.role || locked !== userState.locked)
-                    ) {
-                      updateUser
-                        .mutateAsync({
-                          data: {
-                            id,
-                            role: userState.role,
-                            locked: userState.locked,
-                          },
-                        })
-                        .then(() => {
-                          UsersState[id]!.isEditing = false;
-                        })
-                        .catch((err) => {
-                          toast({
-                            status: "error",
-                            title: err.message,
-                          });
-                        });
-                    } else {
-                      UsersState[id]!.isEditing = !isEditing;
-                    }
-                  }}
-                  icon={isEditing ? <MdSave /> : <MdEdit />}
-                />
-              );
-            },
-          },
-        ]}
-      />
-
-      {/* <HStack
+      <HStack
         wrap="wrap"
         width="100%"
         paddingX="1em"
@@ -388,7 +259,7 @@ export default withAuth(function IndexPage() {
         {data?.adminUsers.allUsers.nodes.map((user) => {
           return <UserCard user={user} key={user.id} />;
         })}
-      </HStack> */}
+      </HStack>
     </VStack>
   );
 });

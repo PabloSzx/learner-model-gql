@@ -147,6 +147,7 @@ importers:
       '@types/nprogress': ^0.2.0
       '@types/react': ^17.0.27
       '@types/react-dom': ^17.0.9
+      '@types/react-table': ^7.7.6
       date-fns: ^2.24.0
       framer-motion: ^4.1.17
       gqty: ^2.0.2
@@ -157,8 +158,10 @@ importers:
       react: ^17.0.2
       react-dom: ^17.0.2
       react-icons: ^4.3.1
+      react-table: ^7.7.0
       typescript: ^4.4.3
       use-immer: ^0.6.0
+      zustand: ^3.5.12
     dependencies:
       '@auth0/auth0-react': 1.8.0_react-dom@17.0.2+react@17.0.2
       '@chakra-ui/react': 1.6.8_706761a4f2b16b77126fe00fb5de7138
@@ -179,9 +182,12 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-icons: 4.3.1_react@17.0.2
+      react-table: 7.7.0_react@17.0.2
       use-immer: 0.6.0_immer@9.0.6+react@17.0.2
+      zustand: 3.5.12_react@17.0.2
     devDependencies:
       '@types/nprogress': 0.2.0
+      '@types/react-table': 7.7.6
       typescript: 4.4.3
 
   packages/client-nextjs:
@@ -3369,6 +3375,12 @@ packages:
     dependencies:
       '@types/react': 17.0.27
     dev: false
+
+  /@types/react-table/7.7.6:
+    resolution: {integrity: sha512-ZMFHh1sG5AGDmhVRpz9mgGByGmBFAqnZ7QnyqGa5iAlKtcSC3vb/gul47lM0kJ1uvlawc+qN5k+++pe+GBdJ+g==}
+    dependencies:
+      '@types/react': 17.0.27
+    dev: true
 
   /@types/react/17.0.27:
     resolution: {integrity: sha512-zgiJwtsggVGtr53MndV7jfiUESTqrbxOcBvwfe6KS/9bzaVPCTDieTWnFNecVNx6EAaapg5xsLLWFfHHR437AA==}
@@ -7796,6 +7808,14 @@ packages:
       tslib: 1.14.1
     dev: false
 
+  /react-table/7.7.0_react@17.0.2:
+    resolution: {integrity: sha512-jBlj70iBwOTvvImsU9t01LjFjy4sXEtclBovl3mTiqjz23Reu0DKnRza4zlLtOPACx6j2/7MrQIthIK1Wi+LIA==}
+    peerDependencies:
+      react: ^16.8.3 || ^17.0.0-0
+    dependencies:
+      react: 17.0.2
+    dev: false
+
   /react/17.0.2:
     resolution: {integrity: sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==}
     engines: {node: '>=0.10.0'}
@@ -9336,4 +9356,16 @@ packages:
       archiver-utils: 2.1.0
       compress-commons: 3.0.0
       readable-stream: 3.6.0
+    dev: false
+
+  /zustand/3.5.12_react@17.0.2:
+    resolution: {integrity: sha512-Cv9fX/yM5HXYODkn3Q/HMmMofnmZw3yqM73VT/3rQEvI/04Yl0OFNO24qMofhN82xTPWcCffkGPFCMq8r67Whg==}
+    engines: {node: '>=12.7.0'}
+    peerDependencies:
+      react: '>=16.8'
+    peerDependenciesMeta:
+      react:
+        optional: true
+    dependencies:
+      react: 17.0.2
     dev: false
