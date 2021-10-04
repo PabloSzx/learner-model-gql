@@ -558,18 +558,6 @@ export type UserInfoFragment = {
   locked: boolean;
 };
 
-export type UpdateUserMutationVariables = Exact<{
-  data: UpdateUserInput;
-}>;
-
-export type UpdateUserMutation = {
-  __typename?: "Mutation";
-  adminUsers: {
-    __typename?: "AdminUserMutations";
-    updateUser: { __typename: "User" };
-  };
-};
-
 export type AdminUsersQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
 }>;
@@ -604,6 +592,18 @@ export type AdminUsersQuery = {
   };
 };
 
+export type UpdateUserMutationVariables = Exact<{
+  data: UpdateUserInput;
+}>;
+
+export type UpdateUserMutation = {
+  __typename?: "Mutation";
+  adminUsers: {
+    __typename?: "AdminUserMutations";
+    updateUser: { __typename: "User" };
+  };
+};
+
 export const UserInfoFragmentDoc = {
   kind: "Document",
   definitions: [
@@ -633,66 +633,6 @@ export const UserInfoFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<UserInfoFragment, unknown>;
-export const UpdateUserDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "UpdateUser" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "UpdateUserInput" },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "adminUsers" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "updateUser" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "data" },
-                      value: {
-                        kind: "Variable",
-                        name: { kind: "Name", value: "data" },
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "__typename" },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<UpdateUserMutation, UpdateUserMutationVariables>;
 export const AdminUsersDocument = {
   kind: "Document",
   definitions: [
@@ -791,3 +731,63 @@ export const AdminUsersDocument = {
     ...UserInfoFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<AdminUsersQuery, AdminUsersQueryVariables>;
+export const UpdateUserDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpdateUser" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "UpdateUserInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminUsers" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "updateUser" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "data" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "data" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "__typename" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UpdateUserMutation, UpdateUserMutationVariables>;

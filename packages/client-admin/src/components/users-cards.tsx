@@ -1,3 +1,4 @@
+//@ts-nocheck
 import {
   HStack,
   IconButton,
@@ -27,11 +28,11 @@ import {
   MdSave,
 } from "react-icons/md";
 import { useImmer } from "use-immer";
-import { useAuth, withAuth } from "../components/Auth";
-import { Card } from "../components/Card/Card";
-import { CardContent } from "../components/Card/CardContent";
-import { CardHeader } from "../components/Card/CardHeader";
-import { Property } from "../components/Card/Property";
+import { useAuth, withAuth } from "./Auth";
+import { Card } from "./Card/Card";
+import { CardContent } from "./Card/CardContent";
+import { CardHeader } from "./Card/CardHeader";
+import { Property } from "./Card/Property";
 import { useCursorPagination } from "../hooks/pagination";
 import { queryClient } from "../utils/rqClient";
 

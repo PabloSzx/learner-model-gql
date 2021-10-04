@@ -41,7 +41,7 @@ export function MainLayout({ children }: { children: ReactNode }) {
         transition="left 0.2s"
       >
         <Box
-          maxW="2560px"
+          maxW="calc(97vw - var(--sidebar-width))"
           bg={mode("white", "gray.700")}
           height="100%"
           pb="6"

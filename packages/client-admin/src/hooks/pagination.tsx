@@ -14,7 +14,7 @@ export function useCursorPagination({ amount = 20 }: { amount?: number } = {}) {
     return {
       pagination,
       pageInfo,
-      leftPagination: {
+      prevPage: {
         get isDisabled() {
           return !pageInfo.current?.hasPreviousPage;
         },
@@ -22,14 +22,15 @@ export function useCursorPagination({ amount = 20 }: { amount?: number } = {}) {
           return pageInfo.current == null;
         },
         onClick() {
+          if (!pageInfo.current?.hasPreviousPage) return;
+
           setPagination({
             before: pageInfo.current?.startCursor,
             last: amount,
           });
         },
-        "aria-label": "Pagina Anterior",
       },
-      rightPagination: {
+      nextPage: {
         get isDisabled() {
           return !pageInfo.current?.hasNextPage;
         },
@@ -37,12 +38,13 @@ export function useCursorPagination({ amount = 20 }: { amount?: number } = {}) {
           return pageInfo.current == null;
         },
         onClick() {
+          if (!pageInfo.current?.hasNextPage) return;
+
           setPagination({
             after: pageInfo.current?.endCursor,
             first: amount,
           });
         },
-        "aria-label": "Pagina Siguiente",
       },
     };
   }, [pagination, setPagination, pageInfo]);

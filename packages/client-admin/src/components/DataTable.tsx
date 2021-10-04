@@ -1,5 +1,6 @@
 import {
   Box,
+  BoxProps,
   Button,
   ButtonGroup,
   chakra,
@@ -34,14 +35,19 @@ import {
 } from "react-table";
 import { proxy, useSnapshot } from "valtio";
 
-export interface DataTableProps<Data extends object> {
+export interface DataTableProps<Data extends object> extends BoxProps {
   data: Data[];
   columns: Column<Data>[];
-  hasNextPage?: Boolean;
-  hasPreviousPage?: Boolean;
-  fetchNextPage?: () => void;
-  fetchPreviousPage?: () => void;
-  isFetching?: Boolean;
+  prevPage?: {
+    isDisabled: boolean;
+    isLoading: boolean;
+    onClick(): void;
+  };
+  nextPage?: {
+    isDisabled: boolean;
+    isLoading: boolean;
+    onClick(): void;
+  };
   initialState?: Partial<TableState<Data>>;
 }
 
@@ -52,12 +58,11 @@ const searchValue = proxy({
 export function DataTable<Data extends object>({
   data,
   columns,
-  hasNextPage,
-  hasPreviousPage,
-  fetchNextPage,
-  fetchPreviousPage,
-  isFetching,
+  prevPage,
+  nextPage,
   initialState,
+  height,
+  ...boxProps
 }: DataTableProps<Data>) {
   const {
     getTableBodyProps,
@@ -99,12 +104,24 @@ export function DataTable<Data extends object>({
     [prepareRow, rows]
   );
 
+  const pagination = (
+    <>
+      {prevPage && nextPage && (
+        <ButtonGroup variant="outline" size="sm">
+          <Button {...prevPage}>Previous</Button>
+          <Button {...nextPage}>Next</Button>
+        </ButtonGroup>
+      )}
+    </>
+  );
+
   return (
     <Box
       shadow="sm"
       rounded="lg"
       w={{ base: "92vw", lg: "full" }}
       overflow="auto"
+      {...boxProps}
     >
       <Flex alignItems="center" justifyContent="space-between" my={1}>
         <InputGroup maxW={{ md: "320px" }} w="full" mb={2}>
@@ -119,84 +136,58 @@ export function DataTable<Data extends object>({
           />
         </InputGroup>
 
-        {fetchNextPage && (
-          <ButtonGroup variant="outline" size="sm">
-            <Button
-              as="a"
-              rel="prev"
-              onClick={fetchPreviousPage}
-              isDisabled={!hasPreviousPage || !!isFetching}
-            >
-              Previous
-            </Button>
-            <Button
-              as="a"
-              rel="next"
-              onClick={fetchNextPage}
-              isDisabled={!hasNextPage || !!isFetching}
-            >
-              Next
-            </Button>
-          </ButtonGroup>
-        )}
+        {pagination}
       </Flex>
-      <>
-        <Table
-          width="full"
-          height="full"
-          variant="striped"
-          {...getTableProps()}
-        >
-          <Thead>
-            {headerGroups.map((headerGroup) => (
-              <Tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <Th
-                    px={6}
-                    py={3}
-                    borderBottomWidth="1px"
-                    backgroundColor={tableBg}
-                    textAlign="left"
-                    fontSize="xs"
-                    color={tableColor}
-                    textTransform="uppercase"
-                    letterSpacing="wider"
-                    lineHeight="1rem"
-                    fontWeight="bold"
-                    _first={{
-                      roundedTopLeft: "lg",
-                    }}
-                    _last={{
-                      roundedTopRight: "lg",
-                    }}
-                    {...column.getHeaderProps(column.getSortByToggleProps())}
-                  >
-                    <Flex alignItems="center">
-                      {column.render("Header")}
-                      <chakra.span pl={2}>
-                        {column.isSorted ? (
-                          column.isSortedDesc ? (
-                            <Icon
-                              as={GoTriangleDown}
-                              aria-label="sorted descending"
-                            />
-                          ) : (
-                            <Icon
-                              as={GoTriangleUp}
-                              aria-label="sorted ascending"
-                            />
-                          )
-                        ) : null}
-                      </chakra.span>
-                    </Flex>
-                  </Th>
-                ))}
-              </Tr>
-            ))}
-          </Thead>
-          <Tbody {...getTableBodyProps()}>{rows.map(MapRow)}</Tbody>
-        </Table>
-      </>
+      <Table width="100%" variant="striped" {...getTableProps()}>
+        <Thead>
+          {headerGroups.map((headerGroup) => (
+            <Tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <Th
+                  px={6}
+                  py={3}
+                  borderBottomWidth="1px"
+                  backgroundColor={tableBg}
+                  textAlign="left"
+                  fontSize="xs"
+                  color={tableColor}
+                  textTransform="uppercase"
+                  letterSpacing="wider"
+                  lineHeight="1rem"
+                  fontWeight="bold"
+                  _first={{
+                    roundedTopLeft: "lg",
+                  }}
+                  _last={{
+                    roundedTopRight: "lg",
+                  }}
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
+                >
+                  <Flex alignItems="center">
+                    {column.render("Header")}
+                    <chakra.span pl={2}>
+                      {column.isSorted ? (
+                        column.isSortedDesc ? (
+                          <Icon
+                            as={GoTriangleDown}
+                            aria-label="sorted descending"
+                          />
+                        ) : (
+                          <Icon
+                            as={GoTriangleUp}
+                            aria-label="sorted ascending"
+                          />
+                        )
+                      ) : null}
+                    </chakra.span>
+                  </Flex>
+                </Th>
+              ))}
+            </Tr>
+          ))}
+        </Thead>
+        <Tbody {...getTableBodyProps()}>{rows.map(MapRow)}</Tbody>
+      </Table>
 
       <Flex alignItems="center" justifyContent="space-between" my={2}>
         <InputGroup maxW={{ md: "320px" }} w="full" mb={2}>
@@ -211,26 +202,7 @@ export function DataTable<Data extends object>({
           />
         </InputGroup>
 
-        {fetchNextPage && (
-          <ButtonGroup variant="outline" size="sm">
-            <Button
-              as="a"
-              rel="prev"
-              onClick={fetchPreviousPage}
-              isDisabled={!hasPreviousPage || !!isFetching}
-            >
-              Previous
-            </Button>
-            <Button
-              as="a"
-              rel="next"
-              onClick={fetchNextPage}
-              isDisabled={!hasNextPage || !!isFetching}
-            >
-              Next
-            </Button>
-          </ButtonGroup>
-        )}
+        {pagination}
       </Flex>
     </Box>
   );
