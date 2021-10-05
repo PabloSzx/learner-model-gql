@@ -1,3 +1,4 @@
+import pMap from "p-map";
 import { gql, Prisma, registerModule, ResolveCursorConnection } from "../ez";
 
 export const groupsModule = registerModule(
@@ -32,7 +33,10 @@ export const groupsModule = registerModule(
     }
 
     extend type AdminUserMutations {
-      setUserGroups(userIds: [IntID!]!, groupIds: [IntID!]!): [User!]!
+      setUserGroups(
+        usersEmails: [EmailAddress!]!
+        groupIds: [IntID!]!
+      ): [User!]!
 
       createGroup(data: CreateGroupInput!): Group!
       updateGroup(data: UpdateGroupInput!): Group!
@@ -91,7 +95,7 @@ export const groupsModule = registerModule(
         },
       },
       AdminUserMutations: {
-        async setUserGroups(_root, { userIds, groupIds }, { prisma }) {
+        async setUserGroups(_root, { usersEmails, groupIds }, { prisma }) {
           const userDataSet: Prisma.UserUpdateInput = {
             groups: {
               set: groupIds.map((id) => {
@@ -101,15 +105,20 @@ export const groupsModule = registerModule(
               }),
             },
           };
-          return prisma.$transaction(
-            userIds.map((id) => {
+
+          return pMap(
+            usersEmails,
+            (email) => {
               return prisma.user.update({
                 where: {
-                  id,
+                  email,
                 },
                 data: userDataSet,
               });
-            })
+            },
+            {
+              concurrency: 4,
+            }
           );
         },
         async createGroup(

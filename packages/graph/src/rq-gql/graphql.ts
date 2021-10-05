@@ -211,7 +211,7 @@ export type AdminUserMutationsSetProjectsToUsersArgs = {
 
 export type AdminUserMutationsSetUserGroupsArgs = {
   groupIds: Array<Scalars["IntID"]>;
-  userIds: Array<Scalars["IntID"]>;
+  usersEmails: Array<Scalars["EmailAddress"]>;
 };
 
 export type AdminUserMutationsUpdateGroupArgs = {

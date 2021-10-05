@@ -211,7 +211,7 @@ export type AdminUserMutationsSetProjectsToUsersArgs = {
 
 export type AdminUserMutationsSetUserGroupsArgs = {
   groupIds: Array<Scalars["IntID"]>;
-  userIds: Array<Scalars["IntID"]>;
+  usersEmails: Array<Scalars["EmailAddress"]>;
 };
 
 export type AdminUserMutationsUpdateGroupArgs = {
@@ -1272,7 +1272,7 @@ export type UsersGroupsQuery = {
 };
 
 export type SetUserGroupsMutationVariables = Exact<{
-  userIds: Array<Scalars["IntID"]> | Scalars["IntID"];
+  usersEmails: Array<Scalars["EmailAddress"]> | Scalars["EmailAddress"];
   groupIds: Array<Scalars["IntID"]> | Scalars["IntID"];
 }>;
 
@@ -3974,7 +3974,7 @@ export const SetUserGroupsDocument = {
           kind: "VariableDefinition",
           variable: {
             kind: "Variable",
-            name: { kind: "Name", value: "userIds" },
+            name: { kind: "Name", value: "usersEmails" },
           },
           type: {
             kind: "NonNullType",
@@ -3984,7 +3984,7 @@ export const SetUserGroupsDocument = {
                 kind: "NonNullType",
                 type: {
                   kind: "NamedType",
-                  name: { kind: "Name", value: "IntID" },
+                  name: { kind: "Name", value: "EmailAddress" },
                 },
               },
             },
@@ -4026,10 +4026,10 @@ export const SetUserGroupsDocument = {
                   arguments: [
                     {
                       kind: "Argument",
-                      name: { kind: "Name", value: "userIds" },
+                      name: { kind: "Name", value: "usersEmails" },
                       value: {
                         kind: "Variable",
-                        name: { kind: "Name", value: "userIds" },
+                        name: { kind: "Name", value: "usersEmails" },
                       },
                     },
                     {

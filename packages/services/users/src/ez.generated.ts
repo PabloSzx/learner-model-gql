@@ -148,7 +148,7 @@ export type AdminUserMutationsUpdateUserArgs = {
 };
 
 export type AdminUserMutationsSetUserGroupsArgs = {
-  userIds: Array<Scalars["IntID"]>;
+  usersEmails: Array<Scalars["EmailAddress"]>;
   groupIds: Array<Scalars["IntID"]>;
 };
 
@@ -524,7 +524,10 @@ export type AdminUserMutationsResolvers<
     Array<ResolversTypes["User"]>,
     ParentType,
     ContextType,
-    RequireFields<AdminUserMutationsSetUserGroupsArgs, "userIds" | "groupIds">
+    RequireFields<
+      AdminUserMutationsSetUserGroupsArgs,
+      "usersEmails" | "groupIds"
+    >
   >;
   createGroup?: Resolver<
     ResolversTypes["Group"],

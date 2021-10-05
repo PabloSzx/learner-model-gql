@@ -519,9 +519,12 @@ export async function CheckGroups({
 
   const setUserGroupResult = await mutation(
     gql(/* GraphQL */ `
-      mutation SetUserGroups($userIds: [IntID!]!, $groupIds: [IntID!]!) {
+      mutation SetUserGroups(
+        $usersEmails: [EmailAddress!]!
+        $groupIds: [IntID!]!
+      ) {
         adminUsers {
-          setUserGroups(userIds: $userIds, groupIds: $groupIds) {
+          setUserGroups(usersEmails: $usersEmails, groupIds: $groupIds) {
             ...UserGroupsInfo
           }
         }
@@ -529,7 +532,7 @@ export async function CheckGroups({
     `),
     {
       variables: {
-        userIds: [user2.userId],
+        usersEmails: [user2.user.email],
         groupIds: [firstGroupId],
       },
     }

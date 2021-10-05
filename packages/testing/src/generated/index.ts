@@ -97,7 +97,7 @@ const documents = {
     graphql.GetGroupsDocument,
   "\n          query UsersGroups($ids: [IntID!]!) {\n            users(ids: $ids) {\n              ...UserGroupsInfo\n            }\n          }\n        ":
     graphql.UsersGroupsDocument,
-  "\n      mutation SetUserGroups($userIds: [IntID!]!, $groupIds: [IntID!]!) {\n        adminUsers {\n          setUserGroups(userIds: $userIds, groupIds: $groupIds) {\n            ...UserGroupsInfo\n          }\n        }\n      }\n    ":
+  "\n      mutation SetUserGroups(\n        $usersEmails: [EmailAddress!]!\n        $groupIds: [IntID!]!\n      ) {\n        adminUsers {\n          setUserGroups(usersEmails: $usersEmails, groupIds: $groupIds) {\n            ...UserGroupsInfo\n          }\n        }\n      }\n    ":
     graphql.SetUserGroupsDocument,
   "\n      mutation AdminCreateGroup($data: CreateGroupInput!) {\n        adminUsers {\n          createGroup(data: $data) {\n            ...GroupInfo\n          }\n        }\n      }\n    ":
     graphql.AdminCreateGroupDocument,
@@ -249,8 +249,8 @@ export function gql(
   source: "\n          query UsersGroups($ids: [IntID!]!) {\n            users(ids: $ids) {\n              ...UserGroupsInfo\n            }\n          }\n        "
 ): typeof documents["\n          query UsersGroups($ids: [IntID!]!) {\n            users(ids: $ids) {\n              ...UserGroupsInfo\n            }\n          }\n        "];
 export function gql(
-  source: "\n      mutation SetUserGroups($userIds: [IntID!]!, $groupIds: [IntID!]!) {\n        adminUsers {\n          setUserGroups(userIds: $userIds, groupIds: $groupIds) {\n            ...UserGroupsInfo\n          }\n        }\n      }\n    "
-): typeof documents["\n      mutation SetUserGroups($userIds: [IntID!]!, $groupIds: [IntID!]!) {\n        adminUsers {\n          setUserGroups(userIds: $userIds, groupIds: $groupIds) {\n            ...UserGroupsInfo\n          }\n        }\n      }\n    "];
+  source: "\n      mutation SetUserGroups(\n        $usersEmails: [EmailAddress!]!\n        $groupIds: [IntID!]!\n      ) {\n        adminUsers {\n          setUserGroups(usersEmails: $usersEmails, groupIds: $groupIds) {\n            ...UserGroupsInfo\n          }\n        }\n      }\n    "
+): typeof documents["\n      mutation SetUserGroups(\n        $usersEmails: [EmailAddress!]!\n        $groupIds: [IntID!]!\n      ) {\n        adminUsers {\n          setUserGroups(usersEmails: $usersEmails, groupIds: $groupIds) {\n            ...UserGroupsInfo\n          }\n        }\n      }\n    "];
 export function gql(
   source: "\n      mutation AdminCreateGroup($data: CreateGroupInput!) {\n        adminUsers {\n          createGroup(data: $data) {\n            ...GroupInfo\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation AdminCreateGroup($data: CreateGroupInput!) {\n        adminUsers {\n          createGroup(data: $data) {\n            ...GroupInfo\n          }\n        }\n      }\n    "];
