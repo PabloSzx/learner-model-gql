@@ -383,6 +383,8 @@ export const generatedSchema = {
     code: { __type: "String!" },
     label: { __type: "String!" },
     users: { __type: "[User!]!" },
+    createdAt: { __type: "DateTime!" },
+    updatedAt: { __type: "DateTime!" },
     projectsIds: { __type: "[IntID!]!" },
     projects: { __type: "[Project!]!" },
   },
@@ -709,6 +711,8 @@ export interface Group {
   code: ScalarsEnums["String"];
   label: ScalarsEnums["String"];
   users: Array<User>;
+  createdAt: ScalarsEnums["DateTime"];
+  updatedAt: ScalarsEnums["DateTime"];
   projectsIds: Array<ScalarsEnums["IntID"]>;
   projects: Array<Project>;
 }

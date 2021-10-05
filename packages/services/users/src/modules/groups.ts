@@ -10,6 +10,9 @@ export const groupsModule = registerModule(
       label: String!
 
       users: [User!]!
+
+      createdAt: DateTime!
+      updatedAt: DateTime!
     }
 
     extend type User {

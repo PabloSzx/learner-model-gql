@@ -79,6 +79,8 @@ type Group {
   code: String!
   label: String!
   users: [User!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   projectsIds: [IntID!]!
   projects: [Project!]!
 }

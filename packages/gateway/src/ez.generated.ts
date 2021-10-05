@@ -117,6 +117,8 @@ export type Group = {
   code: Scalars["String"];
   label: Scalars["String"];
   users: Array<User>;
+  createdAt: Scalars["DateTime"];
+  updatedAt: Scalars["DateTime"];
   projectsIds: Array<Scalars["IntID"]>;
   projects: Array<Project>;
 };
@@ -976,6 +978,8 @@ export type GroupResolvers<
   code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   users?: Resolver<Array<ResolversTypes["User"]>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   projectsIds?: Resolver<
     Array<ResolversTypes["IntID"]>,
     ParentType,

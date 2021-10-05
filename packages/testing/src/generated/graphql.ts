@@ -338,10 +338,12 @@ export type DomainsConnection = Connection & {
 export type Group = {
   __typename?: "Group";
   code: Scalars["String"];
+  createdAt: Scalars["DateTime"];
   id: Scalars["IntID"];
   label: Scalars["String"];
   projects: Array<Project>;
   projectsIds: Array<Scalars["IntID"]>;
+  updatedAt: Scalars["DateTime"];
   users: Array<User>;
 };
 
