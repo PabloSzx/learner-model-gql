@@ -154,199 +154,29 @@ export interface UpdateProject {
 }
 
 export const scalarsEnumsHash: import("gqty").ScalarsEnumsHash = {
-  String: true,
+  Boolean: true,
   DateTime: true,
-  Timestamp: true,
+  EmailAddress: true,
+  Float: true,
+  ID: true,
+  IntID: true,
   JSONObject: true,
   NonNegativeInt: true,
-  Void: true,
+  String: true,
+  Timestamp: true,
   URL: true,
-  EmailAddress: true,
-  IntID: true,
   UserRole: true,
-  Boolean: true,
-  ID: true,
-  Float: true,
+  Void: true,
 };
 export const generatedSchema = {
-  query: {
-    __typename: { __type: "String!" },
-    hello: { __type: "String!" },
-    groups: { __type: "[Group!]!", __args: { ids: "[IntID!]!" } },
-    adminUsers: { __type: "AdminUserQueries!" },
-    currentUser: { __type: "User" },
-    users: { __type: "[User!]!", __args: { ids: "[IntID!]!" } },
-    adminActions: { __type: "AdminActionQueries!" },
-    adminContent: { __type: "AdminContentQueries!" },
-    domains: { __type: "[Domain!]!", __args: { ids: "[IntID!]!" } },
-    topics: { __type: "[Topic!]!", __args: { ids: "[IntID!]!" } },
-    content: { __type: "[Content!]!", __args: { ids: "[IntID!]!" } },
-    adminDomain: { __type: "AdminDomainQueries!" },
-    projects: { __type: "[Project!]!", __args: { ids: "[IntID!]!" } },
-    adminProjects: { __type: "AdminProjectsQueries!" },
-    hello2: { __type: "String!" },
-  },
-  mutation: {
-    __typename: { __type: "String!" },
-    hello: { __type: "String!" },
-    adminUsers: { __type: "AdminUserMutations!" },
-    action: { __type: "Void", __args: { data: "ActionInput!" } },
-    adminContent: { __type: "AdminContentMutations!" },
-    adminDomain: { __type: "AdminDomainMutations!" },
-    adminProjects: { __type: "AdminProjectsMutations!" },
-  },
-  subscription: {
-    __typename: { __type: "String!" },
-    hello: { __type: "String!" },
-  },
-  Group: {
+  Action: {
     __typename: { __type: "String!" },
     id: { __type: "IntID!" },
-    code: { __type: "String!" },
-    label: { __type: "String!" },
-    users: { __type: "[User!]!" },
-    projectsIds: { __type: "[IntID!]!" },
-    projects: { __type: "[Project!]!" },
-  },
-  CreateGroupInput: {
-    code: { __type: "String!" },
-    label: { __type: "String!" },
-    projectIds: { __type: "[IntID!]!" },
-  },
-  UpdateGroupInput: {
-    id: { __type: "IntID!" },
-    code: { __type: "String!" },
-    label: { __type: "String!" },
-    projectIds: { __type: "[IntID!]!" },
-  },
-  GroupsConnection: {
-    __typename: { __type: "String!" },
-    nodes: { __type: "[Group!]!" },
-    pageInfo: { __type: "PageInfo!" },
-  },
-  User: {
-    __typename: { __type: "String!" },
-    id: { __type: "IntID!" },
-    enabled: { __type: "Boolean!" },
-    email: { __type: "String!" },
-    name: { __type: "String" },
-    locked: { __type: "Boolean!" },
-    active: { __type: "Boolean!" },
-    lastOnline: { __type: "DateTime" },
-    role: { __type: "UserRole!" },
-    createdAt: { __type: "DateTime!" },
-    updatedAt: { __type: "DateTime!" },
-    groups: { __type: "[Group!]!" },
-    projectsIds: { __type: "[IntID!]!" },
-    projects: { __type: "[Project!]!" },
-  },
-  UsersConnection: {
-    __typename: { __type: "String!" },
-    nodes: { __type: "[User!]!" },
-    pageInfo: { __type: "PageInfo!" },
-  },
-  AdminUserQueries: {
-    __typename: { __type: "String!" },
-    allUsers: {
-      __type: "UsersConnection!",
-      __args: { pagination: "CursorConnectionArgs!" },
-    },
-    allGroups: {
-      __type: "GroupsConnection!",
-      __args: { pagination: "CursorConnectionArgs!" },
-    },
-  },
-  UpsertUserInput: { email: { __type: "String!" }, name: { __type: "String" } },
-  UpdateUserInput: {
-    id: { __type: "IntID!" },
-    role: { __type: "UserRole!" },
-    locked: { __type: "Boolean!" },
-  },
-  AdminUserMutations: {
-    __typename: { __type: "String!" },
-    upsertUsersWithProject: {
-      __type: "[User!]!",
-      __args: { emails: "[EmailAddress!]!", projectId: "IntID!" },
-    },
-    updateUser: { __type: "User!", __args: { data: "UpdateUserInput!" } },
-    setUserGroups: {
-      __type: "[User!]!",
-      __args: { userIds: "[IntID!]!", groupIds: "[IntID!]!" },
-    },
-    createGroup: { __type: "Group!", __args: { data: "CreateGroupInput!" } },
-    updateGroup: { __type: "Group!", __args: { data: "UpdateGroupInput!" } },
-    setProjectsToUsers: {
-      __type: "[User!]!",
-      __args: { projectIds: "[IntID!]!", userIds: "[IntID!]!" },
-    },
-  },
-  PageInfo: {
-    __typename: { __type: "String!" },
-    startCursor: { __type: "String" },
-    endCursor: { __type: "String" },
-    hasNextPage: { __type: "Boolean!" },
-    hasPreviousPage: { __type: "Boolean!" },
-  },
-  Node: { __typename: { __type: "String!" }, id: { __type: "IntID!" } },
-  Connection: {
-    __typename: { __type: "String!" },
-    pageInfo: { __type: "PageInfo!" },
-    $on: { __type: "$Connection!" },
-  },
-  CursorConnectionArgs: {
-    first: { __type: "NonNegativeInt" },
-    after: { __type: "IntID" },
-    last: { __type: "NonNegativeInt" },
-    before: { __type: "IntID" },
-  },
-  ActionVerb: {
-    __typename: { __type: "String!" },
-    id: { __type: "IntID!" },
-    name: { __type: "String!" },
-  },
-  Content: {
-    __typename: { __type: "String!" },
-    id: { __type: "IntID!" },
-    description: { __type: "String!" },
-    binaryBase64: { __type: "String" },
-    json: { __type: "JSONObject" },
-    url: { __type: "String" },
-    createdAt: { __type: "DateTime!" },
-    updatedAt: { __type: "DateTime!" },
-    domain: { __type: "Domain!" },
-    project: { __type: "Project!" },
-  },
-  Domain: {
-    __typename: { __type: "String!" },
-    id: { __type: "IntID!" },
-    content: {
-      __type: "ContentConnection!",
-      __args: { pagination: "CursorConnectionArgs!" },
-    },
-    code: { __type: "String!" },
-    label: { __type: "String!" },
-    topics: { __type: "[Topic!]!" },
-    createdAt: { __type: "DateTime!" },
-    updatedAt: { __type: "DateTime!" },
-    kcs: { __type: "[KC!]!" },
-    project: { __type: "Project!" },
-  },
-  Topic: {
-    __typename: { __type: "String!" },
-    id: { __type: "IntID!" },
-    content: {
-      __type: "ContentConnection!",
-      __args: { pagination: "CursorConnectionArgs!" },
-    },
-    code: { __type: "String!" },
-    label: { __type: "String!" },
-    domain: { __type: "Domain!" },
-    parent: { __type: "Topic" },
-    childrens: { __type: "[Topic!]!" },
-    createdAt: { __type: "DateTime!" },
-    updatedAt: { __type: "DateTime!" },
-    kcs: { __type: "[KC!]!" },
-    project: { __type: "Project!" },
+    verb: { __type: "ActionVerb!" },
+    activity: { __type: "ActionActivity!" },
+    timestamp: { __type: "Timestamp!" },
+    result: { __type: "Float" },
+    user: { __type: "User" },
   },
   ActionActivity: {
     __typename: { __type: "String!" },
@@ -374,14 +204,10 @@ export const generatedSchema = {
     timestamp: { __type: "Timestamp!" },
     projectId: { __type: "IntID!" },
   },
-  Action: {
+  ActionVerb: {
     __typename: { __type: "String!" },
     id: { __type: "IntID!" },
-    verb: { __type: "ActionVerb!" },
-    activity: { __type: "ActionActivity!" },
-    timestamp: { __type: "Timestamp!" },
-    result: { __type: "Float" },
-    user: { __type: "User" },
+    name: { __type: "String!" },
   },
   ActionsConnection: {
     __typename: { __type: "String!" },
@@ -395,20 +221,6 @@ export const generatedSchema = {
       __args: { pagination: "CursorConnectionArgs!" },
     },
   },
-  CreateContent: {
-    description: { __type: "String!" },
-    projectId: { __type: "IntID!" },
-    domainId: { __type: "IntID!" },
-    topicId: { __type: "IntID" },
-    binaryBase64: { __type: "String" },
-    json: { __type: "JSONObject" },
-    url: { __type: "String" },
-  },
-  ContentConnection: {
-    __typename: { __type: "String!" },
-    nodes: { __type: "[Content!]!" },
-    pageInfo: { __type: "PageInfo!" },
-  },
   AdminContentMutations: {
     __typename: { __type: "String!" },
     createContent: { __type: "Content!", __args: { data: "CreateContent!" } },
@@ -420,15 +232,14 @@ export const generatedSchema = {
       __args: { pagination: "CursorConnectionArgs!" },
     },
   },
-  TopicsConnection: {
+  AdminDomainMutations: {
     __typename: { __type: "String!" },
-    nodes: { __type: "[Topic!]!" },
-    pageInfo: { __type: "PageInfo!" },
-  },
-  DomainsConnection: {
-    __typename: { __type: "String!" },
-    nodes: { __type: "[Domain!]!" },
-    pageInfo: { __type: "PageInfo!" },
+    createDomain: { __type: "Domain!", __args: { input: "CreateDomain!" } },
+    updateDomain: { __type: "Domain!", __args: { input: "UpdateDomain!" } },
+    createTopic: { __type: "Topic!", __args: { input: "CreateTopic!" } },
+    updateTopic: { __type: "Topic!", __args: { input: "UpdateTopic!" } },
+    createKC: { __type: "KC!", __args: { data: "CreateKCInput!" } },
+    updateKC: { __type: "KC!", __args: { data: "UpdateKCInput!" } },
   },
   AdminDomainQueries: {
     __typename: { __type: "String!" },
@@ -445,12 +256,94 @@ export const generatedSchema = {
       __args: { pagination: "CursorConnectionArgs!" },
     },
   },
+  AdminProjectsMutations: {
+    __typename: { __type: "String!" },
+    createProject: { __type: "Project!", __args: { data: "CreateProject!" } },
+    updateProject: { __type: "Project!", __args: { data: "UpdateProject!" } },
+  },
+  AdminProjectsQueries: {
+    __typename: { __type: "String!" },
+    allProjects: {
+      __type: "ProjectsConnection!",
+      __args: { pagination: "CursorConnectionArgs!" },
+    },
+  },
+  AdminUserMutations: {
+    __typename: { __type: "String!" },
+    upsertUsersWithProject: {
+      __type: "[User!]!",
+      __args: { emails: "[EmailAddress!]!", projectId: "IntID!" },
+    },
+    updateUser: { __type: "User!", __args: { data: "UpdateUserInput!" } },
+    setUserGroups: {
+      __type: "[User!]!",
+      __args: { userIds: "[IntID!]!", groupIds: "[IntID!]!" },
+    },
+    createGroup: { __type: "Group!", __args: { data: "CreateGroupInput!" } },
+    updateGroup: { __type: "Group!", __args: { data: "UpdateGroupInput!" } },
+    setProjectsToUsers: {
+      __type: "[User!]!",
+      __args: { projectIds: "[IntID!]!", userIds: "[IntID!]!" },
+    },
+  },
+  AdminUserQueries: {
+    __typename: { __type: "String!" },
+    allUsers: {
+      __type: "UsersConnection!",
+      __args: { pagination: "CursorConnectionArgs!" },
+    },
+    allGroups: {
+      __type: "GroupsConnection!",
+      __args: { pagination: "CursorConnectionArgs!" },
+    },
+  },
+  Connection: {
+    __typename: { __type: "String!" },
+    pageInfo: { __type: "PageInfo!" },
+    $on: { __type: "$Connection!" },
+  },
+  Content: {
+    __typename: { __type: "String!" },
+    id: { __type: "IntID!" },
+    description: { __type: "String!" },
+    binaryBase64: { __type: "String" },
+    json: { __type: "JSONObject" },
+    url: { __type: "String" },
+    createdAt: { __type: "DateTime!" },
+    updatedAt: { __type: "DateTime!" },
+    domain: { __type: "Domain!" },
+    project: { __type: "Project!" },
+  },
+  ContentConnection: {
+    __typename: { __type: "String!" },
+    nodes: { __type: "[Content!]!" },
+    pageInfo: { __type: "PageInfo!" },
+  },
+  CreateContent: {
+    description: { __type: "String!" },
+    projectId: { __type: "IntID!" },
+    domainId: { __type: "IntID!" },
+    topicId: { __type: "IntID" },
+    binaryBase64: { __type: "String" },
+    json: { __type: "JSONObject" },
+    url: { __type: "String" },
+  },
   CreateDomain: {
     code: { __type: "String!" },
     label: { __type: "String!" },
     projectId: { __type: "IntID!" },
   },
-  UpdateDomain: { id: { __type: "IntID!" }, label: { __type: "String!" } },
+  CreateGroupInput: {
+    code: { __type: "String!" },
+    label: { __type: "String!" },
+    projectIds: { __type: "[IntID!]!" },
+  },
+  CreateKCInput: {
+    code: { __type: "String!" },
+    label: { __type: "String!" },
+    domainId: { __type: "IntID!" },
+  },
+  CreateProject: { code: { __type: "String!" }, label: { __type: "String!" } },
   CreateTopic: {
     code: { __type: "String!" },
     label: { __type: "String!" },
@@ -458,22 +351,45 @@ export const generatedSchema = {
     domainId: { __type: "IntID!" },
     projectId: { __type: "IntID!" },
   },
-  UpdateTopic: {
+  CursorConnectionArgs: {
+    first: { __type: "NonNegativeInt" },
+    after: { __type: "IntID" },
+    last: { __type: "NonNegativeInt" },
+    before: { __type: "IntID" },
+  },
+  Domain: {
+    __typename: { __type: "String!" },
+    id: { __type: "IntID!" },
+    content: {
+      __type: "ContentConnection!",
+      __args: { pagination: "CursorConnectionArgs!" },
+    },
+    code: { __type: "String!" },
+    label: { __type: "String!" },
+    topics: { __type: "[Topic!]!" },
+    createdAt: { __type: "DateTime!" },
+    updatedAt: { __type: "DateTime!" },
+    kcs: { __type: "[KC!]!" },
+    project: { __type: "Project!" },
+  },
+  DomainsConnection: {
+    __typename: { __type: "String!" },
+    nodes: { __type: "[Domain!]!" },
+    pageInfo: { __type: "PageInfo!" },
+  },
+  Group: {
+    __typename: { __type: "String!" },
     id: { __type: "IntID!" },
     code: { __type: "String!" },
     label: { __type: "String!" },
-    parentTopicId: { __type: "IntID" },
-    domainId: { __type: "IntID!" },
-    projectId: { __type: "IntID!" },
+    users: { __type: "[User!]!" },
+    projectsIds: { __type: "[IntID!]!" },
+    projects: { __type: "[Project!]!" },
   },
-  AdminDomainMutations: {
+  GroupsConnection: {
     __typename: { __type: "String!" },
-    createDomain: { __type: "Domain!", __args: { input: "CreateDomain!" } },
-    updateDomain: { __type: "Domain!", __args: { input: "UpdateDomain!" } },
-    createTopic: { __type: "Topic!", __args: { input: "CreateTopic!" } },
-    updateTopic: { __type: "Topic!", __args: { input: "UpdateTopic!" } },
-    createKC: { __type: "KC!", __args: { data: "CreateKCInput!" } },
-    updateKC: { __type: "KC!", __args: { data: "UpdateKCInput!" } },
+    nodes: { __type: "[Group!]!" },
+    pageInfo: { __type: "PageInfo!" },
   },
   KC: {
     __typename: { __type: "String!" },
@@ -490,15 +406,13 @@ export const generatedSchema = {
     nodes: { __type: "[KC!]!" },
     pageInfo: { __type: "PageInfo!" },
   },
-  CreateKCInput: {
-    code: { __type: "String!" },
-    label: { __type: "String!" },
-    domainId: { __type: "IntID!" },
-  },
-  UpdateKCInput: {
-    id: { __type: "IntID!" },
-    code: { __type: "String!" },
-    label: { __type: "String!" },
+  Node: { __typename: { __type: "String!" }, id: { __type: "IntID!" } },
+  PageInfo: {
+    __typename: { __type: "String!" },
+    startCursor: { __type: "String" },
+    endCursor: { __type: "String" },
+    hasNextPage: { __type: "Boolean!" },
+    hasPreviousPage: { __type: "Boolean!" },
   },
   Project: {
     __typename: { __type: "String!" },
@@ -514,23 +428,109 @@ export const generatedSchema = {
     nodes: { __type: "[Project!]!" },
     pageInfo: { __type: "PageInfo!" },
   },
-  AdminProjectsQueries: {
+  Topic: {
     __typename: { __type: "String!" },
-    allProjects: {
-      __type: "ProjectsConnection!",
+    id: { __type: "IntID!" },
+    content: {
+      __type: "ContentConnection!",
       __args: { pagination: "CursorConnectionArgs!" },
     },
+    code: { __type: "String!" },
+    label: { __type: "String!" },
+    domain: { __type: "Domain!" },
+    parent: { __type: "Topic" },
+    childrens: { __type: "[Topic!]!" },
+    createdAt: { __type: "DateTime!" },
+    updatedAt: { __type: "DateTime!" },
+    kcs: { __type: "[KC!]!" },
+    project: { __type: "Project!" },
   },
-  CreateProject: { code: { __type: "String!" }, label: { __type: "String!" } },
+  TopicsConnection: {
+    __typename: { __type: "String!" },
+    nodes: { __type: "[Topic!]!" },
+    pageInfo: { __type: "PageInfo!" },
+  },
+  UpdateDomain: { id: { __type: "IntID!" }, label: { __type: "String!" } },
+  UpdateGroupInput: {
+    id: { __type: "IntID!" },
+    code: { __type: "String!" },
+    label: { __type: "String!" },
+    projectIds: { __type: "[IntID!]!" },
+  },
+  UpdateKCInput: {
+    id: { __type: "IntID!" },
+    code: { __type: "String!" },
+    label: { __type: "String!" },
+  },
   UpdateProject: {
     id: { __type: "IntID!" },
     code: { __type: "String!" },
     label: { __type: "String!" },
   },
-  AdminProjectsMutations: {
+  UpdateTopic: {
+    id: { __type: "IntID!" },
+    code: { __type: "String!" },
+    label: { __type: "String!" },
+    parentTopicId: { __type: "IntID" },
+    domainId: { __type: "IntID!" },
+    projectId: { __type: "IntID!" },
+  },
+  UpdateUserInput: {
+    id: { __type: "IntID!" },
+    role: { __type: "UserRole!" },
+    locked: { __type: "Boolean!" },
+  },
+  UpsertUserInput: { email: { __type: "String!" }, name: { __type: "String" } },
+  User: {
     __typename: { __type: "String!" },
-    createProject: { __type: "Project!", __args: { data: "CreateProject!" } },
-    updateProject: { __type: "Project!", __args: { data: "UpdateProject!" } },
+    id: { __type: "IntID!" },
+    enabled: { __type: "Boolean!" },
+    email: { __type: "String!" },
+    name: { __type: "String" },
+    locked: { __type: "Boolean!" },
+    active: { __type: "Boolean!" },
+    lastOnline: { __type: "DateTime" },
+    role: { __type: "UserRole!" },
+    createdAt: { __type: "DateTime!" },
+    updatedAt: { __type: "DateTime!" },
+    groups: { __type: "[Group!]!" },
+    projectsIds: { __type: "[IntID!]!" },
+    projects: { __type: "[Project!]!" },
+  },
+  UsersConnection: {
+    __typename: { __type: "String!" },
+    nodes: { __type: "[User!]!" },
+    pageInfo: { __type: "PageInfo!" },
+  },
+  mutation: {
+    __typename: { __type: "String!" },
+    hello: { __type: "String!" },
+    adminUsers: { __type: "AdminUserMutations!" },
+    action: { __type: "Void", __args: { data: "ActionInput!" } },
+    adminContent: { __type: "AdminContentMutations!" },
+    adminDomain: { __type: "AdminDomainMutations!" },
+    adminProjects: { __type: "AdminProjectsMutations!" },
+  },
+  query: {
+    __typename: { __type: "String!" },
+    hello: { __type: "String!" },
+    groups: { __type: "[Group!]!", __args: { ids: "[IntID!]!" } },
+    adminUsers: { __type: "AdminUserQueries!" },
+    currentUser: { __type: "User" },
+    users: { __type: "[User!]!", __args: { ids: "[IntID!]!" } },
+    adminActions: { __type: "AdminActionQueries!" },
+    adminContent: { __type: "AdminContentQueries!" },
+    domains: { __type: "[Domain!]!", __args: { ids: "[IntID!]!" } },
+    topics: { __type: "[Topic!]!", __args: { ids: "[IntID!]!" } },
+    content: { __type: "[Content!]!", __args: { ids: "[IntID!]!" } },
+    adminDomain: { __type: "AdminDomainQueries!" },
+    projects: { __type: "[Project!]!", __args: { ids: "[IntID!]!" } },
+    adminProjects: { __type: "AdminProjectsQueries!" },
+    hello2: { __type: "String!" },
+  },
+  subscription: {
+    __typename: { __type: "String!" },
+    hello: { __type: "String!" },
   },
   [SchemaUnionsKey]: {
     Connection: [
@@ -545,37 +545,162 @@ export const generatedSchema = {
   },
 } as const;
 
-export interface Query {
-  __typename?: "Query";
-  hello: ScalarsEnums["String"];
-  groups: (args: { ids: Array<Scalars["IntID"]> }) => Array<Group>;
-  adminUsers: AdminUserQueries;
-  currentUser?: Maybe<User>;
-  users: (args: { ids: Array<Scalars["IntID"]> }) => Array<User>;
-  adminActions: AdminActionQueries;
-  adminContent: AdminContentQueries;
-  domains: (args: { ids: Array<Scalars["IntID"]> }) => Array<Domain>;
-  topics: (args: { ids: Array<Scalars["IntID"]> }) => Array<Topic>;
-  content: (args: { ids: Array<Scalars["IntID"]> }) => Array<Content>;
-  adminDomain: AdminDomainQueries;
-  projects: (args: { ids: Array<Scalars["IntID"]> }) => Array<Project>;
-  adminProjects: AdminProjectsQueries;
-  hello2: ScalarsEnums["String"];
+export interface Action {
+  __typename?: "Action";
+  id: ScalarsEnums["IntID"];
+  verb: ActionVerb;
+  activity: ActionActivity;
+  timestamp: ScalarsEnums["Timestamp"];
+  result?: Maybe<ScalarsEnums["Float"]>;
+  user?: Maybe<User>;
 }
 
-export interface Mutation {
-  __typename?: "Mutation";
-  hello: ScalarsEnums["String"];
-  adminUsers: AdminUserMutations;
-  action: (args: { data: ActionInput }) => Maybe<ScalarsEnums["Void"]>;
-  adminContent: AdminContentMutations;
-  adminDomain: AdminDomainMutations;
-  adminProjects: AdminProjectsMutations;
+export interface ActionActivity {
+  __typename?: "ActionActivity";
+  id: ScalarsEnums["IntID"];
+  content?: Maybe<Content>;
+  topic?: Maybe<Topic>;
+  stepID?: Maybe<ScalarsEnums["ID"]>;
+  hintID?: Maybe<ScalarsEnums["ID"]>;
+  amount?: Maybe<ScalarsEnums["Float"]>;
+  detail?: Maybe<ScalarsEnums["String"]>;
+  extra?: Maybe<ScalarsEnums["JSONObject"]>;
 }
 
-export interface Subscription {
-  __typename?: "Subscription";
-  hello: ScalarsEnums["String"];
+export interface ActionVerb {
+  __typename?: "ActionVerb";
+  id: ScalarsEnums["IntID"];
+  name: ScalarsEnums["String"];
+}
+
+export interface ActionsConnection {
+  __typename?: "ActionsConnection";
+  nodes: Array<Action>;
+  pageInfo: PageInfo;
+}
+
+export interface AdminActionQueries {
+  __typename?: "AdminActionQueries";
+  allActions: (args: { pagination: CursorConnectionArgs }) => ActionsConnection;
+}
+
+export interface AdminContentMutations {
+  __typename?: "AdminContentMutations";
+  createContent: (args: { data: CreateContent }) => Content;
+}
+
+export interface AdminContentQueries {
+  __typename?: "AdminContentQueries";
+  allContent: (args: { pagination: CursorConnectionArgs }) => ContentConnection;
+}
+
+export interface AdminDomainMutations {
+  __typename?: "AdminDomainMutations";
+  createDomain: (args: { input: CreateDomain }) => Domain;
+  updateDomain: (args: { input: UpdateDomain }) => Domain;
+  createTopic: (args: { input: CreateTopic }) => Topic;
+  updateTopic: (args: { input: UpdateTopic }) => Topic;
+  createKC: (args: { data: CreateKCInput }) => KC;
+  updateKC: (args: { data: UpdateKCInput }) => KC;
+}
+
+export interface AdminDomainQueries {
+  __typename?: "AdminDomainQueries";
+  allTopics: (args: { pagination: CursorConnectionArgs }) => TopicsConnection;
+  allDomains: (args: { pagination: CursorConnectionArgs }) => DomainsConnection;
+  allKCs: (args: { pagination: CursorConnectionArgs }) => KCsConnection;
+}
+
+export interface AdminProjectsMutations {
+  __typename?: "AdminProjectsMutations";
+  createProject: (args: { data: CreateProject }) => Project;
+  updateProject: (args: { data: UpdateProject }) => Project;
+}
+
+export interface AdminProjectsQueries {
+  __typename?: "AdminProjectsQueries";
+  allProjects: (args: {
+    pagination: CursorConnectionArgs;
+  }) => ProjectsConnection;
+}
+
+export interface AdminUserMutations {
+  __typename?: "AdminUserMutations";
+  /**
+   * Upsert specified users with specified project
+   */
+  upsertUsersWithProject: (args: {
+    emails: Array<Scalars["EmailAddress"]>;
+    projectId: Scalars["IntID"];
+  }) => Array<User>;
+  updateUser: (args: { data: UpdateUserInput }) => User;
+  setUserGroups: (args: {
+    userIds: Array<Scalars["IntID"]>;
+    groupIds: Array<Scalars["IntID"]>;
+  }) => Array<User>;
+  createGroup: (args: { data: CreateGroupInput }) => Group;
+  updateGroup: (args: { data: UpdateGroupInput }) => Group;
+  setProjectsToUsers: (args: {
+    projectIds: Array<Scalars["IntID"]>;
+    userIds: Array<Scalars["IntID"]>;
+  }) => Array<User>;
+}
+
+export interface AdminUserQueries {
+  __typename?: "AdminUserQueries";
+  allUsers: (args: { pagination: CursorConnectionArgs }) => UsersConnection;
+  allGroups: (args: { pagination: CursorConnectionArgs }) => GroupsConnection;
+}
+
+export interface Connection {
+  __typename?:
+    | "GroupsConnection"
+    | "UsersConnection"
+    | "ContentConnection"
+    | "TopicsConnection"
+    | "DomainsConnection"
+    | "KCsConnection"
+    | "ProjectsConnection";
+  pageInfo: PageInfo;
+  $on: $Connection;
+}
+
+export interface Content {
+  __typename?: "Content";
+  id: ScalarsEnums["IntID"];
+  description: ScalarsEnums["String"];
+  binaryBase64?: Maybe<ScalarsEnums["String"]>;
+  json?: Maybe<ScalarsEnums["JSONObject"]>;
+  url?: Maybe<ScalarsEnums["String"]>;
+  createdAt: ScalarsEnums["DateTime"];
+  updatedAt: ScalarsEnums["DateTime"];
+  domain: Domain;
+  project: Project;
+}
+
+export interface ContentConnection {
+  __typename?: "ContentConnection";
+  nodes: Array<Content>;
+  pageInfo: PageInfo;
+}
+
+export interface Domain {
+  __typename?: "Domain";
+  id: ScalarsEnums["IntID"];
+  content: (args: { pagination: CursorConnectionArgs }) => ContentConnection;
+  code: ScalarsEnums["String"];
+  label: ScalarsEnums["String"];
+  topics: Array<Topic>;
+  createdAt: ScalarsEnums["DateTime"];
+  updatedAt: ScalarsEnums["DateTime"];
+  kcs: Array<KC>;
+  project: Project;
+}
+
+export interface DomainsConnection {
+  __typename?: "DomainsConnection";
+  nodes: Array<Domain>;
+  pageInfo: PageInfo;
 }
 
 export interface Group {
@@ -591,6 +716,73 @@ export interface Group {
 export interface GroupsConnection {
   __typename?: "GroupsConnection";
   nodes: Array<Group>;
+  pageInfo: PageInfo;
+}
+
+export interface KC {
+  __typename?: "KC";
+  id: ScalarsEnums["IntID"];
+  code: ScalarsEnums["String"];
+  label: ScalarsEnums["String"];
+  createdAt: ScalarsEnums["DateTime"];
+  updatedAt: ScalarsEnums["DateTime"];
+  domain: Domain;
+  topics: Array<Topic>;
+}
+
+export interface KCsConnection {
+  __typename?: "KCsConnection";
+  nodes: Array<KC>;
+  pageInfo: PageInfo;
+}
+
+export interface Node {
+  __typename?: "Node";
+  id: ScalarsEnums["IntID"];
+}
+
+export interface PageInfo {
+  __typename?: "PageInfo";
+  startCursor?: Maybe<ScalarsEnums["String"]>;
+  endCursor?: Maybe<ScalarsEnums["String"]>;
+  hasNextPage: ScalarsEnums["Boolean"];
+  hasPreviousPage: ScalarsEnums["Boolean"];
+}
+
+export interface Project {
+  __typename?: "Project";
+  id: ScalarsEnums["IntID"];
+  domains: Array<Domain>;
+  code: ScalarsEnums["String"];
+  label: ScalarsEnums["String"];
+  createdAt: ScalarsEnums["DateTime"];
+  updatedAt: ScalarsEnums["DateTime"];
+}
+
+export interface ProjectsConnection {
+  __typename?: "ProjectsConnection";
+  nodes: Array<Project>;
+  pageInfo: PageInfo;
+}
+
+export interface Topic {
+  __typename?: "Topic";
+  id: ScalarsEnums["IntID"];
+  content: (args: { pagination: CursorConnectionArgs }) => ContentConnection;
+  code: ScalarsEnums["String"];
+  label: ScalarsEnums["String"];
+  domain: Domain;
+  parent?: Maybe<Topic>;
+  childrens: Array<Topic>;
+  createdAt: ScalarsEnums["DateTime"];
+  updatedAt: ScalarsEnums["DateTime"];
+  kcs: Array<KC>;
+  project: Project;
+}
+
+export interface TopicsConnection {
+  __typename?: "TopicsConnection";
+  nodes: Array<Topic>;
   pageInfo: PageInfo;
 }
 
@@ -617,298 +809,106 @@ export interface UsersConnection {
   pageInfo: PageInfo;
 }
 
-export interface AdminUserQueries {
-  __typename?: "AdminUserQueries";
-  allUsers: (args: { pagination: CursorConnectionArgs }) => UsersConnection;
-  allGroups: (args: { pagination: CursorConnectionArgs }) => GroupsConnection;
+export interface Mutation {
+  __typename?: "Mutation";
+  hello: ScalarsEnums["String"];
+  adminUsers: AdminUserMutations;
+  action: (args: { data: ActionInput }) => Maybe<ScalarsEnums["Void"]>;
+  adminContent: AdminContentMutations;
+  adminDomain: AdminDomainMutations;
+  adminProjects: AdminProjectsMutations;
 }
 
-export interface AdminUserMutations {
-  __typename?: "AdminUserMutations";
-  /**
-   * Upsert specified users with specified project
-   */
-  upsertUsersWithProject: (args: {
-    emails: Array<Scalars["EmailAddress"]>;
-    projectId: Scalars["IntID"];
-  }) => Array<User>;
-  updateUser: (args: { data: UpdateUserInput }) => User;
-  setUserGroups: (args: {
-    userIds: Array<Scalars["IntID"]>;
-    groupIds: Array<Scalars["IntID"]>;
-  }) => Array<User>;
-  createGroup: (args: { data: CreateGroupInput }) => Group;
-  updateGroup: (args: { data: UpdateGroupInput }) => Group;
-  setProjectsToUsers: (args: {
-    projectIds: Array<Scalars["IntID"]>;
-    userIds: Array<Scalars["IntID"]>;
-  }) => Array<User>;
+export interface Query {
+  __typename?: "Query";
+  hello: ScalarsEnums["String"];
+  groups: (args: { ids: Array<Scalars["IntID"]> }) => Array<Group>;
+  adminUsers: AdminUserQueries;
+  currentUser?: Maybe<User>;
+  users: (args: { ids: Array<Scalars["IntID"]> }) => Array<User>;
+  adminActions: AdminActionQueries;
+  adminContent: AdminContentQueries;
+  domains: (args: { ids: Array<Scalars["IntID"]> }) => Array<Domain>;
+  topics: (args: { ids: Array<Scalars["IntID"]> }) => Array<Topic>;
+  content: (args: { ids: Array<Scalars["IntID"]> }) => Array<Content>;
+  adminDomain: AdminDomainQueries;
+  projects: (args: { ids: Array<Scalars["IntID"]> }) => Array<Project>;
+  adminProjects: AdminProjectsQueries;
+  hello2: ScalarsEnums["String"];
 }
 
-export interface PageInfo {
-  __typename?: "PageInfo";
-  startCursor?: Maybe<ScalarsEnums["String"]>;
-  endCursor?: Maybe<ScalarsEnums["String"]>;
-  hasNextPage: ScalarsEnums["Boolean"];
-  hasPreviousPage: ScalarsEnums["Boolean"];
-}
-
-export interface Node {
-  __typename?: "Node";
-  id: ScalarsEnums["IntID"];
-}
-
-export interface Connection {
-  __typename?:
-    | "GroupsConnection"
-    | "UsersConnection"
-    | "ContentConnection"
-    | "TopicsConnection"
-    | "DomainsConnection"
-    | "KCsConnection"
-    | "ProjectsConnection";
-  pageInfo: PageInfo;
-  $on: $Connection;
-}
-
-export interface ActionVerb {
-  __typename?: "ActionVerb";
-  id: ScalarsEnums["IntID"];
-  name: ScalarsEnums["String"];
-}
-
-export interface Content {
-  __typename?: "Content";
-  id: ScalarsEnums["IntID"];
-  description: ScalarsEnums["String"];
-  binaryBase64?: Maybe<ScalarsEnums["String"]>;
-  json?: Maybe<ScalarsEnums["JSONObject"]>;
-  url?: Maybe<ScalarsEnums["String"]>;
-  createdAt: ScalarsEnums["DateTime"];
-  updatedAt: ScalarsEnums["DateTime"];
-  domain: Domain;
-  project: Project;
-}
-
-export interface Domain {
-  __typename?: "Domain";
-  id: ScalarsEnums["IntID"];
-  content: (args: { pagination: CursorConnectionArgs }) => ContentConnection;
-  code: ScalarsEnums["String"];
-  label: ScalarsEnums["String"];
-  topics: Array<Topic>;
-  createdAt: ScalarsEnums["DateTime"];
-  updatedAt: ScalarsEnums["DateTime"];
-  kcs: Array<KC>;
-  project: Project;
-}
-
-export interface Topic {
-  __typename?: "Topic";
-  id: ScalarsEnums["IntID"];
-  content: (args: { pagination: CursorConnectionArgs }) => ContentConnection;
-  code: ScalarsEnums["String"];
-  label: ScalarsEnums["String"];
-  domain: Domain;
-  parent?: Maybe<Topic>;
-  childrens: Array<Topic>;
-  createdAt: ScalarsEnums["DateTime"];
-  updatedAt: ScalarsEnums["DateTime"];
-  kcs: Array<KC>;
-  project: Project;
-}
-
-export interface ActionActivity {
-  __typename?: "ActionActivity";
-  id: ScalarsEnums["IntID"];
-  content?: Maybe<Content>;
-  topic?: Maybe<Topic>;
-  stepID?: Maybe<ScalarsEnums["ID"]>;
-  hintID?: Maybe<ScalarsEnums["ID"]>;
-  amount?: Maybe<ScalarsEnums["Float"]>;
-  detail?: Maybe<ScalarsEnums["String"]>;
-  extra?: Maybe<ScalarsEnums["JSONObject"]>;
-}
-
-export interface Action {
-  __typename?: "Action";
-  id: ScalarsEnums["IntID"];
-  verb: ActionVerb;
-  activity: ActionActivity;
-  timestamp: ScalarsEnums["Timestamp"];
-  result?: Maybe<ScalarsEnums["Float"]>;
-  user?: Maybe<User>;
-}
-
-export interface ActionsConnection {
-  __typename?: "ActionsConnection";
-  nodes: Array<Action>;
-  pageInfo: PageInfo;
-}
-
-export interface AdminActionQueries {
-  __typename?: "AdminActionQueries";
-  allActions: (args: { pagination: CursorConnectionArgs }) => ActionsConnection;
-}
-
-export interface ContentConnection {
-  __typename?: "ContentConnection";
-  nodes: Array<Content>;
-  pageInfo: PageInfo;
-}
-
-export interface AdminContentMutations {
-  __typename?: "AdminContentMutations";
-  createContent: (args: { data: CreateContent }) => Content;
-}
-
-export interface AdminContentQueries {
-  __typename?: "AdminContentQueries";
-  allContent: (args: { pagination: CursorConnectionArgs }) => ContentConnection;
-}
-
-export interface TopicsConnection {
-  __typename?: "TopicsConnection";
-  nodes: Array<Topic>;
-  pageInfo: PageInfo;
-}
-
-export interface DomainsConnection {
-  __typename?: "DomainsConnection";
-  nodes: Array<Domain>;
-  pageInfo: PageInfo;
-}
-
-export interface AdminDomainQueries {
-  __typename?: "AdminDomainQueries";
-  allTopics: (args: { pagination: CursorConnectionArgs }) => TopicsConnection;
-  allDomains: (args: { pagination: CursorConnectionArgs }) => DomainsConnection;
-  allKCs: (args: { pagination: CursorConnectionArgs }) => KCsConnection;
-}
-
-export interface AdminDomainMutations {
-  __typename?: "AdminDomainMutations";
-  createDomain: (args: { input: CreateDomain }) => Domain;
-  updateDomain: (args: { input: UpdateDomain }) => Domain;
-  createTopic: (args: { input: CreateTopic }) => Topic;
-  updateTopic: (args: { input: UpdateTopic }) => Topic;
-  createKC: (args: { data: CreateKCInput }) => KC;
-  updateKC: (args: { data: UpdateKCInput }) => KC;
-}
-
-export interface KC {
-  __typename?: "KC";
-  id: ScalarsEnums["IntID"];
-  code: ScalarsEnums["String"];
-  label: ScalarsEnums["String"];
-  createdAt: ScalarsEnums["DateTime"];
-  updatedAt: ScalarsEnums["DateTime"];
-  domain: Domain;
-  topics: Array<Topic>;
-}
-
-export interface KCsConnection {
-  __typename?: "KCsConnection";
-  nodes: Array<KC>;
-  pageInfo: PageInfo;
-}
-
-export interface Project {
-  __typename?: "Project";
-  id: ScalarsEnums["IntID"];
-  domains: Array<Domain>;
-  code: ScalarsEnums["String"];
-  label: ScalarsEnums["String"];
-  createdAt: ScalarsEnums["DateTime"];
-  updatedAt: ScalarsEnums["DateTime"];
-}
-
-export interface ProjectsConnection {
-  __typename?: "ProjectsConnection";
-  nodes: Array<Project>;
-  pageInfo: PageInfo;
-}
-
-export interface AdminProjectsQueries {
-  __typename?: "AdminProjectsQueries";
-  allProjects: (args: {
-    pagination: CursorConnectionArgs;
-  }) => ProjectsConnection;
-}
-
-export interface AdminProjectsMutations {
-  __typename?: "AdminProjectsMutations";
-  createProject: (args: { data: CreateProject }) => Project;
-  updateProject: (args: { data: UpdateProject }) => Project;
+export interface Subscription {
+  __typename?: "Subscription";
+  hello: ScalarsEnums["String"];
 }
 
 export interface SchemaObjectTypes {
-  Query: Query;
-  Mutation: Mutation;
-  Subscription: Subscription;
-  Group: Group;
-  GroupsConnection: GroupsConnection;
-  User: User;
-  UsersConnection: UsersConnection;
-  AdminUserQueries: AdminUserQueries;
-  AdminUserMutations: AdminUserMutations;
-  PageInfo: PageInfo;
-  Node: Node;
-  ActionVerb: ActionVerb;
-  Content: Content;
-  Domain: Domain;
-  Topic: Topic;
-  ActionActivity: ActionActivity;
   Action: Action;
+  ActionActivity: ActionActivity;
+  ActionVerb: ActionVerb;
   ActionsConnection: ActionsConnection;
   AdminActionQueries: AdminActionQueries;
-  ContentConnection: ContentConnection;
   AdminContentMutations: AdminContentMutations;
   AdminContentQueries: AdminContentQueries;
-  TopicsConnection: TopicsConnection;
-  DomainsConnection: DomainsConnection;
-  AdminDomainQueries: AdminDomainQueries;
   AdminDomainMutations: AdminDomainMutations;
+  AdminDomainQueries: AdminDomainQueries;
+  AdminProjectsMutations: AdminProjectsMutations;
+  AdminProjectsQueries: AdminProjectsQueries;
+  AdminUserMutations: AdminUserMutations;
+  AdminUserQueries: AdminUserQueries;
+  Content: Content;
+  ContentConnection: ContentConnection;
+  Domain: Domain;
+  DomainsConnection: DomainsConnection;
+  Group: Group;
+  GroupsConnection: GroupsConnection;
   KC: KC;
   KCsConnection: KCsConnection;
+  Mutation: Mutation;
+  Node: Node;
+  PageInfo: PageInfo;
   Project: Project;
   ProjectsConnection: ProjectsConnection;
-  AdminProjectsQueries: AdminProjectsQueries;
-  AdminProjectsMutations: AdminProjectsMutations;
+  Query: Query;
+  Subscription: Subscription;
+  Topic: Topic;
+  TopicsConnection: TopicsConnection;
+  User: User;
+  UsersConnection: UsersConnection;
 }
 export type SchemaObjectTypesNames =
-  | "Query"
-  | "Mutation"
-  | "Subscription"
-  | "Group"
-  | "GroupsConnection"
-  | "User"
-  | "UsersConnection"
-  | "AdminUserQueries"
-  | "AdminUserMutations"
-  | "PageInfo"
-  | "Node"
-  | "ActionVerb"
-  | "Content"
-  | "Domain"
-  | "Topic"
-  | "ActionActivity"
   | "Action"
+  | "ActionActivity"
+  | "ActionVerb"
   | "ActionsConnection"
   | "AdminActionQueries"
-  | "ContentConnection"
   | "AdminContentMutations"
   | "AdminContentQueries"
-  | "TopicsConnection"
-  | "DomainsConnection"
-  | "AdminDomainQueries"
   | "AdminDomainMutations"
+  | "AdminDomainQueries"
+  | "AdminProjectsMutations"
+  | "AdminProjectsQueries"
+  | "AdminUserMutations"
+  | "AdminUserQueries"
+  | "Content"
+  | "ContentConnection"
+  | "Domain"
+  | "DomainsConnection"
+  | "Group"
+  | "GroupsConnection"
   | "KC"
   | "KCsConnection"
+  | "Mutation"
+  | "Node"
+  | "PageInfo"
   | "Project"
   | "ProjectsConnection"
-  | "AdminProjectsQueries"
-  | "AdminProjectsMutations";
+  | "Query"
+  | "Subscription"
+  | "Topic"
+  | "TopicsConnection"
+  | "User"
+  | "UsersConnection";
 
 export interface $Connection {
   GroupsConnection?: GroupsConnection;
