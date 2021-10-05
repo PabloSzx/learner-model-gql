@@ -158,7 +158,7 @@ importers:
       react: ^17.0.2
       react-dom: ^17.0.2
       react-icons: ^4.3.1
-      react-select: ^5.0.0
+      react-select: ^5.1.0
       react-table: ^7.7.0
       react-use: ^17.3.1
       typescript: ^4.4.3
@@ -184,7 +184,7 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-icons: 4.3.1_react@17.0.2
-      react-select: 5.0.0_12a6012245369fd5be825566be975ff0
+      react-select: 5.1.0_12a6012245369fd5be825566be975ff0
       react-table: 7.7.0_react@17.0.2
       react-use: 17.3.1_react-dom@17.0.2+react@17.0.2
       use-immer: 0.6.0_immer@9.0.6+react@17.0.2
@@ -7916,8 +7916,8 @@ packages:
       use-sidecar: 1.0.5_react@17.0.2
     dev: false
 
-  /react-select/5.0.0_12a6012245369fd5be825566be975ff0:
-    resolution: {integrity: sha512-5a6+Xj9J39OSbZQFPN7YdtRc1qvoXqqoJEIMaGICfLl8QJW56YQmJUr1zfqn+2fVmQomYqCdOHHMmM8sHzj+ZQ==}
+  /react-select/5.1.0_12a6012245369fd5be825566be975ff0:
+    resolution: {integrity: sha512-SkEBD1AYsSXrIdNj5HBt7+Ehe+jxdiB448J0atJqR6lE3l/GcFlRf4JYB3NlHe/02jrW4AnIQLo1t0IqWrxXOw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0
       react-dom: ^16.8.0 || ^17.0.0
