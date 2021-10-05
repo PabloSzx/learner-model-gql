@@ -148,7 +148,7 @@ importers:
       '@types/react': ^17.0.27
       '@types/react-dom': ^17.0.9
       '@types/react-table': ^7.7.6
-      date-fns: ^2.24.0
+      date-fns: ^2.25.0
       framer-motion: ^4.1.17
       gqty: ^2.0.2
       graph: workspace:^0.0.1
@@ -174,7 +174,7 @@ importers:
       '@gqty/react': 2.0.0_f5955bd3be1149a4bd41c48673680eeb
       '@types/react': 17.0.27
       '@types/react-dom': 17.0.9
-      date-fns: 2.24.0
+      date-fns: 2.25.0
       framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
       gqty: 2.0.2_graphql@15.6.0
       graph: link:../graph
@@ -229,9 +229,9 @@ importers:
 
   packages/common:
     specifiers:
-      date-fns: ^2.24.0
+      date-fns: ^2.25.0
     dependencies:
-      date-fns: 2.24.0
+      date-fns: 2.25.0
 
   packages/common-api:
     specifiers:
@@ -4637,6 +4637,11 @@ packages:
   /date-fns/2.24.0:
     resolution: {integrity: sha512-6ujwvwgPID6zbI0o7UbURi2vlLDR9uP26+tW6Lg+Ji3w7dd0i3DOcjcClLjLPranT60SSEFBwdSyYwn/ZkPIuw==}
     engines: {node: '>=0.11'}
+
+  /date-fns/2.25.0:
+    resolution: {integrity: sha512-ovYRFnTrbGPD4nqaEqescPEv1mNwvt+UTqI3Ay9SzNtey9NZnYu6E2qCcBBgJ6/2VF1zGGygpyTDITqpQQ5e+w==}
+    engines: {node: '>=0.11'}
+    dev: false
 
   /dateformat/4.6.3:
     resolution: {integrity: sha512-2P0p0pFGzHS5EMnhdxQi7aJN+iMheud0UhG4dlE1DLAlvL8JHjJJTX/CSm4JXwV0Ka5nGk3zC5mcb5bUQUxxMA==}
