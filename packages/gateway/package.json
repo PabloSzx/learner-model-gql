@@ -32,7 +32,7 @@
     "wait-on": "^6.0.0"
   },
   "devDependencies": {
-    "@types/concurrently": "^6.2.1",
+    "@types/concurrently": "^6.3.0",
     "@types/content-type": "^1.1.5",
     "@types/lodash": "^4.14.175",
     "@types/wait-on": "^5.3.1"

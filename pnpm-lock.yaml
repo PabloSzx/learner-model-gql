@@ -15,7 +15,7 @@ importers:
       '@graphql-tools/code-file-loader': ^7.2.0
       '@graphql-tools/graphql-tag-pluck': ^7.1.1
       '@graphql-typed-document-node/core': ^3.1.0
-      '@types/concurrently': ^6.2.1
+      '@types/concurrently': ^6.3.0
       '@types/mocha': ^9.0.0
       '@types/node': ^16.10.2
       '@types/prettier': ^2.4.1
@@ -61,7 +61,7 @@ importers:
       '@graphql-tools/code-file-loader': 7.2.0_graphql@15.6.1
       '@graphql-tools/graphql-tag-pluck': 7.1.1_graphql@15.6.1
       '@graphql-typed-document-node/core': 3.1.0_graphql@15.6.1
-      '@types/concurrently': 6.2.1
+      '@types/concurrently': 6.3.0
       '@types/mocha': 9.0.0
       '@types/node': 16.10.2
       '@types/prettier': 2.4.1
@@ -244,7 +244,7 @@ importers:
   packages/db:
     specifiers:
       '@prisma/client': ^3.2.0
-      '@types/concurrently': ^6.2.1
+      '@types/concurrently': ^6.3.0
       '@types/react': ^17.0.27
       common-api: workspace:^1.0.0
       prisma: ^3.2.0
@@ -255,7 +255,7 @@ importers:
       prisma: 3.2.0
       prisma-dbml-generator: 0.8.1
     devDependencies:
-      '@types/concurrently': 6.2.1
+      '@types/concurrently': 6.3.0
       '@types/react': 17.0.27
 
   packages/gateway:
@@ -268,7 +268,7 @@ importers:
       '@graphql-tools/stitch': ^8.3.1
       '@graphql-tools/utils': ^8.2.4
       '@graphql-tools/wrap': ^8.1.1
-      '@types/concurrently': ^6.2.1
+      '@types/concurrently': ^6.3.0
       '@types/content-type': ^1.1.5
       '@types/lodash': ^4.14.175
       '@types/wait-on': ^5.3.1
@@ -308,7 +308,7 @@ importers:
       undici: 4.7.0
       wait-on: 6.0.0
     devDependencies:
-      '@types/concurrently': 6.2.1
+      '@types/concurrently': 6.3.0
       '@types/content-type': 1.1.5
       '@types/lodash': 4.14.175
       '@types/wait-on': 5.3.1
@@ -3264,10 +3264,11 @@ packages:
     resolution: {integrity: sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==}
     engines: {node: '>= 6'}
 
-  /@types/concurrently/6.2.1:
-    resolution: {integrity: sha512-l+AH7GuHYSgIYoXAufh7P9/oYzRobM+m863XobAARzFiafcGdCjMQQ1grLbVc69+AJTBbO3S8mtt2UPsipk6WA==}
+  /@types/concurrently/6.3.0:
+    resolution: {integrity: sha512-R0M9Dt330vtNgNlBYQYniDfI3I3Sk6cu27M1EKS5VFoio2rZqTMuOBGe9DX+ISM0B6y+RGrgtpWCv2k2VBLtbQ==}
     dependencies:
       '@types/node': 16.10.2
+      chalk: 4.1.2
     dev: true
 
   /@types/content-type/1.1.5:
