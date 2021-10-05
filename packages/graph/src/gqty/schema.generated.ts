@@ -154,6 +154,7 @@ export interface UpdateProject {
 }
 
 export const scalarsEnumsHash: import("gqty").ScalarsEnumsHash = {
+  String: true,
   DateTime: true,
   Timestamp: true,
   JSONObject: true,
@@ -162,7 +163,6 @@ export const scalarsEnumsHash: import("gqty").ScalarsEnumsHash = {
   URL: true,
   EmailAddress: true,
   IntID: true,
-  String: true,
   UserRole: true,
   Boolean: true,
   ID: true,

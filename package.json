@@ -16,7 +16,7 @@
   "scripts": {
     "clean:install": "pnpm dlx rimraf \"**/{node_modules,rimraf,.next,coverage,dist}\" && pnpm i && pnpm generate",
     "clean:test:db": "docker-compose down && sudo rimraf .test-postgres-data",
-    "predev": "pnpm prepack && pnpm generate",
+    "predev": "pnpm prepack && pnpm -r db:generate",
     "dev": "cross-env NEXT_PUBLIC_API_URL=http://localhost:8080/graphql pnpm -r dev",
     "generate": "pnpm -r generate",
     "prepack": "pnpm -r prepack",

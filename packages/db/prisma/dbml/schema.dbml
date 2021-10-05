@@ -109,7 +109,7 @@ Table Action {
   verb ActionVerb [not null]
   verbName String [not null]
   activity ActionActivity [not null]
-  activityId Int [not null]
+  activityId Int [unique, not null]
   timestamp DateTime [not null]
   result Float
   project Project [not null]
