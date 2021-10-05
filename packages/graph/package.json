@@ -23,7 +23,7 @@
     "@gqty/react": "^2.0.0",
     "common": "workspace:^0.0.1",
     "gqty": "^2.0.2",
-    "graphql": "^15.6.0",
+    "graphql": "^15.6.1",
     "prettier": "^2.4.1",
     "react-query": "^3.25.1",
     "rq-gql": "^0.1.6",
