@@ -44,6 +44,8 @@ export type Scalars = {
   Void: unknown;
   /** A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. */
   URL: string;
+  /** A field whose value conforms to the standard internet email address format as specified in RFC822: https://www.w3.org/Protocols/rfc822/. */
+  EmailAddress: string;
   /** ID that parses as non-negative integer, serializes to string, and can be passed as string or number */
   IntID: number;
 };
@@ -190,8 +192,8 @@ export type UpdateUserInput = {
 
 export type AdminUserMutations = {
   __typename?: "AdminUserMutations";
-  /** Upsert specified users, if user with specified email already exists, updates it with the specified name */
-  upsertUsers: Array<User>;
+  /** Upsert specified users with specified project */
+  upsertUsersWithProject: Array<User>;
   updateUser: User;
   setUserGroups: Array<User>;
   createGroup: Group;
@@ -199,8 +201,9 @@ export type AdminUserMutations = {
   setProjectsToUsers: Array<User>;
 };
 
-export type AdminUserMutationsUpsertUsersArgs = {
-  data: Array<UpsertUserInput>;
+export type AdminUserMutationsUpsertUsersWithProjectArgs = {
+  emails: Array<Scalars["EmailAddress"]>;
+  projectId: Scalars["IntID"];
 };
 
 export type AdminUserMutationsUpdateUserArgs = {
@@ -673,6 +676,7 @@ export type ResolversTypes = {
   NonNegativeInt: ResolverTypeWrapper<Scalars["NonNegativeInt"]>;
   Void: ResolverTypeWrapper<Scalars["Void"]>;
   URL: ResolverTypeWrapper<Scalars["URL"]>;
+  EmailAddress: ResolverTypeWrapper<Scalars["EmailAddress"]>;
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
   Group: ResolverTypeWrapper<Group>;
   CreateGroupInput: CreateGroupInput;
@@ -745,6 +749,7 @@ export type ResolversParentTypes = {
   NonNegativeInt: Scalars["NonNegativeInt"];
   Void: Scalars["Void"];
   URL: Scalars["URL"];
+  EmailAddress: Scalars["EmailAddress"];
   IntID: Scalars["IntID"];
   Group: Group;
   CreateGroupInput: CreateGroupInput;
@@ -953,6 +958,11 @@ export interface UrlScalarConfig
   name: "URL";
 }
 
+export interface EmailAddressScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["EmailAddress"], any> {
+  name: "EmailAddress";
+}
+
 export interface IntIdScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["IntID"], any> {
   name: "IntID";
@@ -1052,11 +1062,14 @@ export type AdminUserMutationsResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["AdminUserMutations"] = ResolversParentTypes["AdminUserMutations"]
 > = {
-  upsertUsers?: Resolver<
+  upsertUsersWithProject?: Resolver<
     Array<ResolversTypes["User"]>,
     ParentType,
     ContextType,
-    RequireFields<AdminUserMutationsUpsertUsersArgs, "data">
+    RequireFields<
+      AdminUserMutationsUpsertUsersWithProjectArgs,
+      "emails" | "projectId"
+    >
   >;
   updateUser?: Resolver<
     ResolversTypes["User"],
@@ -1482,6 +1495,7 @@ export type Resolvers<ContextType = EZContext> = {
   NonNegativeInt?: GraphQLScalarType;
   Void?: GraphQLScalarType;
   URL?: GraphQLScalarType;
+  EmailAddress?: GraphQLScalarType;
   IntID?: GraphQLScalarType;
   Group?: GroupResolvers<ContextType>;
   GroupsConnection?: GroupsConnectionResolvers<ContextType>;

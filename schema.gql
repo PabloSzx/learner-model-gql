@@ -65,6 +65,11 @@ A field whose value conforms to the standard URL format as specified in RFC3986:
 scalar URL
 
 """
+A field whose value conforms to the standard internet email address format as specified in RFC822: https://www.w3.org/Protocols/rfc822/.
+"""
+scalar EmailAddress
+
+"""
 ID that parses as non-negative integer, serializes to string, and can be passed as string or number
 """
 scalar IntID
@@ -140,9 +145,9 @@ input UpdateUserInput {
 
 type AdminUserMutations {
   """
-  Upsert specified users, if user with specified email already exists, updates it with the specified name
+  Upsert specified users with specified project
   """
-  upsertUsers(data: [UpsertUserInput!]!): [User!]!
+  upsertUsersWithProject(emails: [EmailAddress!]!, projectId: IntID!): [User!]!
   updateUser(data: UpdateUserInput!): User!
   setUserGroups(userIds: [IntID!]!, groupIds: [IntID!]!): [User!]!
   createGroup(data: CreateGroupInput!): Group!

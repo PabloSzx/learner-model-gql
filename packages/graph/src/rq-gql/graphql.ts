@@ -19,6 +19,8 @@ export type Scalars = {
   Float: number;
   /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: string;
+  /** A field whose value conforms to the standard internet email address format as specified in RFC822: https://www.w3.org/Protocols/rfc822/. */
+  EmailAddress: string;
   /** ID that parses as non-negative integer, serializes to string, and can be passed as string or number */
   IntID: string;
   /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
@@ -194,8 +196,8 @@ export type AdminUserMutations = {
   setUserGroups: Array<User>;
   updateGroup: Group;
   updateUser: User;
-  /** Upsert specified users, if user with specified email already exists, updates it with the specified name */
-  upsertUsers: Array<User>;
+  /** Upsert specified users with specified project */
+  upsertUsersWithProject: Array<User>;
 };
 
 export type AdminUserMutationsCreateGroupArgs = {
@@ -220,8 +222,9 @@ export type AdminUserMutationsUpdateUserArgs = {
   data: UpdateUserInput;
 };
 
-export type AdminUserMutationsUpsertUsersArgs = {
-  data: Array<UpsertUserInput>;
+export type AdminUserMutationsUpsertUsersWithProjectArgs = {
+  emails: Array<Scalars["EmailAddress"]>;
+  projectId: Scalars["IntID"];
 };
 
 export type AdminUserQueries = {

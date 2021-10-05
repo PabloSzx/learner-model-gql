@@ -8,7 +8,6 @@ import {
   gql,
   MockAuthUser,
   notDeepEqual,
-  notEqual,
   prisma,
   PromiseAllCallbacks,
   TestClient,
@@ -58,7 +57,7 @@ export async function CheckUsers({
 }: Pick<TestClient, "query" | "mutation">) {
   await prisma.$queryRaw`TRUNCATE "Project","User" CASCADE;`;
 
-  const { project } = await CreateProject();
+  const { project, projectId } = await CreateProject();
   const authUser = await CreateUser({
     project,
     role: "ADMIN",
@@ -175,9 +174,12 @@ export async function CheckUsers({
 
   const upsertedResult = await mutation(
     gql(/* GraphQL */ `
-      mutation UpsertUsers($data: [UpsertUserInput!]!) {
+      mutation UpsertUsersWithProjects(
+        $emails: [EmailAddress!]!
+        $projectId: IntID!
+      ) {
         adminUsers {
-          upsertUsers(data: $data) {
+          upsertUsersWithProject(emails: $emails, projectId: $projectId) {
             ...UserInfo
           }
         }
@@ -185,25 +187,23 @@ export async function CheckUsers({
     `),
     {
       variables: {
-        data: [
-          {
-            email: newEmail,
-          },
-        ],
+        emails: [newEmail],
+        projectId,
       },
     }
   );
 
   expectDeepEqual(upsertedResult.errors, undefined);
 
-  const upsertedResultUser = upsertedResult.data?.adminUsers.upsertUsers[0];
+  const upsertedResultUser =
+    upsertedResult.data?.adminUsers.upsertUsersWithProject[0];
 
   assert(upsertedResultUser);
 
   expectDeepEqual(upsertedResult, {
     data: {
       adminUsers: {
-        upsertUsers: [
+        upsertUsersWithProject: [
           {
             active: false,
             createdAt: upsertedResultUser.createdAt,
@@ -221,13 +221,14 @@ export async function CheckUsers({
     },
   });
 
-  const newName = generate();
-
   const updatedResult = await mutation(
     gql(/* GraphQL */ `
-      mutation UpsertUsers($data: [UpsertUserInput!]!) {
+      mutation UpsertUsersWithProjects(
+        $emails: [EmailAddress!]!
+        $projectId: IntID!
+      ) {
         adminUsers {
-          upsertUsers(data: $data) {
+          upsertUsersWithProject(emails: $emails, projectId: $projectId) {
             ...UserInfo
           }
         }
@@ -235,28 +236,23 @@ export async function CheckUsers({
     `),
     {
       variables: {
-        data: [
-          {
-            email: newEmail,
-            name: newName,
-          },
-        ],
+        emails: [newEmail],
+        projectId,
       },
     }
   );
 
   expectDeepEqual(updatedResult.errors, undefined);
 
-  const updatedResultUser = updatedResult.data?.adminUsers.upsertUsers[0];
+  const updatedResultUser =
+    updatedResult.data?.adminUsers.upsertUsersWithProject[0];
 
   assert(updatedResultUser);
-
-  notEqual(updatedResultUser.updatedAt, upsertedResultUser.updatedAt);
 
   expectDeepEqual(updatedResult, {
     data: {
       adminUsers: {
-        upsertUsers: [
+        upsertUsersWithProject: [
           {
             active: false,
             createdAt: upsertedResultUser.createdAt,
@@ -267,7 +263,7 @@ export async function CheckUsers({
             role: "USER",
             updatedAt: updatedResultUser.updatedAt,
             lastOnline: null,
-            name: newName,
+            name: updatedResultUser.name,
           },
         ],
       },

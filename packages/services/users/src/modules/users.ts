@@ -1,4 +1,5 @@
 import { gql, registerModule, ResolveCursorConnection } from "../ez";
+import pMap from "p-map";
 
 export const usersModule = registerModule(
   gql`
@@ -44,8 +45,11 @@ export const usersModule = registerModule(
     }
 
     type AdminUserMutations {
-      "Upsert specified users, if user with specified email already exists, updates it with the specified name"
-      upsertUsers(data: [UpsertUserInput!]!): [User!]!
+      "Upsert specified users with specified project"
+      upsertUsersWithProject(
+        emails: [EmailAddress!]!
+        projectId: IntID!
+      ): [User!]!
 
       updateUser(data: UpdateUserInput!): User!
     }
@@ -98,22 +102,34 @@ export const usersModule = registerModule(
         },
       },
       AdminUserMutations: {
-        async upsertUsers(_root, { data }, { prisma }) {
-          return Promise.all(
-            data.map(async ({ email, name }) => {
+        async upsertUsersWithProject(_root, { emails, projectId }, { prisma }) {
+          return pMap(
+            emails,
+            (email) => {
               return prisma.user.upsert({
                 create: {
                   email,
-                  name,
-                },
-                update: {
-                  name,
+                  projects: {
+                    connect: {
+                      id: projectId,
+                    },
+                  },
                 },
                 where: {
                   email,
                 },
+                update: {
+                  projects: {
+                    connect: {
+                      id: projectId,
+                    },
+                  },
+                },
               });
-            })
+            },
+            {
+              concurrency: 4,
+            }
           );
         },
         updateUser(_root, { data: { id, ...data } }, { prisma }) {

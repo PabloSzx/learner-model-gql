@@ -85,8 +85,8 @@ const documents = {
     graphql.UsersByIdDocument,
   "\n          query AdminAllUsers($pagination: CursorConnectionArgs!) {\n            adminUsers {\n              allUsers(pagination: $pagination) {\n                nodes {\n                  ...UserInfo\n                }\n                pageInfo {\n                  hasNextPage\n                }\n              }\n            }\n          }\n        ":
     graphql.AdminAllUsersDocument,
-  "\n      mutation UpsertUsers($data: [UpsertUserInput!]!) {\n        adminUsers {\n          upsertUsers(data: $data) {\n            ...UserInfo\n          }\n        }\n      }\n    ":
-    graphql.UpsertUsersDocument,
+  "\n      mutation UpsertUsersWithProjects(\n        $emails: [EmailAddress!]!\n        $projectId: IntID!\n      ) {\n        adminUsers {\n          upsertUsersWithProject(emails: $emails, projectId: $projectId) {\n            ...UserInfo\n          }\n        }\n      }\n    ":
+    graphql.UpsertUsersWithProjectsDocument,
   "\n        query AdminAllUsers($pagination: CursorConnectionArgs!) {\n          adminUsers {\n            allUsers(pagination: $pagination) {\n              nodes {\n                ...UserInfo\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      ":
     graphql.AdminAllUsersDocument,
   "\n        query CurrentUser {\n          currentUser {\n            ...UserInfo\n          }\n        }\n      ":
@@ -231,8 +231,8 @@ export function gql(
   source: "\n          query AdminAllUsers($pagination: CursorConnectionArgs!) {\n            adminUsers {\n              allUsers(pagination: $pagination) {\n                nodes {\n                  ...UserInfo\n                }\n                pageInfo {\n                  hasNextPage\n                }\n              }\n            }\n          }\n        "
 ): typeof documents["\n          query AdminAllUsers($pagination: CursorConnectionArgs!) {\n            adminUsers {\n              allUsers(pagination: $pagination) {\n                nodes {\n                  ...UserInfo\n                }\n                pageInfo {\n                  hasNextPage\n                }\n              }\n            }\n          }\n        "];
 export function gql(
-  source: "\n      mutation UpsertUsers($data: [UpsertUserInput!]!) {\n        adminUsers {\n          upsertUsers(data: $data) {\n            ...UserInfo\n          }\n        }\n      }\n    "
-): typeof documents["\n      mutation UpsertUsers($data: [UpsertUserInput!]!) {\n        adminUsers {\n          upsertUsers(data: $data) {\n            ...UserInfo\n          }\n        }\n      }\n    "];
+  source: "\n      mutation UpsertUsersWithProjects(\n        $emails: [EmailAddress!]!\n        $projectId: IntID!\n      ) {\n        adminUsers {\n          upsertUsersWithProject(emails: $emails, projectId: $projectId) {\n            ...UserInfo\n          }\n        }\n      }\n    "
+): typeof documents["\n      mutation UpsertUsersWithProjects(\n        $emails: [EmailAddress!]!\n        $projectId: IntID!\n      ) {\n        adminUsers {\n          upsertUsersWithProject(emails: $emails, projectId: $projectId) {\n            ...UserInfo\n          }\n        }\n      }\n    "];
 export function gql(
   source: "\n        query AdminAllUsers($pagination: CursorConnectionArgs!) {\n          adminUsers {\n            allUsers(pagination: $pagination) {\n              nodes {\n                ...UserInfo\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      "
 ): typeof documents["\n        query AdminAllUsers($pagination: CursorConnectionArgs!) {\n          adminUsers {\n            allUsers(pagination: $pagination) {\n              nodes {\n                ...UserInfo\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      "];

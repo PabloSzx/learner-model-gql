@@ -57,6 +57,7 @@ export const codegenOptions: CodegenOptions = {
       Timestamp: "Date",
       Void: "unknown",
       URL: "string",
+      EmailAddress: "string",
     },
     deepPartialResolvers: true,
     enumsAsTypes: true,
@@ -80,6 +81,7 @@ export const ezServicePreset = CreateApp({
           NonNegativeInt: 1,
           Void: 1,
           URL: 1,
+          EmailAddress: 1,
         },
         {
           IntID,

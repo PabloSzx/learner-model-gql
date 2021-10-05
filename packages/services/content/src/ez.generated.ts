@@ -44,6 +44,8 @@ export type Scalars = {
   Void: unknown;
   /** A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. */
   URL: string;
+  /** A field whose value conforms to the standard internet email address format as specified in RFC822: https://www.w3.org/Protocols/rfc822/. */
+  EmailAddress: string;
   /** ID that parses as non-negative integer, serializes to string, and can be passed as string or number */
   IntID: number;
 };
@@ -269,6 +271,7 @@ export type ResolversTypes = {
   NonNegativeInt: ResolverTypeWrapper<Scalars["NonNegativeInt"]>;
   Void: ResolverTypeWrapper<Scalars["Void"]>;
   URL: ResolverTypeWrapper<Scalars["URL"]>;
+  EmailAddress: ResolverTypeWrapper<Scalars["EmailAddress"]>;
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
   Content: ResolverTypeWrapper<Content>;
   String: ResolverTypeWrapper<Scalars["String"]>;
@@ -296,6 +299,7 @@ export type ResolversParentTypes = {
   NonNegativeInt: Scalars["NonNegativeInt"];
   Void: Scalars["Void"];
   URL: Scalars["URL"];
+  EmailAddress: Scalars["EmailAddress"];
   IntID: Scalars["IntID"];
   Content: Content;
   String: Scalars["String"];
@@ -343,6 +347,11 @@ export interface VoidScalarConfig
 export interface UrlScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["URL"], any> {
   name: "URL";
+}
+
+export interface EmailAddressScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["EmailAddress"], any> {
+  name: "EmailAddress";
 }
 
 export interface IntIdScalarConfig
@@ -525,6 +534,7 @@ export type Resolvers<ContextType = EZContext> = {
   NonNegativeInt?: GraphQLScalarType;
   Void?: GraphQLScalarType;
   URL?: GraphQLScalarType;
+  EmailAddress?: GraphQLScalarType;
   IntID?: GraphQLScalarType;
   Content?: ContentResolvers<ContextType>;
   ContentConnection?: ContentConnectionResolvers<ContextType>;

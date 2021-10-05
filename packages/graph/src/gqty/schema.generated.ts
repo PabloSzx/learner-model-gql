@@ -33,6 +33,8 @@ export interface Scalars {
   Void: any;
   /** A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. */
   URL: any;
+  /** A field whose value conforms to the standard internet email address format as specified in RFC822: https://www.w3.org/Protocols/rfc822/. */
+  EmailAddress: string;
   /** ID that parses as non-negative integer, serializes to string, and can be passed as string or number */
   IntID: any;
 }
@@ -158,6 +160,7 @@ export const scalarsEnumsHash: import("gqty").ScalarsEnumsHash = {
   NonNegativeInt: true,
   Void: true,
   URL: true,
+  EmailAddress: true,
   IntID: true,
   String: true,
   UserRole: true,
@@ -261,9 +264,9 @@ export const generatedSchema = {
   },
   AdminUserMutations: {
     __typename: { __type: "String!" },
-    upsertUsers: {
+    upsertUsersWithProject: {
       __type: "[User!]!",
-      __args: { data: "[UpsertUserInput!]!" },
+      __args: { emails: "[EmailAddress!]!", projectId: "IntID!" },
     },
     updateUser: { __type: "User!", __args: { data: "UpdateUserInput!" } },
     setUserGroups: {
@@ -623,9 +626,12 @@ export interface AdminUserQueries {
 export interface AdminUserMutations {
   __typename?: "AdminUserMutations";
   /**
-   * Upsert specified users, if user with specified email already exists, updates it with the specified name
+   * Upsert specified users with specified project
    */
-  upsertUsers: (args: { data: Array<UpsertUserInput> }) => Array<User>;
+  upsertUsersWithProject: (args: {
+    emails: Array<Scalars["EmailAddress"]>;
+    projectId: Scalars["IntID"];
+  }) => Array<User>;
   updateUser: (args: { data: UpdateUserInput }) => User;
   setUserGroups: (args: {
     userIds: Array<Scalars["IntID"]>;
