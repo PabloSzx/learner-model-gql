@@ -872,6 +872,31 @@ export type AdminUsersQuery = {
   };
 };
 
+export type UpsertUsersWithProjectsMutationVariables = Exact<{
+  emails: Array<Scalars["EmailAddress"]> | Scalars["EmailAddress"];
+  projectId: Scalars["IntID"];
+}>;
+
+export type UpsertUsersWithProjectsMutation = {
+  __typename?: "Mutation";
+  adminUsers: {
+    __typename?: "AdminUserMutations";
+    upsertUsersWithProject: Array<{
+      __typename: "User";
+      id: string;
+      email: string;
+      name?: string | null | undefined;
+      active: boolean;
+      lastOnline?: string | null | undefined;
+      createdAt: string;
+      role: UserRole;
+      enabled: boolean;
+      updatedAt: string;
+      locked: boolean;
+    }>;
+  };
+};
+
 export const UserInfoFragmentDoc = {
   kind: "Document",
   definitions: [
@@ -1590,3 +1615,95 @@ export const AdminUsersDocument = {
     ...PaginationFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<AdminUsersQuery, AdminUsersQueryVariables>;
+export const UpsertUsersWithProjectsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpsertUsersWithProjects" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "emails" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "ListType",
+              type: {
+                kind: "NonNullType",
+                type: {
+                  kind: "NamedType",
+                  name: { kind: "Name", value: "EmailAddress" },
+                },
+              },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "projectId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "IntID" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminUsers" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "upsertUsersWithProject" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "emails" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "emails" },
+                      },
+                    },
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "projectId" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "projectId" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "FragmentSpread",
+                        name: { kind: "Name", value: "UserInfo" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...UserInfoFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<
+  UpsertUsersWithProjectsMutation,
+  UpsertUsersWithProjectsMutationVariables
+>;

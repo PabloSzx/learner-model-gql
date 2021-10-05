@@ -13,6 +13,7 @@ import {
   useGQLQuery,
 } from "graph/rq-gql";
 import { useRef } from "react";
+import { MdAdd } from "react-icons/md";
 import { withAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
@@ -69,12 +70,13 @@ function CreateProject() {
     <FormModal
       title="Create Project"
       onSubmit={async () => {
-        if (!codeRef.current?.value || !labelRef.current?.value) return;
+        if (!codeRef.current?.value || !labelRef.current?.value)
+          throw Error("All fields are required");
 
         await mutateAsync({
           data: {
             code: codeRef.current.value,
-            label: codeRef.current.value,
+            label: labelRef.current.value,
           },
         });
 
@@ -83,15 +85,19 @@ function CreateProject() {
         codeRef.current.value = "";
         labelRef.current.value = "";
       }}
+      triggerButton={{
+        colorScheme: "facebook",
+        leftIcon: <MdAdd />,
+      }}
     >
-      <FormControl id="code">
+      <FormControl id="code" isRequired>
         <FormLabel>Code</FormLabel>
         <Input type="text" ref={codeRef} />
         <FormHelperText>
           Unique Code not intended to be showed to the users
         </FormHelperText>
       </FormControl>
-      <FormControl id="label">
+      <FormControl id="label" isRequired>
         <FormLabel>Label</FormLabel>
         <Input type="text" ref={labelRef} />
         <FormHelperText>Human readable label</FormHelperText>

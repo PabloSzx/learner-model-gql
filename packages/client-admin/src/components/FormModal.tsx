@@ -10,6 +10,7 @@ import {
   useDisclosure,
   VStack,
   useToast,
+  ButtonProps,
 } from "@chakra-ui/react";
 import { ReactNode, useState } from "react";
 import { MdCancel, MdSave } from "react-icons/md";
@@ -18,10 +19,14 @@ export function FormModal({
   title,
   children,
   onSubmit,
+  triggerButton,
+  saveButton,
 }: {
   title: string;
   children: ReactNode;
   onSubmit?: () => Promise<void>;
+  triggerButton?: ButtonProps;
+  saveButton?: ButtonProps;
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -31,7 +36,9 @@ export function FormModal({
 
   return (
     <>
-      <Button onClick={onOpen}>{title}</Button>
+      <Button onClick={onOpen} {...triggerButton}>
+        {title}
+      </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -66,6 +73,7 @@ export function FormModal({
                 isLoading={isLoading}
                 leftIcon={<MdSave />}
                 type="submit"
+                {...saveButton}
               >
                 {title}
               </Button>

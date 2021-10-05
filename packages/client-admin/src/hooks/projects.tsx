@@ -103,7 +103,7 @@ export const useSelectSingleProject = () => {
     label: string;
   } | null>(null);
 
-  const component = useMemo(() => {
+  const selectSingleProjectComponent = useMemo(() => {
     return (
       <AsyncSelect
         key={isLoading ? -1 : asOptions.length}
@@ -112,13 +112,14 @@ export const useSelectSingleProject = () => {
         onChange={(selected) => {
           setSelectedProject(selected || null);
         }}
+        value={selectedProject}
         placeholder="Search a project"
       />
     );
-  }, [filteredOptions, isLoading, isFetching, asOptions]);
+  }, [filteredOptions, isLoading, isFetching, asOptions, selectedProject]);
 
   return {
     selectedProject,
-    component,
+    selectSingleProjectComponent,
   };
 };

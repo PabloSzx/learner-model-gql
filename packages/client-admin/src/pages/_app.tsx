@@ -1,6 +1,7 @@
 import { Auth0Provider } from "@auth0/auth0-react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
+import { APILoadingIndicator } from "../components/APILoadingIndicator";
 import { SyncAuth } from "../components/Auth";
 import { MainLayout } from "../components/MainLayout";
 import { NextNProgress } from "../components/NextNProgress";
@@ -21,6 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <QueryClientProvider client={queryClient}>
           <SyncAuth />
           <ChakraProvider theme={theme}>
+            <APILoadingIndicator />
             <NextNProgress color="#10b9cf" />
             <MainLayout>
               <Component {...pageProps} />

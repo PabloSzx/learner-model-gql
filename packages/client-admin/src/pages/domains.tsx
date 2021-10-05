@@ -13,6 +13,7 @@ import {
   useGQLQuery,
 } from "graph/rq-gql";
 import { useRef } from "react";
+import { MdAdd } from "react-icons/md";
 import { withAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
@@ -23,7 +24,7 @@ import { queryClient } from "../utils/rqClient";
 function CreateDomain() {
   const codeRef = useRef<HTMLInputElement>(null);
   const labelRef = useRef<HTMLInputElement>(null);
-  const { component: selectProjectComponent, selectedProject } =
+  const { selectSingleProjectComponent, selectedProject } =
     useSelectSingleProject();
 
   const { mutateAsync } = useGQLMutation(
@@ -54,13 +55,13 @@ function CreateDomain() {
           !labelRef.current?.value ||
           !selectedProject
         )
-          return;
+          throw Error("All fields are required");
 
         await mutateAsync({
           data: {
             projectId: selectedProject.value,
             code: codeRef.current.value,
-            label: codeRef.current.value,
+            label: labelRef.current.value,
           },
         });
 
@@ -69,20 +70,24 @@ function CreateDomain() {
         codeRef.current.value = "";
         labelRef.current.value = "";
       }}
+      triggerButton={{
+        colorScheme: "facebook",
+        leftIcon: <MdAdd />,
+      }}
     >
-      <FormControl>
+      <FormControl isRequired>
         <FormLabel>Associated Project</FormLabel>
 
-        {selectProjectComponent}
+        {selectSingleProjectComponent}
       </FormControl>
-      <FormControl id="code">
+      <FormControl id="code" isRequired>
         <FormLabel>Code</FormLabel>
         <Input type="text" ref={codeRef} />
         <FormHelperText>
           Unique Code not intended to be showed to the users
         </FormHelperText>
       </FormControl>
-      <FormControl id="label">
+      <FormControl id="label" isRequired>
         <FormLabel>Label</FormLabel>
         <Input type="text" ref={labelRef} />
         <FormHelperText>Human readable label</FormHelperText>

@@ -1,4 +1,14 @@
-import { IconButton, Select, Switch, useToast, VStack } from "@chakra-ui/react";
+import {
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  IconButton,
+  Select,
+  Switch,
+  Textarea,
+  useToast,
+  VStack,
+} from "@chakra-ui/react";
 import {
   AdminUsersQuery,
   getKey,
@@ -8,7 +18,8 @@ import {
   UserInfoFragment,
   UserRole,
 } from "graph/rq-gql";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { FaUsers } from "react-icons/fa";
 import {
   MdCheck,
   MdClose,
@@ -20,7 +31,9 @@ import {
 import { proxy, useSnapshot } from "valtio";
 import { useAuth, withAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
+import { FormModal } from "../components/FormModal";
 import { useCursorPagination } from "../hooks/pagination";
+import { useSelectSingleProject } from "../hooks/projects";
 import { queryClient } from "../utils/rqClient";
 
 gql(/* GraphQL */ `
@@ -61,6 +74,84 @@ const UsersState = proxy<
   >
 >({});
 
+function UpsertUsers() {
+  const [text, setText] = useState("");
+
+  const { selectSingleProjectComponent, selectedProject } =
+    useSelectSingleProject();
+
+  const { mutateAsync } = useGQLMutation(
+    gql(/* GraphQL */ `
+      mutation UpsertUsersWithProjects(
+        $emails: [EmailAddress!]!
+        $projectId: IntID!
+      ) {
+        adminUsers {
+          upsertUsersWithProject(emails: $emails, projectId: $projectId) {
+            ...UserInfo
+          }
+        }
+      }
+    `),
+    {
+      async onSuccess() {
+        await queryClient.invalidateQueries(getKey(AdminUsers));
+      },
+    }
+  );
+
+  const emails = useMemo(() => {
+    return Array.from(
+      text
+        .trim()
+        .split(/\r\n|\n/g)
+        .reduce<Array<string>>((acum, value) => {
+          const email = value.trim();
+
+          if (email) acum.push(email);
+
+          return acum;
+        }, [])
+    );
+  }, [text]);
+
+  return (
+    <FormModal
+      title="Upsert Users"
+      onSubmit={async () => {
+        if (!emails.length || !selectedProject) return;
+
+        await mutateAsync({
+          emails,
+          projectId: selectedProject.value,
+        });
+      }}
+      triggerButton={{
+        colorScheme: "facebook",
+        leftIcon: <FaUsers />,
+      }}
+      saveButton={{
+        isDisabled: !selectedProject || !emails.length,
+      }}
+    >
+      <FormControl>
+        <FormLabel>Project</FormLabel>
+        {selectSingleProjectComponent}
+      </FormControl>
+      <FormControl>
+        <FormLabel>Users List</FormLabel>
+        <Textarea
+          value={text}
+          onChange={(ev) => {
+            setText(ev.target.value);
+          }}
+        />
+        <FormHelperText>List of emails separated by a new line</FormHelperText>
+      </FormControl>
+    </FormModal>
+  );
+}
+
 export default withAuth(function IndexPage() {
   const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination();
 
@@ -100,11 +191,11 @@ export default withAuth(function IndexPage() {
 
   return (
     <VStack>
+      <UpsertUsers />
       <DataTable<AdminUsersQuery["adminUsers"]["allUsers"]["nodes"][number]>
         data={data?.adminUsers.allUsers.nodes || []}
         prevPage={prevPage}
         nextPage={nextPage}
-        minH="80vh"
         columns={[
           {
             Header: "ID",
@@ -153,7 +244,7 @@ export default withAuth(function IndexPage() {
                         : UserRole.User;
                   }}
                   isDisabled={updateUser.isLoading}
-                  minW="10ch"
+                  minW="13ch"
                 >
                   <option value={UserRole.Admin}>ADMIN</option>
                   <option value={UserRole.User}>USER</option>
