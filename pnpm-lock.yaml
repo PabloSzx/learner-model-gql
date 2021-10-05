@@ -12,7 +12,7 @@ importers:
       '@gqty/cli': ^2.0.1
       '@gqty/react': ^2.0.0
       '@graphql-ez/fastify': ^0.9.4
-      '@graphql-tools/code-file-loader': ^7.1.0
+      '@graphql-tools/code-file-loader': ^7.2.0
       '@graphql-tools/graphql-tag-pluck': ^7.1.1
       '@graphql-typed-document-node/core': ^3.1.0
       '@types/concurrently': ^6.2.1
@@ -58,7 +58,7 @@ importers:
     devDependencies:
       '@gqty/cli': 2.0.1_graphql@15.6.1
       '@graphql-ez/fastify': 0.9.4_83b16a61bbec5439ffc905b0dfe16da6
-      '@graphql-tools/code-file-loader': 7.1.0_graphql@15.6.1
+      '@graphql-tools/code-file-loader': 7.2.0_graphql@15.6.1
       '@graphql-tools/graphql-tag-pluck': 7.1.1_graphql@15.6.1
       '@graphql-typed-document-node/core': 3.1.0_graphql@15.6.1
       '@types/concurrently': 6.2.1
@@ -2481,6 +2481,21 @@ packages:
 
   /@graphql-tools/code-file-loader/7.1.0_graphql@15.6.1:
     resolution: {integrity: sha512-1EVuKGzTDcZoPQAjJYy0Fw2vwLN1ZnWYDlCZLaqml87tCUzJcqcHlQw26SRhDEvVnJC/oCV+mH+2QE55UxqWuA==}
+    peerDependencies:
+      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
+    dependencies:
+      '@graphql-tools/graphql-tag-pluck': 7.1.1_graphql@15.6.1
+      '@graphql-tools/utils': 8.2.4_graphql@15.6.1
+      globby: 11.0.4
+      graphql: 15.6.1
+      tslib: 2.3.1
+      unixify: 1.0.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@graphql-tools/code-file-loader/7.2.0_graphql@15.6.1:
+    resolution: {integrity: sha512-DYiNqCTHGprA6cysScPGfYctGuxqarJExv+1s+2cKoR0VNiJDHQlinzAp/lo6mR704NJi5St9PVCt6FPKq68vg==}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
     dependencies:
