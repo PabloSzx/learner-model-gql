@@ -22,7 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <QueryClientProvider client={queryClient}>
           <SyncAuth />
           <ChakraProvider theme={theme}>
-            <APILoadingIndicator />
+            {process.env.NODE_ENV !== "production" && <APILoadingIndicator />}
             <NextNProgress color="#10b9cf" />
             <MainLayout>
               <Component {...pageProps} />
