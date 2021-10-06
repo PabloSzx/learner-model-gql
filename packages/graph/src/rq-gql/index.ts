@@ -10,6 +10,8 @@ const documents = {
     graphql.UpdateUserDocument,
   "\n  query AdminUsersCards($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allUsers(pagination: $pagination) {\n        nodes {\n          ...UserInfo\n        }\n        pageInfo {\n          hasNextPage\n          hasPreviousPage\n          startCursor\n          endCursor\n        }\n      }\n    }\n  }\n":
     graphql.AdminUsersCardsDocument,
+  "\n        query AllGroupsBase($pagination: CursorConnectionArgs!) {\n          adminUsers {\n            allGroups(pagination: $pagination) {\n              nodes {\n                id\n                code\n                label\n              }\n              ...Pagination\n            }\n          }\n        }\n      ":
+    graphql.AllGroupsBaseDocument,
   "\n  fragment Pagination on Connection {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n  }\n":
     graphql.PaginationFragmentDoc,
   "\n        query AllProjectsBase($pagination: CursorConnectionArgs!) {\n          adminProjects {\n            allProjects(pagination: $pagination) {\n              nodes {\n                id\n                code\n                label\n              }\n              ...Pagination\n            }\n          }\n        }\n      ":
@@ -20,6 +22,14 @@ const documents = {
     graphql.DomainInfoFragmentDoc,
   "\n  query AllDomains($pagination: CursorConnectionArgs!) {\n    adminDomain {\n      allDomains(pagination: $pagination) {\n        nodes {\n          ...DomainInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n":
     graphql.AllDomainsDocument,
+  "\n  fragment GroupInfo on Group {\n    id\n    code\n    label\n    updatedAt\n    createdAt\n    projects {\n      id\n      code\n      label\n    }\n    users {\n      id\n      email\n      name\n      role\n      active\n      lastOnline\n    }\n  }\n":
+    graphql.GroupInfoFragmentDoc,
+  "\n  query AllGroups($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allGroups(pagination: $pagination) {\n        nodes {\n          ...GroupInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n":
+    graphql.AllGroupsDocument,
+  "\n      mutation CreateGroup($data: CreateGroupInput!) {\n        adminUsers {\n          createGroup(data: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    ":
+    graphql.CreateGroupDocument,
+  "\n      mutation SetUserGroups(\n        $usersEmails: [EmailAddress!]!\n        $groupIds: [IntID!]!\n      ) {\n        adminUsers {\n          setUserGroups(usersEmails: $usersEmails, groupIds: $groupIds) {\n            __typename\n          }\n        }\n      }\n    ":
+    graphql.SetUserGroupsDocument,
   "\n  fragment ProjectInfo on Project {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n  }\n":
     graphql.ProjectInfoFragmentDoc,
   "\n  query AllProjects($pagination: CursorConnectionArgs!) {\n    adminProjects {\n      allProjects(pagination: $pagination) {\n        nodes {\n          ...ProjectInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n":
@@ -42,6 +52,9 @@ export function gql(
   source: "\n  query AdminUsersCards($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allUsers(pagination: $pagination) {\n        nodes {\n          ...UserInfo\n        }\n        pageInfo {\n          hasNextPage\n          hasPreviousPage\n          startCursor\n          endCursor\n        }\n      }\n    }\n  }\n"
 ): typeof documents["\n  query AdminUsersCards($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allUsers(pagination: $pagination) {\n        nodes {\n          ...UserInfo\n        }\n        pageInfo {\n          hasNextPage\n          hasPreviousPage\n          startCursor\n          endCursor\n        }\n      }\n    }\n  }\n"];
 export function gql(
+  source: "\n        query AllGroupsBase($pagination: CursorConnectionArgs!) {\n          adminUsers {\n            allGroups(pagination: $pagination) {\n              nodes {\n                id\n                code\n                label\n              }\n              ...Pagination\n            }\n          }\n        }\n      "
+): typeof documents["\n        query AllGroupsBase($pagination: CursorConnectionArgs!) {\n          adminUsers {\n            allGroups(pagination: $pagination) {\n              nodes {\n                id\n                code\n                label\n              }\n              ...Pagination\n            }\n          }\n        }\n      "];
+export function gql(
   source: "\n  fragment Pagination on Connection {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n  }\n"
 ): typeof documents["\n  fragment Pagination on Connection {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n  }\n"];
 export function gql(
@@ -56,6 +69,18 @@ export function gql(
 export function gql(
   source: "\n  query AllDomains($pagination: CursorConnectionArgs!) {\n    adminDomain {\n      allDomains(pagination: $pagination) {\n        nodes {\n          ...DomainInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"
 ): typeof documents["\n  query AllDomains($pagination: CursorConnectionArgs!) {\n    adminDomain {\n      allDomains(pagination: $pagination) {\n        nodes {\n          ...DomainInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"];
+export function gql(
+  source: "\n  fragment GroupInfo on Group {\n    id\n    code\n    label\n    updatedAt\n    createdAt\n    projects {\n      id\n      code\n      label\n    }\n    users {\n      id\n      email\n      name\n      role\n      active\n      lastOnline\n    }\n  }\n"
+): typeof documents["\n  fragment GroupInfo on Group {\n    id\n    code\n    label\n    updatedAt\n    createdAt\n    projects {\n      id\n      code\n      label\n    }\n    users {\n      id\n      email\n      name\n      role\n      active\n      lastOnline\n    }\n  }\n"];
+export function gql(
+  source: "\n  query AllGroups($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allGroups(pagination: $pagination) {\n        nodes {\n          ...GroupInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"
+): typeof documents["\n  query AllGroups($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allGroups(pagination: $pagination) {\n        nodes {\n          ...GroupInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"];
+export function gql(
+  source: "\n      mutation CreateGroup($data: CreateGroupInput!) {\n        adminUsers {\n          createGroup(data: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    "
+): typeof documents["\n      mutation CreateGroup($data: CreateGroupInput!) {\n        adminUsers {\n          createGroup(data: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    "];
+export function gql(
+  source: "\n      mutation SetUserGroups(\n        $usersEmails: [EmailAddress!]!\n        $groupIds: [IntID!]!\n      ) {\n        adminUsers {\n          setUserGroups(usersEmails: $usersEmails, groupIds: $groupIds) {\n            __typename\n          }\n        }\n      }\n    "
+): typeof documents["\n      mutation SetUserGroups(\n        $usersEmails: [EmailAddress!]!\n        $groupIds: [IntID!]!\n      ) {\n        adminUsers {\n          setUserGroups(usersEmails: $usersEmails, groupIds: $groupIds) {\n            __typename\n          }\n        }\n      }\n    "];
 export function gql(
   source: "\n  fragment ProjectInfo on Project {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n  }\n"
 ): typeof documents["\n  fragment ProjectInfo on Project {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n  }\n"];

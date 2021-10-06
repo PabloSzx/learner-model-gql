@@ -193,7 +193,7 @@ export type AdminUserMutations = {
   __typename?: "AdminUserMutations";
   createGroup: Group;
   setProjectsToUsers: Array<User>;
-  setUserGroups: Array<User>;
+  setUserGroups: Array<Group>;
   updateGroup: Group;
   updateUser: User;
   /** Upsert specified users with specified project */
@@ -1283,17 +1283,12 @@ export type SetUserGroupsMutation = {
   adminUsers: {
     __typename?: "AdminUserMutations";
     setUserGroups: Array<{
-      __typename?: "User";
+      __typename?: "Group";
       id: string;
-      email: string;
-      groups: Array<{
-        __typename?: "Group";
-        id: string;
-        code: string;
-        label: string;
-        projectsIds: Array<string>;
-        users: Array<{ __typename?: "User"; id: string; email: string }>;
-      }>;
+      code: string;
+      label: string;
+      projectsIds: Array<string>;
+      users: Array<{ __typename?: "User"; id: string; email: string }>;
     }>;
   };
 };
@@ -4046,9 +4041,29 @@ export const SetUserGroupsDocument = {
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      { kind: "Field", name: { kind: "Name", value: "label" } },
                       {
-                        kind: "FragmentSpread",
-                        name: { kind: "Name", value: "UserGroupsInfo" },
+                        kind: "Field",
+                        name: { kind: "Name", value: "projectsIds" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "users" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "email" },
+                            },
+                          ],
+                        },
                       },
                     ],
                   },
@@ -4059,7 +4074,6 @@ export const SetUserGroupsDocument = {
         ],
       },
     },
-    ...UserGroupsInfoFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<
   SetUserGroupsMutation,

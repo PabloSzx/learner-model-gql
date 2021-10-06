@@ -134,7 +134,7 @@ export type AdminUserMutations = {
   /** Upsert specified users with specified project */
   upsertUsersWithProject: Array<User>;
   updateUser: User;
-  setUserGroups: Array<User>;
+  setUserGroups: Array<Group>;
   createGroup: Group;
   updateGroup: Group;
   setProjectsToUsers: Array<User>;
@@ -525,7 +525,7 @@ export type AdminUserMutationsResolvers<
     RequireFields<AdminUserMutationsUpdateUserArgs, "data">
   >;
   setUserGroups?: Resolver<
-    Array<ResolversTypes["User"]>,
+    Array<ResolversTypes["Group"]>,
     ParentType,
     ContextType,
     RequireFields<

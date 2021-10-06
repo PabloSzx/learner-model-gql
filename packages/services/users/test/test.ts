@@ -525,7 +525,14 @@ export async function CheckGroups({
       ) {
         adminUsers {
           setUserGroups(usersEmails: $usersEmails, groupIds: $groupIds) {
-            ...UserGroupsInfo
+            id
+            code
+            label
+            projectsIds
+            users {
+              id
+              email
+            }
           }
         }
       }
@@ -543,24 +550,14 @@ export async function CheckGroups({
       adminUsers: {
         setUserGroups: [
           {
-            email: user2.user.email,
-            id: user2.userId,
-            groups: [
+            id: firstGroupId,
+            code: firstGroup.code,
+            label: firstGroup.label,
+            projectsIds: [projectId],
+            users: [
               {
-                id: firstGroupId,
-                code: firstGroup.code,
-                label: firstGroup.label,
-                projectsIds: [projectId],
-                users: [
-                  {
-                    id: userId,
-                    email: user.email,
-                  },
-                  {
-                    id: user2.userId,
-                    email: user2.user.email,
-                  },
-                ],
+                id: user2.userId,
+                email: user2.user.email,
               },
             ],
           },

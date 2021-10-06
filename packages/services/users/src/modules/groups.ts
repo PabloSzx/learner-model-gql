@@ -1,5 +1,6 @@
+import keyBy from "lodash/keyBy.js";
 import pMap from "p-map";
-import { gql, Prisma, registerModule, ResolveCursorConnection } from "../ez";
+import { gql, registerModule, ResolveCursorConnection } from "../ez";
 
 export const groupsModule = registerModule(
   gql`
@@ -39,7 +40,7 @@ export const groupsModule = registerModule(
       setUserGroups(
         usersEmails: [EmailAddress!]!
         groupIds: [IntID!]!
-      ): [User!]!
+      ): [Group!]!
 
       createGroup(data: CreateGroupInput!): Group!
       updateGroup(data: UpdateGroupInput!): Group!
@@ -99,24 +100,39 @@ export const groupsModule = registerModule(
       },
       AdminUserMutations: {
         async setUserGroups(_root, { usersEmails, groupIds }, { prisma }) {
-          const userDataSet: Prisma.UserUpdateInput = {
-            groups: {
-              set: groupIds.map((id) => {
-                return {
-                  id,
-                };
-              }),
+          const usersEmailsSet = await prisma.user.findMany({
+            where: {
+              email: {
+                in: usersEmails,
+              },
             },
-          };
+            select: {
+              email: true,
+            },
+          });
+
+          const foundsUsers = keyBy(usersEmailsSet, (v) => v.email);
+
+          const notFoundEmails = usersEmails.filter((v) => {
+            return !foundsUsers[v];
+          });
+
+          if (notFoundEmails.length) {
+            throw Error("Users Not Found: " + notFoundEmails.join());
+          }
 
           return pMap(
-            usersEmails,
-            (email) => {
-              return prisma.user.update({
+            groupIds,
+            (id) => {
+              return prisma.group.update({
                 where: {
-                  email,
+                  id,
                 },
-                data: userDataSet,
+                data: {
+                  users: {
+                    set: usersEmailsSet,
+                  },
+                },
               });
             },
             {

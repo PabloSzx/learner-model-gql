@@ -276,7 +276,7 @@ export const generatedSchema = {
     },
     updateUser: { __type: "User!", __args: { data: "UpdateUserInput!" } },
     setUserGroups: {
-      __type: "[User!]!",
+      __type: "[Group!]!",
       __args: { usersEmails: "[EmailAddress!]!", groupIds: "[IntID!]!" },
     },
     createGroup: { __type: "Group!", __args: { data: "CreateGroupInput!" } },
@@ -639,7 +639,7 @@ export interface AdminUserMutations {
   setUserGroups: (args: {
     usersEmails: Array<Scalars["EmailAddress"]>;
     groupIds: Array<Scalars["IntID"]>;
-  }) => Array<User>;
+  }) => Array<Group>;
   createGroup: (args: { data: CreateGroupInput }) => Group;
   updateGroup: (args: { data: UpdateGroupInput }) => Group;
   setProjectsToUsers: (args: {
