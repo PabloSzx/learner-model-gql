@@ -965,6 +965,18 @@ export type CreateProjectMutation = {
   };
 };
 
+export type UpdateProjectMutationVariables = Exact<{
+  data: UpdateProject;
+}>;
+
+export type UpdateProjectMutation = {
+  __typename?: "Mutation";
+  adminProjects: {
+    __typename?: "AdminProjectsMutations";
+    updateProject: { __typename: "Project" };
+  };
+};
+
 export type AdminUsersQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
 }>;
@@ -2035,6 +2047,69 @@ export const CreateProjectDocument = {
 } as unknown as DocumentNode<
   CreateProjectMutation,
   CreateProjectMutationVariables
+>;
+export const UpdateProjectDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpdateProject" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "UpdateProject" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminProjects" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "updateProject" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "data" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "data" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "__typename" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  UpdateProjectMutation,
+  UpdateProjectMutationVariables
 >;
 export const AdminUsersDocument = {
   kind: "Document",

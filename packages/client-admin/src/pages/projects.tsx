@@ -2,7 +2,9 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
+  IconButton,
   Input,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import {
@@ -12,8 +14,9 @@ import {
   useGQLMutation,
   useGQLQuery,
 } from "graph/rq-gql";
-import { useRef } from "react";
-import { MdAdd } from "react-icons/md";
+import { useEffect, useRef } from "react";
+import { MdAdd, MdEdit, MdSave } from "react-icons/md";
+import { proxy, ref, useSnapshot } from "valtio";
 import { withAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
@@ -106,11 +109,57 @@ function CreateProject() {
   );
 }
 
+const ProjectsState = proxy<
+  Record<
+    string,
+    ProjectInfoFragment & {
+      isEditing?: boolean;
+      labelRef: { current: string };
+      codeRef: { current: string };
+    }
+  >
+>({});
+
 export default withAuth(function ProjectsPage() {
   const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination();
   const { data } = useGQLQuery(AdminProjects, { pagination });
   pageInfo.current = data?.adminProjects.allProjects.pageInfo;
 
+  useEffect(() => {
+    for (const project of data?.adminProjects.allProjects.nodes || []) {
+      const isEditing = ProjectsState[project.id]?.isEditing;
+      if (isEditing) continue;
+      Object.assign(
+        (ProjectsState[project.id] ||= {
+          ...project,
+          codeRef: ref({ current: project.code }),
+          labelRef: ref({ current: project.label }),
+        }),
+        project
+      );
+    }
+  }, [data]);
+
+  const projectsState = useSnapshot(ProjectsState);
+
+  const updateProject = useGQLMutation(
+    gql(/* GraphQL */ `
+      mutation UpdateProject($data: UpdateProject!) {
+        adminProjects {
+          updateProject(data: $data) {
+            __typename
+          }
+        }
+      }
+    `),
+    {
+      async onSuccess() {
+        await queryClient.invalidateQueries(getKey(AdminProjects));
+      },
+    }
+  );
+
+  const toast = useToast();
   return (
     <VStack>
       <CreateProject />
@@ -127,13 +176,125 @@ export default withAuth(function ProjectsPage() {
           {
             Header: "Code",
             accessor: "code",
+            Cell({
+              value,
+              row: {
+                original: { id },
+              },
+            }) {
+              const projectState = projectsState[id];
+
+              if (!projectState) return value;
+
+              if (projectState.isEditing) {
+                const ref = ProjectsState[id]!.codeRef;
+                return (
+                  <Input
+                    isDisabled={updateProject.isLoading}
+                    defaultValue={ref.current}
+                    onChange={(ev) => {
+                      ref.current = ev.target.value;
+                    }}
+                    colorScheme="facebook"
+                    borderColor="blackAlpha.500"
+                    width="20ch"
+                  />
+                );
+              }
+
+              return value;
+            },
           },
           {
             Header: "Label",
             accessor: "label",
+            Cell({
+              value,
+              row: {
+                original: { id },
+              },
+            }) {
+              const projectState = projectsState[id];
+
+              if (!projectState) return value;
+
+              if (projectState.isEditing) {
+                const ref = ProjectsState[id]!.labelRef;
+
+                return (
+                  <Input
+                    isDisabled={updateProject.isLoading}
+                    defaultValue={ref.current}
+                    onChange={(ev) => {
+                      ref.current = ev.target.value;
+                    }}
+                    colorScheme="facebook"
+                    borderColor="blackAlpha.500"
+                    width="20ch"
+                  />
+                );
+              }
+
+              return value;
+            },
           },
           getDateRow({ id: "createdAt", label: "Created At" }),
           getDateRow({ id: "updatedAt", label: "Created At" }),
+          {
+            id: "edit",
+            Header: "Editar",
+            defaultCanSort: false,
+            defaultCanFilter: false,
+            defaultCanGroupBy: false,
+            accessor: "id",
+            Cell({ value: id, row: { original } }) {
+              const projectState = projectsState[id];
+
+              if (!projectState) return null;
+
+              const { isEditing, codeRef, labelRef } = projectState;
+
+              return (
+                <IconButton
+                  aria-label="Edit"
+                  colorScheme="blue"
+                  isLoading={
+                    updateProject.isLoading &&
+                    updateProject.variables?.data.id === id
+                  }
+                  isDisabled={updateProject.isLoading}
+                  onClick={() => {
+                    if (
+                      isEditing &&
+                      (original.code !== codeRef.current ||
+                        original.label !== labelRef.current)
+                    ) {
+                      updateProject
+                        .mutateAsync({
+                          data: {
+                            id,
+                            code: codeRef.current,
+                            label: labelRef.current,
+                          },
+                        })
+                        .then(() => {
+                          ProjectsState[id]!.isEditing = false;
+                        })
+                        .catch((err) => {
+                          toast({
+                            status: "error",
+                            title: err.message,
+                          });
+                        });
+                    } else {
+                      ProjectsState[id]!.isEditing = !isEditing;
+                    }
+                  }}
+                  icon={isEditing ? <MdSave /> : <MdEdit />}
+                />
+              );
+            },
+          },
         ]}
       />
     </VStack>

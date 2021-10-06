@@ -162,7 +162,7 @@ export default withAuth(function IndexPage() {
 
   useEffect(() => {
     for (const user of data?.adminUsers.allUsers.nodes || []) {
-      const isEditing = UsersState[user.id];
+      const isEditing = UsersState[user.id]?.isEditing;
       if (isEditing) continue;
       Object.assign((UsersState[user.id] ||= user), user);
     }

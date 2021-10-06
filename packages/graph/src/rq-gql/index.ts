@@ -36,6 +36,8 @@ const documents = {
     graphql.AllProjectsDocument,
   "\n      mutation CreateProject($data: CreateProject!) {\n        adminProjects {\n          createProject(data: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    ":
     graphql.CreateProjectDocument,
+  "\n      mutation UpdateProject($data: UpdateProject!) {\n        adminProjects {\n          updateProject(data: $data) {\n            __typename\n          }\n        }\n      }\n    ":
+    graphql.UpdateProjectDocument,
   "\n  query AdminUsers($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allUsers(pagination: $pagination) {\n        nodes {\n          ...UserInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n":
     graphql.AdminUsersDocument,
   "\n      mutation UpsertUsersWithProjects(\n        $emails: [EmailAddress!]!\n        $projectId: IntID!\n      ) {\n        adminUsers {\n          upsertUsersWithProject(emails: $emails, projectId: $projectId) {\n            ...UserInfo\n          }\n        }\n      }\n    ":
@@ -90,6 +92,9 @@ export function gql(
 export function gql(
   source: "\n      mutation CreateProject($data: CreateProject!) {\n        adminProjects {\n          createProject(data: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation CreateProject($data: CreateProject!) {\n        adminProjects {\n          createProject(data: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    "];
+export function gql(
+  source: "\n      mutation UpdateProject($data: UpdateProject!) {\n        adminProjects {\n          updateProject(data: $data) {\n            __typename\n          }\n        }\n      }\n    "
+): typeof documents["\n      mutation UpdateProject($data: UpdateProject!) {\n        adminProjects {\n          updateProject(data: $data) {\n            __typename\n          }\n        }\n      }\n    "];
 export function gql(
   source: "\n  query AdminUsers($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allUsers(pagination: $pagination) {\n        nodes {\n          ...UserInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"
 ): typeof documents["\n  query AdminUsers($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allUsers(pagination: $pagination) {\n        nodes {\n          ...UserInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"];
