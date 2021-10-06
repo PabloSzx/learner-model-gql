@@ -1,5 +1,6 @@
 import { Stack } from "@chakra-ui/react";
 import { FiBook, FiUsers } from "react-icons/fi";
+import { RiGroup2Line } from "react-icons/ri";
 import { VscProject } from "react-icons/vsc";
 import { useAuth } from "./Auth";
 import { DarkModeToggle } from "./DarkModeToggle";
@@ -15,6 +16,9 @@ export function Navigation() {
           <>
             <SidebarLink href="/users" icon={<FiUsers />}>
               Users
+            </SidebarLink>
+            <SidebarLink href="/groups" icon={<RiGroup2Line />}>
+              Groups
             </SidebarLink>
             <SidebarLink href="/domains" icon={<FiBook />}>
               Domains

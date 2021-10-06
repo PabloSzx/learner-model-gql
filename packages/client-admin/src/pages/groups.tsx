@@ -1,0 +1,343 @@
+import {
+  Button,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Textarea,
+  useDisclosure,
+  VStack,
+} from "@chakra-ui/react";
+import { formatSpanish } from "common";
+import {
+  getKey,
+  gql,
+  GroupInfoFragment,
+  useGQLMutation,
+  useGQLQuery,
+} from "graph/rq-gql";
+import { useMemo, useRef, useState } from "react";
+import { FaUsers } from "react-icons/fa";
+import { IoIosEye } from "react-icons/io";
+import { MdAdd, MdCheck, MdClose } from "react-icons/md";
+import { withAuth } from "../components/Auth";
+import { Card } from "../components/Card/Card";
+import { CardContent } from "../components/Card/CardContent";
+import { CardHeader } from "../components/Card/CardHeader";
+import { Property } from "../components/Card/Property";
+import { DataTable, getDateRow } from "../components/DataTable";
+import { FormModal } from "../components/FormModal";
+import { useSelectMultiGroups } from "../hooks/groups";
+import { useCursorPagination } from "../hooks/pagination";
+import { useSelectMultiProjects } from "../hooks/projects";
+import { queryClient } from "../utils/rqClient";
+
+gql(/* GraphQL */ `
+  fragment GroupInfo on Group {
+    id
+    code
+    label
+    updatedAt
+    createdAt
+    projects {
+      id
+      code
+      label
+    }
+    users {
+      id
+      email
+      name
+      role
+      active
+      lastOnline
+    }
+  }
+`);
+
+const AdminGroups = gql(/* GraphQL */ `
+  query AllGroups($pagination: CursorConnectionArgs!) {
+    adminUsers {
+      allGroups(pagination: $pagination) {
+        nodes {
+          ...GroupInfo
+        }
+        ...Pagination
+      }
+    }
+  }
+`);
+
+function CreateProject() {
+  const { mutateAsync } = useGQLMutation(
+    gql(/* GraphQL */ `
+      mutation CreateGroup($data: CreateGroupInput!) {
+        adminUsers {
+          createGroup(data: $data) {
+            id
+            label
+            code
+          }
+        }
+      }
+    `),
+    {
+      async onSuccess() {
+        await queryClient.invalidateQueries(getKey(AdminGroups));
+      },
+    }
+  );
+
+  const codeRef = useRef<HTMLInputElement>(null);
+  const labelRef = useRef<HTMLInputElement>(null);
+  const { selectMultiProjectComponent, selectedProjects } =
+    useSelectMultiProjects();
+  return (
+    <FormModal
+      title="Create Group"
+      onSubmit={async () => {
+        if (!codeRef.current?.value || !labelRef.current?.value)
+          throw Error("All fields are required");
+
+        await mutateAsync({
+          data: {
+            projectIds: selectedProjects.map((v) => v.value),
+            code: codeRef.current.value,
+            label: labelRef.current.value,
+          },
+        });
+
+        queryClient.invalidateQueries(getKey(AdminGroups));
+
+        codeRef.current.value = "";
+        labelRef.current.value = "";
+      }}
+      triggerButton={{
+        colorScheme: "facebook",
+        leftIcon: <MdAdd />,
+      }}
+    >
+      <FormControl>
+        <FormLabel>Associated Projects</FormLabel>
+
+        {selectMultiProjectComponent}
+      </FormControl>
+      <FormControl id="code" isRequired>
+        <FormLabel>Code</FormLabel>
+        <Input type="text" ref={codeRef} />
+        <FormHelperText>
+          Unique Code not intended to be showed to the users
+        </FormHelperText>
+      </FormControl>
+      <FormControl id="label" isRequired>
+        <FormLabel>Label</FormLabel>
+        <Input type="text" ref={labelRef} />
+        <FormHelperText>Human readable label</FormHelperText>
+      </FormControl>
+    </FormModal>
+  );
+}
+
+function GroupsUsers({
+  users,
+  code,
+  label,
+}: {
+  users: GroupInfoFragment["users"][number][];
+  code: string;
+  label: string;
+}) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  return (
+    <>
+      <Button
+        leftIcon={<IoIosEye />}
+        onClick={onOpen}
+        colorScheme="facebook"
+        isDisabled={users.length === 0}
+      >
+        {users.length}
+      </Button>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            {label} - {code}
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            {users.map(({ id, email, name, role, active, lastOnline }) => {
+              return (
+                <Card key={id} margin="0.5em !important">
+                  <CardHeader title={email} />
+                  <CardContent>
+                    <Property label="ID" value={id} />
+                    {name && <Property label="Nombre" value={name} />}
+                    <Property label="Rol" value={role} />
+                    <Property
+                      label="Activo"
+                      value={active ? <MdCheck /> : <MdClose />}
+                    />
+                    <Property
+                      label="Última conexión"
+                      value={
+                        lastOnline
+                          ? formatSpanish(new Date(lastOnline), "PPpp")
+                          : "---"
+                      }
+                    />
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+}
+
+function AssignGroupsUsers() {
+  const [text, setText] = useState("");
+
+  const { selectMultiGroupComponent, selectedGroups, setSelectedGroups } =
+    useSelectMultiGroups();
+  const { mutateAsync } = useGQLMutation(
+    gql(/* GraphQL */ `
+      mutation SetUserGroups(
+        $usersEmails: [EmailAddress!]!
+        $groupIds: [IntID!]!
+      ) {
+        adminUsers {
+          setUserGroups(usersEmails: $usersEmails, groupIds: $groupIds) {
+            __typename
+          }
+        }
+      }
+    `),
+    {
+      async onSuccess() {
+        await queryClient.invalidateQueries(getKey(AdminGroups));
+      },
+    }
+  );
+
+  const emails = useMemo(() => {
+    return Array.from(
+      text
+        .trim()
+        .split(/\r\n|\n/g)
+        .reduce<Array<string>>((acum, value) => {
+          const email = value.trim();
+
+          if (email) acum.push(email);
+
+          return acum;
+        }, [])
+    );
+  }, [text]);
+
+  return (
+    <FormModal
+      title="Assigns Users to Groups"
+      onSubmit={async () => {
+        if (!selectedGroups.length) return;
+
+        await mutateAsync({
+          groupIds: selectedGroups.map((v) => v.value),
+          usersEmails: emails,
+        });
+
+        setSelectedGroups([]);
+        setText("");
+      }}
+      triggerButton={{
+        colorScheme: "facebook",
+        leftIcon: <FaUsers />,
+      }}
+      saveButton={{
+        isDisabled: !selectedGroups.length,
+      }}
+    >
+      <FormControl isRequired>
+        <FormLabel>Groups</FormLabel>
+        {selectMultiGroupComponent}
+      </FormControl>
+      <FormControl>
+        <FormLabel>Users List</FormLabel>
+        <Textarea
+          value={text}
+          onChange={(ev) => {
+            setText(ev.target.value);
+          }}
+        />
+        <FormHelperText>List of emails separated by a new line</FormHelperText>
+      </FormControl>
+    </FormModal>
+  );
+}
+
+export default withAuth(function GroupsPage() {
+  const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination();
+  const { data } = useGQLQuery(AdminGroups, { pagination });
+  pageInfo.current = data?.adminUsers.allGroups.pageInfo;
+
+  return (
+    <VStack>
+      <CreateProject />
+      <AssignGroupsUsers />
+      <DataTable<GroupInfoFragment>
+        data={data?.adminUsers.allGroups.nodes || []}
+        prevPage={prevPage}
+        nextPage={nextPage}
+        minH="80vh"
+        columns={[
+          {
+            Header: "ID",
+            accessor: "id",
+          },
+          {
+            Header: "Code",
+            accessor: "code",
+          },
+          {
+            Header: "Label",
+            accessor: "label",
+          },
+          {
+            id: "projects",
+            Header: "Projects",
+            accessor: "id",
+            Cell({
+              row: {
+                original: { projects },
+              },
+            }) {
+              return projects.map((v) => v.code).join();
+            },
+          },
+          {
+            id: "users",
+            Header: "Users",
+            accessor: "id",
+            Cell({
+              row: {
+                original: { users, label, code },
+              },
+            }) {
+              return <GroupsUsers users={users} label={label} code={code} />;
+            },
+          },
+          getDateRow({ id: "createdAt", label: "Created At" }),
+          getDateRow({ id: "updatedAt", label: "Created At" }),
+        ]}
+      />
+    </VStack>
+  );
+});

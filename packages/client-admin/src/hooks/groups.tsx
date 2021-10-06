@@ -2,13 +2,13 @@ import { gql, useGQLInfiniteQuery } from "graph/rq-gql";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AsyncSelect } from "../components/AsyncSelect";
 
-export const useProjectsBase = () => {
+export const useGroupsBase = () => {
   const { hasNextPage, fetchNextPage, isFetching, data, isLoading } =
     useGQLInfiniteQuery(
       gql(/* GraphQL */ `
-        query AllProjectsBase($pagination: CursorConnectionArgs!) {
-          adminProjects {
-            allProjects(pagination: $pagination) {
+        query AllGroupsBase($pagination: CursorConnectionArgs!) {
+          adminUsers {
+            allGroups(pagination: $pagination) {
               nodes {
                 id
                 code
@@ -29,8 +29,8 @@ export const useProjectsBase = () => {
       },
       {
         getNextPageParam({
-          adminProjects: {
-            allProjects: {
+          adminUsers: {
+            allGroups: {
               pageInfo: { hasNextPage, endCursor },
             },
           },
@@ -48,7 +48,7 @@ export const useProjectsBase = () => {
     }
   }, [hasNextPage, fetchNextPage, isFetching]);
 
-  const projects = useMemo(() => {
+  const groups = useMemo(() => {
     const projects: Record<
       string,
       {
@@ -59,7 +59,7 @@ export const useProjectsBase = () => {
     > = {};
 
     for (const project of data?.pages.flatMap(
-      (v) => v.adminProjects.allProjects.nodes
+      (v) => v.adminUsers.allGroups.nodes
     ) || []) {
       projects[project.id] = project;
     }
@@ -68,13 +68,13 @@ export const useProjectsBase = () => {
   }, [data]);
 
   const asOptions = useMemo(() => {
-    return projects.map(({ id, label, code }) => {
+    return groups.map(({ id, label, code }) => {
       return {
         label: `${code} | ${label}`,
         value: id,
       };
     });
-  }, [projects]);
+  }, [groups]);
 
   const filteredOptions = useCallback(
     async (input: string) => {
@@ -86,7 +86,7 @@ export const useProjectsBase = () => {
   );
 
   return {
-    projects,
+    groups,
     isFetching,
     isLoading,
     asOptions,
@@ -94,66 +94,64 @@ export const useProjectsBase = () => {
   };
 };
 
-export const useSelectSingleProject = () => {
-  const { isFetching, isLoading, filteredOptions, asOptions } =
-    useProjectsBase();
+export const useSelectSingleGroup = () => {
+  const { isFetching, isLoading, filteredOptions, asOptions } = useGroupsBase();
 
-  const [selectedProject, setSelectedProject] = useState<{
+  const [selectedGroup, setSelectedGroups] = useState<{
     value: string;
     label: string;
   } | null>(null);
 
-  const selectSingleProjectComponent = useMemo(() => {
+  const selectSingleGroupComponent = useMemo(() => {
     return (
       <AsyncSelect
         key={isLoading ? -1 : asOptions.length}
         isLoading={isFetching}
         loadOptions={filteredOptions}
         onChange={(selected) => {
-          setSelectedProject(selected || null);
+          setSelectedGroups(selected || null);
         }}
-        value={selectedProject}
-        placeholder="Search a project"
+        value={selectedGroup}
+        placeholder="Search a group"
       />
     );
-  }, [filteredOptions, isLoading, isFetching, asOptions, selectedProject]);
+  }, [filteredOptions, isLoading, isFetching, asOptions, selectedGroup]);
 
   return {
-    selectedProject,
-    selectSingleProjectComponent,
+    selectedGroup,
+    selectSingleGroupComponent,
   };
 };
 
-export const useSelectMultiProjects = () => {
-  const { isFetching, isLoading, filteredOptions, asOptions } =
-    useProjectsBase();
+export const useSelectMultiGroups = () => {
+  const { isFetching, isLoading, filteredOptions, asOptions } = useGroupsBase();
 
-  const [selectedProjects, setSelectedProjects] = useState<
+  const [selectedGroups, setSelectedGroups] = useState<
     {
       value: string;
       label: string;
     }[]
   >([]);
 
-  const selectMultiProjectComponent = useMemo(() => {
+  const selectMultiGroupComponent = useMemo(() => {
     return (
       <AsyncSelect
         key={isLoading ? -1 : asOptions.length}
         isLoading={isFetching}
         loadOptions={filteredOptions}
         onChange={(selected) => {
-          setSelectedProjects(selected || []);
+          setSelectedGroups(selected || []);
         }}
         isMulti
-        value={selectedProjects}
-        placeholder="Search a project"
+        value={selectedGroups}
+        placeholder="Search a group"
       />
     );
-  }, [filteredOptions, isLoading, isFetching, asOptions, selectedProjects]);
+  }, [filteredOptions, isLoading, isFetching, asOptions, selectedGroups]);
 
   return {
-    selectedProjects,
-    selectMultiProjectComponent,
-    setSelectedProjects,
+    selectedGroups,
+    selectMultiGroupComponent,
+    setSelectedGroups,
   };
 };
