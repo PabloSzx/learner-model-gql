@@ -485,6 +485,7 @@ export type TopicsConnection = Connection & {
 };
 
 export type UpdateDomain = {
+  code: Scalars["String"];
   id: Scalars["IntID"];
   label: Scalars["String"];
 };
@@ -781,6 +782,7 @@ export type DomainInfoFragment = {
   label: string;
   updatedAt: string;
   createdAt: string;
+  project: { __typename?: "Project"; id: string; code: string; label: string };
 };
 
 export type AllDomainsQueryVariables = Exact<{
@@ -800,6 +802,12 @@ export type AllDomainsQuery = {
         label: string;
         updatedAt: string;
         createdAt: string;
+        project: {
+          __typename?: "Project";
+          id: string;
+          code: string;
+          label: string;
+        };
       }>;
       pageInfo: {
         __typename?: "PageInfo";
@@ -809,6 +817,18 @@ export type AllDomainsQuery = {
         endCursor?: string | null | undefined;
       };
     };
+  };
+};
+
+export type UpdateDomainMutationVariables = Exact<{
+  data: UpdateDomain;
+}>;
+
+export type UpdateDomainMutation = {
+  __typename?: "Mutation";
+  adminDomain: {
+    __typename?: "AdminDomainMutations";
+    updateDomain: { __typename: "Domain" };
   };
 };
 
@@ -1130,6 +1150,18 @@ export const DomainInfoFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "label" } },
           { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
           { kind: "Field", name: { kind: "Name", value: "createdAt" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "project" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "code" } },
+                { kind: "Field", name: { kind: "Name", value: "label" } },
+              ],
+            },
+          },
         ],
       },
     },
@@ -1683,6 +1715,69 @@ export const AllDomainsDocument = {
     ...PaginationFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<AllDomainsQuery, AllDomainsQueryVariables>;
+export const UpdateDomainDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpdateDomain" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "UpdateDomain" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminDomain" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "updateDomain" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "input" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "data" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "__typename" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  UpdateDomainMutation,
+  UpdateDomainMutationVariables
+>;
 export const AllGroupsDocument = {
   kind: "Document",
   definitions: [

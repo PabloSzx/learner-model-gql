@@ -2,7 +2,9 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
+  IconButton,
   Input,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import {
@@ -12,13 +14,14 @@ import {
   useGQLMutation,
   useGQLQuery,
 } from "graph/rq-gql";
-import { useRef } from "react";
-import { MdAdd } from "react-icons/md";
+import { useEffect, useRef } from "react";
+import { MdAdd, MdEdit, MdSave } from "react-icons/md";
+import { proxy, ref, useSnapshot } from "valtio";
 import { withAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
 import { useCursorPagination } from "../hooks/pagination";
-import { useSelectSingleProject } from "../hooks/projects";
+import { projectOptionLabel, useSelectSingleProject } from "../hooks/projects";
 import { queryClient } from "../utils/rqClient";
 
 function CreateDomain() {
@@ -104,6 +107,11 @@ gql(/* GraphQL */ `
     label
     updatedAt
     createdAt
+    project {
+      id
+      code
+      label
+    }
   }
 `);
 
@@ -120,10 +128,57 @@ const AdminDomains = gql(/* GraphQL */ `
   }
 `);
 
+const DomainsState = proxy<
+  Record<
+    string,
+    DomainInfoFragment & {
+      isEditing?: boolean;
+      labelRef: { current: string };
+      codeRef: { current: string };
+    }
+  >
+>({});
+
 export default withAuth(function DomainPage() {
   const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination();
   const { data } = useGQLQuery(AdminDomains, { pagination });
   pageInfo.current = data?.adminDomain.allDomains.pageInfo;
+
+  useEffect(() => {
+    for (const domain of data?.adminDomain.allDomains.nodes || []) {
+      const isEditing = DomainsState[domain.id]?.isEditing;
+      if (isEditing) continue;
+      Object.assign(
+        (DomainsState[domain.id] ||= {
+          ...domain,
+          codeRef: ref({ current: domain.code }),
+          labelRef: ref({ current: domain.label }),
+        }),
+        domain
+      );
+    }
+  }, [data]);
+
+  const domainsState = useSnapshot(DomainsState);
+
+  const updateDomain = useGQLMutation(
+    gql(/* GraphQL */ `
+      mutation UpdateDomain($data: UpdateDomain!) {
+        adminDomain {
+          updateDomain(input: $data) {
+            __typename
+          }
+        }
+      }
+    `),
+    {
+      async onSuccess() {
+        await queryClient.invalidateQueries(getKey(AdminDomains));
+      },
+    }
+  );
+
+  const toast = useToast();
 
   return (
     <VStack>
@@ -141,13 +196,133 @@ export default withAuth(function DomainPage() {
           {
             Header: "Code",
             accessor: "code",
+            Cell({
+              value,
+              row: {
+                original: { id },
+              },
+            }) {
+              const domainState = domainsState[id];
+
+              if (!domainState) return value;
+
+              if (domainState.isEditing) {
+                const ref = DomainsState[id]!.codeRef;
+                return (
+                  <Input
+                    isDisabled={updateDomain.isLoading}
+                    defaultValue={ref.current}
+                    onChange={(ev) => {
+                      ref.current = ev.target.value;
+                    }}
+                    colorScheme="facebook"
+                    borderColor="blackAlpha.500"
+                    width="20ch"
+                  />
+                );
+              }
+
+              return value;
+            },
           },
           {
             Header: "Label",
             accessor: "label",
+            Cell({
+              value,
+              row: {
+                original: { id },
+              },
+            }) {
+              const domainState = domainsState[id];
+
+              if (!domainState) return value;
+
+              if (domainState.isEditing) {
+                const ref = DomainsState[id]!.labelRef;
+
+                return (
+                  <Input
+                    isDisabled={updateDomain.isLoading}
+                    defaultValue={ref.current}
+                    onChange={(ev) => {
+                      ref.current = ev.target.value;
+                    }}
+                    colorScheme="facebook"
+                    borderColor="blackAlpha.500"
+                    width="20ch"
+                  />
+                );
+              }
+
+              return value;
+            },
+          },
+          {
+            id: "project",
+            Header: "Project",
+            accessor: "project",
+            Cell({ value }) {
+              return projectOptionLabel(value);
+            },
           },
           getDateRow({ id: "createdAt", label: "Created At" }),
           getDateRow({ id: "updatedAt", label: "Created At" }),
+          {
+            id: "edit",
+            Header: "Editar",
+            defaultCanSort: false,
+            defaultCanFilter: false,
+            defaultCanGroupBy: false,
+            accessor: "id",
+            Cell({ value: id, row: { original } }) {
+              const projectState = domainsState[id];
+
+              if (!projectState) return null;
+
+              const { isEditing, codeRef, labelRef } = projectState;
+
+              return (
+                <IconButton
+                  aria-label="Edit"
+                  colorScheme="blue"
+                  isLoading={
+                    updateDomain.isLoading &&
+                    updateDomain.variables?.data.id === id
+                  }
+                  isDisabled={updateDomain.isLoading}
+                  onClick={() => {
+                    if (
+                      isEditing &&
+                      (original.code !== codeRef.current ||
+                        original.label !== labelRef.current)
+                    ) {
+                      updateDomain
+                        .mutateAsync({
+                          data: {
+                            id,
+                            label: labelRef.current,
+                            code: codeRef.current,
+                          },
+                        })
+                        .then(() => {
+                          DomainsState[id]!.isEditing = false;
+                        })
+                        .catch((err) => {
+                          toast({
+                            status: "error",
+                            title: err.message,
+                          });
+                        });
+                    } else {
+                      DomainsState[id]!.isEditing = !isEditing;
+                    }
+                  }}
+                  icon={isEditing ? <MdSave /> : <MdEdit />}
+                />
+              );
+            },
+          },
         ]}
       />
     </VStack>

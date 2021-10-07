@@ -38,7 +38,7 @@ import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
 import { useSelectMultiGroups } from "../hooks/groups";
 import { useCursorPagination } from "../hooks/pagination";
-import { useSelectMultiProjects } from "../hooks/projects";
+import { projectOptionLabel, useSelectMultiProjects } from "../hooks/projects";
 import { queryClient } from "../utils/rqClient";
 
 gql(/* GraphQL */ `
@@ -314,7 +314,7 @@ export default withAuth(function GroupsPage() {
           labelRef: ref({ current: group.label }),
           selectedProjects: group.projects.map(({ code, label, id }) => {
             return {
-              label: `${code} | ${label}`,
+              label: projectOptionLabel({ code, label }),
               value: id,
             };
           }),

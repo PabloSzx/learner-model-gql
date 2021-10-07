@@ -315,6 +315,7 @@ input CreateDomain {
 
 input UpdateDomain {
   id: IntID!
+  code: String!
   label: String!
 }
 

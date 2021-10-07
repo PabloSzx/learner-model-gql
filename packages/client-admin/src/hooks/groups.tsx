@@ -71,7 +71,7 @@ export const useGroupsBase = () => {
   const asOptions = useMemo(() => {
     return groups.map(({ id, label, code }) => {
       return {
-        label: `${code} | ${label}`,
+        label: groupOptionLabel({ code, label }),
         value: id,
       };
     });
@@ -94,6 +94,14 @@ export const useGroupsBase = () => {
     filteredOptions,
   };
 };
+
+export const groupOptionLabel = ({
+  code,
+  label,
+}: {
+  code: string;
+  label: string;
+}) => `${code} | ${label}`;
 
 export const useSelectSingleGroup = () => {
   const { isFetching, isLoading, filteredOptions, asOptions } = useGroupsBase();

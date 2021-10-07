@@ -18,10 +18,12 @@ const documents = {
     graphql.AllProjectsBaseDocument,
   "\n      mutation CreateDomain($data: CreateDomain!) {\n        adminDomain {\n          createDomain(input: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    ":
     graphql.CreateDomainDocument,
-  "\n  fragment DomainInfo on Domain {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n  }\n":
+  "\n  fragment DomainInfo on Domain {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n    project {\n      id\n      code\n      label\n    }\n  }\n":
     graphql.DomainInfoFragmentDoc,
   "\n  query AllDomains($pagination: CursorConnectionArgs!) {\n    adminDomain {\n      allDomains(pagination: $pagination) {\n        nodes {\n          ...DomainInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n":
     graphql.AllDomainsDocument,
+  "\n      mutation UpdateDomain($data: UpdateDomain!) {\n        adminDomain {\n          updateDomain(input: $data) {\n            __typename\n          }\n        }\n      }\n    ":
+    graphql.UpdateDomainDocument,
   "\n  fragment GroupInfo on Group {\n    id\n    code\n    label\n    updatedAt\n    createdAt\n    projects {\n      id\n      code\n      label\n    }\n    users {\n      id\n      email\n      name\n      role\n      active\n      lastOnline\n    }\n  }\n":
     graphql.GroupInfoFragmentDoc,
   "\n  query AllGroups($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allGroups(pagination: $pagination) {\n        nodes {\n          ...GroupInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n":
@@ -68,11 +70,14 @@ export function gql(
   source: "\n      mutation CreateDomain($data: CreateDomain!) {\n        adminDomain {\n          createDomain(input: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation CreateDomain($data: CreateDomain!) {\n        adminDomain {\n          createDomain(input: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    "];
 export function gql(
-  source: "\n  fragment DomainInfo on Domain {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n  }\n"
-): typeof documents["\n  fragment DomainInfo on Domain {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n  }\n"];
+  source: "\n  fragment DomainInfo on Domain {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n    project {\n      id\n      code\n      label\n    }\n  }\n"
+): typeof documents["\n  fragment DomainInfo on Domain {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n    project {\n      id\n      code\n      label\n    }\n  }\n"];
 export function gql(
   source: "\n  query AllDomains($pagination: CursorConnectionArgs!) {\n    adminDomain {\n      allDomains(pagination: $pagination) {\n        nodes {\n          ...DomainInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"
 ): typeof documents["\n  query AllDomains($pagination: CursorConnectionArgs!) {\n    adminDomain {\n      allDomains(pagination: $pagination) {\n        nodes {\n          ...DomainInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"];
+export function gql(
+  source: "\n      mutation UpdateDomain($data: UpdateDomain!) {\n        adminDomain {\n          updateDomain(input: $data) {\n            __typename\n          }\n        }\n      }\n    "
+): typeof documents["\n      mutation UpdateDomain($data: UpdateDomain!) {\n        adminDomain {\n          updateDomain(input: $data) {\n            __typename\n          }\n        }\n      }\n    "];
 export function gql(
   source: "\n  fragment GroupInfo on Group {\n    id\n    code\n    label\n    updatedAt\n    createdAt\n    projects {\n      id\n      code\n      label\n    }\n    users {\n      id\n      email\n      name\n      role\n      active\n      lastOnline\n    }\n  }\n"
 ): typeof documents["\n  fragment GroupInfo on Group {\n    id\n    code\n    label\n    updatedAt\n    createdAt\n    projects {\n      id\n      code\n      label\n    }\n    users {\n      id\n      email\n      name\n      role\n      active\n      lastOnline\n    }\n  }\n"];

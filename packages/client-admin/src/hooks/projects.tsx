@@ -71,7 +71,7 @@ export const useProjectsBase = () => {
   const asOptions = useMemo(() => {
     return projects.map(({ id, label, code }) => {
       return {
-        label: `${code} | ${label}`,
+        label: projectOptionLabel({ label, code }),
         value: id,
       };
     });
@@ -94,6 +94,14 @@ export const useProjectsBase = () => {
     filteredOptions,
   };
 };
+
+export const projectOptionLabel = ({
+  code,
+  label,
+}: {
+  code: string;
+  label: string;
+}) => `${code} | ${label}`;
 
 export const useSelectSingleProject = () => {
   const { isFetching, isLoading, filteredOptions, asOptions } =
