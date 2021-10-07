@@ -910,6 +910,18 @@ export type SetUserGroupsMutation = {
   };
 };
 
+export type UpdateGroupMutationVariables = Exact<{
+  data: UpdateGroupInput;
+}>;
+
+export type UpdateGroupMutation = {
+  __typename?: "Mutation";
+  adminUsers: {
+    __typename?: "AdminUserMutations";
+    updateGroup: { __typename: "Group" };
+  };
+};
+
 export type ProjectInfoFragment = {
   __typename: "Project";
   id: string;
@@ -1908,6 +1920,66 @@ export const SetUserGroupsDocument = {
   SetUserGroupsMutation,
   SetUserGroupsMutationVariables
 >;
+export const UpdateGroupDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpdateGroup" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "UpdateGroupInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminUsers" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "updateGroup" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "data" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "data" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "__typename" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UpdateGroupMutation, UpdateGroupMutationVariables>;
 export const AllProjectsDocument = {
   kind: "Document",
   definitions: [

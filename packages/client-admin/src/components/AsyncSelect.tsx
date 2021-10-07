@@ -37,7 +37,7 @@ interface SelectProps extends CommonSelectProps {
   value?: any;
 }
 
-interface AsyncSelectProps extends CommonSelectProps {
+export interface AsyncSelectProps extends CommonSelectProps {
   isLoading?: boolean;
   loadOptions?: any;
 }

@@ -3,6 +3,7 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
+  IconButton,
   Input,
   Modal,
   ModalBody,
@@ -12,6 +13,7 @@ import {
   ModalOverlay,
   Textarea,
   useDisclosure,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { formatSpanish } from "common";
@@ -22,10 +24,11 @@ import {
   useGQLMutation,
   useGQLQuery,
 } from "graph/rq-gql";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { FaUsers } from "react-icons/fa";
 import { IoIosEye } from "react-icons/io";
-import { MdAdd, MdCheck, MdClose } from "react-icons/md";
+import { MdAdd, MdCheck, MdClose, MdEdit, MdSave } from "react-icons/md";
+import { proxy, ref, useSnapshot } from "valtio";
 import { withAuth } from "../components/Auth";
 import { Card } from "../components/Card/Card";
 import { CardContent } from "../components/Card/CardContent";
@@ -283,10 +286,64 @@ function AssignGroupsUsers() {
   );
 }
 
+const GroupsState = proxy<
+  Record<
+    string,
+    GroupInfoFragment & {
+      isEditing?: boolean;
+      labelRef: { current: string };
+      codeRef: { current: string };
+      selectedProjects: Array<{ label: string; value: string }>;
+    }
+  >
+>({});
+
 export default withAuth(function GroupsPage() {
   const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination();
   const { data } = useGQLQuery(AdminGroups, { pagination });
   pageInfo.current = data?.adminUsers.allGroups.pageInfo;
+
+  useEffect(() => {
+    for (const group of data?.adminUsers.allGroups.nodes || []) {
+      const isEditing = GroupsState[group.id]?.isEditing;
+      if (isEditing) continue;
+      Object.assign(
+        (GroupsState[group.id] ||= {
+          ...group,
+          codeRef: ref({ current: group.code }),
+          labelRef: ref({ current: group.label }),
+          selectedProjects: group.projects.map(({ code, label, id }) => {
+            return {
+              label: `${code} | ${label}`,
+              value: id,
+            };
+          }),
+        }),
+        group
+      );
+    }
+  }, [data]);
+
+  const groupsState = useSnapshot(GroupsState);
+
+  const updateGroup = useGQLMutation(
+    gql(/* GraphQL */ `
+      mutation UpdateGroup($data: UpdateGroupInput!) {
+        adminUsers {
+          updateGroup(data: $data) {
+            __typename
+          }
+        }
+      }
+    `),
+    {
+      async onSuccess() {
+        await queryClient.invalidateQueries(getKey(AdminGroups));
+      },
+    }
+  );
+
+  const toast = useToast();
 
   return (
     <VStack>
@@ -305,10 +362,67 @@ export default withAuth(function GroupsPage() {
           {
             Header: "Code",
             accessor: "code",
+            Cell({
+              value,
+              row: {
+                original: { id },
+              },
+            }) {
+              const groupState = groupsState[id];
+
+              if (!groupState) return value;
+
+              if (groupState.isEditing) {
+                const ref = GroupsState[id]!.codeRef;
+                return (
+                  <Input
+                    isDisabled={updateGroup.isLoading}
+                    defaultValue={ref.current}
+                    onChange={(ev) => {
+                      ref.current = ev.target.value;
+                    }}
+                    colorScheme="facebook"
+                    borderColor="blackAlpha.500"
+                    width="20ch"
+                  />
+                );
+              }
+
+              return value;
+            },
           },
           {
             Header: "Label",
             accessor: "label",
+            Cell({
+              value,
+              row: {
+                original: { id },
+              },
+            }) {
+              const groupState = groupsState[id];
+
+              if (!groupState) return value;
+
+              if (groupState.isEditing) {
+                const ref = GroupsState[id]!.labelRef;
+
+                return (
+                  <Input
+                    isDisabled={updateGroup.isLoading}
+                    defaultValue={ref.current}
+                    onChange={(ev) => {
+                      ref.current = ev.target.value;
+                    }}
+                    colorScheme="facebook"
+                    borderColor="blackAlpha.500"
+                    width="20ch"
+                  />
+                );
+              }
+
+              return value;
+            },
           },
           {
             id: "projects",
@@ -316,10 +430,30 @@ export default withAuth(function GroupsPage() {
             accessor: "id",
             Cell({
               row: {
-                original: { projects },
+                original: { projects, id },
               },
             }) {
-              return projects.map((v) => v.code).join();
+              const projectsCodes = projects.map((v) => v.code).join();
+
+              const groupState = groupsState[id];
+
+              if (!groupState) return projectsCodes;
+
+              if (groupState.isEditing) {
+                const { selectMultiProjectComponent } = useSelectMultiProjects({
+                  state: [
+                    groupState.selectedProjects,
+                    (value) => {
+                      GroupsState[id]!.selectedProjects = value;
+                    },
+                  ],
+                  isDisabled: updateGroup.isLoading,
+                });
+
+                return selectMultiProjectComponent;
+              }
+
+              return projectsCodes;
             },
           },
           {
@@ -336,6 +470,71 @@ export default withAuth(function GroupsPage() {
           },
           getDateRow({ id: "createdAt", label: "Created At" }),
           getDateRow({ id: "updatedAt", label: "Created At" }),
+          {
+            id: "edit",
+            Header: "Editar",
+            defaultCanSort: false,
+            defaultCanFilter: false,
+            defaultCanGroupBy: false,
+            accessor: "id",
+            Cell({ value: id, row: { original } }) {
+              const groupState = groupsState[id];
+
+              if (!groupState) return null;
+
+              const { isEditing, codeRef, labelRef, selectedProjects } =
+                groupState;
+
+              return (
+                <IconButton
+                  aria-label="Edit"
+                  colorScheme="blue"
+                  isLoading={
+                    updateGroup.isLoading &&
+                    updateGroup.variables?.data.id === id
+                  }
+                  isDisabled={updateGroup.isLoading}
+                  onClick={() => {
+                    if (
+                      isEditing &&
+                      (original.code !== codeRef.current ||
+                        original.label !== labelRef.current ||
+                        original.projects
+                          .map((v) => v.id)
+                          .sort()
+                          .join() !==
+                          selectedProjects
+                            .map((v) => v.value)
+                            .sort()
+                            .join())
+                    ) {
+                      updateGroup
+                        .mutateAsync({
+                          data: {
+                            id,
+                            code: codeRef.current,
+                            label: labelRef.current,
+                            projectIds: selectedProjects.map((v) => v.value),
+                          },
+                        })
+                        .then(() => {
+                          GroupsState[id]!.isEditing = false;
+                        })
+                        .catch((err) => {
+                          toast({
+                            status: "error",
+                            title: err.message,
+                          });
+                        });
+                    } else {
+                      GroupsState[id]!.isEditing = !isEditing;
+                    }
+                  }}
+                  icon={isEditing ? <MdSave /> : <MdEdit />}
+                />
+              );
+            },
+          },
         ]}
       />
     </VStack>

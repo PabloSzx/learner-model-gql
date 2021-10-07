@@ -1,6 +1,6 @@
 import { gql, useGQLInfiniteQuery } from "graph/rq-gql";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { AsyncSelect } from "../components/AsyncSelect";
+import { AsyncSelect, AsyncSelectProps } from "../components/AsyncSelect";
 
 export const useProjectsBase = () => {
   const { hasNextPage, fetchNextPage, isFetching, data, isLoading } =
@@ -37,6 +37,7 @@ export const useProjectsBase = () => {
         }) {
           return hasNextPage ? endCursor : null;
         },
+        staleTime: 5000,
       }
     );
 
@@ -124,16 +125,34 @@ export const useSelectSingleProject = () => {
   };
 };
 
-export const useSelectMultiProjects = () => {
-  const { isFetching, isLoading, filteredOptions, asOptions } =
-    useProjectsBase();
-
-  const [selectedProjects, setSelectedProjects] = useState<
+export const useSelectMultiProjects = ({
+  state,
+  ...selectProps
+}: {
+  state?: [
     {
       value: string;
       label: string;
-    }[]
-  >([]);
+    }[],
+    (
+      value: {
+        value: string;
+        label: string;
+      }[]
+    ) => void
+  ];
+} & Partial<AsyncSelectProps> = {}) => {
+  const { isFetching, isLoading, filteredOptions, asOptions } =
+    useProjectsBase();
+
+  const [selectedProjects, setSelectedProjects] =
+    state ||
+    useState<
+      {
+        value: string;
+        label: string;
+      }[]
+    >([]);
 
   const selectMultiProjectComponent = useMemo(() => {
     return (
@@ -147,6 +166,7 @@ export const useSelectMultiProjects = () => {
         isMulti
         value={selectedProjects}
         placeholder="Search a project"
+        {...selectProps}
       />
     );
   }, [filteredOptions, isLoading, isFetching, asOptions, selectedProjects]);

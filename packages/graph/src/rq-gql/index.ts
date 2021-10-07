@@ -30,6 +30,8 @@ const documents = {
     graphql.CreateGroupDocument,
   "\n      mutation SetUserGroups(\n        $usersEmails: [EmailAddress!]!\n        $groupIds: [IntID!]!\n      ) {\n        adminUsers {\n          setUserGroups(usersEmails: $usersEmails, groupIds: $groupIds) {\n            __typename\n          }\n        }\n      }\n    ":
     graphql.SetUserGroupsDocument,
+  "\n      mutation UpdateGroup($data: UpdateGroupInput!) {\n        adminUsers {\n          updateGroup(data: $data) {\n            __typename\n          }\n        }\n      }\n    ":
+    graphql.UpdateGroupDocument,
   "\n  fragment ProjectInfo on Project {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n  }\n":
     graphql.ProjectInfoFragmentDoc,
   "\n  query AllProjects($pagination: CursorConnectionArgs!) {\n    adminProjects {\n      allProjects(pagination: $pagination) {\n        nodes {\n          ...ProjectInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n":
@@ -83,6 +85,9 @@ export function gql(
 export function gql(
   source: "\n      mutation SetUserGroups(\n        $usersEmails: [EmailAddress!]!\n        $groupIds: [IntID!]!\n      ) {\n        adminUsers {\n          setUserGroups(usersEmails: $usersEmails, groupIds: $groupIds) {\n            __typename\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation SetUserGroups(\n        $usersEmails: [EmailAddress!]!\n        $groupIds: [IntID!]!\n      ) {\n        adminUsers {\n          setUserGroups(usersEmails: $usersEmails, groupIds: $groupIds) {\n            __typename\n          }\n        }\n      }\n    "];
+export function gql(
+  source: "\n      mutation UpdateGroup($data: UpdateGroupInput!) {\n        adminUsers {\n          updateGroup(data: $data) {\n            __typename\n          }\n        }\n      }\n    "
+): typeof documents["\n      mutation UpdateGroup($data: UpdateGroupInput!) {\n        adminUsers {\n          updateGroup(data: $data) {\n            __typename\n          }\n        }\n      }\n    "];
 export function gql(
   source: "\n  fragment ProjectInfo on Project {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n  }\n"
 ): typeof documents["\n  fragment ProjectInfo on Project {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n  }\n"];

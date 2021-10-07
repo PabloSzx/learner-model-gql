@@ -37,6 +37,7 @@ export const useGroupsBase = () => {
         }) {
           return hasNextPage ? endCursor : null;
         },
+        staleTime: 5000,
       }
     );
 
