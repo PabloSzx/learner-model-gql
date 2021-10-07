@@ -239,7 +239,7 @@ export default withAuth(function ProjectsPage() {
             },
           },
           getDateRow({ id: "createdAt", label: "Created At" }),
-          getDateRow({ id: "updatedAt", label: "Created At" }),
+          getDateRow({ id: "updatedAt", label: "Updated At" }),
           {
             id: "edit",
             Header: "Editar",

@@ -281,7 +281,7 @@ export default withAuth(function IndexPage() {
           },
           getDateRow({ id: "lastOnline", label: "Last Online" }),
           getDateRow({ id: "createdAt", label: "Created At" }),
-          getDateRow({ id: "updatedAt", label: "Created At" }),
+          getDateRow({ id: "updatedAt", label: "Updated At" }),
           {
             id: "edit",
             Header: "Editar",
