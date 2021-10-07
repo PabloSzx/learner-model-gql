@@ -18,7 +18,8 @@ const files = await Promise.all(
           .replace(
             "gql(source: string): unknown",
             "gql(source: string): DocumentNode"
-          ),
+          )
+          .replace(/\\r\\n/g, "\\n"),
         {
           encoding: "utf-8",
         }
