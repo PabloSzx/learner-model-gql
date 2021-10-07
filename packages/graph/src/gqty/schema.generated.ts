@@ -110,6 +110,7 @@ export interface CreateDomain {
 
 export interface UpdateDomain {
   id: Scalars["IntID"];
+  code: Scalars["String"];
   label: Scalars["String"];
 }
 
@@ -452,7 +453,11 @@ export const generatedSchema = {
     nodes: { __type: "[Topic!]!" },
     pageInfo: { __type: "PageInfo!" },
   },
-  UpdateDomain: { id: { __type: "IntID!" }, label: { __type: "String!" } },
+  UpdateDomain: {
+    id: { __type: "IntID!" },
+    code: { __type: "String!" },
+    label: { __type: "String!" },
+  },
   UpdateGroupInput: {
     id: { __type: "IntID!" },
     code: { __type: "String!" },

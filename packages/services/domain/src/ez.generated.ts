@@ -119,6 +119,7 @@ export type CreateDomain = {
 
 export type UpdateDomain = {
   id: Scalars["IntID"];
+  code: Scalars["String"];
   label: Scalars["String"];
 };
 

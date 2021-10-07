@@ -166,6 +166,7 @@ export async function CheckDomainCreationRetrieval({
       variables: {
         input: {
           id: domain.id,
+          code: domain.code,
           label: tempDomainLabel,
         },
       },
@@ -236,6 +237,7 @@ export async function CheckDomainCreationRetrieval({
       variables: {
         input: {
           id: domain.id,
+          code: domain.code,
           label: domainLabel,
         },
       },

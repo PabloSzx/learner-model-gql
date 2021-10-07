@@ -485,6 +485,7 @@ export type TopicsConnection = Connection & {
 };
 
 export type UpdateDomain = {
+  code: Scalars["String"];
   id: Scalars["IntID"];
   label: Scalars["String"];
 };

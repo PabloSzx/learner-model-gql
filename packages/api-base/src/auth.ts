@@ -122,6 +122,34 @@ export const Authorization = (userPromise: Promise<DBUser | null>) => {
     } as const;
   });
 
+  const expectProjectsIdInPrismaFilter = LazyPromise(async () => {
+    const [{ role }, projectsIds] = await Promise.all([
+      expectUser,
+      expectUserProjects,
+    ]);
+
+    if (role === "ADMIN") return undefined;
+
+    return {
+      id: {
+        in: projectsIds,
+      },
+    } as const;
+  });
+
+  const expectProjectsInPrismaFilter = LazyPromise(async () => {
+    const [{ role }, projectsIds] = await Promise.all([
+      expectUser,
+      expectUserProjects,
+    ]);
+
+    if (role === "ADMIN") return undefined;
+
+    return {
+      in: projectsIds,
+    } as const;
+  });
+
   return {
     expectUser,
     expectAdmin,
@@ -129,5 +157,7 @@ export const Authorization = (userPromise: Promise<DBUser | null>) => {
     expectUserProjects,
     expectUserProjectsSet,
     expectSomeProjectsInPrismaFilter,
+    expectProjectsIdInPrismaFilter,
+    expectProjectsInPrismaFilter,
   };
 };

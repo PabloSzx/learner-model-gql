@@ -1,5 +1,8 @@
 import assert from "assert";
-import { ResolveCursorConnection } from "api-base";
+import {
+  expectRequestedIdsArePresent,
+  ResolveCursorConnection,
+} from "api-base";
 
 import { gql, registerModule } from "../ez";
 
@@ -64,6 +67,8 @@ export const domainModule = registerModule(
     input UpdateDomain {
       id: IntID!
 
+      code: String!
+
       label: String!
     }
 
@@ -126,12 +131,13 @@ export const domainModule = registerModule(
             },
           });
         },
-        updateDomain(_root, { input: { id, label } }, { prisma }) {
+        updateDomain(_root, { input: { id, label, code } }, { prisma }) {
           return prisma.domain.update({
             where: {
               id,
             },
             data: {
+              code,
               label,
             },
           });
@@ -301,32 +307,30 @@ export const domainModule = registerModule(
           return {};
         },
         async topics(_root, { ids }, { prisma, authorization }) {
-          return prisma.topic.findMany({
-            where: {
-              id: {
-                in: ids,
-              },
-              project: {
+          return expectRequestedIdsArePresent(
+            prisma.topic.findMany({
+              where: {
                 id: {
-                  in: await authorization.expectUserProjects,
+                  in: ids,
                 },
+                project: await authorization.expectProjectsIdInPrismaFilter,
               },
-            },
-          });
+            }),
+            ids
+          );
         },
         async domains(_root, { ids }, { prisma, authorization }) {
-          return prisma.domain.findMany({
-            where: {
-              id: {
-                in: ids,
-              },
-              project: {
+          return expectRequestedIdsArePresent(
+            prisma.domain.findMany({
+              where: {
                 id: {
-                  in: await authorization.expectUserProjects,
+                  in: ids,
                 },
+                project: await authorization.expectProjectsIdInPrismaFilter,
               },
-            },
-          });
+            }),
+            ids
+          );
         },
       },
     },

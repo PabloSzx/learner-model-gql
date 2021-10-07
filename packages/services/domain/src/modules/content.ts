@@ -1,4 +1,5 @@
 import assert from "assert";
+import { expectRequestedIdsArePresent } from "api-base";
 import { gql, registerModule } from "../ez";
 
 export const contentModule = registerModule(
@@ -33,19 +34,20 @@ export const contentModule = registerModule(
       },
       Query: {
         async content(_root, { ids }, { prisma, authorization }) {
-          return prisma.content.findMany({
-            where: {
-              id: {
-                in: ids,
+          return expectRequestedIdsArePresent(
+            prisma.content.findMany({
+              where: {
+                id: {
+                  in: ids,
+                },
+                projectId: await authorization.expectProjectsInPrismaFilter,
               },
-              projectId: {
-                in: await authorization.expectUserProjects,
+              select: {
+                id: true,
               },
-            },
-            select: {
-              id: true,
-            },
-          });
+            }),
+            ids
+          );
         },
       },
     },
