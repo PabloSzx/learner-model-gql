@@ -1,3 +1,4 @@
+import { expectRequestedIdsArePresent } from "api-base";
 import { gql, registerModule } from "../ez";
 
 export const usersModule = registerModule(
@@ -51,43 +52,37 @@ export const usersModule = registerModule(
       },
       Query: {
         async users(_root, { ids }, { prisma, authorization }) {
-          return prisma.user.findMany({
-            where: {
-              id: {
-                in: ids,
-              },
-              projects: {
-                some: {
-                  id: {
-                    in: await authorization.expectUserProjects,
-                  },
+          return expectRequestedIdsArePresent(
+            prisma.user.findMany({
+              where: {
+                id: {
+                  in: ids,
                 },
+                projects: await authorization.expectSomeProjectsInPrismaFilter,
               },
-            },
-            select: {
-              id: true,
-            },
-          });
+              select: {
+                id: true,
+              },
+            }),
+            ids
+          );
         },
 
         async groups(_root, { ids }, { prisma, authorization }) {
-          return prisma.group.findMany({
-            where: {
-              id: {
-                in: ids,
-              },
-              projects: {
-                some: {
-                  id: {
-                    in: await authorization.expectUserProjects,
-                  },
+          return expectRequestedIdsArePresent(
+            prisma.group.findMany({
+              where: {
+                id: {
+                  in: ids,
                 },
+                projects: await authorization.expectSomeProjectsInPrismaFilter,
               },
-            },
-            select: {
-              id: true,
-            },
-          });
+              select: {
+                id: true,
+              },
+            }),
+            ids
+          );
         },
       },
     },

@@ -105,11 +105,29 @@ export const Authorization = (userPromise: Promise<DBUser | null>) => {
     return { user, projectId };
   };
 
+  const expectSomeProjectsInPrismaFilter = LazyPromise(async () => {
+    const [{ role }, projectsIds] = await Promise.all([
+      expectUser,
+      expectUserProjects,
+    ]);
+
+    if (role === "ADMIN") return undefined;
+
+    return {
+      some: {
+        id: {
+          in: projectsIds,
+        },
+      },
+    } as const;
+  });
+
   return {
     expectUser,
     expectAdmin,
     expectAllowedUserProject,
     expectUserProjects,
     expectUserProjectsSet,
+    expectSomeProjectsInPrismaFilter,
   };
 };
