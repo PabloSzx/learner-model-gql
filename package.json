@@ -33,7 +33,7 @@
     "common": "workspace:^0.0.1",
     "gqty": "^2.0.2",
     "graph": "workspace:^0.0.1",
-    "undici": "^4.7.0"
+    "undici": "^4.7.1"
   },
   "devDependencies": {
     "@gqty/cli": "^2.1.0",
