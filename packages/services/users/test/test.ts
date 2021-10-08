@@ -176,10 +176,10 @@ export async function CheckUsers({
     gql(/* GraphQL */ `
       mutation UpsertUsersWithProjects(
         $emails: [EmailAddress!]!
-        $projectId: IntID!
+        $projectsIds: [IntID!]!
       ) {
         adminUsers {
-          upsertUsersWithProject(emails: $emails, projectId: $projectId) {
+          upsertUsersWithProjects(emails: $emails, projectsIds: $projectsIds) {
             ...UserInfo
           }
         }
@@ -188,7 +188,7 @@ export async function CheckUsers({
     {
       variables: {
         emails: [newEmail],
-        projectId,
+        projectsIds: [projectId],
       },
     }
   );
@@ -196,14 +196,14 @@ export async function CheckUsers({
   expectDeepEqual(upsertedResult.errors, undefined);
 
   const upsertedResultUser =
-    upsertedResult.data?.adminUsers.upsertUsersWithProject[0];
+    upsertedResult.data?.adminUsers.upsertUsersWithProjects[0];
 
   assert(upsertedResultUser);
 
   expectDeepEqual(upsertedResult, {
     data: {
       adminUsers: {
-        upsertUsersWithProject: [
+        upsertUsersWithProjects: [
           {
             active: false,
             createdAt: upsertedResultUser.createdAt,
@@ -225,10 +225,10 @@ export async function CheckUsers({
     gql(/* GraphQL */ `
       mutation UpsertUsersWithProjects(
         $emails: [EmailAddress!]!
-        $projectId: IntID!
+        $projectsIds: [IntID!]!
       ) {
         adminUsers {
-          upsertUsersWithProject(emails: $emails, projectId: $projectId) {
+          upsertUsersWithProjects(emails: $emails, projectsIds: $projectsIds) {
             ...UserInfo
           }
         }
@@ -237,7 +237,7 @@ export async function CheckUsers({
     {
       variables: {
         emails: [newEmail],
-        projectId,
+        projectsIds: [projectId],
       },
     }
   );
@@ -245,14 +245,14 @@ export async function CheckUsers({
   expectDeepEqual(updatedResult.errors, undefined);
 
   const updatedResultUser =
-    updatedResult.data?.adminUsers.upsertUsersWithProject[0];
+    updatedResult.data?.adminUsers.upsertUsersWithProjects[0];
 
   assert(updatedResultUser);
 
   expectDeepEqual(updatedResult, {
     data: {
       adminUsers: {
-        upsertUsersWithProject: [
+        upsertUsersWithProjects: [
           {
             active: false,
             createdAt: upsertedResultUser.createdAt,

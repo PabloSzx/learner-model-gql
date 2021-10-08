@@ -128,7 +128,7 @@ export type UpdateUserInput = {
 export type AdminUserMutations = {
   __typename?: "AdminUserMutations";
   /** Upsert specified users with specified project */
-  upsertUsersWithProject: Array<User>;
+  upsertUsersWithProjects: Array<User>;
   updateUser: User;
   setUserGroups: Array<Group>;
   createGroup: Group;
@@ -136,9 +136,9 @@ export type AdminUserMutations = {
   setProjectsToUsers: Array<User>;
 };
 
-export type AdminUserMutationsUpsertUsersWithProjectArgs = {
+export type AdminUserMutationsUpsertUsersWithProjectsArgs = {
   emails: Array<Scalars["EmailAddress"]>;
-  projectId?: Maybe<Scalars["IntID"]>;
+  projectsIds: Array<Scalars["IntID"]>;
 };
 
 export type AdminUserMutationsUpdateUserArgs = {
@@ -503,11 +503,14 @@ export type AdminUserMutationsResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["AdminUserMutations"] = ResolversParentTypes["AdminUserMutations"]
 > = {
-  upsertUsersWithProject?: Resolver<
+  upsertUsersWithProjects?: Resolver<
     Array<ResolversTypes["User"]>,
     ParentType,
     ContextType,
-    RequireFields<AdminUserMutationsUpsertUsersWithProjectArgs, "emails">
+    RequireFields<
+      AdminUserMutationsUpsertUsersWithProjectsArgs,
+      "emails" | "projectsIds"
+    >
   >;
   updateUser?: Resolver<
     ResolversTypes["User"],

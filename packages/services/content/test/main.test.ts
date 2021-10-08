@@ -353,11 +353,7 @@ describe("Content service", () => {
         }
       );
 
-      expectDeepEqual(result, {
-        data: {
-          domains: [],
-        },
-      });
+      expectDeepEqual(result.errors?.[0]?.message, domainId + " not found!");
     }
 
     withUserWithoutAllowedProject: {
@@ -393,11 +389,10 @@ describe("Content service", () => {
         }
       );
 
-      expectDeepEqual(result, {
-        data: {
-          topics: [],
-        },
-      });
+      expectDeepEqual(
+        result.errors?.[0]?.message,
+        domain.topics[0]?.id + " not found!"
+      );
     }
   });
 });

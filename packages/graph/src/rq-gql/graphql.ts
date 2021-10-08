@@ -197,7 +197,7 @@ export type AdminUserMutations = {
   updateGroup: Group;
   updateUser: User;
   /** Upsert specified users with specified project */
-  upsertUsersWithProject: Array<User>;
+  upsertUsersWithProjects: Array<User>;
 };
 
 export type AdminUserMutationsCreateGroupArgs = {
@@ -222,9 +222,9 @@ export type AdminUserMutationsUpdateUserArgs = {
   data: UpdateUserInput;
 };
 
-export type AdminUserMutationsUpsertUsersWithProjectArgs = {
+export type AdminUserMutationsUpsertUsersWithProjectsArgs = {
   emails: Array<Scalars["EmailAddress"]>;
-  projectId?: Maybe<Scalars["IntID"]>;
+  projectsIds: Array<Scalars["IntID"]>;
 };
 
 export type AdminUserQueries = {
@@ -1073,14 +1073,14 @@ export type AdminUsersQuery = {
 
 export type UpsertUsersWithProjectsMutationVariables = Exact<{
   emails: Array<Scalars["EmailAddress"]> | Scalars["EmailAddress"];
-  projectId?: Maybe<Scalars["IntID"]>;
+  projectsIds: Array<Scalars["IntID"]> | Scalars["IntID"];
 }>;
 
 export type UpsertUsersWithProjectsMutation = {
   __typename?: "Mutation";
   adminUsers: {
     __typename?: "AdminUserMutations";
-    upsertUsersWithProject: Array<{
+    upsertUsersWithProjects: Array<{
       __typename: "User";
       id: string;
       email: string;
@@ -2463,9 +2463,21 @@ export const UpsertUsersWithProjectsDocument = {
           kind: "VariableDefinition",
           variable: {
             kind: "Variable",
-            name: { kind: "Name", value: "projectId" },
+            name: { kind: "Name", value: "projectsIds" },
           },
-          type: { kind: "NamedType", name: { kind: "Name", value: "IntID" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "ListType",
+              type: {
+                kind: "NonNullType",
+                type: {
+                  kind: "NamedType",
+                  name: { kind: "Name", value: "IntID" },
+                },
+              },
+            },
+          },
         },
       ],
       selectionSet: {
@@ -2479,7 +2491,7 @@ export const UpsertUsersWithProjectsDocument = {
               selections: [
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "upsertUsersWithProject" },
+                  name: { kind: "Name", value: "upsertUsersWithProjects" },
                   arguments: [
                     {
                       kind: "Argument",
@@ -2491,10 +2503,10 @@ export const UpsertUsersWithProjectsDocument = {
                     },
                     {
                       kind: "Argument",
-                      name: { kind: "Name", value: "projectId" },
+                      name: { kind: "Name", value: "projectsIds" },
                       value: {
                         kind: "Variable",
-                        name: { kind: "Name", value: "projectId" },
+                        name: { kind: "Name", value: "projectsIds" },
                       },
                     },
                   ],

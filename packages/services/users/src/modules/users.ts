@@ -43,9 +43,9 @@ export const usersModule = registerModule(
 
     type AdminUserMutations {
       "Upsert specified users with specified project"
-      upsertUsersWithProject(
+      upsertUsersWithProjects(
         emails: [EmailAddress!]!
-        projectId: IntID
+        projectsIds: [IntID!]!
       ): [User!]!
 
       updateUser(data: UpdateUserInput!): User!
@@ -96,34 +96,28 @@ export const usersModule = registerModule(
         },
       },
       AdminUserMutations: {
-        async upsertUsersWithProject(_root, { emails, projectId }, { prisma }) {
+        async upsertUsersWithProjects(
+          _root,
+          { emails, projectsIds },
+          { prisma }
+        ) {
           return pMap(
             emails,
             (email) => {
               return prisma.user.upsert({
                 create: {
                   email,
-                  projects:
-                    projectId != null
-                      ? {
-                          connect: {
-                            id: projectId,
-                          },
-                        }
-                      : undefined,
+                  projects: {
+                    connect: projectsIds.map((id) => ({ id })),
+                  },
                 },
                 where: {
                   email,
                 },
                 update: {
-                  projects:
-                    projectId != null
-                      ? {
-                          connect: {
-                            id: projectId,
-                          },
-                        }
-                      : undefined,
+                  projects: {
+                    connect: projectsIds.map((id) => ({ id })),
+                  },
                 },
               });
             },

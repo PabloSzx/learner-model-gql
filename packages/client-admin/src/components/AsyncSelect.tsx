@@ -1,8 +1,4 @@
-import { FiChevronDown } from "react-icons/fi";
-import ReactSelect from "react-select";
-import { components as selectComponents } from "react-select";
-import ReactAsyncSelect from "react-select/async";
-
+import type { CSSWithMultiValues, RecursiveCSSObject } from "@chakra-ui/react";
 import {
   Box,
   Center,
@@ -20,11 +16,15 @@ import {
   useStyles,
   useTheme,
 } from "@chakra-ui/react";
-
-import type { CSSWithMultiValues, RecursiveCSSObject } from "@chakra-ui/react";
-
 import type { FC } from "react";
+import { FiChevronDown } from "react-icons/fi";
 import type { Props as ReactSelectProps } from "react-select";
+import ReactSelect, {
+  components as selectComponents,
+  StylesConfig,
+} from "react-select";
+import ReactAsyncSelect from "react-select/async";
+
 interface CommonSelectProps
   extends ReactSelectProps<{ label: string; value: string }, true> {
   onChange?: ({ value }: any) => void;
@@ -42,25 +42,34 @@ export interface AsyncSelectProps extends CommonSelectProps {
   loadOptions?: any;
 }
 
-const chakraStyles = {
-  input: (provided: Record<string, any>) => ({
+const chakraStyles: StylesConfig<{
+  label: string;
+  value: string;
+}> = {
+  input: (provided) => ({
     ...provided,
     color: "inherit",
     lineHeight: 1,
   }),
-  menu: (provided: Record<string, any>) => ({
+  menu: (provided) => ({
     ...provided,
     boxShadow: "none",
     backgroundColor: "inherit",
   }),
-  valueContainer: (provided: Record<string, any>) => ({
+  valueContainer: (provided) => ({
     ...provided,
     padding: "0.125rem 1rem",
   }),
-  singleValue: (provided: Record<string, any>) => ({
+  singleValue: (provided) => ({
     ...provided,
     color: "inherit",
   }),
+  multiValueRemove(provided) {
+    return {
+      ...provided,
+      color: "black",
+    };
+  },
 };
 
 const components = {

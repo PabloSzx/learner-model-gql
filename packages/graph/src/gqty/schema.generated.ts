@@ -267,9 +267,9 @@ export const generatedSchema = {
   },
   AdminUserMutations: {
     __typename: { __type: "String!" },
-    upsertUsersWithProject: {
+    upsertUsersWithProjects: {
       __type: "[User!]!",
-      __args: { emails: "[EmailAddress!]!", projectId: "IntID" },
+      __args: { emails: "[EmailAddress!]!", projectsIds: "[IntID!]!" },
     },
     updateUser: { __type: "User!", __args: { data: "UpdateUserInput!" } },
     setUserGroups: {
@@ -632,9 +632,9 @@ export interface AdminUserMutations {
   /**
    * Upsert specified users with specified project
    */
-  upsertUsersWithProject: (args: {
+  upsertUsersWithProjects: (args: {
     emails: Array<Scalars["EmailAddress"]>;
-    projectId?: Maybe<Scalars["IntID"]>;
+    projectsIds: Array<Scalars["IntID"]>;
   }) => Array<User>;
   updateUser: (args: { data: UpdateUserInput }) => User;
   setUserGroups: (args: {

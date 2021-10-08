@@ -33,11 +33,7 @@ import { useAuth, withAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
 import { useCursorPagination } from "../hooks/pagination";
-import {
-  projectOptionLabel,
-  useSelectMultiProjects,
-  useSelectSingleProject,
-} from "../hooks/projects";
+import { projectOptionLabel, useSelectMultiProjects } from "../hooks/projects";
 import { queryClient } from "../utils/rqClient";
 
 gql(/* GraphQL */ `
@@ -87,17 +83,17 @@ const UsersState = proxy<
 function UpsertUsers() {
   const [text, setText] = useState("");
 
-  const { selectSingleProjectComponent, selectedProject } =
-    useSelectSingleProject();
+  const { selectMultiProjectComponent, selectedProjects } =
+    useSelectMultiProjects();
 
   const { mutateAsync } = useGQLMutation(
     gql(/* GraphQL */ `
       mutation UpsertUsersWithProjects(
         $emails: [EmailAddress!]!
-        $projectId: IntID
+        $projectsIds: [IntID!]!
       ) {
         adminUsers {
-          upsertUsersWithProject(emails: $emails, projectId: $projectId) {
+          upsertUsersWithProjects(emails: $emails, projectsIds: $projectsIds) {
             ...UserInfo
           }
         }
@@ -133,7 +129,7 @@ function UpsertUsers() {
 
         await mutateAsync({
           emails,
-          projectId: selectedProject?.value,
+          projectsIds: selectedProjects.map((v) => v.value),
         });
       }}
       triggerButton={{
@@ -141,12 +137,12 @@ function UpsertUsers() {
         leftIcon: <FaUsers />,
       }}
       saveButton={{
-        isDisabled: !selectedProject || !emails.length,
+        isDisabled: !emails.length,
       }}
     >
       <FormControl>
-        <FormLabel>Project</FormLabel>
-        {selectSingleProjectComponent}
+        <FormLabel>Projects</FormLabel>
+        {selectMultiProjectComponent}
       </FormControl>
       <FormControl>
         <FormLabel>Users List</FormLabel>
@@ -235,13 +231,13 @@ export default withAuth(function IndexPage() {
               return value ? <MdCheck /> : <MdClose />;
             },
           },
-          {
-            Header: "Enabled",
-            accessor: "enabled",
-            Cell({ value }) {
-              return value ? <MdCheck /> : <MdClose />;
-            },
-          },
+          // {
+          //   Header: "Enabled",
+          //   accessor: "enabled",
+          //   Cell({ value }) {
+          //     return value ? <MdCheck /> : <MdClose />;
+          //   },
+          // },
           {
             id: "role",
             Header: "Role",
@@ -251,7 +247,7 @@ export default withAuth(function IndexPage() {
 
               if (!userState) return null;
 
-              const { isEditing, role } = userState;
+              const { isEditing, role, id } = userState;
 
               return isEditing ? (
                 <Select
@@ -262,7 +258,7 @@ export default withAuth(function IndexPage() {
                         ? UserRole.Admin
                         : UserRole.User;
                   }}
-                  isDisabled={updateUser.isLoading}
+                  isDisabled={updateUser.isLoading || authUser?.id === id}
                   minW="13ch"
                 >
                   <option value={UserRole.Admin}>ADMIN</option>
@@ -282,11 +278,11 @@ export default withAuth(function IndexPage() {
 
               if (!userState) return null;
 
-              const { isEditing, locked } = userState;
+              const { isEditing, locked, id } = userState;
               return isEditing ? (
                 <Switch
                   isChecked={userState.locked}
-                  isDisabled={updateUser.isLoading}
+                  isDisabled={updateUser.isLoading || authUser?.id === id}
                   onChange={() => {
                     UsersState[value]!.locked = !locked;
                   }}
@@ -355,7 +351,7 @@ export default withAuth(function IndexPage() {
                   isLoading={
                     updateUser.isLoading && updateUser.variables?.data.id === id
                   }
-                  isDisabled={updateUser.isLoading || authUser?.id === id}
+                  isDisabled={updateUser.isLoading}
                   onClick={() => {
                     if (
                       isEditing &&

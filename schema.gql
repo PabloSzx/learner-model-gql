@@ -145,7 +145,10 @@ type AdminUserMutations {
   """
   Upsert specified users with specified project
   """
-  upsertUsersWithProject(emails: [EmailAddress!]!, projectId: IntID): [User!]!
+  upsertUsersWithProjects(
+    emails: [EmailAddress!]!
+    projectsIds: [IntID!]!
+  ): [User!]!
   updateUser(data: UpdateUserInput!): User!
   setUserGroups(usersEmails: [EmailAddress!]!, groupIds: [IntID!]!): [Group!]!
   createGroup(data: CreateGroupInput!): Group!
