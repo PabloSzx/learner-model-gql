@@ -6,6 +6,7 @@ export const logger = Pino({
   level: ENV.IS_DEVELOPMENT ? "info" : "info",
   prettyPrint: {
     levelFirst: true,
+    singleLine: true,
     translateTime: true,
   },
 });
