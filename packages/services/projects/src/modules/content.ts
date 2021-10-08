@@ -1,5 +1,5 @@
+import { getNodeIdList } from "api-base";
 import assert from "assert";
-
 import { gql, registerModule } from "../ez";
 
 export const contentModule = registerModule(
@@ -35,19 +35,20 @@ export const contentModule = registerModule(
       },
       Query: {
         async content(_root, { ids }, { prisma, authorization }) {
-          return prisma.content.findMany({
-            where: {
-              id: {
-                in: ids,
+          return getNodeIdList(
+            prisma.content.findMany({
+              where: {
+                id: {
+                  in: ids,
+                },
+                projectId: await authorization.expectProjectsInPrismaFilter,
               },
-              projectId: {
-                in: await authorization.expectUserProjects,
+              select: {
+                id: true,
               },
-            },
-            select: {
-              id: true,
-            },
-          });
+            }),
+            ids
+          );
         },
       },
     },

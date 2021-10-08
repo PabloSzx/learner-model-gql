@@ -1,3 +1,4 @@
+import { getNodeIdList } from "api-base";
 import keyBy from "lodash/keyBy.js";
 import pMap from "p-map";
 import { gql, registerModule, ResolveCursorConnection } from "../ez";
@@ -176,20 +177,17 @@ export const groupsModule = registerModule(
       },
       Query: {
         async groups(_root, { ids }, { prisma, authorization }) {
-          return prisma.group.findMany({
-            where: {
-              id: {
-                in: ids,
-              },
-              projects: {
-                some: {
-                  id: {
-                    in: await authorization.expectUserProjects,
-                  },
+          return getNodeIdList(
+            prisma.group.findMany({
+              where: {
+                id: {
+                  in: ids,
                 },
+                projects: await authorization.expectSomeProjectsInPrismaFilter,
               },
-            },
-          });
+            }),
+            ids
+          );
         },
       },
     },

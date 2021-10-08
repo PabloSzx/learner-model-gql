@@ -1,5 +1,6 @@
-import { gql, registerModule, ResolveCursorConnection } from "../ez";
+import { getNodeIdList } from "api-base";
 import pMap from "p-map";
+import { gql, registerModule, ResolveCursorConnection } from "../ez";
 
 export const usersModule = registerModule(
   gql`
@@ -33,22 +34,18 @@ export const usersModule = registerModule(
       allUsers(pagination: CursorConnectionArgs!): UsersConnection!
     }
 
-    input UpsertUserInput {
-      email: String!
-      name: String
-    }
-
     input UpdateUserInput {
       id: IntID!
       role: UserRole!
       locked: Boolean!
+      projectIds: [IntID!]!
     }
 
     type AdminUserMutations {
       "Upsert specified users with specified project"
       upsertUsersWithProject(
         emails: [EmailAddress!]!
-        projectId: IntID!
+        projectId: IntID
       ): [User!]!
 
       updateUser(data: UpdateUserInput!): User!
@@ -77,20 +74,17 @@ export const usersModule = registerModule(
       },
       Query: {
         async users(_root, { ids }, { prisma, authorization }) {
-          return prisma.user.findMany({
-            where: {
-              id: {
-                in: ids,
-              },
-              projects: {
-                some: {
-                  id: {
-                    in: await authorization.expectUserProjects,
-                  },
+          return getNodeIdList(
+            prisma.user.findMany({
+              where: {
+                id: {
+                  in: ids,
                 },
+                projects: await authorization.expectSomeProjectsInPrismaFilter,
               },
-            },
-          });
+            }),
+            ids
+          );
         },
         async adminUsers(_root, _args, { authorization }) {
           await authorization.expectAdmin;
@@ -109,21 +103,27 @@ export const usersModule = registerModule(
               return prisma.user.upsert({
                 create: {
                   email,
-                  projects: {
-                    connect: {
-                      id: projectId,
-                    },
-                  },
+                  projects:
+                    projectId != null
+                      ? {
+                          connect: {
+                            id: projectId,
+                          },
+                        }
+                      : undefined,
                 },
                 where: {
                   email,
                 },
                 update: {
-                  projects: {
-                    connect: {
-                      id: projectId,
-                    },
-                  },
+                  projects:
+                    projectId != null
+                      ? {
+                          connect: {
+                            id: projectId,
+                          },
+                        }
+                      : undefined,
                 },
               });
             },
@@ -132,12 +132,17 @@ export const usersModule = registerModule(
             }
           );
         },
-        updateUser(_root, { data: { id, ...data } }, { prisma }) {
+        updateUser(_root, { data: { id, projectIds, ...data } }, { prisma }) {
           return prisma.user.update({
             where: {
               id,
             },
-            data,
+            data: {
+              ...data,
+              projects: {
+                set: projectIds.map((id) => ({ id })),
+              },
+            },
           });
         },
       },

@@ -134,22 +134,18 @@ type AdminUserQueries {
   allGroups(pagination: CursorConnectionArgs!): GroupsConnection!
 }
 
-input UpsertUserInput {
-  email: String!
-  name: String
-}
-
 input UpdateUserInput {
   id: IntID!
   role: UserRole!
   locked: Boolean!
+  projectIds: [IntID!]!
 }
 
 type AdminUserMutations {
   """
   Upsert specified users with specified project
   """
-  upsertUsersWithProject(emails: [EmailAddress!]!, projectId: IntID!): [User!]!
+  upsertUsersWithProject(emails: [EmailAddress!]!, projectId: IntID): [User!]!
   updateUser(data: UpdateUserInput!): User!
   setUserGroups(usersEmails: [EmailAddress!]!, groupIds: [IntID!]!): [Group!]!
   createGroup(data: CreateGroupInput!): Group!

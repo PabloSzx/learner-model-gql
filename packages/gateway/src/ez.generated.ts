@@ -181,15 +181,11 @@ export type AdminUserQueriesAllGroupsArgs = {
   pagination: CursorConnectionArgs;
 };
 
-export type UpsertUserInput = {
-  email: Scalars["String"];
-  name?: Maybe<Scalars["String"]>;
-};
-
 export type UpdateUserInput = {
   id: Scalars["IntID"];
   role: UserRole;
   locked: Scalars["Boolean"];
+  projectIds: Array<Scalars["IntID"]>;
 };
 
 export type AdminUserMutations = {
@@ -205,7 +201,7 @@ export type AdminUserMutations = {
 
 export type AdminUserMutationsUpsertUsersWithProjectArgs = {
   emails: Array<Scalars["EmailAddress"]>;
-  projectId: Scalars["IntID"];
+  projectId?: Maybe<Scalars["IntID"]>;
 };
 
 export type AdminUserMutationsUpdateUserArgs = {
@@ -690,7 +686,6 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   UsersConnection: ResolverTypeWrapper<UsersConnection>;
   AdminUserQueries: ResolverTypeWrapper<AdminUserQueries>;
-  UpsertUserInput: UpsertUserInput;
   UpdateUserInput: UpdateUserInput;
   AdminUserMutations: ResolverTypeWrapper<AdminUserMutations>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
@@ -762,7 +757,6 @@ export type ResolversParentTypes = {
   Boolean: Scalars["Boolean"];
   UsersConnection: UsersConnection;
   AdminUserQueries: AdminUserQueries;
-  UpsertUserInput: UpsertUserInput;
   UpdateUserInput: UpdateUserInput;
   AdminUserMutations: AdminUserMutations;
   PageInfo: PageInfo;
@@ -1071,10 +1065,7 @@ export type AdminUserMutationsResolvers<
     Array<ResolversTypes["User"]>,
     ParentType,
     ContextType,
-    RequireFields<
-      AdminUserMutationsUpsertUsersWithProjectArgs,
-      "emails" | "projectId"
-    >
+    RequireFields<AdminUserMutationsUpsertUsersWithProjectArgs, "emails">
   >;
   updateUser?: Resolver<
     ResolversTypes["User"],

@@ -1,4 +1,4 @@
-import { ResolveCursorConnection } from "api-base";
+import { getNodeIdList, ResolveCursorConnection } from "api-base";
 import { gql, registerModule } from "../ez";
 
 export const domainModule = registerModule(
@@ -54,34 +54,36 @@ export const domainModule = registerModule(
       },
       Query: {
         async domains(_root, { ids }, { prisma, authorization }) {
-          return prisma.domain.findMany({
-            where: {
-              id: {
-                in: ids,
+          return getNodeIdList(
+            prisma.domain.findMany({
+              where: {
+                id: {
+                  in: ids,
+                },
+                projectId: await authorization.expectProjectsInPrismaFilter,
               },
-              projectId: {
-                in: await authorization.expectUserProjects,
+              select: {
+                id: true,
               },
-            },
-            select: {
-              id: true,
-            },
-          });
+            }),
+            ids
+          );
         },
         async topics(_root, { ids }, { prisma, authorization }) {
-          return prisma.topic.findMany({
-            where: {
-              id: {
-                in: ids,
+          return getNodeIdList(
+            prisma.topic.findMany({
+              where: {
+                id: {
+                  in: ids,
+                },
+                projectId: await authorization.expectProjectsInPrismaFilter,
               },
-              projectId: {
-                in: await authorization.expectUserProjects,
+              select: {
+                id: true,
               },
-            },
-            select: {
-              id: true,
-            },
-          });
+            }),
+            ids
+          );
         },
       },
     },

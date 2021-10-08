@@ -1,8 +1,5 @@
 import assert from "assert";
-import {
-  expectRequestedIdsArePresent,
-  ResolveCursorConnection,
-} from "api-base";
+import { getNodeIdList, ResolveCursorConnection } from "api-base";
 
 import { gql, registerModule } from "../ez";
 
@@ -307,7 +304,7 @@ export const domainModule = registerModule(
           return {};
         },
         async topics(_root, { ids }, { prisma, authorization }) {
-          return expectRequestedIdsArePresent(
+          return getNodeIdList(
             prisma.topic.findMany({
               where: {
                 id: {
@@ -320,7 +317,7 @@ export const domainModule = registerModule(
           );
         },
         async domains(_root, { ids }, { prisma, authorization }) {
-          return expectRequestedIdsArePresent(
+          return getNodeIdList(
             prisma.domain.findMany({
               where: {
                 id: {

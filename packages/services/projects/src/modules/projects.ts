@@ -1,5 +1,5 @@
 import {
-  expectRequestedIdsArePresent,
+  getNodeIdList,
   getIdsIntersection,
   ResolveCursorConnection,
 } from "api-base";
@@ -88,7 +88,7 @@ export const projectsModule = registerModule(
           return {};
         },
         async projects(_root, { ids }, { prisma, authorization }) {
-          return expectRequestedIdsArePresent(
+          return getNodeIdList(
             prisma.project.findMany({
               where: {
                 id: {

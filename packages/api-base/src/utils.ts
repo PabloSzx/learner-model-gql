@@ -1,4 +1,3 @@
-import { ENV } from "common-api";
 import type { PromiseOrValue } from "graphql-ez";
 
 export const getIdsIntersection = async (
@@ -19,25 +18,23 @@ export const getIdsIntersection = async (
   return ids;
 };
 
-export async function expectRequestedIdsArePresent<T extends { id: number }>(
+export async function getNodeIdList<T extends { id: number }>(
   nodes: PromiseOrValue<T[]>,
   ids: number[]
 ) {
-  const resultNodes = await nodes;
+  const result = (await nodes).reduce<Record<string | number, T>>(
+    (acum, node) => {
+      acum[node.id] = node;
+      return acum;
+    },
+    {}
+  );
 
-  if (ENV.IS_PRODUCTION) {
-    for (const id of ids) {
-      if (resultNodes.find((v) => v.id === id) == null) {
-        throw Error("Forbidden");
-      }
-    }
-  } else {
-    const missingIds = ids.filter(
-      (id) => resultNodes.find((v) => v.id === id) == null
-    );
+  return ids.map((id) => {
+    const data = result[id];
 
-    if (missingIds.length) throw Error("Forbidden ids: " + missingIds.join());
-  }
+    if (data == null) throw Error(`${id} not found!`);
 
-  return resultNodes;
+    return data;
+  });
 }

@@ -1,4 +1,4 @@
-import { expectRequestedIdsArePresent } from "api-base";
+import { getNodeIdList } from "api-base";
 import { gql, registerModule } from "../ez";
 
 export const usersModule = registerModule(
@@ -52,7 +52,7 @@ export const usersModule = registerModule(
       },
       Query: {
         async users(_root, { ids }, { prisma, authorization }) {
-          return expectRequestedIdsArePresent(
+          return getNodeIdList(
             prisma.user.findMany({
               where: {
                 id: {
@@ -67,9 +67,8 @@ export const usersModule = registerModule(
             ids
           );
         },
-
         async groups(_root, { ids }, { prisma, authorization }) {
-          return expectRequestedIdsArePresent(
+          return getNodeIdList(
             prisma.group.findMany({
               where: {
                 id: {

@@ -57,15 +57,11 @@ export enum UserRole {
   USER = "USER",
 }
 
-export interface UpsertUserInput {
-  email: Scalars["String"];
-  name?: Maybe<Scalars["String"]>;
-}
-
 export interface UpdateUserInput {
   id: Scalars["IntID"];
   role: UserRole;
   locked: Scalars["Boolean"];
+  projectIds: Array<Scalars["IntID"]>;
 }
 
 export interface CursorConnectionArgs {
@@ -273,7 +269,7 @@ export const generatedSchema = {
     __typename: { __type: "String!" },
     upsertUsersWithProject: {
       __type: "[User!]!",
-      __args: { emails: "[EmailAddress!]!", projectId: "IntID!" },
+      __args: { emails: "[EmailAddress!]!", projectId: "IntID" },
     },
     updateUser: { __type: "User!", __args: { data: "UpdateUserInput!" } },
     setUserGroups: {
@@ -486,8 +482,8 @@ export const generatedSchema = {
     id: { __type: "IntID!" },
     role: { __type: "UserRole!" },
     locked: { __type: "Boolean!" },
+    projectIds: { __type: "[IntID!]!" },
   },
-  UpsertUserInput: { email: { __type: "String!" }, name: { __type: "String" } },
   User: {
     __typename: { __type: "String!" },
     id: { __type: "IntID!" },
@@ -638,7 +634,7 @@ export interface AdminUserMutations {
    */
   upsertUsersWithProject: (args: {
     emails: Array<Scalars["EmailAddress"]>;
-    projectId: Scalars["IntID"];
+    projectId?: Maybe<Scalars["IntID"]>;
   }) => Array<User>;
   updateUser: (args: { data: UpdateUserInput }) => User;
   setUserGroups: (args: {

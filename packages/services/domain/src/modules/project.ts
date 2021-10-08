@@ -1,4 +1,4 @@
-import { getIdsIntersection, expectRequestedIdsArePresent } from "api-base";
+import { getIdsIntersection, getNodeIdList } from "api-base";
 import { gql, registerModule } from "../ez";
 
 export const projectModule = registerModule(
@@ -17,7 +17,7 @@ export const projectModule = registerModule(
     resolvers: {
       Query: {
         async projects(_root, { ids }, { authorization, prisma }) {
-          return expectRequestedIdsArePresent(
+          return getNodeIdList(
             prisma.project.findMany({
               where: {
                 id: {

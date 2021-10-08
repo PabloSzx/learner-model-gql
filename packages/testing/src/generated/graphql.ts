@@ -224,7 +224,7 @@ export type AdminUserMutationsUpdateUserArgs = {
 
 export type AdminUserMutationsUpsertUsersWithProjectArgs = {
   emails: Array<Scalars["EmailAddress"]>;
-  projectId: Scalars["IntID"];
+  projectId?: Maybe<Scalars["IntID"]>;
 };
 
 export type AdminUserQueries = {
@@ -521,12 +521,8 @@ export type UpdateTopic = {
 export type UpdateUserInput = {
   id: Scalars["IntID"];
   locked: Scalars["Boolean"];
+  projectIds: Array<Scalars["IntID"]>;
   role: UserRole;
-};
-
-export type UpsertUserInput = {
-  email: Scalars["String"];
-  name?: Maybe<Scalars["String"]>;
 };
 
 export type User = {
