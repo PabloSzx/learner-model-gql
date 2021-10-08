@@ -33,7 +33,11 @@ import { useAuth, withAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
 import { useCursorPagination } from "../hooks/pagination";
-import { useSelectSingleProject } from "../hooks/projects";
+import {
+  projectOptionLabel,
+  useSelectMultiProjects,
+  useSelectSingleProject,
+} from "../hooks/projects";
 import { queryClient } from "../utils/rqClient";
 
 gql(/* GraphQL */ `
@@ -49,6 +53,11 @@ gql(/* GraphQL */ `
     enabled
     updatedAt
     locked
+    projects {
+      id
+      code
+      label
+    }
   }
 `);
 
@@ -70,6 +79,7 @@ const UsersState = proxy<
     string,
     {
       isEditing?: boolean;
+      selectedProjects: Array<{ label: string; value: string }>;
     } & UserInfoFragment
   >
 >({});
@@ -84,7 +94,7 @@ function UpsertUsers() {
     gql(/* GraphQL */ `
       mutation UpsertUsersWithProjects(
         $emails: [EmailAddress!]!
-        $projectId: IntID!
+        $projectId: IntID
       ) {
         adminUsers {
           upsertUsersWithProject(emails: $emails, projectId: $projectId) {
@@ -119,11 +129,11 @@ function UpsertUsers() {
     <FormModal
       title="Upsert Users"
       onSubmit={async () => {
-        if (!emails.length || !selectedProject) return;
+        if (!emails.length) return;
 
         await mutateAsync({
           emails,
-          projectId: selectedProject.value,
+          projectId: selectedProject?.value,
         });
       }}
       triggerButton={{
@@ -164,7 +174,16 @@ export default withAuth(function IndexPage() {
     for (const user of data?.adminUsers.allUsers.nodes || []) {
       const isEditing = UsersState[user.id]?.isEditing;
       if (isEditing) continue;
-      Object.assign((UsersState[user.id] ||= user), user);
+      Object.assign(
+        (UsersState[user.id] ||= {
+          ...user,
+          selectedProjects: user.projects.map((project) => ({
+            value: project.id,
+            label: projectOptionLabel(project),
+          })),
+        }),
+        user
+      );
     }
   }, [data]);
 
@@ -279,6 +298,39 @@ export default withAuth(function IndexPage() {
               );
             },
           },
+          {
+            id: "projects",
+            Header: "Projects",
+            accessor: "id",
+            Cell({
+              row: {
+                original: { projects, id },
+              },
+            }) {
+              const projectsCodes = projects.map((v) => v.code).join();
+
+              const userState = usersState[id];
+
+              if (!userState) return projectsCodes;
+
+              if (userState.isEditing) {
+                const { selectMultiProjectComponent } = useSelectMultiProjects({
+                  state: [
+                    userState.selectedProjects,
+                    (value) => {
+                      UsersState[id]!.selectedProjects = value;
+                    },
+                  ],
+                  isDisabled: updateUser.isLoading,
+                });
+
+                return selectMultiProjectComponent;
+              }
+
+              return projectsCodes;
+            },
+          },
+
           getDateRow({ id: "lastOnline", label: "Last Online" }),
           getDateRow({ id: "createdAt", label: "Created At" }),
           getDateRow({ id: "updatedAt", label: "Updated At" }),
@@ -294,7 +346,7 @@ export default withAuth(function IndexPage() {
 
               if (!userState) return null;
 
-              const { isEditing, role, locked } = userState;
+              const { isEditing, role, locked, selectedProjects } = userState;
 
               return (
                 <IconButton
@@ -307,7 +359,16 @@ export default withAuth(function IndexPage() {
                   onClick={() => {
                     if (
                       isEditing &&
-                      (original.role !== role || original.locked !== locked)
+                      (original.role !== role ||
+                        original.locked !== locked ||
+                        original.projects
+                          .map((v) => v.id)
+                          .sort()
+                          .join() !==
+                          selectedProjects
+                            .map((v) => v.value)
+                            .sort()
+                            .join())
                     ) {
                       updateUser
                         .mutateAsync({
@@ -315,6 +376,7 @@ export default withAuth(function IndexPage() {
                             id,
                             role,
                             locked,
+                            projectIds: selectedProjects.map((v) => v.value),
                           },
                         })
                         .then(() => {

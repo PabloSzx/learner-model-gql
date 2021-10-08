@@ -77,7 +77,7 @@ const AdminGroups = gql(/* GraphQL */ `
   }
 `);
 
-function CreateProject() {
+function CreateGroup() {
   const { mutateAsync } = useGQLMutation(
     gql(/* GraphQL */ `
       mutation CreateGroup($data: CreateGroupInput!) {
@@ -347,7 +347,7 @@ export default withAuth(function GroupsPage() {
 
   return (
     <VStack>
-      <CreateProject />
+      <CreateGroup />
       <AssignGroupsUsers />
       <DataTable<GroupInfoFragment>
         data={data?.adminUsers.allGroups.nodes || []}

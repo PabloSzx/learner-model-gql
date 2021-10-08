@@ -4,8 +4,8 @@ import { rqGQL } from "rq-gql";
 import type { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/core";
 
 const documents = {
-  "\n  fragment UserInfo on User {\n    __typename\n    id\n    email\n    name\n    active\n    lastOnline\n    createdAt\n    role\n    enabled\n    updatedAt\n    locked\n  }\n":
-    graphql.UserInfoFragmentDoc,
+  "\n  fragment UserInfoCard on User {\n    __typename\n    id\n    email\n    name\n    active\n    lastOnline\n    createdAt\n    role\n    enabled\n    updatedAt\n    locked\n  }\n":
+    graphql.UserInfoCardFragmentDoc,
   "\n      mutation UpdateUser($data: UpdateUserInput!) {\n        adminUsers {\n          updateUser(data: $data) {\n            __typename\n          }\n        }\n      }\n    ":
     graphql.UpdateUserDocument,
   "\n  query AdminUsersCards($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allUsers(pagination: $pagination) {\n        nodes {\n          ...UserInfo\n        }\n        pageInfo {\n          hasNextPage\n          hasPreviousPage\n          startCursor\n          endCursor\n        }\n      }\n    }\n  }\n":
@@ -42,15 +42,17 @@ const documents = {
     graphql.CreateProjectDocument,
   "\n      mutation UpdateProject($data: UpdateProject!) {\n        adminProjects {\n          updateProject(data: $data) {\n            __typename\n          }\n        }\n      }\n    ":
     graphql.UpdateProjectDocument,
+  "\n  fragment UserInfo on User {\n    __typename\n    id\n    email\n    name\n    active\n    lastOnline\n    createdAt\n    role\n    enabled\n    updatedAt\n    locked\n    projects {\n      id\n      code\n      label\n    }\n  }\n":
+    graphql.UserInfoFragmentDoc,
   "\n  query AdminUsers($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allUsers(pagination: $pagination) {\n        nodes {\n          ...UserInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n":
     graphql.AdminUsersDocument,
-  "\n      mutation UpsertUsersWithProjects(\n        $emails: [EmailAddress!]!\n        $projectId: IntID!\n      ) {\n        adminUsers {\n          upsertUsersWithProject(emails: $emails, projectId: $projectId) {\n            ...UserInfo\n          }\n        }\n      }\n    ":
+  "\n      mutation UpsertUsersWithProjects(\n        $emails: [EmailAddress!]!\n        $projectId: IntID\n      ) {\n        adminUsers {\n          upsertUsersWithProject(emails: $emails, projectId: $projectId) {\n            ...UserInfo\n          }\n        }\n      }\n    ":
     graphql.UpsertUsersWithProjectsDocument,
 };
 
 export function gql(
-  source: "\n  fragment UserInfo on User {\n    __typename\n    id\n    email\n    name\n    active\n    lastOnline\n    createdAt\n    role\n    enabled\n    updatedAt\n    locked\n  }\n"
-): typeof documents["\n  fragment UserInfo on User {\n    __typename\n    id\n    email\n    name\n    active\n    lastOnline\n    createdAt\n    role\n    enabled\n    updatedAt\n    locked\n  }\n"];
+  source: "\n  fragment UserInfoCard on User {\n    __typename\n    id\n    email\n    name\n    active\n    lastOnline\n    createdAt\n    role\n    enabled\n    updatedAt\n    locked\n  }\n"
+): typeof documents["\n  fragment UserInfoCard on User {\n    __typename\n    id\n    email\n    name\n    active\n    lastOnline\n    createdAt\n    role\n    enabled\n    updatedAt\n    locked\n  }\n"];
 export function gql(
   source: "\n      mutation UpdateUser($data: UpdateUserInput!) {\n        adminUsers {\n          updateUser(data: $data) {\n            __typename\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation UpdateUser($data: UpdateUserInput!) {\n        adminUsers {\n          updateUser(data: $data) {\n            __typename\n          }\n        }\n      }\n    "];
@@ -106,11 +108,14 @@ export function gql(
   source: "\n      mutation UpdateProject($data: UpdateProject!) {\n        adminProjects {\n          updateProject(data: $data) {\n            __typename\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation UpdateProject($data: UpdateProject!) {\n        adminProjects {\n          updateProject(data: $data) {\n            __typename\n          }\n        }\n      }\n    "];
 export function gql(
+  source: "\n  fragment UserInfo on User {\n    __typename\n    id\n    email\n    name\n    active\n    lastOnline\n    createdAt\n    role\n    enabled\n    updatedAt\n    locked\n    projects {\n      id\n      code\n      label\n    }\n  }\n"
+): typeof documents["\n  fragment UserInfo on User {\n    __typename\n    id\n    email\n    name\n    active\n    lastOnline\n    createdAt\n    role\n    enabled\n    updatedAt\n    locked\n    projects {\n      id\n      code\n      label\n    }\n  }\n"];
+export function gql(
   source: "\n  query AdminUsers($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allUsers(pagination: $pagination) {\n        nodes {\n          ...UserInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"
 ): typeof documents["\n  query AdminUsers($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allUsers(pagination: $pagination) {\n        nodes {\n          ...UserInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"];
 export function gql(
-  source: "\n      mutation UpsertUsersWithProjects(\n        $emails: [EmailAddress!]!\n        $projectId: IntID!\n      ) {\n        adminUsers {\n          upsertUsersWithProject(emails: $emails, projectId: $projectId) {\n            ...UserInfo\n          }\n        }\n      }\n    "
-): typeof documents["\n      mutation UpsertUsersWithProjects(\n        $emails: [EmailAddress!]!\n        $projectId: IntID!\n      ) {\n        adminUsers {\n          upsertUsersWithProject(emails: $emails, projectId: $projectId) {\n            ...UserInfo\n          }\n        }\n      }\n    "];
+  source: "\n      mutation UpsertUsersWithProjects(\n        $emails: [EmailAddress!]!\n        $projectId: IntID\n      ) {\n        adminUsers {\n          upsertUsersWithProject(emails: $emails, projectId: $projectId) {\n            ...UserInfo\n          }\n        }\n      }\n    "
+): typeof documents["\n      mutation UpsertUsersWithProjects(\n        $emails: [EmailAddress!]!\n        $projectId: IntID\n      ) {\n        adminUsers {\n          upsertUsersWithProject(emails: $emails, projectId: $projectId) {\n            ...UserInfo\n          }\n        }\n      }\n    "];
 
 export function gql(source: string): DocumentNode | string;
 export function gql(source: string) {

@@ -37,7 +37,7 @@ import { useCursorPagination } from "../hooks/pagination";
 import { queryClient } from "../utils/rqClient";
 
 const UserInfo = gql(/* GraphQL */ `
-  fragment UserInfo on User {
+  fragment UserInfoCard on User {
     __typename
     id
     email

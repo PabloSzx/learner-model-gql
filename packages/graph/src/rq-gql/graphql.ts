@@ -224,7 +224,7 @@ export type AdminUserMutationsUpdateUserArgs = {
 
 export type AdminUserMutationsUpsertUsersWithProjectArgs = {
   emails: Array<Scalars["EmailAddress"]>;
-  projectId: Scalars["IntID"];
+  projectId?: Maybe<Scalars["IntID"]>;
 };
 
 export type AdminUserQueries = {
@@ -521,12 +521,8 @@ export type UpdateTopic = {
 export type UpdateUserInput = {
   id: Scalars["IntID"];
   locked: Scalars["Boolean"];
+  projectIds: Array<Scalars["IntID"]>;
   role: UserRole;
-};
-
-export type UpsertUserInput = {
-  email: Scalars["String"];
-  name?: Maybe<Scalars["String"]>;
 };
 
 export type User = {
@@ -558,7 +554,7 @@ export type UsersConnection = Connection & {
   pageInfo: PageInfo;
 };
 
-export type UserInfoFragment = {
+export type UserInfoCardFragment = {
   __typename: "User";
   id: string;
   email: string;
@@ -606,6 +602,12 @@ export type AdminUsersCardsQuery = {
         enabled: boolean;
         updatedAt: string;
         locked: boolean;
+        projects: Array<{
+          __typename?: "Project";
+          id: string;
+          code: string;
+          label: string;
+        }>;
       }>;
       pageInfo: {
         __typename?: "PageInfo";
@@ -1009,6 +1011,26 @@ export type UpdateProjectMutation = {
   };
 };
 
+export type UserInfoFragment = {
+  __typename: "User";
+  id: string;
+  email: string;
+  name?: string | null | undefined;
+  active: boolean;
+  lastOnline?: string | null | undefined;
+  createdAt: string;
+  role: UserRole;
+  enabled: boolean;
+  updatedAt: string;
+  locked: boolean;
+  projects: Array<{
+    __typename?: "Project";
+    id: string;
+    code: string;
+    label: string;
+  }>;
+};
+
 export type AdminUsersQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
 }>;
@@ -1031,6 +1053,12 @@ export type AdminUsersQuery = {
         enabled: boolean;
         updatedAt: string;
         locked: boolean;
+        projects: Array<{
+          __typename?: "Project";
+          id: string;
+          code: string;
+          label: string;
+        }>;
       }>;
       pageInfo: {
         __typename?: "PageInfo";
@@ -1045,7 +1073,7 @@ export type AdminUsersQuery = {
 
 export type UpsertUsersWithProjectsMutationVariables = Exact<{
   emails: Array<Scalars["EmailAddress"]> | Scalars["EmailAddress"];
-  projectId: Scalars["IntID"];
+  projectId?: Maybe<Scalars["IntID"]>;
 }>;
 
 export type UpsertUsersWithProjectsMutation = {
@@ -1064,16 +1092,22 @@ export type UpsertUsersWithProjectsMutation = {
       enabled: boolean;
       updatedAt: string;
       locked: boolean;
+      projects: Array<{
+        __typename?: "Project";
+        id: string;
+        code: string;
+        label: string;
+      }>;
     }>;
   };
 };
 
-export const UserInfoFragmentDoc = {
+export const UserInfoCardFragmentDoc = {
   kind: "Document",
   definitions: [
     {
       kind: "FragmentDefinition",
-      name: { kind: "Name", value: "UserInfo" },
+      name: { kind: "Name", value: "UserInfoCard" },
       typeCondition: {
         kind: "NamedType",
         name: { kind: "Name", value: "User" },
@@ -1096,7 +1130,7 @@ export const UserInfoFragmentDoc = {
       },
     },
   ],
-} as unknown as DocumentNode<UserInfoFragment, unknown>;
+} as unknown as DocumentNode<UserInfoCardFragment, unknown>;
 export const PaginationFragmentDoc = {
   kind: "Document",
   definitions: [
@@ -1241,6 +1275,47 @@ export const ProjectInfoFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<ProjectInfoFragment, unknown>;
+export const UserInfoFragmentDoc = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "UserInfo" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "User" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "__typename" } },
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "email" } },
+          { kind: "Field", name: { kind: "Name", value: "name" } },
+          { kind: "Field", name: { kind: "Name", value: "active" } },
+          { kind: "Field", name: { kind: "Name", value: "lastOnline" } },
+          { kind: "Field", name: { kind: "Name", value: "createdAt" } },
+          { kind: "Field", name: { kind: "Name", value: "role" } },
+          { kind: "Field", name: { kind: "Name", value: "enabled" } },
+          { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
+          { kind: "Field", name: { kind: "Name", value: "locked" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "projects" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "code" } },
+                { kind: "Field", name: { kind: "Name", value: "label" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UserInfoFragment, unknown>;
 export const UpdateUserDocument = {
   kind: "Document",
   definitions: [
@@ -2390,10 +2465,7 @@ export const UpsertUsersWithProjectsDocument = {
             kind: "Variable",
             name: { kind: "Name", value: "projectId" },
           },
-          type: {
-            kind: "NonNullType",
-            type: { kind: "NamedType", name: { kind: "Name", value: "IntID" } },
-          },
+          type: { kind: "NamedType", name: { kind: "Name", value: "IntID" } },
         },
       ],
       selectionSet: {
