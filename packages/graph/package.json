@@ -25,7 +25,7 @@
     "gqty": "^2.0.2",
     "graphql": "^15.6.1",
     "prettier": "^2.4.1",
-    "react-query": "^3.25.1",
+    "react-query": "^3.26.0",
     "rq-gql": "^0.1.6",
     "valtio": "^1.2.4"
   },
