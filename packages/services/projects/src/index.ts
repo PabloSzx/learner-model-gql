@@ -8,7 +8,7 @@ const app = Fastify({
 
 const ezApp = buildApp({
   async prepare() {
-    await import("./modules");
+    await import("./modules/index");
   },
 });
 

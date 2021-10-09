@@ -8,6 +8,7 @@ const config = {
     ? []
     : [__dirname === process.cwd() ? "dist/**/*.test.js" : "dist/test"],
   require: [resolve(__dirname, "./pre-test.mjs")],
+  loader: "bob-tsm",
 };
 
 module.exports = config;

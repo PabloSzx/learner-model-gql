@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development bob-ts-watch -c \"node dist/index.mjs\"",
+    "dev": "cross-env NODE_ENV=development bob-tsm --watch=src src/index.ts",
     "prepack": "bob-ts",
-    "start": "node dist/index.mjs"
+    "start": "bob-tsm src/index.ts"
   },
   "dependencies": {
     "api-base": "workspace:^0.0.1",

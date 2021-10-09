@@ -23,6 +23,7 @@ importers:
       '@types/react': ^17.0.27
       api-base: workspace:^0.0.1
       bob-ts: ^1.1.2
+      bob-tsm: ^0.1.0
       c8: ^7.10.0
       common: workspace:^0.0.1
       concurrently: ^6.3.0
@@ -68,6 +69,7 @@ importers:
       '@types/randomstring': 1.1.7
       '@types/react': 17.0.27
       bob-ts: 1.1.2_96ea800be824d2bbdd96260fc9c061a6
+      bob-tsm: 0.1.0_esbuild@0.13.4
       c8: 7.10.0
       concurrently: 6.3.0
       cross-env: 7.0.3
@@ -3854,6 +3856,18 @@ packages:
       globby: 12.0.2
       rollup: 2.58.0
       rollup-plugin-delete: 2.0.0
+      tree-kill: 1.2.2
+    dev: true
+
+  /bob-tsm/0.1.0_esbuild@0.13.4:
+    resolution: {integrity: sha512-S0oBfSwxuMwa3qysot5pByEQouRF5ocXpSAKx0Qh6mF/0OGVgvZrokObvGL2vlUJGVeU35q0H7eIs42Ppzq4Jg==}
+    engines: {node: ^12.20.0 || >=14.13.0}
+    hasBin: true
+    peerDependencies:
+      esbuild: ^0.13.4
+    dependencies:
+      commander: 8.2.0
+      esbuild: 0.13.4
       tree-kill: 1.2.2
     dev: true
 
