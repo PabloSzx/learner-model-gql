@@ -4,8 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development bob-tsm --watch=src src/index.ts",
-    "prepack": "bob-ts",
-    "pretest": "bob-ts",
     "test": "c8 mocha",
     "test:watch": "bob-ts-watch -c \"mocha\"",
     "start": "bob-tsm src/index.ts"

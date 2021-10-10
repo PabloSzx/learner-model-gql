@@ -18,7 +18,7 @@ import {
   domainModule,
   kcModule,
   projectModule,
-} from "../src/modules";
+} from "../src/modules/index";
 
 export const IsolatedDomainFields = gql(/* GraphQL */ `
   fragment IsolatedDomainFields on Domain {

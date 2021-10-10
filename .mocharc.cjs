@@ -6,9 +6,10 @@ const config = {
   "enable-source-maps": true,
   spec: process.argv[2]
     ? []
-    : [__dirname === process.cwd() ? "dist/**/*.test.js" : "dist/test"],
+    : [__dirname === process.cwd() ? "**/*.test.ts" : "test"],
   require: [resolve(__dirname, "./pre-test.mjs")],
   loader: "bob-tsm",
+  extension: ["ts"],
 };
 
 module.exports = config;

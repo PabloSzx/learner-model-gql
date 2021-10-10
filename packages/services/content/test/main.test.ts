@@ -9,7 +9,7 @@ import {
   prisma,
 } from "testing";
 
-import { contentModule, domainModule } from "../src/modules";
+import { contentModule, domainModule } from "../src/modules/index";
 import { CheckContentCreationRetrieval } from "./test";
 
 describe("Content service", () => {

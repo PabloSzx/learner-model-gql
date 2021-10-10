@@ -3,12 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
-  "main": "dist/index.js",
+  "main": "src/index.ts",
   "scripts": {
     "dev": "concurrently -r bob-ts-watch pnpm:generate:watch",
     "generate": "graphql-codegen generate --config codegen.yaml",
     "generate:watch": "graphql-codegen generate --config codegen.yaml --watch",
-    "prepack": "bob-ts",
     "test:watch": "bob-ts-watch"
   },
   "devDependencies": {

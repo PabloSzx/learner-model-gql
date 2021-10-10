@@ -3,11 +3,6 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "type": "module",
-  "scripts": {
-    "prepack": "bob-ts",
-    "dev": "bob-ts-watch",
-    "test:watch": "bob-ts-watch"
-  },
   "dependencies": {
     "common": "workspace:^0.0.1",
     "require-env-variable": "^3.1.2"

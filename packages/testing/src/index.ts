@@ -40,7 +40,7 @@ export type {
 } from "graphql-ez";
 export { createDeferredPromise, LazyPromise, PLazy } from "graphql-ez/utils";
 export { generate } from "randomstring";
-export * from "./generated";
+export * from "./generated/index";
 export * from "./generated/graphql";
 export { MockAuthUser };
 export { assert, equal, deepEqual, notDeepEqual, notEqual };

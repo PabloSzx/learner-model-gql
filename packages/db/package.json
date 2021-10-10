@@ -12,7 +12,6 @@
     "generate": "prisma generate",
     "migrate:dev": "prisma migrate dev",
     "migrate:push": "prisma db push",
-    "prepack": "bob-ts",
     "prepare": "touch ../../.env && ln -f ../../.env prisma/.env",
     "test:watch": "bob-ts-watch"
   },

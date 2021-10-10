@@ -5,7 +5,7 @@ import {
   domainModule,
   projectsModule,
   usersModule,
-} from "../src/modules";
+} from "../src/modules/index";
 import {
   CheckProjectCreationRetrieval,
   CheckProjectFromContent,

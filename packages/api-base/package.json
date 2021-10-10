@@ -6,7 +6,6 @@
   "type": "module",
   "scripts": {
     "dev": "bob-ts-watch -i src",
-    "prepack": "bob-ts -i src",
     "test:watch": "bob-ts-watch -i src"
   },
   "devDependencies": {

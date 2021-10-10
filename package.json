@@ -20,11 +20,11 @@
     "dev": "cross-env NEXT_PUBLIC_API_URL=http://localhost:8080/graphql pnpm -r dev",
     "generate": "pnpm -r generate",
     "prepack": "pnpm -r prepack",
+    "postinstall": "node patch.cjs",
     "prepare": "husky install && pnpm prepack",
     "pretty": "pretty-quick",
     "pretty:all": "prettier --write \"**/*.{ts,tsx,gql,json}\"",
-    "pretest": "pnpm prepack",
-    "test": "bob-ts -i packages test && c8 mocha",
+    "test": "c8 mocha",
     "test:watch": "bob-ts-watch -i packages test -c \"pnpm prepack && mocha\" --ignore \"**/generated/**\""
   },
   "dependencies": {

@@ -25,7 +25,7 @@ export const TestStitchedSchema = async () => {
   const ActionService = GetTestClient({
     async prepare({ registerModule }) {
       const { actionModule } = await import(
-        "../packages/services/actions/src/modules"
+        "../packages/services/actions/src/modules/index"
       );
       registerModule(actionModule);
     },
@@ -34,7 +34,7 @@ export const TestStitchedSchema = async () => {
   const ContentService = GetTestClient({
     async prepare({ registerModule }) {
       const { contentModule, domainModule } = await import(
-        "../packages/services/content/src/modules"
+        "../packages/services/content/src/modules/index"
       );
       registerModule(contentModule);
       registerModule(domainModule);
@@ -44,7 +44,7 @@ export const TestStitchedSchema = async () => {
   const DomainService = GetTestClient({
     async prepare({ registerModule }) {
       const { contentModule, domainModule, projectModule, kcModule } =
-        await import("../packages/services/domain/src/modules");
+        await import("../packages/services/domain/src/modules/index");
 
       registerModule(contentModule);
       registerModule(domainModule);
@@ -56,7 +56,7 @@ export const TestStitchedSchema = async () => {
   const ProjectsService = GetTestClient({
     async prepare({ registerModule }) {
       const { contentModule, domainModule, projectsModule, usersModule } =
-        await import("../packages/services/projects/src/modules");
+        await import("../packages/services/projects/src/modules/index");
 
       registerModule(contentModule);
       registerModule(domainModule);
@@ -68,7 +68,7 @@ export const TestStitchedSchema = async () => {
   const UsersService = GetTestClient({
     async prepare({ registerModule }) {
       const { usersModule, groupsModule, projectsModule } = await import(
-        "../packages/services/users/src/modules"
+        "../packages/services/users/src/modules/index"
       );
 
       registerModule(groupsModule);

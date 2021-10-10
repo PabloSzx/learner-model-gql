@@ -4,8 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development bob-tsm --watch=src src/index.ts",
-    "prepack": "bob-ts",
-    "pretest": "bob-ts",
     "start": "bob-tsm src/index.ts"
   },
   "dependencies": {

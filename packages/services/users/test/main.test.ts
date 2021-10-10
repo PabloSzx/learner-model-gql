@@ -1,6 +1,10 @@
 import { expectDeepEqual, GetTestClient, gql } from "testing";
 
-import { groupsModule, projectsModule, usersModule } from "../src/modules";
+import {
+  groupsModule,
+  projectsModule,
+  usersModule,
+} from "../src/modules/index";
 import { CheckGroups, CheckUsers } from "./test";
 
 const UsersClient = () => {

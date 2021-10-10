@@ -6,7 +6,7 @@ import {
   MockAuthUser,
   gql,
 } from "testing";
-import { actionModule } from "../src/modules";
+import { actionModule } from "../src/modules/index";
 import { CheckActionsCreationRetrieval } from "./test";
 
 describe("Actions service", () => {
