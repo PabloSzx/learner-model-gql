@@ -4,10 +4,6 @@
   "license": "MIT",
   "main": "src/index.ts",
   "type": "module",
-  "scripts": {
-    "dev": "bob-ts-watch -i src",
-    "test:watch": "bob-ts-watch -i src"
-  },
   "devDependencies": {
     "@types/pino": "^6.3.11",
     "@types/validator": "^13.6.3"

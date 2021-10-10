@@ -7,13 +7,12 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "prisma db push",
-    "dev": "bob-ts-watch -c \"prisma generate\"",
+    "dev": "bob-watch -c \"prisma generate\"",
     "db:generate": "prisma generate",
     "generate": "prisma generate",
     "migrate:dev": "prisma migrate dev",
     "migrate:push": "prisma db push",
-    "prepare": "touch ../../.env && ln -f ../../.env prisma/.env",
-    "test:watch": "bob-ts-watch"
+    "prepare": "touch ../../.env && ln -f ../../.env prisma/.env"
   },
   "dependencies": {
     "@prisma/client": "^3.2.1",

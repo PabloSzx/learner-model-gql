@@ -4,19 +4,15 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./*": "./dist/*.js",
-    "./gqty": "./dist/gqty/index.js",
-    "./rq": "./dist/rq/index.js"
+    "./*": "./src/*.ts",
+    "./gqty": "./src/gqty/index.ts",
+    "./rq": "./src/rq/index.ts"
   },
   "scripts": {
-    "build": "pnpm prepack",
-    "dev": "concurrently -r pnpm:dev:*",
-    "dev:rq": "graphql-codegen --config codegen.yml --watch",
-    "dev:ts": "bob-ts-watch",
-    "generate": "concurrently pnpm:generate:* && bob-ts",
+    "dev": "graphql-codegen --config codegen.yml --watch",
+    "generate": "concurrently pnpm:generate:*",
     "generate:gqty": "gqty generate",
-    "generate:rq": "graphql-codegen --config codegen.yml",
-    "prepack": "bob-ts"
+    "generate:rq": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
     "@gqty/logger": "^2.0.1",
@@ -36,7 +32,6 @@
     "@graphql-codegen/typescript": "^2.2.2",
     "@graphql-codegen/typescript-document-nodes": "2.1.4",
     "@graphql-codegen/typescript-operations": "^2.1.6",
-    "@graphql-codegen/typescript-react-query": "^3.0.1",
-    "bob-ts": "^1.1.3"
+    "@graphql-codegen/typescript-react-query": "^3.0.1"
   }
 }

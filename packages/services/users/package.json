@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development bob-tsm --watch=src src/index.ts",
     "test": "c8 mocha",
-    "test:watch": "bob-ts-watch -c \"c8 mocha\"",
+    "test:watch": "bob-watch -w src test -c mocha",
     "start": "bob-tsm src/index.ts"
   },
   "dependencies": {
