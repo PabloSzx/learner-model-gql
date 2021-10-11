@@ -192,6 +192,7 @@ type Content {
   json: JSONObject
   url: String
   sortIndex: Int
+  tags: [String!]!
   createdAt: DateTime!
   updatedAt: DateTime!
   domain: Domain!
@@ -281,6 +282,21 @@ input CreateContent {
   json: JSONObject
   url: String
   topics: [IntID!]!
+  tags: [String!]!
+}
+
+input UpdateContent {
+  id: IntID!
+  description: String!
+  code: String!
+  label: String!
+  projectId: IntID!
+  domainId: IntID!
+  binaryBase64: String
+  json: JSONObject
+  url: String
+  topics: [IntID!]!
+  tags: [String!]!
 }
 
 type ContentConnection implements Connection {
@@ -290,6 +306,7 @@ type ContentConnection implements Connection {
 
 type AdminContentMutations {
   createContent(data: CreateContent!): Content!
+  updateContent(data: UpdateContent!): Content!
 }
 
 type AdminContentQueries {

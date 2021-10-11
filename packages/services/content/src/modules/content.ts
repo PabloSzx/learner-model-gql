@@ -19,6 +19,8 @@ export const contentModule = registerModule(
 
       sortIndex: Int
 
+      tags: [String!]!
+
       createdAt: DateTime!
       updatedAt: DateTime!
     }
@@ -37,6 +39,28 @@ export const contentModule = registerModule(
       url: String
 
       topics: [IntID!]!
+
+      tags: [String!]!
+    }
+
+    input UpdateContent {
+      id: IntID!
+
+      description: String!
+
+      code: String!
+      label: String!
+
+      projectId: IntID!
+      domainId: IntID!
+
+      binaryBase64: String
+      json: JSONObject
+      url: String
+
+      topics: [IntID!]!
+
+      tags: [String!]!
     }
 
     type ContentConnection implements Connection {
@@ -46,6 +70,7 @@ export const contentModule = registerModule(
 
     type AdminContentMutations {
       createContent(data: CreateContent!): Content!
+      updateContent(data: UpdateContent!): Content!
     }
 
     type AdminContentQueries {
@@ -75,6 +100,7 @@ export const contentModule = registerModule(
               code,
               label,
               topics,
+              tags,
             },
           },
           { prisma }
@@ -101,6 +127,60 @@ export const contentModule = registerModule(
               },
               topics: {
                 connect: topics.map((id) => ({ id })),
+              },
+              tags: {
+                set: tags,
+              },
+            },
+          });
+        },
+        updateContent(
+          _root,
+          {
+            data: {
+              id,
+              description,
+              domainId,
+              projectId,
+              binaryBase64,
+              json,
+              url,
+              code,
+              label,
+              topics,
+              tags,
+            },
+          },
+          { prisma }
+        ) {
+          return prisma.content.update({
+            where: {
+              id,
+            },
+            data: {
+              code,
+              label,
+              description,
+              json,
+              url,
+              binary: binaryBase64
+                ? Buffer.from(binaryBase64, "base64")
+                : undefined,
+              domain: {
+                connect: {
+                  id: domainId,
+                },
+              },
+              project: {
+                connect: {
+                  id: projectId,
+                },
+              },
+              topics: {
+                connect: topics.map((id) => ({ id })),
+              },
+              tags: {
+                set: tags,
               },
             },
           });

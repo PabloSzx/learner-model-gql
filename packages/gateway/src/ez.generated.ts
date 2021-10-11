@@ -265,6 +265,7 @@ export type Content = {
   json?: Maybe<Scalars["JSONObject"]>;
   url?: Maybe<Scalars["String"]>;
   sortIndex?: Maybe<Scalars["Int"]>;
+  tags: Array<Scalars["String"]>;
   createdAt: Scalars["DateTime"];
   updatedAt: Scalars["DateTime"];
   domain: Domain;
@@ -372,6 +373,21 @@ export type CreateContent = {
   json?: Maybe<Scalars["JSONObject"]>;
   url?: Maybe<Scalars["String"]>;
   topics: Array<Scalars["IntID"]>;
+  tags: Array<Scalars["String"]>;
+};
+
+export type UpdateContent = {
+  id: Scalars["IntID"];
+  description: Scalars["String"];
+  code: Scalars["String"];
+  label: Scalars["String"];
+  projectId: Scalars["IntID"];
+  domainId: Scalars["IntID"];
+  binaryBase64?: Maybe<Scalars["String"]>;
+  json?: Maybe<Scalars["JSONObject"]>;
+  url?: Maybe<Scalars["String"]>;
+  topics: Array<Scalars["IntID"]>;
+  tags: Array<Scalars["String"]>;
 };
 
 export type ContentConnection = Connection & {
@@ -383,10 +399,15 @@ export type ContentConnection = Connection & {
 export type AdminContentMutations = {
   __typename?: "AdminContentMutations";
   createContent: Content;
+  updateContent: Content;
 };
 
 export type AdminContentMutationsCreateContentArgs = {
   data: CreateContent;
+};
+
+export type AdminContentMutationsUpdateContentArgs = {
+  data: UpdateContent;
 };
 
 export type AdminContentQueries = {
@@ -719,6 +740,7 @@ export type ResolversTypes = {
   ActionsConnection: ResolverTypeWrapper<ActionsConnection>;
   AdminActionQueries: ResolverTypeWrapper<AdminActionQueries>;
   CreateContent: CreateContent;
+  UpdateContent: UpdateContent;
   ContentConnection: ResolverTypeWrapper<ContentConnection>;
   AdminContentMutations: ResolverTypeWrapper<AdminContentMutations>;
   AdminContentQueries: ResolverTypeWrapper<AdminContentQueries>;
@@ -791,6 +813,7 @@ export type ResolversParentTypes = {
   ActionsConnection: ActionsConnection;
   AdminActionQueries: AdminActionQueries;
   CreateContent: CreateContent;
+  UpdateContent: UpdateContent;
   ContentConnection: ContentConnection;
   AdminContentMutations: AdminContentMutations;
   AdminContentQueries: AdminContentQueries;
@@ -1191,6 +1214,7 @@ export type ContentResolvers<
   json?: Resolver<Maybe<ResolversTypes["JSONObject"]>, ParentType, ContextType>;
   url?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   sortIndex?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  tags?: Resolver<Array<ResolversTypes["String"]>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
@@ -1319,6 +1343,12 @@ export type AdminContentMutationsResolvers<
     ParentType,
     ContextType,
     RequireFields<AdminContentMutationsCreateContentArgs, "data">
+  >;
+  updateContent?: Resolver<
+    ResolversTypes["Content"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminContentMutationsUpdateContentArgs, "data">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

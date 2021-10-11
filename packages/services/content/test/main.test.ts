@@ -112,6 +112,7 @@ describe("Content service", () => {
               code: "asd",
               label: "asd",
               topics: [],
+              tags: [],
             },
           },
         }

@@ -98,6 +98,21 @@ export interface CreateContent {
   json?: Maybe<Scalars["JSONObject"]>;
   url?: Maybe<Scalars["String"]>;
   topics: Array<Scalars["IntID"]>;
+  tags: Array<Scalars["String"]>;
+}
+
+export interface UpdateContent {
+  id: Scalars["IntID"];
+  description: Scalars["String"];
+  code: Scalars["String"];
+  label: Scalars["String"];
+  projectId: Scalars["IntID"];
+  domainId: Scalars["IntID"];
+  binaryBase64?: Maybe<Scalars["String"]>;
+  json?: Maybe<Scalars["JSONObject"]>;
+  url?: Maybe<Scalars["String"]>;
+  topics: Array<Scalars["IntID"]>;
+  tags: Array<Scalars["String"]>;
 }
 
 export interface CreateDomain {
@@ -224,6 +239,7 @@ export const generatedSchema = {
   AdminContentMutations: {
     __typename: { __type: "String!" },
     createContent: { __type: "Content!", __args: { data: "CreateContent!" } },
+    updateContent: { __type: "Content!", __args: { data: "UpdateContent!" } },
   },
   AdminContentQueries: {
     __typename: { __type: "String!" },
@@ -312,6 +328,7 @@ export const generatedSchema = {
     json: { __type: "JSONObject" },
     url: { __type: "String" },
     sortIndex: { __type: "Int" },
+    tags: { __type: "[String!]!" },
     createdAt: { __type: "DateTime!" },
     updatedAt: { __type: "DateTime!" },
     domain: { __type: "Domain!" },
@@ -332,6 +349,7 @@ export const generatedSchema = {
     json: { __type: "JSONObject" },
     url: { __type: "String" },
     topics: { __type: "[IntID!]!" },
+    tags: { __type: "[String!]!" },
   },
   CreateDomain: {
     code: { __type: "String!" },
@@ -457,6 +475,19 @@ export const generatedSchema = {
     __typename: { __type: "String!" },
     nodes: { __type: "[Topic!]!" },
     pageInfo: { __type: "PageInfo!" },
+  },
+  UpdateContent: {
+    id: { __type: "IntID!" },
+    description: { __type: "String!" },
+    code: { __type: "String!" },
+    label: { __type: "String!" },
+    projectId: { __type: "IntID!" },
+    domainId: { __type: "IntID!" },
+    binaryBase64: { __type: "String" },
+    json: { __type: "JSONObject" },
+    url: { __type: "String" },
+    topics: { __type: "[IntID!]!" },
+    tags: { __type: "[String!]!" },
   },
   UpdateDomain: {
     id: { __type: "IntID!" },
@@ -599,6 +630,7 @@ export interface AdminActionQueries {
 export interface AdminContentMutations {
   __typename?: "AdminContentMutations";
   createContent: (args: { data: CreateContent }) => Content;
+  updateContent: (args: { data: UpdateContent }) => Content;
 }
 
 export interface AdminContentQueries {
@@ -687,6 +719,7 @@ export interface Content {
   json?: Maybe<ScalarsEnums["JSONObject"]>;
   url?: Maybe<ScalarsEnums["String"]>;
   sortIndex?: Maybe<ScalarsEnums["Int"]>;
+  tags: Array<ScalarsEnums["String"]>;
   createdAt: ScalarsEnums["DateTime"];
   updatedAt: ScalarsEnums["DateTime"];
   domain: Domain;

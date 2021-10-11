@@ -98,10 +98,15 @@ export type AdminActionQueriesAllActionsArgs = {
 export type AdminContentMutations = {
   __typename?: "AdminContentMutations";
   createContent: Content;
+  updateContent: Content;
 };
 
 export type AdminContentMutationsCreateContentArgs = {
   data: CreateContent;
+};
+
+export type AdminContentMutationsUpdateContentArgs = {
+  data: UpdateContent;
 };
 
 export type AdminContentQueries = {
@@ -257,6 +262,7 @@ export type Content = {
   label: Scalars["String"];
   project: Project;
   sortIndex?: Maybe<Scalars["Int"]>;
+  tags: Array<Scalars["String"]>;
   updatedAt: Scalars["DateTime"];
   url?: Maybe<Scalars["String"]>;
 };
@@ -275,6 +281,7 @@ export type CreateContent = {
   json?: Maybe<Scalars["JSONObject"]>;
   label: Scalars["String"];
   projectId: Scalars["IntID"];
+  tags: Array<Scalars["String"]>;
   topics: Array<Scalars["IntID"]>;
   url?: Maybe<Scalars["String"]>;
 };
@@ -488,6 +495,20 @@ export type TopicsConnection = Connection & {
   __typename?: "TopicsConnection";
   nodes: Array<Topic>;
   pageInfo: PageInfo;
+};
+
+export type UpdateContent = {
+  binaryBase64?: Maybe<Scalars["String"]>;
+  code: Scalars["String"];
+  description: Scalars["String"];
+  domainId: Scalars["IntID"];
+  id: Scalars["IntID"];
+  json?: Maybe<Scalars["JSONObject"]>;
+  label: Scalars["String"];
+  projectId: Scalars["IntID"];
+  tags: Array<Scalars["String"]>;
+  topics: Array<Scalars["IntID"]>;
+  url?: Maybe<Scalars["String"]>;
 };
 
 export type UpdateDomain = {

@@ -67,6 +67,7 @@ export async function CheckContentCreationRetrieval({
           topics: [topicId],
           code: contentCode,
           label: contentLabel,
+          tags: [],
         },
       },
     }
