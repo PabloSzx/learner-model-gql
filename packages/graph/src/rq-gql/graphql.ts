@@ -256,6 +256,7 @@ export type Content = {
   json?: Maybe<Scalars["JSONObject"]>;
   label: Scalars["String"];
   project: Project;
+  sortIndex?: Maybe<Scalars["Int"]>;
   updatedAt: Scalars["DateTime"];
   url?: Maybe<Scalars["String"]>;
 };
@@ -475,6 +476,7 @@ export type Topic = {
   label: Scalars["String"];
   parent?: Maybe<Topic>;
   project: Project;
+  sortIndex?: Maybe<Scalars["Int"]>;
   updatedAt: Scalars["DateTime"];
 };
 

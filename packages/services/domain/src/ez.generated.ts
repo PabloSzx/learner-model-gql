@@ -61,6 +61,7 @@ export type Topic = {
   id: Scalars["IntID"];
   code: Scalars["String"];
   label: Scalars["String"];
+  sortIndex?: Maybe<Scalars["Int"]>;
   domain: Domain;
   parent?: Maybe<Topic>;
   childrens: Array<Topic>;
@@ -380,6 +381,7 @@ export type ResolversTypes = {
   Content: ResolverTypeWrapper<Content>;
   Topic: ResolverTypeWrapper<Topic>;
   String: ResolverTypeWrapper<Scalars["String"]>;
+  Int: ResolverTypeWrapper<Scalars["Int"]>;
   Domain: ResolverTypeWrapper<Domain>;
   TopicsConnection: ResolverTypeWrapper<TopicsConnection>;
   DomainsConnection: ResolverTypeWrapper<DomainsConnection>;
@@ -420,6 +422,7 @@ export type ResolversParentTypes = {
   Content: Content;
   Topic: Topic;
   String: Scalars["String"];
+  Int: Scalars["Int"];
   Domain: Domain;
   TopicsConnection: TopicsConnection;
   DomainsConnection: DomainsConnection;
@@ -503,6 +506,7 @@ export type TopicResolvers<
   id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
   code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  sortIndex?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
   domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
   parent?: Resolver<Maybe<ResolversTypes["Topic"]>, ParentType, ContextType>;
   childrens?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;

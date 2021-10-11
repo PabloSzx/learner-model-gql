@@ -158,6 +158,7 @@ export const scalarsEnumsHash: import("gqty").ScalarsEnumsHash = {
   EmailAddress: true,
   Float: true,
   ID: true,
+  Int: true,
   IntID: true,
   JSONObject: true,
   NonNegativeInt: true,
@@ -310,6 +311,7 @@ export const generatedSchema = {
     binaryBase64: { __type: "String" },
     json: { __type: "JSONObject" },
     url: { __type: "String" },
+    sortIndex: { __type: "Int" },
     createdAt: { __type: "DateTime!" },
     updatedAt: { __type: "DateTime!" },
     domain: { __type: "Domain!" },
@@ -442,6 +444,7 @@ export const generatedSchema = {
     },
     code: { __type: "String!" },
     label: { __type: "String!" },
+    sortIndex: { __type: "Int" },
     domain: { __type: "Domain!" },
     parent: { __type: "Topic" },
     childrens: { __type: "[Topic!]!" },
@@ -529,9 +532,9 @@ export const generatedSchema = {
     users: { __type: "[User!]!", __args: { ids: "[IntID!]!" } },
     adminActions: { __type: "AdminActionQueries!" },
     adminContent: { __type: "AdminContentQueries!" },
+    content: { __type: "[Content!]!", __args: { ids: "[IntID!]!" } },
     domains: { __type: "[Domain!]!", __args: { ids: "[IntID!]!" } },
     topics: { __type: "[Topic!]!", __args: { ids: "[IntID!]!" } },
-    content: { __type: "[Content!]!", __args: { ids: "[IntID!]!" } },
     adminDomain: { __type: "AdminDomainQueries!" },
     projects: { __type: "[Project!]!", __args: { ids: "[IntID!]!" } },
     adminProjects: { __type: "AdminProjectsQueries!" },
@@ -683,6 +686,7 @@ export interface Content {
   binaryBase64?: Maybe<ScalarsEnums["String"]>;
   json?: Maybe<ScalarsEnums["JSONObject"]>;
   url?: Maybe<ScalarsEnums["String"]>;
+  sortIndex?: Maybe<ScalarsEnums["Int"]>;
   createdAt: ScalarsEnums["DateTime"];
   updatedAt: ScalarsEnums["DateTime"];
   domain: Domain;
@@ -784,6 +788,7 @@ export interface Topic {
   content: (args: { pagination: CursorConnectionArgs }) => ContentConnection;
   code: ScalarsEnums["String"];
   label: ScalarsEnums["String"];
+  sortIndex?: Maybe<ScalarsEnums["Int"]>;
   domain: Domain;
   parent?: Maybe<Topic>;
   childrens: Array<Topic>;
@@ -841,9 +846,9 @@ export interface Query {
   users: (args: { ids: Array<Scalars["IntID"]> }) => Array<User>;
   adminActions: AdminActionQueries;
   adminContent: AdminContentQueries;
+  content: (args: { ids: Array<Scalars["IntID"]> }) => Array<Content>;
   domains: (args: { ids: Array<Scalars["IntID"]> }) => Array<Domain>;
   topics: (args: { ids: Array<Scalars["IntID"]> }) => Array<Topic>;
-  content: (args: { ids: Array<Scalars["IntID"]> }) => Array<Content>;
   adminDomain: AdminDomainQueries;
   projects: (args: { ids: Array<Scalars["IntID"]> }) => Array<Project>;
   adminProjects: AdminProjectsQueries;

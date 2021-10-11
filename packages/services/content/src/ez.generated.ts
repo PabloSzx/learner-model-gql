@@ -59,6 +59,7 @@ export type Content = {
   binaryBase64?: Maybe<Scalars["String"]>;
   json?: Maybe<Scalars["JSONObject"]>;
   url?: Maybe<Scalars["String"]>;
+  sortIndex?: Maybe<Scalars["Int"]>;
   createdAt: Scalars["DateTime"];
   updatedAt: Scalars["DateTime"];
 };
@@ -146,8 +147,13 @@ export type Query = {
   __typename?: "Query";
   hello: Scalars["String"];
   adminContent: AdminContentQueries;
+  content: Array<Content>;
   domains: Array<Domain>;
   topics: Array<Topic>;
+};
+
+export type QueryContentArgs = {
+  ids: Array<Scalars["IntID"]>;
 };
 
 export type QueryDomainsArgs = {
@@ -279,6 +285,7 @@ export type ResolversTypes = {
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
   Content: ResolverTypeWrapper<Content>;
   String: ResolverTypeWrapper<Scalars["String"]>;
+  Int: ResolverTypeWrapper<Scalars["Int"]>;
   CreateContent: CreateContent;
   ContentConnection: ResolverTypeWrapper<ContentConnection>;
   AdminContentMutations: ResolverTypeWrapper<AdminContentMutations>;
@@ -307,6 +314,7 @@ export type ResolversParentTypes = {
   IntID: Scalars["IntID"];
   Content: Content;
   String: Scalars["String"];
+  Int: Scalars["Int"];
   CreateContent: CreateContent;
   ContentConnection: ContentConnection;
   AdminContentMutations: AdminContentMutations;
@@ -378,6 +386,7 @@ export type ContentResolvers<
   >;
   json?: Resolver<Maybe<ResolversTypes["JSONObject"]>, ParentType, ContextType>;
   url?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  sortIndex?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -494,6 +503,12 @@ export type QueryResolvers<
     ResolversTypes["AdminContentQueries"],
     ParentType,
     ContextType
+  >;
+  content?: Resolver<
+    Array<ResolversTypes["Content"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryContentArgs, "ids">
   >;
   domains?: Resolver<
     Array<ResolversTypes["Domain"]>,

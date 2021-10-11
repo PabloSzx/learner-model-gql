@@ -59,9 +59,9 @@ export type Query = {
   users: Array<User>;
   adminActions: AdminActionQueries;
   adminContent: AdminContentQueries;
+  content: Array<Content>;
   domains: Array<Domain>;
   topics: Array<Topic>;
-  content: Array<Content>;
   adminDomain: AdminDomainQueries;
   projects: Array<Project>;
   adminProjects: AdminProjectsQueries;
@@ -76,15 +76,15 @@ export type QueryUsersArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+export type QueryContentArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
 export type QueryDomainsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
 export type QueryTopicsArgs = {
-  ids: Array<Scalars["IntID"]>;
-};
-
-export type QueryContentArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
@@ -264,6 +264,7 @@ export type Content = {
   binaryBase64?: Maybe<Scalars["String"]>;
   json?: Maybe<Scalars["JSONObject"]>;
   url?: Maybe<Scalars["String"]>;
+  sortIndex?: Maybe<Scalars["Int"]>;
   createdAt: Scalars["DateTime"];
   updatedAt: Scalars["DateTime"];
   domain: Domain;
@@ -293,6 +294,7 @@ export type Topic = {
   content: ContentConnection;
   code: Scalars["String"];
   label: Scalars["String"];
+  sortIndex?: Maybe<Scalars["Int"]>;
   domain: Domain;
   parent?: Maybe<Topic>;
   childrens: Array<Topic>;
@@ -705,6 +707,7 @@ export type ResolversTypes = {
   CursorConnectionArgs: CursorConnectionArgs;
   ActionVerb: ResolverTypeWrapper<ActionVerb>;
   Content: ResolverTypeWrapper<Content>;
+  Int: ResolverTypeWrapper<Scalars["Int"]>;
   Domain: ResolverTypeWrapper<Domain>;
   Topic: ResolverTypeWrapper<Topic>;
   ActionActivity: ResolverTypeWrapper<ActionActivity>;
@@ -776,6 +779,7 @@ export type ResolversParentTypes = {
   CursorConnectionArgs: CursorConnectionArgs;
   ActionVerb: ActionVerb;
   Content: Content;
+  Int: Scalars["Int"];
   Domain: Domain;
   Topic: Topic;
   ActionActivity: ActionActivity;
@@ -847,6 +851,12 @@ export type QueryResolvers<
     ParentType,
     ContextType
   >;
+  content?: Resolver<
+    Array<ResolversTypes["Content"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryContentArgs, "ids">
+  >;
   domains?: Resolver<
     Array<ResolversTypes["Domain"]>,
     ParentType,
@@ -858,12 +868,6 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     RequireFields<QueryTopicsArgs, "ids">
-  >;
-  content?: Resolver<
-    Array<ResolversTypes["Content"]>,
-    ParentType,
-    ContextType,
-    RequireFields<QueryContentArgs, "ids">
   >;
   adminDomain?: Resolver<
     ResolversTypes["AdminDomainQueries"],
@@ -1186,6 +1190,7 @@ export type ContentResolvers<
   >;
   json?: Resolver<Maybe<ResolversTypes["JSONObject"]>, ParentType, ContextType>;
   url?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  sortIndex?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
@@ -1227,6 +1232,7 @@ export type TopicResolvers<
   >;
   code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  sortIndex?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
   domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
   parent?: Resolver<Maybe<ResolversTypes["Topic"]>, ParentType, ContextType>;
   childrens?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;

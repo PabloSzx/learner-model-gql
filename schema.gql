@@ -12,9 +12,9 @@ type Query {
   users(ids: [IntID!]!): [User!]!
   adminActions: AdminActionQueries!
   adminContent: AdminContentQueries!
+  content(ids: [IntID!]!): [Content!]!
   domains(ids: [IntID!]!): [Domain!]!
   topics(ids: [IntID!]!): [Topic!]!
-  content(ids: [IntID!]!): [Content!]!
   adminDomain: AdminDomainQueries!
   projects(ids: [IntID!]!): [Project!]!
   adminProjects: AdminProjectsQueries!
@@ -191,6 +191,7 @@ type Content {
   binaryBase64: String
   json: JSONObject
   url: String
+  sortIndex: Int
   createdAt: DateTime!
   updatedAt: DateTime!
   domain: Domain!
@@ -214,6 +215,7 @@ type Topic {
   content(pagination: CursorConnectionArgs!): ContentConnection!
   code: String!
   label: String!
+  sortIndex: Int
   domain: Domain!
   parent: Topic
   childrens: [Topic!]!

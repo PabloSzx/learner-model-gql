@@ -1,4 +1,4 @@
-import { ResolveCursorConnection } from "api-base";
+import { getNodeIdList, ResolveCursorConnection } from "api-base";
 import type { Content as DBContent } from "db";
 import { gql, registerModule } from "../ez";
 import type { Content } from "../ez.generated";
@@ -16,6 +16,8 @@ export const contentModule = registerModule(
       binaryBase64: String
       json: JSONObject
       url: String
+
+      sortIndex: Int
 
       createdAt: DateTime!
       updatedAt: DateTime!
@@ -51,6 +53,7 @@ export const contentModule = registerModule(
     }
     extend type Query {
       adminContent: AdminContentQueries!
+      content(ids: [IntID!]!): [Content!]!
     }
     extend type Mutation {
       adminContent: AdminContentMutations!
@@ -121,6 +124,19 @@ export const contentModule = registerModule(
         async adminContent(_root, _args, { authorization }) {
           await authorization.expectAdmin;
           return {};
+        },
+        async content(_root, { ids }, { prisma, authorization }) {
+          return getNodeIdList(
+            prisma.content.findMany({
+              where: {
+                id: {
+                  in: ids,
+                },
+                projectId: await authorization.expectProjectsInPrismaFilter,
+              },
+            }),
+            ids
+          );
         },
       },
       Mutation: {

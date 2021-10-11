@@ -11,6 +11,8 @@ export const domainModule = registerModule(
       code: String!
       label: String!
 
+      sortIndex: Int
+
       domain: Domain!
 
       parent: Topic
