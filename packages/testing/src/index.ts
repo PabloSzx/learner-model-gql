@@ -1,5 +1,12 @@
 import type { FastifyAppOptions, PromiseType } from "@graphql-ez/fastify";
-import { ezServicePreset, MockAuthUser, prisma } from "api-base";
+import { CreateTestClient, GlobalTeardown } from "@graphql-ez/fastify-testing";
+import {
+  DATABASE_URL,
+  ezServicePreset,
+  MockAuthUser,
+  prisma,
+  URL_DATABASE,
+} from "api-base";
 import {
   deepEqual,
   equal,
@@ -7,14 +14,16 @@ import {
   notEqual,
   strict as assert,
 } from "assert/strict";
+import type { UserRole } from "db";
 import { getGqtyClient } from "graph/gqty";
 import { generate } from "randomstring";
 import { inspect } from "util";
 
-import { CreateTestClient, GlobalTeardown } from "@graphql-ez/fastify-testing";
-
-import type { UserRole } from "db";
 inspect.defaultOptions.depth = null;
+
+if (URL_DATABASE.hostname !== "localhost" || URL_DATABASE.port !== "5789") {
+  throw Error(`Unexpected database used for testing! ` + DATABASE_URL);
+}
 
 typeof after !== "undefined" &&
   after(() => {
@@ -40,8 +49,8 @@ export type {
 } from "graphql-ez";
 export { createDeferredPromise, LazyPromise, PLazy } from "graphql-ez/utils";
 export { generate } from "randomstring";
-export * from "./generated/index";
 export * from "./generated/graphql";
+export * from "./generated/index";
 export { MockAuthUser };
 export { assert, equal, deepEqual, notDeepEqual, notEqual };
 

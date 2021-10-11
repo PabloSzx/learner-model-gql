@@ -10,7 +10,7 @@ console.log({
   GATEWAY_URL,
 });
 
-const URL_DATABASE = new URL(DATABASE_URL);
+export const URL_DATABASE = new URL(DATABASE_URL);
 
 export const DATABASE_SCHEMA =
   URL_DATABASE.searchParams.get("schema") || "public";
