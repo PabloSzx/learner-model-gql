@@ -196,6 +196,7 @@ type Content {
   createdAt: DateTime!
   updatedAt: DateTime!
   domain: Domain!
+  kcs: [KC!]!
   project: Project!
 }
 
@@ -282,6 +283,7 @@ input CreateContent {
   json: JSONObject
   url: String
   topics: [IntID!]!
+  kcs: [IntID!]!
   tags: [String!]!
 }
 
@@ -296,6 +298,7 @@ input UpdateContent {
   json: JSONObject
   url: String
   topics: [IntID!]!
+  kcs: [IntID!]!
   tags: [String!]!
 }
 

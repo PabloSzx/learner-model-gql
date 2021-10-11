@@ -8,6 +8,8 @@ export const contentModule = registerModule(
       id: IntID!
 
       domain: Domain!
+
+      kcs: [KC!]!
     }
 
     extend type Query {
@@ -30,6 +32,17 @@ export const contentModule = registerModule(
           assert(domain, "Domain could not be found for Content " + id);
 
           return domain;
+        },
+        async kcs({ id }, _args, { prisma }) {
+          const kcs = await prisma.content
+            .findUnique({
+              where: {
+                id,
+              },
+            })
+            .kcs();
+
+          return kcs || [];
         },
       },
       Query: {

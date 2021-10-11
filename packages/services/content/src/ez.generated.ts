@@ -75,6 +75,7 @@ export type CreateContent = {
   json?: Maybe<Scalars["JSONObject"]>;
   url?: Maybe<Scalars["String"]>;
   topics: Array<Scalars["IntID"]>;
+  kcs: Array<Scalars["IntID"]>;
   tags: Array<Scalars["String"]>;
 };
 
@@ -89,6 +90,7 @@ export type UpdateContent = {
   json?: Maybe<Scalars["JSONObject"]>;
   url?: Maybe<Scalars["String"]>;
   topics: Array<Scalars["IntID"]>;
+  kcs: Array<Scalars["IntID"]>;
   tags: Array<Scalars["String"]>;
 };
 

@@ -98,6 +98,7 @@ export interface CreateContent {
   json?: Maybe<Scalars["JSONObject"]>;
   url?: Maybe<Scalars["String"]>;
   topics: Array<Scalars["IntID"]>;
+  kcs: Array<Scalars["IntID"]>;
   tags: Array<Scalars["String"]>;
 }
 
@@ -112,6 +113,7 @@ export interface UpdateContent {
   json?: Maybe<Scalars["JSONObject"]>;
   url?: Maybe<Scalars["String"]>;
   topics: Array<Scalars["IntID"]>;
+  kcs: Array<Scalars["IntID"]>;
   tags: Array<Scalars["String"]>;
 }
 
@@ -332,6 +334,7 @@ export const generatedSchema = {
     createdAt: { __type: "DateTime!" },
     updatedAt: { __type: "DateTime!" },
     domain: { __type: "Domain!" },
+    kcs: { __type: "[KC!]!" },
     project: { __type: "Project!" },
   },
   ContentConnection: {
@@ -349,6 +352,7 @@ export const generatedSchema = {
     json: { __type: "JSONObject" },
     url: { __type: "String" },
     topics: { __type: "[IntID!]!" },
+    kcs: { __type: "[IntID!]!" },
     tags: { __type: "[String!]!" },
   },
   CreateDomain: {
@@ -487,6 +491,7 @@ export const generatedSchema = {
     json: { __type: "JSONObject" },
     url: { __type: "String" },
     topics: { __type: "[IntID!]!" },
+    kcs: { __type: "[IntID!]!" },
     tags: { __type: "[String!]!" },
   },
   UpdateDomain: {
@@ -723,6 +728,7 @@ export interface Content {
   createdAt: ScalarsEnums["DateTime"];
   updatedAt: ScalarsEnums["DateTime"];
   domain: Domain;
+  kcs: Array<KC>;
   project: Project;
 }
 

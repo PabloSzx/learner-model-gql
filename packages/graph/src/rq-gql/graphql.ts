@@ -259,6 +259,7 @@ export type Content = {
   domain: Domain;
   id: Scalars["IntID"];
   json?: Maybe<Scalars["JSONObject"]>;
+  kcs: Array<Kc>;
   label: Scalars["String"];
   project: Project;
   sortIndex?: Maybe<Scalars["Int"]>;
@@ -279,6 +280,7 @@ export type CreateContent = {
   description: Scalars["String"];
   domainId: Scalars["IntID"];
   json?: Maybe<Scalars["JSONObject"]>;
+  kcs: Array<Scalars["IntID"]>;
   label: Scalars["String"];
   projectId: Scalars["IntID"];
   tags: Array<Scalars["String"]>;
@@ -504,6 +506,7 @@ export type UpdateContent = {
   domainId: Scalars["IntID"];
   id: Scalars["IntID"];
   json?: Maybe<Scalars["JSONObject"]>;
+  kcs: Array<Scalars["IntID"]>;
   label: Scalars["String"];
   projectId: Scalars["IntID"];
   tags: Array<Scalars["String"]>;

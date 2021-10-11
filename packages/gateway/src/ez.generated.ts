@@ -269,6 +269,7 @@ export type Content = {
   createdAt: Scalars["DateTime"];
   updatedAt: Scalars["DateTime"];
   domain: Domain;
+  kcs: Array<Kc>;
   project: Project;
 };
 
@@ -373,6 +374,7 @@ export type CreateContent = {
   json?: Maybe<Scalars["JSONObject"]>;
   url?: Maybe<Scalars["String"]>;
   topics: Array<Scalars["IntID"]>;
+  kcs: Array<Scalars["IntID"]>;
   tags: Array<Scalars["String"]>;
 };
 
@@ -387,6 +389,7 @@ export type UpdateContent = {
   json?: Maybe<Scalars["JSONObject"]>;
   url?: Maybe<Scalars["String"]>;
   topics: Array<Scalars["IntID"]>;
+  kcs: Array<Scalars["IntID"]>;
   tags: Array<Scalars["String"]>;
 };
 
@@ -1218,6 +1221,7 @@ export type ContentResolvers<
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
+  kcs?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
   project?: Resolver<ResolversTypes["Project"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

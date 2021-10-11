@@ -40,6 +40,8 @@ export const contentModule = registerModule(
 
       topics: [IntID!]!
 
+      kcs: [IntID!]!
+
       tags: [String!]!
     }
 
@@ -59,6 +61,8 @@ export const contentModule = registerModule(
       url: String
 
       topics: [IntID!]!
+
+      kcs: [IntID!]!
 
       tags: [String!]!
     }
@@ -101,6 +105,7 @@ export const contentModule = registerModule(
               label,
               topics,
               tags,
+              kcs,
             },
           },
           { prisma }
@@ -131,6 +136,9 @@ export const contentModule = registerModule(
               tags: {
                 set: tags,
               },
+              kcs: {
+                connect: kcs.map((id) => ({ id })),
+              },
             },
           });
         },
@@ -149,6 +157,7 @@ export const contentModule = registerModule(
               label,
               topics,
               tags,
+              kcs,
             },
           },
           { prisma }
@@ -181,6 +190,9 @@ export const contentModule = registerModule(
               },
               tags: {
                 set: tags,
+              },
+              kcs: {
+                set: kcs.map((id) => ({ id })),
               },
             },
           });
