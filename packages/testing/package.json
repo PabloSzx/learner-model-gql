@@ -5,9 +5,8 @@
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "concurrently -r pnpm:generate:watch",
-    "generate": "graphql-codegen generate --config codegen.yaml",
-    "generate:watch": "graphql-codegen generate --config codegen.yaml --watch"
+    "dev": "graphql-codegen generate --config codegen.yaml --watch",
+    "generate": "graphql-codegen generate --config codegen.yaml"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.2.0",
