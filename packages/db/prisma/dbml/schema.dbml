@@ -73,6 +73,7 @@ Table Topic {
   id Int [pk, increment]
   code String [unique, not null]
   label String [not null]
+  sortIndex Int
   domain Domain [not null]
   domainId Int [not null]
   project Project [not null]
@@ -94,6 +95,7 @@ Table KC {
   domain Domain [not null]
   domainId Int [not null]
   topics Topic [not null]
+  content Content [not null]
 }
 
 Table ActionVerb {
@@ -136,12 +138,16 @@ Table ActionActivity {
 
 Table Content {
   id Int [pk, increment]
+  code String [unique, not null]
+  label String [not null]
+  sortIndex Int
+  tags String [not null]
   project Project [not null]
   projectId Int [not null]
   domain Domain [not null]
   domainId Int [not null]
-  topic Topic
-  topicId Int
+  topics Topic [not null]
+  kcs KC [not null]
   actionActivities ActionActivity [not null]
   description String [not null]
   binary Bytes
@@ -166,9 +172,19 @@ Table GroupToProject {
   groupsId Int [ref: > Group.id]
 }
 
+Table ContentToTopic {
+  contentId Int [ref: > Content.id]
+  topicsId Int [ref: > Topic.id]
+}
+
 Table KCToTopic {
   kcsId Int [ref: > KC.id]
   topicsId Int [ref: > Topic.id]
+}
+
+Table ContentToKC {
+  contentId Int [ref: > Content.id]
+  kcsId Int [ref: > KC.id]
 }
 
 Enum UserRole {
@@ -203,5 +219,3 @@ Ref: ActionActivity.topicId > Topic.id
 Ref: Content.projectId > Project.id
 
 Ref: Content.domainId > Domain.id
-
-Ref: Content.topicId > Topic.id

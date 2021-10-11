@@ -116,6 +116,8 @@ model Topic {
   code  String @unique
   label String
 
+  sortIndex Int?
+
   domain   Domain @relation(fields: [domainId], references: [id])
   domainId Int
 
@@ -148,6 +150,8 @@ model KC {
   domainId Int
 
   topics Topic[]
+
+  content Content[]
 }
 
 model ActionVerb {
@@ -168,7 +172,7 @@ model Action {
   verbName String
 
   activity   ActionActivity @relation(fields: [activityId], references: [id])
-  activityId Int
+  activityId Int            @unique
 
   timestamp DateTime
 
@@ -208,14 +212,22 @@ model ActionActivity {
 model Content {
   id Int @id @default(autoincrement())
 
+  code  String @unique
+  label String
+
+  sortIndex Int?
+
+  tags String[]
+
   project   Project @relation(fields: [projectId], references: [id])
   projectId Int
 
   domain   Domain @relation(fields: [domainId], references: [id])
   domainId Int
 
-  topic   Topic? @relation(fields: [topicId], references: [id])
-  topicId Int?
+  topics Topic[]
+
+  kcs KC[]
 
   actionActivities ActionActivity[]
 
