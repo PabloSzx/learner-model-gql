@@ -8,6 +8,9 @@ export const contentModule = registerModule(
     type Content {
       id: IntID!
 
+      code: String!
+      label: String!
+
       description: String!
 
       binaryBase64: String
@@ -21,13 +24,17 @@ export const contentModule = registerModule(
     input CreateContent {
       description: String!
 
+      code: String!
+      label: String!
+
       projectId: IntID!
       domainId: IntID!
-      topicId: IntID
 
       binaryBase64: String
       json: JSONObject
       url: String
+
+      topics: [IntID!]!
     }
 
     type ContentConnection implements Connection {
@@ -61,14 +68,18 @@ export const contentModule = registerModule(
               projectId,
               binaryBase64,
               json,
-              topicId,
               url,
+              code,
+              label,
+              topics,
             },
           },
           { prisma }
         ) {
           return prisma.content.create({
             data: {
+              code,
+              label,
               description,
               json,
               url,
@@ -85,14 +96,9 @@ export const contentModule = registerModule(
                   id: projectId,
                 },
               },
-              topic:
-                topicId != null
-                  ? {
-                      connect: {
-                        id: topicId,
-                      },
-                    }
-                  : undefined,
+              topics: {
+                connect: topics.map((id) => ({ id })),
+              },
             },
           });
         },

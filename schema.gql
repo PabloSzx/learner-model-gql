@@ -185,6 +185,8 @@ type ActionVerb {
 
 type Content {
   id: IntID!
+  code: String!
+  label: String!
   description: String!
   binaryBase64: String
   json: JSONObject
@@ -269,12 +271,14 @@ type AdminActionQueries {
 
 input CreateContent {
   description: String!
+  code: String!
+  label: String!
   projectId: IntID!
   domainId: IntID!
-  topicId: IntID
   binaryBase64: String
   json: JSONObject
   url: String
+  topics: [IntID!]!
 }
 
 type ContentConnection implements Connection {

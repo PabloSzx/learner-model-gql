@@ -180,15 +180,17 @@ export const CreateDomain = async ({
 export const CreateEmptyContent = async ({
   project,
   domain,
-  topic,
+  topics,
 }: {
   project: { id: number };
   domain: { id: number };
-  topic?: { id: number };
+  topics?: { id: number } | Array<{ id: number }>;
 }) => {
   const content = await prisma.content.create({
     data: {
       description: generate(),
+      code: generate(),
+      label: generate(),
       project: {
         connect: {
           id: project.id,
@@ -199,18 +201,16 @@ export const CreateEmptyContent = async ({
           id: domain.id,
         },
       },
-      topic: topic
+      topics: topics
         ? {
-            connect: {
-              id: topic.id,
-            },
+            connect: topics,
           }
         : undefined,
     },
     include: {
       domain: true,
       project: true,
-      topic: true,
+      topics: true,
     },
   });
 

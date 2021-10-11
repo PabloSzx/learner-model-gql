@@ -248,11 +248,13 @@ export type Connection = {
 export type Content = {
   __typename?: "Content";
   binaryBase64?: Maybe<Scalars["String"]>;
+  code: Scalars["String"];
   createdAt: Scalars["DateTime"];
   description: Scalars["String"];
   domain: Domain;
   id: Scalars["IntID"];
   json?: Maybe<Scalars["JSONObject"]>;
+  label: Scalars["String"];
   project: Project;
   updatedAt: Scalars["DateTime"];
   url?: Maybe<Scalars["String"]>;
@@ -266,11 +268,13 @@ export type ContentConnection = Connection & {
 
 export type CreateContent = {
   binaryBase64?: Maybe<Scalars["String"]>;
+  code: Scalars["String"];
   description: Scalars["String"];
   domainId: Scalars["IntID"];
   json?: Maybe<Scalars["JSONObject"]>;
+  label: Scalars["String"];
   projectId: Scalars["IntID"];
-  topicId?: Maybe<Scalars["IntID"]>;
+  topics: Array<Scalars["IntID"]>;
   url?: Maybe<Scalars["String"]>;
 };
 
@@ -624,6 +628,8 @@ export type CreateContentMutation = {
       description: string;
       binaryBase64?: string | null | undefined;
       json?: Record<string, unknown> | null | undefined;
+      code: string;
+      label: string;
     };
   };
 };
@@ -1855,6 +1861,8 @@ export const CreateContentDocument = {
                         name: { kind: "Name", value: "binaryBase64" },
                       },
                       { kind: "Field", name: { kind: "Name", value: "json" } },
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      { kind: "Field", name: { kind: "Name", value: "label" } },
                     ],
                   },
                 },

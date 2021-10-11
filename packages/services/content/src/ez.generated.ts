@@ -53,6 +53,8 @@ export type Scalars = {
 export type Content = {
   __typename?: "Content";
   id: Scalars["IntID"];
+  code: Scalars["String"];
+  label: Scalars["String"];
   description: Scalars["String"];
   binaryBase64?: Maybe<Scalars["String"]>;
   json?: Maybe<Scalars["JSONObject"]>;
@@ -63,12 +65,14 @@ export type Content = {
 
 export type CreateContent = {
   description: Scalars["String"];
+  code: Scalars["String"];
+  label: Scalars["String"];
   projectId: Scalars["IntID"];
   domainId: Scalars["IntID"];
-  topicId?: Maybe<Scalars["IntID"]>;
   binaryBase64?: Maybe<Scalars["String"]>;
   json?: Maybe<Scalars["JSONObject"]>;
   url?: Maybe<Scalars["String"]>;
+  topics: Array<Scalars["IntID"]>;
 };
 
 export type ContentConnection = Connection & {
@@ -364,6 +368,8 @@ export type ContentResolvers<
   ParentType extends ResolversParentTypes["Content"] = ResolversParentTypes["Content"]
 > = {
   id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   description?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   binaryBase64?: Resolver<
     Maybe<ResolversTypes["String"]>,

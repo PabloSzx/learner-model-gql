@@ -1,4 +1,5 @@
 import { MockAuthUser } from "api-base";
+import { generate } from "randomstring";
 import {
   assert,
   CreateDomain,
@@ -33,6 +34,9 @@ export async function CheckContentCreationRetrieval({
 
   const binaryContent = Buffer.from("hello world in base64", "utf-8");
 
+  const contentCode = generate();
+  const contentLabel = generate();
+
   const contentResult = await mutation(
     gql(/* GraphQL */ `
       mutation CreateContent($data: CreateContent!) {
@@ -42,6 +46,8 @@ export async function CheckContentCreationRetrieval({
             description
             binaryBase64
             json
+            code
+            label
           }
         }
       }
@@ -58,7 +64,9 @@ export async function CheckContentCreationRetrieval({
               world: "json",
             },
           },
-          topicId,
+          topics: [topicId],
+          code: contentCode,
+          label: contentLabel,
         },
       },
     }
@@ -80,6 +88,8 @@ export async function CheckContentCreationRetrieval({
               world: "json",
             },
           },
+          code: contentCode,
+          label: contentLabel,
         },
       },
     },

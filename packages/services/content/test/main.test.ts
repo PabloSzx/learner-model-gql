@@ -97,6 +97,8 @@ describe("Content service", () => {
                 description
                 binaryBase64
                 json
+                code
+                label
               }
             }
           }
@@ -107,6 +109,9 @@ describe("Content service", () => {
               description: "asd",
               domainId: "123",
               projectId: "123",
+              code: "asd",
+              label: "asd",
+              topics: [],
             },
           },
         }

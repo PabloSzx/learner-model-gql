@@ -90,12 +90,14 @@ export interface ActionInput {
 
 export interface CreateContent {
   description: Scalars["String"];
+  code: Scalars["String"];
+  label: Scalars["String"];
   projectId: Scalars["IntID"];
   domainId: Scalars["IntID"];
-  topicId?: Maybe<Scalars["IntID"]>;
   binaryBase64?: Maybe<Scalars["String"]>;
   json?: Maybe<Scalars["JSONObject"]>;
   url?: Maybe<Scalars["String"]>;
+  topics: Array<Scalars["IntID"]>;
 }
 
 export interface CreateDomain {
@@ -302,6 +304,8 @@ export const generatedSchema = {
   Content: {
     __typename: { __type: "String!" },
     id: { __type: "IntID!" },
+    code: { __type: "String!" },
+    label: { __type: "String!" },
     description: { __type: "String!" },
     binaryBase64: { __type: "String" },
     json: { __type: "JSONObject" },
@@ -318,12 +322,14 @@ export const generatedSchema = {
   },
   CreateContent: {
     description: { __type: "String!" },
+    code: { __type: "String!" },
+    label: { __type: "String!" },
     projectId: { __type: "IntID!" },
     domainId: { __type: "IntID!" },
-    topicId: { __type: "IntID" },
     binaryBase64: { __type: "String" },
     json: { __type: "JSONObject" },
     url: { __type: "String" },
+    topics: { __type: "[IntID!]!" },
   },
   CreateDomain: {
     code: { __type: "String!" },
@@ -671,6 +677,8 @@ export interface Connection {
 export interface Content {
   __typename?: "Content";
   id: ScalarsEnums["IntID"];
+  code: ScalarsEnums["String"];
+  label: ScalarsEnums["String"];
   description: ScalarsEnums["String"];
   binaryBase64?: Maybe<ScalarsEnums["String"]>;
   json?: Maybe<ScalarsEnums["JSONObject"]>;
