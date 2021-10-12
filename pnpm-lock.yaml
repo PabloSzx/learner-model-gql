@@ -107,7 +107,7 @@ importers:
       '@types/validator': ^13.6.3
       common-api: workspace:^1.0.0
       db: workspace:^0.0.1
-      fastify-auth0-verify: ^0.5.2
+      fastify-auth0-verify: ^0.6.0
       fastify-plugin: ^3.0.0
       pg-gql-pubsub: ^0.3.0
       pino: ^6.13.3
@@ -126,7 +126,7 @@ importers:
       '@graphql-ez/plugin-websockets': 0.10.0_af2a267332b79b3e46bdc750b376126b
       common-api: link:../common-api
       db: link:../db
-      fastify-auth0-verify: 0.5.2
+      fastify-auth0-verify: 0.6.0
       fastify-plugin: 3.0.0
       pg-gql-pubsub: 0.3.0
       pino: 6.13.3
@@ -4405,6 +4405,11 @@ packages:
     dependencies:
       safe-buffer: 5.1.2
 
+  /cookie-signature/1.1.0:
+    resolution: {integrity: sha512-Alvs19Vgq07eunykd3Xy2jF0/qSNv2u7KDbAek9H5liV1UMijbqFs5cycZvv5dVsvseT/U4H8/7/w8Koh35C4A==}
+    engines: {node: '>=6.6.0'}
+    dev: false
+
   /cookie/0.4.1:
     resolution: {integrity: sha512-ZwrFkGJxUR3EIoXtO+yVE69Eb7KlixbaeAWfBQB9vVsNn/o+Yw69gBWSSDK825hQNdN+wF8zELf3dFNl/kxkUA==}
     engines: {node: '>= 0.6'}
@@ -5204,15 +5209,24 @@ packages:
       reusify: 1.0.4
     dev: false
 
-  /fastify-auth0-verify/0.5.2:
-    resolution: {integrity: sha512-MHNolhH4BRRQEzUWHdSfa03/Aeas/NYvjaRTopF17ovta55ErWJa3e6UpxmXKjMArFP/NeyZkcZ3ZBci71Fz1Q==}
+  /fastify-auth0-verify/0.6.0:
+    resolution: {integrity: sha512-WT6Uek2IA3fEZlWdRP6p18MIQlUqzuoc8zQLgnAwx8hb62u1ZhDCAl1FePF9d16tsHCvcCf3WyfL8HlZNCZhDA==}
     engines: {node: '>= 12.0.0'}
     dependencies:
-      fastify-jwt: 3.1.0
+      fastify-cookie: 5.3.1
+      fastify-jwt: 3.2.0
       fastify-plugin: 3.0.0
       http-errors: 1.8.0
       node-cache: 5.1.2
       node-fetch: 2.6.5
+    dev: false
+
+  /fastify-cookie/5.3.1:
+    resolution: {integrity: sha512-ubiC5ydvgqaXOydeg3G+SFEiTJtsyNPde6ForXi+UG66aDbsHlWNLJTQZg4BopXv+MJ0SzlShGVCWv26mgAwpw==}
+    dependencies:
+      cookie: 0.4.1
+      cookie-signature: 1.1.0
+      fastify-plugin: 3.0.0
     dev: false
 
   /fastify-cors/6.0.2:
@@ -5224,8 +5238,8 @@ packages:
   /fastify-error/0.3.1:
     resolution: {integrity: sha512-oCfpcsDndgnDVgiI7bwFKAun2dO+4h84vBlkWsWnz/OUK9Reff5UFoFl241xTiLeHWX/vU9zkDVXqYUxjOwHcQ==}
 
-  /fastify-jwt/3.1.0:
-    resolution: {integrity: sha512-ZZq+kf/lTcvx0X6hjREEWoCclAxpOcClmNTn2joQiVPMcMdTnN10YnMBVRMCB9YTnS/1YDHRyZWkY73QFFAVhQ==}
+  /fastify-jwt/3.2.0:
+    resolution: {integrity: sha512-WcYUrudiqeT/HrdUMvC/hXHy+kqXuSO8qc82FrxM2VPXqpjQBpOPgBjBiwXj1XKdtHa5RgtXF0amlDiUTfxDAw==}
     engines: {node: '>=10'}
     dependencies:
       '@types/jsonwebtoken': 8.5.5
