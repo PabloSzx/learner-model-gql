@@ -131,6 +131,7 @@ export type CreateTopic = {
   parentTopicId?: Maybe<Scalars["IntID"]>;
   domainId: Scalars["IntID"];
   projectId: Scalars["IntID"];
+  contentIds: Array<Scalars["IntID"]>;
 };
 
 export type UpdateTopic = {
@@ -140,6 +141,7 @@ export type UpdateTopic = {
   parentTopicId?: Maybe<Scalars["IntID"]>;
   domainId: Scalars["IntID"];
   projectId: Scalars["IntID"];
+  contentIds: Array<Scalars["IntID"]>;
 };
 
 export type AdminDomainMutations = {

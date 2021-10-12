@@ -80,6 +80,8 @@ export const domainModule = registerModule(
       domainId: IntID!
 
       projectId: IntID!
+
+      contentIds: [IntID!]!
     }
 
     input UpdateTopic {
@@ -93,6 +95,8 @@ export const domainModule = registerModule(
       domainId: IntID!
 
       projectId: IntID!
+
+      contentIds: [IntID!]!
     }
 
     type AdminDomainMutations {
@@ -143,7 +147,16 @@ export const domainModule = registerModule(
         },
         createTopic(
           _root,
-          { input: { code, label, projectId, parentTopicId, domainId } },
+          {
+            input: {
+              code,
+              label,
+              projectId,
+              parentTopicId,
+              domainId,
+              contentIds,
+            },
+          },
           { prisma }
         ) {
           return prisma.topic.create({
@@ -168,12 +181,25 @@ export const domainModule = registerModule(
                       },
                     }
                   : undefined,
+              content: {
+                connect: contentIds.map((id) => ({ id })),
+              },
             },
           });
         },
         async updateTopic(
           _root,
-          { input: { code, label, projectId, parentTopicId, domainId, id } },
+          {
+            input: {
+              code,
+              label,
+              projectId,
+              parentTopicId,
+              domainId,
+              id,
+              contentIds,
+            },
+          },
           { prisma }
         ) {
           const topic = await prisma.topic.update({
@@ -201,6 +227,9 @@ export const domainModule = registerModule(
                       },
                     }
                   : undefined,
+              content: {
+                set: contentIds.map((id) => ({ id })),
+              },
             },
           });
 

@@ -313,6 +313,7 @@ export type CreateProject = {
 
 export type CreateTopic = {
   code: Scalars["String"];
+  contentIds: Array<Scalars["IntID"]>;
   domainId: Scalars["IntID"];
   label: Scalars["String"];
   parentTopicId?: Maybe<Scalars["IntID"]>;
@@ -537,6 +538,7 @@ export type UpdateProject = {
 
 export type UpdateTopic = {
   code: Scalars["String"];
+  contentIds: Array<Scalars["IntID"]>;
   domainId: Scalars["IntID"];
   id: Scalars["IntID"];
   label: Scalars["String"];

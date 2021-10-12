@@ -135,6 +135,7 @@ export interface CreateTopic {
   parentTopicId?: Maybe<Scalars["IntID"]>;
   domainId: Scalars["IntID"];
   projectId: Scalars["IntID"];
+  contentIds: Array<Scalars["IntID"]>;
 }
 
 export interface UpdateTopic {
@@ -144,6 +145,7 @@ export interface UpdateTopic {
   parentTopicId?: Maybe<Scalars["IntID"]>;
   domainId: Scalars["IntID"];
   projectId: Scalars["IntID"];
+  contentIds: Array<Scalars["IntID"]>;
 }
 
 export interface CreateKCInput {
@@ -377,6 +379,7 @@ export const generatedSchema = {
     parentTopicId: { __type: "IntID" },
     domainId: { __type: "IntID!" },
     projectId: { __type: "IntID!" },
+    contentIds: { __type: "[IntID!]!" },
   },
   CursorConnectionArgs: {
     first: { __type: "NonNegativeInt" },
@@ -519,6 +522,7 @@ export const generatedSchema = {
     parentTopicId: { __type: "IntID" },
     domainId: { __type: "IntID!" },
     projectId: { __type: "IntID!" },
+    contentIds: { __type: "[IntID!]!" },
   },
   UpdateUserInput: {
     id: { __type: "IntID!" },
