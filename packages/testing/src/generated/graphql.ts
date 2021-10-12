@@ -477,7 +477,7 @@ export type Topic = {
   __typename?: "Topic";
   childrens: Array<Topic>;
   code: Scalars["String"];
-  content: ContentConnection;
+  content: Array<Content>;
   createdAt: Scalars["DateTime"];
   domain: Domain;
   id: Scalars["IntID"];
@@ -487,10 +487,6 @@ export type Topic = {
   project: Project;
   sortIndex?: Maybe<Scalars["Int"]>;
   updatedAt: Scalars["DateTime"];
-};
-
-export type TopicContentArgs = {
-  pagination: CursorConnectionArgs;
 };
 
 export type TopicsConnection = Connection & {
@@ -686,7 +682,6 @@ export type ContentFromDomainQuery = {
 
 export type ContentFromTopicQueryVariables = Exact<{
   ids: Array<Scalars["IntID"]> | Scalars["IntID"];
-  pagination: CursorConnectionArgs;
 }>;
 
 export type ContentFromTopicQuery = {
@@ -694,17 +689,13 @@ export type ContentFromTopicQuery = {
   topics: Array<{
     __typename?: "Topic";
     id: string;
-    content: {
-      __typename?: "ContentConnection";
-      nodes: Array<{
-        __typename?: "Content";
-        id: string;
-        description: string;
-        binaryBase64?: string | null | undefined;
-        json?: Record<string, unknown> | null | undefined;
-      }>;
-      pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean };
-    };
+    content: Array<{
+      __typename?: "Content";
+      id: string;
+      description: string;
+      binaryBase64?: string | null | undefined;
+      json?: Record<string, unknown> | null | undefined;
+    }>;
   }>;
 };
 
@@ -2056,20 +2047,6 @@ export const ContentFromTopicDocument = {
             },
           },
         },
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "pagination" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "CursorConnectionArgs" },
-            },
-          },
-        },
       ],
       selectionSet: {
         kind: "SelectionSet",
@@ -2094,57 +2071,19 @@ export const ContentFromTopicDocument = {
                 {
                   kind: "Field",
                   name: { kind: "Name", value: "content" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "pagination" },
-                      value: {
-                        kind: "Variable",
-                        name: { kind: "Name", value: "pagination" },
-                      },
-                    },
-                  ],
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "nodes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "id" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "description" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "binaryBase64" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "json" },
-                            },
-                          ],
-                        },
+                        name: { kind: "Name", value: "description" },
                       },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "pageInfo" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "hasNextPage" },
-                            },
-                          ],
-                        },
+                        name: { kind: "Name", value: "binaryBase64" },
                       },
+                      { kind: "Field", name: { kind: "Name", value: "json" } },
                     ],
                   },
                 },

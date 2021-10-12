@@ -477,7 +477,7 @@ export type Topic = {
   __typename?: "Topic";
   childrens: Array<Topic>;
   code: Scalars["String"];
-  content: ContentConnection;
+  content: Array<Content>;
   createdAt: Scalars["DateTime"];
   domain: Domain;
   id: Scalars["IntID"];
@@ -487,10 +487,6 @@ export type Topic = {
   project: Project;
   sortIndex?: Maybe<Scalars["Int"]>;
   updatedAt: Scalars["DateTime"];
-};
-
-export type TopicContentArgs = {
-  pagination: CursorConnectionArgs;
 };
 
 export type TopicsConnection = Connection & {

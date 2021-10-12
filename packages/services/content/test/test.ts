@@ -68,6 +68,7 @@ export async function CheckContentCreationRetrieval({
           code: contentCode,
           label: contentLabel,
           tags: [],
+          kcs: [],
         },
       },
     }
@@ -223,22 +224,14 @@ export async function CheckContentCreationRetrieval({
   {
     const result = await query(
       gql(/* GraphQL */ `
-        query ContentFromTopic(
-          $ids: [IntID!]!
-          $pagination: CursorConnectionArgs!
-        ) {
+        query ContentFromTopic($ids: [IntID!]!) {
           topics(ids: $ids) {
             id
-            content(pagination: $pagination) {
-              nodes {
-                id
-                description
-                binaryBase64
-                json
-              }
-              pageInfo {
-                hasNextPage
-              }
+            content {
+              id
+              description
+              binaryBase64
+              json
             }
           }
         }
@@ -246,9 +239,6 @@ export async function CheckContentCreationRetrieval({
       {
         variables: {
           ids: [topicId],
-          pagination: {
-            first: 10,
-          },
         },
       }
     );
@@ -262,23 +252,18 @@ export async function CheckContentCreationRetrieval({
         topics: [
           {
             id: topicId,
-            content: {
-              nodes: [
-                {
-                  id: contentId,
-                  description: "Hello World",
-                  binaryBase64: binaryContent.toString("base64"),
-                  json: {
-                    hello: {
-                      world: "json",
-                    },
+            content: [
+              {
+                id: contentId,
+                description: "Hello World",
+                binaryBase64: binaryContent.toString("base64"),
+                json: {
+                  hello: {
+                    world: "json",
                   },
                 },
-              ],
-              pageInfo: {
-                hasNextPage: false,
               },
-            },
+            ],
           },
         ],
       },

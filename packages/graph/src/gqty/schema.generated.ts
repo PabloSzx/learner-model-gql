@@ -460,10 +460,7 @@ export const generatedSchema = {
   Topic: {
     __typename: { __type: "String!" },
     id: { __type: "IntID!" },
-    content: {
-      __type: "ContentConnection!",
-      __args: { pagination: "CursorConnectionArgs!" },
-    },
+    content: { __type: "[Content!]!" },
     code: { __type: "String!" },
     label: { __type: "String!" },
     sortIndex: { __type: "Int" },
@@ -824,7 +821,7 @@ export interface ProjectsConnection {
 export interface Topic {
   __typename?: "Topic";
   id: ScalarsEnums["IntID"];
-  content: (args: { pagination: CursorConnectionArgs }) => ContentConnection;
+  content: Array<Content>;
   code: ScalarsEnums["String"];
   label: ScalarsEnums["String"];
   sortIndex?: Maybe<ScalarsEnums["Int"]>;

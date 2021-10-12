@@ -136,11 +136,7 @@ export type DomainContentArgs = {
 export type Topic = {
   __typename?: "Topic";
   id: Scalars["IntID"];
-  content: ContentConnection;
-};
-
-export type TopicContentArgs = {
-  pagination: CursorConnectionArgs;
+  content: Array<Content>;
 };
 
 export type PageInfo = {
@@ -478,12 +474,7 @@ export type TopicResolvers<
   ParentType extends ResolversParentTypes["Topic"] = ResolversParentTypes["Topic"]
 > = {
   id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-  content?: Resolver<
-    ResolversTypes["ContentConnection"],
-    ParentType,
-    ContextType,
-    RequireFields<TopicContentArgs, "pagination">
-  >;
+  content?: Resolver<Array<ResolversTypes["Content"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

@@ -12,7 +12,7 @@ export const domainModule = registerModule(
     type Topic {
       id: IntID!
 
-      content(pagination: CursorConnectionArgs!): ContentConnection!
+      content: [Content!]!
     }
 
     extend type Query {
@@ -23,18 +23,16 @@ export const domainModule = registerModule(
   {
     resolvers: {
       Topic: {
-        async content({ id }, { pagination }, { prisma }) {
-          return ResolveCursorConnection(pagination, (connection) => {
-            return prisma.topic
+        async content({ id }, _args, { prisma }) {
+          return (
+            (await prisma.topic
               .findUnique({
                 where: {
                   id,
                 },
               })
-              .content({
-                ...connection,
-              });
-          });
+              .content()) || []
+          );
         },
       },
       Domain: {

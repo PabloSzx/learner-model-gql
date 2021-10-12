@@ -113,6 +113,7 @@ describe("Content service", () => {
               label: "asd",
               topics: [],
               tags: [],
+              kcs: [],
             },
           },
         }
@@ -169,22 +170,14 @@ describe("Content service", () => {
     withoutUser: {
       const result = await query(
         gql(/* GraphQL */ `
-          query ContentFromTopic(
-            $ids: [IntID!]!
-            $pagination: CursorConnectionArgs!
-          ) {
+          query ContentFromTopic($ids: [IntID!]!) {
             topics(ids: $ids) {
               id
-              content(pagination: $pagination) {
-                nodes {
-                  id
-                  description
-                  binaryBase64
-                  json
-                }
-                pageInfo {
-                  hasNextPage
-                }
+              content {
+                id
+                description
+                binaryBase64
+                json
               }
             }
           }
@@ -192,9 +185,6 @@ describe("Content service", () => {
         {
           variables: {
             ids: [],
-            pagination: {
-              first: 10,
-            },
           },
         }
       );
@@ -267,22 +257,14 @@ describe("Content service", () => {
     withUserAllowedProject: {
       const result = await query(
         gql(/* GraphQL */ `
-          query ContentFromTopic(
-            $ids: [IntID!]!
-            $pagination: CursorConnectionArgs!
-          ) {
+          query ContentFromTopic($ids: [IntID!]!) {
             topics(ids: $ids) {
               id
-              content(pagination: $pagination) {
-                nodes {
-                  id
-                  description
-                  binaryBase64
-                  json
-                }
-                pageInfo {
-                  hasNextPage
-                }
+              content {
+                id
+                description
+                binaryBase64
+                json
               }
             }
           }
@@ -290,9 +272,6 @@ describe("Content service", () => {
         {
           variables: {
             ids: domain.topics.map((v) => v.id.toString()),
-            pagination: {
-              first: 10,
-            },
           },
         }
       );
@@ -302,12 +281,7 @@ describe("Content service", () => {
           topics: [
             {
               id: domain.topics[0]?.id.toString()!,
-              content: {
-                nodes: [],
-                pageInfo: {
-                  hasNextPage: false,
-                },
-              },
+              content: [],
             },
           ],
         },
@@ -365,22 +339,14 @@ describe("Content service", () => {
     withUserWithoutAllowedProject: {
       const result = await query(
         gql(/* GraphQL */ `
-          query ContentFromTopic(
-            $ids: [IntID!]!
-            $pagination: CursorConnectionArgs!
-          ) {
+          query ContentFromTopic($ids: [IntID!]!) {
             topics(ids: $ids) {
               id
-              content(pagination: $pagination) {
-                nodes {
-                  id
-                  description
-                  binaryBase64
-                  json
-                }
-                pageInfo {
-                  hasNextPage
-                }
+              content {
+                id
+                description
+                binaryBase64
+                json
               }
             }
           }
@@ -388,9 +354,6 @@ describe("Content service", () => {
         {
           variables: {
             ids: domain.topics.map((v) => v.id.toString()),
-            pagination: {
-              first: 10,
-            },
           },
         }
       );

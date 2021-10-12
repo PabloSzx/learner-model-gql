@@ -293,7 +293,7 @@ export type DomainContentArgs = {
 export type Topic = {
   __typename?: "Topic";
   id: Scalars["IntID"];
-  content: ContentConnection;
+  content: Array<Content>;
   code: Scalars["String"];
   label: Scalars["String"];
   sortIndex?: Maybe<Scalars["Int"]>;
@@ -304,10 +304,6 @@ export type Topic = {
   updatedAt: Scalars["DateTime"];
   kcs: Array<Kc>;
   project: Project;
-};
-
-export type TopicContentArgs = {
-  pagination: CursorConnectionArgs;
 };
 
 export type ActionActivity = {
@@ -1252,12 +1248,7 @@ export type TopicResolvers<
   ParentType extends ResolversParentTypes["Topic"] = ResolversParentTypes["Topic"]
 > = {
   id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-  content?: Resolver<
-    ResolversTypes["ContentConnection"],
-    ParentType,
-    ContextType,
-    RequireFields<TopicContentArgs, "pagination">
-  >;
+  content?: Resolver<Array<ResolversTypes["Content"]>, ParentType, ContextType>;
   code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   sortIndex?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;

@@ -214,7 +214,7 @@ type Domain {
 
 type Topic {
   id: IntID!
-  content(pagination: CursorConnectionArgs!): ContentConnection!
+  content: [Content!]!
   code: String!
   label: String!
   sortIndex: Int
