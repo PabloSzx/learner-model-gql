@@ -22,7 +22,7 @@ import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
 import { useCursorPagination } from "../hooks/pagination";
 import { projectOptionLabel, useSelectSingleProject } from "../hooks/projects";
-import { queryClient } from "../utils/rqClient";
+import { queryClient } from "../rqClient";
 
 function CreateDomain() {
   const codeRef = useRef<HTMLInputElement>(null);

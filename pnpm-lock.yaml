@@ -331,7 +331,7 @@ importers:
       graphql: ^15.6.1
       prettier: ^2.4.1
       react-query: ^3.26.0
-      rq-gql: ^0.1.6
+      rq-gql: ^0.2.2
       valtio: ^1.2.4
     dependencies:
       '@gqty/logger': 2.0.1_gqty@2.0.2
@@ -341,7 +341,7 @@ importers:
       graphql: 15.6.1
       prettier: 2.4.1
       react-query: 3.26.0_react@17.0.2
-      rq-gql: 0.1.6_6a348728cef044fd276fe57f89246b69
+      rq-gql: 0.2.2_2b17dc2273588b5273077ebb247d5358
       valtio: 1.2.4_react@17.0.2
     devDependencies:
       '@graphql-codegen/cli': 2.2.0_2b311a31742146ac38e1effdcd578775
@@ -8166,13 +8166,12 @@ packages:
       inherits: 2.0.4
     dev: false
 
-  /rq-gql/0.1.6_6a348728cef044fd276fe57f89246b69:
-    resolution: {integrity: sha512-TztyBq6etCyBF6X64TKi6omgOTDpTABWvAiFY7yoXn6Zob32wmZDZ5zw4JEo7GnKLDr0TOCOv8WbWkbNKBisUA==}
+  /rq-gql/0.2.2_2b17dc2273588b5273077ebb247d5358:
+    resolution: {integrity: sha512-sQOw+bQYpSaKmHlWmH8imb2EzsiyAgjdrNZwSxm4/GYeSDtHkmeL9BP2VbPM7Y6v162AOu8M2SWJ2h/xSsZd7g==}
     peerDependencies:
       '@graphql-typed-document-node/core': ^3.1.0
-      graphql: ^15.6.0
-      react-query: ^3.24.5
-      valtio: ^1.2.4
+      graphql: '*'
+      react-query: ^3.26.0
     dependencies:
       '@graphql-codegen/add': 3.1.0_graphql@15.6.1
       '@graphql-codegen/core': 2.1.0_graphql@15.6.1
@@ -8188,6 +8187,10 @@ packages:
       react-query: 3.26.0_react@17.0.2
       valtio: 1.2.4_react@17.0.2
     transitivePeerDependencies:
+      - '@babel/helper-module-imports'
+      - '@babel/types'
+      - babel-plugin-macros
+      - react
       - supports-color
     dev: false
 

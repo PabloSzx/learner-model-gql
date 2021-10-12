@@ -28,13 +28,13 @@ import {
   MdSave,
 } from "react-icons/md";
 import { useImmer } from "use-immer";
+import { useCursorPagination } from "../hooks/pagination";
+import { queryClient } from "../rqClient";
 import { useAuth, withAuth } from "./Auth";
 import { Card } from "./Card/Card";
 import { CardContent } from "./Card/CardContent";
 import { CardHeader } from "./Card/CardHeader";
 import { Property } from "./Card/Property";
-import { useCursorPagination } from "../hooks/pagination";
-import { queryClient } from "../utils/rqClient";
 
 const UserInfo = gql(/* GraphQL */ `
   fragment UserInfoCard on User {

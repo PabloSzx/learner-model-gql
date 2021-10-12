@@ -1,11 +1,12 @@
 import { Auth0Provider } from "@auth0/auth0-react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { CombinedRQGQLProvider } from "graph/rq-gql";
 import type { AppProps } from "next/app";
 import { APILoadingIndicator } from "../components/APILoadingIndicator";
 import { SyncAuth } from "../components/Auth";
 import { MainLayout } from "../components/MainLayout";
 import { NextNProgress } from "../components/NextNProgress";
-import { queryClient, QueryClientProvider } from "../utils/rqClient";
+import { queryClient, rqGQLClient } from "../rqClient";
 
 const theme = extendTheme({});
 
@@ -19,7 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
           typeof window !== "undefined" ? window.location.origin : undefined
         }
       >
-        <QueryClientProvider client={queryClient}>
+        <CombinedRQGQLProvider client={queryClient} rqGQLClient={rqGQLClient}>
           <SyncAuth />
           <ChakraProvider theme={theme}>
             {process.env.NODE_ENV !== "production" && <APILoadingIndicator />}
@@ -28,7 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
               <Component {...pageProps} />
             </MainLayout>
           </ChakraProvider>
-        </QueryClientProvider>
+        </CombinedRQGQLProvider>
       </Auth0Provider>
     </>
   );

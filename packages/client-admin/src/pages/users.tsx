@@ -34,7 +34,7 @@ import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
 import { useCursorPagination } from "../hooks/pagination";
 import { projectOptionLabel, useSelectMultiProjects } from "../hooks/projects";
-import { queryClient } from "../utils/rqClient";
+import { queryClient } from "../rqClient";
 
 gql(/* GraphQL */ `
   fragment UserInfo on User {

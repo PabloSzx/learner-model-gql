@@ -1,7 +1,6 @@
 /* eslint-disable */
-import * as graphql from "./graphql";
-import { rqGQL } from "rq-gql";
 import type { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/core";
+import * as graphql from "./graphql";
 
 const documents = {
   "\n  fragment UserInfoCard on User {\n    __typename\n    id\n    email\n    name\n    active\n    lastOnline\n    createdAt\n    role\n    enabled\n    updatedAt\n    locked\n  }\n":
@@ -125,15 +124,5 @@ export function gql(source: string) {
 export type DocumentType<TDocumentNode extends DocumentNode<any, any>> =
   TDocumentNode extends DocumentNode<infer TType, any> ? TType : never;
 
-export const {
-  useGQLQuery,
-  useGQLMutation,
-  useGQLInfiniteQuery,
-  headers,
-  useHeadersSnapshot,
-  fetchGQL,
-  configureRQ,
-  getKey,
-} = rqGQL();
-
+export * from "rq-gql";
 export * from "./graphql";

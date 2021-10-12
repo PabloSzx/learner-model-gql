@@ -39,7 +39,7 @@ import { FormModal } from "../components/FormModal";
 import { useSelectMultiGroups } from "../hooks/groups";
 import { useCursorPagination } from "../hooks/pagination";
 import { projectOptionLabel, useSelectMultiProjects } from "../hooks/projects";
-import { queryClient } from "../utils/rqClient";
+import { queryClient } from "../rqClient";
 
 gql(/* GraphQL */ `
   fragment GroupInfo on Group {
