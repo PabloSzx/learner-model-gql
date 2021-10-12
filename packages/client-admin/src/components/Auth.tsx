@@ -1,15 +1,16 @@
 import { useAuth0, User as Auth0User } from "@auth0/auth0-react";
 import { Spinner } from "@chakra-ui/react";
-import Router from "next/router";
-import { FC, useEffect } from "react";
 import {
   CurrentUserQuery,
-  useHeaders,
   headers,
   useCurrentUserQuery,
+  useHeaders,
 } from "graph/rq";
-import { headers as rqHeaders } from "graph/rq-gql";
+import Router from "next/router";
+import { FC, useEffect } from "react";
 import { proxy, useSnapshot } from "valtio";
+import { rqGQLClient } from "../rqClient";
+
 export const AuthState = proxy({
   auth0User: null as Auth0User | null,
   user: null as CurrentUserQuery["currentUser"],
@@ -43,7 +44,7 @@ export function SyncAuth() {
       AuthState.isLoading = true;
       getIdTokenClaims().then((data) => {
         headers.authorization =
-          rqHeaders.authorization = `Bearer ${data.__raw}`;
+          rqGQLClient.headers.authorization = `Bearer ${data.__raw}`;
 
         AuthState.isLoading = true;
       });
