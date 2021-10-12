@@ -45,7 +45,7 @@ importers:
       react: ^17.0.2
       rimraf: ^3.0.2
       testing: workspace:*
-      typescript: ^4.4.3
+      typescript: ^4.4.4
       undici: ^4.7.1
       valtio: ^1.2.4
       wait-on: ^6.0.0
@@ -88,7 +88,7 @@ importers:
       react: 17.0.2
       rimraf: 3.0.2
       testing: link:packages/testing
-      typescript: 4.4.3
+      typescript: 4.4.4
       valtio: 1.2.4_react@17.0.2
       wait-on: 6.0.0
 
@@ -163,7 +163,7 @@ importers:
       react-select: ^5.1.0
       react-table: ^7.7.0
       react-use: ^17.3.1
-      typescript: ^4.4.3
+      typescript: ^4.4.4
       use-immer: ^0.6.0
       zustand: ^3.5.13
     dependencies:
@@ -181,7 +181,7 @@ importers:
       gqty: 2.0.2_graphql@15.6.1
       graph: link:../graph
       immer: 9.0.6
-      next: 11.1.2_bd7797d63db473de6e2318609a63c933
+      next: 11.1.2_8e3522129ef2816b3c737f17aecb3a9d
       nprogress: 0.2.0
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -194,7 +194,7 @@ importers:
     devDependencies:
       '@types/nprogress': 0.2.0
       '@types/react-table': 7.7.6
-      typescript: 4.4.3
+      typescript: 4.4.4
 
   packages/client-nextjs:
     specifiers:
@@ -211,7 +211,7 @@ importers:
       react: ^17.0.2
       react-dom: ^17.0.2
       react-icons: ^4.3.1
-      typescript: ^4.4.3
+      typescript: ^4.4.4
     dependencies:
       '@auth0/auth0-react': 1.8.0_react-dom@17.0.2+react@17.0.2
       '@chakra-ui/react': 1.6.9_9b23c8181841c8ac0bc098f4c33087d4
@@ -222,12 +222,12 @@ importers:
       '@types/react-dom': 17.0.9
       framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
       graph: link:../graph
-      next: 11.1.2_bd7797d63db473de6e2318609a63c933
+      next: 11.1.2_8e3522129ef2816b3c737f17aecb3a9d
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-icons: 4.3.1_react@17.0.2
     devDependencies:
-      typescript: 4.4.3
+      typescript: 4.4.4
 
   packages/common:
     specifiers:
@@ -344,7 +344,7 @@ importers:
       rq-gql: 0.2.2_2b17dc2273588b5273077ebb247d5358
       valtio: 1.2.4_react@17.0.2
     devDependencies:
-      '@graphql-codegen/cli': 2.2.0_2b311a31742146ac38e1effdcd578775
+      '@graphql-codegen/cli': 2.2.0_5651f299744d8217016a25b202895c1d
       '@graphql-codegen/core': 2.1.0_graphql@15.6.1
       '@graphql-codegen/typed-document-node': 2.1.4_graphql@15.6.1
       '@graphql-codegen/typescript': 2.2.2_graphql@15.6.1
@@ -416,7 +416,7 @@ importers:
       api-base: workspace:^0.0.1
       graph: workspace:^0.0.1
     devDependencies:
-      '@graphql-codegen/cli': 2.2.0_2b311a31742146ac38e1effdcd578775
+      '@graphql-codegen/cli': 2.2.0_5651f299744d8217016a25b202895c1d
       '@graphql-codegen/core': 2.1.0_graphql@15.6.1
       '@graphql-codegen/gql-tag-operations-preset': 1.2.0_graphql@15.6.1
       '@graphql-codegen/typed-document-node': 2.1.4_graphql@15.6.1
@@ -1916,7 +1916,7 @@ packages:
     resolution: {integrity: sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==}
     dev: false
 
-  /@endemolshinegroup/cosmiconfig-typescript-loader/3.0.2_e9677aae07926e7f535c02f0a1c9b8a5:
+  /@endemolshinegroup/cosmiconfig-typescript-loader/3.0.2_3a94db2abf629ff46a0570c3eca8c614:
     resolution: {integrity: sha512-QRVtqJuS1mcT56oHpVegkKBlgtWjXw/gHNWO3eL9oyB5Sc7HBoc2OLG/nYpVfT/Jejvo3NUrD0Udk7XgoyDKkA==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
@@ -1925,7 +1925,7 @@ packages:
       cosmiconfig: 7.0.0
       lodash.get: 4.4.2
       make-error: 1.3.6
-      ts-node: 9.1.1_typescript@4.4.3
+      ts-node: 9.1.1_typescript@4.4.4
       tslib: 2.3.1
     transitivePeerDependencies:
       - typescript
@@ -2019,7 +2019,7 @@ packages:
       graphql: 15.6.1
       tslib: 2.3.1
 
-  /@graphql-codegen/cli/2.2.0_2b311a31742146ac38e1effdcd578775:
+  /@graphql-codegen/cli/2.2.0_5651f299744d8217016a25b202895c1d:
     resolution: {integrity: sha512-f4EsScASza57aPM1z6eKAaYmwz83B/LsmiyBb8phy1NfbWea2IBUCfEgtvOHN85xbiMpdQfNtckE2mC84yH80w==}
     hasBin: true
     peerDependencies:
@@ -2049,7 +2049,7 @@ packages:
       glob: 7.2.0
       globby: 11.0.4
       graphql: 15.6.1
-      graphql-config: 4.0.1_2b311a31742146ac38e1effdcd578775
+      graphql-config: 4.0.1_5651f299744d8217016a25b202895c1d
       inquirer: 7.3.3
       is-glob: 4.0.3
       json-to-pretty-yaml: 1.2.2
@@ -5647,13 +5647,13 @@ packages:
     resolution: {integrity: sha512-qkIilPUYcNhJpd33n0GBXTB1MMPp14TxEsEs0pTrsSVucApsYzW5V+Q8Qxhik6KU3evy+qkAAowTByymK0avdg==}
     dev: false
 
-  /graphql-config/4.0.1_2b311a31742146ac38e1effdcd578775:
+  /graphql-config/4.0.1_5651f299744d8217016a25b202895c1d:
     resolution: {integrity: sha512-JdXxFzBwjujJMGLHUZom9SrmP/M4gF57iTDa3fJVm3Q85+Xw2kj9jZIygaaSLpDKhaPnMQZqfJ5Hmc6afKxS9w==}
     engines: {node: '>= 10.0.0'}
     peerDependencies:
       graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
     dependencies:
-      '@endemolshinegroup/cosmiconfig-typescript-loader': 3.0.2_e9677aae07926e7f535c02f0a1c9b8a5
+      '@endemolshinegroup/cosmiconfig-typescript-loader': 3.0.2_3a94db2abf629ff46a0570c3eca8c614
       '@graphql-tools/graphql-file-loader': 7.3.0_graphql@15.6.1
       '@graphql-tools/json-file-loader': 7.3.0_graphql@15.6.1
       '@graphql-tools/load': 7.3.2_graphql@15.6.1
@@ -6946,7 +6946,7 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  /next/11.1.2_bd7797d63db473de6e2318609a63c933:
+  /next/11.1.2_8e3522129ef2816b3c737f17aecb3a9d:
     resolution: {integrity: sha512-azEYL0L+wFjv8lstLru3bgvrzPvK0P7/bz6B/4EJ9sYkXeW8r5Bjh78D/Ol7VOg0EIPz0CXoe72hzAlSAXo9hw==}
     engines: {node: '>=12.0.0'}
     hasBin: true
@@ -6997,7 +6997,7 @@ packages:
       os-browserify: 0.3.0
       p-limit: 3.1.0
       path-browserify: 1.0.1
-      pnp-webpack-plugin: 1.6.4_typescript@4.4.3
+      pnp-webpack-plugin: 1.6.4_typescript@4.4.4
       postcss: 8.2.15
       process: 0.11.10
       querystring-es3: 0.2.1
@@ -7508,11 +7508,11 @@ packages:
     resolution: {integrity: sha512-fnWVljUchTro6RiCFvCXBbNhJc2NijN7oIQxbwsyL0buWJPG85v81ehlHI9fXrJsMNgTofEoWIQeClKpgxFLrg==}
     dev: false
 
-  /pnp-webpack-plugin/1.6.4_typescript@4.4.3:
+  /pnp-webpack-plugin/1.6.4_typescript@4.4.4:
     resolution: {integrity: sha512-7Wjy+9E3WwLOEL30D+m8TSTF7qJJUJLONBnwQp0518siuMxUQUbgZwssaFX+QKlZkjHZcw/IpZCt/H0srrntSg==}
     engines: {node: '>=6'}
     dependencies:
-      ts-pnp: 1.2.0_typescript@4.4.3
+      ts-pnp: 1.2.0_typescript@4.4.4
     transitivePeerDependencies:
       - typescript
     dev: false
@@ -8978,7 +8978,7 @@ packages:
     resolution: {integrity: sha512-XvB+OdKSJ708Dmf9ore4Uf/q62AYDTzFcAdxc8KNML1mmAWywRFVt/dn1KYJH8Agt5UJNujfM3znU5PxgAzA2w==}
     dev: true
 
-  /ts-node/9.1.1_typescript@4.4.3:
+  /ts-node/9.1.1_typescript@4.4.4:
     resolution: {integrity: sha512-hPlt7ZACERQGf03M253ytLY3dHbGNGrAq9qIHWUY9XHYl1z7wYngSr3OQ5xmui8o2AaxsONxIzjafLUiWBo1Fg==}
     engines: {node: '>=10.0.0'}
     hasBin: true
@@ -8990,11 +8990,11 @@ packages:
       diff: 4.0.2
       make-error: 1.3.6
       source-map-support: 0.5.20
-      typescript: 4.4.3
+      typescript: 4.4.4
       yn: 3.1.1
     dev: true
 
-  /ts-pnp/1.2.0_typescript@4.4.3:
+  /ts-pnp/1.2.0_typescript@4.4.4:
     resolution: {integrity: sha512-csd+vJOb/gkzvcCHgTGSChYpy5f1/XKNsmvBGO4JXS+z1v2HobugDz4s1IeFXM3wZB44uczs+eazB5Q/ccdhQw==}
     engines: {node: '>=6'}
     peerDependencies:
@@ -9003,7 +9003,7 @@ packages:
       typescript:
         optional: true
     dependencies:
-      typescript: 4.4.3
+      typescript: 4.4.4
     dev: false
 
   /tslib/1.14.1:
@@ -9060,8 +9060,8 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /typescript/4.4.3:
-    resolution: {integrity: sha512-4xfscpisVgqqDfPaJo5vkd+Qd/ItkoagnHpufr+i2QCHBsNYp+G7UAoyFl8aPtx879u38wPV65rZ8qbGZijalA==}
+  /typescript/4.4.4:
+    resolution: {integrity: sha512-DqGhF5IKoBl8WNf8C1gu8q0xZSInh9j1kJJMqT3a94w1JzVaBU4EXOSMrz9yDqMT0xt3selp83fuFMQ0uzv6qA==}
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true
