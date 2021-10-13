@@ -86,7 +86,7 @@ function UpsertUsers() {
   const { selectMultiProjectComponent, selectedProjects } =
     useSelectMultiProjects();
 
-  const { mutateAsync } = useGQLMutation(
+  const { mutateAsync, isLoading } = useGQLMutation(
     gql(/* GraphQL */ `
       mutation UpsertUsersWithProjects(
         $emails: [EmailAddress!]!
@@ -137,7 +137,7 @@ function UpsertUsers() {
         leftIcon: <FaUsers />,
       }}
       saveButton={{
-        isDisabled: !emails.length,
+        isDisabled: isLoading || !emails.length,
       }}
     >
       <FormControl>
@@ -158,7 +158,7 @@ function UpsertUsers() {
   );
 }
 
-export default withAuth(function IndexPage() {
+export default withAuth(function UsersPage() {
   const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination();
 
   const usersState = useSnapshot(UsersState);

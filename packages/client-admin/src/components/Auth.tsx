@@ -59,7 +59,10 @@ export const useAuth = () => useSnapshot(AuthState);
 export function withAuth<Props extends Record<string, unknown>>(
   Cmp: FC<Props>
 ) {
-  return function WithAuth(props: Props) {
+  const WithAuth: {
+    (props: Props): JSX.Element;
+    displayName: string;
+  } = function WithAuth(props: Props) {
     const { isLoading, user } = useAuth();
 
     if (isLoading) return <Spinner />;
@@ -70,4 +73,8 @@ export function withAuth<Props extends Record<string, unknown>>(
 
     return <Spinner />;
   };
+
+  WithAuth.displayName = Cmp.name;
+
+  return WithAuth;
 }

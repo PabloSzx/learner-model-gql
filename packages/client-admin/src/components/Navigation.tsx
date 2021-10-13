@@ -1,5 +1,6 @@
 import { Stack } from "@chakra-ui/react";
 import { FiBook, FiUsers } from "react-icons/fi";
+import { MdOutlineTopic } from "react-icons/md";
 import { RiGroup2Line } from "react-icons/ri";
 import { VscProject } from "react-icons/vsc";
 import { useAuth } from "./Auth";
@@ -25,6 +26,9 @@ export function Navigation() {
             </SidebarLink>
             <SidebarLink href="/projects" icon={<VscProject />}>
               Projects
+            </SidebarLink>
+            <SidebarLink href="/topics" icon={<MdOutlineTopic />}>
+              Topics
             </SidebarLink>
           </>
         )}

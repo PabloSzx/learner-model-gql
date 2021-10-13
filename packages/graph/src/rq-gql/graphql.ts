@@ -648,6 +648,33 @@ export type AdminUsersCardsQuery = {
   };
 };
 
+export type AllDomainsBaseQueryVariables = Exact<{
+  pagination: CursorConnectionArgs;
+}>;
+
+export type AllDomainsBaseQuery = {
+  __typename?: "Query";
+  adminDomain: {
+    __typename?: "AdminDomainQueries";
+    allDomains: {
+      __typename?: "DomainsConnection";
+      nodes: Array<{
+        __typename?: "Domain";
+        id: string;
+        code: string;
+        label: string;
+      }>;
+      pageInfo: {
+        __typename?: "PageInfo";
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null | undefined;
+        endCursor?: string | null | undefined;
+      };
+    };
+  };
+};
+
 export type AllGroupsBaseQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
 }>;
@@ -776,6 +803,43 @@ export type AllProjectsBaseQuery = {
         id: string;
         code: string;
         label: string;
+      }>;
+      pageInfo: {
+        __typename?: "PageInfo";
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null | undefined;
+        endCursor?: string | null | undefined;
+      };
+    };
+  };
+};
+
+export type AllTopicsBaseQueryVariables = Exact<{
+  pagination: CursorConnectionArgs;
+}>;
+
+export type AllTopicsBaseQuery = {
+  __typename?: "Query";
+  adminDomain: {
+    __typename?: "AdminDomainQueries";
+    allTopics: {
+      __typename?: "TopicsConnection";
+      nodes: Array<{
+        __typename?: "Topic";
+        id: string;
+        code: string;
+        label: string;
+        domain: {
+          __typename?: "Domain";
+          id: string;
+          code: string;
+          label: string;
+        };
+        parent?:
+          | { __typename?: "Topic"; id: string; code: string; label: string }
+          | null
+          | undefined;
       }>;
       pageInfo: {
         __typename?: "PageInfo";
@@ -1036,6 +1100,23 @@ export type UpdateProjectMutation = {
   adminProjects: {
     __typename?: "AdminProjectsMutations";
     updateProject: { __typename: "Project" };
+  };
+};
+
+export type CreateTopicMutationVariables = Exact<{
+  data: CreateTopic;
+}>;
+
+export type CreateTopicMutation = {
+  __typename?: "Mutation";
+  adminDomain: {
+    __typename?: "AdminDomainMutations";
+    createTopic: {
+      __typename?: "Topic";
+      id: string;
+      label: string;
+      code: string;
+    };
   };
 };
 
@@ -1505,6 +1586,91 @@ export const AdminUsersCardsDocument = {
   AdminUsersCardsQuery,
   AdminUsersCardsQueryVariables
 >;
+export const AllDomainsBaseDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "AllDomainsBase" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "pagination" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "CursorConnectionArgs" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminDomain" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "allDomains" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "pagination" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "pagination" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "nodes" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "code" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "label" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "FragmentSpread",
+                        name: { kind: "Name", value: "Pagination" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...PaginationFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<AllDomainsBaseQuery, AllDomainsBaseQueryVariables>;
 export const AllGroupsBaseDocument = {
   kind: "Document",
   definitions: [
@@ -1678,6 +1844,133 @@ export const AllProjectsBaseDocument = {
   AllProjectsBaseQuery,
   AllProjectsBaseQueryVariables
 >;
+export const AllTopicsBaseDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "AllTopicsBase" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "pagination" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "CursorConnectionArgs" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminDomain" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "allTopics" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "pagination" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "pagination" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "nodes" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "code" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "label" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "domain" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "id" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "code" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "label" },
+                                  },
+                                ],
+                              },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "parent" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "id" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "code" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "label" },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "FragmentSpread",
+                        name: { kind: "Name", value: "Pagination" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...PaginationFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<AllTopicsBaseQuery, AllTopicsBaseQueryVariables>;
 export const CreateDomainDocument = {
   kind: "Document",
   definitions: [
@@ -2381,6 +2674,65 @@ export const UpdateProjectDocument = {
   UpdateProjectMutation,
   UpdateProjectMutationVariables
 >;
+export const CreateTopicDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "CreateTopic" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "CreateTopic" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminDomain" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "createTopic" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "input" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "data" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "label" } },
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<CreateTopicMutation, CreateTopicMutationVariables>;
 export const AdminUsersDocument = {
   kind: "Document",
   definitions: [
