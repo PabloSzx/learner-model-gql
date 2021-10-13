@@ -102,7 +102,7 @@ importers:
       '@graphql-ez/plugin-scalars': ^0.7.3
       '@graphql-ez/plugin-schema': ^0.7.3
       '@graphql-ez/plugin-voyager': ^0.9.0
-      '@graphql-ez/plugin-websockets': ^0.10.1
+      '@graphql-ez/plugin-websockets': ^0.10.2
       '@types/pino': ^6.3.11
       '@types/validator': ^13.6.3
       common-api: workspace:^1.0.0
@@ -123,7 +123,7 @@ importers:
       '@graphql-ez/plugin-scalars': 0.7.3_af2a267332b79b3e46bdc750b376126b
       '@graphql-ez/plugin-schema': 0.7.3_af2a267332b79b3e46bdc750b376126b
       '@graphql-ez/plugin-voyager': 0.9.0_af2a267332b79b3e46bdc750b376126b
-      '@graphql-ez/plugin-websockets': 0.10.1_af2a267332b79b3e46bdc750b376126b
+      '@graphql-ez/plugin-websockets': 0.10.2_af2a267332b79b3e46bdc750b376126b
       common-api: link:../common-api
       db: link:../db
       fastify-auth0-verify: 0.6.0
@@ -2408,8 +2408,8 @@ packages:
       - graphql
     dev: false
 
-  /@graphql-ez/plugin-websockets/0.10.1_af2a267332b79b3e46bdc750b376126b:
-    resolution: {integrity: sha512-CjpWzcz65d9BXIEodhSNLAH8w9MiA8YvJkD+B4gy/6dYY2HhAgUZMlpdpbzXVITDO3oYfS9vFmi6usUaRRyJgA==}
+  /@graphql-ez/plugin-websockets/0.10.2_af2a267332b79b3e46bdc750b376126b:
+    resolution: {integrity: sha512-auAsiDdGFHwlYhMUrPxTFSba2NOnGLTgofetpCr3bB2f9EazXCOkAHJCHxFLxWYlKxOT+PqT4YZOtbCdNFpkLA==}
     engines: {node: ^12.20.0 || >=14.13.0}
     peerDependencies:
       graphql: '*'
