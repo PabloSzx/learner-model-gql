@@ -9,12 +9,12 @@
     "generate": "graphql-codegen generate --config codegen.yaml"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^2.2.0",
-    "@graphql-codegen/core": "^2.1.0",
+    "@graphql-codegen/cli": "^2.2.1",
+    "@graphql-codegen/core": "^2.2.0",
     "@graphql-codegen/gql-tag-operations-preset": "^1.2.0",
-    "@graphql-codegen/typed-document-node": "^2.1.4",
-    "@graphql-codegen/typescript": "^2.2.2",
-    "@graphql-codegen/typescript-operations": "^2.1.6",
+    "@graphql-codegen/typed-document-node": "^2.1.5",
+    "@graphql-codegen/typescript": "^2.2.3",
+    "@graphql-codegen/typescript-operations": "^2.1.7",
     "@graphql-ez/fastify": "^0.9.4",
     "@graphql-ez/fastify-testing": "^0.1.2",
     "@graphql-typed-document-node/core": "^3.1.0",
