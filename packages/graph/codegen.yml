@@ -1,10 +1,8 @@
 overwrite: true
 schema: "../../schema.gql"
 documents:
-  - "../../**/client-admin/src/**/*.tsx"
-  - "../../**/client-admin/src/**/*.ts"
-  - "!**/node_modules/**"
-  - "!**/graph/**"
+  - "../client-admin/src/**/*.tsx"
+  - "../client-admin/src/**/*.ts"
 generates:
   src/rq-gql/:
     preset: rq-gql/preset
