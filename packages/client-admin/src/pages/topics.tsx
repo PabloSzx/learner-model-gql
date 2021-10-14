@@ -380,7 +380,11 @@ export default withAuth(function TopicsPage() {
       {isLoading ? (
         <Spinner />
       ) : (
-        <HStack wrap="wrap" justifyContent="space-around" alignItems="center">
+        <HStack
+          wrap="wrap"
+          justifyContent="space-around"
+          alignItems="flex-start"
+        >
           <TopicsCards topics={topicsTree} />
         </HStack>
       )}
