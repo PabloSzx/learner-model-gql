@@ -23,7 +23,7 @@
     "fastify-auth0-verify": "^0.6.0",
     "fastify-plugin": "^3.0.0",
     "pg-gql-pubsub": "^0.3.0",
-    "pino": "^6.13.3",
+    "pino": "^7.0.1",
     "pino-pretty": "^7.0.1",
     "validator": "^13.6.0",
     "wait-on": "^6.0.0"
