@@ -4,12 +4,11 @@ import {
   AllTopicsBaseQueryVariables,
   getKey,
   gql,
+  useGQLInfiniteQuery,
 } from "graph/rq-gql";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useInfiniteQuery } from "react-query";
 import { useImmer } from "use-immer";
 import { AsyncSelect, AsyncSelectProps } from "../components/AsyncSelect";
-import { rqGQLClient } from "../rqClient";
 
 export type TopicInfo =
   AllTopicsBaseQuery["adminDomain"]["allTopics"]["nodes"][number];
@@ -53,21 +52,16 @@ export const useAllTopics = ({ jsFilter }: AllTopicsOptions = {}) => {
   const [topicsFilter, produceTopicsFilter] =
     useImmer<AdminTopicsFilter | null>(null);
   const { hasNextPage, fetchNextPage, isFetching, data, isLoading } =
-    useInfiniteQuery<AllTopicsBaseQuery, Error>(
-      getKey(AllTopicsBaseDoc, {
-        filters: topicsFilter,
-      } as AllTopicsBaseQueryVariables),
-      ({ pageParam }) => {
-        return rqGQLClient.fetchGQL<
-          AllTopicsBaseQuery,
-          AllTopicsBaseQueryVariables
-        >(AllTopicsBaseDoc, {
+    useGQLInfiniteQuery(
+      AllTopicsBaseDoc,
+      (pageParam) => {
+        return {
           pagination: {
             first: 20,
             after: pageParam,
           },
           filters: topicsFilter,
-        })();
+        };
       },
       {
         getNextPageParam({
@@ -80,6 +74,9 @@ export const useAllTopics = ({ jsFilter }: AllTopicsOptions = {}) => {
           return hasNextPage ? endCursor : null;
         },
         staleTime: 5000,
+        queryKey: getKey(AllTopicsBaseDoc, {
+          filters: topicsFilter,
+        } as AllTopicsBaseQueryVariables),
       }
     );
 

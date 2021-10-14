@@ -325,10 +325,7 @@ export const TopicCard = memo(function TopicCard({
         )}
         <Property label="Domain" value={domainOptionLabel(topic.domain)} />
         {topic.childrens.length ? (
-          <Property
-            label="Childrens"
-            value={<TopicsCards topics={topic.childrens} />}
-          />
+          <Property value={<TopicsCards topics={topic.childrens} />} />
         ) : null}
       </CardContent>
     </Card>

@@ -2,7 +2,7 @@ import { Box, Flex, FlexProps, useColorModeValue } from "@chakra-ui/react";
 import type { ReactNode } from "react";
 
 interface Props extends FlexProps {
-  label: string;
+  label?: string;
   value: ReactNode;
 }
 
@@ -17,9 +17,11 @@ export const Property = (props: Props) => {
       _even={{ bg: useColorModeValue("gray.50", "gray.600") }}
       {...flexProps}
     >
-      <Box as="dt" minWidth="180px">
-        {label}
-      </Box>
+      {label ? (
+        <Box as="dt" minWidth="180px">
+          {label}
+        </Box>
+      ) : null}
       <Box as="dd" flex="1" fontWeight="semibold">
         {value}
       </Box>

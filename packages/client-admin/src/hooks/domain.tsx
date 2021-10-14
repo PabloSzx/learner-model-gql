@@ -1,15 +1,13 @@
 import {
-  AllDomainsBaseQuery,
-  AllDomainsBaseQueryVariables,
   AdminDomainsFilter,
+  AllDomainsBaseQueryVariables,
   getKey,
   gql,
+  useGQLInfiniteQuery,
 } from "graph/rq-gql";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useInfiniteQuery } from "react-query";
 import { useImmer } from "use-immer";
 import { AsyncSelect, AsyncSelectProps } from "../components/AsyncSelect";
-import { rqGQLClient } from "../rqClient";
 
 export const AllDomainsBaseDoc = gql(/* GraphQL */ `
   query AllDomainsBase(
@@ -33,21 +31,16 @@ export const useDomainsBase = () => {
   const [domainsFilter, produceDomainsFilter] =
     useImmer<AdminDomainsFilter | null>(null);
   const { hasNextPage, fetchNextPage, isFetching, data, isLoading } =
-    useInfiniteQuery<AllDomainsBaseQuery, Error>(
-      getKey(AllDomainsBaseDoc, {
-        filters: domainsFilter,
-      } as AllDomainsBaseQueryVariables),
-      ({ pageParam }) => {
-        return rqGQLClient.fetchGQL<
-          AllDomainsBaseQuery,
-          AllDomainsBaseQueryVariables
-        >(AllDomainsBaseDoc, {
+    useGQLInfiniteQuery(
+      AllDomainsBaseDoc,
+      (pageParam) => {
+        return {
           pagination: {
             first: 20,
             after: pageParam,
           },
           filters: domainsFilter,
-        })();
+        };
       },
       {
         getNextPageParam({
@@ -60,6 +53,9 @@ export const useDomainsBase = () => {
           return hasNextPage ? endCursor : null;
         },
         staleTime: 5000,
+        queryKey: getKey(AllDomainsBaseDoc, {
+          filters: domainsFilter,
+        } as AllDomainsBaseQueryVariables),
       }
     );
 
