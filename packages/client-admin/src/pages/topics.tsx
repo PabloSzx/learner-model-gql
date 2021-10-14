@@ -251,7 +251,8 @@ export const TopicCard = memo(function TopicCard({
                 isEditing &&
                 (topicEdit.code !== topic.code ||
                   topicEdit.label !== topic.label ||
-                  selectedTopic?.value !== topic.parent?.id)
+                  selectedTopic?.value !== topic.parent?.id ||
+                  topicEdit.sortIndex !== topic.sortIndex)
               ) {
                 mutateAsync({
                   data: {
@@ -261,6 +262,7 @@ export const TopicCard = memo(function TopicCard({
                     contentIds: [],
                     domainId: topic.domain.id,
                     parentTopicId: selectedTopic?.value,
+                    sortIndex: topicEdit.sortIndex,
                   },
                 })
                   .then(() => {
@@ -317,6 +319,24 @@ export const TopicCard = memo(function TopicCard({
               />
             ) : (
               topic.label
+            )
+          }
+        />
+        <Property
+          label="sortIndex"
+          value={
+            isEditing ? (
+              <Input
+                value={topicEdit.sortIndex || ""}
+                type="number"
+                onChange={(ev) => {
+                  edit((draft) => {
+                    draft.topicEdit.sortIndex = ev.target.valueAsNumber;
+                  });
+                }}
+              />
+            ) : (
+              topic.sortIndex
             )
           }
         />

@@ -844,6 +844,7 @@ export type AllTopicsBaseQuery = {
         id: string;
         code: string;
         label: string;
+        sortIndex?: number | null | undefined;
         domain: {
           __typename?: "Domain";
           id: string;
@@ -1984,6 +1985,10 @@ export const AllTopicsBaseDocument = {
                             {
                               kind: "Field",
                               name: { kind: "Name", value: "label" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "sortIndex" },
                             },
                             {
                               kind: "Field",
