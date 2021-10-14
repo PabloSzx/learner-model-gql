@@ -103,7 +103,6 @@ importers:
       '@graphql-ez/plugin-schema': ^0.7.3
       '@graphql-ez/plugin-voyager': ^0.9.0
       '@graphql-ez/plugin-websockets': ^0.10.2
-      '@types/pino': ^6.3.11
       '@types/validator': ^13.6.3
       common-api: workspace:^1.0.0
       db: workspace:^0.0.1
@@ -134,7 +133,6 @@ importers:
       validator: 13.6.0
       wait-on: 6.0.0
     devDependencies:
-      '@types/pino': 6.3.11
       '@types/validator': 13.6.3
 
   packages/client-admin:
@@ -3313,27 +3311,6 @@ packages:
       pg-protocol: 1.5.0
       pg-types: 2.2.0
     dev: false
-
-  /@types/pino-pretty/4.7.1:
-    resolution: {integrity: sha512-l1ntNXdpVWsnPYUk5HyO5Lxfr38zLCgxVfEn/9Zhhm+nGF04/BiIou/m8XPwvoVZLV+livUo79VdHXMJPfUYxA==}
-    dependencies:
-      '@types/pino': 6.3.11
-    dev: true
-
-  /@types/pino-std-serializers/2.4.1:
-    resolution: {integrity: sha512-17XcksO47M24IVTVKPeAByWUd3Oez7EbIjXpSbzMPhXVzgjGtrOa49gKBwxH9hb8dKv58OelsWQ+A1G1l9S3wQ==}
-    dependencies:
-      '@types/node': 16.10.9
-    dev: true
-
-  /@types/pino/6.3.11:
-    resolution: {integrity: sha512-S7+fLONqSpHeW9d7TApUqO6VN47KYgOXhCNKwGBVLHObq8HhaAYlVqUNdfnvoXjCMiwE5xcPm/5R2ZUh8bgaXQ==}
-    dependencies:
-      '@types/node': 16.10.9
-      '@types/pino-pretty': 4.7.1
-      '@types/pino-std-serializers': 2.4.1
-      sonic-boom: 2.3.0
-    dev: true
 
   /@types/prettier/2.4.1:
     resolution: {integrity: sha512-Fo79ojj3vdEZOHg3wR9ksAMRz4P3S5fDB5e/YWZiFnyFQI1WY2Vftu9XoXVVtJfxB7Bpce/QTqWSSntkz2Znrw==}
@@ -8411,6 +8388,7 @@ packages:
     resolution: {integrity: sha512-lEPaw654/4/rCJHz/TNzV4GIthqCq4inO+O3aFhbdOvR1bE+2//sVkcS+xlqPdb8gdjQCEE0hE9BuvnVixbnWQ==}
     dependencies:
       atomic-sleep: 1.0.0
+    dev: false
 
   /source-map-support/0.5.20:
     resolution: {integrity: sha512-n1lZZ8Ve4ksRqizaBQgxXDgKwttHDhyfQjA6YZZn8+AroHbsIz+JjwxQDxbp+7y5OYCI8t1Yk7etjD9CRd2hIw==}
