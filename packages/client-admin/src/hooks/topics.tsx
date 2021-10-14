@@ -1,14 +1,26 @@
-import { AllTopicsBaseQuery, gql, useGQLInfiniteQuery } from "graph/rq-gql";
+import {
+  AdminTopicsFilter,
+  AllTopicsBaseQuery,
+  AllTopicsBaseQueryVariables,
+  getKey,
+  gql,
+} from "graph/rq-gql";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useInfiniteQuery } from "react-query";
+import { useImmer } from "use-immer";
 import { AsyncSelect, AsyncSelectProps } from "../components/AsyncSelect";
+import { rqGQLClient } from "../rqClient";
 
 export type TopicInfo =
   AllTopicsBaseQuery["adminDomain"]["allTopics"]["nodes"][number];
 
 export const AllTopicsBaseDoc = gql(/* GraphQL */ `
-  query AllTopicsBase($pagination: CursorConnectionArgs!) {
+  query AllTopicsBase(
+    $pagination: CursorConnectionArgs!
+    $filters: AdminTopicsFilter
+  ) {
     adminDomain {
-      allTopics(pagination: $pagination) {
+      allTopics(pagination: $pagination, filters: $filters) {
         nodes {
           id
           code
@@ -23,6 +35,11 @@ export const AllTopicsBaseDoc = gql(/* GraphQL */ `
             code
             label
           }
+          project {
+            id
+            code
+            label
+          }
         }
         ...Pagination
       }
@@ -33,16 +50,24 @@ export const AllTopicsBaseDoc = gql(/* GraphQL */ `
 export type AllTopicsOptions = { jsFilter?: (topic: TopicInfo) => boolean };
 
 export const useAllTopics = ({ jsFilter }: AllTopicsOptions = {}) => {
+  const [topicsFilter, produceTopicsFilter] =
+    useImmer<AdminTopicsFilter | null>(null);
   const { hasNextPage, fetchNextPage, isFetching, data, isLoading } =
-    useGQLInfiniteQuery(
-      AllTopicsBaseDoc,
-      (after) => {
-        return {
+    useInfiniteQuery<AllTopicsBaseQuery, Error>(
+      getKey(AllTopicsBaseDoc, {
+        filters: topicsFilter,
+      } as AllTopicsBaseQueryVariables),
+      ({ pageParam }) => {
+        return rqGQLClient.fetchGQL<
+          AllTopicsBaseQuery,
+          AllTopicsBaseQueryVariables
+        >(AllTopicsBaseDoc, {
           pagination: {
             first: 20,
-            after,
+            after: pageParam,
           },
-        };
+          filters: topicsFilter,
+        })();
       },
       {
         getNextPageParam({
@@ -108,6 +133,8 @@ export const useAllTopics = ({ jsFilter }: AllTopicsOptions = {}) => {
     isLoading,
     asOptions,
     filteredOptions,
+    topicsFilter,
+    produceTopicsFilter,
   };
 };
 
@@ -120,17 +147,35 @@ export const topicOptionLabel = ({
 }) => `${code} | ${label}`;
 
 export const useSelectSingleTopic = ({
+  state,
   topics,
+  selectProps,
 }: {
+  state?: [
+    {
+      value: string;
+      label: string;
+    } | null,
+    (value: { value: string; label: string } | null) => void
+  ];
   topics?: AllTopicsOptions;
+  selectProps?: Partial<AsyncSelectProps>;
 } = {}) => {
-  const { isFetching, isLoading, filteredOptions, asOptions } =
-    useAllTopics(topics);
+  const {
+    isFetching,
+    isLoading,
+    filteredOptions,
+    asOptions,
+    topicsFilter,
+    produceTopicsFilter,
+  } = useAllTopics(topics);
 
-  const [selectedTopic, setSelectedTopic] = useState<{
-    value: string;
-    label: string;
-  } | null>(null);
+  const [selectedTopic, setSelectedTopic] =
+    state ||
+    useState<{
+      value: string;
+      label: string;
+    } | null>(null);
 
   const selectSingleTopicComponent = useMemo(() => {
     return (
@@ -143,13 +188,24 @@ export const useSelectSingleTopic = ({
         }}
         value={selectedTopic}
         placeholder="Search a topic"
+        {...selectProps}
       />
     );
-  }, [filteredOptions, isLoading, isFetching, asOptions, selectedTopic]);
+  }, [
+    filteredOptions,
+    isLoading,
+    isFetching,
+    asOptions,
+    selectedTopic,
+    selectProps,
+  ]);
 
   return {
     selectedTopic,
+    setSelectedTopic,
     selectSingleTopicComponent,
+    topicsFilter,
+    produceTopicsFilter,
   };
 };
 
@@ -172,8 +228,14 @@ export const useSelectMultiTopics = ({
   ];
   topics?: AllTopicsOptions;
 } & Partial<AsyncSelectProps> = {}) => {
-  const { isFetching, isLoading, filteredOptions, asOptions } =
-    useAllTopics(topics);
+  const {
+    isFetching,
+    isLoading,
+    filteredOptions,
+    asOptions,
+    topicsFilter,
+    produceTopicsFilter,
+  } = useAllTopics(topics);
 
   const [selectedTopics, setSelectedTopics] =
     state ||
@@ -205,5 +267,7 @@ export const useSelectMultiTopics = ({
     selectedTopics,
     selectMultiDomainComponent,
     setSelectedTopics,
+    topicsFilter,
+    produceTopicsFilter,
   };
 };

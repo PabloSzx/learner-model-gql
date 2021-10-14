@@ -150,6 +150,7 @@ importers:
       '@types/react': ^17.0.29
       '@types/react-dom': ^17.0.9
       '@types/react-table': ^7.7.6
+      common: workspace:^0.0.1
       date-fns: ^2.25.0
       framer-motion: ^4.1.17
       gqty: ^2.0.2
@@ -176,6 +177,7 @@ importers:
       '@gqty/react': 2.0.0_a20d9e5165f44d4a924da7bf5f974c66
       '@types/react': 17.0.29
       '@types/react-dom': 17.0.9
+      common: link:../common
       date-fns: 2.25.0
       framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
       gqty: 2.0.2_graphql@15.6.1

@@ -160,6 +160,7 @@ export type AdminDomainQueries = {
 };
 
 export type AdminDomainQueriesAllDomainsArgs = {
+  filters?: Maybe<AdminDomainsFilter>;
   pagination: CursorConnectionArgs;
 };
 
@@ -168,7 +169,12 @@ export type AdminDomainQueriesAllKCsArgs = {
 };
 
 export type AdminDomainQueriesAllTopicsArgs = {
+  filters?: Maybe<AdminTopicsFilter>;
   pagination: CursorConnectionArgs;
+};
+
+export type AdminDomainsFilter = {
+  projects?: Maybe<Array<Scalars["IntID"]>>;
 };
 
 export type AdminProjectsMutations = {
@@ -192,6 +198,11 @@ export type AdminProjectsQueries = {
 
 export type AdminProjectsQueriesAllProjectsArgs = {
   pagination: CursorConnectionArgs;
+};
+
+export type AdminTopicsFilter = {
+  domains?: Maybe<Array<Scalars["IntID"]>>;
+  projects?: Maybe<Array<Scalars["IntID"]>>;
 };
 
 export type AdminUserMutations = {
@@ -543,7 +554,6 @@ export type UpdateTopic = {
   id: Scalars["IntID"];
   label: Scalars["String"];
   parentTopicId?: Maybe<Scalars["IntID"]>;
-  projectId: Scalars["IntID"];
 };
 
 export type UpdateUserInput = {
@@ -650,6 +660,7 @@ export type AdminUsersCardsQuery = {
 
 export type AllDomainsBaseQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
+  filters?: Maybe<AdminDomainsFilter>;
 }>;
 
 export type AllDomainsBaseQuery = {
@@ -817,6 +828,7 @@ export type AllProjectsBaseQuery = {
 
 export type AllTopicsBaseQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
+  filters?: Maybe<AdminTopicsFilter>;
 }>;
 
 export type AllTopicsBaseQuery = {
@@ -840,6 +852,12 @@ export type AllTopicsBaseQuery = {
           | { __typename?: "Topic"; id: string; code: string; label: string }
           | null
           | undefined;
+        project: {
+          __typename?: "Project";
+          id: string;
+          code: string;
+          label: string;
+        };
       }>;
       pageInfo: {
         __typename?: "PageInfo";
@@ -1116,6 +1134,23 @@ export type CreateTopicMutation = {
       id: string;
       label: string;
       code: string;
+    };
+  };
+};
+
+export type UpdateTopicMutationVariables = Exact<{
+  data: UpdateTopic;
+}>;
+
+export type UpdateTopicMutation = {
+  __typename?: "Mutation";
+  adminDomain: {
+    __typename?: "AdminDomainMutations";
+    updateTopic: {
+      __typename?: "Topic";
+      id: string;
+      code: string;
+      label: string;
     };
   };
 };
@@ -1608,6 +1643,17 @@ export const AllDomainsBaseDocument = {
             },
           },
         },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "filters" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "AdminDomainsFilter" },
+          },
+        },
       ],
       selectionSet: {
         kind: "SelectionSet",
@@ -1628,6 +1674,14 @@ export const AllDomainsBaseDocument = {
                       value: {
                         kind: "Variable",
                         name: { kind: "Name", value: "pagination" },
+                      },
+                    },
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "filters" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "filters" },
                       },
                     },
                   ],
@@ -1866,6 +1920,17 @@ export const AllTopicsBaseDocument = {
             },
           },
         },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "filters" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "AdminTopicsFilter" },
+          },
+        },
       ],
       selectionSet: {
         kind: "SelectionSet",
@@ -1886,6 +1951,14 @@ export const AllTopicsBaseDocument = {
                       value: {
                         kind: "Variable",
                         name: { kind: "Name", value: "pagination" },
+                      },
+                    },
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "filters" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "filters" },
                       },
                     },
                   ],
@@ -1934,6 +2007,27 @@ export const AllTopicsBaseDocument = {
                             {
                               kind: "Field",
                               name: { kind: "Name", value: "parent" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "id" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "code" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "label" },
+                                  },
+                                ],
+                              },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "project" },
                               selectionSet: {
                                 kind: "SelectionSet",
                                 selections: [
@@ -2733,6 +2827,65 @@ export const CreateTopicDocument = {
     },
   ],
 } as unknown as DocumentNode<CreateTopicMutation, CreateTopicMutationVariables>;
+export const UpdateTopicDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpdateTopic" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "UpdateTopic" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminDomain" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "updateTopic" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "input" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "data" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      { kind: "Field", name: { kind: "Name", value: "label" } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UpdateTopicMutation, UpdateTopicMutationVariables>;
 export const AdminUsersDocument = {
   kind: "Document",
   definitions: [

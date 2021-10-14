@@ -51,9 +51,24 @@ export const domainModule = registerModule(
       pageInfo: PageInfo!
     }
 
+    input AdminDomainsFilter {
+      projects: [IntID!]
+    }
+
+    input AdminTopicsFilter {
+      domains: [IntID!]
+      projects: [IntID!]
+    }
+
     type AdminDomainQueries {
-      allTopics(pagination: CursorConnectionArgs!): TopicsConnection!
-      allDomains(pagination: CursorConnectionArgs!): DomainsConnection!
+      allTopics(
+        pagination: CursorConnectionArgs!
+        filters: AdminTopicsFilter
+      ): TopicsConnection!
+      allDomains(
+        pagination: CursorConnectionArgs!
+        filters: AdminDomainsFilter
+      ): DomainsConnection!
     }
 
     input CreateDomain {
@@ -93,8 +108,6 @@ export const domainModule = registerModule(
       parentTopicId: IntID
 
       domainId: IntID!
-
-      projectId: IntID!
 
       contentIds: [IntID!]!
     }
@@ -189,17 +202,7 @@ export const domainModule = registerModule(
         },
         async updateTopic(
           _root,
-          {
-            input: {
-              code,
-              label,
-              projectId,
-              parentTopicId,
-              domainId,
-              id,
-              contentIds,
-            },
-          },
+          { input: { code, label, parentTopicId, domainId, id, contentIds } },
           { prisma }
         ) {
           const topic = await prisma.topic.update({
@@ -212,11 +215,6 @@ export const domainModule = registerModule(
               domain: {
                 connect: {
                   id: domainId,
-                },
-              },
-              project: {
-                connect: {
-                  id: projectId,
                 },
               },
               parent:
@@ -249,14 +247,37 @@ export const domainModule = registerModule(
         },
       },
       AdminDomainQueries: {
-        allTopics(_root, { pagination }, { prisma }) {
+        allTopics(_root, { pagination, filters }, { prisma }) {
           return ResolveCursorConnection(pagination, (args) => {
-            return prisma.topic.findMany(args);
+            return prisma.topic.findMany({
+              ...args,
+              where: {
+                domainId: filters?.domains
+                  ? {
+                      in: filters.domains,
+                    }
+                  : undefined,
+                projectId: filters?.projects
+                  ? {
+                      in: filters.projects,
+                    }
+                  : undefined,
+              },
+            });
           });
         },
-        allDomains(_root, { pagination }, { prisma }) {
+        allDomains(_root, { pagination, filters }, { prisma }) {
           return ResolveCursorConnection(pagination, (args) => {
-            return prisma.domain.findMany(args);
+            return prisma.domain.findMany({
+              ...args,
+              where: {
+                projectId: filters?.projects
+                  ? {
+                      in: filters.projects,
+                    }
+                  : undefined,
+              },
+            });
           });
         },
       },

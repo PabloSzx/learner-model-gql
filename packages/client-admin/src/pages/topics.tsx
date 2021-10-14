@@ -2,20 +2,30 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
+  HStack,
+  IconButton,
   Input,
-  Text,
+  Spinner,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { getKey, gql, useGQLMutation } from "graph/rq-gql";
-import { useMemo, useRef } from "react";
-import { MdOutlineTopic } from "react-icons/md";
+import { memo, useEffect, useMemo, useRef } from "react";
+import { MdEdit, MdOutlineTopic, MdSave } from "react-icons/md";
+import { useUpdateEffect } from "react-use";
+import { useImmer } from "use-immer";
 import { withAuth } from "../components/Auth";
+import { Card } from "../components/Card/Card";
+import { CardContent } from "../components/Card/CardContent";
+import { CardHeader } from "../components/Card/CardHeader";
+import { Property } from "../components/Card/Property";
 import { FormModal } from "../components/FormModal";
-import { useSelectSingleDomain } from "../hooks/domain";
+import { domainOptionLabel, useSelectSingleDomain } from "../hooks/domain";
 import { useSelectSingleProject } from "../hooks/projects";
 import {
   AllTopicsBaseDoc,
   TopicInfo,
+  topicOptionLabel,
   useAllTopics,
   useSelectSingleTopic,
 } from "../hooks/topics";
@@ -28,8 +38,32 @@ export const CreateTopic = () => {
   const { selectSingleProjectComponent, selectedProject } =
     useSelectSingleProject();
 
-  const { selectSingleDomainComponent, selectedDomain } =
-    useSelectSingleDomain();
+  const {
+    selectSingleDomainComponent,
+    selectedDomain,
+    setSelectedDomain,
+    produceDomainsFilter,
+  } = useSelectSingleDomain({
+    selectProps: {
+      isDisabled: !selectedProject,
+    },
+  });
+
+  useEffect(() => {
+    setSelectedDomain(null);
+    produceDomainsFilter((draft) => {
+      if (!selectedProject) return null;
+
+      if (!draft)
+        return {
+          projects: [selectedProject.value],
+        };
+
+      draft.projects = [selectedProject.value];
+
+      return;
+    });
+  }, [selectedProject]);
 
   const { mutateAsync, isLoading } = useGQLMutation(
     gql(/* GraphQL */ `
@@ -50,7 +84,29 @@ export const CreateTopic = () => {
     }
   );
 
-  const parentTopic = useSelectSingleTopic();
+  const parentTopic = useSelectSingleTopic({
+    selectProps: useMemo(() => {
+      return {
+        isDisabled: !selectedDomain,
+      };
+    }, [!selectedDomain]),
+  });
+
+  useEffect(() => {
+    parentTopic.setSelectedTopic(null);
+    parentTopic.produceTopicsFilter((draft) => {
+      if (!selectedDomain) return null;
+
+      if (!draft)
+        return {
+          domains: [selectedDomain.value],
+        };
+
+      draft.domains = [selectedDomain.value];
+
+      return;
+    });
+  }, [selectedDomain]);
 
   return (
     <FormModal
@@ -92,12 +148,18 @@ export const CreateTopic = () => {
         <FormLabel>Associated Domain</FormLabel>
 
         {selectSingleDomainComponent}
+        {!selectedProject && (
+          <FormHelperText>You have to select a project first</FormHelperText>
+        )}
       </FormControl>
 
       <FormControl>
         <FormLabel>Parent Topic</FormLabel>
 
         {parentTopic.selectSingleTopicComponent}
+        {!selectedDomain && (
+          <FormHelperText>You have to select a domain first</FormHelperText>
+        )}
       </FormControl>
       <FormControl id="code" isRequired>
         <FormLabel>Code</FormLabel>
@@ -115,8 +177,180 @@ export const CreateTopic = () => {
   );
 };
 
+export const TopicCard = memo(function TopicCard({
+  topic,
+}: {
+  topic: TopicInfoWithChildrens;
+}) {
+  const { mutateAsync, isLoading } = useGQLMutation(
+    gql(/* GraphQL */ `
+      mutation UpdateTopic($data: UpdateTopic!) {
+        adminDomain {
+          updateTopic(input: $data) {
+            id
+            code
+            label
+          }
+        }
+      }
+    `),
+    {
+      async onSuccess() {
+        await queryClient.invalidateQueries(getKey(AllTopicsBaseDoc));
+      },
+    }
+  );
+
+  const [{ topicEdit, isEditing, selectedTopic }, edit] = useImmer(() => {
+    return {
+      topicEdit: topic,
+      selectedTopic: (topic.parent
+        ? { label: topicOptionLabel(topic.parent), value: topic.parent.id }
+        : null) as null | { value: string; label: string },
+      isEditing: false,
+    };
+  });
+
+  const { selectSingleTopicComponent, produceTopicsFilter } =
+    useSelectSingleTopic({
+      state: [
+        selectedTopic,
+        (selected) => edit((draft) => void (draft.selectedTopic = selected)),
+      ],
+    });
+
+  useEffect(() => {
+    produceTopicsFilter({ domains: [topic.domain.id] });
+  }, [topic.domain.id]);
+
+  useUpdateEffect(() => {
+    edit((draft) => {
+      draft.selectedTopic = topic.parent
+        ? { label: topicOptionLabel(topic.parent), value: topic.parent.id }
+        : null;
+      draft.topicEdit = topic;
+    });
+  }, [topic.code, topic.label, topic.parent?.id, edit]);
+
+  const toast = useToast();
+
+  return (
+    <Card key={topic.id} margin="0.2em !important" overflow="visible">
+      <CardHeader
+        title={topicOptionLabel(topic)}
+        action={
+          <IconButton
+            marginX="0.5em"
+            colorScheme="facebook"
+            aria-label="Edit"
+            isLoading={isLoading}
+            isDisabled={isLoading}
+            icon={isEditing ? <MdSave /> : <MdEdit />}
+            onClick={() => {
+              if (
+                isEditing &&
+                (topicEdit.code !== topic.code ||
+                  topicEdit.label !== topic.label ||
+                  selectedTopic?.value !== topic.parent?.id)
+              ) {
+                mutateAsync({
+                  data: {
+                    id: topic.id,
+                    code: topicEdit.code,
+                    label: topicEdit.label,
+                    contentIds: [],
+                    domainId: topic.domain.id,
+                    parentTopicId: selectedTopic?.value,
+                  },
+                })
+                  .then(() => {
+                    edit((draft) => {
+                      draft.isEditing = false;
+                    });
+                  })
+                  .catch((err) => {
+                    toast({
+                      status: "error",
+                      title: err.message,
+                    });
+                  });
+              } else {
+                edit((draft) => {
+                  draft.isEditing = !draft.isEditing;
+                });
+              }
+            }}
+          />
+        }
+      />
+
+      <CardContent>
+        <Property label="ID" value={topic.id} />
+        <Property
+          label="Code"
+          value={
+            isEditing ? (
+              <Input
+                value={topicEdit.code}
+                onChange={(ev) => {
+                  edit((draft) => {
+                    draft.topicEdit.code = ev.target.value;
+                  });
+                }}
+              />
+            ) : (
+              topic.code
+            )
+          }
+        />
+        <Property
+          label="Label"
+          value={
+            isEditing ? (
+              <Input
+                value={topicEdit.label}
+                onChange={(ev) => {
+                  edit((draft) => {
+                    draft.topicEdit.label = ev.target.value;
+                  });
+                }}
+              />
+            ) : (
+              topic.label
+            )
+          }
+        />
+        {isEditing && (
+          <Property label="Parent" value={selectSingleTopicComponent} />
+        )}
+        <Property label="Domain" value={domainOptionLabel(topic.domain)} />
+        {topic.childrens.length ? (
+          <Property
+            label="Childrens"
+            value={<TopicsCards topics={topic.childrens} />}
+          />
+        ) : null}
+      </CardContent>
+    </Card>
+  );
+});
+
+export const TopicsCards = ({
+  topics,
+}: {
+  topics: Array<TopicInfoWithChildrens>;
+}) => {
+  return (
+    <>
+      {topics.map((topic) => {
+        return <TopicCard key={topic.id} topic={topic} />;
+      })}
+    </>
+  );
+};
+
 export default withAuth(function TopicsPage() {
-  const { topics } = useAllTopics();
+  const { topics, isLoading } = useAllTopics();
 
   const topicsTree = useMemo(() => {
     return getTopicChildrens(topics);
@@ -126,26 +360,33 @@ export default withAuth(function TopicsPage() {
     <VStack>
       <CreateTopic />
 
-      <Text whiteSpace="pre-wrap">{JSON.stringify(topicsTree, null, 2)}</Text>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <HStack wrap="wrap" justifyContent="space-around" alignItems="center">
+          <TopicsCards topics={topicsTree} />
+        </HStack>
+      )}
     </VStack>
   );
 });
 
+export type TopicInfoWithChildrens = TopicInfo & {
+  childrens: Array<TopicInfoWithChildrens>;
+};
+
 export function getTopicChildrens(
   allTopics: TopicInfo[],
   topic?: TopicInfo
-): Array<TopicInfo & { childrens: Array<TopicInfo> }> {
-  return allTopics.reduce<Array<TopicInfo & { childrens: Array<TopicInfo> }>>(
-    (acum, topicValue) => {
-      if (topicValue.parent?.id === topic?.id) {
-        acum.push({
-          ...topicValue,
-          childrens: getTopicChildrens(allTopics, topicValue),
-        });
-      }
+): Array<TopicInfoWithChildrens> {
+  return allTopics.reduce<Array<TopicInfoWithChildrens>>((acum, topicValue) => {
+    if (topicValue.parent?.id === topic?.id) {
+      acum.push({
+        ...topicValue,
+        childrens: getTopicChildrens(allTopics, topicValue),
+      });
+    }
 
-      return acum;
-    },
-    []
-  );
+    return acum;
+  }, []);
 }

@@ -17,6 +17,7 @@
     "@gqty/react": "^2.0.0",
     "@types/react": "^17.0.29",
     "@types/react-dom": "^17.0.9",
+    "common": "workspace:^0.0.1",
     "date-fns": "^2.25.0",
     "framer-motion": "^4.1.17",
     "gqty": "^2.0.2",

@@ -1,11 +1,23 @@
-import { gql, useGQLInfiniteQuery } from "graph/rq-gql";
+import {
+  AllDomainsBaseQuery,
+  AllDomainsBaseQueryVariables,
+  AdminDomainsFilter,
+  getKey,
+  gql,
+} from "graph/rq-gql";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useInfiniteQuery } from "react-query";
+import { useImmer } from "use-immer";
 import { AsyncSelect, AsyncSelectProps } from "../components/AsyncSelect";
+import { rqGQLClient } from "../rqClient";
 
 export const AllDomainsBaseDoc = gql(/* GraphQL */ `
-  query AllDomainsBase($pagination: CursorConnectionArgs!) {
+  query AllDomainsBase(
+    $pagination: CursorConnectionArgs!
+    $filters: AdminDomainsFilter
+  ) {
     adminDomain {
-      allDomains(pagination: $pagination) {
+      allDomains(pagination: $pagination, filters: $filters) {
         nodes {
           id
           code
@@ -18,16 +30,24 @@ export const AllDomainsBaseDoc = gql(/* GraphQL */ `
 `);
 
 export const useDomainsBase = () => {
+  const [domainsFilter, produceDomainsFilter] =
+    useImmer<AdminDomainsFilter | null>(null);
   const { hasNextPage, fetchNextPage, isFetching, data, isLoading } =
-    useGQLInfiniteQuery(
-      AllDomainsBaseDoc,
-      (after) => {
-        return {
+    useInfiniteQuery<AllDomainsBaseQuery, Error>(
+      getKey(AllDomainsBaseDoc, {
+        filters: domainsFilter,
+      } as AllDomainsBaseQueryVariables),
+      ({ pageParam }) => {
+        return rqGQLClient.fetchGQL<
+          AllDomainsBaseQuery,
+          AllDomainsBaseQueryVariables
+        >(AllDomainsBaseDoc, {
           pagination: {
             first: 20,
-            after,
+            after: pageParam,
           },
-        };
+          filters: domainsFilter,
+        })();
       },
       {
         getNextPageParam({
@@ -94,6 +114,8 @@ export const useDomainsBase = () => {
     isLoading,
     asOptions,
     filteredOptions,
+    domainsFilter,
+    produceDomainsFilter,
   };
 };
 
@@ -105,14 +127,34 @@ export const domainOptionLabel = ({
   label: string;
 }) => `${code} | ${label}`;
 
-export const useSelectSingleDomain = () => {
-  const { isFetching, isLoading, filteredOptions, asOptions } =
-    useDomainsBase();
+export const useSelectSingleDomain = ({
+  state,
+  selectProps,
+}: {
+  state?: [
+    {
+      value: string;
+      label: string;
+    } | null,
+    (value: { value: string; label: string } | null) => void
+  ];
+  selectProps?: Partial<AsyncSelectProps>;
+} = {}) => {
+  const {
+    isFetching,
+    isLoading,
+    filteredOptions,
+    asOptions,
+    domainsFilter,
+    produceDomainsFilter,
+  } = useDomainsBase();
 
-  const [selectedDomain, setSelectedDomain] = useState<{
-    value: string;
-    label: string;
-  } | null>(null);
+  const [selectedDomain, setSelectedDomain] =
+    state ||
+    useState<{
+      value: string;
+      label: string;
+    } | null>(null);
 
   const selectSingleDomainComponent = useMemo(() => {
     return (
@@ -125,13 +167,24 @@ export const useSelectSingleDomain = () => {
         }}
         value={selectedDomain}
         placeholder="Search a domain"
+        {...selectProps}
       />
     );
-  }, [filteredOptions, isLoading, isFetching, asOptions, selectedDomain]);
+  }, [
+    filteredOptions,
+    isLoading,
+    isFetching,
+    asOptions,
+    selectedDomain,
+    selectProps,
+  ]);
 
   return {
     selectedDomain,
+    setSelectedDomain,
     selectSingleDomainComponent,
+    domainsFilter,
+    produceDomainsFilter,
   };
 };
 
@@ -152,8 +205,14 @@ export const useSelectMultiDomains = ({
     ) => void
   ];
 } & Partial<AsyncSelectProps> = {}) => {
-  const { isFetching, isLoading, filteredOptions, asOptions } =
-    useDomainsBase();
+  const {
+    isFetching,
+    isLoading,
+    filteredOptions,
+    asOptions,
+    domainsFilter,
+    produceDomainsFilter,
+  } = useDomainsBase();
 
   const [selectedDomains, setSelectedDomains] =
     state ||
@@ -183,7 +242,9 @@ export const useSelectMultiDomains = ({
 
   return {
     selectedDomains,
-    selectMultiDomainComponent,
     setSelectedDomains,
+    selectMultiDomainComponent,
+    domainsFilter,
+    produceDomainsFilter,
   };
 };

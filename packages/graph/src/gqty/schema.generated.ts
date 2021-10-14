@@ -117,6 +117,15 @@ export interface UpdateContent {
   tags: Array<Scalars["String"]>;
 }
 
+export interface AdminDomainsFilter {
+  projects?: Maybe<Array<Scalars["IntID"]>>;
+}
+
+export interface AdminTopicsFilter {
+  domains?: Maybe<Array<Scalars["IntID"]>>;
+  projects?: Maybe<Array<Scalars["IntID"]>>;
+}
+
 export interface CreateDomain {
   code: Scalars["String"];
   label: Scalars["String"];
@@ -144,7 +153,6 @@ export interface UpdateTopic {
   label: Scalars["String"];
   parentTopicId?: Maybe<Scalars["IntID"]>;
   domainId: Scalars["IntID"];
-  projectId: Scalars["IntID"];
   contentIds: Array<Scalars["IntID"]>;
 }
 
@@ -265,17 +273,24 @@ export const generatedSchema = {
     __typename: { __type: "String!" },
     allTopics: {
       __type: "TopicsConnection!",
-      __args: { pagination: "CursorConnectionArgs!" },
+      __args: {
+        pagination: "CursorConnectionArgs!",
+        filters: "AdminTopicsFilter",
+      },
     },
     allDomains: {
       __type: "DomainsConnection!",
-      __args: { pagination: "CursorConnectionArgs!" },
+      __args: {
+        pagination: "CursorConnectionArgs!",
+        filters: "AdminDomainsFilter",
+      },
     },
     allKCs: {
       __type: "KCsConnection!",
       __args: { pagination: "CursorConnectionArgs!" },
     },
   },
+  AdminDomainsFilter: { projects: { __type: "[IntID!]" } },
   AdminProjectsMutations: {
     __typename: { __type: "String!" },
     createProject: { __type: "Project!", __args: { data: "CreateProject!" } },
@@ -287,6 +302,10 @@ export const generatedSchema = {
       __type: "ProjectsConnection!",
       __args: { pagination: "CursorConnectionArgs!" },
     },
+  },
+  AdminTopicsFilter: {
+    domains: { __type: "[IntID!]" },
+    projects: { __type: "[IntID!]" },
   },
   AdminUserMutations: {
     __typename: { __type: "String!" },
@@ -521,7 +540,6 @@ export const generatedSchema = {
     label: { __type: "String!" },
     parentTopicId: { __type: "IntID" },
     domainId: { __type: "IntID!" },
-    projectId: { __type: "IntID!" },
     contentIds: { __type: "[IntID!]!" },
   },
   UpdateUserInput: {
@@ -656,8 +674,14 @@ export interface AdminDomainMutations {
 
 export interface AdminDomainQueries {
   __typename?: "AdminDomainQueries";
-  allTopics: (args: { pagination: CursorConnectionArgs }) => TopicsConnection;
-  allDomains: (args: { pagination: CursorConnectionArgs }) => DomainsConnection;
+  allTopics: (args: {
+    pagination: CursorConnectionArgs;
+    filters?: Maybe<AdminTopicsFilter>;
+  }) => TopicsConnection;
+  allDomains: (args: {
+    pagination: CursorConnectionArgs;
+    filters?: Maybe<AdminDomainsFilter>;
+  }) => DomainsConnection;
   allKCs: (args: { pagination: CursorConnectionArgs }) => KCsConnection;
 }
 

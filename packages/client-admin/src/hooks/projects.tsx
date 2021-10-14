@@ -103,14 +103,26 @@ export const projectOptionLabel = ({
   label: string;
 }) => `${code} | ${label}`;
 
-export const useSelectSingleProject = () => {
+export const useSelectSingleProject = ({
+  state,
+}: {
+  state?: [
+    {
+      value: string;
+      label: string;
+    } | null,
+    (value: { value: string; label: string } | null) => void
+  ];
+} = {}) => {
   const { isFetching, isLoading, filteredOptions, asOptions } =
     useProjectsBase();
 
-  const [selectedProject, setSelectedProject] = useState<{
-    value: string;
-    label: string;
-  } | null>(null);
+  const [selectedProject, setSelectedProject] =
+    state ||
+    useState<{
+      value: string;
+      label: string;
+    } | null>(null);
 
   const selectSingleProjectComponent = useMemo(() => {
     return (

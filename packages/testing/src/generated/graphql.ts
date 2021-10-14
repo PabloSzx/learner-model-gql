@@ -160,6 +160,7 @@ export type AdminDomainQueries = {
 };
 
 export type AdminDomainQueriesAllDomainsArgs = {
+  filters?: Maybe<AdminDomainsFilter>;
   pagination: CursorConnectionArgs;
 };
 
@@ -168,7 +169,12 @@ export type AdminDomainQueriesAllKCsArgs = {
 };
 
 export type AdminDomainQueriesAllTopicsArgs = {
+  filters?: Maybe<AdminTopicsFilter>;
   pagination: CursorConnectionArgs;
+};
+
+export type AdminDomainsFilter = {
+  projects?: Maybe<Array<Scalars["IntID"]>>;
 };
 
 export type AdminProjectsMutations = {
@@ -192,6 +198,11 @@ export type AdminProjectsQueries = {
 
 export type AdminProjectsQueriesAllProjectsArgs = {
   pagination: CursorConnectionArgs;
+};
+
+export type AdminTopicsFilter = {
+  domains?: Maybe<Array<Scalars["IntID"]>>;
+  projects?: Maybe<Array<Scalars["IntID"]>>;
 };
 
 export type AdminUserMutations = {
@@ -543,7 +554,6 @@ export type UpdateTopic = {
   id: Scalars["IntID"];
   label: Scalars["String"];
   parentTopicId?: Maybe<Scalars["IntID"]>;
-  projectId: Scalars["IntID"];
 };
 
 export type UpdateUserInput = {

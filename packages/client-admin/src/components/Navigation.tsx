@@ -24,11 +24,11 @@ export function Navigation() {
             <SidebarLink href="/domains" icon={<FiBook />}>
               Domains
             </SidebarLink>
-            <SidebarLink href="/projects" icon={<VscProject />}>
-              Projects
-            </SidebarLink>
             <SidebarLink href="/topics" icon={<MdOutlineTopic />}>
               Topics
+            </SidebarLink>
+            <SidebarLink href="/projects" icon={<VscProject />}>
+              Projects
             </SidebarLink>
           </>
         )}

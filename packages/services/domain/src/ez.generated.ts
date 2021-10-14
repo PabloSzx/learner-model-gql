@@ -94,6 +94,15 @@ export type DomainsConnection = Connection & {
   pageInfo: PageInfo;
 };
 
+export type AdminDomainsFilter = {
+  projects?: Maybe<Array<Scalars["IntID"]>>;
+};
+
+export type AdminTopicsFilter = {
+  domains?: Maybe<Array<Scalars["IntID"]>>;
+  projects?: Maybe<Array<Scalars["IntID"]>>;
+};
+
 export type AdminDomainQueries = {
   __typename?: "AdminDomainQueries";
   allTopics: TopicsConnection;
@@ -103,10 +112,12 @@ export type AdminDomainQueries = {
 
 export type AdminDomainQueriesAllTopicsArgs = {
   pagination: CursorConnectionArgs;
+  filters?: Maybe<AdminTopicsFilter>;
 };
 
 export type AdminDomainQueriesAllDomainsArgs = {
   pagination: CursorConnectionArgs;
+  filters?: Maybe<AdminDomainsFilter>;
 };
 
 export type AdminDomainQueriesAllKCsArgs = {
@@ -140,7 +151,6 @@ export type UpdateTopic = {
   label: Scalars["String"];
   parentTopicId?: Maybe<Scalars["IntID"]>;
   domainId: Scalars["IntID"];
-  projectId: Scalars["IntID"];
   contentIds: Array<Scalars["IntID"]>;
 };
 
@@ -388,6 +398,8 @@ export type ResolversTypes = {
   Domain: ResolverTypeWrapper<Domain>;
   TopicsConnection: ResolverTypeWrapper<TopicsConnection>;
   DomainsConnection: ResolverTypeWrapper<DomainsConnection>;
+  AdminDomainsFilter: AdminDomainsFilter;
+  AdminTopicsFilter: AdminTopicsFilter;
   AdminDomainQueries: ResolverTypeWrapper<AdminDomainQueries>;
   CreateDomain: CreateDomain;
   UpdateDomain: UpdateDomain;
@@ -429,6 +441,8 @@ export type ResolversParentTypes = {
   Domain: Domain;
   TopicsConnection: TopicsConnection;
   DomainsConnection: DomainsConnection;
+  AdminDomainsFilter: AdminDomainsFilter;
+  AdminTopicsFilter: AdminTopicsFilter;
   AdminDomainQueries: AdminDomainQueries;
   CreateDomain: CreateDomain;
   UpdateDomain: UpdateDomain;

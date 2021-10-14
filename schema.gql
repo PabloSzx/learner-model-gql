@@ -326,9 +326,24 @@ type DomainsConnection implements Connection {
   pageInfo: PageInfo!
 }
 
+input AdminDomainsFilter {
+  projects: [IntID!]
+}
+
+input AdminTopicsFilter {
+  domains: [IntID!]
+  projects: [IntID!]
+}
+
 type AdminDomainQueries {
-  allTopics(pagination: CursorConnectionArgs!): TopicsConnection!
-  allDomains(pagination: CursorConnectionArgs!): DomainsConnection!
+  allTopics(
+    pagination: CursorConnectionArgs!
+    filters: AdminTopicsFilter
+  ): TopicsConnection!
+  allDomains(
+    pagination: CursorConnectionArgs!
+    filters: AdminDomainsFilter
+  ): DomainsConnection!
   allKCs(pagination: CursorConnectionArgs!): KCsConnection!
 }
 
@@ -359,7 +374,6 @@ input UpdateTopic {
   label: String!
   parentTopicId: IntID
   domainId: IntID!
-  projectId: IntID!
   contentIds: [IntID!]!
 }
 
