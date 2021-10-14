@@ -367,15 +367,32 @@ export const TopicsCards = ({
 };
 
 export default withAuth(function TopicsPage() {
-  const { topics, isLoading } = useAllTopics();
+  const { topics, isLoading, produceTopicsFilter } = useAllTopics();
 
   const topicsTree = useMemo(() => {
     return getTopicChildrens(topics);
   }, [topics]);
 
+  const { selectSingleDomainComponent, selectedDomain } =
+    useSelectSingleDomain();
+
+  useEffect(() => {
+    produceTopicsFilter((draft) => {
+      if (!draft)
+        return {
+          domains: selectedDomain ? [selectedDomain.value] : [],
+        };
+
+      draft.domains = selectedDomain ? [selectedDomain.value] : [];
+      return;
+    });
+  }, [selectedDomain]);
+
   return (
     <VStack>
       <CreateTopic />
+
+      {selectSingleDomainComponent}
 
       {isLoading ? (
         <Spinner />
