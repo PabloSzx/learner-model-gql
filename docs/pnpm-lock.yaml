@@ -5,7 +5,7 @@ importers:
   .:
     specifiers:
       '@types/node': ^16.7.10
-      '@types/react': ^17.0.29
+      '@types/react': ^17.0.30
       concurrently: ^6.3.0
       next: ^11.1.2
       nextra: ^1.1.0
@@ -18,12 +18,12 @@ importers:
     dependencies:
       next: 11.1.2_8e3522129ef2816b3c737f17aecb3a9d
       nextra: 1.1.0_react@17.0.2
-      nextra-theme-docs: 1.2.6_372b6779f65c509a941c1d67d19cc635
+      nextra-theme-docs: 1.2.6_6522407f6ff8a414bbb504ad3a51d520
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     devDependencies:
       '@types/node': 16.7.10
-      '@types/react': 17.0.29
+      '@types/react': 17.0.30
       concurrently: 6.3.0
       open-cli: 7.0.1
       typescript: 4.4.4
@@ -340,8 +340,8 @@ packages:
     resolution: {integrity: sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==}
     dev: true
 
-  /@types/react/17.0.29:
-    resolution: {integrity: sha512-HSenIfBEBZ70BLrrVhtEtHpqaP79waauPtA8XKlczTxL3hXrW/ElGNLTpD1TmqkykgGlOAK55+D3SmUHEirpFw==}
+  /@types/react/17.0.30:
+    resolution: {integrity: sha512-3Dt/A8gd3TCXi2aRe84y7cK1K8G+N9CZRDG8kDGguOKa0kf/ZkSwTmVIDPsm/KbQOVMaDJXwhBtuOXxqwdpWVg==}
     dependencies:
       '@types/prop-types': 15.7.4
       '@types/scheduler': 0.16.2
@@ -2708,7 +2708,7 @@ packages:
       - webpack
     dev: false
 
-  /nextra-theme-docs/1.2.6_372b6779f65c509a941c1d67d19cc635:
+  /nextra-theme-docs/1.2.6_6522407f6ff8a414bbb504ad3a51d520:
     resolution: {integrity: sha512-6tSq74EEw/lfZXfrN9TXr8UFov1mddW+yXnwQB57XRF9hBVq3WtVl6lJT7Xe9q0S0s9lkEeGviHtq+NRpONcQQ==}
     peerDependencies:
       next: '>=9.5.3'
@@ -2729,7 +2729,7 @@ packages:
       prism-react-renderer: 1.2.1_react@17.0.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      react-innertext: 1.1.5_26a96a4441ab225e0159f41c8a2ae043
+      react-innertext: 1.1.5_0d9ae6029f9b6856f7d6fb45bd27ecc7
       title: 3.4.3
     transitivePeerDependencies:
       - '@types/react'
@@ -3249,13 +3249,13 @@ packages:
       scheduler: 0.20.2
     dev: false
 
-  /react-innertext/1.1.5_26a96a4441ab225e0159f41c8a2ae043:
+  /react-innertext/1.1.5_0d9ae6029f9b6856f7d6fb45bd27ecc7:
     resolution: {integrity: sha512-PWAqdqhxhHIv80dT9znP2KvS+hfkbRovFp4zFYHFFlOoQLRiawIic81gKb3U1wEyJZgMwgs3JoLtwryASRWP3Q==}
     peerDependencies:
       '@types/react': '>=0.0.0 <=99'
       react: '>=0.0.0 <=99'
     dependencies:
-      '@types/react': 17.0.29
+      '@types/react': 17.0.30
       react: 17.0.2
     dev: false
 
