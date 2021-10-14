@@ -329,6 +329,7 @@ export type CreateTopic = {
   label: Scalars["String"];
   parentTopicId?: Maybe<Scalars["IntID"]>;
   projectId: Scalars["IntID"];
+  sortIndex?: Maybe<Scalars["Int"]>;
 };
 
 export type CursorConnectionArgs = {
@@ -554,6 +555,7 @@ export type UpdateTopic = {
   id: Scalars["IntID"];
   label: Scalars["String"];
   parentTopicId?: Maybe<Scalars["IntID"]>;
+  sortIndex?: Maybe<Scalars["Int"]>;
 };
 
 export type UpdateUserInput = {

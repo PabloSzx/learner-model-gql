@@ -366,6 +366,7 @@ input CreateTopic {
   domainId: IntID!
   projectId: IntID!
   contentIds: [IntID!]!
+  sortIndex: Int
 }
 
 input UpdateTopic {
@@ -375,6 +376,7 @@ input UpdateTopic {
   parentTopicId: IntID
   domainId: IntID!
   contentIds: [IntID!]!
+  sortIndex: Int
 }
 
 type AdminDomainMutations {
