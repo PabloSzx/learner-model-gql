@@ -170,6 +170,8 @@ model KC {
   topics Topic[]
 
   content Content[]
+
+  actions Action[]
 }
 
 model ActionVerb {
@@ -204,6 +206,8 @@ model Action {
 
   topic   Topic? @relation(fields: [topicId], references: [id])
   topicId Int?
+
+  kcs KC[]
 
   stepID String?
   hintID String?

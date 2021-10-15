@@ -108,6 +108,7 @@ Table KC {
   domainId Int [not null]
   topics Topic [not null]
   content Content [not null]
+  actions Action [not null]
 }
 
 Table ActionVerb {
@@ -132,6 +133,7 @@ Table Action {
   contentId Int
   topic Topic
   topicId Int
+  kcs KC [not null]
   stepID String
   hintID String
   amount Float
@@ -189,6 +191,11 @@ Table KCToTopic {
 
 Table ContentToKC {
   contentId Int [ref: > Content.id]
+  kcsId Int [ref: > KC.id]
+}
+
+Table ActionToKC {
+  actionsId Int [ref: > Action.id]
   kcsId Int [ref: > KC.id]
 }
 
