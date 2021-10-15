@@ -17,7 +17,7 @@
     "clean:install": "pnpm dlx rimraf \"**/{node_modules,rimraf,.next,coverage,dist}\" && pnpm i && pnpm generate",
     "clean:test:db": "docker-compose down && sudo rimraf .test-postgres-data",
     "predev": "pnpm -r db:generate",
-    "dev": "cross-env NEXT_PUBLIC_API_URL=http://localhost:8080/graphql pnpm -r dev",
+    "dev": "concurrently -r \"cross-env NEXT_PUBLIC_API_URL=http://localhost:8080/graphql pnpm -r dev\" \"tsc --watch\"",
     "generate": "pnpm -r generate",
     "postinstall": "node patch.cjs",
     "prepare": "husky install",

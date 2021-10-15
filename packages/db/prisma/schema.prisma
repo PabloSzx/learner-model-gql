@@ -26,6 +26,8 @@ model User {
   name    String?
   picture String?
 
+  tags String[]
+
   locked Boolean @default(false)
 
   active     Boolean   @default(false)
@@ -60,6 +62,8 @@ model Group {
 
   code  String @unique
   label String
+
+  tags String[]
 
   users User[]
 
