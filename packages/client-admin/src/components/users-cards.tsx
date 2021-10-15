@@ -10,7 +10,6 @@ import {
 import { formatSpanish } from "common";
 import {
   DocumentType,
-  getKey,
   gql,
   useGQLMutation,
   useGQLQuery,
@@ -95,7 +94,7 @@ const UserCard = ({ user }: { user: DocumentType<typeof UserInfo> }) => {
     `),
     {
       async onSuccess() {
-        await queryClient.invalidateQueries(getKey(AdminUsers));
+        await queryClient.invalidateQueries();
       },
     }
   );

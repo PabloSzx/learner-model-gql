@@ -18,7 +18,6 @@ import {
 } from "@chakra-ui/react";
 import { formatSpanish } from "common";
 import {
-  getKey,
   gql,
   GroupInfoFragment,
   useGQLMutation,
@@ -92,7 +91,7 @@ function CreateGroup() {
     `),
     {
       async onSuccess() {
-        await queryClient.invalidateQueries(getKey(AdminGroups));
+        await queryClient.invalidateQueries();
       },
     }
   );
@@ -116,7 +115,7 @@ function CreateGroup() {
           },
         });
 
-        queryClient.invalidateQueries(getKey(AdminGroups));
+        queryClient.invalidateQueries();
 
         codeRef.current.value = "";
         labelRef.current.value = "";
@@ -226,7 +225,7 @@ function AssignGroupsUsers() {
     `),
     {
       async onSuccess() {
-        await queryClient.invalidateQueries(getKey(AdminGroups));
+        await queryClient.invalidateQueries();
       },
     }
   );
@@ -338,7 +337,7 @@ export default withAuth(function GroupsPage() {
     `),
     {
       async onSuccess() {
-        await queryClient.invalidateQueries(getKey(AdminGroups));
+        await queryClient.invalidateQueries();
       },
     }
   );

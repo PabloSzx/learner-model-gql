@@ -9,7 +9,7 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
-import { getKey, gql, useGQLMutation } from "graph/rq-gql";
+import { gql, useGQLMutation } from "graph/rq-gql";
 import { memo, useEffect, useMemo, useRef } from "react";
 import { MdEdit, MdOutlineTopic, MdSave } from "react-icons/md";
 import { useUpdateEffect } from "react-use";
@@ -23,7 +23,6 @@ import { FormModal } from "../components/FormModal";
 import { domainOptionLabel, useSelectSingleDomain } from "../hooks/domain";
 import { useSelectSingleProject } from "../hooks/projects";
 import {
-  AllTopicsBaseDoc,
   TopicInfo,
   topicOptionLabel,
   useAllTopics,
@@ -79,7 +78,7 @@ export const CreateTopic = () => {
     `),
     {
       async onSuccess() {
-        await queryClient.invalidateQueries(getKey(AllTopicsBaseDoc));
+        await queryClient.invalidateQueries();
       },
     }
   );
@@ -196,7 +195,7 @@ export const TopicCard = memo(function TopicCard({
     `),
     {
       async onSuccess() {
-        await queryClient.invalidateQueries(getKey(AllTopicsBaseDoc));
+        await queryClient.invalidateQueries();
       },
     }
   );

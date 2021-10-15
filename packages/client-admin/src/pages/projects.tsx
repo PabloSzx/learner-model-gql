@@ -8,7 +8,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import {
-  getKey,
   gql,
   ProjectInfoFragment,
   useGQLMutation,
@@ -62,7 +61,7 @@ function CreateProject() {
     `),
     {
       async onSuccess() {
-        await queryClient.invalidateQueries(getKey(AdminProjects));
+        await queryClient.invalidateQueries();
       },
     }
   );
@@ -83,7 +82,7 @@ function CreateProject() {
           },
         });
 
-        queryClient.invalidateQueries(getKey(AdminProjects));
+        queryClient.invalidateQueries();
 
         codeRef.current.value = "";
         labelRef.current.value = "";
@@ -154,7 +153,7 @@ export default withAuth(function ProjectsPage() {
     `),
     {
       async onSuccess() {
-        await queryClient.invalidateQueries(getKey(AdminProjects));
+        await queryClient.invalidateQueries();
       },
     }
   );

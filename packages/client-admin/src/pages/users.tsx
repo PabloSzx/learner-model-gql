@@ -11,7 +11,6 @@ import {
 } from "@chakra-ui/react";
 import {
   AdminUsersQuery,
-  getKey,
   gql,
   useGQLMutation,
   useGQLQuery,
@@ -101,7 +100,7 @@ function UpsertUsers() {
     `),
     {
       async onSuccess() {
-        await queryClient.invalidateQueries(getKey(AdminUsers));
+        await queryClient.invalidateQueries();
       },
     }
   );
@@ -195,7 +194,7 @@ export default withAuth(function UsersPage() {
     `),
     {
       async onSuccess() {
-        await queryClient.invalidateQueries(getKey(AdminUsers));
+        await queryClient.invalidateQueries();
       },
     }
   );

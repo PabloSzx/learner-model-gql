@@ -9,7 +9,6 @@ import {
 } from "@chakra-ui/react";
 import {
   DomainInfoFragment,
-  getKey,
   gql,
   useGQLMutation,
   useGQLQuery,
@@ -44,7 +43,7 @@ function CreateDomain() {
     `),
     {
       async onSuccess() {
-        await queryClient.invalidateQueries(getKey(AdminDomains));
+        await queryClient.invalidateQueries();
       },
     }
   );
@@ -68,7 +67,7 @@ function CreateDomain() {
           },
         });
 
-        queryClient.invalidateQueries(getKey(AdminDomains));
+        queryClient.invalidateQueries();
 
         codeRef.current.value = "";
         labelRef.current.value = "";
@@ -173,7 +172,7 @@ export default withAuth(function DomainPage() {
     `),
     {
       async onSuccess() {
-        await queryClient.invalidateQueries(getKey(AdminDomains));
+        await queryClient.invalidateQueries();
       },
     }
   );

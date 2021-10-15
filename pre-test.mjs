@@ -14,9 +14,9 @@ await command("docker-compose logs", {
 });
 
 const DATABASE_URL =
-  (process.env.DATABASE_URL = `postgresql://postgres:postgres@localhost:5789/${generate(
+  (process.env.DATABASE_URL = `postgresql://postgres:postgres@localhost:5789/test_${generate(
     {
-      length: 50,
+      length: Math.floor(Math.random() * 25) + 20,
     }
   )}`);
 
