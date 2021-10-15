@@ -46,7 +46,7 @@ importers:
       rimraf: ^3.0.2
       testing: workspace:*
       typescript: ^4.4.4
-      undici: ^4.7.2
+      undici: ^4.7.3
       valtio: ^1.2.4
       wait-on: ^6.0.0
     dependencies:
@@ -55,7 +55,7 @@ importers:
       common: link:packages/common
       gqty: 2.0.2_graphql@15.6.1
       graph: link:packages/graph
-      undici: 4.7.2
+      undici: 4.7.3
     devDependencies:
       '@gqty/cli': 2.1.0_graphql@15.6.1
       '@graphql-ez/fastify': 0.9.4_d73f881ed919427cab15f815d61a6f7a
@@ -285,7 +285,7 @@ importers:
       graphql-ez: ^0.13.1
       lodash: ^4.17.21
       ms: ^3.0.0-canary.1
-      undici: ^4.7.2
+      undici: ^4.7.3
       wait-on: ^6.0.0
     dependencies:
       '@graphql-ez/fastify': 0.9.4_d73f881ed919427cab15f815d61a6f7a
@@ -307,7 +307,7 @@ importers:
       graphql-ez: 0.13.1_6bf53d632871289cdf6a598e683f2a90
       lodash: 4.17.21
       ms: 3.0.0-canary.1
-      undici: 4.7.2
+      undici: 4.7.3
       wait-on: 6.0.0
     devDependencies:
       '@types/concurrently': 6.3.0
@@ -9082,6 +9082,12 @@ packages:
   /undici/4.7.2:
     resolution: {integrity: sha512-kEW5A5JpmnzjMi09XL++3Y1lKG2rnInJuRIsYHD4DwlJFUX2EFehMBaaeDlSys/ht4nwMhKnnoWEycuRQ8GJPw==}
     engines: {node: '>=12.18'}
+    dev: true
+
+  /undici/4.7.3:
+    resolution: {integrity: sha512-ecY0KLuZ3EVbiR+Z2kpxh3V3tLGhkxuNv5jhIYskZXO8KgpwcFxqScIMs6JO523VFnfRnN2Fm6yhLxc+BQvezw==}
+    engines: {node: '>=12.18'}
+    dev: false
 
   /unfetch/4.2.0:
     resolution: {integrity: sha512-F9p7yYCn6cIW9El1zi0HI6vqpeIvBsr3dSuRO6Xuppb1u5rXpCPmMvLSyECLhybr9isec8Ohl0hPekMVrEinDA==}
