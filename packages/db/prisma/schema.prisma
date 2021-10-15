@@ -150,7 +150,7 @@ model Topic {
 
   kcs KC[]
 
-  actionActivities ActionActivity[]
+  actions Action[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
@@ -189,9 +189,6 @@ model Action {
   verb     ActionVerb @relation(fields: [verbName], references: [name])
   verbName String
 
-  activity   ActionActivity @relation(fields: [activityId], references: [id])
-  activityId Int            @unique
-
   timestamp DateTime
 
   result Float?
@@ -201,15 +198,6 @@ model Action {
 
   user   User? @relation(fields: [userId], references: [id])
   userId Int?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-}
-
-model ActionActivity {
-  id Int @id @default(autoincrement())
-
-  action Action?
 
   content   Content? @relation(fields: [contentId], references: [id])
   contentId Int?
@@ -225,6 +213,9 @@ model ActionActivity {
   detail String?
 
   extra Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Content {
@@ -247,7 +238,7 @@ model Content {
 
   kcs KC[]
 
-  actionActivities ActionActivity[]
+  actions Action[]
 
   description String
 

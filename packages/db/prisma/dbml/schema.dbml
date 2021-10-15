@@ -95,7 +95,7 @@ Table Topic {
   childrens Topic [not null]
   content Content [not null]
   kcs KC [not null]
-  actionActivities ActionActivity [not null]
+  actions Action [not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [default: `now()`, not null]
 }
@@ -122,21 +122,12 @@ Table Action {
   id Int [pk, increment]
   verb ActionVerb [not null]
   verbName String [not null]
-  activity ActionActivity [not null]
-  activityId Int [unique, not null]
   timestamp DateTime [not null]
   result Float
   project Project [not null]
   projectId Int [not null]
   user User
   userId Int
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [default: `now()`, not null]
-}
-
-Table ActionActivity {
-  id Int [pk, increment]
-  action Action
   content Content
   contentId Int
   topic Topic
@@ -146,6 +137,8 @@ Table ActionActivity {
   amount Float
   detail String
   extra Json
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [default: `now()`, not null]
 }
 
 Table Content {
@@ -160,7 +153,7 @@ Table Content {
   domainId Int [not null]
   topics Topic [not null]
   kcs KC [not null]
-  actionActivities ActionActivity [not null]
+  actions Action [not null]
   description String [not null]
   binary Bytes
   json Json
@@ -220,15 +213,13 @@ Ref: KC.domainId > Domain.id
 
 Ref: Action.verbName > ActionVerb.name
 
-Ref: Action.activityId - ActionActivity.id
-
 Ref: Action.projectId > Project.id
 
 Ref: Action.userId > User.id
 
-Ref: ActionActivity.contentId > Content.id
+Ref: Action.contentId > Content.id
 
-Ref: ActionActivity.topicId > Topic.id
+Ref: Action.topicId > Topic.id
 
 Ref: Content.projectId > Project.id
 
