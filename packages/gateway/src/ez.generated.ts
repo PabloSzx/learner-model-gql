@@ -118,10 +118,23 @@ export type Group = {
   label: Scalars["String"];
   users: Array<User>;
   tags: Array<Scalars["String"]>;
+  flags: GroupFlags;
   createdAt: Scalars["DateTime"];
   updatedAt: Scalars["DateTime"];
   projectsIds: Array<Scalars["IntID"]>;
   projects: Array<Project>;
+};
+
+export type GroupFlags = {
+  __typename?: "GroupFlags";
+  id: Scalars["IntID"];
+  readProjectActions: Scalars["Boolean"];
+  createdAt: Scalars["DateTime"];
+  updatedAt: Scalars["DateTime"];
+};
+
+export type GroupFlagsInput = {
+  readProjectActions: Scalars["Boolean"];
 };
 
 export type CreateGroupInput = {
@@ -129,6 +142,7 @@ export type CreateGroupInput = {
   label: Scalars["String"];
   tags: Array<Scalars["String"]>;
   projectIds: Array<Scalars["IntID"]>;
+  flags?: Maybe<GroupFlagsInput>;
 };
 
 export type UpdateGroupInput = {
@@ -137,6 +151,7 @@ export type UpdateGroupInput = {
   label: Scalars["String"];
   tags: Array<Scalars["String"]>;
   projectIds: Array<Scalars["IntID"]>;
+  flags?: Maybe<GroupFlagsInput>;
 };
 
 export type GroupsConnection = Connection & {
@@ -723,12 +738,14 @@ export type ResolversTypes = {
   EmailAddress: ResolverTypeWrapper<Scalars["EmailAddress"]>;
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
   Group: ResolverTypeWrapper<Group>;
+  GroupFlags: ResolverTypeWrapper<GroupFlags>;
+  Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
+  GroupFlagsInput: GroupFlagsInput;
   CreateGroupInput: CreateGroupInput;
   UpdateGroupInput: UpdateGroupInput;
   GroupsConnection: ResolverTypeWrapper<GroupsConnection>;
   UserRole: UserRole;
   User: ResolverTypeWrapper<User>;
-  Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   UsersConnection: ResolverTypeWrapper<UsersConnection>;
   AdminUserQueries: ResolverTypeWrapper<AdminUserQueries>;
   UpdateUserInput: UpdateUserInput;
@@ -799,11 +816,13 @@ export type ResolversParentTypes = {
   EmailAddress: Scalars["EmailAddress"];
   IntID: Scalars["IntID"];
   Group: Group;
+  GroupFlags: GroupFlags;
+  Boolean: Scalars["Boolean"];
+  GroupFlagsInput: GroupFlagsInput;
   CreateGroupInput: CreateGroupInput;
   UpdateGroupInput: UpdateGroupInput;
   GroupsConnection: GroupsConnection;
   User: User;
-  Boolean: Scalars["Boolean"];
   UsersConnection: UsersConnection;
   AdminUserQueries: AdminUserQueries;
   UpdateUserInput: UpdateUserInput;
@@ -1027,6 +1046,7 @@ export type GroupResolvers<
   label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   users?: Resolver<Array<ResolversTypes["User"]>, ParentType, ContextType>;
   tags?: Resolver<Array<ResolversTypes["String"]>, ParentType, ContextType>;
+  flags?: Resolver<ResolversTypes["GroupFlags"], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   projectsIds?: Resolver<
@@ -1039,6 +1059,21 @@ export type GroupResolvers<
     ParentType,
     ContextType
   >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type GroupFlagsResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["GroupFlags"] = ResolversParentTypes["GroupFlags"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  readProjectActions?: Resolver<
+    ResolversTypes["Boolean"],
+    ParentType,
+    ContextType
+  >;
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1562,6 +1597,7 @@ export type Resolvers<ContextType = EZContext> = {
   EmailAddress?: GraphQLScalarType;
   IntID?: GraphQLScalarType;
   Group?: GroupResolvers<ContextType>;
+  GroupFlags?: GroupFlagsResolvers<ContextType>;
   GroupsConnection?: GroupsConnectionResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   UsersConnection?: UsersConnectionResolvers<ContextType>;

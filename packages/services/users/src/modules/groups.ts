@@ -15,12 +15,27 @@ export const groupsModule = registerModule(
 
       tags: [String!]!
 
+      flags: GroupFlags!
+
+      createdAt: DateTime!
+      updatedAt: DateTime!
+    }
+
+    type GroupFlags {
+      id: IntID!
+
+      readProjectActions: Boolean!
+
       createdAt: DateTime!
       updatedAt: DateTime!
     }
 
     extend type User {
       groups: [Group!]!
+    }
+
+    input GroupFlagsInput {
+      readProjectActions: Boolean!
     }
 
     input CreateGroupInput {
@@ -30,6 +45,8 @@ export const groupsModule = registerModule(
       tags: [String!]!
 
       projectIds: [IntID!]!
+
+      flags: GroupFlagsInput
     }
 
     input UpdateGroupInput {
@@ -41,6 +58,8 @@ export const groupsModule = registerModule(
       tags: [String!]!
 
       projectIds: [IntID!]!
+
+      flags: GroupFlagsInput
     }
 
     extend type AdminUserMutations {
@@ -81,6 +100,33 @@ export const groupsModule = registerModule(
               })
               .users()) || []
           );
+        },
+        async flags({ id }, _args, { prisma }) {
+          const flags = await prisma.group
+            .findUnique({
+              where: {
+                id,
+              },
+            })
+            .flags();
+
+          if (!flags) {
+            return prisma.groupFlags.upsert({
+              where: {
+                groupId: id,
+              },
+              create: {
+                group: {
+                  connect: {
+                    id,
+                  },
+                },
+              },
+              update: {},
+            });
+          }
+
+          return flags;
         },
       },
       User: {
@@ -149,7 +195,7 @@ export const groupsModule = registerModule(
         },
         async createGroup(
           _root,
-          { data: { code, label, projectIds, tags } },
+          { data: { code, label, projectIds, tags, flags } },
           { prisma }
         ) {
           return prisma.group.create({
@@ -162,12 +208,15 @@ export const groupsModule = registerModule(
               tags: {
                 set: tags,
               },
+              flags: {
+                create: flags || {},
+              },
             },
           });
         },
         async updateGroup(
           _root,
-          { data: { id, code, label, projectIds, tags } },
+          { data: { id, code, label, projectIds, tags, flags } },
           { prisma }
         ) {
           return prisma.group.update({
@@ -183,6 +232,14 @@ export const groupsModule = registerModule(
               tags: {
                 set: tags,
               },
+              flags: flags
+                ? {
+                    upsert: {
+                      create: flags,
+                      update: flags,
+                    },
+                  }
+                : undefined,
             },
           });
         },

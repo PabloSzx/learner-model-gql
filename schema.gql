@@ -80,10 +80,22 @@ type Group {
   label: String!
   users: [User!]!
   tags: [String!]!
+  flags: GroupFlags!
   createdAt: DateTime!
   updatedAt: DateTime!
   projectsIds: [IntID!]!
   projects: [Project!]!
+}
+
+type GroupFlags {
+  id: IntID!
+  readProjectActions: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input GroupFlagsInput {
+  readProjectActions: Boolean!
 }
 
 input CreateGroupInput {
@@ -91,6 +103,7 @@ input CreateGroupInput {
   label: String!
   tags: [String!]!
   projectIds: [IntID!]!
+  flags: GroupFlagsInput
 }
 
 input UpdateGroupInput {
@@ -99,6 +112,7 @@ input UpdateGroupInput {
   label: String!
   tags: [String!]!
   projectIds: [IntID!]!
+  flags: GroupFlagsInput
 }
 
 type GroupsConnection implements Connection {

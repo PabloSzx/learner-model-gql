@@ -41,7 +41,7 @@ export const getGatewayPlugin = async () => {
     envelop: {
       plugins: [
         {
-          async onSchemaChange({ schema }) {
+          async onSchemaChange({ schema, replaceSchema }) {
             writeGenerate(
               schema,
               (await gqtyConfigPromise).config.destination ||
@@ -49,15 +49,16 @@ export const getGatewayPlugin = async () => {
                   throw Error("GQty destination could not be found!");
                 })()
             ).catch(console.error);
-          },
-          async onPluginInit({ setSchema }) {
+
             for await (const data of pubSub.subscribe("updateGateway")) {
               logger.info(`Update service ${data}`);
               getStitchedSchema(servicesConfig)
                 .then((schema) => {
-                  setSchema(schema);
+                  replaceSchema(schema);
                 })
                 .catch(console.error);
+
+              break;
             }
           },
         },

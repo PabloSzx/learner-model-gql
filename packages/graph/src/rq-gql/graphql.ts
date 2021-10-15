@@ -307,6 +307,7 @@ export type CreateDomain = {
 
 export type CreateGroupInput = {
   code: Scalars["String"];
+  flags?: Maybe<GroupFlagsInput>;
   label: Scalars["String"];
   projectIds: Array<Scalars["IntID"]>;
   tags: Array<Scalars["String"]>;
@@ -367,6 +368,7 @@ export type Group = {
   __typename?: "Group";
   code: Scalars["String"];
   createdAt: Scalars["DateTime"];
+  flags: GroupFlags;
   id: Scalars["IntID"];
   label: Scalars["String"];
   projects: Array<Project>;
@@ -374,6 +376,18 @@ export type Group = {
   tags: Array<Scalars["String"]>;
   updatedAt: Scalars["DateTime"];
   users: Array<User>;
+};
+
+export type GroupFlags = {
+  __typename?: "GroupFlags";
+  createdAt: Scalars["DateTime"];
+  id: Scalars["IntID"];
+  readProjectActions: Scalars["Boolean"];
+  updatedAt: Scalars["DateTime"];
+};
+
+export type GroupFlagsInput = {
+  readProjectActions: Scalars["Boolean"];
 };
 
 export type GroupsConnection = Connection & {
@@ -533,6 +547,7 @@ export type UpdateDomain = {
 
 export type UpdateGroupInput = {
   code: Scalars["String"];
+  flags?: Maybe<GroupFlagsInput>;
   id: Scalars["IntID"];
   label: Scalars["String"];
   projectIds: Array<Scalars["IntID"]>;

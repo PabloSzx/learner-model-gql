@@ -40,8 +40,18 @@ Table Group {
   tags String [not null]
   users User [not null]
   projects Project [not null]
+  flags GroupFlags
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [default: `now()`, not null]
+}
+
+Table GroupFlags {
+  id Int [pk, increment]
+  readProjectActions Boolean [not null, default: false]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [default: `now()`, not null]
+  group Group [not null]
+  groupId Int [unique, not null]
 }
 
 Table Project {
@@ -195,6 +205,8 @@ Enum UserRole {
 }
 
 Ref: UserUID.userId > User.id
+
+Ref: GroupFlags.groupId - Group.id
 
 Ref: Domain.projectId > Project.id
 

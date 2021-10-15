@@ -39,11 +39,16 @@ export interface Scalars {
   IntID: any;
 }
 
+export interface GroupFlagsInput {
+  readProjectActions: Scalars["Boolean"];
+}
+
 export interface CreateGroupInput {
   code: Scalars["String"];
   label: Scalars["String"];
   tags: Array<Scalars["String"]>;
   projectIds: Array<Scalars["IntID"]>;
+  flags?: Maybe<GroupFlagsInput>;
 }
 
 export interface UpdateGroupInput {
@@ -52,6 +57,7 @@ export interface UpdateGroupInput {
   label: Scalars["String"];
   tags: Array<Scalars["String"]>;
   projectIds: Array<Scalars["IntID"]>;
+  flags?: Maybe<GroupFlagsInput>;
 }
 
 export enum UserRole {
@@ -391,6 +397,7 @@ export const generatedSchema = {
     label: { __type: "String!" },
     tags: { __type: "[String!]!" },
     projectIds: { __type: "[IntID!]!" },
+    flags: { __type: "GroupFlagsInput" },
   },
   CreateKCInput: {
     code: { __type: "String!" },
@@ -440,11 +447,20 @@ export const generatedSchema = {
     label: { __type: "String!" },
     users: { __type: "[User!]!" },
     tags: { __type: "[String!]!" },
+    flags: { __type: "GroupFlags!" },
     createdAt: { __type: "DateTime!" },
     updatedAt: { __type: "DateTime!" },
     projectsIds: { __type: "[IntID!]!" },
     projects: { __type: "[Project!]!" },
   },
+  GroupFlags: {
+    __typename: { __type: "String!" },
+    id: { __type: "IntID!" },
+    readProjectActions: { __type: "Boolean!" },
+    createdAt: { __type: "DateTime!" },
+    updatedAt: { __type: "DateTime!" },
+  },
+  GroupFlagsInput: { readProjectActions: { __type: "Boolean!" } },
   GroupsConnection: {
     __typename: { __type: "String!" },
     nodes: { __type: "[Group!]!" },
@@ -532,6 +548,7 @@ export const generatedSchema = {
     label: { __type: "String!" },
     tags: { __type: "[String!]!" },
     projectIds: { __type: "[IntID!]!" },
+    flags: { __type: "GroupFlagsInput" },
   },
   UpdateKCInput: {
     id: { __type: "IntID!" },
@@ -801,10 +818,19 @@ export interface Group {
   label: ScalarsEnums["String"];
   users: Array<User>;
   tags: Array<ScalarsEnums["String"]>;
+  flags: GroupFlags;
   createdAt: ScalarsEnums["DateTime"];
   updatedAt: ScalarsEnums["DateTime"];
   projectsIds: Array<ScalarsEnums["IntID"]>;
   projects: Array<Project>;
+}
+
+export interface GroupFlags {
+  __typename?: "GroupFlags";
+  id: ScalarsEnums["IntID"];
+  readProjectActions: ScalarsEnums["Boolean"];
+  createdAt: ScalarsEnums["DateTime"];
+  updatedAt: ScalarsEnums["DateTime"];
 }
 
 export interface GroupsConnection {
@@ -957,6 +983,7 @@ export interface SchemaObjectTypes {
   Domain: Domain;
   DomainsConnection: DomainsConnection;
   Group: Group;
+  GroupFlags: GroupFlags;
   GroupsConnection: GroupsConnection;
   KC: KC;
   KCsConnection: KCsConnection;
@@ -991,6 +1018,7 @@ export type SchemaObjectTypesNames =
   | "Domain"
   | "DomainsConnection"
   | "Group"
+  | "GroupFlags"
   | "GroupsConnection"
   | "KC"
   | "KCsConnection"
