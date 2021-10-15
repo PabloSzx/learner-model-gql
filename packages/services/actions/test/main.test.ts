@@ -64,7 +64,6 @@ describe("Actions service", () => {
           {
             variables: {
               data: {
-                activity: {},
                 projectId: "55",
                 timestamp: Date.now(),
                 verbName: "zxczx",
@@ -113,7 +112,6 @@ describe("Actions service", () => {
           {
             variables: {
               data: {
-                activity: {},
                 projectId: "55",
                 timestamp: Date.now(),
                 verbName: "zxczx",

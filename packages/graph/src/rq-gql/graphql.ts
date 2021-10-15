@@ -37,40 +37,30 @@ export type Scalars = {
 
 export type Action = {
   __typename?: "Action";
-  activity: ActionActivity;
-  id: Scalars["IntID"];
-  result?: Maybe<Scalars["Float"]>;
-  timestamp: Scalars["Timestamp"];
-  user?: Maybe<User>;
-  verb: ActionVerb;
-};
-
-export type ActionActivity = {
-  __typename?: "ActionActivity";
   amount?: Maybe<Scalars["Float"]>;
   content?: Maybe<Content>;
   detail?: Maybe<Scalars["String"]>;
   extra?: Maybe<Scalars["JSONObject"]>;
   hintID?: Maybe<Scalars["ID"]>;
   id: Scalars["IntID"];
+  result?: Maybe<Scalars["Float"]>;
   stepID?: Maybe<Scalars["ID"]>;
+  timestamp: Scalars["Timestamp"];
   topic?: Maybe<Topic>;
+  user?: Maybe<User>;
+  verb: ActionVerb;
 };
 
-export type ActionActivityInput = {
+export type ActionInput = {
   amount?: Maybe<Scalars["Float"]>;
   contentID?: Maybe<Scalars["IntID"]>;
   detail?: Maybe<Scalars["String"]>;
   extra?: Maybe<Scalars["JSONObject"]>;
   hintID?: Maybe<Scalars["ID"]>;
-  stepID?: Maybe<Scalars["ID"]>;
-  topicID?: Maybe<Scalars["IntID"]>;
-};
-
-export type ActionInput = {
-  activity: ActionActivityInput;
   projectId: Scalars["IntID"];
+  stepID?: Maybe<Scalars["ID"]>;
   timestamp: Scalars["Timestamp"];
+  topicID?: Maybe<Scalars["IntID"]>;
   verbName: Scalars["String"];
 };
 

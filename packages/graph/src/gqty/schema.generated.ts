@@ -80,7 +80,7 @@ export interface CursorConnectionArgs {
   before?: Maybe<Scalars["IntID"]>;
 }
 
-export interface ActionActivityInput {
+export interface ActionInput {
   contentID?: Maybe<Scalars["IntID"]>;
   topicID?: Maybe<Scalars["IntID"]>;
   stepID?: Maybe<Scalars["ID"]>;
@@ -88,10 +88,6 @@ export interface ActionActivityInput {
   amount?: Maybe<Scalars["Float"]>;
   detail?: Maybe<Scalars["String"]>;
   extra?: Maybe<Scalars["JSONObject"]>;
-}
-
-export interface ActionInput {
-  activity: ActionActivityInput;
   verbName: Scalars["String"];
   timestamp: Scalars["Timestamp"];
   projectId: Scalars["IntID"];
@@ -211,14 +207,9 @@ export const generatedSchema = {
     __typename: { __type: "String!" },
     id: { __type: "IntID!" },
     verb: { __type: "ActionVerb!" },
-    activity: { __type: "ActionActivity!" },
     timestamp: { __type: "Timestamp!" },
     result: { __type: "Float" },
     user: { __type: "User" },
-  },
-  ActionActivity: {
-    __typename: { __type: "String!" },
-    id: { __type: "IntID!" },
     content: { __type: "Content" },
     topic: { __type: "Topic" },
     stepID: { __type: "ID" },
@@ -227,7 +218,7 @@ export const generatedSchema = {
     detail: { __type: "String" },
     extra: { __type: "JSONObject" },
   },
-  ActionActivityInput: {
+  ActionInput: {
     contentID: { __type: "IntID" },
     topicID: { __type: "IntID" },
     stepID: { __type: "ID" },
@@ -235,9 +226,6 @@ export const generatedSchema = {
     amount: { __type: "Float" },
     detail: { __type: "String" },
     extra: { __type: "JSONObject" },
-  },
-  ActionInput: {
-    activity: { __type: "ActionActivityInput!" },
     verbName: { __type: "String!" },
     timestamp: { __type: "Timestamp!" },
     projectId: { __type: "IntID!" },
@@ -645,15 +633,9 @@ export interface Action {
   __typename?: "Action";
   id: ScalarsEnums["IntID"];
   verb: ActionVerb;
-  activity: ActionActivity;
   timestamp: ScalarsEnums["Timestamp"];
   result?: Maybe<ScalarsEnums["Float"]>;
   user?: Maybe<User>;
-}
-
-export interface ActionActivity {
-  __typename?: "ActionActivity";
-  id: ScalarsEnums["IntID"];
   content?: Maybe<Content>;
   topic?: Maybe<Topic>;
   stepID?: Maybe<ScalarsEnums["ID"]>;
@@ -966,7 +948,6 @@ export interface Subscription {
 
 export interface SchemaObjectTypes {
   Action: Action;
-  ActionActivity: ActionActivity;
   ActionVerb: ActionVerb;
   ActionsConnection: ActionsConnection;
   AdminActionQueries: AdminActionQueries;
@@ -1001,7 +982,6 @@ export interface SchemaObjectTypes {
 }
 export type SchemaObjectTypesNames =
   | "Action"
-  | "ActionActivity"
   | "ActionVerb"
   | "ActionsConnection"
   | "AdminActionQueries"

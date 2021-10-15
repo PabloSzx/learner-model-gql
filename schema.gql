@@ -246,18 +246,7 @@ type Topic {
   project: Project!
 }
 
-type ActionActivity {
-  id: IntID!
-  content: Content
-  topic: Topic
-  stepID: ID
-  hintID: ID
-  amount: Float
-  detail: String
-  extra: JSONObject
-}
-
-input ActionActivityInput {
+input ActionInput {
   contentID: IntID
   topicID: IntID
   stepID: ID
@@ -265,10 +254,6 @@ input ActionActivityInput {
   amount: Float
   detail: String
   extra: JSONObject
-}
-
-input ActionInput {
-  activity: ActionActivityInput!
   verbName: String!
   timestamp: Timestamp!
   projectId: IntID!
@@ -277,10 +262,16 @@ input ActionInput {
 type Action {
   id: IntID!
   verb: ActionVerb!
-  activity: ActionActivity!
   timestamp: Timestamp!
   result: Float
   user: User
+  content: Content
+  topic: Topic
+  stepID: ID
+  hintID: ID
+  amount: Float
+  detail: String
+  extra: JSONObject
 }
 
 type ActionsConnection {

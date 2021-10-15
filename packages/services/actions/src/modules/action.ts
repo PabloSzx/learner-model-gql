@@ -29,8 +29,38 @@ export const actionModule = registerModule(
       id: IntID!
     }
 
-    type ActionActivity {
+    input ActionInput {
+      contentID: IntID
+
+      topicID: IntID
+
+      stepID: ID
+
+      hintID: ID
+
+      amount: Float
+
+      detail: String
+
+      extra: JSONObject
+
+      verbName: String!
+
+      timestamp: Timestamp!
+
+      projectId: IntID!
+    }
+
+    type Action {
       id: IntID!
+
+      verb: ActionVerb!
+
+      timestamp: Timestamp!
+
+      result: Float
+
+      user: User
 
       content: Content
 
@@ -45,46 +75,6 @@ export const actionModule = registerModule(
       detail: String
 
       extra: JSONObject
-    }
-
-    input ActionActivityInput {
-      contentID: IntID
-
-      topicID: IntID
-
-      stepID: ID
-
-      hintID: ID
-
-      amount: Float
-
-      detail: String
-
-      extra: JSONObject
-    }
-
-    input ActionInput {
-      activity: ActionActivityInput!
-
-      verbName: String!
-
-      timestamp: Timestamp!
-
-      projectId: IntID!
-    }
-
-    type Action {
-      id: IntID!
-
-      verb: ActionVerb!
-
-      activity: ActionActivity!
-
-      timestamp: Timestamp!
-
-      result: Float
-
-      user: User
     }
 
     type ActionsConnection {
@@ -115,9 +105,10 @@ export const actionModule = registerModule(
           });
         },
       },
-      ActionActivity: {
+
+      Action: {
         content({ id }, _args, { prisma }) {
-          return prisma.actionActivity
+          return prisma.action
             .findUnique({
               where: {
                 id,
@@ -126,28 +117,13 @@ export const actionModule = registerModule(
             .content();
         },
         topic({ id }, _args, { prisma }) {
-          return prisma.actionActivity
+          return prisma.action
             .findUnique({
               where: {
                 id,
               },
             })
             .topic();
-        },
-      },
-      Action: {
-        async activity({ id }, _args, { prisma }) {
-          const activity = await prisma.action
-            .findUnique({
-              where: {
-                id,
-              },
-            })
-            .activity();
-
-          assert(activity, "Activity could not be found for action " + id);
-
-          return activity;
         },
         async verb({ id }, _args, { prisma }) {
           const verb = await prisma.action
@@ -184,15 +160,13 @@ export const actionModule = registerModule(
           _root,
           {
             data: {
-              activity: {
-                amount,
-                contentID,
-                detail,
-                extra,
-                hintID,
-                stepID,
-                topicID,
-              },
+              amount,
+              contentID,
+              detail,
+              extra,
+              hintID,
+              stepID,
+              topicID,
               timestamp,
               verbName,
               projectId,
@@ -220,31 +194,27 @@ export const actionModule = registerModule(
                   ).projectId,
                 },
               },
-              activity: {
-                create: {
-                  amount,
-                  content:
-                    contentID != null
-                      ? {
-                          connect: {
-                            id: contentID,
-                          },
-                        }
-                      : undefined,
-                  topic:
-                    topicID != null
-                      ? {
-                          connect: {
-                            id: topicID,
-                          },
-                        }
-                      : undefined,
-                  detail,
-                  extra,
-                  hintID: hintID?.toString(),
-                  stepID: stepID?.toString(),
-                },
-              },
+              amount,
+              content:
+                contentID != null
+                  ? {
+                      connect: {
+                        id: contentID,
+                      },
+                    }
+                  : undefined,
+              topic:
+                topicID != null
+                  ? {
+                      connect: {
+                        id: topicID,
+                      },
+                    }
+                  : undefined,
+              detail,
+              extra,
+              hintID: hintID?.toString(),
+              stepID: stepID?.toString(),
               user: {
                 connect: {
                   id: (await authorization.expectUser).id,

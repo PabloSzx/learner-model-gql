@@ -33,7 +33,6 @@ export async function CheckActionsCreationRetrieval({
       {
         variables: {
           data: {
-            activity: {},
             projectId,
             timestamp: Date.now(),
             verbName,

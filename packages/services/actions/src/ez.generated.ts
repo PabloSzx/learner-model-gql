@@ -76,19 +76,7 @@ export type User = {
   id: Scalars["IntID"];
 };
 
-export type ActionActivity = {
-  __typename?: "ActionActivity";
-  id: Scalars["IntID"];
-  content?: Maybe<Content>;
-  topic?: Maybe<Topic>;
-  stepID?: Maybe<Scalars["ID"]>;
-  hintID?: Maybe<Scalars["ID"]>;
-  amount?: Maybe<Scalars["Float"]>;
-  detail?: Maybe<Scalars["String"]>;
-  extra?: Maybe<Scalars["JSONObject"]>;
-};
-
-export type ActionActivityInput = {
+export type ActionInput = {
   contentID?: Maybe<Scalars["IntID"]>;
   topicID?: Maybe<Scalars["IntID"]>;
   stepID?: Maybe<Scalars["ID"]>;
@@ -96,10 +84,6 @@ export type ActionActivityInput = {
   amount?: Maybe<Scalars["Float"]>;
   detail?: Maybe<Scalars["String"]>;
   extra?: Maybe<Scalars["JSONObject"]>;
-};
-
-export type ActionInput = {
-  activity: ActionActivityInput;
   verbName: Scalars["String"];
   timestamp: Scalars["Timestamp"];
   projectId: Scalars["IntID"];
@@ -109,10 +93,16 @@ export type Action = {
   __typename?: "Action";
   id: Scalars["IntID"];
   verb: ActionVerb;
-  activity: ActionActivity;
   timestamp: Scalars["Timestamp"];
   result?: Maybe<Scalars["Float"]>;
   user?: Maybe<User>;
+  content?: Maybe<Content>;
+  topic?: Maybe<Topic>;
+  stepID?: Maybe<Scalars["ID"]>;
+  hintID?: Maybe<Scalars["ID"]>;
+  amount?: Maybe<Scalars["Float"]>;
+  detail?: Maybe<Scalars["String"]>;
+  extra?: Maybe<Scalars["JSONObject"]>;
 };
 
 export type ActionsConnection = {
@@ -288,11 +278,9 @@ export type ResolversTypes = {
   Domain: ResolverTypeWrapper<Domain>;
   Topic: ResolverTypeWrapper<Topic>;
   User: ResolverTypeWrapper<User>;
-  ActionActivity: ResolverTypeWrapper<ActionActivity>;
+  ActionInput: ActionInput;
   ID: ResolverTypeWrapper<Scalars["ID"]>;
   Float: ResolverTypeWrapper<Scalars["Float"]>;
-  ActionActivityInput: ActionActivityInput;
-  ActionInput: ActionInput;
   Action: ResolverTypeWrapper<Action>;
   ActionsConnection: ResolverTypeWrapper<ActionsConnection>;
   AdminActionQueries: ResolverTypeWrapper<AdminActionQueries>;
@@ -322,11 +310,9 @@ export type ResolversParentTypes = {
   Domain: Domain;
   Topic: Topic;
   User: User;
-  ActionActivity: ActionActivity;
+  ActionInput: ActionInput;
   ID: Scalars["ID"];
   Float: Scalars["Float"];
-  ActionActivityInput: ActionActivityInput;
-  ActionInput: ActionInput;
   Action: Action;
   ActionsConnection: ActionsConnection;
   AdminActionQueries: AdminActionQueries;
@@ -421,11 +407,15 @@ export type UserResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ActionActivityResolvers<
+export type ActionResolvers<
   ContextType = EZContext,
-  ParentType extends ResolversParentTypes["ActionActivity"] = ResolversParentTypes["ActionActivity"]
+  ParentType extends ResolversParentTypes["Action"] = ResolversParentTypes["Action"]
 > = {
   id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  verb?: Resolver<ResolversTypes["ActionVerb"], ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes["Timestamp"], ParentType, ContextType>;
+  result?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  user?: Resolver<Maybe<ResolversTypes["User"]>, ParentType, ContextType>;
   content?: Resolver<Maybe<ResolversTypes["Content"]>, ParentType, ContextType>;
   topic?: Resolver<Maybe<ResolversTypes["Topic"]>, ParentType, ContextType>;
   stepID?: Resolver<Maybe<ResolversTypes["ID"]>, ParentType, ContextType>;
@@ -437,23 +427,6 @@ export type ActionActivityResolvers<
     ParentType,
     ContextType
   >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type ActionResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Action"] = ResolversParentTypes["Action"]
-> = {
-  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-  verb?: Resolver<ResolversTypes["ActionVerb"], ParentType, ContextType>;
-  activity?: Resolver<
-    ResolversTypes["ActionActivity"],
-    ParentType,
-    ContextType
-  >;
-  timestamp?: Resolver<ResolversTypes["Timestamp"], ParentType, ContextType>;
-  result?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
-  user?: Resolver<Maybe<ResolversTypes["User"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -569,7 +542,6 @@ export type Resolvers<ContextType = EZContext> = {
   Domain?: DomainResolvers<ContextType>;
   Topic?: TopicResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
-  ActionActivity?: ActionActivityResolvers<ContextType>;
   Action?: ActionResolvers<ContextType>;
   ActionsConnection?: ActionsConnectionResolvers<ContextType>;
   AdminActionQueries?: AdminActionQueriesResolvers<ContextType>;
