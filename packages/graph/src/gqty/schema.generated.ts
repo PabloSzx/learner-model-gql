@@ -42,6 +42,7 @@ export interface Scalars {
 export interface CreateGroupInput {
   code: Scalars["String"];
   label: Scalars["String"];
+  tags: Array<Scalars["String"]>;
   projectIds: Array<Scalars["IntID"]>;
 }
 
@@ -49,6 +50,7 @@ export interface UpdateGroupInput {
   id: Scalars["IntID"];
   code: Scalars["String"];
   label: Scalars["String"];
+  tags: Array<Scalars["String"]>;
   projectIds: Array<Scalars["IntID"]>;
 }
 
@@ -62,6 +64,7 @@ export interface UpdateUserInput {
   role: UserRole;
   locked: Scalars["Boolean"];
   projectIds: Array<Scalars["IntID"]>;
+  tags: Array<Scalars["String"]>;
 }
 
 export interface CursorConnectionArgs {
@@ -386,6 +389,7 @@ export const generatedSchema = {
   CreateGroupInput: {
     code: { __type: "String!" },
     label: { __type: "String!" },
+    tags: { __type: "[String!]!" },
     projectIds: { __type: "[IntID!]!" },
   },
   CreateKCInput: {
@@ -435,6 +439,7 @@ export const generatedSchema = {
     code: { __type: "String!" },
     label: { __type: "String!" },
     users: { __type: "[User!]!" },
+    tags: { __type: "[String!]!" },
     createdAt: { __type: "DateTime!" },
     updatedAt: { __type: "DateTime!" },
     projectsIds: { __type: "[IntID!]!" },
@@ -525,6 +530,7 @@ export const generatedSchema = {
     id: { __type: "IntID!" },
     code: { __type: "String!" },
     label: { __type: "String!" },
+    tags: { __type: "[String!]!" },
     projectIds: { __type: "[IntID!]!" },
   },
   UpdateKCInput: {
@@ -551,6 +557,7 @@ export const generatedSchema = {
     role: { __type: "UserRole!" },
     locked: { __type: "Boolean!" },
     projectIds: { __type: "[IntID!]!" },
+    tags: { __type: "[String!]!" },
   },
   User: {
     __typename: { __type: "String!" },
@@ -561,6 +568,7 @@ export const generatedSchema = {
     locked: { __type: "Boolean!" },
     active: { __type: "Boolean!" },
     lastOnline: { __type: "DateTime" },
+    tags: { __type: "[String!]!" },
     role: { __type: "UserRole!" },
     createdAt: { __type: "DateTime!" },
     updatedAt: { __type: "DateTime!" },
@@ -792,6 +800,7 @@ export interface Group {
   code: ScalarsEnums["String"];
   label: ScalarsEnums["String"];
   users: Array<User>;
+  tags: Array<ScalarsEnums["String"]>;
   createdAt: ScalarsEnums["DateTime"];
   updatedAt: ScalarsEnums["DateTime"];
   projectsIds: Array<ScalarsEnums["IntID"]>;
@@ -881,6 +890,7 @@ export interface User {
   locked: ScalarsEnums["Boolean"];
   active: ScalarsEnums["Boolean"];
   lastOnline?: Maybe<ScalarsEnums["DateTime"]>;
+  tags: Array<ScalarsEnums["String"]>;
   role: ScalarsEnums["UserRole"];
   createdAt: ScalarsEnums["DateTime"];
   updatedAt: ScalarsEnums["DateTime"];

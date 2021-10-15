@@ -112,6 +112,7 @@ function CreateGroup() {
             projectIds: selectedProjects.map((v) => v.value),
             code: codeRef.current.value,
             label: labelRef.current.value,
+            tags: [],
           },
         });
 
@@ -514,6 +515,7 @@ export default withAuth(function GroupsPage() {
                             code: codeRef.current,
                             label: labelRef.current,
                             projectIds: selectedProjects.map((v) => v.value),
+                            tags: [],
                           },
                         })
                         .then(() => {

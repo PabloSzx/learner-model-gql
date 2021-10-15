@@ -372,6 +372,7 @@ export default withAuth(function UsersPage() {
                             role,
                             locked,
                             projectIds: selectedProjects.map((v) => v.value),
+                            tags: [],
                           },
                         })
                         .then(() => {

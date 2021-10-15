@@ -13,6 +13,8 @@ export const groupsModule = registerModule(
 
       users: [User!]!
 
+      tags: [String!]!
+
       createdAt: DateTime!
       updatedAt: DateTime!
     }
@@ -25,6 +27,8 @@ export const groupsModule = registerModule(
       code: String!
       label: String!
 
+      tags: [String!]!
+
       projectIds: [IntID!]!
     }
 
@@ -33,6 +37,8 @@ export const groupsModule = registerModule(
 
       code: String!
       label: String!
+
+      tags: [String!]!
 
       projectIds: [IntID!]!
     }
@@ -143,7 +149,7 @@ export const groupsModule = registerModule(
         },
         async createGroup(
           _root,
-          { data: { code, label, projectIds } },
+          { data: { code, label, projectIds, tags } },
           { prisma }
         ) {
           return prisma.group.create({
@@ -153,12 +159,15 @@ export const groupsModule = registerModule(
               projects: {
                 connect: projectIds.map((id) => ({ id })),
               },
+              tags: {
+                set: tags,
+              },
             },
           });
         },
         async updateGroup(
           _root,
-          { data: { id, code, label, projectIds } },
+          { data: { id, code, label, projectIds, tags } },
           { prisma }
         ) {
           return prisma.group.update({
@@ -170,6 +179,9 @@ export const groupsModule = registerModule(
               label,
               projects: {
                 set: projectIds.map((id) => ({ id })),
+              },
+              tags: {
+                set: tags,
               },
             },
           });

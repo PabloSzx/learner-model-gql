@@ -585,6 +585,7 @@ export async function CheckGroups({
           code: group2Code,
           label: group2Label,
           projectIds: [projectId],
+          tags: [],
         },
       },
     }
@@ -632,6 +633,7 @@ export async function CheckGroups({
           code: updatedGroup2Code,
           label: updatedGroup2Label,
           projectIds: [],
+          tags: [],
         },
       },
     }

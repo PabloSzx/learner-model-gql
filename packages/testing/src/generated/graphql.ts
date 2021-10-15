@@ -309,6 +309,7 @@ export type CreateGroupInput = {
   code: Scalars["String"];
   label: Scalars["String"];
   projectIds: Array<Scalars["IntID"]>;
+  tags: Array<Scalars["String"]>;
 };
 
 export type CreateKcInput = {
@@ -370,6 +371,7 @@ export type Group = {
   label: Scalars["String"];
   projects: Array<Project>;
   projectsIds: Array<Scalars["IntID"]>;
+  tags: Array<Scalars["String"]>;
   updatedAt: Scalars["DateTime"];
   users: Array<User>;
 };
@@ -534,6 +536,7 @@ export type UpdateGroupInput = {
   id: Scalars["IntID"];
   label: Scalars["String"];
   projectIds: Array<Scalars["IntID"]>;
+  tags: Array<Scalars["String"]>;
 };
 
 export type UpdateKcInput = {
@@ -563,6 +566,7 @@ export type UpdateUserInput = {
   locked: Scalars["Boolean"];
   projectIds: Array<Scalars["IntID"]>;
   role: UserRole;
+  tags: Array<Scalars["String"]>;
 };
 
 export type User = {
@@ -579,6 +583,7 @@ export type User = {
   projects: Array<Project>;
   projectsIds: Array<Scalars["IntID"]>;
   role: UserRole;
+  tags: Array<Scalars["String"]>;
   updatedAt: Scalars["DateTime"];
 };
 

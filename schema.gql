@@ -79,6 +79,7 @@ type Group {
   code: String!
   label: String!
   users: [User!]!
+  tags: [String!]!
   createdAt: DateTime!
   updatedAt: DateTime!
   projectsIds: [IntID!]!
@@ -88,6 +89,7 @@ type Group {
 input CreateGroupInput {
   code: String!
   label: String!
+  tags: [String!]!
   projectIds: [IntID!]!
 }
 
@@ -95,6 +97,7 @@ input UpdateGroupInput {
   id: IntID!
   code: String!
   label: String!
+  tags: [String!]!
   projectIds: [IntID!]!
 }
 
@@ -116,6 +119,7 @@ type User {
   locked: Boolean!
   active: Boolean!
   lastOnline: DateTime
+  tags: [String!]!
   role: UserRole!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -139,6 +143,7 @@ input UpdateUserInput {
   role: UserRole!
   locked: Boolean!
   projectIds: [IntID!]!
+  tags: [String!]!
 }
 
 type AdminUserMutations {

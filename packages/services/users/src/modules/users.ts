@@ -19,6 +19,8 @@ export const usersModule = registerModule(
       active: Boolean!
       lastOnline: DateTime
 
+      tags: [String!]!
+
       role: UserRole!
 
       createdAt: DateTime!
@@ -39,6 +41,7 @@ export const usersModule = registerModule(
       role: UserRole!
       locked: Boolean!
       projectIds: [IntID!]!
+      tags: [String!]!
     }
 
     type AdminUserMutations {
@@ -126,7 +129,11 @@ export const usersModule = registerModule(
             }
           );
         },
-        updateUser(_root, { data: { id, projectIds, ...data } }, { prisma }) {
+        updateUser(
+          _root,
+          { data: { id, projectIds, tags, ...data } },
+          { prisma }
+        ) {
           return prisma.user.update({
             where: {
               id,
@@ -135,6 +142,9 @@ export const usersModule = registerModule(
               ...data,
               projects: {
                 set: projectIds.map((id) => ({ id })),
+              },
+              tags: {
+                set: tags,
               },
             },
           });

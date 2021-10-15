@@ -56,6 +56,7 @@ export type Group = {
   code: Scalars["String"];
   label: Scalars["String"];
   users: Array<User>;
+  tags: Array<Scalars["String"]>;
   createdAt: Scalars["DateTime"];
   updatedAt: Scalars["DateTime"];
   projectsIds: Array<Scalars["IntID"]>;
@@ -64,6 +65,7 @@ export type Group = {
 export type CreateGroupInput = {
   code: Scalars["String"];
   label: Scalars["String"];
+  tags: Array<Scalars["String"]>;
   projectIds: Array<Scalars["IntID"]>;
 };
 
@@ -71,6 +73,7 @@ export type UpdateGroupInput = {
   id: Scalars["IntID"];
   code: Scalars["String"];
   label: Scalars["String"];
+  tags: Array<Scalars["String"]>;
   projectIds: Array<Scalars["IntID"]>;
 };
 
@@ -91,6 +94,7 @@ export type User = {
   locked: Scalars["Boolean"];
   active: Scalars["Boolean"];
   lastOnline?: Maybe<Scalars["DateTime"]>;
+  tags: Array<Scalars["String"]>;
   role: UserRole;
   createdAt: Scalars["DateTime"];
   updatedAt: Scalars["DateTime"];
@@ -123,6 +127,7 @@ export type UpdateUserInput = {
   role: UserRole;
   locked: Scalars["Boolean"];
   projectIds: Array<Scalars["IntID"]>;
+  tags: Array<Scalars["String"]>;
 };
 
 export type AdminUserMutations = {
@@ -425,6 +430,7 @@ export type GroupResolvers<
   code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   users?: Resolver<Array<ResolversTypes["User"]>, ParentType, ContextType>;
+  tags?: Resolver<Array<ResolversTypes["String"]>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   projectsIds?: Resolver<
@@ -459,6 +465,7 @@ export type UserResolvers<
     ParentType,
     ContextType
   >;
+  tags?: Resolver<Array<ResolversTypes["String"]>, ParentType, ContextType>;
   role?: Resolver<ResolversTypes["UserRole"], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
