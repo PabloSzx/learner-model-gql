@@ -72,10 +72,8 @@ Table Domain {
   id Int [pk, increment]
   code String [unique, not null]
   label String [not null]
-  project Project [not null]
-  projectId Int [not null]
+  projects Project [not null]
   content Content [not null]
-  topics Topic [not null]
   kcs KC [not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [default: `now()`, not null]
@@ -86,8 +84,6 @@ Table Topic {
   code String [unique, not null]
   label String [not null]
   sortIndex Int
-  domain Domain [not null]
-  domainId Int [not null]
   project Project [not null]
   projectId Int [not null]
   parent Topic
@@ -179,6 +175,11 @@ Table GroupToProject {
   groupsId Int [ref: > Group.id]
 }
 
+Table DomainToProject {
+  domainsId Int [ref: > Domain.id]
+  projectsId Int [ref: > Project.id]
+}
+
 Table ContentToTopic {
   contentId Int [ref: > Content.id]
   topicsId Int [ref: > Topic.id]
@@ -207,10 +208,6 @@ Enum UserRole {
 Ref: UserUID.userId > User.id
 
 Ref: GroupFlags.groupId - Group.id
-
-Ref: Domain.projectId > Project.id
-
-Ref: Topic.domainId > Domain.id
 
 Ref: Topic.projectId > Project.id
 

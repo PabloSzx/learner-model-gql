@@ -113,19 +113,15 @@ model Domain {
   code  String @unique
   label String
 
-  project   Project @relation(fields: [projectId], references: [id])
-  projectId Int
+  projects Project[]
+
 
   content Content[]
-
-  topics Topic[]
 
   kcs KC[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
-
-  @@index([id, projectId])
 }
 
 model Topic {
@@ -135,9 +131,6 @@ model Topic {
   label String
 
   sortIndex Int?
-
-  domain   Domain @relation(fields: [domainId], references: [id])
-  domainId Int
 
   project   Project @relation(fields: [projectId], references: [id])
   projectId Int
