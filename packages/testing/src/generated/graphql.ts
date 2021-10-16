@@ -43,6 +43,7 @@ export type Action = {
   extra?: Maybe<Scalars["JSONObject"]>;
   hintID?: Maybe<Scalars["ID"]>;
   id: Scalars["IntID"];
+  kcs: Array<Kc>;
   result?: Maybe<Scalars["Float"]>;
   stepID?: Maybe<Scalars["ID"]>;
   timestamp: Scalars["Timestamp"];
@@ -53,14 +54,16 @@ export type Action = {
 
 export type ActionInput = {
   amount?: Maybe<Scalars["Float"]>;
-  contentID?: Maybe<Scalars["IntID"]>;
+  contentID?: Maybe<Scalars["ID"]>;
   detail?: Maybe<Scalars["String"]>;
   extra?: Maybe<Scalars["JSONObject"]>;
   hintID?: Maybe<Scalars["ID"]>;
+  kcsIDs?: Maybe<Array<Scalars["ID"]>>;
   projectId: Scalars["IntID"];
+  result?: Maybe<Scalars["Float"]>;
   stepID?: Maybe<Scalars["ID"]>;
   timestamp: Scalars["Timestamp"];
-  topicID?: Maybe<Scalars["IntID"]>;
+  topicID?: Maybe<Scalars["ID"]>;
   verbName: Scalars["String"];
 };
 
@@ -458,6 +461,7 @@ export type Query = {
   groups: Array<Group>;
   hello: Scalars["String"];
   hello2: Scalars["String"];
+  kcs: Array<Kc>;
   projects: Array<Project>;
   topics: Array<Topic>;
   users: Array<User>;
@@ -472,6 +476,10 @@ export type QueryDomainsArgs = {
 };
 
 export type QueryGroupsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryKcsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 

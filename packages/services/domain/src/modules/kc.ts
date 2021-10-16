@@ -1,4 +1,4 @@
-import { ResolveCursorConnection } from "api-base";
+import { getNodeIdList, ResolveCursorConnection } from "api-base";
 import { gql, registerModule } from "../ez";
 
 export const kcModule = registerModule(
@@ -48,6 +48,10 @@ export const kcModule = registerModule(
       createKC(data: CreateKCInput!): KC!
 
       updateKC(data: UpdateKCInput!): KC!
+    }
+
+    extend type Query {
+      kcs(ids: [IntID!]!): [KC!]!
     }
   `,
   {
@@ -110,6 +114,23 @@ export const kcModule = registerModule(
               ...data,
             },
           });
+        },
+      },
+      Query: {
+        async kcs(_root, { ids }, { prisma, authorization }) {
+          return getNodeIdList(
+            prisma.kC.findMany({
+              where: {
+                id: {
+                  in: ids,
+                },
+                domain: {
+                  project: await authorization.expectProjectsIdInPrismaFilter,
+                },
+              },
+            }),
+            ids
+          );
         },
       },
     },

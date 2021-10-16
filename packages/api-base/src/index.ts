@@ -26,6 +26,7 @@ export * from "./connection";
 export * from "./logger";
 export * from "./utils";
 export * from "./listen";
+export { default as isInt } from "validator/lib/isInt.js";
 
 async function buildContext({ fastify }: BuildContextArgs) {
   const { Auth0UserPromise } = GetAuth0User(fastify?.request);

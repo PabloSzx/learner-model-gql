@@ -13,3 +13,5 @@ export const logger = Pino({
     },
   },
 });
+
+export { serializeError } from "serialize-error";

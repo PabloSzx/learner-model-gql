@@ -61,6 +61,11 @@ export type Content = {
   id: Scalars["IntID"];
 };
 
+export type Kc = {
+  __typename?: "KC";
+  id: Scalars["IntID"];
+};
+
 export type Domain = {
   __typename?: "Domain";
   id: Scalars["IntID"];
@@ -77,8 +82,9 @@ export type User = {
 };
 
 export type ActionInput = {
-  contentID?: Maybe<Scalars["IntID"]>;
-  topicID?: Maybe<Scalars["IntID"]>;
+  contentID?: Maybe<Scalars["ID"]>;
+  topicID?: Maybe<Scalars["ID"]>;
+  kcsIDs?: Maybe<Array<Scalars["ID"]>>;
   stepID?: Maybe<Scalars["ID"]>;
   hintID?: Maybe<Scalars["ID"]>;
   amount?: Maybe<Scalars["Float"]>;
@@ -87,6 +93,7 @@ export type ActionInput = {
   verbName: Scalars["String"];
   timestamp: Scalars["Timestamp"];
   projectId: Scalars["IntID"];
+  result?: Maybe<Scalars["Float"]>;
 };
 
 export type Action = {
@@ -98,6 +105,7 @@ export type Action = {
   user?: Maybe<User>;
   content?: Maybe<Content>;
   topic?: Maybe<Topic>;
+  kcs: Array<Kc>;
   stepID?: Maybe<Scalars["ID"]>;
   hintID?: Maybe<Scalars["ID"]>;
   amount?: Maybe<Scalars["Float"]>;
@@ -275,6 +283,7 @@ export type ResolversTypes = {
   ActionVerb: ResolverTypeWrapper<ActionVerb>;
   String: ResolverTypeWrapper<Scalars["String"]>;
   Content: ResolverTypeWrapper<Content>;
+  KC: ResolverTypeWrapper<Kc>;
   Domain: ResolverTypeWrapper<Domain>;
   Topic: ResolverTypeWrapper<Topic>;
   User: ResolverTypeWrapper<User>;
@@ -307,6 +316,7 @@ export type ResolversParentTypes = {
   ActionVerb: ActionVerb;
   String: Scalars["String"];
   Content: Content;
+  KC: Kc;
   Domain: Domain;
   Topic: Topic;
   User: User;
@@ -383,6 +393,14 @@ export type ContentResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type KcResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["KC"] = ResolversParentTypes["KC"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type DomainResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Domain"] = ResolversParentTypes["Domain"]
@@ -418,6 +436,7 @@ export type ActionResolvers<
   user?: Resolver<Maybe<ResolversTypes["User"]>, ParentType, ContextType>;
   content?: Resolver<Maybe<ResolversTypes["Content"]>, ParentType, ContextType>;
   topic?: Resolver<Maybe<ResolversTypes["Topic"]>, ParentType, ContextType>;
+  kcs?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
   stepID?: Resolver<Maybe<ResolversTypes["ID"]>, ParentType, ContextType>;
   hintID?: Resolver<Maybe<ResolversTypes["ID"]>, ParentType, ContextType>;
   amount?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
@@ -539,6 +558,7 @@ export type Resolvers<ContextType = EZContext> = {
   IntID?: GraphQLScalarType;
   ActionVerb?: ActionVerbResolvers<ContextType>;
   Content?: ContentResolvers<ContextType>;
+  KC?: KcResolvers<ContextType>;
   Domain?: DomainResolvers<ContextType>;
   Topic?: TopicResolvers<ContextType>;
   User?: UserResolvers<ContextType>;

@@ -1,4 +1,10 @@
-import { ResolveCursorConnection } from "api-base";
+import {
+  logger,
+  PromiseAllCallbacks,
+  ResolveCursorConnection,
+  serializeError,
+  isInt,
+} from "api-base";
 import assert from "assert";
 import { gql, registerModule } from "../ez";
 
@@ -17,6 +23,10 @@ export const actionModule = registerModule(
       id: IntID!
     }
 
+    type KC {
+      id: IntID!
+    }
+
     type Domain {
       id: IntID!
     }
@@ -30,9 +40,11 @@ export const actionModule = registerModule(
     }
 
     input ActionInput {
-      contentID: IntID
+      contentID: ID
 
-      topicID: IntID
+      topicID: ID
+
+      kcsIDs: [ID!]
 
       stepID: ID
 
@@ -49,6 +61,8 @@ export const actionModule = registerModule(
       timestamp: Timestamp!
 
       projectId: IntID!
+
+      result: Float
     }
 
     type Action {
@@ -65,6 +79,8 @@ export const actionModule = registerModule(
       content: Content
 
       topic: Topic
+
+      kcs: [KC!]!
 
       stepID: ID
 
@@ -107,6 +123,21 @@ export const actionModule = registerModule(
       },
 
       Action: {
+        async kcs({ id }, _args, { prisma }) {
+          return (
+            (await prisma.action
+              .findUnique({
+                where: {
+                  id,
+                },
+              })
+              .kcs({
+                select: {
+                  id: true,
+                },
+              })) || []
+          );
+        },
         content({ id }, _args, { prisma }) {
           return prisma.action
             .findUnique({
@@ -114,7 +145,11 @@ export const actionModule = registerModule(
                 id,
               },
             })
-            .content();
+            .content({
+              select: {
+                id: true,
+              },
+            });
         },
         topic({ id }, _args, { prisma }) {
           return prisma.action
@@ -123,7 +158,11 @@ export const actionModule = registerModule(
                 id,
               },
             })
-            .topic();
+            .topic({
+              select: {
+                id: true,
+              },
+            });
         },
         async verb({ id }, _args, { prisma }) {
           const verb = await prisma.action
@@ -145,7 +184,11 @@ export const actionModule = registerModule(
                 id,
               },
             })
-            .user();
+            .user({
+              select: {
+                id: true,
+              },
+            });
         },
       },
       Query: {
@@ -170,10 +213,139 @@ export const actionModule = registerModule(
               timestamp,
               verbName,
               projectId,
+              kcsIDs,
+              result,
             },
           },
           { authorization, prisma }
         ) {
+          const {
+            projectId: userProjectId,
+            user: { id: userId },
+          } = await authorization.expectAllowedUserProject(projectId);
+
+          const [{ content }, { topic }, { kcs }] = await PromiseAllCallbacks(
+            async () => {
+              return {
+                content:
+                  contentID != null && (contentID = contentID.toString())
+                    ? {
+                        connect: {
+                          id: (
+                            await prisma.content.findFirst({
+                              where: isInt(contentID)
+                                ? {
+                                    projectId: userProjectId,
+                                    id: parseInt(contentID.toString()),
+                                  }
+                                : {
+                                    projectId: userProjectId,
+                                    code: contentID.toString(),
+                                  },
+                              rejectOnNotFound: true,
+                              select: {
+                                id: true,
+                              },
+                            })
+                          ).id,
+                        },
+                      }
+                    : undefined,
+              };
+            },
+            async () => {
+              return {
+                topic:
+                  topicID != null && (topicID = topicID.toString())
+                    ? {
+                        connect: {
+                          id: (
+                            await prisma.topic.findFirst({
+                              where: isInt(topicID)
+                                ? {
+                                    projectId: userProjectId,
+                                    id: parseInt(topicID),
+                                  }
+                                : {
+                                    projectId: userProjectId,
+                                    code: topicID,
+                                  },
+                              rejectOnNotFound: true,
+                              select: {
+                                id: true,
+                              },
+                            })
+                          ).id,
+                        },
+                      }
+                    : undefined,
+              };
+            },
+            async () => {
+              if (!kcsIDs?.length) return {};
+
+              const parsedKcsIds = kcsIDs?.reduce<{
+                ids: Set<number>;
+                codes: Set<string>;
+              }>(
+                (acum, value) => {
+                  if (isInt((value = value.toString()))) {
+                    acum.ids.add(parseInt(value));
+                  } else {
+                    acum.codes.add(value);
+                  }
+                  return acum;
+                },
+                {
+                  ids: new Set(),
+                  codes: new Set(),
+                }
+              );
+
+              const kcs = await prisma.kC.findMany({
+                where: {
+                  OR: [
+                    {
+                      id: {
+                        in: Array.from(parsedKcsIds.ids),
+                      },
+                      domain: {
+                        projectId: userProjectId,
+                      },
+                    },
+                    {
+                      code: {
+                        in: Array.from(parsedKcsIds.codes),
+                      },
+                      domain: {
+                        projectId: userProjectId,
+                      },
+                    },
+                  ],
+                },
+                select: {
+                  id: true,
+                },
+              });
+
+              if (
+                kcs.length !==
+                parsedKcsIds.ids.size + parsedKcsIds.codes.size
+              )
+                throw Error("Forbidden!");
+
+              return {
+                kcs: {
+                  connect: kcs,
+                },
+              };
+            }
+          ).catch((err) => {
+            logger.error(serializeError(err));
+
+            throw Error("Forbidden!");
+          });
+
           await prisma.action.create({
             data: {
               timestamp,
@@ -189,37 +361,23 @@ export const actionModule = registerModule(
               },
               project: {
                 connect: {
-                  id: (
-                    await authorization.expectAllowedUserProject(projectId)
-                  ).projectId,
+                  id: userProjectId,
                 },
               },
               amount,
-              content:
-                contentID != null
-                  ? {
-                      connect: {
-                        id: contentID,
-                      },
-                    }
-                  : undefined,
-              topic:
-                topicID != null
-                  ? {
-                      connect: {
-                        id: topicID,
-                      },
-                    }
-                  : undefined,
+              content,
+              topic,
               detail,
               extra,
               hintID: hintID?.toString(),
               stepID: stepID?.toString(),
               user: {
                 connect: {
-                  id: (await authorization.expectUser).id,
+                  id: userId,
                 },
               },
+              result,
+              kcs,
             },
             select: null,
           });

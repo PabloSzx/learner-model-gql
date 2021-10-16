@@ -16,6 +16,7 @@ type Query {
   domains(ids: [IntID!]!): [Domain!]!
   topics(ids: [IntID!]!): [Topic!]!
   adminDomain: AdminDomainQueries!
+  kcs(ids: [IntID!]!): [KC!]!
   projects(ids: [IntID!]!): [Project!]!
   adminProjects: AdminProjectsQueries!
   hello2: String!
@@ -219,6 +220,16 @@ type Content {
   project: Project!
 }
 
+type KC {
+  id: IntID!
+  code: String!
+  label: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  domain: Domain!
+  topics: [Topic!]!
+}
+
 type Domain {
   id: IntID!
   content(pagination: CursorConnectionArgs!): ContentConnection!
@@ -247,8 +258,9 @@ type Topic {
 }
 
 input ActionInput {
-  contentID: IntID
-  topicID: IntID
+  contentID: ID
+  topicID: ID
+  kcsIDs: [ID!]
   stepID: ID
   hintID: ID
   amount: Float
@@ -257,6 +269,7 @@ input ActionInput {
   verbName: String!
   timestamp: Timestamp!
   projectId: IntID!
+  result: Float
 }
 
 type Action {
@@ -267,6 +280,7 @@ type Action {
   user: User
   content: Content
   topic: Topic
+  kcs: [KC!]!
   stepID: ID
   hintID: ID
   amount: Float
@@ -396,16 +410,6 @@ type AdminDomainMutations {
   updateTopic(input: UpdateTopic!): Topic!
   createKC(data: CreateKCInput!): KC!
   updateKC(data: UpdateKCInput!): KC!
-}
-
-type KC {
-  id: IntID!
-  code: String!
-  label: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  domain: Domain!
-  topics: [Topic!]!
 }
 
 type KCsConnection implements Connection {

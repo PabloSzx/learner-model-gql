@@ -255,6 +255,7 @@ export type Query = {
   topics: Array<Topic>;
   domains: Array<Domain>;
   adminDomain: AdminDomainQueries;
+  kcs: Array<Kc>;
   projects: Array<Project>;
 };
 
@@ -267,6 +268,10 @@ export type QueryTopicsArgs = {
 };
 
 export type QueryDomainsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryKcsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
@@ -738,6 +743,12 @@ export type QueryResolvers<
     ResolversTypes["AdminDomainQueries"],
     ParentType,
     ContextType
+  >;
+  kcs?: Resolver<
+    Array<ResolversTypes["KC"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryKcsArgs, "ids">
   >;
   projects?: Resolver<
     Array<ResolversTypes["Project"]>,

@@ -81,8 +81,9 @@ export interface CursorConnectionArgs {
 }
 
 export interface ActionInput {
-  contentID?: Maybe<Scalars["IntID"]>;
-  topicID?: Maybe<Scalars["IntID"]>;
+  contentID?: Maybe<Scalars["ID"]>;
+  topicID?: Maybe<Scalars["ID"]>;
+  kcsIDs?: Maybe<Array<Scalars["ID"]>>;
   stepID?: Maybe<Scalars["ID"]>;
   hintID?: Maybe<Scalars["ID"]>;
   amount?: Maybe<Scalars["Float"]>;
@@ -91,6 +92,7 @@ export interface ActionInput {
   verbName: Scalars["String"];
   timestamp: Scalars["Timestamp"];
   projectId: Scalars["IntID"];
+  result?: Maybe<Scalars["Float"]>;
 }
 
 export interface CreateContent {
@@ -212,6 +214,7 @@ export const generatedSchema = {
     user: { __type: "User" },
     content: { __type: "Content" },
     topic: { __type: "Topic" },
+    kcs: { __type: "[KC!]!" },
     stepID: { __type: "ID" },
     hintID: { __type: "ID" },
     amount: { __type: "Float" },
@@ -219,8 +222,9 @@ export const generatedSchema = {
     extra: { __type: "JSONObject" },
   },
   ActionInput: {
-    contentID: { __type: "IntID" },
-    topicID: { __type: "IntID" },
+    contentID: { __type: "ID" },
+    topicID: { __type: "ID" },
+    kcsIDs: { __type: "[ID!]" },
     stepID: { __type: "ID" },
     hintID: { __type: "ID" },
     amount: { __type: "Float" },
@@ -229,6 +233,7 @@ export const generatedSchema = {
     verbName: { __type: "String!" },
     timestamp: { __type: "Timestamp!" },
     projectId: { __type: "IntID!" },
+    result: { __type: "Float" },
   },
   ActionVerb: {
     __typename: { __type: "String!" },
@@ -608,6 +613,7 @@ export const generatedSchema = {
     domains: { __type: "[Domain!]!", __args: { ids: "[IntID!]!" } },
     topics: { __type: "[Topic!]!", __args: { ids: "[IntID!]!" } },
     adminDomain: { __type: "AdminDomainQueries!" },
+    kcs: { __type: "[KC!]!", __args: { ids: "[IntID!]!" } },
     projects: { __type: "[Project!]!", __args: { ids: "[IntID!]!" } },
     adminProjects: { __type: "AdminProjectsQueries!" },
     hello2: { __type: "String!" },
@@ -638,6 +644,7 @@ export interface Action {
   user?: Maybe<User>;
   content?: Maybe<Content>;
   topic?: Maybe<Topic>;
+  kcs: Array<KC>;
   stepID?: Maybe<ScalarsEnums["ID"]>;
   hintID?: Maybe<ScalarsEnums["ID"]>;
   amount?: Maybe<ScalarsEnums["Float"]>;
@@ -936,6 +943,7 @@ export interface Query {
   domains: (args: { ids: Array<Scalars["IntID"]> }) => Array<Domain>;
   topics: (args: { ids: Array<Scalars["IntID"]> }) => Array<Topic>;
   adminDomain: AdminDomainQueries;
+  kcs: (args: { ids: Array<Scalars["IntID"]> }) => Array<KC>;
   projects: (args: { ids: Array<Scalars["IntID"]> }) => Array<Project>;
   adminProjects: AdminProjectsQueries;
   hello2: ScalarsEnums["String"];
