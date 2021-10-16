@@ -6,7 +6,7 @@ import { APILoadingIndicator } from "../components/APILoadingIndicator";
 import { SyncAuth } from "../components/Auth";
 import { MainLayout } from "../components/MainLayout";
 import { NextNProgress } from "../components/NextNProgress";
-import { queryClient, rqGQLClient } from "../rqClient";
+import { ErrorToast, queryClient, rqGQLClient } from "../rqClient";
 
 const theme = extendTheme({});
 
@@ -23,6 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <CombinedRQGQLProvider client={queryClient} rqGQLClient={rqGQLClient}>
           <SyncAuth />
           <ChakraProvider theme={theme}>
+            <ErrorToast />
             {process.env.NODE_ENV !== "production" && <APILoadingIndicator />}
             <NextNProgress color="#10b9cf" />
             <MainLayout>
