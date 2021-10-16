@@ -249,6 +249,7 @@ importers:
 
   packages/db:
     specifiers:
+      '@graphql-ez/utils': ^0.1.2
       '@prisma/client': ^3.2.1
       '@types/concurrently': ^6.3.0
       '@types/react': ^17.0.30
@@ -256,6 +257,7 @@ importers:
       prisma: ^3.2.1
       prisma-dbml-generator: ^0.8.1
     dependencies:
+      '@graphql-ez/utils': 0.1.2_6bf53d632871289cdf6a598e683f2a90
       '@prisma/client': 3.2.1_prisma@3.2.1
       common-api: link:../common-api
       prisma: 3.2.1

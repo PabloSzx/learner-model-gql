@@ -15,6 +15,7 @@
     "prepare": "touch ../../.env && ln -f ../../.env prisma/.env"
   },
   "dependencies": {
+    "@graphql-ez/utils": "^0.1.2",
     "@prisma/client": "^3.2.1",
     "common-api": "workspace:^1.0.0",
     "prisma": "^3.2.1",
