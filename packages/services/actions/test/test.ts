@@ -57,7 +57,6 @@ export async function CheckActionsCreationRetrieval({
               verb {
                 name
               }
-
               result
               user {
                 id

@@ -58,7 +58,7 @@ export const domainModule = registerModule(
                 id: {
                   in: ids,
                 },
-                projectId: await authorization.expectProjectsInPrismaFilter,
+                projects: await authorization.expectSomeProjectsInPrismaFilter,
               },
               select: {
                 id: true,

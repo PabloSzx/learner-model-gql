@@ -149,32 +149,37 @@ export const CreateDomain = async ({
 }) => {
   const domain = await prisma.domain.create({
     data: {
-      project: {
+      projects: {
         connect: {
           id: project.id,
         },
       },
       code: generate(),
       label: generate(),
-      topics: {
-        create: {
-          code: generate(),
-          label: generate(),
-          project: {
-            connect: {
-              id: project.id,
-            },
-          },
-        },
-      },
     },
     include: {
-      topics: true,
-      project: true,
+      projects: true,
     },
   });
 
   return { domain, domainId: domain.id.toString() };
+};
+
+export const CreateTopic = async ({ project }: { project: { id: number } }) => {
+  const topic = await prisma.topic.create({
+    data: {
+      project: {
+        connect: {
+          id: project.id,
+        },
+      },
+
+      code: generate(),
+      label: generate(),
+    },
+  });
+
+  return topic;
 };
 
 export const CreateEmptyContent = async ({

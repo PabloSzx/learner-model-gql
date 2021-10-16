@@ -59,7 +59,7 @@ export type Content = {
 export type Domain = {
   __typename?: "Domain";
   id: Scalars["IntID"];
-  project: Project;
+  projects: Array<Project>;
 };
 
 export type Topic = {
@@ -415,7 +415,11 @@ export type DomainResolvers<
   ParentType extends ResolversParentTypes["Domain"] = ResolversParentTypes["Domain"]
 > = {
   id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-  project?: Resolver<ResolversTypes["Project"], ParentType, ContextType>;
+  projects?: Resolver<
+    Array<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

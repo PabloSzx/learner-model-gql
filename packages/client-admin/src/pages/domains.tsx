@@ -20,14 +20,14 @@ import { withAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
 import { useCursorPagination } from "../hooks/pagination";
-import { projectOptionLabel, useSelectSingleProject } from "../hooks/projects";
+import { projectOptionLabel, useSelectMultiProjects } from "../hooks/projects";
 import { queryClient } from "../rqClient";
 
 function CreateDomain() {
   const codeRef = useRef<HTMLInputElement>(null);
   const labelRef = useRef<HTMLInputElement>(null);
-  const { selectSingleProjectComponent, selectedProject } =
-    useSelectSingleProject();
+  const { selectMultiProjectComponent, selectedProjects } =
+    useSelectMultiProjects();
 
   const { mutateAsync } = useGQLMutation(
     gql(/* GraphQL */ `
@@ -55,13 +55,13 @@ function CreateDomain() {
         if (
           !codeRef.current?.value ||
           !labelRef.current?.value ||
-          !selectedProject
+          !selectedProjects.length
         )
           throw Error("All fields are required");
 
         await mutateAsync({
           data: {
-            projectId: selectedProject.value,
+            projectsIds: selectedProjects.map((v) => v.value),
             code: codeRef.current.value,
             label: labelRef.current.value,
           },
@@ -78,9 +78,9 @@ function CreateDomain() {
       }}
     >
       <FormControl isRequired>
-        <FormLabel>Associated Project</FormLabel>
+        <FormLabel>Associated Projects</FormLabel>
 
-        {selectSingleProjectComponent}
+        {selectMultiProjectComponent}
       </FormControl>
       <FormControl id="code" isRequired>
         <FormLabel>Code</FormLabel>
@@ -106,7 +106,7 @@ gql(/* GraphQL */ `
     label
     updatedAt
     createdAt
-    project {
+    projects {
       id
       code
       label
@@ -260,9 +260,9 @@ export default withAuth(function DomainPage() {
           {
             id: "project",
             Header: "Project",
-            accessor: "project",
+            accessor: "projects",
             Cell({ value }) {
-              return projectOptionLabel(value);
+              return value.map(projectOptionLabel).join(" | ");
             },
           },
           getDateRow({ id: "createdAt", label: "Created At" }),

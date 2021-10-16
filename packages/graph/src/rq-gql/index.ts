@@ -3,12 +3,6 @@ import type { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-
 import * as graphql from "./graphql";
 
 const documents = {
-  "\n  fragment UserInfoCard on User {\n    __typename\n    id\n    email\n    name\n    active\n    lastOnline\n    createdAt\n    role\n    enabled\n    updatedAt\n    locked\n  }\n":
-    graphql.UserInfoCardFragmentDoc,
-  "\n      mutation UpdateUser($data: UpdateUserInput!) {\n        adminUsers {\n          updateUser(data: $data) {\n            __typename\n          }\n        }\n      }\n    ":
-    graphql.UpdateUserDocument,
-  "\n  query AdminUsersCards($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allUsers(pagination: $pagination) {\n        nodes {\n          ...UserInfo\n        }\n        pageInfo {\n          hasNextPage\n          hasPreviousPage\n          startCursor\n          endCursor\n        }\n      }\n    }\n  }\n":
-    graphql.AdminUsersCardsDocument,
   "\n  query AllDomainsBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminDomainsFilter\n  ) {\n    adminDomain {\n      allDomains(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n        }\n        ...Pagination\n      }\n    }\n  }\n":
     graphql.AllDomainsBaseDocument,
   "\n        query AllGroupsBase($pagination: CursorConnectionArgs!) {\n          adminUsers {\n            allGroups(pagination: $pagination) {\n              nodes {\n                id\n                code\n                label\n              }\n              ...Pagination\n            }\n          }\n        }\n      ":
@@ -17,11 +11,11 @@ const documents = {
     graphql.PaginationFragmentDoc,
   "\n        query AllProjectsBase($pagination: CursorConnectionArgs!) {\n          adminProjects {\n            allProjects(pagination: $pagination) {\n              nodes {\n                id\n                code\n                label\n              }\n              ...Pagination\n            }\n          }\n        }\n      ":
     graphql.AllProjectsBaseDocument,
-  "\n  query AllTopicsBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminTopicsFilter\n  ) {\n    adminDomain {\n      allTopics(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n          sortIndex\n          domain {\n            id\n            code\n            label\n          }\n          parent {\n            id\n            code\n            label\n          }\n          project {\n            id\n            code\n            label\n          }\n        }\n        ...Pagination\n      }\n    }\n  }\n":
+  "\n  query AllTopicsBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminTopicsFilter\n  ) {\n    adminDomain {\n      allTopics(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n          sortIndex\n          parent {\n            id\n            code\n            label\n          }\n          project {\n            id\n            code\n            label\n          }\n        }\n        ...Pagination\n      }\n    }\n  }\n":
     graphql.AllTopicsBaseDocument,
   "\n      mutation CreateDomain($data: CreateDomain!) {\n        adminDomain {\n          createDomain(input: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    ":
     graphql.CreateDomainDocument,
-  "\n  fragment DomainInfo on Domain {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n    project {\n      id\n      code\n      label\n    }\n  }\n":
+  "\n  fragment DomainInfo on Domain {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n    projects {\n      id\n      code\n      label\n    }\n  }\n":
     graphql.DomainInfoFragmentDoc,
   "\n  query AllDomains($pagination: CursorConnectionArgs!) {\n    adminDomain {\n      allDomains(pagination: $pagination) {\n        nodes {\n          ...DomainInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n":
     graphql.AllDomainsDocument,
@@ -55,17 +49,10 @@ const documents = {
     graphql.AdminUsersDocument,
   "\n      mutation UpsertUsersWithProjects(\n        $emails: [EmailAddress!]!\n        $projectsIds: [IntID!]!\n      ) {\n        adminUsers {\n          upsertUsersWithProjects(emails: $emails, projectsIds: $projectsIds) {\n            ...UserInfo\n          }\n        }\n      }\n    ":
     graphql.UpsertUsersWithProjectsDocument,
+  "\n      mutation UpdateUser($data: UpdateUserInput!) {\n        adminUsers {\n          updateUser(data: $data) {\n            __typename\n          }\n        }\n      }\n    ":
+    graphql.UpdateUserDocument,
 };
 
-export function gql(
-  source: "\n  fragment UserInfoCard on User {\n    __typename\n    id\n    email\n    name\n    active\n    lastOnline\n    createdAt\n    role\n    enabled\n    updatedAt\n    locked\n  }\n"
-): typeof documents["\n  fragment UserInfoCard on User {\n    __typename\n    id\n    email\n    name\n    active\n    lastOnline\n    createdAt\n    role\n    enabled\n    updatedAt\n    locked\n  }\n"];
-export function gql(
-  source: "\n      mutation UpdateUser($data: UpdateUserInput!) {\n        adminUsers {\n          updateUser(data: $data) {\n            __typename\n          }\n        }\n      }\n    "
-): typeof documents["\n      mutation UpdateUser($data: UpdateUserInput!) {\n        adminUsers {\n          updateUser(data: $data) {\n            __typename\n          }\n        }\n      }\n    "];
-export function gql(
-  source: "\n  query AdminUsersCards($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allUsers(pagination: $pagination) {\n        nodes {\n          ...UserInfo\n        }\n        pageInfo {\n          hasNextPage\n          hasPreviousPage\n          startCursor\n          endCursor\n        }\n      }\n    }\n  }\n"
-): typeof documents["\n  query AdminUsersCards($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allUsers(pagination: $pagination) {\n        nodes {\n          ...UserInfo\n        }\n        pageInfo {\n          hasNextPage\n          hasPreviousPage\n          startCursor\n          endCursor\n        }\n      }\n    }\n  }\n"];
 export function gql(
   source: "\n  query AllDomainsBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminDomainsFilter\n  ) {\n    adminDomain {\n      allDomains(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n        }\n        ...Pagination\n      }\n    }\n  }\n"
 ): typeof documents["\n  query AllDomainsBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminDomainsFilter\n  ) {\n    adminDomain {\n      allDomains(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n        }\n        ...Pagination\n      }\n    }\n  }\n"];
@@ -79,14 +66,14 @@ export function gql(
   source: "\n        query AllProjectsBase($pagination: CursorConnectionArgs!) {\n          adminProjects {\n            allProjects(pagination: $pagination) {\n              nodes {\n                id\n                code\n                label\n              }\n              ...Pagination\n            }\n          }\n        }\n      "
 ): typeof documents["\n        query AllProjectsBase($pagination: CursorConnectionArgs!) {\n          adminProjects {\n            allProjects(pagination: $pagination) {\n              nodes {\n                id\n                code\n                label\n              }\n              ...Pagination\n            }\n          }\n        }\n      "];
 export function gql(
-  source: "\n  query AllTopicsBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminTopicsFilter\n  ) {\n    adminDomain {\n      allTopics(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n          sortIndex\n          domain {\n            id\n            code\n            label\n          }\n          parent {\n            id\n            code\n            label\n          }\n          project {\n            id\n            code\n            label\n          }\n        }\n        ...Pagination\n      }\n    }\n  }\n"
-): typeof documents["\n  query AllTopicsBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminTopicsFilter\n  ) {\n    adminDomain {\n      allTopics(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n          sortIndex\n          domain {\n            id\n            code\n            label\n          }\n          parent {\n            id\n            code\n            label\n          }\n          project {\n            id\n            code\n            label\n          }\n        }\n        ...Pagination\n      }\n    }\n  }\n"];
+  source: "\n  query AllTopicsBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminTopicsFilter\n  ) {\n    adminDomain {\n      allTopics(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n          sortIndex\n          parent {\n            id\n            code\n            label\n          }\n          project {\n            id\n            code\n            label\n          }\n        }\n        ...Pagination\n      }\n    }\n  }\n"
+): typeof documents["\n  query AllTopicsBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminTopicsFilter\n  ) {\n    adminDomain {\n      allTopics(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n          sortIndex\n          parent {\n            id\n            code\n            label\n          }\n          project {\n            id\n            code\n            label\n          }\n        }\n        ...Pagination\n      }\n    }\n  }\n"];
 export function gql(
   source: "\n      mutation CreateDomain($data: CreateDomain!) {\n        adminDomain {\n          createDomain(input: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation CreateDomain($data: CreateDomain!) {\n        adminDomain {\n          createDomain(input: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    "];
 export function gql(
-  source: "\n  fragment DomainInfo on Domain {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n    project {\n      id\n      code\n      label\n    }\n  }\n"
-): typeof documents["\n  fragment DomainInfo on Domain {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n    project {\n      id\n      code\n      label\n    }\n  }\n"];
+  source: "\n  fragment DomainInfo on Domain {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n    projects {\n      id\n      code\n      label\n    }\n  }\n"
+): typeof documents["\n  fragment DomainInfo on Domain {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n    projects {\n      id\n      code\n      label\n    }\n  }\n"];
 export function gql(
   source: "\n  query AllDomains($pagination: CursorConnectionArgs!) {\n    adminDomain {\n      allDomains(pagination: $pagination) {\n        nodes {\n          ...DomainInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"
 ): typeof documents["\n  query AllDomains($pagination: CursorConnectionArgs!) {\n    adminDomain {\n      allDomains(pagination: $pagination) {\n        nodes {\n          ...DomainInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"];
@@ -135,6 +122,9 @@ export function gql(
 export function gql(
   source: "\n      mutation UpsertUsersWithProjects(\n        $emails: [EmailAddress!]!\n        $projectsIds: [IntID!]!\n      ) {\n        adminUsers {\n          upsertUsersWithProjects(emails: $emails, projectsIds: $projectsIds) {\n            ...UserInfo\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation UpsertUsersWithProjects(\n        $emails: [EmailAddress!]!\n        $projectsIds: [IntID!]!\n      ) {\n        adminUsers {\n          upsertUsersWithProjects(emails: $emails, projectsIds: $projectsIds) {\n            ...UserInfo\n          }\n        }\n      }\n    "];
+export function gql(
+  source: "\n      mutation UpdateUser($data: UpdateUserInput!) {\n        adminUsers {\n          updateUser(data: $data) {\n            __typename\n          }\n        }\n      }\n    "
+): typeof documents["\n      mutation UpdateUser($data: UpdateUserInput!) {\n        adminUsers {\n          updateUser(data: $data) {\n            __typename\n          }\n        }\n      }\n    "];
 
 export function gql(source: string): DocumentNode | string;
 export function gql(source: string) {

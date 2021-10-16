@@ -160,7 +160,6 @@ describe("Actions service", () => {
                     verb {
                       name
                     }
-
                     result
                     user {
                       id

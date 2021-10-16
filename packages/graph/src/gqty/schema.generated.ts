@@ -129,14 +129,13 @@ export interface AdminDomainsFilter {
 }
 
 export interface AdminTopicsFilter {
-  domains?: Maybe<Array<Scalars["IntID"]>>;
   projects?: Maybe<Array<Scalars["IntID"]>>;
 }
 
 export interface CreateDomain {
   code: Scalars["String"];
   label: Scalars["String"];
-  projectId: Scalars["IntID"];
+  projectsIds: Array<Scalars["IntID"]>;
 }
 
 export interface UpdateDomain {
@@ -149,7 +148,6 @@ export interface CreateTopic {
   code: Scalars["String"];
   label: Scalars["String"];
   parentTopicId?: Maybe<Scalars["IntID"]>;
-  domainId: Scalars["IntID"];
   projectId: Scalars["IntID"];
   contentIds: Array<Scalars["IntID"]>;
   sortIndex?: Maybe<Scalars["Int"]>;
@@ -160,7 +158,6 @@ export interface UpdateTopic {
   code: Scalars["String"];
   label: Scalars["String"];
   parentTopicId?: Maybe<Scalars["IntID"]>;
-  domainId: Scalars["IntID"];
   contentIds: Array<Scalars["IntID"]>;
   sortIndex?: Maybe<Scalars["Int"]>;
 }
@@ -307,10 +304,7 @@ export const generatedSchema = {
       __args: { pagination: "CursorConnectionArgs!" },
     },
   },
-  AdminTopicsFilter: {
-    domains: { __type: "[IntID!]" },
-    projects: { __type: "[IntID!]" },
-  },
+  AdminTopicsFilter: { projects: { __type: "[IntID!]" } },
   AdminUserMutations: {
     __typename: { __type: "String!" },
     upsertUsersWithProjects: {
@@ -383,7 +377,7 @@ export const generatedSchema = {
   CreateDomain: {
     code: { __type: "String!" },
     label: { __type: "String!" },
-    projectId: { __type: "IntID!" },
+    projectsIds: { __type: "[IntID!]!" },
   },
   CreateGroupInput: {
     code: { __type: "String!" },
@@ -402,7 +396,6 @@ export const generatedSchema = {
     code: { __type: "String!" },
     label: { __type: "String!" },
     parentTopicId: { __type: "IntID" },
-    domainId: { __type: "IntID!" },
     projectId: { __type: "IntID!" },
     contentIds: { __type: "[IntID!]!" },
     sortIndex: { __type: "Int" },
@@ -426,7 +419,7 @@ export const generatedSchema = {
     createdAt: { __type: "DateTime!" },
     updatedAt: { __type: "DateTime!" },
     kcs: { __type: "[KC!]!" },
-    project: { __type: "Project!" },
+    projects: { __type: "[Project!]!" },
   },
   DomainsConnection: {
     __typename: { __type: "String!" },
@@ -503,7 +496,6 @@ export const generatedSchema = {
     code: { __type: "String!" },
     label: { __type: "String!" },
     sortIndex: { __type: "Int" },
-    domain: { __type: "Domain!" },
     parent: { __type: "Topic" },
     childrens: { __type: "[Topic!]!" },
     createdAt: { __type: "DateTime!" },
@@ -558,7 +550,6 @@ export const generatedSchema = {
     code: { __type: "String!" },
     label: { __type: "String!" },
     parentTopicId: { __type: "IntID" },
-    domainId: { __type: "IntID!" },
     contentIds: { __type: "[IntID!]!" },
     sortIndex: { __type: "Int" },
   },
@@ -791,7 +782,7 @@ export interface Domain {
   createdAt: ScalarsEnums["DateTime"];
   updatedAt: ScalarsEnums["DateTime"];
   kcs: Array<KC>;
-  project: Project;
+  projects: Array<Project>;
 }
 
 export interface DomainsConnection {
@@ -881,7 +872,6 @@ export interface Topic {
   code: ScalarsEnums["String"];
   label: ScalarsEnums["String"];
   sortIndex?: Maybe<ScalarsEnums["Int"]>;
-  domain: Domain;
   parent?: Maybe<Topic>;
   childrens: Array<Topic>;
   createdAt: ScalarsEnums["DateTime"];

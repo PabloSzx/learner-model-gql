@@ -8,7 +8,7 @@ export const domainModule = registerModule(
     type Domain {
       id: IntID!
 
-      project: Project!
+      projects: [Project!]!
     }
 
     type Topic {
@@ -34,7 +34,7 @@ export const domainModule = registerModule(
                 id: {
                   in: ids,
                 },
-                projectId: await authorization.expectProjectsInPrismaFilter,
+                projects: await authorization.expectSomeProjectsInPrismaFilter,
               },
               select: {
                 id: true,
@@ -61,18 +61,16 @@ export const domainModule = registerModule(
         },
       },
       Domain: {
-        async project({ id }, _args, { prisma }) {
-          const project = await prisma.domain
-            .findUnique({
-              where: {
-                id,
-              },
-            })
-            .project();
-
-          assert(project, "Project could not be found for domain " + id);
-
-          return project;
+        async projects({ id }, _args, { prisma }) {
+          return (
+            (await prisma.domain
+              .findUnique({
+                where: {
+                  id,
+                },
+              })
+              .projects()) || []
+          );
         },
       },
       Topic: {

@@ -239,7 +239,7 @@ type Domain {
   createdAt: DateTime!
   updatedAt: DateTime!
   kcs: [KC!]!
-  project: Project!
+  projects: [Project!]!
 }
 
 type Topic {
@@ -248,7 +248,6 @@ type Topic {
   code: String!
   label: String!
   sortIndex: Int
-  domain: Domain!
   parent: Topic
   childrens: [Topic!]!
   createdAt: DateTime!
@@ -355,7 +354,6 @@ input AdminDomainsFilter {
 }
 
 input AdminTopicsFilter {
-  domains: [IntID!]
   projects: [IntID!]
 }
 
@@ -374,7 +372,7 @@ type AdminDomainQueries {
 input CreateDomain {
   code: String!
   label: String!
-  projectId: IntID!
+  projectsIds: [IntID!]!
 }
 
 input UpdateDomain {
@@ -387,7 +385,6 @@ input CreateTopic {
   code: String!
   label: String!
   parentTopicId: IntID
-  domainId: IntID!
   projectId: IntID!
   contentIds: [IntID!]!
   sortIndex: Int
@@ -398,7 +395,6 @@ input UpdateTopic {
   code: String!
   label: String!
   parentTopicId: IntID
-  domainId: IntID!
   contentIds: [IntID!]!
   sortIndex: Int
 }

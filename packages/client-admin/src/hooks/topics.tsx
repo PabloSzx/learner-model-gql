@@ -25,11 +25,6 @@ export const AllTopicsBaseDoc = gql(/* GraphQL */ `
           code
           label
           sortIndex
-          domain {
-            id
-            code
-            label
-          }
           parent {
             id
             code

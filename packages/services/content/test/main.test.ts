@@ -2,6 +2,7 @@ import { MockAuthUser } from "api-base";
 import {
   CreateDomain,
   CreateProject,
+  CreateTopic,
   CreateUser,
   expectDeepEqual,
   GetTestClient,
@@ -193,7 +194,11 @@ describe("Content service", () => {
     }
 
     const { project } = await CreateProject();
-    const { domain, domainId } = await CreateDomain({
+    const { domainId } = await CreateDomain({
+      project,
+    });
+
+    const topic = await CreateTopic({
       project,
     });
 
@@ -271,7 +276,7 @@ describe("Content service", () => {
         `),
         {
           variables: {
-            ids: domain.topics.map((v) => v.id.toString()),
+            ids: [topic.id.toString()],
           },
         }
       );
@@ -280,7 +285,7 @@ describe("Content service", () => {
         data: {
           topics: [
             {
-              id: domain.topics[0]?.id.toString()!,
+              id: topic.id.toString(),
               content: [],
             },
           ],
@@ -353,15 +358,12 @@ describe("Content service", () => {
         `),
         {
           variables: {
-            ids: domain.topics.map((v) => v.id.toString()),
+            ids: [topic.id.toString()],
           },
         }
       );
 
-      expectDeepEqual(
-        result.errors?.[0]?.message,
-        domain.topics[0]?.id + " not found!"
-      );
+      expectDeepEqual(result.errors?.[0]?.message, topic.id + " not found!");
     }
   });
 });

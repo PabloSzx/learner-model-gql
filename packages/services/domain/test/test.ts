@@ -33,20 +33,11 @@ export const IsolatedTopicFields = gql(/* GraphQL */ `
     id
     code
     label
-    domain {
-      id
-    }
     parent {
       id
-      domain {
-        id
-      }
     }
     childrens {
       id
-      domain {
-        id
-      }
     }
   }
 `);
@@ -92,7 +83,7 @@ export async function CheckDomainCreationRetrieval({
         input: {
           code: domainCode,
           label: domainLabel,
-          projectId,
+          projectsIds: [projectId],
         },
       },
     }
@@ -264,8 +255,11 @@ export async function CheckDomainCreationRetrieval({
 export async function CheckTopicsCreationRetrieval({
   mutation,
   query,
-}: Pick<TestClient, "mutation" | "query">) {
-  const { projectId, domainId } = await CheckDomainCreationRetrieval({
+  assertedQuery,
+}: Pick<TestClient, "mutation" | "query" | "assertedQuery">) {
+  await prisma.$queryRaw`TRUNCATE "Topic","User" CASCADE;`;
+
+  const { projectId } = await CheckDomainCreationRetrieval({
     mutation,
     query,
   });
@@ -286,7 +280,6 @@ export async function CheckTopicsCreationRetrieval({
     {
       variables: {
         input: {
-          domainId,
           code: firstTopicCode,
           label: firstTopicLabel,
           projectId,
@@ -305,9 +298,6 @@ export async function CheckTopicsCreationRetrieval({
   expectDeepEqual(firstTopic, {
     code: firstTopicCode,
     label: firstTopicLabel,
-    domain: {
-      id: domainId,
-    },
     id: firstTopic.id,
     parent: null,
     childrens: [],
@@ -329,7 +319,6 @@ export async function CheckTopicsCreationRetrieval({
     {
       variables: {
         input: {
-          domainId,
           code: secondTopicCode,
           label: secondTopicLabel,
           projectId,
@@ -349,20 +338,14 @@ export async function CheckTopicsCreationRetrieval({
   expectDeepEqual(secondTopic, {
     code: secondTopicCode,
     label: secondTopicLabel,
-    domain: {
-      id: domainId,
-    },
     id: secondTopic.id,
     parent: {
       id: firstTopic.id,
-      domain: {
-        id: domainId,
-      },
     },
     childrens: [],
   });
 
-  const allTopicsResult = await query(
+  const allTopicsResult = await assertedQuery(
     gql(/* GraphQL */ `
       query AllTopics($pagination: CursorConnectionArgs!) {
         adminDomain {
@@ -386,9 +369,7 @@ export async function CheckTopicsCreationRetrieval({
     }
   );
 
-  expectDeepEqual(allTopicsResult.errors, undefined);
-
-  const allTopics = allTopicsResult.data?.adminDomain.allTopics;
+  const allTopics = allTopicsResult.adminDomain.allTopics;
 
   assert(allTopics);
 
@@ -398,12 +379,10 @@ export async function CheckTopicsCreationRetrieval({
         id: firstTopic.id,
         code: firstTopic.code,
         label: firstTopic.label,
-        domain: { id: domainId },
         parent: null,
         childrens: [
           {
             id: secondTopic.id,
-            domain: { id: domainId },
           },
         ],
       },
@@ -411,10 +390,8 @@ export async function CheckTopicsCreationRetrieval({
         id: secondTopic.id,
         code: secondTopic.code,
         label: secondTopic.label,
-        domain: { id: domainId },
         parent: {
           id: firstTopic.id,
-          domain: { id: domainId },
         },
         childrens: [],
       },
@@ -441,7 +418,6 @@ export async function CheckTopicsCreationRetrieval({
             label: firstTopicNewLabel,
             code: firstTopicNewCode,
             id: firstTopic.id,
-            domainId,
             parentTopicId: secondTopic.id,
             contentIds: [],
           },
@@ -459,21 +435,12 @@ export async function CheckTopicsCreationRetrieval({
     expectDeepEqual(updatedFirstTopic, {
       code: firstTopicNewCode,
       label: firstTopicNewLabel,
-      domain: {
-        id: domainId,
-      },
       id: firstTopic.id,
       parent: {
-        domain: {
-          id: domainId,
-        },
         id: secondTopic.id,
       },
       childrens: [
         {
-          domain: {
-            id: domainId,
-          },
           id: secondTopic.id,
         },
       ],
@@ -498,7 +465,6 @@ export async function CheckTopicsCreationRetrieval({
             label: secondTopicNewLabel,
             code: secondTopicNewCode,
             id: secondTopic.id,
-            domainId,
             parentTopicId: null,
             contentIds: [],
           },
@@ -515,16 +481,10 @@ export async function CheckTopicsCreationRetrieval({
     expectDeepEqual(updatedSecondTopic, {
       code: secondTopicNewCode,
       label: secondTopicNewLabel,
-      domain: {
-        id: domainId,
-      },
       id: secondTopic.id,
       parent: null,
       childrens: [
         {
-          domain: {
-            id: domainId,
-          },
           id: firstTopic.id,
         },
       ],
@@ -566,10 +526,8 @@ export async function CheckTopicsCreationRetrieval({
           id: firstTopic.id,
           code: updatedFirstTopic.code,
           label: updatedFirstTopic.label,
-          domain: { id: domainId },
           parent: {
             id: secondTopic.id,
-            domain: { id: domainId },
           },
           childrens: [],
         },
@@ -577,12 +535,10 @@ export async function CheckTopicsCreationRetrieval({
           id: secondTopic.id,
           code: updatedSecondTopic.code,
           label: updatedSecondTopic.label,
-          domain: { id: domainId },
           parent: null,
           childrens: [
             {
               id: firstTopic.id,
-              domain: { id: domainId },
             },
           ],
         },

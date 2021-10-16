@@ -194,7 +194,6 @@ export type AdminProjectsQueriesAllProjectsArgs = {
 };
 
 export type AdminTopicsFilter = {
-  domains?: Maybe<Array<Scalars["IntID"]>>;
   projects?: Maybe<Array<Scalars["IntID"]>>;
 };
 
@@ -295,7 +294,7 @@ export type CreateContent = {
 export type CreateDomain = {
   code: Scalars["String"];
   label: Scalars["String"];
-  projectId: Scalars["IntID"];
+  projectsIds: Array<Scalars["IntID"]>;
 };
 
 export type CreateGroupInput = {
@@ -320,7 +319,6 @@ export type CreateProject = {
 export type CreateTopic = {
   code: Scalars["String"];
   contentIds: Array<Scalars["IntID"]>;
-  domainId: Scalars["IntID"];
   label: Scalars["String"];
   parentTopicId?: Maybe<Scalars["IntID"]>;
   projectId: Scalars["IntID"];
@@ -342,7 +340,7 @@ export type Domain = {
   id: Scalars["IntID"];
   kcs: Array<Kc>;
   label: Scalars["String"];
-  project: Project;
+  projects: Array<Project>;
   topics: Array<Topic>;
   updatedAt: Scalars["DateTime"];
 };
@@ -506,7 +504,6 @@ export type Topic = {
   code: Scalars["String"];
   content: Array<Content>;
   createdAt: Scalars["DateTime"];
-  domain: Domain;
   id: Scalars["IntID"];
   kcs: Array<Kc>;
   label: Scalars["String"];
@@ -567,7 +564,6 @@ export type UpdateProject = {
 export type UpdateTopic = {
   code: Scalars["String"];
   contentIds: Array<Scalars["IntID"]>;
-  domainId: Scalars["IntID"];
   id: Scalars["IntID"];
   label: Scalars["String"];
   parentTopicId?: Maybe<Scalars["IntID"]>;
@@ -743,20 +739,8 @@ export type IsolatedTopicFieldsFragment = {
   id: string;
   code: string;
   label: string;
-  domain: { __typename?: "Domain"; id: string };
-  parent?:
-    | {
-        __typename?: "Topic";
-        id: string;
-        domain: { __typename?: "Domain"; id: string };
-      }
-    | null
-    | undefined;
-  childrens: Array<{
-    __typename?: "Topic";
-    id: string;
-    domain: { __typename?: "Domain"; id: string };
-  }>;
+  parent?: { __typename?: "Topic"; id: string } | null | undefined;
+  childrens: Array<{ __typename?: "Topic"; id: string }>;
 };
 
 export type CreateDomainMutationVariables = Exact<{
@@ -827,20 +811,8 @@ export type CreateTopicMutation = {
       id: string;
       code: string;
       label: string;
-      domain: { __typename?: "Domain"; id: string };
-      parent?:
-        | {
-            __typename?: "Topic";
-            id: string;
-            domain: { __typename?: "Domain"; id: string };
-          }
-        | null
-        | undefined;
-      childrens: Array<{
-        __typename?: "Topic";
-        id: string;
-        domain: { __typename?: "Domain"; id: string };
-      }>;
+      parent?: { __typename?: "Topic"; id: string } | null | undefined;
+      childrens: Array<{ __typename?: "Topic"; id: string }>;
     };
   };
 };
@@ -860,20 +832,8 @@ export type AllTopicsQuery = {
         id: string;
         code: string;
         label: string;
-        domain: { __typename?: "Domain"; id: string };
-        parent?:
-          | {
-              __typename?: "Topic";
-              id: string;
-              domain: { __typename?: "Domain"; id: string };
-            }
-          | null
-          | undefined;
-        childrens: Array<{
-          __typename?: "Topic";
-          id: string;
-          domain: { __typename?: "Domain"; id: string };
-        }>;
+        parent?: { __typename?: "Topic"; id: string } | null | undefined;
+        childrens: Array<{ __typename?: "Topic"; id: string }>;
       }>;
       pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean };
     };
@@ -893,20 +853,8 @@ export type UpdateTopicMutation = {
       id: string;
       code: string;
       label: string;
-      domain: { __typename?: "Domain"; id: string };
-      parent?:
-        | {
-            __typename?: "Topic";
-            id: string;
-            domain: { __typename?: "Domain"; id: string };
-          }
-        | null
-        | undefined;
-      childrens: Array<{
-        __typename?: "Topic";
-        id: string;
-        domain: { __typename?: "Domain"; id: string };
-      }>;
+      parent?: { __typename?: "Topic"; id: string } | null | undefined;
+      childrens: Array<{ __typename?: "Topic"; id: string }>;
     };
   };
 };
@@ -1074,12 +1022,12 @@ export type AdminProjectFromDomainQuery = {
   domains: Array<{
     __typename?: "Domain";
     id: string;
-    project: {
+    projects: Array<{
       __typename?: "Project";
       id: string;
       code: string;
       label: string;
-    };
+    }>;
   }>;
 };
 
@@ -1440,31 +1388,11 @@ export const IsolatedTopicFieldsFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "label" } },
           {
             kind: "Field",
-            name: { kind: "Name", value: "domain" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "id" } },
-              ],
-            },
-          },
-          {
-            kind: "Field",
             name: { kind: "Name", value: "parent" },
             selectionSet: {
               kind: "SelectionSet",
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "id" } },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "domain" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                    ],
-                  },
-                },
               ],
             },
           },
@@ -1475,16 +1403,6 @@ export const IsolatedTopicFieldsFragmentDoc = {
               kind: "SelectionSet",
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "id" } },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "domain" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                    ],
-                  },
-                },
               ],
             },
           },
@@ -3268,7 +3186,7 @@ export const AdminProjectFromDomainDocument = {
                 { kind: "Field", name: { kind: "Name", value: "id" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "project" },
+                  name: { kind: "Name", value: "projects" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [

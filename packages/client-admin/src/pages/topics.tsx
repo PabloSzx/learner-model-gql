@@ -10,7 +10,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { gql, useGQLMutation } from "graph/rq-gql";
-import { memo, useEffect, useMemo, useRef } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { MdEdit, MdOutlineTopic, MdSave } from "react-icons/md";
 import { useUpdateEffect } from "react-use";
 import { useImmer } from "use-immer";
@@ -20,7 +20,6 @@ import { CardContent } from "../components/Card/CardContent";
 import { CardHeader } from "../components/Card/CardHeader";
 import { Property } from "../components/Card/Property";
 import { FormModal } from "../components/FormModal";
-import { domainOptionLabel, useSelectSingleDomain } from "../hooks/domain";
 import { useSelectSingleProject } from "../hooks/projects";
 import {
   TopicInfo,
@@ -37,20 +36,9 @@ export const CreateTopic = () => {
   const { selectSingleProjectComponent, selectedProject } =
     useSelectSingleProject();
 
-  const {
-    selectSingleDomainComponent,
-    selectedDomain,
-    setSelectedDomain,
-    produceDomainsFilter,
-  } = useSelectSingleDomain({
-    selectProps: {
-      isDisabled: !selectedProject,
-    },
-  });
-
   useEffect(() => {
-    setSelectedDomain(null);
-    produceDomainsFilter((draft) => {
+    parentTopic.setSelectedTopic(null);
+    parentTopic.produceTopicsFilter((draft) => {
       if (!selectedProject) return null;
 
       if (!draft)
@@ -86,26 +74,10 @@ export const CreateTopic = () => {
   const parentTopic = useSelectSingleTopic({
     selectProps: useMemo(() => {
       return {
-        isDisabled: !selectedDomain,
+        isDisabled: !selectedProject,
       };
-    }, [!selectedDomain]),
+    }, [!selectedProject]),
   });
-
-  useEffect(() => {
-    parentTopic.setSelectedTopic(null);
-    parentTopic.produceTopicsFilter((draft) => {
-      if (!selectedDomain) return null;
-
-      if (!draft)
-        return {
-          domains: [selectedDomain.value],
-        };
-
-      draft.domains = [selectedDomain.value];
-
-      return;
-    });
-  }, [selectedDomain]);
 
   return (
     <FormModal
@@ -114,8 +86,7 @@ export const CreateTopic = () => {
         if (
           !codeRef.current?.value ||
           !labelRef.current?.value ||
-          !selectedProject ||
-          !selectedDomain
+          !selectedProject
         )
           throw Error("Code, label, project and domain are required");
 
@@ -125,7 +96,6 @@ export const CreateTopic = () => {
             code: codeRef.current.value,
             label: labelRef.current.value,
             contentIds: [],
-            domainId: selectedDomain.value,
             parentTopicId: parentTopic.selectedTopic?.value,
           },
         });
@@ -135,7 +105,7 @@ export const CreateTopic = () => {
         leftIcon: <MdOutlineTopic />,
       }}
       saveButton={{
-        isDisabled: isLoading || !selectedProject || !selectedDomain,
+        isDisabled: isLoading || !selectedProject,
       }}
     >
       <FormControl isRequired>
@@ -143,22 +113,11 @@ export const CreateTopic = () => {
 
         {selectSingleProjectComponent}
       </FormControl>
-      <FormControl isRequired>
-        <FormLabel>Associated Domain</FormLabel>
-
-        {selectSingleDomainComponent}
-        {!selectedProject && (
-          <FormHelperText>You have to select a project first</FormHelperText>
-        )}
-      </FormControl>
 
       <FormControl>
         <FormLabel>Parent Topic</FormLabel>
 
         {parentTopic.selectSingleTopicComponent}
-        {!selectedDomain && (
-          <FormHelperText>You have to select a domain first</FormHelperText>
-        )}
       </FormControl>
       <FormControl id="code" isRequired>
         <FormLabel>Code</FormLabel>
@@ -216,11 +175,19 @@ export const TopicCard = memo(function TopicCard({
         selectedTopic,
         (selected) => edit((draft) => void (draft.selectedTopic = selected)),
       ],
+      topics: {
+        jsFilter: useCallback(
+          (topicValue: TopicInfo) => {
+            return topicValue.id !== topic.id;
+          },
+          [topic.id]
+        ),
+      },
     });
 
   useEffect(() => {
-    produceTopicsFilter({ domains: [topic.domain.id] });
-  }, [topic.domain.id]);
+    produceTopicsFilter({ projects: [topic.project.id] });
+  }, [topic.project.id]);
 
   useUpdateEffect(() => {
     edit((draft) => {
@@ -259,7 +226,6 @@ export const TopicCard = memo(function TopicCard({
                     code: topicEdit.code,
                     label: topicEdit.label,
                     contentIds: [],
-                    domainId: topic.domain.id,
                     parentTopicId: selectedTopic?.value,
                     sortIndex: topicEdit.sortIndex,
                   },
@@ -342,7 +308,6 @@ export const TopicCard = memo(function TopicCard({
         {isEditing && (
           <Property label="Parent" value={selectSingleTopicComponent} />
         )}
-        <Property label="Domain" value={domainOptionLabel(topic.domain)} />
         {topic.childrens.length ? (
           <Property value={<TopicsCards topics={topic.childrens} />} />
         ) : null}
@@ -372,26 +337,26 @@ export default withAuth(function TopicsPage() {
     return getTopicChildrens(topics);
   }, [topics]);
 
-  const { selectSingleDomainComponent, selectedDomain } =
-    useSelectSingleDomain();
+  const { selectedProject, selectSingleProjectComponent } =
+    useSelectSingleProject();
 
   useEffect(() => {
     produceTopicsFilter((draft) => {
       if (!draft)
         return {
-          domains: selectedDomain ? [selectedDomain.value] : [],
+          projects: selectedProject ? [selectedProject.value] : [],
         };
 
-      draft.domains = selectedDomain ? [selectedDomain.value] : [];
+      draft.projects = selectedProject ? [selectedProject.value] : [];
       return;
     });
-  }, [selectedDomain]);
+  }, [selectedProject]);
 
   return (
     <VStack>
       <CreateTopic />
 
-      {selectSingleDomainComponent}
+      {selectSingleProjectComponent}
 
       {isLoading ? (
         <Spinner />

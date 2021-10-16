@@ -194,7 +194,6 @@ export type AdminProjectsQueriesAllProjectsArgs = {
 };
 
 export type AdminTopicsFilter = {
-  domains?: Maybe<Array<Scalars["IntID"]>>;
   projects?: Maybe<Array<Scalars["IntID"]>>;
 };
 
@@ -295,7 +294,7 @@ export type CreateContent = {
 export type CreateDomain = {
   code: Scalars["String"];
   label: Scalars["String"];
-  projectId: Scalars["IntID"];
+  projectsIds: Array<Scalars["IntID"]>;
 };
 
 export type CreateGroupInput = {
@@ -320,7 +319,6 @@ export type CreateProject = {
 export type CreateTopic = {
   code: Scalars["String"];
   contentIds: Array<Scalars["IntID"]>;
-  domainId: Scalars["IntID"];
   label: Scalars["String"];
   parentTopicId?: Maybe<Scalars["IntID"]>;
   projectId: Scalars["IntID"];
@@ -342,7 +340,7 @@ export type Domain = {
   id: Scalars["IntID"];
   kcs: Array<Kc>;
   label: Scalars["String"];
-  project: Project;
+  projects: Array<Project>;
   topics: Array<Topic>;
   updatedAt: Scalars["DateTime"];
 };
@@ -506,7 +504,6 @@ export type Topic = {
   code: Scalars["String"];
   content: Array<Content>;
   createdAt: Scalars["DateTime"];
-  domain: Domain;
   id: Scalars["IntID"];
   kcs: Array<Kc>;
   label: Scalars["String"];
@@ -567,7 +564,6 @@ export type UpdateProject = {
 export type UpdateTopic = {
   code: Scalars["String"];
   contentIds: Array<Scalars["IntID"]>;
-  domainId: Scalars["IntID"];
   id: Scalars["IntID"];
   label: Scalars["String"];
   parentTopicId?: Maybe<Scalars["IntID"]>;
@@ -610,72 +606,6 @@ export type UsersConnection = Connection & {
   __typename?: "UsersConnection";
   nodes: Array<User>;
   pageInfo: PageInfo;
-};
-
-export type UserInfoCardFragment = {
-  __typename: "User";
-  id: string;
-  email: string;
-  name?: string | null | undefined;
-  active: boolean;
-  lastOnline?: string | null | undefined;
-  createdAt: string;
-  role: UserRole;
-  enabled: boolean;
-  updatedAt: string;
-  locked: boolean;
-};
-
-export type UpdateUserMutationVariables = Exact<{
-  data: UpdateUserInput;
-}>;
-
-export type UpdateUserMutation = {
-  __typename?: "Mutation";
-  adminUsers: {
-    __typename?: "AdminUserMutations";
-    updateUser: { __typename: "User" };
-  };
-};
-
-export type AdminUsersCardsQueryVariables = Exact<{
-  pagination: CursorConnectionArgs;
-}>;
-
-export type AdminUsersCardsQuery = {
-  __typename?: "Query";
-  adminUsers: {
-    __typename?: "AdminUserQueries";
-    allUsers: {
-      __typename?: "UsersConnection";
-      nodes: Array<{
-        __typename: "User";
-        id: string;
-        email: string;
-        name?: string | null | undefined;
-        active: boolean;
-        lastOnline?: string | null | undefined;
-        createdAt: string;
-        role: UserRole;
-        enabled: boolean;
-        updatedAt: string;
-        locked: boolean;
-        projects: Array<{
-          __typename?: "Project";
-          id: string;
-          code: string;
-          label: string;
-        }>;
-      }>;
-      pageInfo: {
-        __typename?: "PageInfo";
-        hasNextPage: boolean;
-        hasPreviousPage: boolean;
-        startCursor?: string | null | undefined;
-        endCursor?: string | null | undefined;
-      };
-    };
-  };
 };
 
 export type AllDomainsBaseQueryVariables = Exact<{
@@ -863,12 +793,6 @@ export type AllTopicsBaseQuery = {
         code: string;
         label: string;
         sortIndex?: number | null | undefined;
-        domain: {
-          __typename?: "Domain";
-          id: string;
-          code: string;
-          label: string;
-        };
         parent?:
           | { __typename?: "Topic"; id: string; code: string; label: string }
           | null
@@ -915,7 +839,12 @@ export type DomainInfoFragment = {
   label: string;
   updatedAt: string;
   createdAt: string;
-  project: { __typename?: "Project"; id: string; code: string; label: string };
+  projects: Array<{
+    __typename?: "Project";
+    id: string;
+    code: string;
+    label: string;
+  }>;
 };
 
 export type AllDomainsQueryVariables = Exact<{
@@ -935,12 +864,12 @@ export type AllDomainsQuery = {
         label: string;
         updatedAt: string;
         createdAt: string;
-        project: {
+        projects: Array<{
           __typename?: "Project";
           id: string;
           code: string;
           label: string;
-        };
+        }>;
       }>;
       pageInfo: {
         __typename?: "PageInfo";
@@ -1267,35 +1196,18 @@ export type UpsertUsersWithProjectsMutation = {
   };
 };
 
-export const UserInfoCardFragmentDoc = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "FragmentDefinition",
-      name: { kind: "Name", value: "UserInfoCard" },
-      typeCondition: {
-        kind: "NamedType",
-        name: { kind: "Name", value: "User" },
-      },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          { kind: "Field", name: { kind: "Name", value: "__typename" } },
-          { kind: "Field", name: { kind: "Name", value: "id" } },
-          { kind: "Field", name: { kind: "Name", value: "email" } },
-          { kind: "Field", name: { kind: "Name", value: "name" } },
-          { kind: "Field", name: { kind: "Name", value: "active" } },
-          { kind: "Field", name: { kind: "Name", value: "lastOnline" } },
-          { kind: "Field", name: { kind: "Name", value: "createdAt" } },
-          { kind: "Field", name: { kind: "Name", value: "role" } },
-          { kind: "Field", name: { kind: "Name", value: "enabled" } },
-          { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
-          { kind: "Field", name: { kind: "Name", value: "locked" } },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<UserInfoCardFragment, unknown>;
+export type UpdateUserMutationVariables = Exact<{
+  data: UpdateUserInput;
+}>;
+
+export type UpdateUserMutation = {
+  __typename?: "Mutation";
+  adminUsers: {
+    __typename?: "AdminUserMutations";
+    updateUser: { __typename: "User" };
+  };
+};
+
 export const PaginationFragmentDoc = {
   kind: "Document",
   definitions: [
@@ -1351,7 +1263,7 @@ export const DomainInfoFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "createdAt" } },
           {
             kind: "Field",
-            name: { kind: "Name", value: "project" },
+            name: { kind: "Name", value: "projects" },
             selectionSet: {
               kind: "SelectionSet",
               selections: [
@@ -1481,167 +1393,6 @@ export const UserInfoFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<UserInfoFragment, unknown>;
-export const UpdateUserDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "UpdateUser" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "UpdateUserInput" },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "adminUsers" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "updateUser" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "data" },
-                      value: {
-                        kind: "Variable",
-                        name: { kind: "Name", value: "data" },
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "__typename" },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<UpdateUserMutation, UpdateUserMutationVariables>;
-export const AdminUsersCardsDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "AdminUsersCards" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "pagination" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "CursorConnectionArgs" },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "adminUsers" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "allUsers" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "pagination" },
-                      value: {
-                        kind: "Variable",
-                        name: { kind: "Name", value: "pagination" },
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "nodes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "UserInfo" },
-                            },
-                          ],
-                        },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "pageInfo" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "hasNextPage" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "hasPreviousPage" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "startCursor" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "endCursor" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-    ...UserInfoFragmentDoc.definitions,
-  ],
-} as unknown as DocumentNode<
-  AdminUsersCardsQuery,
-  AdminUsersCardsQueryVariables
->;
 export const AllDomainsBaseDocument = {
   kind: "Document",
   definitions: [
@@ -2007,27 +1758,6 @@ export const AllTopicsBaseDocument = {
                             {
                               kind: "Field",
                               name: { kind: "Name", value: "sortIndex" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "domain" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "id" },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "code" },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "label" },
-                                  },
-                                ],
-                              },
                             },
                             {
                               kind: "Field",
@@ -3090,3 +2820,63 @@ export const UpsertUsersWithProjectsDocument = {
   UpsertUsersWithProjectsMutation,
   UpsertUsersWithProjectsMutationVariables
 >;
+export const UpdateUserDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpdateUser" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "UpdateUserInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminUsers" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "updateUser" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "data" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "data" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "__typename" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UpdateUserMutation, UpdateUserMutationVariables>;

@@ -7,11 +7,11 @@ const documents = {
     graphql.HelloDocument,
   "\n            mutation CreateAction($data: ActionInput!) {\n              action(data: $data)\n            }\n          ":
     graphql.CreateActionDocument,
-  "\n            query AllActions($pagination: CursorConnectionArgs!) {\n              adminActions {\n                allActions(pagination: $pagination) {\n                  nodes {\n                    verb {\n                      name\n                    }\n\n                    result\n                    user {\n                      id\n                    }\n                  }\n                  pageInfo {\n                    hasNextPage\n                  }\n                }\n              }\n            }\n          ":
+  "\n            query AllActions($pagination: CursorConnectionArgs!) {\n              adminActions {\n                allActions(pagination: $pagination) {\n                  nodes {\n                    verb {\n                      name\n                    }\n                    result\n                    user {\n                      id\n                    }\n                  }\n                  pageInfo {\n                    hasNextPage\n                  }\n                }\n              }\n            }\n          ":
     graphql.AllActionsDocument,
   "\n        mutation CreateAction($data: ActionInput!) {\n          action(data: $data)\n        }\n      ":
     graphql.CreateActionDocument,
-  "\n      query AllActions($pagination: CursorConnectionArgs!) {\n        adminActions {\n          allActions(pagination: $pagination) {\n            nodes {\n              verb {\n                name\n              }\n\n              result\n              user {\n                id\n              }\n            }\n            pageInfo {\n              hasNextPage\n            }\n          }\n        }\n      }\n    ":
+  "\n      query AllActions($pagination: CursorConnectionArgs!) {\n        adminActions {\n          allActions(pagination: $pagination) {\n            nodes {\n              verb {\n                name\n              }\n              result\n              user {\n                id\n              }\n            }\n            pageInfo {\n              hasNextPage\n            }\n          }\n        }\n      }\n    ":
     graphql.AllActionsDocument,
   "\n          query AllContent($pagination: CursorConnectionArgs!) {\n            adminContent {\n              allContent(pagination: $pagination) {\n                nodes {\n                  id\n                  description\n                  binaryBase64\n                  json\n                }\n                pageInfo {\n                  hasNextPage\n                }\n              }\n            }\n          }\n        ":
     graphql.AllContentDocument,
@@ -31,7 +31,7 @@ const documents = {
     graphql.ContentFromTopicDocument,
   "\n  fragment IsolatedDomainFields on Domain {\n    id\n    code\n    label\n  }\n":
     graphql.IsolatedDomainFieldsFragmentDoc,
-  "\n  fragment IsolatedTopicFields on Topic {\n    id\n    code\n    label\n    domain {\n      id\n    }\n    parent {\n      id\n      domain {\n        id\n      }\n    }\n    childrens {\n      id\n      domain {\n        id\n      }\n    }\n  }\n":
+  "\n  fragment IsolatedTopicFields on Topic {\n    id\n    code\n    label\n    parent {\n      id\n    }\n    childrens {\n      id\n    }\n  }\n":
     graphql.IsolatedTopicFieldsFragmentDoc,
   "\n      mutation CreateDomain($input: CreateDomain!) {\n        adminDomain {\n          createDomain(input: $input) {\n            ...IsolatedDomainFields\n          }\n        }\n      }\n    ":
     graphql.CreateDomainDocument,
@@ -67,7 +67,7 @@ const documents = {
     graphql.AdminAllProjectsDocument,
   "\n      query AdminProjectFromContent($ids: [IntID!]!) {\n        content(ids: $ids) {\n          id\n          project {\n            id\n            code\n            label\n          }\n        }\n      }\n    ":
     graphql.AdminProjectFromContentDocument,
-  "\n        query AdminProjectFromDomain($ids: [IntID!]!) {\n          domains(ids: $ids) {\n            id\n            project {\n              id\n              code\n              label\n            }\n          }\n        }\n      ":
+  "\n        query AdminProjectFromDomain($ids: [IntID!]!) {\n          domains(ids: $ids) {\n            id\n            projects {\n              id\n              code\n              label\n            }\n          }\n        }\n      ":
     graphql.AdminProjectFromDomainDocument,
   "\n        query AdminProjectFromTopic($ids: [IntID!]!) {\n          topics(ids: $ids) {\n            id\n            project {\n              id\n              code\n              label\n            }\n          }\n        }\n      ":
     graphql.AdminProjectFromTopicDocument,
@@ -114,14 +114,14 @@ export function gql(
   source: "\n            mutation CreateAction($data: ActionInput!) {\n              action(data: $data)\n            }\n          "
 ): typeof documents["\n            mutation CreateAction($data: ActionInput!) {\n              action(data: $data)\n            }\n          "];
 export function gql(
-  source: "\n            query AllActions($pagination: CursorConnectionArgs!) {\n              adminActions {\n                allActions(pagination: $pagination) {\n                  nodes {\n                    verb {\n                      name\n                    }\n\n                    result\n                    user {\n                      id\n                    }\n                  }\n                  pageInfo {\n                    hasNextPage\n                  }\n                }\n              }\n            }\n          "
-): typeof documents["\n            query AllActions($pagination: CursorConnectionArgs!) {\n              adminActions {\n                allActions(pagination: $pagination) {\n                  nodes {\n                    verb {\n                      name\n                    }\n\n                    result\n                    user {\n                      id\n                    }\n                  }\n                  pageInfo {\n                    hasNextPage\n                  }\n                }\n              }\n            }\n          "];
+  source: "\n            query AllActions($pagination: CursorConnectionArgs!) {\n              adminActions {\n                allActions(pagination: $pagination) {\n                  nodes {\n                    verb {\n                      name\n                    }\n                    result\n                    user {\n                      id\n                    }\n                  }\n                  pageInfo {\n                    hasNextPage\n                  }\n                }\n              }\n            }\n          "
+): typeof documents["\n            query AllActions($pagination: CursorConnectionArgs!) {\n              adminActions {\n                allActions(pagination: $pagination) {\n                  nodes {\n                    verb {\n                      name\n                    }\n                    result\n                    user {\n                      id\n                    }\n                  }\n                  pageInfo {\n                    hasNextPage\n                  }\n                }\n              }\n            }\n          "];
 export function gql(
   source: "\n        mutation CreateAction($data: ActionInput!) {\n          action(data: $data)\n        }\n      "
 ): typeof documents["\n        mutation CreateAction($data: ActionInput!) {\n          action(data: $data)\n        }\n      "];
 export function gql(
-  source: "\n      query AllActions($pagination: CursorConnectionArgs!) {\n        adminActions {\n          allActions(pagination: $pagination) {\n            nodes {\n              verb {\n                name\n              }\n\n              result\n              user {\n                id\n              }\n            }\n            pageInfo {\n              hasNextPage\n            }\n          }\n        }\n      }\n    "
-): typeof documents["\n      query AllActions($pagination: CursorConnectionArgs!) {\n        adminActions {\n          allActions(pagination: $pagination) {\n            nodes {\n              verb {\n                name\n              }\n\n              result\n              user {\n                id\n              }\n            }\n            pageInfo {\n              hasNextPage\n            }\n          }\n        }\n      }\n    "];
+  source: "\n      query AllActions($pagination: CursorConnectionArgs!) {\n        adminActions {\n          allActions(pagination: $pagination) {\n            nodes {\n              verb {\n                name\n              }\n              result\n              user {\n                id\n              }\n            }\n            pageInfo {\n              hasNextPage\n            }\n          }\n        }\n      }\n    "
+): typeof documents["\n      query AllActions($pagination: CursorConnectionArgs!) {\n        adminActions {\n          allActions(pagination: $pagination) {\n            nodes {\n              verb {\n                name\n              }\n              result\n              user {\n                id\n              }\n            }\n            pageInfo {\n              hasNextPage\n            }\n          }\n        }\n      }\n    "];
 export function gql(
   source: "\n          query AllContent($pagination: CursorConnectionArgs!) {\n            adminContent {\n              allContent(pagination: $pagination) {\n                nodes {\n                  id\n                  description\n                  binaryBase64\n                  json\n                }\n                pageInfo {\n                  hasNextPage\n                }\n              }\n            }\n          }\n        "
 ): typeof documents["\n          query AllContent($pagination: CursorConnectionArgs!) {\n            adminContent {\n              allContent(pagination: $pagination) {\n                nodes {\n                  id\n                  description\n                  binaryBase64\n                  json\n                }\n                pageInfo {\n                  hasNextPage\n                }\n              }\n            }\n          }\n        "];
@@ -150,8 +150,8 @@ export function gql(
   source: "\n  fragment IsolatedDomainFields on Domain {\n    id\n    code\n    label\n  }\n"
 ): typeof documents["\n  fragment IsolatedDomainFields on Domain {\n    id\n    code\n    label\n  }\n"];
 export function gql(
-  source: "\n  fragment IsolatedTopicFields on Topic {\n    id\n    code\n    label\n    domain {\n      id\n    }\n    parent {\n      id\n      domain {\n        id\n      }\n    }\n    childrens {\n      id\n      domain {\n        id\n      }\n    }\n  }\n"
-): typeof documents["\n  fragment IsolatedTopicFields on Topic {\n    id\n    code\n    label\n    domain {\n      id\n    }\n    parent {\n      id\n      domain {\n        id\n      }\n    }\n    childrens {\n      id\n      domain {\n        id\n      }\n    }\n  }\n"];
+  source: "\n  fragment IsolatedTopicFields on Topic {\n    id\n    code\n    label\n    parent {\n      id\n    }\n    childrens {\n      id\n    }\n  }\n"
+): typeof documents["\n  fragment IsolatedTopicFields on Topic {\n    id\n    code\n    label\n    parent {\n      id\n    }\n    childrens {\n      id\n    }\n  }\n"];
 export function gql(
   source: "\n      mutation CreateDomain($input: CreateDomain!) {\n        adminDomain {\n          createDomain(input: $input) {\n            ...IsolatedDomainFields\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation CreateDomain($input: CreateDomain!) {\n        adminDomain {\n          createDomain(input: $input) {\n            ...IsolatedDomainFields\n          }\n        }\n      }\n    "];
@@ -204,8 +204,8 @@ export function gql(
   source: "\n      query AdminProjectFromContent($ids: [IntID!]!) {\n        content(ids: $ids) {\n          id\n          project {\n            id\n            code\n            label\n          }\n        }\n      }\n    "
 ): typeof documents["\n      query AdminProjectFromContent($ids: [IntID!]!) {\n        content(ids: $ids) {\n          id\n          project {\n            id\n            code\n            label\n          }\n        }\n      }\n    "];
 export function gql(
-  source: "\n        query AdminProjectFromDomain($ids: [IntID!]!) {\n          domains(ids: $ids) {\n            id\n            project {\n              id\n              code\n              label\n            }\n          }\n        }\n      "
-): typeof documents["\n        query AdminProjectFromDomain($ids: [IntID!]!) {\n          domains(ids: $ids) {\n            id\n            project {\n              id\n              code\n              label\n            }\n          }\n        }\n      "];
+  source: "\n        query AdminProjectFromDomain($ids: [IntID!]!) {\n          domains(ids: $ids) {\n            id\n            projects {\n              id\n              code\n              label\n            }\n          }\n        }\n      "
+): typeof documents["\n        query AdminProjectFromDomain($ids: [IntID!]!) {\n          domains(ids: $ids) {\n            id\n            projects {\n              id\n              code\n              label\n            }\n          }\n        }\n      "];
 export function gql(
   source: "\n        query AdminProjectFromTopic($ids: [IntID!]!) {\n          topics(ids: $ids) {\n            id\n            project {\n              id\n              code\n              label\n            }\n          }\n        }\n      "
 ): typeof documents["\n        query AdminProjectFromTopic($ids: [IntID!]!) {\n          topics(ids: $ids) {\n            id\n            project {\n              id\n              code\n              label\n            }\n          }\n        }\n      "];

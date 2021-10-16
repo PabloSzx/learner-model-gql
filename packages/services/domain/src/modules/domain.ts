@@ -13,8 +13,6 @@ export const domainModule = registerModule(
 
       sortIndex: Int
 
-      domain: Domain!
-
       parent: Topic
 
       childrens: [Topic!]!
@@ -56,7 +54,6 @@ export const domainModule = registerModule(
     }
 
     input AdminTopicsFilter {
-      domains: [IntID!]
       projects: [IntID!]
     }
 
@@ -75,7 +72,7 @@ export const domainModule = registerModule(
       code: String!
       label: String!
 
-      projectId: IntID!
+      projectsIds: [IntID!]!
     }
 
     input UpdateDomain {
@@ -92,8 +89,6 @@ export const domainModule = registerModule(
 
       parentTopicId: IntID
 
-      domainId: IntID!
-
       projectId: IntID!
 
       contentIds: [IntID!]!
@@ -108,8 +103,6 @@ export const domainModule = registerModule(
       label: String!
 
       parentTopicId: IntID
-
-      domainId: IntID!
 
       contentIds: [IntID!]!
 
@@ -138,15 +131,17 @@ export const domainModule = registerModule(
     id: "Domain Module",
     resolvers: {
       AdminDomainMutations: {
-        createDomain(_root, { input: { code, label, projectId } }, { prisma }) {
+        createDomain(
+          _root,
+          { input: { code, label, projectsIds } },
+          { prisma }
+        ) {
           return prisma.domain.create({
             data: {
               code,
               label,
-              project: {
-                connect: {
-                  id: projectId,
-                },
+              projects: {
+                connect: projectsIds.map((id) => ({ id })),
               },
             },
           });
@@ -170,7 +165,6 @@ export const domainModule = registerModule(
               label,
               projectId,
               parentTopicId,
-              domainId,
               contentIds,
               sortIndex,
             },
@@ -181,11 +175,6 @@ export const domainModule = registerModule(
             data: {
               code,
               label,
-              domain: {
-                connect: {
-                  id: domainId,
-                },
-              },
               project: {
                 connect: {
                   id: projectId,
@@ -208,17 +197,7 @@ export const domainModule = registerModule(
         },
         async updateTopic(
           _root,
-          {
-            input: {
-              code,
-              label,
-              parentTopicId,
-              domainId,
-              id,
-              contentIds,
-              sortIndex,
-            },
-          },
+          { input: { code, label, parentTopicId, id, contentIds, sortIndex } },
           { prisma }
         ) {
           const topic = await prisma.topic.update({
@@ -228,11 +207,6 @@ export const domainModule = registerModule(
             data: {
               code,
               label,
-              domain: {
-                connect: {
-                  id: domainId,
-                },
-              },
               parent:
                 parentTopicId != null
                   ? {
@@ -269,11 +243,6 @@ export const domainModule = registerModule(
             return prisma.topic.findMany({
               ...args,
               where: {
-                domainId: filters?.domains
-                  ? {
-                      in: filters.domains,
-                    }
-                  : undefined,
                 projectId: filters?.projects
                   ? {
                       in: filters.projects,
@@ -288,9 +257,13 @@ export const domainModule = registerModule(
             return prisma.domain.findMany({
               ...args,
               where: {
-                projectId: filters?.projects
+                projects: filters?.projects
                   ? {
-                      in: filters.projects,
+                      some: {
+                        id: {
+                          in: filters.projects,
+                        },
+                      },
                     }
                   : undefined,
               },
@@ -299,19 +272,6 @@ export const domainModule = registerModule(
         },
       },
       Topic: {
-        async domain({ id }, _args, { prisma }) {
-          const domain = await prisma.topic
-            .findUnique({
-              where: {
-                id,
-              },
-            })
-            .domain();
-
-          assert(domain, "Domain could not be found for topic " + id);
-
-          return domain;
-        },
         parent({ id }, _args, { prisma }) {
           return prisma.topic
             .findUnique({
@@ -392,7 +352,7 @@ export const domainModule = registerModule(
                 id: {
                   in: ids,
                 },
-                project: await authorization.expectProjectsIdInPrismaFilter,
+                projects: await authorization.expectSomeProjectsInPrismaFilter,
               },
             }),
             ids

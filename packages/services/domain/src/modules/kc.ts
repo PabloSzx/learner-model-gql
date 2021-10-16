@@ -125,7 +125,8 @@ export const kcModule = registerModule(
                   in: ids,
                 },
                 domain: {
-                  project: await authorization.expectProjectsIdInPrismaFilter,
+                  projects:
+                    await authorization.expectSomeProjectsInPrismaFilter,
                 },
               },
             }),

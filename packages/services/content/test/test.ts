@@ -4,6 +4,7 @@ import {
   assert,
   CreateDomain,
   CreateProject,
+  CreateTopic,
   CreateUser,
   equal,
   expectDeepEqual,
@@ -28,7 +29,11 @@ export async function CheckContentCreationRetrieval({
     project,
   });
 
-  const topicId = domain.topics[0]?.id.toString();
+  const topic = await CreateTopic({
+    project,
+  });
+
+  const topicId = topic.id.toString();
 
   assert(topicId);
 

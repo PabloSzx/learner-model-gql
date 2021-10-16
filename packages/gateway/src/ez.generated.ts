@@ -319,7 +319,7 @@ export type Domain = {
   createdAt: Scalars["DateTime"];
   updatedAt: Scalars["DateTime"];
   kcs: Array<Kc>;
-  project: Project;
+  projects: Array<Project>;
 };
 
 export type DomainContentArgs = {
@@ -333,7 +333,6 @@ export type Topic = {
   code: Scalars["String"];
   label: Scalars["String"];
   sortIndex?: Maybe<Scalars["Int"]>;
-  domain: Domain;
   parent?: Maybe<Topic>;
   childrens: Array<Topic>;
   createdAt: Scalars["DateTime"];
@@ -464,7 +463,6 @@ export type AdminDomainsFilter = {
 };
 
 export type AdminTopicsFilter = {
-  domains?: Maybe<Array<Scalars["IntID"]>>;
   projects?: Maybe<Array<Scalars["IntID"]>>;
 };
 
@@ -492,7 +490,7 @@ export type AdminDomainQueriesAllKCsArgs = {
 export type CreateDomain = {
   code: Scalars["String"];
   label: Scalars["String"];
-  projectId: Scalars["IntID"];
+  projectsIds: Array<Scalars["IntID"]>;
 };
 
 export type UpdateDomain = {
@@ -505,7 +503,6 @@ export type CreateTopic = {
   code: Scalars["String"];
   label: Scalars["String"];
   parentTopicId?: Maybe<Scalars["IntID"]>;
-  domainId: Scalars["IntID"];
   projectId: Scalars["IntID"];
   contentIds: Array<Scalars["IntID"]>;
   sortIndex?: Maybe<Scalars["Int"]>;
@@ -516,7 +513,6 @@ export type UpdateTopic = {
   code: Scalars["String"];
   label: Scalars["String"];
   parentTopicId?: Maybe<Scalars["IntID"]>;
-  domainId: Scalars["IntID"];
   contentIds: Array<Scalars["IntID"]>;
   sortIndex?: Maybe<Scalars["Int"]>;
 };
@@ -1313,7 +1309,11 @@ export type DomainResolvers<
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   kcs?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
-  project?: Resolver<ResolversTypes["Project"], ParentType, ContextType>;
+  projects?: Resolver<
+    Array<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1326,7 +1326,6 @@ export type TopicResolvers<
   code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   sortIndex?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
-  domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
   parent?: Resolver<Maybe<ResolversTypes["Topic"]>, ParentType, ContextType>;
   childrens?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;

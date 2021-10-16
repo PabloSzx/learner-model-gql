@@ -310,7 +310,11 @@ export const actionModule = registerModule(
                         in: Array.from(parsedKcsIds.ids),
                       },
                       domain: {
-                        projectId: userProjectId,
+                        projects: {
+                          some: {
+                            id: userProjectId,
+                          },
+                        },
                       },
                     },
                     {
@@ -318,7 +322,11 @@ export const actionModule = registerModule(
                         in: Array.from(parsedKcsIds.codes),
                       },
                       domain: {
-                        projectId: userProjectId,
+                        projects: {
+                          some: {
+                            id: userProjectId,
+                          },
+                        },
                       },
                     },
                   ],
