@@ -7,16 +7,11 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
-import {
-  DomainInfoFragment,
-  gql,
-  useGQLMutation,
-  useGQLQuery,
-} from "graph/rq-gql";
+import { DomainInfoFragment, gql, useGQLMutation, useGQLQuery } from "graph";
 import { useEffect, useRef } from "react";
 import { MdAdd, MdEdit, MdSave } from "react-icons/md";
 import { proxy, ref, useSnapshot } from "valtio";
-import { withAuth } from "../components/Auth";
+import { withAdminAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
 import { useCursorPagination } from "../hooks/pagination";
@@ -138,7 +133,7 @@ const DomainsState = proxy<
   >
 >({});
 
-export default withAuth(function DomainPage() {
+export default withAdminAuth(function DomainPage() {
   const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination();
   const { data } = useGQLQuery(AdminDomains, { pagination });
   pageInfo.current = data?.adminDomain.allDomains.pageInfo;

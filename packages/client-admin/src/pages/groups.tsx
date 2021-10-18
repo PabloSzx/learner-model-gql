@@ -17,18 +17,13 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { formatSpanish } from "common";
-import {
-  gql,
-  GroupInfoFragment,
-  useGQLMutation,
-  useGQLQuery,
-} from "graph/rq-gql";
+import { gql, GroupInfoFragment, useGQLMutation, useGQLQuery } from "graph";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FaUsers } from "react-icons/fa";
 import { IoIosEye } from "react-icons/io";
 import { MdAdd, MdCheck, MdClose, MdEdit, MdSave } from "react-icons/md";
 import { proxy, ref, useSnapshot } from "valtio";
-import { withAuth } from "../components/Auth";
+import { withAdminAuth } from "../components/Auth";
 import { Card } from "../components/Card/Card";
 import { CardContent } from "../components/Card/CardContent";
 import { CardHeader } from "../components/Card/CardHeader";
@@ -298,7 +293,7 @@ const GroupsState = proxy<
   >
 >({});
 
-export default withAuth(function GroupsPage() {
+export default withAdminAuth(function GroupsPage() {
   const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination();
   const { data } = useGQLQuery(AdminGroups, { pagination });
   pageInfo.current = data?.adminUsers.allGroups.pageInfo;

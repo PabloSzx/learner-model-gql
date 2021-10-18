@@ -9,12 +9,12 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
-import { gql, useGQLMutation } from "graph/rq-gql";
+import { gql, useGQLMutation } from "graph";
 import { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { MdEdit, MdOutlineTopic, MdSave } from "react-icons/md";
 import { useUpdateEffect } from "react-use";
 import { useImmer } from "use-immer";
-import { withAuth } from "../components/Auth";
+import { withAdminAuth } from "../components/Auth";
 import { Card } from "../components/Card/Card";
 import { CardContent } from "../components/Card/CardContent";
 import { CardHeader } from "../components/Card/CardHeader";
@@ -330,7 +330,7 @@ export const TopicsCards = ({
   );
 };
 
-export default withAuth(function TopicsPage() {
+export default withAdminAuth(function TopicsPage() {
   const { topics, isLoading, produceTopicsFilter } = useAllTopics();
 
   const topicsTree = useMemo(() => {

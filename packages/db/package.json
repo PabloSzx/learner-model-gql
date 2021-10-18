@@ -4,10 +4,9 @@
   "private": true,
   "type": "module",
   "main": "src/index.ts",
-  "types": "dist/index.d.ts",
+  "types": "src/index.ts",
   "scripts": {
     "build": "prisma db push",
-    "dev": "bob-watch -c \"prisma generate\"",
     "db:generate": "prisma generate",
     "generate": "prisma generate",
     "migrate:dev": "prisma migrate dev",

@@ -1,4 +1,4 @@
-import { CursorConnectionArgs, PageInfo, gql } from "graph/rq-gql";
+import { CursorConnectionArgs, PageInfo, gql } from "graph";
 import { useMemo, useRef, useState } from "react";
 
 gql(/* GraphQL */ `

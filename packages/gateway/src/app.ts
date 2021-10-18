@@ -8,7 +8,6 @@ import { resolve } from "path";
 import waitOn from "wait-on";
 import { getServicesConfigFromEnv } from "./services";
 import { getStitchedSchema } from "./stitch";
-import { writeGenerate, gqtyConfigPromise } from "@gqty/cli";
 
 const __dirname = getDirname(import.meta.url);
 
@@ -41,15 +40,7 @@ export const getGatewayPlugin = async () => {
     envelop: {
       plugins: [
         {
-          async onSchemaChange({ schema, replaceSchema }) {
-            writeGenerate(
-              schema,
-              (await gqtyConfigPromise).config.destination ||
-                (() => {
-                  throw Error("GQty destination could not be found!");
-                })()
-            ).catch(console.error);
-
+          async onSchemaChange({ replaceSchema }) {
             for await (const data of pubSub.subscribe("updateGateway")) {
               logger.info(`Update service ${data}`);
               getStitchedSchema(servicesConfig)

@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "main": "src/index.ts",
-  "types": "dist/index.d.ts",
+  "types": "src/index.ts",
   "dependencies": {
     "date-fns": "^2.25.0"
   }

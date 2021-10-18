@@ -4,7 +4,7 @@ import {
   getKey,
   gql,
   useGQLInfiniteQuery,
-} from "graph/rq-gql";
+} from "graph";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useImmer } from "use-immer";
 import { AsyncSelect, AsyncSelectProps } from "../components/AsyncSelect";

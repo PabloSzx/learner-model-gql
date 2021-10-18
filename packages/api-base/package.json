@@ -2,12 +2,9 @@
   "name": "api-base",
   "version": "0.0.1",
   "license": "MIT",
-  "main": "src/index.ts",
   "type": "module",
-  "devDependencies": {
-    "@types/validator": "^13.6.3",
-    "@types/wait-on": "^5.3.1"
-  },
+  "main": "src/index.ts",
+  "types": "src/index.ts",
   "dependencies": {
     "@auth0/auth0-react": "^1.8.0",
     "@graphql-ez/fastify": "^0.9.4",
@@ -28,5 +25,9 @@
     "serialize-error": "^8.1.0",
     "validator": "^13.6.0",
     "wait-on": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/validator": "^13.6.3",
+    "@types/wait-on": "^5.3.1"
   }
 }

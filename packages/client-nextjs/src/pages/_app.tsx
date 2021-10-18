@@ -1,16 +1,12 @@
-import { ReactQuery } from "graph/rq";
-
 import { Auth0Provider } from "@auth0/auth0-react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-
+import { CombinedRQGQLProvider } from "graph";
+import type { AppProps } from "next/app";
 import { SyncAuth } from "../components/Auth";
 import { MainLayout } from "../components/MainLayout";
-
-import type { AppProps } from "next/app";
+import { ErrorToast, queryClient, rqGQLClient } from "../rqClient";
 
 const theme = extendTheme({});
-
-const reactQueryClient = new ReactQuery.QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -22,14 +18,15 @@ export default function App({ Component, pageProps }: AppProps) {
           typeof window !== "undefined" ? window.location.origin : undefined
         }
       >
-        <ReactQuery.QueryClientProvider client={reactQueryClient}>
+        <CombinedRQGQLProvider client={queryClient} rqGQLClient={rqGQLClient}>
           <SyncAuth />
           <ChakraProvider theme={theme}>
+            <ErrorToast />
             <MainLayout>
               <Component {...pageProps} />
             </MainLayout>
           </ChakraProvider>
-        </ReactQuery.QueryClientProvider>
+        </CombinedRQGQLProvider>
       </Auth0Provider>
     </>
   );

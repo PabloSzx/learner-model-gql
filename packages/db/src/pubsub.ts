@@ -1,5 +1,5 @@
 import { DATABASE_URL } from "common-api";
-import type { Subscription } from "gateway/src/ez.generated";
+import type { Subscription } from "../../gateway/src/ez.generated";
 import { CreatePubSub } from "pg-gql-pubsub";
 
 type PubSubData = { [k in keyof Subscription]: Pick<Subscription, k> };

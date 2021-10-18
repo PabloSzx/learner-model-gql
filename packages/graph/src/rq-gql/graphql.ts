@@ -608,6 +608,22 @@ export type UsersConnection = Connection & {
   pageInfo: PageInfo;
 };
 
+export type CurrentUserQueryVariables = Exact<{ [key: string]: never }>;
+
+export type CurrentUserQuery = {
+  __typename?: "Query";
+  currentUser?:
+    | {
+        __typename?: "User";
+        id: string;
+        email: string;
+        name?: string | null | undefined;
+        role: UserRole;
+      }
+    | null
+    | undefined;
+};
+
 export type AllDomainsBaseQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
   filters?: Maybe<AdminDomainsFilter>;
@@ -1393,6 +1409,34 @@ export const UserInfoFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<UserInfoFragment, unknown>;
+export const CurrentUserDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "currentUser" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "currentUser" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "email" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "role" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<CurrentUserQuery, CurrentUserQueryVariables>;
 export const AllDomainsBaseDocument = {
   kind: "Document",
   definitions: [

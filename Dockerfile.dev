@@ -8,7 +8,7 @@ RUN npm install -g pnpm@latest
 
 RUN pnpm fetch
 
-COPY tsconfig.json package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc schema.gql gqty.config.cjs ./
+COPY tsconfig.json package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc schema.gql ./
 
 COPY packages/api-base ./packages/api-base
 COPY packages/common ./packages/common

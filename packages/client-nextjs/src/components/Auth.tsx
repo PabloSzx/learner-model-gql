@@ -1,7 +1,8 @@
 import { useAuth0, User as Auth0User } from "@auth0/auth0-react";
+import { CurrentUserQuery, gql, useGQLQuery } from "graph";
 import { useEffect } from "react";
-import { CurrentUserQuery, headers, useCurrentUserQuery } from "graph/rq";
 import { proxy, useSnapshot } from "valtio";
+import { rqGQLClient } from "../rqClient";
 
 export const AuthState = proxy({
   auth0User: null as Auth0User | null,
@@ -11,7 +12,7 @@ export const AuthState = proxy({
 
 export function SyncAuth() {
   const { user, getIdTokenClaims, isLoading } = useAuth0();
-  const headersSnap = useSnapshot(headers);
+  const headersSnap = useSnapshot(rqGQLClient.headers);
 
   useEffect(() => {
     AuthState.isLoading = isLoading;
@@ -21,20 +22,33 @@ export function SyncAuth() {
     AuthState.auth0User = user || null;
   }, [user]);
 
-  useCurrentUserQuery(undefined, {
-    enabled: !!headersSnap.authorization,
-    onSuccess(data) {
-      AuthState.user = data.currentUser;
-    },
-    onSettled() {
-      AuthState.isLoading = false;
-    },
-  });
+  useGQLQuery(
+    gql(/* GraphQL */ `
+      query currentUser {
+        currentUser {
+          id
+          email
+          name
+          role
+        }
+      }
+    `),
+    undefined,
+    {
+      enabled: !!headersSnap.authorization,
+      onSuccess(data) {
+        AuthState.user = data.currentUser;
+      },
+      onSettled() {
+        AuthState.isLoading = false;
+      },
+    }
+  );
 
   useEffect(() => {
     if (user) {
       getIdTokenClaims().then((data) => {
-        headers.authorization = `Bearer ${data.__raw}`;
+        rqGQLClient.headers.authorization = `Bearer ${data.__raw}`;
 
         AuthState.isLoading = true;
       });

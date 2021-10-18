@@ -3,22 +3,14 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
-  "exports": {
-    "./*": "./src/*.ts",
-    "./gqty": "./src/gqty/index.ts",
-    "./rq": "./src/rq/index.ts"
-  },
+  "main": "src/index.ts",
+  "types": "src/index.ts",
   "scripts": {
     "dev": "graphql-codegen --config codegen.yml --watch",
-    "generate": "concurrently pnpm:generate:*",
-    "generate:gqty": "gqty generate",
-    "generate:rq": "graphql-codegen --config codegen.yml"
+    "generate": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
-    "@gqty/logger": "^2.0.1",
-    "@gqty/react": "^2.0.0",
     "common": "workspace:^0.0.1",
-    "gqty": "^2.0.2",
     "graphql": "^15.6.1",
     "prettier": "^2.4.1",
     "react-query": "^3.27.0",

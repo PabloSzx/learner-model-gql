@@ -1,4 +1,4 @@
-import { gql, useGQLInfiniteQuery } from "graph/rq-gql";
+import { gql, useGQLInfiniteQuery } from "graph";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AsyncSelect, AsyncSelectProps } from "../components/AsyncSelect";
 

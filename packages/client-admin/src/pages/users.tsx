@@ -16,7 +16,7 @@ import {
   useGQLQuery,
   UserInfoFragment,
   UserRole,
-} from "graph/rq-gql";
+} from "graph";
 import { useEffect, useMemo, useState } from "react";
 import { FaUsers } from "react-icons/fa";
 import {
@@ -28,7 +28,7 @@ import {
   MdSave,
 } from "react-icons/md";
 import { proxy, useSnapshot } from "valtio";
-import { useAuth, withAuth } from "../components/Auth";
+import { useAuth, withAdminAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
 import { useCursorPagination } from "../hooks/pagination";
@@ -157,7 +157,7 @@ function UpsertUsers() {
   );
 }
 
-export default withAuth(function UsersPage() {
+export default withAdminAuth(function UsersPage() {
   const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination();
 
   const usersState = useSnapshot(UsersState);

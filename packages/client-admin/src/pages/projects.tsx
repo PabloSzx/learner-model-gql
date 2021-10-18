@@ -7,16 +7,11 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
-import {
-  gql,
-  ProjectInfoFragment,
-  useGQLMutation,
-  useGQLQuery,
-} from "graph/rq-gql";
+import { gql, ProjectInfoFragment, useGQLMutation, useGQLQuery } from "graph";
 import { useEffect, useRef } from "react";
 import { MdAdd, MdEdit, MdSave } from "react-icons/md";
 import { proxy, ref, useSnapshot } from "valtio";
-import { withAuth } from "../components/Auth";
+import { withAdminAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
 import { useCursorPagination } from "../hooks/pagination";
@@ -119,7 +114,7 @@ const ProjectsState = proxy<
   >
 >({});
 
-export default withAuth(function ProjectsPage() {
+export default withAdminAuth(function ProjectsPage() {
   const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination();
   const { data } = useGQLQuery(AdminProjects, { pagination });
   pageInfo.current = data?.adminProjects.allProjects.pageInfo;

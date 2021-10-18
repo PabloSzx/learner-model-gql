@@ -127,11 +127,6 @@ describe("gateway", () => {
         },
       }
     );
-
-    expectDeepEqual(
-      await GatewayClient.gqty.resolved(({ query }) => query.hello),
-      "Hello World!"
-    );
   });
 
   it("actions", async () => {

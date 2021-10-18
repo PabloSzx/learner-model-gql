@@ -1,6 +1,6 @@
 import { Auth0Provider } from "@auth0/auth0-react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import { CombinedRQGQLProvider } from "graph/rq-gql";
+import { CombinedRQGQLProvider } from "graph";
 import type { AppProps } from "next/app";
 import { APILoadingIndicator } from "../components/APILoadingIndicator";
 import { SyncAuth } from "../components/Auth";
