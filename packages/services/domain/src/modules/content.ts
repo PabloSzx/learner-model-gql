@@ -10,6 +10,8 @@ export const contentModule = registerModule(
       domain: Domain!
 
       kcs: [KC!]!
+
+      topics: [Topic!]!
     }
 
     extend type Query {
@@ -43,6 +45,17 @@ export const contentModule = registerModule(
             .kcs();
 
           return kcs || [];
+        },
+        async topics({ id }, _args, { prisma }) {
+          return (
+            (await prisma.content
+              .findUnique({
+                where: {
+                  id,
+                },
+              })
+              .topics()) || []
+          );
         },
       },
       Query: {

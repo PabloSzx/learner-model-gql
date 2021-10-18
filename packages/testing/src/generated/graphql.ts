@@ -267,6 +267,7 @@ export type Content = {
   project: Project;
   sortIndex?: Maybe<Scalars["Int"]>;
   tags: Array<Scalars["String"]>;
+  topics: Array<Topic>;
   updatedAt: Scalars["DateTime"];
   url?: Maybe<Scalars["String"]>;
 };

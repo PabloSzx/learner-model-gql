@@ -63,6 +63,7 @@ export type Content = {
   tags: Array<Scalars["String"]>;
   createdAt: Scalars["DateTime"];
   updatedAt: Scalars["DateTime"];
+  topics: Array<Topic>;
 };
 
 export type CreateContent = {
@@ -411,6 +412,7 @@ export type ContentResolvers<
   tags?: Resolver<Array<ResolversTypes["String"]>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

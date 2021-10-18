@@ -15,6 +15,10 @@ export const domainModule = registerModule(
       content: [Content!]!
     }
 
+    extend type Content {
+      topics: [Topic!]!
+    }
+
     extend type Query {
       domains(ids: [IntID!]!): [Domain!]!
       topics(ids: [IntID!]!): [Topic!]!
@@ -22,6 +26,23 @@ export const domainModule = registerModule(
   `,
   {
     resolvers: {
+      Content: {
+        async topics({ id }, _args, { prisma }) {
+          return (
+            (await prisma.content
+              .findUnique({
+                where: {
+                  id,
+                },
+              })
+              .topics({
+                select: {
+                  id: true,
+                },
+              })) || []
+          );
+        },
+      },
       Topic: {
         async content({ id }, _args, { prisma }) {
           return (

@@ -215,6 +215,7 @@ type Content {
   tags: [String!]!
   createdAt: DateTime!
   updatedAt: DateTime!
+  topics: [Topic!]!
   domain: Domain!
   kcs: [KC!]!
   project: Project!

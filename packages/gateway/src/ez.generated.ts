@@ -293,6 +293,7 @@ export type Content = {
   tags: Array<Scalars["String"]>;
   createdAt: Scalars["DateTime"];
   updatedAt: Scalars["DateTime"];
+  topics: Array<Topic>;
   domain: Domain;
   kcs: Array<Kc>;
   project: Project;
@@ -1272,6 +1273,7 @@ export type ContentResolvers<
   tags?: Resolver<Array<ResolversTypes["String"]>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
   domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
   kcs?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
   project?: Resolver<ResolversTypes["Project"], ParentType, ContextType>;
