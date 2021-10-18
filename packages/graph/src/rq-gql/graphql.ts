@@ -267,6 +267,7 @@ export type Content = {
   project: Project;
   sortIndex?: Maybe<Scalars["Int"]>;
   tags: Array<Scalars["String"]>;
+  topics: Array<Topic>;
   updatedAt: Scalars["DateTime"];
   url?: Maybe<Scalars["String"]>;
 };
@@ -831,6 +832,100 @@ export type AllTopicsBaseQuery = {
   };
 };
 
+export type ContentInfoFragment = {
+  __typename?: "Content";
+  id: string;
+  code: string;
+  label: string;
+  description: string;
+  tags: Array<string>;
+  updatedAt: string;
+  createdAt: string;
+  project: { __typename?: "Project"; id: string; code: string; label: string };
+  domain: { __typename?: "Domain"; id: string; code: string; label: string };
+  kcs: Array<{ __typename?: "KC"; id: string; code: string; label: string }>;
+  topics: Array<{ __typename?: "Topic"; id: string }>;
+};
+
+export type AllContentQueryVariables = Exact<{
+  pagination: CursorConnectionArgs;
+}>;
+
+export type AllContentQuery = {
+  __typename?: "Query";
+  adminContent: {
+    __typename?: "AdminContentQueries";
+    allContent: {
+      __typename?: "ContentConnection";
+      nodes: Array<{
+        __typename?: "Content";
+        id: string;
+        code: string;
+        label: string;
+        description: string;
+        tags: Array<string>;
+        updatedAt: string;
+        createdAt: string;
+        project: {
+          __typename?: "Project";
+          id: string;
+          code: string;
+          label: string;
+        };
+        domain: {
+          __typename?: "Domain";
+          id: string;
+          code: string;
+          label: string;
+        };
+        kcs: Array<{
+          __typename?: "KC";
+          id: string;
+          code: string;
+          label: string;
+        }>;
+        topics: Array<{ __typename?: "Topic"; id: string }>;
+      }>;
+      pageInfo: {
+        __typename?: "PageInfo";
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null | undefined;
+        endCursor?: string | null | undefined;
+      };
+    };
+  };
+};
+
+export type CreateContentMutationVariables = Exact<{
+  data: CreateContent;
+}>;
+
+export type CreateContentMutation = {
+  __typename?: "Mutation";
+  adminContent: {
+    __typename?: "AdminContentMutations";
+    createContent: {
+      __typename?: "Content";
+      id: string;
+      label: string;
+      code: string;
+    };
+  };
+};
+
+export type UpdateContentMutationVariables = Exact<{
+  data: UpdateContent;
+}>;
+
+export type UpdateContentMutation = {
+  __typename?: "Mutation";
+  adminContent: {
+    __typename?: "AdminContentMutations";
+    updateContent: { __typename: "Content" };
+  };
+};
+
 export type CreateDomainMutationVariables = Exact<{
   data: CreateDomain;
 }>;
@@ -1258,6 +1353,77 @@ export const PaginationFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<PaginationFragment, unknown>;
+export const ContentInfoFragmentDoc = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "ContentInfo" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Content" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "code" } },
+          { kind: "Field", name: { kind: "Name", value: "label" } },
+          { kind: "Field", name: { kind: "Name", value: "description" } },
+          { kind: "Field", name: { kind: "Name", value: "tags" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "project" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "code" } },
+                { kind: "Field", name: { kind: "Name", value: "label" } },
+              ],
+            },
+          },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "domain" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "code" } },
+                { kind: "Field", name: { kind: "Name", value: "label" } },
+              ],
+            },
+          },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "kcs" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "code" } },
+                { kind: "Field", name: { kind: "Name", value: "label" } },
+              ],
+            },
+          },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "topics" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+              ],
+            },
+          },
+          { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
+          { kind: "Field", name: { kind: "Name", value: "createdAt" } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ContentInfoFragment, unknown>;
 export const DomainInfoFragmentDoc = {
   kind: "Document",
   definitions: [
@@ -1864,6 +2030,209 @@ export const AllTopicsBaseDocument = {
     ...PaginationFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<AllTopicsBaseQuery, AllTopicsBaseQueryVariables>;
+export const AllContentDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "AllContent" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "pagination" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "CursorConnectionArgs" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminContent" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "allContent" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "pagination" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "pagination" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "nodes" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "FragmentSpread",
+                              name: { kind: "Name", value: "ContentInfo" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "FragmentSpread",
+                        name: { kind: "Name", value: "Pagination" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...ContentInfoFragmentDoc.definitions,
+    ...PaginationFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<AllContentQuery, AllContentQueryVariables>;
+export const CreateContentDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "CreateContent" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "CreateContent" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminContent" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "createContent" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "data" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "data" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "label" } },
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  CreateContentMutation,
+  CreateContentMutationVariables
+>;
+export const UpdateContentDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpdateContent" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "UpdateContent" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminContent" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "updateContent" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "data" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "data" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "__typename" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  UpdateContentMutation,
+  UpdateContentMutationVariables
+>;
 export const CreateDomainDocument = {
   kind: "Document",
   definitions: [
