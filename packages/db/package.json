@@ -15,9 +15,9 @@
   },
   "dependencies": {
     "@graphql-ez/utils": "^0.1.2",
-    "@prisma/client": "^3.2.1",
+    "@prisma/client": "^3.3.0",
     "common-api": "workspace:^1.0.0",
-    "prisma": "^3.2.1",
+    "prisma": "^3.3.0",
     "prisma-dbml-generator": "^0.8.1"
   },
   "devDependencies": {
