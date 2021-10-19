@@ -51,7 +51,7 @@
     "dotenv": "^10.0.0",
     "esbuild": "^0.13.8",
     "execa": "^5.1.1",
-    "fastify": "^3.22.0",
+    "fastify": "^3.22.1",
     "graphql": "^15.6.1",
     "graphql-ez": "^0.13.2",
     "husky": "^7.0.2",
