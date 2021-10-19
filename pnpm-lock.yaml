@@ -94,7 +94,7 @@ importers:
       '@graphql-ez/plugin-codegen': ^0.7.4
       '@graphql-ez/plugin-modules': ^0.8.2
       '@graphql-ez/plugin-scalars': ^0.7.3
-      '@graphql-ez/plugin-schema': ^0.7.3
+      '@graphql-ez/plugin-schema': ^0.8.0
       '@graphql-ez/plugin-voyager': ^0.9.0
       '@graphql-ez/plugin-websockets': ^0.10.2
       '@types/validator': ^13.6.3
@@ -116,7 +116,7 @@ importers:
       '@graphql-ez/plugin-codegen': 0.7.4_277f492b6885c53838c451de19d07887
       '@graphql-ez/plugin-modules': 0.8.2_277f492b6885c53838c451de19d07887
       '@graphql-ez/plugin-scalars': 0.7.3_277f492b6885c53838c451de19d07887
-      '@graphql-ez/plugin-schema': 0.7.3_277f492b6885c53838c451de19d07887
+      '@graphql-ez/plugin-schema': 0.8.0_277f492b6885c53838c451de19d07887
       '@graphql-ez/plugin-voyager': 0.9.0_277f492b6885c53838c451de19d07887
       '@graphql-ez/plugin-websockets': 0.10.2_277f492b6885c53838c451de19d07887
       common-api: link:../common-api
@@ -2324,12 +2324,12 @@ packages:
       - '@types/node'
     dev: false
 
-  /@graphql-ez/plugin-schema/0.7.3_277f492b6885c53838c451de19d07887:
-    resolution: {integrity: sha512-40qamfjyQ0qIuAmc3SlE5VRApd+CG0CBPPe91bnKJPrdgqAcCeiAdqEtiz3DnG3QSJhWZS+HdgCMux1/+bwqTQ==}
+  /@graphql-ez/plugin-schema/0.8.0_277f492b6885c53838c451de19d07887:
+    resolution: {integrity: sha512-VdjW5P2KIyDM46L0Zq4kjYMy8Sx1C3BKWCsqRcI487M9ufAiPt/4kO+wz851dvbrEQaKvUXwEc8oc7QoeSdNiw==}
     engines: {node: ^12.20.0 || >=14.13.0}
     peerDependencies:
       graphql: '*'
-      graphql-ez: ^0.13.0
+      graphql-ez: ^0.13.2
     dependencies:
       '@graphql-ez/utils': 0.1.2_e4f5e5a695eb571cd94376f3baa4399b
       '@graphql-tools/schema': 8.2.0_graphql@15.6.1
