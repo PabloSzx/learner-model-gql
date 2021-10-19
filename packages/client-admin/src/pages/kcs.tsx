@@ -6,46 +6,55 @@ import {
   Input,
   VStack,
 } from "@chakra-ui/react";
-import { gql, ProjectInfoFragment, useGQLMutation, useGQLQuery } from "graph";
-import { useEffect, useRef } from "react";
+import { gql, KcInfoFragment, useGQLMutation, useGQLQuery } from "graph";
+import { memo, useEffect, useRef } from "react";
 import { MdAdd, MdEdit, MdSave } from "react-icons/md";
 import { proxy, ref, useSnapshot } from "valtio";
 import { withAdminAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
+import { domainOptionLabel, useSelectSingleDomain } from "../hooks/domain";
 import { useCursorPagination } from "../hooks/pagination";
 import { queryClient } from "../rqClient";
 
 gql(/* GraphQL */ `
-  fragment ProjectInfo on Project {
-    __typename
+  fragment KCInfo on KC {
     id
     code
     label
+    domain {
+      id
+      code
+      label
+    }
     updatedAt
     createdAt
   }
 `);
 
-const AdminProjects = gql(/* GraphQL */ `
-  query AllProjects($pagination: CursorConnectionArgs!) {
-    adminProjects {
-      allProjects(pagination: $pagination) {
-        nodes {
-          ...ProjectInfo
-        }
-        ...Pagination
-      }
+const KCsState = proxy<
+  Record<
+    string,
+    KcInfoFragment & {
+      isEditing?: boolean;
+      labelRef: { current: string };
+      codeRef: { current: string };
     }
-  }
-`);
+  >
+>({});
 
-function CreateProject() {
+const CreateKC = memo(function CreateKC() {
+  const codeRef = useRef<HTMLInputElement>(null);
+  const labelRef = useRef<HTMLInputElement>(null);
+
+  const { selectedDomain, selectSingleDomainComponent } =
+    useSelectSingleDomain();
+
   const { mutateAsync } = useGQLMutation(
     gql(/* GraphQL */ `
-      mutation CreateProject($data: CreateProject!) {
-        adminProjects {
-          createProject(data: $data) {
+      mutation CreateKC($data: CreateKCInput!) {
+        adminDomain {
+          createKC(data: $data) {
             id
             label
             code
@@ -60,19 +69,22 @@ function CreateProject() {
     }
   );
 
-  const codeRef = useRef<HTMLInputElement>(null);
-  const labelRef = useRef<HTMLInputElement>(null);
   return (
     <FormModal
-      title="Create Project"
+      title="Create KC"
       onSubmit={async () => {
-        if (!codeRef.current?.value || !labelRef.current?.value)
+        if (
+          !codeRef.current?.value ||
+          !labelRef.current?.value ||
+          !selectedDomain
+        )
           throw Error("All fields are required");
 
         await mutateAsync({
           data: {
             code: codeRef.current.value,
             label: labelRef.current.value,
+            domainId: selectedDomain.value,
           },
         });
 
@@ -86,6 +98,11 @@ function CreateProject() {
         leftIcon: <MdAdd />,
       }}
     >
+      <FormControl isRequired>
+        <FormLabel>Associated Domain</FormLabel>
+
+        {selectSingleDomainComponent}
+      </FormControl>
       <FormControl id="code" isRequired>
         <FormLabel>Code</FormLabel>
         <Input type="text" ref={codeRef} />
@@ -100,46 +117,52 @@ function CreateProject() {
       </FormControl>
     </FormModal>
   );
-}
+});
 
-const ProjectsState = proxy<
-  Record<
-    string,
-    ProjectInfoFragment & {
-      isEditing?: boolean;
-      labelRef: { current: string };
-      codeRef: { current: string };
+export default withAdminAuth(function KCPage() {
+  const { pageInfo, pagination, prevPage, nextPage } = useCursorPagination();
+
+  const { data } = useGQLQuery(
+    gql(/* GraphQL */ `
+      query AllKCs($pagination: CursorConnectionArgs!) {
+        adminDomain {
+          allKCs(pagination: $pagination) {
+            nodes {
+              ...KCInfo
+            }
+            ...Pagination
+          }
+        }
+      }
+    `),
+    {
+      pagination,
     }
-  >
->({});
-
-export default withAdminAuth(function ProjectsPage() {
-  const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination();
-  const { data } = useGQLQuery(AdminProjects, { pagination });
-  pageInfo.current = data?.adminProjects.allProjects.pageInfo;
+  );
+  pageInfo.current = data?.adminDomain.allKCs.pageInfo;
 
   useEffect(() => {
-    for (const project of data?.adminProjects.allProjects.nodes || []) {
-      const isEditing = ProjectsState[project.id]?.isEditing;
+    for (const domain of data?.adminDomain.allKCs.nodes || []) {
+      const isEditing = KCsState[domain.id]?.isEditing;
       if (isEditing) continue;
       Object.assign(
-        (ProjectsState[project.id] ||= {
-          ...project,
-          codeRef: ref({ current: project.code }),
-          labelRef: ref({ current: project.label }),
+        (KCsState[domain.id] ||= {
+          ...domain,
+          codeRef: ref({ current: domain.code }),
+          labelRef: ref({ current: domain.label }),
         }),
-        project
+        domain
       );
     }
   }, [data]);
 
-  const projectsState = useSnapshot(ProjectsState);
+  const kcsState = useSnapshot(KCsState);
 
-  const updateProject = useGQLMutation(
+  const updateKc = useGQLMutation(
     gql(/* GraphQL */ `
-      mutation UpdateProject($data: UpdateProject!) {
-        adminProjects {
-          updateProject(data: $data) {
+      mutation UpdateKC($data: UpdateKCInput!) {
+        adminDomain {
+          updateKC(data: $data) {
             __typename
           }
         }
@@ -154,9 +177,9 @@ export default withAdminAuth(function ProjectsPage() {
 
   return (
     <VStack>
-      <CreateProject />
-      <DataTable<ProjectInfoFragment>
-        data={data?.adminProjects.allProjects.nodes || []}
+      <CreateKC />
+      <DataTable<KcInfoFragment>
+        data={data?.adminDomain.allKCs.nodes || []}
         prevPage={prevPage}
         nextPage={nextPage}
         minH="80vh"
@@ -174,15 +197,15 @@ export default withAdminAuth(function ProjectsPage() {
                 original: { id },
               },
             }) {
-              const projectState = projectsState[id];
+              const state = kcsState[id];
 
-              if (!projectState) return value;
+              if (!state) return value;
 
-              if (projectState.isEditing) {
-                const ref = ProjectsState[id]!.codeRef;
+              if (state.isEditing) {
+                const ref = KCsState[id]!.codeRef;
                 return (
                   <Input
-                    isDisabled={updateProject.isLoading}
+                    isDisabled={updateKc.isLoading}
                     defaultValue={ref.current}
                     onChange={(ev) => {
                       ref.current = ev.target.value;
@@ -206,16 +229,16 @@ export default withAdminAuth(function ProjectsPage() {
                 original: { id },
               },
             }) {
-              const projectState = projectsState[id];
+              const state = kcsState[id];
 
-              if (!projectState) return value;
+              if (!state) return value;
 
-              if (projectState.isEditing) {
-                const ref = ProjectsState[id]!.labelRef;
+              if (state.isEditing) {
+                const ref = KCsState[id]!.labelRef;
 
                 return (
                   <Input
-                    isDisabled={updateProject.isLoading}
+                    isDisabled={updateKc.isLoading}
                     defaultValue={ref.current}
                     onChange={(ev) => {
                       ref.current = ev.target.value;
@@ -230,6 +253,13 @@ export default withAdminAuth(function ProjectsPage() {
               return value;
             },
           },
+          {
+            id: "Domain",
+            Header: "Domain",
+            accessor(v) {
+              return domainOptionLabel(v.domain);
+            },
+          },
           getDateRow({ id: "createdAt", label: "Created At" }),
           getDateRow({ id: "updatedAt", label: "Updated At" }),
           {
@@ -240,41 +270,46 @@ export default withAdminAuth(function ProjectsPage() {
             defaultCanGroupBy: false,
             accessor: "id",
             Cell({ value: id, row: { original } }) {
-              const projectState = projectsState[id];
+              const state = kcsState[id];
 
-              if (!projectState) return null;
+              if (!state) return null;
 
-              const { isEditing, codeRef, labelRef } = projectState;
+              const {
+                isEditing,
+                codeRef,
+                labelRef,
+                domain: { id: domainId },
+              } = state;
 
               return (
                 <IconButton
                   aria-label="Edit"
                   colorScheme="blue"
                   isLoading={
-                    updateProject.isLoading &&
-                    updateProject.variables?.data.id === id
+                    updateKc.isLoading && updateKc.variables?.data.id === id
                   }
-                  isDisabled={updateProject.isLoading}
+                  isDisabled={updateKc.isLoading}
                   onClick={() => {
                     if (
                       isEditing &&
                       (original.code !== codeRef.current ||
-                        original.label !== labelRef.current)
+                        original.label !== labelRef.current ||
+                        domainId !== original.domain.id)
                     ) {
-                      updateProject
+                      updateKc
                         .mutateAsync({
                           data: {
                             id,
-                            code: codeRef.current,
                             label: labelRef.current,
+                            code: codeRef.current,
                           },
                         })
                         .then(() => {
-                          ProjectsState[id]!.isEditing = false;
+                          KCsState[id]!.isEditing = false;
                         })
                         .catch(console.error);
                     } else {
-                      ProjectsState[id]!.isEditing = !isEditing;
+                      KCsState[id]!.isEditing = !isEditing;
                     }
                   }}
                   icon={isEditing ? <MdSave /> : <MdEdit />}

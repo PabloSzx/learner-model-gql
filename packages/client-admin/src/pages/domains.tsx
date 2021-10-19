@@ -4,7 +4,6 @@ import {
   FormLabel,
   IconButton,
   Input,
-  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { DomainInfoFragment, gql, useGQLMutation, useGQLQuery } from "graph";
@@ -172,8 +171,6 @@ export default withAdminAuth(function DomainPage() {
     }
   );
 
-  const toast = useToast();
-
   return (
     <VStack>
       <CreateDomain />
@@ -302,12 +299,7 @@ export default withAdminAuth(function DomainPage() {
                         .then(() => {
                           DomainsState[id]!.isEditing = false;
                         })
-                        .catch((err) => {
-                          toast({
-                            status: "error",
-                            title: err.message,
-                          });
-                        });
+                        .catch(console.error);
                     } else {
                       DomainsState[id]!.isEditing = !isEditing;
                     }

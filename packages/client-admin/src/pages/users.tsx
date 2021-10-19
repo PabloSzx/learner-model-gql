@@ -6,7 +6,6 @@ import {
   Select,
   Switch,
   Textarea,
-  useToast,
   VStack,
 } from "@chakra-ui/react";
 import {
@@ -201,8 +200,6 @@ export default withAdminAuth(function UsersPage() {
 
   const { user: authUser } = useAuth();
 
-  const toast = useToast();
-
   return (
     <VStack>
       <UpsertUsers />
@@ -230,13 +227,6 @@ export default withAdminAuth(function UsersPage() {
               return value ? <MdCheck /> : <MdClose />;
             },
           },
-          // {
-          //   Header: "Enabled",
-          //   accessor: "enabled",
-          //   Cell({ value }) {
-          //     return value ? <MdCheck /> : <MdClose />;
-          //   },
-          // },
           {
             id: "role",
             Header: "Role",
@@ -378,12 +368,7 @@ export default withAdminAuth(function UsersPage() {
                         .then(() => {
                           UsersState[id]!.isEditing = false;
                         })
-                        .catch((err) => {
-                          toast({
-                            status: "error",
-                            title: err.message,
-                          });
-                        });
+                        .catch(console.error);
                     } else {
                       UsersState[id]!.isEditing = !isEditing;
                     }

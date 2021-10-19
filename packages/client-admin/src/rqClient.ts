@@ -49,6 +49,8 @@ export const ErrorToast = memo(() => {
       title: message,
       status: "error",
     });
+
+    errorState.message = null;
   }, [message]);
 
   return null;

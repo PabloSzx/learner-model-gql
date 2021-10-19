@@ -6,7 +6,6 @@ import {
   IconButton,
   Input,
   Spinner,
-  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { gql, useGQLMutation } from "graph";
@@ -198,8 +197,6 @@ export const TopicCard = memo(function TopicCard({
     });
   }, [topic.code, topic.label, topic.parent?.id, edit]);
 
-  const toast = useToast();
-
   return (
     <Card key={topic.id} margin="0.2em !important" overflow="visible">
       <CardHeader
@@ -235,12 +232,7 @@ export const TopicCard = memo(function TopicCard({
                       draft.isEditing = false;
                     });
                   })
-                  .catch((err) => {
-                    toast({
-                      status: "error",
-                      title: err.message,
-                    });
-                  });
+                  .catch(console.error);
               } else {
                 edit((draft) => {
                   draft.isEditing = !draft.isEditing;

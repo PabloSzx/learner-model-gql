@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonProps,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -9,8 +10,6 @@ import {
   ModalOverlay,
   useDisclosure,
   VStack,
-  useToast,
-  ButtonProps,
 } from "@chakra-ui/react";
 import { ReactNode, useState } from "react";
 import { MdCancel, MdSave } from "react-icons/md";
@@ -31,8 +30,6 @@ export function FormModal({
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [isLoading, setLoading] = useState(false);
-
-  const toast = useToast();
 
   return (
     <>
@@ -56,11 +53,6 @@ export function FormModal({
                   onClose();
                 } catch (err) {
                   console.error(err);
-                  toast({
-                    status: "error",
-                    title:
-                      err instanceof Error ? err.message : JSON.stringify(err),
-                  });
                 } finally {
                   setLoading(false);
                 }

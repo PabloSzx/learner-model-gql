@@ -13,7 +13,6 @@ import {
   ModalOverlay,
   Textarea,
   useDisclosure,
-  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { formatSpanish } from "common";
@@ -338,8 +337,6 @@ export default withAdminAuth(function GroupsPage() {
     }
   );
 
-  const toast = useToast();
-
   return (
     <VStack>
       <CreateGroup />
@@ -516,12 +513,7 @@ export default withAdminAuth(function GroupsPage() {
                         .then(() => {
                           GroupsState[id]!.isEditing = false;
                         })
-                        .catch((err) => {
-                          toast({
-                            status: "error",
-                            title: err.message,
-                          });
-                        });
+                        .catch(console.error);
                     } else {
                       GroupsState[id]!.isEditing = !isEditing;
                     }

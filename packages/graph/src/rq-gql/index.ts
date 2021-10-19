@@ -17,10 +17,10 @@ const documents = {
     graphql.AllTopicsBaseDocument,
   "\n  fragment ContentInfo on Content {\n    id\n    code\n    label\n    description\n    tags\n    project {\n      id\n      code\n      label\n    }\n    domain {\n      id\n      code\n      label\n    }\n    kcs {\n      id\n      code\n      label\n    }\n    topics {\n      id\n    }\n    updatedAt\n    createdAt\n  }\n":
     graphql.ContentInfoFragmentDoc,
-  "\n  query AllContent($pagination: CursorConnectionArgs!) {\n    adminContent {\n      allContent(pagination: $pagination) {\n        nodes {\n          ...ContentInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n":
-    graphql.AllContentDocument,
   "\n      mutation CreateContent($data: CreateContent!) {\n        adminContent {\n          createContent(data: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    ":
     graphql.CreateContentDocument,
+  "\n      query AllContent($pagination: CursorConnectionArgs!) {\n        adminContent {\n          allContent(pagination: $pagination) {\n            nodes {\n              ...ContentInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    ":
+    graphql.AllContentDocument,
   "\n      mutation UpdateContent($data: UpdateContent!) {\n        adminContent {\n          updateContent(data: $data) {\n            __typename\n          }\n        }\n      }\n    ":
     graphql.UpdateContentDocument,
   "\n      mutation CreateDomain($data: CreateDomain!) {\n        adminDomain {\n          createDomain(input: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    ":
@@ -41,6 +41,14 @@ const documents = {
     graphql.SetUserGroupsDocument,
   "\n      mutation UpdateGroup($data: UpdateGroupInput!) {\n        adminUsers {\n          updateGroup(data: $data) {\n            __typename\n          }\n        }\n      }\n    ":
     graphql.UpdateGroupDocument,
+  "\n  fragment KCInfo on KC {\n    id\n    code\n    label\n    domain {\n      id\n      code\n      label\n    }\n    updatedAt\n    createdAt\n  }\n":
+    graphql.KcInfoFragmentDoc,
+  "\n      mutation CreateKC($data: CreateKCInput!) {\n        adminDomain {\n          createKC(data: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    ":
+    graphql.CreateKcDocument,
+  "\n      query AllKCs($pagination: CursorConnectionArgs!) {\n        adminDomain {\n          allKCs(pagination: $pagination) {\n            nodes {\n              ...KCInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    ":
+    graphql.AllKCsDocument,
+  "\n      mutation UpdateKC($data: UpdateKCInput!) {\n        adminDomain {\n          updateKC(data: $data) {\n            __typename\n          }\n        }\n      }\n    ":
+    graphql.UpdateKcDocument,
   "\n  fragment ProjectInfo on Project {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n  }\n":
     graphql.ProjectInfoFragmentDoc,
   "\n  query AllProjects($pagination: CursorConnectionArgs!) {\n    adminProjects {\n      allProjects(pagination: $pagination) {\n        nodes {\n          ...ProjectInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n":
@@ -85,11 +93,11 @@ export function gql(
   source: "\n  fragment ContentInfo on Content {\n    id\n    code\n    label\n    description\n    tags\n    project {\n      id\n      code\n      label\n    }\n    domain {\n      id\n      code\n      label\n    }\n    kcs {\n      id\n      code\n      label\n    }\n    topics {\n      id\n    }\n    updatedAt\n    createdAt\n  }\n"
 ): typeof documents["\n  fragment ContentInfo on Content {\n    id\n    code\n    label\n    description\n    tags\n    project {\n      id\n      code\n      label\n    }\n    domain {\n      id\n      code\n      label\n    }\n    kcs {\n      id\n      code\n      label\n    }\n    topics {\n      id\n    }\n    updatedAt\n    createdAt\n  }\n"];
 export function gql(
-  source: "\n  query AllContent($pagination: CursorConnectionArgs!) {\n    adminContent {\n      allContent(pagination: $pagination) {\n        nodes {\n          ...ContentInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"
-): typeof documents["\n  query AllContent($pagination: CursorConnectionArgs!) {\n    adminContent {\n      allContent(pagination: $pagination) {\n        nodes {\n          ...ContentInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"];
-export function gql(
   source: "\n      mutation CreateContent($data: CreateContent!) {\n        adminContent {\n          createContent(data: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation CreateContent($data: CreateContent!) {\n        adminContent {\n          createContent(data: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    "];
+export function gql(
+  source: "\n      query AllContent($pagination: CursorConnectionArgs!) {\n        adminContent {\n          allContent(pagination: $pagination) {\n            nodes {\n              ...ContentInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    "
+): typeof documents["\n      query AllContent($pagination: CursorConnectionArgs!) {\n        adminContent {\n          allContent(pagination: $pagination) {\n            nodes {\n              ...ContentInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    "];
 export function gql(
   source: "\n      mutation UpdateContent($data: UpdateContent!) {\n        adminContent {\n          updateContent(data: $data) {\n            __typename\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation UpdateContent($data: UpdateContent!) {\n        adminContent {\n          updateContent(data: $data) {\n            __typename\n          }\n        }\n      }\n    "];
@@ -120,6 +128,18 @@ export function gql(
 export function gql(
   source: "\n      mutation UpdateGroup($data: UpdateGroupInput!) {\n        adminUsers {\n          updateGroup(data: $data) {\n            __typename\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation UpdateGroup($data: UpdateGroupInput!) {\n        adminUsers {\n          updateGroup(data: $data) {\n            __typename\n          }\n        }\n      }\n    "];
+export function gql(
+  source: "\n  fragment KCInfo on KC {\n    id\n    code\n    label\n    domain {\n      id\n      code\n      label\n    }\n    updatedAt\n    createdAt\n  }\n"
+): typeof documents["\n  fragment KCInfo on KC {\n    id\n    code\n    label\n    domain {\n      id\n      code\n      label\n    }\n    updatedAt\n    createdAt\n  }\n"];
+export function gql(
+  source: "\n      mutation CreateKC($data: CreateKCInput!) {\n        adminDomain {\n          createKC(data: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    "
+): typeof documents["\n      mutation CreateKC($data: CreateKCInput!) {\n        adminDomain {\n          createKC(data: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    "];
+export function gql(
+  source: "\n      query AllKCs($pagination: CursorConnectionArgs!) {\n        adminDomain {\n          allKCs(pagination: $pagination) {\n            nodes {\n              ...KCInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    "
+): typeof documents["\n      query AllKCs($pagination: CursorConnectionArgs!) {\n        adminDomain {\n          allKCs(pagination: $pagination) {\n            nodes {\n              ...KCInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    "];
+export function gql(
+  source: "\n      mutation UpdateKC($data: UpdateKCInput!) {\n        adminDomain {\n          updateKC(data: $data) {\n            __typename\n          }\n        }\n      }\n    "
+): typeof documents["\n      mutation UpdateKC($data: UpdateKCInput!) {\n        adminDomain {\n          updateKC(data: $data) {\n            __typename\n          }\n        }\n      }\n    "];
 export function gql(
   source: "\n  fragment ProjectInfo on Project {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n  }\n"
 ): typeof documents["\n  fragment ProjectInfo on Project {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n  }\n"];

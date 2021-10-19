@@ -1,9 +1,10 @@
 import { Stack } from "@chakra-ui/react";
+import { BiBookContent } from "react-icons/bi";
+import { FaBookReader } from "react-icons/fa";
 import { FiBook, FiUsers } from "react-icons/fi";
 import { MdOutlineTopic } from "react-icons/md";
 import { RiGroup2Line } from "react-icons/ri";
 import { VscProject } from "react-icons/vsc";
-import { BiBookContent } from "react-icons/bi";
 import { useAuth } from "./Auth";
 import { DarkModeToggle } from "./DarkModeToggle";
 import { ScrollArea } from "./ScrollArea";
@@ -27,6 +28,9 @@ export function Navigation() {
             </SidebarLink>
             <SidebarLink href="/topics" icon={<MdOutlineTopic />}>
               Topics
+            </SidebarLink>
+            <SidebarLink href="/kcs" icon={<FaBookReader />}>
+              KC
             </SidebarLink>
             <SidebarLink href="/projects" icon={<VscProject />}>
               Projects

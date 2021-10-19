@@ -20,5 +20,5 @@
     "types": ["@types/mocha"]
   },
   "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["**/dist", "**/node_modules"]
+  "exclude": ["**/node_modules"]
 }

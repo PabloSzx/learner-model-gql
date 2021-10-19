@@ -45,6 +45,8 @@ export const ErrorToast = memo(() => {
   useEffect(() => {
     if (!message) return;
 
+    errorState.message = null;
+
     toast({
       title: message,
       status: "error",

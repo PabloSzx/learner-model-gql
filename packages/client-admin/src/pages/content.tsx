@@ -5,7 +5,6 @@ import {
   FormLabel,
   IconButton,
   Input,
-  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { ContentInfoFragment, gql, useGQLMutation, useGQLQuery } from "graph";
@@ -50,19 +49,6 @@ gql(/* GraphQL */ `
     }
     updatedAt
     createdAt
-  }
-`);
-
-const AdminContent = gql(/* GraphQL */ `
-  query AllContent($pagination: CursorConnectionArgs!) {
-    adminContent {
-      allContent(pagination: $pagination) {
-        nodes {
-          ...ContentInfo
-        }
-        ...Pagination
-      }
-    }
   }
 `);
 
@@ -189,9 +175,23 @@ const CreateContent = memo(function CreateContent() {
 
 export default withAdminAuth(function ContentPage() {
   const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination();
-  const { data } = useGQLQuery(AdminContent, {
-    pagination,
-  });
+  const { data } = useGQLQuery(
+    gql(/* GraphQL */ `
+      query AllContent($pagination: CursorConnectionArgs!) {
+        adminContent {
+          allContent(pagination: $pagination) {
+            nodes {
+              ...ContentInfo
+            }
+            ...Pagination
+          }
+        }
+      }
+    `),
+    {
+      pagination,
+    }
+  );
   pageInfo.current = data?.adminContent.allContent.pageInfo;
 
   useEffect(() => {
@@ -209,7 +209,7 @@ export default withAdminAuth(function ContentPage() {
         content
       );
     }
-  });
+  }, [data]);
 
   const contentsState = useSnapshot(ContentState);
 
@@ -229,10 +229,6 @@ export default withAdminAuth(function ContentPage() {
       },
     }
   );
-
-  const toast = useToast();
-
-  toast;
 
   return (
     <VStack>
@@ -256,11 +252,11 @@ export default withAdminAuth(function ContentPage() {
                 original: { id },
               },
             }) {
-              const domainState = contentsState[id];
+              const state = contentsState[id];
 
-              if (!domainState) return value;
+              if (!state) return value;
 
-              if (domainState.isEditing) {
+              if (state.isEditing) {
                 const ref = ContentState[id]!.codeRef;
                 return (
                   <Input
@@ -288,11 +284,11 @@ export default withAdminAuth(function ContentPage() {
                 original: { id },
               },
             }) {
-              const contentState = contentsState[id];
+              const state = contentsState[id];
 
-              if (!contentState) return value;
+              if (!state) return value;
 
-              if (contentState.isEditing) {
+              if (state.isEditing) {
                 const ref = ContentState[id]!.labelRef;
 
                 return (
@@ -349,12 +345,14 @@ export default withAdminAuth(function ContentPage() {
             },
           },
           {
+            id: "Project",
             Header: "Project",
             accessor(v) {
               return projectOptionLabel(v.project);
             },
           },
           {
+            id: "Domain",
             Header: "Domain",
             accessor(v) {
               return domainOptionLabel(v.domain);
@@ -456,12 +454,7 @@ export default withAdminAuth(function ContentPage() {
                         .then(() => {
                           ContentState[id]!.isEditing = false;
                         })
-                        .catch((err) => {
-                          toast({
-                            status: "error",
-                            title: err.message,
-                          });
-                        });
+                        .catch(console.error);
                     } else {
                       ContentState[id]!.isEditing = !isEditing;
                     }
