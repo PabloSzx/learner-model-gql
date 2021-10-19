@@ -143,7 +143,7 @@ importers:
       '@types/nprogress': ^0.2.0
       '@types/react': ^17.0.30
       '@types/react-dom': ^17.0.9
-      '@types/react-table': ^7.7.6
+      '@types/react-table': ^7.7.7
       common: workspace:^0.0.1
       date-fns: ^2.25.0
       framer-motion: ^4.1.17
@@ -187,7 +187,7 @@ importers:
       zustand: 3.5.14_react@17.0.2
     devDependencies:
       '@types/nprogress': 0.2.0
-      '@types/react-table': 7.7.6
+      '@types/react-table': 7.7.7
       typescript: 4.4.4
 
   packages/client-nextjs:
@@ -3274,8 +3274,8 @@ packages:
       '@types/react': 17.0.30
     dev: false
 
-  /@types/react-table/7.7.6:
-    resolution: {integrity: sha512-ZMFHh1sG5AGDmhVRpz9mgGByGmBFAqnZ7QnyqGa5iAlKtcSC3vb/gul47lM0kJ1uvlawc+qN5k+++pe+GBdJ+g==}
+  /@types/react-table/7.7.7:
+    resolution: {integrity: sha512-3l2TP4detx9n5Jt44XhdH7Ku6PYwz6kB83P8W+YcBMUkIHtiw2gsCCcq9c4wyCIcdSwcTlWZ9WqH4PF7Yfbprg==}
     dependencies:
       '@types/react': 17.0.30
     dev: true
