@@ -1,4 +1,10 @@
-import { Box, Flex, useColorModeValue as mode } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  useColorModeValue,
+  useUpdateEffect,
+} from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import type { ReactNode } from "react";
 import { MobileMenuButton } from "./MobileMenuButton";
 import { Navigation } from "./Navigation";
@@ -6,12 +12,21 @@ import { useMobileMenuState } from "./useMobileMenuState";
 import { UserInfo } from "./UserInfo";
 
 export function MainLayout({ children }: { children: ReactNode }) {
-  const { isOpen, toggle } = useMobileMenuState();
+  const { isOpen, toggle, off } = useMobileMenuState();
 
+  const { pathname } = useRouter();
+
+  useUpdateEffect(() => {
+    if (isOpen) off();
+  }, [pathname]);
+
+  const mainContainerBackground = useColorModeValue("blue.800", "gray.800");
+
+  const contentContainerBackground = useColorModeValue("white", "gray.700");
   return (
     <Flex
       height="100vh"
-      bg={mode("blue.800", "gray.800")}
+      bg={mainContainerBackground}
       overflow="hidden"
       sx={{ "--sidebar-width": "16rem" }}
     >
@@ -41,8 +56,8 @@ export function MainLayout({ children }: { children: ReactNode }) {
         transition="left 0.2s"
       >
         <Box
-          maxW="calc(97vw - var(--sidebar-width))"
-          bg={mode("white", "gray.700")}
+          maxW="2560px"
+          bg={contentContainerBackground}
           height="100%"
           pb="6"
           rounded={{ md: "lg" }}
@@ -65,8 +80,15 @@ export function MainLayout({ children }: { children: ReactNode }) {
               direction="column"
               flex="1"
               overflow="auto"
-              px="10"
-              pt="8"
+              px={{
+                md: "10",
+              }}
+              pt={{
+                md: "8",
+              }}
+              maxW={{
+                md: "calc(97vw - var(--sidebar-width))",
+              }}
             >
               {children}
             </Flex>
