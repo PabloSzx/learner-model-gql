@@ -17,6 +17,7 @@ import { proxy, ref, useSnapshot } from "valtio";
 import { withAdminAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
+import { useJSONEditor } from "../components/jsonEditor";
 import { domainOptionLabel, useSelectSingleDomain } from "../hooks/domain";
 import { useCursorPagination } from "../hooks/pagination";
 import { projectOptionLabel, useSelectSingleProject } from "../hooks/projects";
@@ -67,6 +68,15 @@ const ContentState = proxy<
   >
 >({});
 
+function getBase64(file: File) {
+  return new Promise<string | null>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
+}
+
 const CreateContent = memo(function CreateContent() {
   const codeRef = useRef<HTMLInputElement>(null);
   const labelRef = useRef<HTMLInputElement>(null);
@@ -97,10 +107,20 @@ const CreateContent = memo(function CreateContent() {
 
   const tagsRef = useRef<Select<{ label: string; value: string }, true>>(null);
 
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const jsonEditor = useJSONEditor();
+
+  const urlRef = useRef<HTMLInputElement>(null);
+
   return (
     <FormModal
       title="Create Content"
       onSubmit={async () => {
+        if (jsonEditor.json && !jsonEditor.isValid) {
+          throw Error("Invalid JSON");
+        }
+
         if (
           !codeRef.current?.value ||
           !labelRef.current?.value ||
@@ -109,6 +129,15 @@ const CreateContent = memo(function CreateContent() {
           !descriptionRef.current?.value
         )
           throw Error("All fields are required");
+
+        const file = fileRef.current?.files?.[0];
+
+        const binaryBase64 = file
+          ? (await getBase64(file)) ||
+            (() => {
+              throw Error("File could not be encoded to base64!");
+            })()
+          : null;
 
         await mutateAsync({
           data: {
@@ -120,6 +149,9 @@ const CreateContent = memo(function CreateContent() {
             kcs: [],
             tags: tagsRef.current?.getValue().map((v) => v.value) || [],
             topics: [],
+            binaryBase64,
+            json: jsonEditor.parsedJson || null,
+            url: urlRef.current?.value || null,
           },
         });
 
@@ -166,8 +198,30 @@ const CreateContent = memo(function CreateContent() {
           ref={tagsRef}
           placeholder="Tags"
           isMulti
-          noOptionsMessage={() => `No tags yet, create the first one!`}
+          noOptionsMessage={() => `Start writing to create a new tag!`}
         />
+      </FormControl>
+      <FormControl>
+        <FormLabel>Binary Content</FormLabel>
+        <Input
+          type="file"
+          ref={fileRef}
+          lineHeight="2rem"
+          sx={{ textAlignLast: "center" }}
+        />
+        <FormHelperText>
+          The file is going to be encoded to base64
+        </FormHelperText>
+      </FormControl>
+      <FormControl>
+        <FormLabel>JSON</FormLabel>
+        {jsonEditor.jsonEditor}
+        <FormHelperText>JSON Object</FormHelperText>
+      </FormControl>
+      <FormControl id="url">
+        <FormLabel>URL</FormLabel>
+        <Input type="url" ref={urlRef} />
+        <FormHelperText>Custom External URL</FormHelperText>
       </FormControl>
     </FormModal>
   );
@@ -379,7 +433,7 @@ export default withAdminAuth(function ContentPage() {
                       placeholder="Tags"
                       isMulti
                       noOptionsMessage={() =>
-                        `No tags yet, create the first one!`
+                        `Start writing to create a new tag!`
                       }
                       defaultValue={tags.map((value) => ({
                         label: value,

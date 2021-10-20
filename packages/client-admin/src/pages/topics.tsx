@@ -284,7 +284,7 @@ export const TopicCard = memo(function TopicCard({
           value={
             isEditing ? (
               <Input
-                value={topicEdit.sortIndex || ""}
+                value={topicEdit.sortIndex ?? ""}
                 type="number"
                 onChange={(ev) => {
                   edit((draft) => {

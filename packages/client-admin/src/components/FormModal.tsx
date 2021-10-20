@@ -8,6 +8,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  ModalProps,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
@@ -20,12 +21,14 @@ export function FormModal({
   onSubmit,
   triggerButton,
   saveButton,
+  modalProps,
 }: {
   title: string;
   children: ReactNode;
   onSubmit?: () => Promise<void>;
   triggerButton?: ButtonProps;
   saveButton?: ButtonProps;
+  modalProps?: ModalProps;
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -37,7 +40,12 @@ export function FormModal({
         {title}
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        scrollBehavior="inside"
+        {...modalProps}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>{title}</ModalHeader>
