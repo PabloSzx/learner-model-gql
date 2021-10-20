@@ -36,7 +36,7 @@ export const contentModule = registerModule(
 
       binaryBase64: String
       json: JSONObject
-      url: String
+      url: URL
 
       topics: [IntID!]!
 
@@ -58,7 +58,7 @@ export const contentModule = registerModule(
 
       binaryBase64: String
       json: JSONObject
-      url: String
+      url: URL
 
       topics: [IntID!]!
 
@@ -116,10 +116,8 @@ export const contentModule = registerModule(
               label,
               description,
               json,
-              url,
-              binary: binaryBase64
-                ? Buffer.from(binaryBase64, "base64")
-                : undefined,
+              url: url?.toString() || null,
+              binary: binaryBase64 ? Buffer.from(binaryBase64, "base64") : null,
               domain: {
                 connect: {
                   id: domainId,
@@ -171,10 +169,8 @@ export const contentModule = registerModule(
               label,
               description,
               json,
-              url,
-              binary: binaryBase64
-                ? Buffer.from(binaryBase64, "base64")
-                : undefined,
+              url: url?.toString() || null,
+              binary: binaryBase64 ? Buffer.from(binaryBase64, "base64") : null,
               domain: {
                 connect: {
                   id: domainId,

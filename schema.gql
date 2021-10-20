@@ -305,7 +305,7 @@ input CreateContent {
   domainId: IntID!
   binaryBase64: String
   json: JSONObject
-  url: String
+  url: URL
   topics: [IntID!]!
   kcs: [IntID!]!
   tags: [String!]!
@@ -320,7 +320,7 @@ input UpdateContent {
   domainId: IntID!
   binaryBase64: String
   json: JSONObject
-  url: String
+  url: URL
   topics: [IntID!]!
   kcs: [IntID!]!
   tags: [String!]!

@@ -289,7 +289,7 @@ export type CreateContent = {
   projectId: Scalars["IntID"];
   tags: Array<Scalars["String"]>;
   topics: Array<Scalars["IntID"]>;
-  url?: Maybe<Scalars["String"]>;
+  url?: Maybe<Scalars["URL"]>;
 };
 
 export type CreateDomain = {
@@ -532,7 +532,7 @@ export type UpdateContent = {
   projectId: Scalars["IntID"];
   tags: Array<Scalars["String"]>;
   topics: Array<Scalars["IntID"]>;
-  url?: Maybe<Scalars["String"]>;
+  url?: Maybe<Scalars["URL"]>;
 };
 
 export type UpdateDomain = {

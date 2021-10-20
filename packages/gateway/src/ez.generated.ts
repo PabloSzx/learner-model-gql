@@ -397,7 +397,7 @@ export type CreateContent = {
   domainId: Scalars["IntID"];
   binaryBase64?: Maybe<Scalars["String"]>;
   json?: Maybe<Scalars["JSONObject"]>;
-  url?: Maybe<Scalars["String"]>;
+  url?: Maybe<Scalars["URL"]>;
   topics: Array<Scalars["IntID"]>;
   kcs: Array<Scalars["IntID"]>;
   tags: Array<Scalars["String"]>;
@@ -412,7 +412,7 @@ export type UpdateContent = {
   domainId: Scalars["IntID"];
   binaryBase64?: Maybe<Scalars["String"]>;
   json?: Maybe<Scalars["JSONObject"]>;
-  url?: Maybe<Scalars["String"]>;
+  url?: Maybe<Scalars["URL"]>;
   topics: Array<Scalars["IntID"]>;
   kcs: Array<Scalars["IntID"]>;
   tags: Array<Scalars["String"]>;
