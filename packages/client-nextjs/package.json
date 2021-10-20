@@ -14,7 +14,7 @@
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@types/react": "^17.0.30",
-    "@types/react-dom": "^17.0.9",
+    "@types/react-dom": "^17.0.10",
     "common": "workspace:^0.0.1",
     "framer-motion": "^4.1.17",
     "graph": "workspace:^0.0.1",

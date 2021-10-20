@@ -142,7 +142,7 @@ importers:
       '@emotion/styled': ^11.3.0
       '@types/nprogress': ^0.2.0
       '@types/react': ^17.0.30
-      '@types/react-dom': ^17.0.9
+      '@types/react-dom': ^17.0.10
       '@types/react-table': ^7.7.7
       common: workspace:^0.0.1
       date-fns: ^2.25.0
@@ -168,7 +168,7 @@ importers:
       '@emotion/react': 11.5.0_0d9ae6029f9b6856f7d6fb45bd27ecc7
       '@emotion/styled': 11.3.0_a18847030f5d66c91ccc2d367a906fbb
       '@types/react': 17.0.30
-      '@types/react-dom': 17.0.9
+      '@types/react-dom': 17.0.10
       common: link:../common
       date-fns: 2.25.0
       framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
@@ -198,7 +198,7 @@ importers:
       '@emotion/react': ^11.5.0
       '@emotion/styled': ^11.3.0
       '@types/react': ^17.0.30
-      '@types/react-dom': ^17.0.9
+      '@types/react-dom': ^17.0.10
       common: workspace:^0.0.1
       framer-motion: ^4.1.17
       graph: workspace:^0.0.1
@@ -214,7 +214,7 @@ importers:
       '@emotion/react': 11.5.0_0d9ae6029f9b6856f7d6fb45bd27ecc7
       '@emotion/styled': 11.3.0_a18847030f5d66c91ccc2d367a906fbb
       '@types/react': 17.0.30
-      '@types/react-dom': 17.0.9
+      '@types/react-dom': 17.0.10
       common: link:../common
       framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
       graph: link:../graph
@@ -3268,8 +3268,8 @@ packages:
     resolution: {integrity: sha512-S6NRYPiH8VGcLW4m9KEMUPtGxXqToCOLLCutQh8sSMaZGrL6/PEQCZAPGBtMP6SKd43ep5eWuPFN732h23h15w==}
     dev: true
 
-  /@types/react-dom/17.0.9:
-    resolution: {integrity: sha512-wIvGxLfgpVDSAMH5utdL9Ngm5Owu0VsGmldro3ORLXV8CShrL8awVj06NuEXFQ5xyaYfdca7Sgbk/50Ri1GdPg==}
+  /@types/react-dom/17.0.10:
+    resolution: {integrity: sha512-8oz3NAUId2z/zQdFI09IMhQPNgIbiP8Lslhv39DIDamr846/0spjZK0vnrMak0iB8EKb9QFTTIdg2Wj2zH5a3g==}
     dependencies:
       '@types/react': 17.0.30
     dev: false
