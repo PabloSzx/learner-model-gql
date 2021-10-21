@@ -38,6 +38,7 @@ export const usersModule = registerModule(
 
     input UpdateUserInput {
       id: IntID!
+      name: String
       role: UserRole!
       locked: Boolean!
       projectIds: [IntID!]!

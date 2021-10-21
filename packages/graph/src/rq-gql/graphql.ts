@@ -579,6 +579,7 @@ export type UpdateTopic = {
 export type UpdateUserInput = {
   id: Scalars["IntID"];
   locked: Scalars["Boolean"];
+  name?: Maybe<Scalars["String"]>;
   projectIds: Array<Scalars["IntID"]>;
   role: UserRole;
   tags: Array<Scalars["String"]>;

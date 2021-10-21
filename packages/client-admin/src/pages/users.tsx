@@ -3,6 +3,7 @@ import {
   FormHelperText,
   FormLabel,
   IconButton,
+  Input,
   Select,
   Switch,
   Textarea,
@@ -80,6 +81,7 @@ const UsersState = proxy<
       tagsRef: {
         current: SelectRefType | null;
       };
+      nameRef: { current: string };
     } & UserInfoFragment
   >
 >({});
@@ -184,6 +186,7 @@ export default withAdminAuth(function UsersPage() {
           tagsRef: ref({
             current: null,
           }),
+          nameRef: { current: user.name || "" },
         }),
         user
       );
@@ -228,6 +231,32 @@ export default withAdminAuth(function UsersPage() {
           {
             Header: "Name",
             accessor: "name",
+            Cell({
+              value,
+              row: {
+                original: { id },
+              },
+            }) {
+              const userState = UsersState[id];
+
+              if (userState?.isEditing) {
+                const ref = userState.nameRef;
+                return (
+                  <Input
+                    isDisabled={updateUser.isLoading}
+                    defaultValue={ref.current}
+                    onChange={(ev) => {
+                      ref.current = ev.target.value;
+                    }}
+                    colorScheme="facebook"
+                    borderColor="blackAlpha.500"
+                    width="30ch"
+                  />
+                );
+              }
+
+              return value;
+            },
           },
           {
             Header: "Active",
@@ -355,7 +384,7 @@ export default withAdminAuth(function UsersPage() {
             defaultCanGroupBy: false,
             accessor: "id",
             Cell({ value: id, row: { original } }) {
-              const userState = usersState[id];
+              const userState = UsersState[id];
 
               if (!userState) return null;
 
@@ -377,6 +406,7 @@ export default withAdminAuth(function UsersPage() {
                       isEditing &&
                       (original.role !== role ||
                         original.locked !== locked ||
+                        (original.name || "") !== userState.nameRef.current ||
                         original.projects
                           .map((v) => v.id)
                           .sort()
@@ -395,6 +425,7 @@ export default withAdminAuth(function UsersPage() {
                             locked,
                             projectIds: selectedProjects.map((v) => v.value),
                             tags: tagsRefList,
+                            name: userState.nameRef.current || null,
                           },
                         })
                         .then(() => {

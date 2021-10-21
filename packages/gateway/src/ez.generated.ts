@@ -207,6 +207,7 @@ export type AdminUserQueriesAllGroupsArgs = {
 
 export type UpdateUserInput = {
   id: Scalars["IntID"];
+  name?: Maybe<Scalars["String"]>;
   role: UserRole;
   locked: Scalars["Boolean"];
   projectIds: Array<Scalars["IntID"]>;

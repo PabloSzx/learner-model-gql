@@ -155,6 +155,7 @@ type AdminUserQueries {
 
 input UpdateUserInput {
   id: IntID!
+  name: String
   role: UserRole!
   locked: Boolean!
   projectIds: [IntID!]!

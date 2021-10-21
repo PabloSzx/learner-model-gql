@@ -17,7 +17,7 @@ export function GetDBUser(auth0UserPromise: Promise<Auth0User | null>) {
     if (!uid || !email) return null;
 
     const lastOnline = new Date();
-    return prisma.userUID
+    const userDb = await prisma.userUID
       .upsert({
         where: {
           uid,
@@ -80,6 +80,26 @@ export function GetDBUser(auth0UserPromise: Promise<Auth0User | null>) {
         },
       })
       .then((data) => data.user);
+
+    if (userDb && (!userDb.name || !userDb.picture) && (name || picture)) {
+      const updatedUser = await prisma.user.update({
+        where: {
+          id: userDb.id,
+        },
+        data: {
+          name: userDb.name ? undefined : name || undefined,
+          picture: userDb.picture ? undefined : picture || undefined,
+        },
+        select: {
+          name: true,
+          picture: true,
+        },
+      });
+
+      Object.assign(userDb, updatedUser);
+    }
+
+    return userDb;
   });
 
   return {
