@@ -14,15 +14,12 @@ import { MdAdd, MdEdit, MdSave } from "react-icons/md";
 import CreatableSelect from "react-select/creatable";
 import type Select from "react-select/dist/declarations/src/Select";
 import { proxy, ref, useSnapshot } from "valtio";
-import {
-  AsyncSelect,
-  SelectRefType,
-  useSelectStyles,
-} from "../components/AsyncSelect";
+import { AsyncSelect, SelectRefType } from "../components/AsyncSelect";
 import { withAdminAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
 import { useJSONEditor } from "../components/jsonEditor";
+import { useTagsSelect } from "../components/TagsSelect";
 import { kcOptionLabel, useKCsBase, useSelectMultiKCs } from "../hooks/kcs";
 import { useCursorPagination } from "../hooks/pagination";
 import { projectOptionLabel, useSelectSingleProject } from "../hooks/projects";
@@ -40,7 +37,6 @@ gql(/* GraphQL */ `
       code
       label
     }
-
     kcs {
       id
       code
@@ -292,8 +288,6 @@ export default withAdminAuth(function ContentPage() {
 
   const kcsBase = useKCsBase();
 
-  const selectStyles = useSelectStyles();
-
   return (
     <VStack>
       <CreateContent />
@@ -430,23 +424,12 @@ export default withAdminAuth(function ContentPage() {
               if (!state) return tags.join(" | ");
 
               if (state.isEditing) {
-                return (
-                  <Box minW="250px">
-                    <CreatableSelect<{ label: string; value: string }, true>
-                      ref={state.tagsRef}
-                      placeholder="Tags"
-                      isMulti
-                      noOptionsMessage={() =>
-                        `Start writing to create a new tag!`
-                      }
-                      defaultValue={tags.map((value) => ({
-                        label: value,
-                        value,
-                      }))}
-                      {...selectStyles}
-                    />
-                  </Box>
-                );
+                const { tagsSelect } = useTagsSelect({
+                  tagsRef: state.tagsRef,
+                  defaultTags: tags,
+                });
+
+                return tagsSelect;
               }
               return tags.join(" | ");
             },

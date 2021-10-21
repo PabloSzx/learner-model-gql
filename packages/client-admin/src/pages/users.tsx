@@ -26,11 +26,12 @@ import {
   MdLockOpen,
   MdSave,
 } from "react-icons/md";
-import { proxy, useSnapshot } from "valtio";
-import type { OptionValue } from "../components/AsyncSelect";
+import { proxy, ref, useSnapshot } from "valtio";
+import type { OptionValue, SelectRefType } from "../components/AsyncSelect";
 import { useAuth, withAdminAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
+import { useTagsSelect } from "../components/TagsSelect";
 import { useCursorPagination } from "../hooks/pagination";
 import { projectOptionLabel, useSelectMultiProjects } from "../hooks/projects";
 import { queryClient } from "../rqClient";
@@ -48,6 +49,7 @@ gql(/* GraphQL */ `
     enabled
     updatedAt
     locked
+    tags
     projects {
       id
       code
@@ -75,6 +77,9 @@ const UsersState = proxy<
     {
       isEditing?: boolean;
       selectedProjects: Array<OptionValue>;
+      tagsRef: {
+        current: SelectRefType | null;
+      };
     } & UserInfoFragment
   >
 >({});
@@ -176,6 +181,9 @@ export default withAdminAuth(function UsersPage() {
             value: project.id,
             label: projectOptionLabel(project),
           })),
+          tagsRef: ref({
+            current: null,
+          }),
         }),
         user
       );
@@ -295,14 +303,12 @@ export default withAdminAuth(function UsersPage() {
             }) {
               const projectsCodes = projects.map((v) => v.code).join();
 
-              const userState = usersState[id];
+              const state = usersState[id];
 
-              if (!userState) return projectsCodes;
-
-              if (userState.isEditing) {
+              if (state?.isEditing) {
                 const { selectMultiProjectComponent } = useSelectMultiProjects({
                   state: [
-                    userState.selectedProjects,
+                    state.selectedProjects,
                     (value) => {
                       UsersState[id]!.selectedProjects = value;
                     },
@@ -316,7 +322,28 @@ export default withAdminAuth(function UsersPage() {
               return projectsCodes;
             },
           },
+          {
+            id: "Tags",
+            Header: "Tags",
+            accessor: "id",
+            Cell({
+              row: {
+                original: { id, tags },
+              },
+            }) {
+              const state = UsersState[id];
 
+              if (state?.isEditing) {
+                const { tagsSelect } = useTagsSelect({
+                  tagsRef: state.tagsRef,
+                  defaultTags: tags,
+                });
+
+                return tagsSelect;
+              }
+              return tags.join(" | ");
+            },
+          },
           getDateRow({ id: "lastOnline", label: "Last Online" }),
           getDateRow({ id: "createdAt", label: "Created At" }),
           getDateRow({ id: "updatedAt", label: "Updated At" }),
@@ -332,7 +359,8 @@ export default withAdminAuth(function UsersPage() {
 
               if (!userState) return null;
 
-              const { isEditing, role, locked, selectedProjects } = userState;
+              const { isEditing, role, locked, selectedProjects, tagsRef } =
+                userState;
 
               return (
                 <IconButton
@@ -343,6 +371,8 @@ export default withAdminAuth(function UsersPage() {
                   }
                   isDisabled={updateUser.isLoading}
                   onClick={() => {
+                    const tagsRefList =
+                      tagsRef.current?.getValue().map((v) => v.value) || [];
                     if (
                       isEditing &&
                       (original.role !== role ||
@@ -354,7 +384,8 @@ export default withAdminAuth(function UsersPage() {
                           selectedProjects
                             .map((v) => v.value)
                             .sort()
-                            .join())
+                            .join() ||
+                        original.tags.join() !== tagsRefList.join())
                     ) {
                       updateUser
                         .mutateAsync({
@@ -363,7 +394,7 @@ export default withAdminAuth(function UsersPage() {
                             role,
                             locked,
                             projectIds: selectedProjects.map((v) => v.value),
-                            tags: [],
+                            tags: tagsRefList,
                           },
                         })
                         .then(() => {

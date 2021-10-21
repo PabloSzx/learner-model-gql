@@ -1325,6 +1325,7 @@ export type UserInfoFragment = {
   enabled: boolean;
   updatedAt: string;
   locked: boolean;
+  tags: Array<string>;
   projects: Array<{
     __typename?: "Project";
     id: string;
@@ -1355,6 +1356,7 @@ export type AdminUsersQuery = {
         enabled: boolean;
         updatedAt: string;
         locked: boolean;
+        tags: Array<string>;
         projects: Array<{
           __typename?: "Project";
           id: string;
@@ -1394,6 +1396,7 @@ export type UpsertUsersWithProjectsMutation = {
       enabled: boolean;
       updatedAt: string;
       locked: boolean;
+      tags: Array<string>;
       projects: Array<{
         __typename?: "Project";
         id: string;
@@ -1675,6 +1678,7 @@ export const UserInfoFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "enabled" } },
           { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
           { kind: "Field", name: { kind: "Name", value: "locked" } },
+          { kind: "Field", name: { kind: "Name", value: "tags" } },
           {
             kind: "Field",
             name: { kind: "Name", value: "projects" },

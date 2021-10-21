@@ -16,7 +16,7 @@ import {
   useStyles,
   useTheme,
 } from "@chakra-ui/react";
-import type { FC, RefObject } from "react";
+import { FC, RefObject, useCallback, useMemo } from "react";
 import { FiChevronDown } from "react-icons/fi";
 import type { GroupBase, Props as ReactSelectProps, Theme } from "react-select";
 import ReactSelect, {
@@ -52,31 +52,33 @@ export interface AsyncSelectProps extends CommonSelectProps {
   selectRef?: RefObject<SelectRefType>;
 }
 
-export const chakraStyles: StylesConfig<OptionValue> = {
-  input: (provided) => ({
-    ...provided,
-    color: "inherit",
-    lineHeight: 1,
-  }),
-  menu: (provided) => ({
-    ...provided,
-    boxShadow: "none",
-    backgroundColor: "inherit",
-  }),
-  valueContainer: (provided) => ({
-    ...provided,
-    padding: "0.125rem 1rem",
-  }),
-  singleValue: (provided) => ({
-    ...provided,
-    color: "inherit",
-  }),
-  multiValueRemove(provided) {
-    return {
+export const chakraStyles = {
+  ...({
+    input: (provided) => ({
       ...provided,
-      color: "black",
-    };
-  },
+      color: "inherit",
+      lineHeight: 1,
+    }),
+    menu: (provided) => ({
+      ...provided,
+      boxShadow: "none",
+      backgroundColor: "inherit",
+    }),
+    valueContainer: (provided) => ({
+      ...provided,
+      padding: "0.125rem 1rem",
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: "inherit",
+    }),
+    multiValueRemove(provided) {
+      return {
+        ...provided,
+        color: "black",
+      };
+    },
+  } as StylesConfig<OptionValue>),
 };
 
 const components = {
@@ -300,11 +302,8 @@ export const useSelectStyles = () => {
     chakraTheme.colors.whiteAlpha[400]
   );
 
-  return {
-    styles: {
-      ...chakraStyles,
-    },
-    theme: (baseTheme: Theme) => ({
+  const theme = useCallback(
+    (baseTheme: Theme) => ({
       ...baseTheme,
       colors: {
         ...baseTheme.colors,
@@ -312,6 +311,10 @@ export const useSelectStyles = () => {
         neutral40: placeholderColor,
       },
     }),
-    components,
-  };
+    [placeholderColor]
+  );
+
+  return useMemo(() => {
+    return { styles: chakraStyles, theme, components };
+  }, [theme]);
 };

@@ -231,7 +231,7 @@ export const getDateRow = <
       return (
         <HStack>
           {precell?.(row.original) || null}
-          <Text>{value ? formatSpanish(new Date(value), "PPpp O") : "-"}</Text>;
+          <Text>{value ? formatSpanish(new Date(value), "Pp O") : "-"}</Text>;
         </HStack>
       );
     },
