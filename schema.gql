@@ -336,8 +336,17 @@ type AdminContentMutations {
   updateContent(data: UpdateContent!): Content!
 }
 
+input AdminContentFilter {
+  tags: [String!]
+  domains: [IntID!]
+  projects: [IntID!]
+}
+
 type AdminContentQueries {
-  allContent(pagination: CursorConnectionArgs!): ContentConnection!
+  allContent(
+    pagination: CursorConnectionArgs!
+    filters: AdminContentFilter
+  ): ContentConnection!
 }
 
 type TopicsConnection implements Connection {

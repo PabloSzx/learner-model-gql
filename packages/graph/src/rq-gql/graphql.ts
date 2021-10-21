@@ -88,6 +88,12 @@ export type AdminActionQueriesAllActionsArgs = {
   pagination: CursorConnectionArgs;
 };
 
+export type AdminContentFilter = {
+  domains?: Maybe<Array<Scalars["IntID"]>>;
+  projects?: Maybe<Array<Scalars["IntID"]>>;
+  tags?: Maybe<Array<Scalars["String"]>>;
+};
+
 export type AdminContentMutations = {
   __typename?: "AdminContentMutations";
   createContent: Content;
@@ -108,6 +114,7 @@ export type AdminContentQueries = {
 };
 
 export type AdminContentQueriesAllContentArgs = {
+  filters?: Maybe<AdminContentFilter>;
   pagination: CursorConnectionArgs;
 };
 

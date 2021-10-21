@@ -115,6 +115,12 @@ export type AdminContentMutationsUpdateContentArgs = {
   data: UpdateContent;
 };
 
+export type AdminContentFilter = {
+  tags?: Maybe<Array<Scalars["String"]>>;
+  domains?: Maybe<Array<Scalars["IntID"]>>;
+  projects?: Maybe<Array<Scalars["IntID"]>>;
+};
+
 export type AdminContentQueries = {
   __typename?: "AdminContentQueries";
   allContent: ContentConnection;
@@ -122,6 +128,7 @@ export type AdminContentQueries = {
 
 export type AdminContentQueriesAllContentArgs = {
   pagination: CursorConnectionArgs;
+  filters?: Maybe<AdminContentFilter>;
 };
 
 export type Domain = {
@@ -310,6 +317,7 @@ export type ResolversTypes = {
   UpdateContent: UpdateContent;
   ContentConnection: ResolverTypeWrapper<ContentConnection>;
   AdminContentMutations: ResolverTypeWrapper<AdminContentMutations>;
+  AdminContentFilter: AdminContentFilter;
   AdminContentQueries: ResolverTypeWrapper<AdminContentQueries>;
   Domain: ResolverTypeWrapper<Domain>;
   Topic: ResolverTypeWrapper<Topic>;
@@ -340,6 +348,7 @@ export type ResolversParentTypes = {
   UpdateContent: UpdateContent;
   ContentConnection: ContentConnection;
   AdminContentMutations: AdminContentMutations;
+  AdminContentFilter: AdminContentFilter;
   AdminContentQueries: AdminContentQueries;
   Domain: Domain;
   Topic: Topic;

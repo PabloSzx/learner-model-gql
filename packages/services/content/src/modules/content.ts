@@ -77,8 +77,17 @@ export const contentModule = registerModule(
       updateContent(data: UpdateContent!): Content!
     }
 
+    input AdminContentFilter {
+      tags: [String!]
+      domains: [IntID!]
+      projects: [IntID!]
+    }
+
     type AdminContentQueries {
-      allContent(pagination: CursorConnectionArgs!): ContentConnection!
+      allContent(
+        pagination: CursorConnectionArgs!
+        filters: AdminContentFilter
+      ): ContentConnection!
     }
     extend type Query {
       adminContent: AdminContentQueries!
@@ -195,10 +204,29 @@ export const contentModule = registerModule(
         },
       },
       AdminContentQueries: {
-        allContent(_root, { pagination }, { prisma }) {
+        allContent(_root, { pagination, filters }, { prisma }) {
           return ResolveCursorConnection(pagination, (connection) => {
             return prisma.content.findMany({
               ...connection,
+              where: filters
+                ? {
+                    tags: filters.tags
+                      ? {
+                          hasSome: filters.tags,
+                        }
+                      : undefined,
+                    domainId: filters.domains
+                      ? {
+                          in: filters.domains,
+                        }
+                      : undefined,
+                    projectId: filters.projects
+                      ? {
+                          in: filters.projects,
+                        }
+                      : undefined,
+                  }
+                : undefined,
             });
           });
         },
