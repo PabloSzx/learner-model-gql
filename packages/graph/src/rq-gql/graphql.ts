@@ -906,6 +906,7 @@ export type CreateContentMutation = {
 
 export type AllContentQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
+  filters?: Maybe<AdminContentFilter>;
 }>;
 
 export type AllContentQuery = {
@@ -1179,6 +1180,7 @@ export type CreateKcMutation = {
 
 export type AllKCsQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
+  filters?: Maybe<AdminKCsFilter>;
 }>;
 
 export type AllKCsQuery = {
@@ -2359,6 +2361,17 @@ export const AllContentDocument = {
             },
           },
         },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "filters" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "AdminContentFilter" },
+          },
+        },
       ],
       selectionSet: {
         kind: "SelectionSet",
@@ -2379,6 +2392,14 @@ export const AllContentDocument = {
                       value: {
                         kind: "Variable",
                         name: { kind: "Name", value: "pagination" },
+                      },
+                    },
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "filters" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "filters" },
                       },
                     },
                   ],
@@ -3059,6 +3080,17 @@ export const AllKCsDocument = {
             },
           },
         },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "filters" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "AdminKCsFilter" },
+          },
+        },
       ],
       selectionSet: {
         kind: "SelectionSet",
@@ -3079,6 +3111,14 @@ export const AllKCsDocument = {
                       value: {
                         kind: "Variable",
                         name: { kind: "Name", value: "pagination" },
+                      },
+                    },
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "filters" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "filters" },
                       },
                     },
                   ],

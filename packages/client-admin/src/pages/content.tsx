@@ -244,11 +244,18 @@ const CreateContent = memo(function CreateContent() {
 
 export default withAdminAuth(function ContentPage() {
   const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination();
+
+  const { selectedDomain, selectSingleDomainComponent } =
+    useSelectSingleDomain();
+
   const { data } = useGQLQuery(
     gql(/* GraphQL */ `
-      query AllContent($pagination: CursorConnectionArgs!) {
+      query AllContent(
+        $pagination: CursorConnectionArgs!
+        $filters: AdminContentFilter
+      ) {
         adminContent {
-          allContent(pagination: $pagination) {
+          allContent(pagination: $pagination, filters: $filters) {
             nodes {
               ...ContentInfo
             }
@@ -259,6 +266,11 @@ export default withAdminAuth(function ContentPage() {
     `),
     {
       pagination,
+      filters: selectedDomain
+        ? {
+            domains: [selectedDomain.value],
+          }
+        : undefined,
     }
   );
   pageInfo.current = data?.adminContent.allContent.pageInfo;
@@ -307,6 +319,7 @@ export default withAdminAuth(function ContentPage() {
   return (
     <VStack>
       <CreateContent />
+      {selectSingleDomainComponent}
       <DataTable<ContentInfoFragment>
         data={data?.adminContent.allContent.nodes || []}
         prevPage={prevPage}

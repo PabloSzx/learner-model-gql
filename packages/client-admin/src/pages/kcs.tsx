@@ -122,11 +122,17 @@ const CreateKC = memo(function CreateKC() {
 export default withAdminAuth(function KCPage() {
   const { pageInfo, pagination, prevPage, nextPage } = useCursorPagination();
 
+  const { selectedDomain, selectSingleDomainComponent } =
+    useSelectSingleDomain();
+
   const { data } = useGQLQuery(
     gql(/* GraphQL */ `
-      query AllKCs($pagination: CursorConnectionArgs!) {
+      query AllKCs(
+        $pagination: CursorConnectionArgs!
+        $filters: AdminKCsFilter
+      ) {
         adminDomain {
-          allKCs(pagination: $pagination) {
+          allKCs(pagination: $pagination, filters: $filters) {
             nodes {
               ...KCInfo
             }
@@ -137,6 +143,11 @@ export default withAdminAuth(function KCPage() {
     `),
     {
       pagination,
+      filters: selectedDomain
+        ? {
+            domains: [selectedDomain.value],
+          }
+        : null,
     }
   );
   pageInfo.current = data?.adminDomain.allKCs.pageInfo;
@@ -178,6 +189,9 @@ export default withAdminAuth(function KCPage() {
   return (
     <VStack>
       <CreateKC />
+
+      {selectSingleDomainComponent}
+
       <DataTable<KcInfoFragment>
         data={data?.adminDomain.allKCs.nodes || []}
         prevPage={prevPage}

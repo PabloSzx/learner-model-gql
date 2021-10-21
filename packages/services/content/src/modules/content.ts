@@ -124,7 +124,7 @@ export const contentModule = registerModule(
               code,
               label,
               description,
-              json,
+              json: json || undefined,
               url: url?.toString() || null,
               binary: binaryBase64 ? Buffer.from(binaryBase64, "base64") : null,
               domain: {
