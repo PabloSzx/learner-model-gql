@@ -158,6 +158,7 @@ export type AdminDomainQueriesAllDomainsArgs = {
 };
 
 export type AdminDomainQueriesAllKCsArgs = {
+  filters?: Maybe<AdminKCsFilter>;
   pagination: CursorConnectionArgs;
 };
 
@@ -168,6 +169,10 @@ export type AdminDomainQueriesAllTopicsArgs = {
 
 export type AdminDomainsFilter = {
   projects?: Maybe<Array<Scalars["IntID"]>>;
+};
+
+export type AdminKCsFilter = {
+  domains?: Maybe<Array<Scalars["IntID"]>>;
 };
 
 export type AdminProjectsMutations = {
@@ -665,6 +670,34 @@ export type AllGroupsBaseQuery = {
       __typename?: "GroupsConnection";
       nodes: Array<{
         __typename?: "Group";
+        id: string;
+        code: string;
+        label: string;
+      }>;
+      pageInfo: {
+        __typename?: "PageInfo";
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null | undefined;
+        endCursor?: string | null | undefined;
+      };
+    };
+  };
+};
+
+export type AllKCsBaseQueryVariables = Exact<{
+  pagination: CursorConnectionArgs;
+  filters?: Maybe<AdminKCsFilter>;
+}>;
+
+export type AllKCsBaseQuery = {
+  __typename?: "Query";
+  adminDomain: {
+    __typename?: "AdminDomainQueries";
+    allKCs: {
+      __typename?: "KCsConnection";
+      nodes: Array<{
+        __typename?: "KC";
         id: string;
         code: string;
         label: string;
@@ -1893,6 +1926,110 @@ export const AllGroupsBaseDocument = {
     ...PaginationFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<AllGroupsBaseQuery, AllGroupsBaseQueryVariables>;
+export const AllKCsBaseDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "AllKCsBase" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "pagination" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "CursorConnectionArgs" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "filters" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "AdminKCsFilter" },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminDomain" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "allKCs" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "pagination" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "pagination" },
+                      },
+                    },
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "filters" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "filters" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "nodes" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "code" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "label" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "FragmentSpread",
+                        name: { kind: "Name", value: "Pagination" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...PaginationFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<AllKCsBaseQuery, AllKCsBaseQueryVariables>;
 export const AllProjectsBaseDocument = {
   kind: "Document",
   definitions: [

@@ -56,7 +56,6 @@ export function MainLayout({ children }: { children: ReactNode }) {
         transition="left 0.2s"
       >
         <Box
-          maxW="2560px"
           bg={contentContainerBackground}
           height="100%"
           pb="6"

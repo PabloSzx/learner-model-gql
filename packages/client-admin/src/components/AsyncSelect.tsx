@@ -16,14 +16,15 @@ import {
   useStyles,
   useTheme,
 } from "@chakra-ui/react";
-import type { FC } from "react";
+import type { FC, RefObject } from "react";
 import { FiChevronDown } from "react-icons/fi";
-import type { Props as ReactSelectProps } from "react-select";
+import type { GroupBase, Props as ReactSelectProps, Theme } from "react-select";
 import ReactSelect, {
   components as selectComponents,
   StylesConfig,
 } from "react-select";
 import ReactAsyncSelect from "react-select/async";
+import type SelectType from "react-select/dist/declarations/src/Select";
 
 interface CommonSelectProps
   extends ReactSelectProps<{ label: string; value: string }, true> {
@@ -32,17 +33,31 @@ interface CommonSelectProps
   defaultValue?: any;
 }
 
-interface SelectProps extends CommonSelectProps {
+export type SelectRefType = SelectType<
+  {
+    value: string;
+    label: string;
+  },
+  true,
+  GroupBase<{
+    value: string;
+    label: string;
+  }>
+>;
+
+export interface SelectProps extends CommonSelectProps {
   options?: any;
   value?: any;
+  selectRef?: RefObject<SelectRefType>;
 }
 
 export interface AsyncSelectProps extends CommonSelectProps {
   isLoading?: boolean;
   loadOptions?: any;
+  selectRef?: RefObject<SelectRefType>;
 }
 
-const chakraStyles: StylesConfig<{
+export const chakraStyles: StylesConfig<{
   label: string;
   value: string;
 }> = {
@@ -239,14 +254,10 @@ export const AsyncSelect: FC<AsyncSelectProps> = ({
   onChange,
   placeholder,
   defaultValue,
+  selectRef,
   ...props
 }) => {
-  const chakraTheme = useTheme();
-
-  const placeholderColor = useColorModeValue(
-    chakraTheme.colors.gray[400],
-    chakraTheme.colors.whiteAlpha[400]
-  );
+  const selectStyles = useSelectStyles();
 
   return (
     <ReactAsyncSelect
@@ -258,18 +269,8 @@ export const AsyncSelect: FC<AsyncSelectProps> = ({
       cacheOptions
       defaultOptions
       isClearable
-      styles={{
-        ...chakraStyles,
-      }}
-      theme={(baseTheme) => ({
-        ...baseTheme,
-        colors: {
-          ...baseTheme.colors,
-          neutral50: placeholderColor,
-          neutral40: placeholderColor,
-        },
-      })}
-      components={components}
+      {...selectStyles}
+      ref={selectRef}
       {...props}
     />
   );
@@ -280,14 +281,10 @@ export const Select: FC<SelectProps> = ({
   onChange,
   placeholder,
   defaultValue,
+  selectRef,
   ...props
 }) => {
-  const chakraTheme = useTheme();
-
-  const placeholderColor = useColorModeValue(
-    chakraTheme.colors.gray[400],
-    chakraTheme.colors.whiteAlpha[400]
-  );
+  const selectStyles = useSelectStyles();
 
   return (
     <ReactSelect
@@ -296,19 +293,33 @@ export const Select: FC<SelectProps> = ({
       placeholder={placeholder}
       defaultValue={defaultValue}
       isClearable
-      styles={{
-        ...chakraStyles,
-      }}
-      theme={(baseTheme) => ({
-        ...baseTheme,
-        colors: {
-          ...baseTheme.colors,
-          neutral50: placeholderColor,
-          neutral40: placeholderColor,
-        },
-      })}
-      components={components}
+      {...selectStyles}
+      ref={selectRef}
       {...props}
     />
   );
+};
+
+export const useSelectStyles = () => {
+  const chakraTheme = useTheme();
+
+  const placeholderColor = useColorModeValue(
+    chakraTheme.colors.gray[400],
+    chakraTheme.colors.whiteAlpha[400]
+  );
+
+  return {
+    styles: {
+      ...chakraStyles,
+    },
+    theme: (baseTheme: Theme) => ({
+      ...baseTheme,
+      colors: {
+        ...baseTheme.colors,
+        neutral50: placeholderColor,
+        neutral40: placeholderColor,
+      },
+    }),
+    components,
+  };
 };

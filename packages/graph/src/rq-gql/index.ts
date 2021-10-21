@@ -9,6 +9,8 @@ const documents = {
     graphql.AllDomainsBaseDocument,
   "\n        query AllGroupsBase($pagination: CursorConnectionArgs!) {\n          adminUsers {\n            allGroups(pagination: $pagination) {\n              nodes {\n                id\n                code\n                label\n              }\n              ...Pagination\n            }\n          }\n        }\n      ":
     graphql.AllGroupsBaseDocument,
+  "\n  query AllKCsBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminKCsFilter\n  ) {\n    adminDomain {\n      allKCs(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n        }\n        ...Pagination\n      }\n    }\n  }\n":
+    graphql.AllKCsBaseDocument,
   "\n  fragment Pagination on Connection {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n  }\n":
     graphql.PaginationFragmentDoc,
   "\n        query AllProjectsBase($pagination: CursorConnectionArgs!) {\n          adminProjects {\n            allProjects(pagination: $pagination) {\n              nodes {\n                id\n                code\n                label\n              }\n              ...Pagination\n            }\n          }\n        }\n      ":
@@ -80,6 +82,9 @@ export function gql(
 export function gql(
   source: "\n        query AllGroupsBase($pagination: CursorConnectionArgs!) {\n          adminUsers {\n            allGroups(pagination: $pagination) {\n              nodes {\n                id\n                code\n                label\n              }\n              ...Pagination\n            }\n          }\n        }\n      "
 ): typeof documents["\n        query AllGroupsBase($pagination: CursorConnectionArgs!) {\n          adminUsers {\n            allGroups(pagination: $pagination) {\n              nodes {\n                id\n                code\n                label\n              }\n              ...Pagination\n            }\n          }\n        }\n      "];
+export function gql(
+  source: "\n  query AllKCsBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminKCsFilter\n  ) {\n    adminDomain {\n      allKCs(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n        }\n        ...Pagination\n      }\n    }\n  }\n"
+): typeof documents["\n  query AllKCsBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminKCsFilter\n  ) {\n    adminDomain {\n      allKCs(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n        }\n        ...Pagination\n      }\n    }\n  }\n"];
 export function gql(
   source: "\n  fragment Pagination on Connection {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n  }\n"
 ): typeof documents["\n  fragment Pagination on Connection {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n  }\n"];

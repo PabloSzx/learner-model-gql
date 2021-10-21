@@ -14,11 +14,17 @@ import { MdAdd, MdEdit, MdSave } from "react-icons/md";
 import CreatableSelect from "react-select/creatable";
 import type Select from "react-select/dist/declarations/src/Select";
 import { proxy, ref, useSnapshot } from "valtio";
+import {
+  AsyncSelect,
+  SelectRefType,
+  useSelectStyles,
+} from "../components/AsyncSelect";
 import { withAdminAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
 import { useJSONEditor } from "../components/jsonEditor";
 import { domainOptionLabel, useSelectSingleDomain } from "../hooks/domain";
+import { kcOptionLabel, useKCsBase, useSelectMultiKCs } from "../hooks/kcs";
 import { useCursorPagination } from "../hooks/pagination";
 import { projectOptionLabel, useSelectSingleProject } from "../hooks/projects";
 import { queryClient } from "../rqClient";
@@ -62,7 +68,10 @@ const ContentState = proxy<
       codeRef: { current: string };
       descriptionRef: { current: string };
       tagsRef: {
-        current: Select<{ label: string; value: string }, true> | null;
+        current: SelectRefType | null;
+      };
+      kcsRef: {
+        current: SelectRefType | null;
       };
     }
   >
@@ -113,6 +122,8 @@ const CreateContent = memo(function CreateContent() {
 
   const urlRef = useRef<HTMLInputElement>(null);
 
+  const { selectMultiKCComponent, selectedKCs } = useSelectMultiKCs({});
+
   return (
     <FormModal
       title="Create Content"
@@ -146,7 +157,7 @@ const CreateContent = memo(function CreateContent() {
             label: labelRef.current.value,
             domainId: selectedDomain.value,
             description: descriptionRef.current.value,
-            kcs: [],
+            kcs: selectedKCs.map((v) => v.value),
             tags: tagsRef.current?.getValue().map((v) => v.value) || [],
             topics: [],
             binaryBase64,
@@ -191,6 +202,10 @@ const CreateContent = memo(function CreateContent() {
         <FormLabel>Description</FormLabel>
         <Input type="text" ref={descriptionRef} />
         <FormHelperText>Detailed description of content</FormHelperText>
+      </FormControl>
+      <FormControl id="kcs">
+        <FormLabel>KCs</FormLabel>
+        {selectMultiKCComponent}
       </FormControl>
       <FormControl id="tags">
         <FormLabel>Tags</FormLabel>
@@ -259,6 +274,7 @@ export default withAdminAuth(function ContentPage() {
           labelRef: ref({ current: content.label }),
           descriptionRef: ref({ current: content.label }),
           tagsRef: ref({ current: null }),
+          kcsRef: ref({ current: null }),
         }),
         content
       );
@@ -283,6 +299,10 @@ export default withAdminAuth(function ContentPage() {
       },
     }
   );
+
+  const kcsBase = useKCsBase();
+
+  const selectStyles = useSelectStyles();
 
   return (
     <VStack>
@@ -421,15 +441,15 @@ export default withAdminAuth(function ContentPage() {
                 original: { id, tags },
               },
             }) {
-              const contentState = ContentState[id];
+              const state = ContentState[id];
 
-              if (!contentState) return tags.join(" | ");
+              if (!state) return tags.join(" | ");
 
-              if (contentState.isEditing) {
+              if (state.isEditing) {
                 return (
                   <Box minW="250px">
                     <CreatableSelect<{ label: string; value: string }, true>
-                      ref={contentState.tagsRef}
+                      ref={state.tagsRef}
                       placeholder="Tags"
                       isMulti
                       noOptionsMessage={() =>
@@ -439,11 +459,47 @@ export default withAdminAuth(function ContentPage() {
                         label: value,
                         value,
                       }))}
+                      {...selectStyles}
                     />
                   </Box>
                 );
               }
               return tags.join(" | ");
+            },
+          },
+          {
+            id: "KCs",
+            Header: "KCs",
+            accessor: "id",
+            Cell({
+              row: {
+                original: { id, kcs },
+              },
+            }) {
+              const state = ContentState[id];
+
+              if (!state)
+                return kcs.map((v) => '"' + kcOptionLabel(v) + '"').join(" | ");
+
+              if (state.isEditing) {
+                return (
+                  <Box minW="250px">
+                    <AsyncSelect
+                      key={kcsBase.asOptions.length}
+                      isLoading={kcsBase.isFetching}
+                      loadOptions={kcsBase.filteredOptions}
+                      isMulti
+                      selectRef={state.kcsRef}
+                      placeholder="Search a KC"
+                      defaultValue={kcs.map((kc) => ({
+                        label: kcOptionLabel(kc),
+                        value: kc.id,
+                      }))}
+                    />
+                  </Box>
+                );
+              }
+              return kcs.map((v) => '"' + kcOptionLabel(v) + '"').join(" | ");
             },
           },
           getDateRow({ id: "createdAt", label: "Created At" }),
@@ -468,8 +524,8 @@ export default withAdminAuth(function ContentPage() {
                 domain: { id: domainId },
                 project: { id: projectId },
                 tagsRef,
-                kcs,
                 topics,
+                kcsRef,
               } = contentState;
 
               return (
@@ -484,12 +540,18 @@ export default withAdminAuth(function ContentPage() {
                   onClick={() => {
                     const tagsRefList =
                       tagsRef.current?.getValue().map((v) => v.value) || [];
+
+                    const kcsRefList =
+                      kcsRef.current?.getValue().map((v) => v.value) || [];
+
                     if (
                       isEditing &&
                       (original.code !== codeRef.current ||
                         original.label !== labelRef.current ||
                         descriptionRef.current !== original.description ||
-                        tagsRefList.join() !== original.tags.join())
+                        tagsRefList.join() !== original.tags.join() ||
+                        original.kcs.map((v) => v.id).join() !==
+                          kcsRefList.join())
                     ) {
                       updateContent
                         .mutateAsync({
@@ -501,7 +563,7 @@ export default withAdminAuth(function ContentPage() {
                             domainId,
                             projectId,
                             tags: tagsRefList,
-                            kcs: kcs.map((v) => v.id),
+                            kcs: kcsRefList,
                             topics: topics.map((v) => v.id),
                           },
                         })
