@@ -2,7 +2,6 @@ import { MockAuthUser } from "api-base";
 import { generate } from "randomstring";
 import {
   assert,
-  CreateDomain,
   CreateProject,
   CreateTopic,
   CreateUser,
@@ -24,10 +23,6 @@ export async function CheckContentCreationRetrieval({
   const { authUser } = await CreateUser({ project });
 
   MockAuthUser.user = authUser;
-
-  const { domain, domainId } = await CreateDomain({
-    project,
-  });
 
   const topic = await CreateTopic({
     project,
@@ -62,7 +57,6 @@ export async function CheckContentCreationRetrieval({
         data: {
           projectId,
           description: "Hello World",
-          domainId,
           binaryBase64: binaryContent.toString("base64"),
           json: {
             hello: {
@@ -159,71 +153,6 @@ export async function CheckContentCreationRetrieval({
       ).toString("utf-8"),
       "hello world in base64"
     );
-  }
-
-  {
-    const result = await query(
-      gql(/* GraphQL */ `
-        query ContentFromDomain(
-          $ids: [IntID!]!
-          $pagination: CursorConnectionArgs!
-        ) {
-          domains(ids: $ids) {
-            id
-            content(pagination: $pagination) {
-              nodes {
-                id
-                description
-                binaryBase64
-                json
-              }
-              pageInfo {
-                hasNextPage
-              }
-            }
-          }
-        }
-      `),
-      {
-        variables: {
-          ids: [domain.id.toString()],
-          pagination: {
-            first: 10,
-          },
-        },
-      }
-    );
-
-    equal(result.errors, undefined);
-
-    assert(result.data?.domains.length);
-
-    expectDeepEqual(result, {
-      data: {
-        domains: [
-          {
-            id: domain.id.toString(),
-            content: {
-              nodes: [
-                {
-                  id: contentId,
-                  description: "Hello World",
-                  binaryBase64: binaryContent.toString("base64"),
-                  json: {
-                    hello: {
-                      world: "json",
-                    },
-                  },
-                },
-              ],
-              pageInfo: {
-                hasNextPage: false,
-              },
-            },
-          },
-        ],
-      },
-    });
   }
 
   {

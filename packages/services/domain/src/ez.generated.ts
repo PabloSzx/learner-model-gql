@@ -53,7 +53,6 @@ export type Scalars = {
 export type Content = {
   __typename?: "Content";
   id: Scalars["IntID"];
-  domain: Domain;
   kcs: Array<Kc>;
   topics: Array<Topic>;
 };
@@ -523,7 +522,6 @@ export type ContentResolvers<
   ParentType extends ResolversParentTypes["Content"] = ResolversParentTypes["Content"]
 > = {
   id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-  domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
   kcs?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
   topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

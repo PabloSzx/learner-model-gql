@@ -2,7 +2,6 @@ import { expectDeepEqual, gql } from "testing";
 
 import {
   CheckDomainCreationRetrieval,
-  CheckDomainOfContent,
   CheckDomainsOfProjects,
   CheckKCs,
   CheckTopicsCreationRetrieval,
@@ -39,12 +38,6 @@ describe("Domain service", () => {
     const testClient = await DomainClient();
 
     await CheckTopicsCreationRetrieval(testClient);
-  });
-
-  it("domain of content", async () => {
-    const testClient = await DomainClient();
-
-    await CheckDomainOfContent(testClient);
   });
 
   it("domain of project", async () => {

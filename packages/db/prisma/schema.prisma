@@ -116,8 +116,6 @@ model Domain {
   projects Project[]
 
 
-  content Content[]
-
   kcs KC[]
 
   createdAt DateTime @default(now())
@@ -231,8 +229,6 @@ model Content {
   project   Project @relation(fields: [projectId], references: [id])
   projectId Int
 
-  domain   Domain @relation(fields: [domainId], references: [id])
-  domainId Int
 
   topics Topic[]
 

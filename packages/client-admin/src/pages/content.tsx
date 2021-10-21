@@ -23,7 +23,6 @@ import { withAdminAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
 import { useJSONEditor } from "../components/jsonEditor";
-import { domainOptionLabel, useSelectSingleDomain } from "../hooks/domain";
 import { kcOptionLabel, useKCsBase, useSelectMultiKCs } from "../hooks/kcs";
 import { useCursorPagination } from "../hooks/pagination";
 import { projectOptionLabel, useSelectSingleProject } from "../hooks/projects";
@@ -41,11 +40,7 @@ gql(/* GraphQL */ `
       code
       label
     }
-    domain {
-      id
-      code
-      label
-    }
+
     kcs {
       id
       code
@@ -92,8 +87,6 @@ const CreateContent = memo(function CreateContent() {
   const descriptionRef = useRef<HTMLInputElement>(null);
   const { selectedProject, selectSingleProjectComponent } =
     useSelectSingleProject();
-  const { selectedDomain, selectSingleDomainComponent } =
-    useSelectSingleDomain();
 
   const { mutateAsync } = useGQLMutation(
     gql(/* GraphQL */ `
@@ -136,7 +129,6 @@ const CreateContent = memo(function CreateContent() {
           !codeRef.current?.value ||
           !labelRef.current?.value ||
           !selectedProject ||
-          !selectedDomain ||
           !descriptionRef.current?.value
         )
           throw Error("All fields are required");
@@ -155,7 +147,6 @@ const CreateContent = memo(function CreateContent() {
             projectId: selectedProject.value,
             code: codeRef.current.value,
             label: labelRef.current.value,
-            domainId: selectedDomain.value,
             description: descriptionRef.current.value,
             kcs: selectedKCs.map((v) => v.value),
             tags: tagsRef.current?.getValue().map((v) => v.value) || [],
@@ -180,11 +171,6 @@ const CreateContent = memo(function CreateContent() {
         <FormLabel>Associated Project</FormLabel>
 
         {selectSingleProjectComponent}
-      </FormControl>
-      <FormControl isRequired>
-        <FormLabel>Associated Domain</FormLabel>
-
-        {selectSingleDomainComponent}
       </FormControl>
       <FormControl id="code" isRequired>
         <FormLabel>Code</FormLabel>
@@ -245,9 +231,6 @@ const CreateContent = memo(function CreateContent() {
 export default withAdminAuth(function ContentPage() {
   const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination();
 
-  const { selectedDomain, selectSingleDomainComponent } =
-    useSelectSingleDomain();
-
   const { data } = useGQLQuery(
     gql(/* GraphQL */ `
       query AllContent(
@@ -266,11 +249,6 @@ export default withAdminAuth(function ContentPage() {
     `),
     {
       pagination,
-      filters: selectedDomain
-        ? {
-            domains: [selectedDomain.value],
-          }
-        : undefined,
     }
   );
   pageInfo.current = data?.adminContent.allContent.pageInfo;
@@ -319,7 +297,6 @@ export default withAdminAuth(function ContentPage() {
   return (
     <VStack>
       <CreateContent />
-      {selectSingleDomainComponent}
       <DataTable<ContentInfoFragment>
         data={data?.adminContent.allContent.nodes || []}
         prevPage={prevPage}
@@ -438,13 +415,7 @@ export default withAdminAuth(function ContentPage() {
               return projectOptionLabel(v.project);
             },
           },
-          {
-            id: "Domain",
-            Header: "Domain",
-            accessor(v) {
-              return domainOptionLabel(v.domain);
-            },
-          },
+
           {
             id: "Tags",
             Header: "Tags",
@@ -534,7 +505,6 @@ export default withAdminAuth(function ContentPage() {
                 codeRef,
                 labelRef,
                 descriptionRef,
-                domain: { id: domainId },
                 project: { id: projectId },
                 tagsRef,
                 topics,
@@ -573,7 +543,6 @@ export default withAdminAuth(function ContentPage() {
                             label: labelRef.current,
                             code: codeRef.current,
                             description: descriptionRef.current,
-                            domainId,
                             projectId,
                             tags: tagsRefList,
                             kcs: kcsRefList,

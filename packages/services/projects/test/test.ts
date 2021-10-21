@@ -203,10 +203,8 @@ export async function CheckProjectFromContent({
       MockAuthUser.user = authUser;
     },
     async () => {
-      const { domain } = await CreateDomain({ project });
       const { contentId } = await CreateEmptyContent({
         project,
-        domain,
       });
 
       return {

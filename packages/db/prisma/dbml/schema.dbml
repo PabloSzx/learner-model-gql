@@ -73,7 +73,6 @@ Table Domain {
   code String [unique, not null]
   label String [not null]
   projects Project [not null]
-  content Content [not null]
   kcs KC [not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [default: `now()`, not null]
@@ -149,8 +148,6 @@ Table Content {
   tags String [not null]
   project Project [not null]
   projectId Int [not null]
-  domain Domain [not null]
-  domainId Int [not null]
   topics Topic [not null]
   kcs KC [not null]
   actions Action [not null]
@@ -228,5 +225,3 @@ Ref: Action.contentId > Content.id
 Ref: Action.topicId > Topic.id
 
 Ref: Content.projectId > Project.id
-
-Ref: Content.domainId > Domain.id

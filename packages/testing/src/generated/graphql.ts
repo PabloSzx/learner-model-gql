@@ -89,7 +89,6 @@ export type AdminActionQueriesAllActionsArgs = {
 };
 
 export type AdminContentFilter = {
-  domains?: Maybe<Array<Scalars["IntID"]>>;
   projects?: Maybe<Array<Scalars["IntID"]>>;
   tags?: Maybe<Array<Scalars["String"]>>;
 };
@@ -271,7 +270,6 @@ export type Content = {
   code: Scalars["String"];
   createdAt: Scalars["DateTime"];
   description: Scalars["String"];
-  domain: Domain;
   id: Scalars["IntID"];
   json?: Maybe<Scalars["JSONObject"]>;
   kcs: Array<Kc>;
@@ -294,7 +292,6 @@ export type CreateContent = {
   binaryBase64?: Maybe<Scalars["String"]>;
   code: Scalars["String"];
   description: Scalars["String"];
-  domainId: Scalars["IntID"];
   json?: Maybe<Scalars["JSONObject"]>;
   kcs: Array<Scalars["IntID"]>;
   label: Scalars["String"];
@@ -348,7 +345,6 @@ export type CursorConnectionArgs = {
 export type Domain = {
   __typename?: "Domain";
   code: Scalars["String"];
-  content: ContentConnection;
   createdAt: Scalars["DateTime"];
   id: Scalars["IntID"];
   kcs: Array<Kc>;
@@ -356,10 +352,6 @@ export type Domain = {
   projects: Array<Project>;
   topics: Array<Topic>;
   updatedAt: Scalars["DateTime"];
-};
-
-export type DomainContentArgs = {
-  pagination: CursorConnectionArgs;
 };
 
 export type DomainsConnection = Connection & {
@@ -536,7 +528,6 @@ export type UpdateContent = {
   binaryBase64?: Maybe<Scalars["String"]>;
   code: Scalars["String"];
   description: Scalars["String"];
-  domainId: Scalars["IntID"];
   id: Scalars["IntID"];
   json?: Maybe<Scalars["JSONObject"]>;
   kcs: Array<Scalars["IntID"]>;
@@ -697,30 +688,6 @@ export type CreateContentMutation = {
   };
 };
 
-export type ContentFromDomainQueryVariables = Exact<{
-  ids: Array<Scalars["IntID"]> | Scalars["IntID"];
-  pagination: CursorConnectionArgs;
-}>;
-
-export type ContentFromDomainQuery = {
-  __typename?: "Query";
-  domains: Array<{
-    __typename?: "Domain";
-    id: string;
-    content: {
-      __typename?: "ContentConnection";
-      nodes: Array<{
-        __typename?: "Content";
-        id: string;
-        description: string;
-        binaryBase64?: string | null | undefined;
-        json?: Record<string, unknown> | null | undefined;
-      }>;
-      pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean };
-    };
-  }>;
-};
-
 export type ContentFromTopicQueryVariables = Exact<{
   ids: Array<Scalars["IntID"]> | Scalars["IntID"];
 }>;
@@ -870,19 +837,6 @@ export type UpdateTopicMutation = {
       childrens: Array<{ __typename?: "Topic"; id: string }>;
     };
   };
-};
-
-export type DomainFromContentQueryVariables = Exact<{
-  ids: Array<Scalars["IntID"]> | Scalars["IntID"];
-}>;
-
-export type DomainFromContentQuery = {
-  __typename?: "Query";
-  content: Array<{
-    __typename?: "Content";
-    id: string;
-    domain: { __typename?: "Domain"; id: string };
-  }>;
 };
 
 export type DomainsFromProjectsQueryVariables = Exact<{
@@ -1857,134 +1811,6 @@ export const CreateContentDocument = {
   CreateContentMutation,
   CreateContentMutationVariables
 >;
-export const ContentFromDomainDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "ContentFromDomain" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "ids" } },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "ListType",
-              type: {
-                kind: "NonNullType",
-                type: {
-                  kind: "NamedType",
-                  name: { kind: "Name", value: "IntID" },
-                },
-              },
-            },
-          },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "pagination" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "CursorConnectionArgs" },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "domains" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "ids" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "ids" },
-                },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "id" } },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "content" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "pagination" },
-                      value: {
-                        kind: "Variable",
-                        name: { kind: "Name", value: "pagination" },
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "nodes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "id" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "description" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "binaryBase64" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "json" },
-                            },
-                          ],
-                        },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "pageInfo" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "hasNextPage" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  ContentFromDomainQuery,
-  ContentFromDomainQueryVariables
->;
 export const ContentFromTopicDocument = {
   kind: "Document",
   definitions: [
@@ -2501,73 +2327,6 @@ export const UpdateTopicDocument = {
     ...IsolatedTopicFieldsFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<UpdateTopicMutation, UpdateTopicMutationVariables>;
-export const DomainFromContentDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "DomainFromContent" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "ids" } },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "ListType",
-              type: {
-                kind: "NonNullType",
-                type: {
-                  kind: "NamedType",
-                  name: { kind: "Name", value: "IntID" },
-                },
-              },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "content" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "ids" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "ids" },
-                },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "id" } },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "domain" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  DomainFromContentQuery,
-  DomainFromContentQueryVariables
->;
 export const DomainsFromProjectsDocument = {
   kind: "Document",
   definitions: [

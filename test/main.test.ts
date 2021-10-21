@@ -3,7 +3,6 @@ import { CheckActionsCreationRetrieval } from "../packages/services/actions/test
 import { CheckContentCreationRetrieval } from "../packages/services/content/test/test";
 import {
   CheckDomainCreationRetrieval,
-  CheckDomainOfContent,
   CheckDomainsOfProjects,
   CheckTopicsCreationRetrieval,
   CheckKCs,
@@ -151,11 +150,6 @@ describe("gateway", () => {
       const { GatewayClient } = await TestStitchedSchema();
 
       await CheckTopicsCreationRetrieval(GatewayClient);
-    });
-    it("content", async () => {
-      const { GatewayClient } = await TestStitchedSchema();
-
-      await CheckDomainOfContent(GatewayClient);
     });
 
     it("projects", async () => {

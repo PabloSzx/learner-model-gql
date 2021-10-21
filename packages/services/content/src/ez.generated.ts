@@ -71,7 +71,6 @@ export type CreateContent = {
   code: Scalars["String"];
   label: Scalars["String"];
   projectId: Scalars["IntID"];
-  domainId: Scalars["IntID"];
   binaryBase64?: Maybe<Scalars["String"]>;
   json?: Maybe<Scalars["JSONObject"]>;
   url?: Maybe<Scalars["URL"]>;
@@ -86,7 +85,6 @@ export type UpdateContent = {
   code: Scalars["String"];
   label: Scalars["String"];
   projectId: Scalars["IntID"];
-  domainId: Scalars["IntID"];
   binaryBase64?: Maybe<Scalars["String"]>;
   json?: Maybe<Scalars["JSONObject"]>;
   url?: Maybe<Scalars["URL"]>;
@@ -117,7 +115,6 @@ export type AdminContentMutationsUpdateContentArgs = {
 
 export type AdminContentFilter = {
   tags?: Maybe<Array<Scalars["String"]>>;
-  domains?: Maybe<Array<Scalars["IntID"]>>;
   projects?: Maybe<Array<Scalars["IntID"]>>;
 };
 
@@ -129,16 +126,6 @@ export type AdminContentQueries = {
 export type AdminContentQueriesAllContentArgs = {
   pagination: CursorConnectionArgs;
   filters?: Maybe<AdminContentFilter>;
-};
-
-export type Domain = {
-  __typename?: "Domain";
-  id: Scalars["IntID"];
-  content: ContentConnection;
-};
-
-export type DomainContentArgs = {
-  pagination: CursorConnectionArgs;
 };
 
 export type Topic = {
@@ -175,15 +162,10 @@ export type Query = {
   hello: Scalars["String"];
   adminContent: AdminContentQueries;
   content: Array<Content>;
-  domains: Array<Domain>;
   topics: Array<Topic>;
 };
 
 export type QueryContentArgs = {
-  ids: Array<Scalars["IntID"]>;
-};
-
-export type QueryDomainsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
@@ -319,7 +301,6 @@ export type ResolversTypes = {
   AdminContentMutations: ResolverTypeWrapper<AdminContentMutations>;
   AdminContentFilter: AdminContentFilter;
   AdminContentQueries: ResolverTypeWrapper<AdminContentQueries>;
-  Domain: ResolverTypeWrapper<Domain>;
   Topic: ResolverTypeWrapper<Topic>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
@@ -350,7 +331,6 @@ export type ResolversParentTypes = {
   AdminContentMutations: AdminContentMutations;
   AdminContentFilter: AdminContentFilter;
   AdminContentQueries: AdminContentQueries;
-  Domain: Domain;
   Topic: Topic;
   PageInfo: PageInfo;
   Boolean: Scalars["Boolean"];
@@ -466,20 +446,6 @@ export type AdminContentQueriesResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type DomainResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Domain"] = ResolversParentTypes["Domain"]
-> = {
-  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-  content?: Resolver<
-    ResolversTypes["ContentConnection"],
-    ParentType,
-    ContextType,
-    RequireFields<DomainContentArgs, "pagination">
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type TopicResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Topic"] = ResolversParentTypes["Topic"]
@@ -544,12 +510,6 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryContentArgs, "ids">
   >;
-  domains?: Resolver<
-    Array<ResolversTypes["Domain"]>,
-    ParentType,
-    ContextType,
-    RequireFields<QueryDomainsArgs, "ids">
-  >;
   topics?: Resolver<
     Array<ResolversTypes["Topic"]>,
     ParentType,
@@ -595,7 +555,6 @@ export type Resolvers<ContextType = EZContext> = {
   ContentConnection?: ContentConnectionResolvers<ContextType>;
   AdminContentMutations?: AdminContentMutationsResolvers<ContextType>;
   AdminContentQueries?: AdminContentQueriesResolvers<ContextType>;
-  Domain?: DomainResolvers<ContextType>;
   Topic?: TopicResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
   Node?: NodeResolvers<ContextType>;

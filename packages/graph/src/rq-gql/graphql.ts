@@ -89,7 +89,6 @@ export type AdminActionQueriesAllActionsArgs = {
 };
 
 export type AdminContentFilter = {
-  domains?: Maybe<Array<Scalars["IntID"]>>;
   projects?: Maybe<Array<Scalars["IntID"]>>;
   tags?: Maybe<Array<Scalars["String"]>>;
 };
@@ -271,7 +270,6 @@ export type Content = {
   code: Scalars["String"];
   createdAt: Scalars["DateTime"];
   description: Scalars["String"];
-  domain: Domain;
   id: Scalars["IntID"];
   json?: Maybe<Scalars["JSONObject"]>;
   kcs: Array<Kc>;
@@ -294,7 +292,6 @@ export type CreateContent = {
   binaryBase64?: Maybe<Scalars["String"]>;
   code: Scalars["String"];
   description: Scalars["String"];
-  domainId: Scalars["IntID"];
   json?: Maybe<Scalars["JSONObject"]>;
   kcs: Array<Scalars["IntID"]>;
   label: Scalars["String"];
@@ -348,7 +345,6 @@ export type CursorConnectionArgs = {
 export type Domain = {
   __typename?: "Domain";
   code: Scalars["String"];
-  content: ContentConnection;
   createdAt: Scalars["DateTime"];
   id: Scalars["IntID"];
   kcs: Array<Kc>;
@@ -356,10 +352,6 @@ export type Domain = {
   projects: Array<Project>;
   topics: Array<Topic>;
   updatedAt: Scalars["DateTime"];
-};
-
-export type DomainContentArgs = {
-  pagination: CursorConnectionArgs;
 };
 
 export type DomainsConnection = Connection & {
@@ -536,7 +528,6 @@ export type UpdateContent = {
   binaryBase64?: Maybe<Scalars["String"]>;
   code: Scalars["String"];
   description: Scalars["String"];
-  domainId: Scalars["IntID"];
   id: Scalars["IntID"];
   json?: Maybe<Scalars["JSONObject"]>;
   kcs: Array<Scalars["IntID"]>;
@@ -882,7 +873,6 @@ export type ContentInfoFragment = {
   updatedAt: string;
   createdAt: string;
   project: { __typename?: "Project"; id: string; code: string; label: string };
-  domain: { __typename?: "Domain"; id: string; code: string; label: string };
   kcs: Array<{ __typename?: "KC"; id: string; code: string; label: string }>;
   topics: Array<{ __typename?: "Topic"; id: string }>;
 };
@@ -926,12 +916,6 @@ export type AllContentQuery = {
         createdAt: string;
         project: {
           __typename?: "Project";
-          id: string;
-          code: string;
-          label: string;
-        };
-        domain: {
-          __typename?: "Domain";
           id: string;
           code: string;
           label: string;
@@ -1485,18 +1469,6 @@ export const ContentInfoFragmentDoc = {
           {
             kind: "Field",
             name: { kind: "Name", value: "project" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "id" } },
-                { kind: "Field", name: { kind: "Name", value: "code" } },
-                { kind: "Field", name: { kind: "Name", value: "label" } },
-              ],
-            },
-          },
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "domain" },
             selectionSet: {
               kind: "SelectionSet",
               selections: [

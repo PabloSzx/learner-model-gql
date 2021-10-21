@@ -1,14 +1,8 @@
-import { getNodeIdList, ResolveCursorConnection } from "api-base";
+import { getNodeIdList } from "api-base";
 import { gql, registerModule } from "../ez";
 
 export const domainModule = registerModule(
   gql`
-    type Domain {
-      id: IntID!
-
-      content(pagination: CursorConnectionArgs!): ContentConnection!
-    }
-
     type Topic {
       id: IntID!
 
@@ -20,7 +14,6 @@ export const domainModule = registerModule(
     }
 
     extend type Query {
-      domains(ids: [IntID!]!): [Domain!]!
       topics(ids: [IntID!]!): [Topic!]!
     }
   `,
@@ -56,38 +49,7 @@ export const domainModule = registerModule(
           );
         },
       },
-      Domain: {
-        async content({ id }, { pagination }, { prisma }) {
-          return ResolveCursorConnection(pagination, (connection) => {
-            return prisma.domain
-              .findUnique({
-                where: {
-                  id,
-                },
-              })
-              .content({
-                ...connection,
-              });
-          });
-        },
-      },
       Query: {
-        async domains(_root, { ids }, { prisma, authorization }) {
-          return getNodeIdList(
-            prisma.domain.findMany({
-              where: {
-                id: {
-                  in: ids,
-                },
-                projects: await authorization.expectSomeProjectsInPrismaFilter,
-              },
-              select: {
-                id: true,
-              },
-            }),
-            ids
-          );
-        },
         async topics(_root, { ids }, { prisma, authorization }) {
           return getNodeIdList(
             prisma.topic.findMany({

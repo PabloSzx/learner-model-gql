@@ -60,8 +60,8 @@ export type Query = {
   adminActions: AdminActionQueries;
   adminContent: AdminContentQueries;
   content: Array<Content>;
-  domains: Array<Domain>;
   topics: Array<Topic>;
+  domains: Array<Domain>;
   adminDomain: AdminDomainQueries;
   kcs: Array<Kc>;
   projects: Array<Project>;
@@ -81,11 +81,11 @@ export type QueryContentArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-export type QueryDomainsArgs = {
+export type QueryTopicsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-export type QueryTopicsArgs = {
+export type QueryDomainsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
@@ -294,7 +294,6 @@ export type Content = {
   createdAt: Scalars["DateTime"];
   updatedAt: Scalars["DateTime"];
   topics: Array<Topic>;
-  domain: Domain;
   kcs: Array<Kc>;
   project: Project;
 };
@@ -313,7 +312,6 @@ export type Kc = {
 export type Domain = {
   __typename?: "Domain";
   id: Scalars["IntID"];
-  content: ContentConnection;
   code: Scalars["String"];
   label: Scalars["String"];
   topics: Array<Topic>;
@@ -321,10 +319,6 @@ export type Domain = {
   updatedAt: Scalars["DateTime"];
   kcs: Array<Kc>;
   projects: Array<Project>;
-};
-
-export type DomainContentArgs = {
-  pagination: CursorConnectionArgs;
 };
 
 export type Topic = {
@@ -394,7 +388,6 @@ export type CreateContent = {
   code: Scalars["String"];
   label: Scalars["String"];
   projectId: Scalars["IntID"];
-  domainId: Scalars["IntID"];
   binaryBase64?: Maybe<Scalars["String"]>;
   json?: Maybe<Scalars["JSONObject"]>;
   url?: Maybe<Scalars["URL"]>;
@@ -409,7 +402,6 @@ export type UpdateContent = {
   code: Scalars["String"];
   label: Scalars["String"];
   projectId: Scalars["IntID"];
-  domainId: Scalars["IntID"];
   binaryBase64?: Maybe<Scalars["String"]>;
   json?: Maybe<Scalars["JSONObject"]>;
   url?: Maybe<Scalars["URL"]>;
@@ -440,7 +432,6 @@ export type AdminContentMutationsUpdateContentArgs = {
 
 export type AdminContentFilter = {
   tags?: Maybe<Array<Scalars["String"]>>;
-  domains?: Maybe<Array<Scalars["IntID"]>>;
   projects?: Maybe<Array<Scalars["IntID"]>>;
 };
 
@@ -928,17 +919,17 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryContentArgs, "ids">
   >;
-  domains?: Resolver<
-    Array<ResolversTypes["Domain"]>,
-    ParentType,
-    ContextType,
-    RequireFields<QueryDomainsArgs, "ids">
-  >;
   topics?: Resolver<
     Array<ResolversTypes["Topic"]>,
     ParentType,
     ContextType,
     RequireFields<QueryTopicsArgs, "ids">
+  >;
+  domains?: Resolver<
+    Array<ResolversTypes["Domain"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryDomainsArgs, "ids">
   >;
   adminDomain?: Resolver<
     ResolversTypes["AdminDomainQueries"],
@@ -1290,7 +1281,6 @@ export type ContentResolvers<
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
-  domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
   kcs?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
   project?: Resolver<ResolversTypes["Project"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -1315,12 +1305,6 @@ export type DomainResolvers<
   ParentType extends ResolversParentTypes["Domain"] = ResolversParentTypes["Domain"]
 > = {
   id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-  content?: Resolver<
-    ResolversTypes["ContentConnection"],
-    ParentType,
-    ContextType,
-    RequireFields<DomainContentArgs, "pagination">
-  >;
   code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;

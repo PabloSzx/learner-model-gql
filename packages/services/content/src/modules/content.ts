@@ -32,7 +32,6 @@ export const contentModule = registerModule(
       label: String!
 
       projectId: IntID!
-      domainId: IntID!
 
       binaryBase64: String
       json: JSONObject
@@ -54,7 +53,6 @@ export const contentModule = registerModule(
       label: String!
 
       projectId: IntID!
-      domainId: IntID!
 
       binaryBase64: String
       json: JSONObject
@@ -79,7 +77,6 @@ export const contentModule = registerModule(
 
     input AdminContentFilter {
       tags: [String!]
-      domains: [IntID!]
       projects: [IntID!]
     }
 
@@ -105,7 +102,6 @@ export const contentModule = registerModule(
           {
             data: {
               description,
-              domainId,
               projectId,
               binaryBase64,
               json,
@@ -127,11 +123,7 @@ export const contentModule = registerModule(
               json: json || undefined,
               url: url?.toString() || null,
               binary: binaryBase64 ? Buffer.from(binaryBase64, "base64") : null,
-              domain: {
-                connect: {
-                  id: domainId,
-                },
-              },
+
               project: {
                 connect: {
                   id: projectId,
@@ -155,7 +147,6 @@ export const contentModule = registerModule(
             data: {
               id,
               description,
-              domainId,
               projectId,
               binaryBase64,
               json,
@@ -180,11 +171,7 @@ export const contentModule = registerModule(
               json,
               url: url?.toString() || null,
               binary: binaryBase64 ? Buffer.from(binaryBase64, "base64") : null,
-              domain: {
-                connect: {
-                  id: domainId,
-                },
-              },
+
               project: {
                 connect: {
                   id: projectId,
@@ -215,11 +202,7 @@ export const contentModule = registerModule(
                           hasSome: filters.tags,
                         }
                       : undefined,
-                    domainId: filters.domains
-                      ? {
-                          in: filters.domains,
-                        }
-                      : undefined,
+
                     projectId: filters.projects
                       ? {
                           in: filters.projects,

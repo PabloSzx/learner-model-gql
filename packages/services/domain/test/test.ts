@@ -1,7 +1,6 @@
 import {
   assert,
   CreateDomain,
-  CreateEmptyContent,
   CreateProject,
   CreateUser,
   expectDeepEqual,
@@ -546,58 +545,6 @@ export async function CheckTopicsCreationRetrieval({
       pageInfo: { hasNextPage: false },
     });
   }
-}
-
-export async function CheckDomainOfContent({
-  query,
-}: Pick<TestClient, "query">) {
-  await prisma.$queryRaw`TRUNCATE "Domain","Content","User" CASCADE;`;
-
-  const { project } = await CreateProject();
-
-  const { authUser } = await CreateUser({ project });
-
-  MockAuthUser.user = authUser;
-
-  const { domain, domainId } = await CreateDomain({
-    project,
-  });
-
-  const { contentId } = await CreateEmptyContent({
-    project,
-    domain,
-  });
-
-  const ContentDomainResult = await query(
-    gql(/* GraphQL */ `
-      query DomainFromContent($ids: [IntID!]!) {
-        content(ids: $ids) {
-          id
-          domain {
-            id
-          }
-        }
-      }
-    `),
-    {
-      variables: {
-        ids: [contentId],
-      },
-    }
-  );
-
-  expectDeepEqual(ContentDomainResult, {
-    data: {
-      content: [
-        {
-          id: contentId,
-          domain: {
-            id: domainId,
-          },
-        },
-      ],
-    },
-  });
 }
 
 export async function CheckDomainsOfProjects({

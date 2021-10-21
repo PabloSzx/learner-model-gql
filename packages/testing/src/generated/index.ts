@@ -17,16 +17,12 @@ const documents = {
     graphql.AllContentDocument,
   "\n          mutation CreateContent($data: CreateContent!) {\n            adminContent {\n              createContent(data: $data) {\n                id\n                description\n                binaryBase64\n                json\n                code\n                label\n              }\n            }\n          }\n        ":
     graphql.CreateContentDocument,
-  "\n          query ContentFromDomain(\n            $ids: [IntID!]!\n            $pagination: CursorConnectionArgs!\n          ) {\n            domains(ids: $ids) {\n              id\n              content(pagination: $pagination) {\n                nodes {\n                  id\n                  description\n                  binaryBase64\n                  json\n                }\n                pageInfo {\n                  hasNextPage\n                }\n              }\n            }\n          }\n        ":
-    graphql.ContentFromDomainDocument,
   "\n          query ContentFromTopic($ids: [IntID!]!) {\n            topics(ids: $ids) {\n              id\n              content {\n                id\n                description\n                binaryBase64\n                json\n              }\n            }\n          }\n        ":
     graphql.ContentFromTopicDocument,
   "\n      mutation CreateContent($data: CreateContent!) {\n        adminContent {\n          createContent(data: $data) {\n            id\n            description\n            binaryBase64\n            json\n            code\n            label\n          }\n        }\n      }\n    ":
     graphql.CreateContentDocument,
   "\n        query AllContent($pagination: CursorConnectionArgs!) {\n          adminContent {\n            allContent(pagination: $pagination) {\n              nodes {\n                id\n                description\n                binaryBase64\n                json\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      ":
     graphql.AllContentDocument,
-  "\n        query ContentFromDomain(\n          $ids: [IntID!]!\n          $pagination: CursorConnectionArgs!\n        ) {\n          domains(ids: $ids) {\n            id\n            content(pagination: $pagination) {\n              nodes {\n                id\n                description\n                binaryBase64\n                json\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      ":
-    graphql.ContentFromDomainDocument,
   "\n        query ContentFromTopic($ids: [IntID!]!) {\n          topics(ids: $ids) {\n            id\n            content {\n              id\n              description\n              binaryBase64\n              json\n            }\n          }\n        }\n      ":
     graphql.ContentFromTopicDocument,
   "\n  fragment IsolatedDomainFields on Domain {\n    id\n    code\n    label\n  }\n":
@@ -47,8 +43,6 @@ const documents = {
     graphql.UpdateTopicDocument,
   "\n        query AllTopics($pagination: CursorConnectionArgs!) {\n          adminDomain {\n            allTopics(pagination: $pagination) {\n              nodes {\n                ...IsolatedTopicFields\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      ":
     graphql.AllTopicsDocument,
-  "\n      query DomainFromContent($ids: [IntID!]!) {\n        content(ids: $ids) {\n          id\n          domain {\n            id\n          }\n        }\n      }\n    ":
-    graphql.DomainFromContentDocument,
   "\n      query DomainsFromProjects($ids: [IntID!]!) {\n        projects(ids: $ids) {\n          id\n          domains {\n            id\n          }\n        }\n      }\n    ":
     graphql.DomainsFromProjectsDocument,
   "\n        query AllKcsFirst10 {\n          adminDomain {\n            allKCs(pagination: { first: 10 }) {\n              nodes {\n                id\n                code\n                label\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      ":
@@ -129,9 +123,6 @@ export function gql(
   source: "\n          mutation CreateContent($data: CreateContent!) {\n            adminContent {\n              createContent(data: $data) {\n                id\n                description\n                binaryBase64\n                json\n                code\n                label\n              }\n            }\n          }\n        "
 ): typeof documents["\n          mutation CreateContent($data: CreateContent!) {\n            adminContent {\n              createContent(data: $data) {\n                id\n                description\n                binaryBase64\n                json\n                code\n                label\n              }\n            }\n          }\n        "];
 export function gql(
-  source: "\n          query ContentFromDomain(\n            $ids: [IntID!]!\n            $pagination: CursorConnectionArgs!\n          ) {\n            domains(ids: $ids) {\n              id\n              content(pagination: $pagination) {\n                nodes {\n                  id\n                  description\n                  binaryBase64\n                  json\n                }\n                pageInfo {\n                  hasNextPage\n                }\n              }\n            }\n          }\n        "
-): typeof documents["\n          query ContentFromDomain(\n            $ids: [IntID!]!\n            $pagination: CursorConnectionArgs!\n          ) {\n            domains(ids: $ids) {\n              id\n              content(pagination: $pagination) {\n                nodes {\n                  id\n                  description\n                  binaryBase64\n                  json\n                }\n                pageInfo {\n                  hasNextPage\n                }\n              }\n            }\n          }\n        "];
-export function gql(
   source: "\n          query ContentFromTopic($ids: [IntID!]!) {\n            topics(ids: $ids) {\n              id\n              content {\n                id\n                description\n                binaryBase64\n                json\n              }\n            }\n          }\n        "
 ): typeof documents["\n          query ContentFromTopic($ids: [IntID!]!) {\n            topics(ids: $ids) {\n              id\n              content {\n                id\n                description\n                binaryBase64\n                json\n              }\n            }\n          }\n        "];
 export function gql(
@@ -140,9 +131,6 @@ export function gql(
 export function gql(
   source: "\n        query AllContent($pagination: CursorConnectionArgs!) {\n          adminContent {\n            allContent(pagination: $pagination) {\n              nodes {\n                id\n                description\n                binaryBase64\n                json\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      "
 ): typeof documents["\n        query AllContent($pagination: CursorConnectionArgs!) {\n          adminContent {\n            allContent(pagination: $pagination) {\n              nodes {\n                id\n                description\n                binaryBase64\n                json\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      "];
-export function gql(
-  source: "\n        query ContentFromDomain(\n          $ids: [IntID!]!\n          $pagination: CursorConnectionArgs!\n        ) {\n          domains(ids: $ids) {\n            id\n            content(pagination: $pagination) {\n              nodes {\n                id\n                description\n                binaryBase64\n                json\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      "
-): typeof documents["\n        query ContentFromDomain(\n          $ids: [IntID!]!\n          $pagination: CursorConnectionArgs!\n        ) {\n          domains(ids: $ids) {\n            id\n            content(pagination: $pagination) {\n              nodes {\n                id\n                description\n                binaryBase64\n                json\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      "];
 export function gql(
   source: "\n        query ContentFromTopic($ids: [IntID!]!) {\n          topics(ids: $ids) {\n            id\n            content {\n              id\n              description\n              binaryBase64\n              json\n            }\n          }\n        }\n      "
 ): typeof documents["\n        query ContentFromTopic($ids: [IntID!]!) {\n          topics(ids: $ids) {\n            id\n            content {\n              id\n              description\n              binaryBase64\n              json\n            }\n          }\n        }\n      "];
@@ -173,9 +161,6 @@ export function gql(
 export function gql(
   source: "\n        query AllTopics($pagination: CursorConnectionArgs!) {\n          adminDomain {\n            allTopics(pagination: $pagination) {\n              nodes {\n                ...IsolatedTopicFields\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      "
 ): typeof documents["\n        query AllTopics($pagination: CursorConnectionArgs!) {\n          adminDomain {\n            allTopics(pagination: $pagination) {\n              nodes {\n                ...IsolatedTopicFields\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      "];
-export function gql(
-  source: "\n      query DomainFromContent($ids: [IntID!]!) {\n        content(ids: $ids) {\n          id\n          domain {\n            id\n          }\n        }\n      }\n    "
-): typeof documents["\n      query DomainFromContent($ids: [IntID!]!) {\n        content(ids: $ids) {\n          id\n          domain {\n            id\n          }\n        }\n      }\n    "];
 export function gql(
   source: "\n      query DomainsFromProjects($ids: [IntID!]!) {\n        projects(ids: $ids) {\n          id\n          domains {\n            id\n          }\n        }\n      }\n    "
 ): typeof documents["\n      query DomainsFromProjects($ids: [IntID!]!) {\n        projects(ids: $ids) {\n          id\n          domains {\n            id\n          }\n        }\n      }\n    "];
