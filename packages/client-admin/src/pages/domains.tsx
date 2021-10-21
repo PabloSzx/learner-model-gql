@@ -14,14 +14,11 @@ import { withAdminAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
 import { useCursorPagination } from "../hooks/pagination";
-import { projectOptionLabel, useSelectMultiProjects } from "../hooks/projects";
 import { queryClient } from "../rqClient";
 
 function CreateDomain() {
   const codeRef = useRef<HTMLInputElement>(null);
   const labelRef = useRef<HTMLInputElement>(null);
-  const { selectMultiProjectComponent, selectedProjects } =
-    useSelectMultiProjects();
 
   const { mutateAsync } = useGQLMutation(
     gql(/* GraphQL */ `
@@ -46,16 +43,12 @@ function CreateDomain() {
     <FormModal
       title="Create Domain"
       onSubmit={async () => {
-        if (
-          !codeRef.current?.value ||
-          !labelRef.current?.value ||
-          !selectedProjects.length
-        )
+        if (!codeRef.current?.value || !labelRef.current?.value)
           throw Error("All fields are required");
 
         await mutateAsync({
           data: {
-            projectsIds: selectedProjects.map((v) => v.value),
+            projectsIds: [],
             code: codeRef.current.value,
             label: labelRef.current.value,
           },
@@ -71,11 +64,6 @@ function CreateDomain() {
         leftIcon: <MdAdd />,
       }}
     >
-      <FormControl isRequired>
-        <FormLabel>Associated Projects</FormLabel>
-
-        {selectMultiProjectComponent}
-      </FormControl>
       <FormControl id="code" isRequired>
         <FormLabel>Code</FormLabel>
         <Input type="text" ref={codeRef} />
@@ -100,11 +88,6 @@ gql(/* GraphQL */ `
     label
     updatedAt
     createdAt
-    projects {
-      id
-      code
-      label
-    }
   }
 `);
 
@@ -247,16 +230,6 @@ export default withAdminAuth(function DomainPage() {
               }
 
               return value;
-            },
-          },
-          {
-            id: "project",
-            Header: "Projects",
-            accessor: "projects",
-            Cell({ value }) {
-              return value
-                .map((v) => '"' + projectOptionLabel(v) + '"')
-                .join(" | ");
             },
           },
           getDateRow({ id: "createdAt", label: "Created At" }),

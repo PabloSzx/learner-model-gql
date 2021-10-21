@@ -975,12 +975,6 @@ export type DomainInfoFragment = {
   label: string;
   updatedAt: string;
   createdAt: string;
-  projects: Array<{
-    __typename?: "Project";
-    id: string;
-    code: string;
-    label: string;
-  }>;
 };
 
 export type AllDomainsQueryVariables = Exact<{
@@ -1000,12 +994,6 @@ export type AllDomainsQuery = {
         label: string;
         updatedAt: string;
         createdAt: string;
-        projects: Array<{
-          __typename?: "Project";
-          id: string;
-          code: string;
-          label: string;
-        }>;
       }>;
       pageInfo: {
         __typename?: "PageInfo";
@@ -1526,18 +1514,6 @@ export const DomainInfoFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "label" } },
           { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
           { kind: "Field", name: { kind: "Name", value: "createdAt" } },
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "projects" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "id" } },
-                { kind: "Field", name: { kind: "Name", value: "code" } },
-                { kind: "Field", name: { kind: "Name", value: "label" } },
-              ],
-            },
-          },
         ],
       },
     },
