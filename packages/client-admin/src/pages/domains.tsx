@@ -251,10 +251,12 @@ export default withAdminAuth(function DomainPage() {
           },
           {
             id: "project",
-            Header: "Project",
+            Header: "Projects",
             accessor: "projects",
             Cell({ value }) {
-              return value.map(projectOptionLabel).join(" | ");
+              return value
+                .map((v) => '"' + projectOptionLabel(v) + '"')
+                .join(" | ");
             },
           },
           getDateRow({ id: "createdAt", label: "Created At" }),
