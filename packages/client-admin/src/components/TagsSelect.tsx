@@ -3,12 +3,14 @@ import { useMemo, useRef } from "react";
 import CreatableSelect from "react-select/creatable";
 import { SelectRefType, useSelectStyles } from "./AsyncSelect";
 
-export const useTagsSelect = (props: {
-  tagsRef?: {
-    current: SelectRefType | null;
-  };
-  defaultTags?: string[];
-}) => {
+export const useTagsSelect = (
+  props: {
+    tagsRef?: {
+      current: SelectRefType | null;
+    };
+    defaultTags?: string[];
+  } = {}
+) => {
   const tagsRef: typeof props["tagsRef"] =
     props.tagsRef || useRef<SelectRefType>(null);
   const selectStyles = useSelectStyles();

@@ -11,8 +11,6 @@ import { ContentInfoFragment, gql, useGQLMutation, useGQLQuery } from "graph";
 import truncate from "lodash/truncate.js";
 import { memo, useEffect, useRef } from "react";
 import { MdAdd, MdEdit, MdSave } from "react-icons/md";
-import CreatableSelect from "react-select/creatable";
-import type Select from "react-select/dist/declarations/src/Select";
 import { proxy, ref, useSnapshot } from "valtio";
 import { AsyncSelect, SelectRefType } from "../components/AsyncSelect";
 import { withAdminAuth } from "../components/Auth";
@@ -103,7 +101,7 @@ const CreateContent = memo(function CreateContent() {
     }
   );
 
-  const tagsRef = useRef<Select<{ label: string; value: string }, true>>(null);
+  const { tagsRef, tagsSelect } = useTagsSelect();
 
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -191,12 +189,7 @@ const CreateContent = memo(function CreateContent() {
       </FormControl>
       <FormControl id="tags">
         <FormLabel>Tags</FormLabel>
-        <CreatableSelect<{ label: string; value: string }, true>
-          ref={tagsRef}
-          placeholder="Tags"
-          isMulti
-          noOptionsMessage={() => `Start writing to create a new tag!`}
-        />
+        {tagsSelect}
       </FormControl>
       <FormControl>
         <FormLabel>Binary Content</FormLabel>
