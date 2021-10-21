@@ -462,28 +462,24 @@ export default withAdminAuth(function ContentPage() {
             }) {
               const state = ContentState[id];
 
-              if (!state)
-                return kcs.map((v) => '"' + kcOptionLabel(v) + '"').join(" | ");
-
-              if (state.isEditing) {
-                return (
-                  <Box minW="250px">
-                    <AsyncSelect
-                      key={kcsBase.asOptions.length}
-                      isLoading={kcsBase.isFetching}
-                      loadOptions={kcsBase.filteredOptions}
-                      isMulti
-                      selectRef={state.kcsRef}
-                      placeholder="Search a KC"
-                      defaultValue={kcs.map((kc) => ({
-                        label: kcOptionLabel(kc),
-                        value: kc.id,
-                      }))}
-                    />
-                  </Box>
-                );
-              }
-              return kcs.map((v) => '"' + kcOptionLabel(v) + '"').join(" | ");
+              if (!state) return null;
+              return (
+                <Box minW="250px">
+                  <AsyncSelect
+                    key={kcsBase.asOptions.length}
+                    isLoading={kcsBase.isFetching}
+                    loadOptions={kcsBase.filteredOptions}
+                    isMulti
+                    selectRef={state.kcsRef}
+                    placeholder="Search a KC"
+                    defaultValue={kcs.map((kc) => ({
+                      label: kcOptionLabel(kc),
+                      value: kc.id,
+                    }))}
+                    isDisabled={!state.isEditing}
+                  />
+                </Box>
+              );
             },
           },
           getDateRow({ id: "createdAt", label: "Created At" }),
