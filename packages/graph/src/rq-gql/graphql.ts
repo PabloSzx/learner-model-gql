@@ -323,6 +323,7 @@ export type CreateKcInput = {
 
 export type CreateProject = {
   code: Scalars["String"];
+  domains: Array<Scalars["IntID"]>;
   label: Scalars["String"];
 };
 
@@ -561,6 +562,7 @@ export type UpdateKcInput = {
 
 export type UpdateProject = {
   code: Scalars["String"];
+  domains: Array<Scalars["IntID"]>;
   id: Scalars["IntID"];
   label: Scalars["String"];
 };
@@ -1205,6 +1207,12 @@ export type ProjectInfoFragment = {
   label: string;
   updatedAt: string;
   createdAt: string;
+  domains: Array<{
+    __typename?: "Domain";
+    id: string;
+    code: string;
+    label: string;
+  }>;
 };
 
 export type AllProjectsQueryVariables = Exact<{
@@ -1224,6 +1232,12 @@ export type AllProjectsQuery = {
         label: string;
         updatedAt: string;
         createdAt: string;
+        domains: Array<{
+          __typename?: "Domain";
+          id: string;
+          code: string;
+          label: string;
+        }>;
       }>;
       pageInfo: {
         __typename?: "PageInfo";
@@ -1620,6 +1634,18 @@ export const ProjectInfoFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "label" } },
           { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
           { kind: "Field", name: { kind: "Name", value: "createdAt" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "domains" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "code" } },
+                { kind: "Field", name: { kind: "Name", value: "label" } },
+              ],
+            },
+          },
         ],
       },
     },

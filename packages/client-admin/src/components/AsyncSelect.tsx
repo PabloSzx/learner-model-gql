@@ -26,23 +26,18 @@ import ReactSelect, {
 import ReactAsyncSelect from "react-select/async";
 import type SelectType from "react-select/dist/declarations/src/Select";
 
-interface CommonSelectProps
-  extends ReactSelectProps<{ label: string; value: string }, true> {
+export type OptionValue = { label: string; value: string };
+
+interface CommonSelectProps extends ReactSelectProps<OptionValue, true> {
   onChange?: ({ value }: any) => void;
   placeholder?: string;
   defaultValue?: any;
 }
 
 export type SelectRefType = SelectType<
-  {
-    value: string;
-    label: string;
-  },
+  OptionValue,
   true,
-  GroupBase<{
-    value: string;
-    label: string;
-  }>
+  GroupBase<OptionValue>
 >;
 
 export interface SelectProps extends CommonSelectProps {
@@ -57,10 +52,7 @@ export interface AsyncSelectProps extends CommonSelectProps {
   selectRef?: RefObject<SelectRefType>;
 }
 
-export const chakraStyles: StylesConfig<{
-  label: string;
-  value: string;
-}> = {
+export const chakraStyles: StylesConfig<OptionValue> = {
   input: (provided) => ({
     ...provided,
     color: "inherit",

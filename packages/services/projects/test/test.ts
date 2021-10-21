@@ -47,6 +47,7 @@ export async function CheckProjectCreationRetrieval({
         data: {
           code: projectCode,
           label: projectLabel,
+          domains: [],
         },
       },
     }
@@ -129,6 +130,7 @@ export async function CheckProjectCreationRetrieval({
             id: projectId,
             code: updatedCode,
             label: updatedLabel,
+            domains: [],
           },
         },
       }

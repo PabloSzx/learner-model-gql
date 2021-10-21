@@ -13,6 +13,7 @@ import { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { MdEdit, MdOutlineTopic, MdSave } from "react-icons/md";
 import { useUpdateEffect } from "react-use";
 import { useImmer } from "use-immer";
+import type { OptionValue } from "../components/AsyncSelect";
 import { withAdminAuth } from "../components/Auth";
 import { Card } from "../components/Card/Card";
 import { CardContent } from "../components/Card/CardContent";
@@ -163,7 +164,7 @@ export const TopicCard = memo(function TopicCard({
       topicEdit: topic,
       selectedTopic: (topic.parent
         ? { label: topicOptionLabel(topic.parent), value: topic.parent.id }
-        : null) as null | { value: string; label: string },
+        : null) as null | OptionValue,
       isEditing: false,
     };
   });

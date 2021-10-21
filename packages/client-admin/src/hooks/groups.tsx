@@ -1,6 +1,6 @@
 import { gql, useGQLInfiniteQuery } from "graph";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { AsyncSelect } from "../components/AsyncSelect";
+import { AsyncSelect, OptionValue } from "../components/AsyncSelect";
 
 export const useGroupsBase = () => {
   const { hasNextPage, fetchNextPage, isFetching, data, isLoading } =
@@ -106,10 +106,7 @@ export const groupOptionLabel = ({
 export const useSelectSingleGroup = () => {
   const { isFetching, isLoading, filteredOptions, asOptions } = useGroupsBase();
 
-  const [selectedGroup, setSelectedGroups] = useState<{
-    value: string;
-    label: string;
-  } | null>(null);
+  const [selectedGroup, setSelectedGroups] = useState<OptionValue | null>(null);
 
   const selectSingleGroupComponent = useMemo(() => {
     return (
@@ -135,12 +132,7 @@ export const useSelectSingleGroup = () => {
 export const useSelectMultiGroups = () => {
   const { isFetching, isLoading, filteredOptions, asOptions } = useGroupsBase();
 
-  const [selectedGroups, setSelectedGroups] = useState<
-    {
-      value: string;
-      label: string;
-    }[]
-  >([]);
+  const [selectedGroups, setSelectedGroups] = useState<OptionValue[]>([]);
 
   const selectMultiGroupComponent = useMemo(() => {
     return (

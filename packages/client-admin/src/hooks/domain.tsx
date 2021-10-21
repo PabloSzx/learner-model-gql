@@ -7,7 +7,11 @@ import {
 } from "graph";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useImmer } from "use-immer";
-import { AsyncSelect, AsyncSelectProps } from "../components/AsyncSelect";
+import {
+  AsyncSelect,
+  AsyncSelectProps,
+  OptionValue,
+} from "../components/AsyncSelect";
 
 export const AllDomainsBaseDoc = gql(/* GraphQL */ `
   query AllDomainsBase(
@@ -127,13 +131,7 @@ export const useSelectSingleDomain = ({
   state,
   selectProps,
 }: {
-  state?: [
-    {
-      value: string;
-      label: string;
-    } | null,
-    (value: { value: string; label: string } | null) => void
-  ];
+  state?: [OptionValue | null, (value: OptionValue | null) => void];
   selectProps?: Partial<AsyncSelectProps>;
 } = {}) => {
   const {
@@ -146,11 +144,7 @@ export const useSelectSingleDomain = ({
   } = useDomainsBase();
 
   const [selectedDomain, setSelectedDomain] =
-    state ||
-    useState<{
-      value: string;
-      label: string;
-    } | null>(null);
+    state || useState<OptionValue | null>(null);
 
   const selectSingleDomainComponent = useMemo(() => {
     return (
@@ -186,21 +180,11 @@ export const useSelectSingleDomain = ({
 
 export const useSelectMultiDomains = ({
   state,
-  ...selectProps
+  selectProps,
 }: {
-  state?: [
-    {
-      value: string;
-      label: string;
-    }[],
-    (
-      value: {
-        value: string;
-        label: string;
-      }[]
-    ) => void
-  ];
-} & Partial<AsyncSelectProps> = {}) => {
+  state?: [OptionValue[], (value: OptionValue[]) => void];
+  selectProps?: Partial<AsyncSelectProps>;
+} = {}) => {
   const {
     isFetching,
     isLoading,
@@ -211,13 +195,7 @@ export const useSelectMultiDomains = ({
   } = useDomainsBase();
 
   const [selectedDomains, setSelectedDomains] =
-    state ||
-    useState<
-      {
-        value: string;
-        label: string;
-      }[]
-    >([]);
+    state || useState<OptionValue[]>([]);
 
   const selectMultiDomainComponent = useMemo(() => {
     return (

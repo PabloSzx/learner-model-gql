@@ -29,6 +29,8 @@ export const projectsModule = registerModule(
     input CreateProject {
       code: String!
       label: String!
+
+      domains: [IntID!]!
     }
 
     input UpdateProject {
@@ -36,6 +38,8 @@ export const projectsModule = registerModule(
 
       code: String!
       label: String!
+
+      domains: [IntID!]!
     }
 
     type AdminProjectsMutations {
@@ -67,17 +71,27 @@ export const projectsModule = registerModule(
         },
       },
       AdminProjectsMutations: {
-        createProject(_root, { data }, { prisma }) {
+        createProject(_root, { data: { domains, ...data } }, { prisma }) {
           return prisma.project.create({
-            data,
+            data: {
+              ...data,
+              domains: {
+                connect: domains.map((id) => ({ id })),
+              },
+            },
           });
         },
-        updateProject(_root, { data: { id, ...data } }, { prisma }) {
+        updateProject(_root, { data: { id, domains, ...data } }, { prisma }) {
           return prisma.project.update({
             where: {
               id,
             },
-            data,
+            data: {
+              ...data,
+              domains: {
+                set: domains.map((id) => ({ id })),
+              },
+            },
           });
         },
       },

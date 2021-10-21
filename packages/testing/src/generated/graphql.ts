@@ -323,6 +323,7 @@ export type CreateKcInput = {
 
 export type CreateProject = {
   code: Scalars["String"];
+  domains: Array<Scalars["IntID"]>;
   label: Scalars["String"];
 };
 
@@ -561,6 +562,7 @@ export type UpdateKcInput = {
 
 export type UpdateProject = {
   code: Scalars["String"];
+  domains: Array<Scalars["IntID"]>;
   id: Scalars["IntID"];
   label: Scalars["String"];
 };

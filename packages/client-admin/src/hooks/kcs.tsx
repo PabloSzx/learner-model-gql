@@ -10,6 +10,7 @@ import { useImmer } from "use-immer";
 import {
   AsyncSelect,
   AsyncSelectProps,
+  OptionValue,
   SelectRefType,
 } from "../components/AsyncSelect";
 
@@ -131,13 +132,7 @@ export const useSelectSingleKC = ({
   state,
   selectProps,
 }: {
-  state?: [
-    {
-      value: string;
-      label: string;
-    } | null,
-    (value: { value: string; label: string } | null) => void
-  ];
+  state?: [OptionValue | null, (value: OptionValue | null) => void];
   selectProps?: Partial<AsyncSelectProps>;
 } = {}) => {
   const {
@@ -152,11 +147,7 @@ export const useSelectSingleKC = ({
   const selectRef = useRef<SelectRefType>(null);
 
   const [selectedKC, setSelectedKC] =
-    state ||
-    useState<{
-      value: string;
-      label: string;
-    } | null>(null);
+    state || useState<OptionValue | null>(null);
 
   const selectSingleKCComponent = useMemo(() => {
     return (
@@ -196,18 +187,7 @@ export const useSelectMultiKCs = ({
   state,
   selectProps,
 }: {
-  state?: [
-    {
-      value: string;
-      label: string;
-    }[],
-    (
-      value: {
-        value: string;
-        label: string;
-      }[]
-    ) => void
-  ];
+  state?: [OptionValue[], (value: OptionValue[]) => void];
   selectProps?: Partial<AsyncSelectProps>;
 } = {}) => {
   const {
@@ -221,14 +201,7 @@ export const useSelectMultiKCs = ({
 
   const selectRef = useRef<SelectRefType>(null);
 
-  const [selectedKCs, setSelectedKCs] =
-    state ||
-    useState<
-      {
-        value: string;
-        label: string;
-      }[]
-    >([]);
+  const [selectedKCs, setSelectedKCs] = state || useState<OptionValue[]>([]);
 
   const selectMultiKCComponent = useMemo(() => {
     return (

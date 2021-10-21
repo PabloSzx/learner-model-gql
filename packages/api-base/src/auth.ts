@@ -100,7 +100,8 @@ export const Authorization = (userPromise: Promise<DBUser | null>) => {
       projectIdPromise,
     ]);
 
-    assert(usersProjectsSet.has(projectId), "Forbidden Project!");
+    if (user.role !== "ADMIN")
+      assert(usersProjectsSet.has(projectId), "Forbidden Project!");
 
     return { user, projectId };
   };

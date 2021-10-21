@@ -27,6 +27,7 @@ import {
   MdSave,
 } from "react-icons/md";
 import { proxy, useSnapshot } from "valtio";
+import type { OptionValue } from "../components/AsyncSelect";
 import { useAuth, withAdminAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
@@ -73,7 +74,7 @@ const UsersState = proxy<
     string,
     {
       isEditing?: boolean;
-      selectedProjects: Array<{ label: string; value: string }>;
+      selectedProjects: Array<OptionValue>;
     } & UserInfoFragment
   >
 >({});

@@ -8,7 +8,11 @@ import {
 } from "graph";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useImmer } from "use-immer";
-import { AsyncSelect, AsyncSelectProps } from "../components/AsyncSelect";
+import {
+  AsyncSelect,
+  AsyncSelectProps,
+  OptionValue,
+} from "../components/AsyncSelect";
 
 export type TopicInfo =
   AllTopicsBaseQuery["adminDomain"]["allTopics"]["nodes"][number];
@@ -144,13 +148,7 @@ export const useSelectSingleTopic = ({
   topics,
   selectProps,
 }: {
-  state?: [
-    {
-      value: string;
-      label: string;
-    } | null,
-    (value: { value: string; label: string } | null) => void
-  ];
+  state?: [OptionValue | null, (value: OptionValue | null) => void];
   topics?: AllTopicsOptions;
   selectProps?: Partial<AsyncSelectProps>;
 } = {}) => {
@@ -164,11 +162,7 @@ export const useSelectSingleTopic = ({
   } = useAllTopics(topics);
 
   const [selectedTopic, setSelectedTopic] =
-    state ||
-    useState<{
-      value: string;
-      label: string;
-    } | null>(null);
+    state || useState<OptionValue | null>(null);
 
   const selectSingleTopicComponent = useMemo(() => {
     return (
@@ -207,18 +201,7 @@ export const useSelectMultiTopics = ({
   topics,
   ...selectProps
 }: {
-  state?: [
-    {
-      value: string;
-      label: string;
-    }[],
-    (
-      value: {
-        value: string;
-        label: string;
-      }[]
-    ) => void
-  ];
+  state?: [OptionValue[], (value: OptionValue[]) => void];
   topics?: AllTopicsOptions;
 } & Partial<AsyncSelectProps> = {}) => {
   const {
@@ -231,13 +214,7 @@ export const useSelectMultiTopics = ({
   } = useAllTopics(topics);
 
   const [selectedTopics, setSelectedTopics] =
-    state ||
-    useState<
-      {
-        value: string;
-        label: string;
-      }[]
-    >([]);
+    state || useState<OptionValue[]>([]);
 
   const selectMultiDomainComponent = useMemo(() => {
     return (

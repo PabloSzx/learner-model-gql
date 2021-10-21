@@ -458,12 +458,14 @@ type AdminProjectsQueries {
 input CreateProject {
   code: String!
   label: String!
+  domains: [IntID!]!
 }
 
 input UpdateProject {
   id: IntID!
   code: String!
   label: String!
+  domains: [IntID!]!
 }
 
 type AdminProjectsMutations {

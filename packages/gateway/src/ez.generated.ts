@@ -601,12 +601,14 @@ export type AdminProjectsQueriesAllProjectsArgs = {
 export type CreateProject = {
   code: Scalars["String"];
   label: Scalars["String"];
+  domains: Array<Scalars["IntID"]>;
 };
 
 export type UpdateProject = {
   id: Scalars["IntID"];
   code: Scalars["String"];
   label: Scalars["String"];
+  domains: Array<Scalars["IntID"]>;
 };
 
 export type AdminProjectsMutations = {

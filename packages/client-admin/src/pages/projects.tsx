@@ -10,9 +10,11 @@ import { gql, ProjectInfoFragment, useGQLMutation, useGQLQuery } from "graph";
 import { useEffect, useRef } from "react";
 import { MdAdd, MdEdit, MdSave } from "react-icons/md";
 import { proxy, ref, useSnapshot } from "valtio";
+import type { OptionValue } from "../components/AsyncSelect";
 import { withAdminAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
+import { domainOptionLabel, useSelectMultiDomains } from "../hooks/domain";
 import { useCursorPagination } from "../hooks/pagination";
 import { queryClient } from "../rqClient";
 
@@ -24,6 +26,11 @@ gql(/* GraphQL */ `
     label
     updatedAt
     createdAt
+    domains {
+      id
+      code
+      label
+    }
   }
 `);
 
@@ -62,6 +69,8 @@ function CreateProject() {
 
   const codeRef = useRef<HTMLInputElement>(null);
   const labelRef = useRef<HTMLInputElement>(null);
+  const { selectedDomains, selectMultiDomainComponent } =
+    useSelectMultiDomains();
   return (
     <FormModal
       title="Create Project"
@@ -73,6 +82,7 @@ function CreateProject() {
           data: {
             code: codeRef.current.value,
             label: labelRef.current.value,
+            domains: selectedDomains.map((v) => v.value),
           },
         });
 
@@ -98,6 +108,10 @@ function CreateProject() {
         <Input type="text" ref={labelRef} />
         <FormHelperText>Human readable label</FormHelperText>
       </FormControl>
+      <FormControl id="Domains">
+        <FormLabel>Associated Domains</FormLabel>
+        {selectMultiDomainComponent}
+      </FormControl>
     </FormModal>
   );
 }
@@ -109,6 +123,7 @@ const ProjectsState = proxy<
       isEditing?: boolean;
       labelRef: { current: string };
       codeRef: { current: string };
+      selectedDomains: OptionValue[];
     }
   >
 >({});
@@ -127,6 +142,10 @@ export default withAdminAuth(function ProjectsPage() {
           ...project,
           codeRef: ref({ current: project.code }),
           labelRef: ref({ current: project.label }),
+          selectedDomains: project.domains.map((domain) => ({
+            label: domainOptionLabel(domain),
+            value: domain.id,
+          })),
         }),
         project
       );
@@ -230,6 +249,34 @@ export default withAdminAuth(function ProjectsPage() {
               return value;
             },
           },
+          {
+            id: "Domains",
+            Header: "Domains",
+            accessor: "id",
+            Cell({
+              row: {
+                original: { id },
+              },
+            }) {
+              const state = ProjectsState[id];
+
+              if (!state) return null;
+
+              const { selectMultiDomainComponent } = useSelectMultiDomains({
+                state: [
+                  state.selectedDomains,
+                  (value) => {
+                    state.selectedDomains = value;
+                  },
+                ],
+                selectProps: {
+                  isDisabled: !state.isEditing,
+                },
+              });
+
+              return selectMultiDomainComponent;
+            },
+          },
           getDateRow({ id: "createdAt", label: "Created At" }),
           getDateRow({ id: "updatedAt", label: "Updated At" }),
           {
@@ -244,7 +291,8 @@ export default withAdminAuth(function ProjectsPage() {
 
               if (!projectState) return null;
 
-              const { isEditing, codeRef, labelRef } = projectState;
+              const { isEditing, codeRef, labelRef, selectedDomains } =
+                projectState;
 
               return (
                 <IconButton
@@ -259,7 +307,9 @@ export default withAdminAuth(function ProjectsPage() {
                     if (
                       isEditing &&
                       (original.code !== codeRef.current ||
-                        original.label !== labelRef.current)
+                        original.label !== labelRef.current ||
+                        original.domains.map((v) => v.id).join() !==
+                          selectedDomains.map((v) => v.value).join())
                     ) {
                       updateProject
                         .mutateAsync({
@@ -267,6 +317,7 @@ export default withAdminAuth(function ProjectsPage() {
                             id,
                             code: codeRef.current,
                             label: labelRef.current,
+                            domains: selectedDomains.map((v) => v.value),
                           },
                         })
                         .then(() => {
