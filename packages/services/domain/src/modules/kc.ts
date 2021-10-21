@@ -26,8 +26,15 @@ export const kcModule = registerModule(
       pageInfo: PageInfo!
     }
 
+    input AdminKCsFilter {
+      domains: [IntID!]
+    }
+
     extend type AdminDomainQueries {
-      allKCs(pagination: CursorConnectionArgs!): KCsConnection!
+      allKCs(
+        pagination: CursorConnectionArgs!
+        filters: AdminKCsFilter
+      ): KCsConnection!
     }
 
     input CreateKCInput {
@@ -84,10 +91,17 @@ export const kcModule = registerModule(
         },
       },
       AdminDomainQueries: {
-        allKCs(_root, { pagination }, { prisma }) {
+        allKCs(_root, { pagination, filters }, { prisma }) {
           return ResolveCursorConnection(pagination, (connection) => {
             return prisma.kC.findMany({
               ...connection,
+              where: {
+                domainId: filters?.domains
+                  ? {
+                      in: filters.domains,
+                    }
+                  : undefined,
+              },
             });
           });
         },

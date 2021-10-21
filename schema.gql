@@ -367,7 +367,10 @@ type AdminDomainQueries {
     pagination: CursorConnectionArgs!
     filters: AdminDomainsFilter
   ): DomainsConnection!
-  allKCs(pagination: CursorConnectionArgs!): KCsConnection!
+  allKCs(
+    pagination: CursorConnectionArgs!
+    filters: AdminKCsFilter
+  ): KCsConnection!
 }
 
 input CreateDomain {
@@ -412,6 +415,10 @@ type AdminDomainMutations {
 type KCsConnection implements Connection {
   nodes: [KC!]!
   pageInfo: PageInfo!
+}
+
+input AdminKCsFilter {
+  domains: [IntID!]
 }
 
 input CreateKCInput {

@@ -486,6 +486,7 @@ export type AdminDomainQueriesAllDomainsArgs = {
 
 export type AdminDomainQueriesAllKCsArgs = {
   pagination: CursorConnectionArgs;
+  filters?: Maybe<AdminKCsFilter>;
 };
 
 export type CreateDomain = {
@@ -556,6 +557,10 @@ export type KCsConnection = Connection & {
   __typename?: "KCsConnection";
   nodes: Array<Kc>;
   pageInfo: PageInfo;
+};
+
+export type AdminKCsFilter = {
+  domains?: Maybe<Array<Scalars["IntID"]>>;
 };
 
 export type CreateKcInput = {
@@ -784,6 +789,7 @@ export type ResolversTypes = {
   UpdateTopic: UpdateTopic;
   AdminDomainMutations: ResolverTypeWrapper<AdminDomainMutations>;
   KCsConnection: ResolverTypeWrapper<KCsConnection>;
+  AdminKCsFilter: AdminKCsFilter;
   CreateKCInput: CreateKcInput;
   UpdateKCInput: UpdateKcInput;
   Project: ResolverTypeWrapper<Project>;
@@ -859,6 +865,7 @@ export type ResolversParentTypes = {
   UpdateTopic: UpdateTopic;
   AdminDomainMutations: AdminDomainMutations;
   KCsConnection: KCsConnection;
+  AdminKCsFilter: AdminKCsFilter;
   CreateKCInput: CreateKcInput;
   UpdateKCInput: UpdateKcInput;
   Project: Project;

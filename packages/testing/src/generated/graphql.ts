@@ -158,6 +158,7 @@ export type AdminDomainQueriesAllDomainsArgs = {
 };
 
 export type AdminDomainQueriesAllKCsArgs = {
+  filters?: Maybe<AdminKCsFilter>;
   pagination: CursorConnectionArgs;
 };
 
@@ -168,6 +169,10 @@ export type AdminDomainQueriesAllTopicsArgs = {
 
 export type AdminDomainsFilter = {
   projects?: Maybe<Array<Scalars["IntID"]>>;
+};
+
+export type AdminKCsFilter = {
+  domains?: Maybe<Array<Scalars["IntID"]>>;
 };
 
 export type AdminProjectsMutations = {
