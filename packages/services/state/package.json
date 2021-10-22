@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development bob-tsm --watch=src src/index.ts",
-    "start": "bob-tsm src/index.ts"
+    "dev": "bob-tsm --node-env=dev --watch=src src/index.ts",
+    "start": "bob-tsm --node-env=prod src/index.ts"
   },
   "dependencies": {
     "api-base": "workspace:^0.0.1",
