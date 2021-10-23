@@ -27,7 +27,7 @@
     "wait-on": "^6.0.0"
   },
   "devDependencies": {
-    "@types/validator": "^13.6.4",
+    "@types/validator": "^13.6.5",
     "@types/wait-on": "^5.3.1"
   }
 }
