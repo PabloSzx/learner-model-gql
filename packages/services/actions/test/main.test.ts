@@ -98,7 +98,9 @@ describe("Actions service", () => {
         },
       });
 
-      const { authUser } = await CreateUser();
+      const { authUser } = await CreateUser({
+        role: "USER",
+      });
 
       MockAuthUser.user = authUser;
 
