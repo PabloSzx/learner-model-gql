@@ -20,7 +20,7 @@
     "fastify-auth0-verify": "^0.6.0",
     "fastify-plugin": "^3.0.0",
     "pg-gql-pubsub": "^0.3.0",
-    "pino": "^7.0.3",
+    "pino": "^7.0.4",
     "pino-pretty": "^7.1.0",
     "serialize-error": "^8.1.0",
     "validator": "^13.6.0",
