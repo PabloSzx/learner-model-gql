@@ -1,7 +1,9 @@
-import { getNodeIdList, ResolveCursorConnection } from "api-base";
-import type { Content as DBContent } from "db";
-import { gql, registerModule } from "../ez";
 import Prisma from "@prisma/client";
+import { getNodeIdList, ResolveCursorConnection } from "api-base";
+import assert from "assert";
+import type { Content as DBContent } from "db";
+import mime from "mime";
+import { gql, registerModule } from "../ez";
 import type { Content } from "../ez.generated";
 
 export const contentModule = registerModule(
@@ -123,6 +125,10 @@ export const contentModule = registerModule(
           },
           { prisma }
         ) {
+          if (binaryFilename) {
+            assert(mime.getType(binaryFilename) != null, "Invalid File");
+          }
+
           return prisma.content.create({
             data: {
               code,
@@ -176,6 +182,10 @@ export const contentModule = registerModule(
           },
           { prisma }
         ) {
+          if (binaryFilename) {
+            assert(mime.getType(binaryFilename) != null, "Invalid File");
+          }
+
           return prisma.content.update({
             where: {
               id,
@@ -238,8 +248,11 @@ export const contentModule = registerModule(
         },
       },
       Content: {
-        binaryBase64({ binary }: Partial<Pick<DBContent, "binary">> & Content) {
-          return binary?.toString("base64");
+        binaryBase64({
+          binary,
+          binaryFilename,
+        }: Partial<Pick<DBContent, "binary">> & Content) {
+          return binaryFilename ? binary?.toString("base64") : null;
         },
       },
       Query: {
