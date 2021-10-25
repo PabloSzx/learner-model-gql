@@ -873,6 +873,9 @@ export type ContentInfoFragment = {
   label: string;
   description: string;
   tags: Array<string>;
+  binaryBase64?: string | null | undefined;
+  json?: Record<string, unknown> | null | undefined;
+  url?: string | null | undefined;
   updatedAt: string;
   createdAt: string;
   project: { __typename?: "Project"; id: string; code: string; label: string };
@@ -897,6 +900,18 @@ export type CreateContentMutation = {
   };
 };
 
+export type UpdateContentMutationVariables = Exact<{
+  data: UpdateContent;
+}>;
+
+export type UpdateContentMutation = {
+  __typename?: "Mutation";
+  adminContent: {
+    __typename?: "AdminContentMutations";
+    updateContent: { __typename: "Content" };
+  };
+};
+
 export type AllContentQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
   filters?: Maybe<AdminContentFilter>;
@@ -915,6 +930,9 @@ export type AllContentQuery = {
         label: string;
         description: string;
         tags: Array<string>;
+        binaryBase64?: string | null | undefined;
+        json?: Record<string, unknown> | null | undefined;
+        url?: string | null | undefined;
         updatedAt: string;
         createdAt: string;
         project: {
@@ -939,18 +957,6 @@ export type AllContentQuery = {
         endCursor?: string | null | undefined;
       };
     };
-  };
-};
-
-export type UpdateContentMutationVariables = Exact<{
-  data: UpdateContent;
-}>;
-
-export type UpdateContentMutation = {
-  __typename?: "Mutation";
-  adminContent: {
-    __typename?: "AdminContentMutations";
-    updateContent: { __typename: "Content" };
   };
 };
 
@@ -1472,6 +1478,9 @@ export const ContentInfoFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "label" } },
           { kind: "Field", name: { kind: "Name", value: "description" } },
           { kind: "Field", name: { kind: "Name", value: "tags" } },
+          { kind: "Field", name: { kind: "Name", value: "binaryBase64" } },
+          { kind: "Field", name: { kind: "Name", value: "json" } },
+          { kind: "Field", name: { kind: "Name", value: "url" } },
           {
             kind: "Field",
             name: { kind: "Name", value: "project" },
@@ -2318,6 +2327,69 @@ export const CreateContentDocument = {
   CreateContentMutation,
   CreateContentMutationVariables
 >;
+export const UpdateContentDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpdateContent" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "UpdateContent" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminContent" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "updateContent" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "data" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "data" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "__typename" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  UpdateContentMutation,
+  UpdateContentMutationVariables
+>;
 export const AllContentDocument = {
   kind: "Document",
   definitions: [
@@ -2415,69 +2487,6 @@ export const AllContentDocument = {
     ...PaginationFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<AllContentQuery, AllContentQueryVariables>;
-export const UpdateContentDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "UpdateContent" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "UpdateContent" },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "adminContent" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "updateContent" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "data" },
-                      value: {
-                        kind: "Variable",
-                        name: { kind: "Name", value: "data" },
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "__typename" },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  UpdateContentMutation,
-  UpdateContentMutationVariables
->;
 export const CreateDomainDocument = {
   kind: "Document",
   definitions: [

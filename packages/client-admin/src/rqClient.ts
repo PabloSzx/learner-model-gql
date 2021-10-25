@@ -16,6 +16,9 @@ export const queryClient = new QueryClient({
           errorState.message = JSON.stringify(serializeError(err));
         }
       },
+      async onSuccess() {
+        await queryClient.invalidateQueries();
+      },
     },
     queries: {
       onError(err) {

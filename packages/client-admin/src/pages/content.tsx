@@ -3,16 +3,15 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
-  IconButton,
   Input,
   VStack,
+  Button,
 } from "@chakra-ui/react";
 import { ContentInfoFragment, gql, useGQLMutation, useGQLQuery } from "graph";
-import truncate from "lodash/truncate.js";
-import { memo, useEffect, useRef } from "react";
-import { MdAdd, MdEdit, MdSave } from "react-icons/md";
-import { proxy, ref, useSnapshot } from "valtio";
-import { AsyncSelect, SelectRefType } from "../components/AsyncSelect";
+import { memo, useRef } from "react";
+import { MdAdd, MdEdit } from "react-icons/md";
+import { useImmer } from "use-immer";
+import { AsyncSelect } from "../components/AsyncSelect";
 import { withAdminAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
@@ -22,6 +21,7 @@ import { kcOptionLabel, useKCsBase, useSelectMultiKCs } from "../hooks/kcs";
 import { useCursorPagination } from "../hooks/pagination";
 import { projectOptionLabel, useSelectSingleProject } from "../hooks/projects";
 import { queryClient } from "../rqClient";
+import useCopyToClipboard from "react-use/lib/useCopyToClipboard.js";
 
 gql(/* GraphQL */ `
   fragment ContentInfo on Content {
@@ -30,6 +30,9 @@ gql(/* GraphQL */ `
     label
     description
     tags
+    binaryBase64
+    json
+    url
     project {
       id
       code
@@ -47,24 +50,6 @@ gql(/* GraphQL */ `
     createdAt
   }
 `);
-
-const ContentState = proxy<
-  Record<
-    string,
-    ContentInfoFragment & {
-      isEditing?: boolean;
-      labelRef: { current: string };
-      codeRef: { current: string };
-      descriptionRef: { current: string };
-      tagsRef: {
-        current: SelectRefType | null;
-      };
-      kcsRef: {
-        current: SelectRefType | null;
-      };
-    }
-  >
->({});
 
 function getBase64(file: File) {
   return new Promise<string | null>((resolve, reject) => {
@@ -93,12 +78,7 @@ const CreateContent = memo(function CreateContent() {
           }
         }
       }
-    `),
-    {
-      async onSuccess() {
-        await queryClient.invalidateQueries();
-      },
-    }
+    `)
   );
 
   const { tagsRef, tagsSelect } = useTagsSelect();
@@ -150,8 +130,6 @@ const CreateContent = memo(function CreateContent() {
             url: urlRef.current?.value || null,
           },
         });
-
-        queryClient.invalidateQueries();
 
         codeRef.current.value = "";
         labelRef.current.value = "";
@@ -217,6 +195,193 @@ const CreateContent = memo(function CreateContent() {
   );
 });
 
+const EditContent = ({
+  row: { original: content },
+}: {
+  row: { original: ContentInfoFragment };
+}) => {
+  const [form, produceForm] = useImmer(() => {
+    const { code, label, description, tags, kcs } = content;
+    return {
+      code,
+      label,
+      description,
+      tags,
+      kcs: kcs.map((kc) => ({ label: kcOptionLabel(kc), value: kc.id })),
+    };
+  });
+
+  const { tagsSelect } = useTagsSelect({
+    defaultTags: content.tags,
+  });
+
+  const { id } = content;
+
+  const { selectMultiKCComponent } = useSelectMultiKCs({
+    state: [
+      form.kcs,
+      (value) =>
+        produceForm((draft) => {
+          draft.kcs = value;
+        }),
+    ],
+  });
+
+  const updateContent = useGQLMutation(
+    gql(/* GraphQL */ `
+      mutation UpdateContent($data: UpdateContent!) {
+        adminContent {
+          updateContent(data: $data) {
+            __typename
+          }
+        }
+      }
+    `),
+    {
+      async onSuccess() {
+        await queryClient.invalidateQueries();
+      },
+    }
+  );
+
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const jsonEditor = useJSONEditor();
+
+  const urlRef = useRef<HTMLInputElement>(null);
+
+  const [, copyToClipboard] = useCopyToClipboard();
+
+  return (
+    <FormModal
+      onSubmit={async () => {
+        const { code, label, description, kcs, tags } = form;
+
+        const file = fileRef.current?.files?.[0];
+
+        const binaryBase64 = file
+          ? (await getBase64(file)) ||
+            (() => {
+              throw Error("File could not be encoded to base64!");
+            })()
+          : null;
+
+        await updateContent.mutateAsync({
+          data: {
+            id,
+            code,
+            label,
+            description,
+            kcs: kcs.map((v) => v.value),
+            projectId: content.project.id,
+            tags,
+            topics: [],
+            binaryBase64,
+            json: jsonEditor.parsedJson || null,
+            url: urlRef.current?.value || null,
+          },
+        });
+      }}
+      title="Edit Content"
+      triggerButton={{
+        leftIcon: <MdEdit />,
+        colorScheme: "facebook",
+        children: null,
+        sx: {
+          span: {
+            margin: "0px",
+          },
+        },
+      }}
+      saveButton={{
+        children: "Save Changes",
+      }}
+      modalProps={{
+        closeOnOverlayClick: false,
+      }}
+    >
+      <FormControl id="code">
+        <FormLabel>Code</FormLabel>
+        <Input
+          type="text"
+          value={form.code}
+          onChange={(ev) => {
+            produceForm((draft) => {
+              draft.code = ev.target.value;
+            });
+          }}
+        />
+      </FormControl>
+      <FormControl id="label">
+        <FormLabel>Label</FormLabel>
+        <Input
+          type="text"
+          value={form.label}
+          onChange={(ev) => {
+            produceForm((draft) => {
+              draft.label = ev.target.value;
+            });
+          }}
+        />
+      </FormControl>
+      <FormControl id="description">
+        <FormLabel>Description</FormLabel>
+        <Input
+          type="text"
+          value={form.description}
+          onChange={(ev) => {
+            produceForm((draft) => {
+              draft.description = ev.target.value;
+            });
+          }}
+        />
+      </FormControl>
+      <FormControl id="tags">
+        <FormLabel>Tags</FormLabel>
+        {tagsSelect}
+      </FormControl>
+      <FormControl id="kcs" minW="250px">
+        <FormLabel>KCs</FormLabel>
+
+        {selectMultiKCComponent}
+      </FormControl>
+      {content.binaryBase64 ? (
+        <FormControl id="existingBase64">
+          <Button
+            onClick={() => {
+              copyToClipboard(content.binaryBase64!);
+            }}
+          >
+            Copy to Clipboard
+          </Button>
+        </FormControl>
+      ) : null}
+      <FormControl>
+        <FormLabel>Binary Content</FormLabel>
+        <Input
+          type="file"
+          ref={fileRef}
+          lineHeight="2rem"
+          sx={{ textAlignLast: "center" }}
+        />
+        <FormHelperText>
+          The file is going to be encoded to base64
+        </FormHelperText>
+      </FormControl>
+      <FormControl>
+        <FormLabel>JSON</FormLabel>
+        {jsonEditor.jsonEditor}
+        <FormHelperText>JSON Object</FormHelperText>
+      </FormControl>
+      <FormControl id="url">
+        <FormLabel>URL</FormLabel>
+        <Input type="url" ref={urlRef} />
+        <FormHelperText>Custom External URL</FormHelperText>
+      </FormControl>
+    </FormModal>
+  );
+};
+
 export default withAdminAuth(function ContentPage() {
   const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination();
 
@@ -242,43 +407,6 @@ export default withAdminAuth(function ContentPage() {
   );
   pageInfo.current = data?.adminContent.allContent.pageInfo;
 
-  useEffect(() => {
-    for (const content of data?.adminContent.allContent.nodes || []) {
-      const isEditing = ContentState[content.id]?.isEditing;
-      if (isEditing) continue;
-      Object.assign(
-        (ContentState[content.id] ||= {
-          ...content,
-          codeRef: ref({ current: content.code }),
-          labelRef: ref({ current: content.label }),
-          descriptionRef: ref({ current: content.label }),
-          tagsRef: ref({ current: null }),
-          kcsRef: ref({ current: null }),
-        }),
-        content
-      );
-    }
-  }, [data]);
-
-  const contentsState = useSnapshot(ContentState);
-
-  const updateContent = useGQLMutation(
-    gql(/* GraphQL */ `
-      mutation UpdateContent($data: UpdateContent!) {
-        adminContent {
-          updateContent(data: $data) {
-            __typename
-          }
-        }
-      }
-    `),
-    {
-      async onSuccess() {
-        await queryClient.invalidateQueries();
-      },
-    }
-  );
-
   const kcsBase = useKCsBase();
 
   return (
@@ -297,103 +425,10 @@ export default withAdminAuth(function ContentPage() {
           {
             Header: "Code",
             accessor: "code",
-            Cell({
-              value,
-              row: {
-                original: { id },
-              },
-            }) {
-              const state = contentsState[id];
-
-              if (!state) return value;
-
-              if (state.isEditing) {
-                const ref = ContentState[id]!.codeRef;
-                return (
-                  <Input
-                    isDisabled={updateContent.isLoading}
-                    defaultValue={ref.current}
-                    onChange={(ev) => {
-                      ref.current = ev.target.value;
-                    }}
-                    colorScheme="facebook"
-                    borderColor="blackAlpha.500"
-                    width="20ch"
-                  />
-                );
-              }
-
-              return value;
-            },
           },
           {
             Header: "Label",
             accessor: "label",
-            Cell({
-              value,
-              row: {
-                original: { id },
-              },
-            }) {
-              const state = contentsState[id];
-
-              if (!state) return value;
-
-              if (state.isEditing) {
-                const ref = ContentState[id]!.labelRef;
-
-                return (
-                  <Input
-                    isDisabled={updateContent.isLoading}
-                    defaultValue={ref.current}
-                    onChange={(ev) => {
-                      ref.current = ev.target.value;
-                    }}
-                    colorScheme="facebook"
-                    borderColor="blackAlpha.500"
-                    width="20ch"
-                  />
-                );
-              }
-
-              return value;
-            },
-          },
-          {
-            Header: "Description",
-            accessor: "description",
-            Cell({
-              value,
-              row: {
-                original: { id },
-              },
-            }) {
-              const truncatedValue = truncate(value, {
-                length: 30,
-              });
-              const contentState = contentsState[id];
-
-              if (!contentState) return truncatedValue;
-
-              if (contentState.isEditing) {
-                const ref = ContentState[id]!.descriptionRef;
-
-                return (
-                  <Input
-                    isDisabled={updateContent.isLoading}
-                    defaultValue={ref.current}
-                    onChange={(ev) => {
-                      ref.current = ev.target.value;
-                    }}
-                    colorScheme="facebook"
-                    borderColor="blackAlpha.500"
-                    width="20ch"
-                  />
-                );
-              }
-
-              return truncatedValue;
-            },
           },
           {
             id: "Project",
@@ -406,26 +441,7 @@ export default withAdminAuth(function ContentPage() {
           {
             id: "Tags",
             Header: "Tags",
-            accessor: "id",
-            Cell({
-              row: {
-                original: { id, tags },
-              },
-            }) {
-              const state = ContentState[id];
-
-              if (!state) return tags.join(" | ");
-
-              if (state.isEditing) {
-                const { tagsSelect } = useTagsSelect({
-                  tagsRef: state.tagsRef,
-                  defaultTags: tags,
-                });
-
-                return tagsSelect;
-              }
-              return tags.join(" | ");
-            },
+            accessor: (v) => v.tags.join(" | ") || "-",
           },
           {
             id: "KCs",
@@ -433,26 +449,22 @@ export default withAdminAuth(function ContentPage() {
             accessor: "id",
             Cell({
               row: {
-                original: { id, kcs },
+                original: { kcs },
               },
             }) {
-              const state = ContentState[id];
-
-              if (!state) return null;
               return (
-                <Box minW="250px">
+                <Box minW={kcs.length ? "250px" : undefined}>
                   <AsyncSelect
                     key={kcsBase.asOptions.length}
                     isLoading={kcsBase.isFetching}
                     loadOptions={kcsBase.filteredOptions}
                     isMulti
-                    selectRef={state.kcsRef}
-                    placeholder="Search a KC"
-                    defaultValue={kcs.map((kc) => ({
+                    placeholder="No KCs"
+                    value={kcs.map((kc) => ({
                       label: kcOptionLabel(kc),
                       value: kc.id,
                     }))}
-                    isDisabled={!state.isEditing}
+                    isDisabled
                   />
                 </Box>
               );
@@ -467,72 +479,7 @@ export default withAdminAuth(function ContentPage() {
             defaultCanFilter: false,
             defaultCanGroupBy: false,
             accessor: "id",
-            Cell({ value: id, row: { original } }) {
-              const contentState = contentsState[id];
-
-              if (!contentState) return null;
-
-              const {
-                isEditing,
-                codeRef,
-                labelRef,
-                descriptionRef,
-                project: { id: projectId },
-                tagsRef,
-                topics,
-                kcsRef,
-              } = contentState;
-
-              return (
-                <IconButton
-                  aria-label="Edit"
-                  colorScheme="blue"
-                  isLoading={
-                    updateContent.isLoading &&
-                    updateContent.variables?.data.id === id
-                  }
-                  isDisabled={updateContent.isLoading}
-                  onClick={() => {
-                    const tagsRefList =
-                      tagsRef.current?.getValue().map((v) => v.value) || [];
-
-                    const kcsRefList =
-                      kcsRef.current?.getValue().map((v) => v.value) || [];
-
-                    if (
-                      isEditing &&
-                      (original.code !== codeRef.current ||
-                        original.label !== labelRef.current ||
-                        descriptionRef.current !== original.description ||
-                        tagsRefList.join() !== original.tags.join() ||
-                        original.kcs.map((v) => v.id).join() !==
-                          kcsRefList.join())
-                    ) {
-                      updateContent
-                        .mutateAsync({
-                          data: {
-                            id,
-                            label: labelRef.current,
-                            code: codeRef.current,
-                            description: descriptionRef.current,
-                            projectId,
-                            tags: tagsRefList,
-                            kcs: kcsRefList,
-                            topics: topics.map((v) => v.id),
-                          },
-                        })
-                        .then(() => {
-                          ContentState[id]!.isEditing = false;
-                        })
-                        .catch(console.error);
-                    } else {
-                      ContentState[id]!.isEditing = !isEditing;
-                    }
-                  }}
-                  icon={isEditing ? <MdSave /> : <MdEdit />}
-                />
-              );
-            },
+            Cell: EditContent,
           },
         ]}
       />

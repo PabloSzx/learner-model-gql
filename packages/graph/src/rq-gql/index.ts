@@ -17,14 +17,14 @@ const documents = {
     graphql.AllProjectsBaseDocument,
   "\n  query AllTopicsBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminTopicsFilter\n  ) {\n    adminDomain {\n      allTopics(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n          sortIndex\n          parent {\n            id\n            code\n            label\n          }\n          project {\n            id\n            code\n            label\n          }\n        }\n        ...Pagination\n      }\n    }\n  }\n":
     graphql.AllTopicsBaseDocument,
-  "\n  fragment ContentInfo on Content {\n    id\n    code\n    label\n    description\n    tags\n    project {\n      id\n      code\n      label\n    }\n    kcs {\n      id\n      code\n      label\n    }\n    topics {\n      id\n    }\n    updatedAt\n    createdAt\n  }\n":
+  "\n  fragment ContentInfo on Content {\n    id\n    code\n    label\n    description\n    tags\n    binaryBase64\n    json\n    url\n    project {\n      id\n      code\n      label\n    }\n    kcs {\n      id\n      code\n      label\n    }\n    topics {\n      id\n    }\n    updatedAt\n    createdAt\n  }\n":
     graphql.ContentInfoFragmentDoc,
   "\n      mutation CreateContent($data: CreateContent!) {\n        adminContent {\n          createContent(data: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    ":
     graphql.CreateContentDocument,
-  "\n      query AllContent(\n        $pagination: CursorConnectionArgs!\n        $filters: AdminContentFilter\n      ) {\n        adminContent {\n          allContent(pagination: $pagination, filters: $filters) {\n            nodes {\n              ...ContentInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    ":
-    graphql.AllContentDocument,
   "\n      mutation UpdateContent($data: UpdateContent!) {\n        adminContent {\n          updateContent(data: $data) {\n            __typename\n          }\n        }\n      }\n    ":
     graphql.UpdateContentDocument,
+  "\n      query AllContent(\n        $pagination: CursorConnectionArgs!\n        $filters: AdminContentFilter\n      ) {\n        adminContent {\n          allContent(pagination: $pagination, filters: $filters) {\n            nodes {\n              ...ContentInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    ":
+    graphql.AllContentDocument,
   "\n      mutation CreateDomain($data: CreateDomain!) {\n        adminDomain {\n          createDomain(input: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    ":
     graphql.CreateDomainDocument,
   "\n  fragment DomainInfo on Domain {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n  }\n":
@@ -95,17 +95,17 @@ export function gql(
   source: "\n  query AllTopicsBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminTopicsFilter\n  ) {\n    adminDomain {\n      allTopics(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n          sortIndex\n          parent {\n            id\n            code\n            label\n          }\n          project {\n            id\n            code\n            label\n          }\n        }\n        ...Pagination\n      }\n    }\n  }\n"
 ): typeof documents["\n  query AllTopicsBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminTopicsFilter\n  ) {\n    adminDomain {\n      allTopics(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n          sortIndex\n          parent {\n            id\n            code\n            label\n          }\n          project {\n            id\n            code\n            label\n          }\n        }\n        ...Pagination\n      }\n    }\n  }\n"];
 export function gql(
-  source: "\n  fragment ContentInfo on Content {\n    id\n    code\n    label\n    description\n    tags\n    project {\n      id\n      code\n      label\n    }\n    kcs {\n      id\n      code\n      label\n    }\n    topics {\n      id\n    }\n    updatedAt\n    createdAt\n  }\n"
-): typeof documents["\n  fragment ContentInfo on Content {\n    id\n    code\n    label\n    description\n    tags\n    project {\n      id\n      code\n      label\n    }\n    kcs {\n      id\n      code\n      label\n    }\n    topics {\n      id\n    }\n    updatedAt\n    createdAt\n  }\n"];
+  source: "\n  fragment ContentInfo on Content {\n    id\n    code\n    label\n    description\n    tags\n    binaryBase64\n    json\n    url\n    project {\n      id\n      code\n      label\n    }\n    kcs {\n      id\n      code\n      label\n    }\n    topics {\n      id\n    }\n    updatedAt\n    createdAt\n  }\n"
+): typeof documents["\n  fragment ContentInfo on Content {\n    id\n    code\n    label\n    description\n    tags\n    binaryBase64\n    json\n    url\n    project {\n      id\n      code\n      label\n    }\n    kcs {\n      id\n      code\n      label\n    }\n    topics {\n      id\n    }\n    updatedAt\n    createdAt\n  }\n"];
 export function gql(
   source: "\n      mutation CreateContent($data: CreateContent!) {\n        adminContent {\n          createContent(data: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation CreateContent($data: CreateContent!) {\n        adminContent {\n          createContent(data: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    "];
 export function gql(
-  source: "\n      query AllContent(\n        $pagination: CursorConnectionArgs!\n        $filters: AdminContentFilter\n      ) {\n        adminContent {\n          allContent(pagination: $pagination, filters: $filters) {\n            nodes {\n              ...ContentInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    "
-): typeof documents["\n      query AllContent(\n        $pagination: CursorConnectionArgs!\n        $filters: AdminContentFilter\n      ) {\n        adminContent {\n          allContent(pagination: $pagination, filters: $filters) {\n            nodes {\n              ...ContentInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    "];
-export function gql(
   source: "\n      mutation UpdateContent($data: UpdateContent!) {\n        adminContent {\n          updateContent(data: $data) {\n            __typename\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation UpdateContent($data: UpdateContent!) {\n        adminContent {\n          updateContent(data: $data) {\n            __typename\n          }\n        }\n      }\n    "];
+export function gql(
+  source: "\n      query AllContent(\n        $pagination: CursorConnectionArgs!\n        $filters: AdminContentFilter\n      ) {\n        adminContent {\n          allContent(pagination: $pagination, filters: $filters) {\n            nodes {\n              ...ContentInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    "
+): typeof documents["\n      query AllContent(\n        $pagination: CursorConnectionArgs!\n        $filters: AdminContentFilter\n      ) {\n        adminContent {\n          allContent(pagination: $pagination, filters: $filters) {\n            nodes {\n              ...ContentInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    "];
 export function gql(
   source: "\n      mutation CreateDomain($data: CreateDomain!) {\n        adminDomain {\n          createDomain(input: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation CreateDomain($data: CreateDomain!) {\n        adminDomain {\n          createDomain(input: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    "];

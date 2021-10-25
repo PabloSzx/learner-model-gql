@@ -28,7 +28,7 @@ export function FormModal({
   onSubmit?: () => Promise<void>;
   triggerButton?: ButtonProps;
   saveButton?: ButtonProps;
-  modalProps?: ModalProps;
+  modalProps?: Partial<ModalProps>;
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -36,9 +36,7 @@ export function FormModal({
 
   return (
     <>
-      <Button onClick={onOpen} {...triggerButton}>
-        {title}
-      </Button>
+      <Button onClick={onOpen} children={title} {...triggerButton} />
 
       <Modal
         isOpen={isOpen}
@@ -73,10 +71,9 @@ export function FormModal({
                 isLoading={isLoading}
                 leftIcon={<MdSave />}
                 type="submit"
+                children={title}
                 {...saveButton}
-              >
-                {title}
-              </Button>
+              />
             </VStack>
           </ModalBody>
           <ModalFooter>
