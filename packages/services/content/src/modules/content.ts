@@ -14,6 +14,8 @@ export const contentModule = registerModule(
       description: String!
 
       binaryBase64: String
+      binaryFilename: String
+
       json: JSONObject
       url: String
 
@@ -34,6 +36,8 @@ export const contentModule = registerModule(
       projectId: IntID!
 
       binaryBase64: String
+      binaryFilename: String
+
       json: JSONObject
       url: URL
 
@@ -55,6 +59,8 @@ export const contentModule = registerModule(
       projectId: IntID!
 
       binaryBase64: String
+      binaryFilename: String
+
       json: JSONObject
       url: URL
 
@@ -103,6 +109,7 @@ export const contentModule = registerModule(
             data: {
               description,
               projectId,
+              binaryFilename,
               binaryBase64,
               json,
               url,
@@ -123,7 +130,14 @@ export const contentModule = registerModule(
               json: json || undefined,
               url: url?.toString() || null,
               binary: binaryBase64 ? Buffer.from(binaryBase64, "base64") : null,
-
+              binaryFilename: binaryBase64
+                ? binaryFilename ||
+                  (() => {
+                    throw Error(
+                      "binaryFilename not specified alongside binaryBase64"
+                    );
+                  })()
+                : null,
               project: {
                 connect: {
                   id: projectId,
@@ -149,6 +163,7 @@ export const contentModule = registerModule(
               description,
               projectId,
               binaryBase64,
+              binaryFilename,
               json,
               url,
               code,
@@ -171,7 +186,14 @@ export const contentModule = registerModule(
               json,
               url: url?.toString() || null,
               binary: binaryBase64 ? Buffer.from(binaryBase64, "base64") : null,
-
+              binaryFilename: binaryBase64
+                ? binaryFilename ||
+                  (() => {
+                    throw Error(
+                      "binaryFilename not specified alongside binaryBase64"
+                    );
+                  })()
+                : null,
               project: {
                 connect: {
                   id: projectId,

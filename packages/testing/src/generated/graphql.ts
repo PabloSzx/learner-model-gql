@@ -267,6 +267,7 @@ export type Connection = {
 export type Content = {
   __typename?: "Content";
   binaryBase64?: Maybe<Scalars["String"]>;
+  binaryFilename?: Maybe<Scalars["String"]>;
   code: Scalars["String"];
   createdAt: Scalars["DateTime"];
   description: Scalars["String"];
@@ -290,6 +291,7 @@ export type ContentConnection = Connection & {
 
 export type CreateContent = {
   binaryBase64?: Maybe<Scalars["String"]>;
+  binaryFilename?: Maybe<Scalars["String"]>;
   code: Scalars["String"];
   description: Scalars["String"];
   json?: Maybe<Scalars["JSONObject"]>;
@@ -527,6 +529,7 @@ export type TopicsConnection = Connection & {
 
 export type UpdateContent = {
   binaryBase64?: Maybe<Scalars["String"]>;
+  binaryFilename?: Maybe<Scalars["String"]>;
   code: Scalars["String"];
   description: Scalars["String"];
   id: Scalars["IntID"];

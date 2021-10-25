@@ -238,9 +238,11 @@ model Content {
 
   description String
 
-  binary Bytes?
-  json   Json?
-  url    String?
+  binary         Bytes?
+  binaryFilename String?
+
+  json Json?
+  url  String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt

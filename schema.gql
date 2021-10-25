@@ -210,6 +210,7 @@ type Content {
   label: String!
   description: String!
   binaryBase64: String
+  binaryFilename: String
   json: JSONObject
   url: String
   sortIndex: Int
@@ -302,6 +303,7 @@ input CreateContent {
   label: String!
   projectId: IntID!
   binaryBase64: String
+  binaryFilename: String
   json: JSONObject
   url: URL
   topics: [IntID!]!
@@ -316,6 +318,7 @@ input UpdateContent {
   label: String!
   projectId: IntID!
   binaryBase64: String
+  binaryFilename: String
   json: JSONObject
   url: URL
   topics: [IntID!]!

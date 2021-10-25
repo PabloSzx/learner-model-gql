@@ -57,6 +57,7 @@ export type Content = {
   label: Scalars["String"];
   description: Scalars["String"];
   binaryBase64?: Maybe<Scalars["String"]>;
+  binaryFilename?: Maybe<Scalars["String"]>;
   json?: Maybe<Scalars["JSONObject"]>;
   url?: Maybe<Scalars["String"]>;
   sortIndex?: Maybe<Scalars["Int"]>;
@@ -72,6 +73,7 @@ export type CreateContent = {
   label: Scalars["String"];
   projectId: Scalars["IntID"];
   binaryBase64?: Maybe<Scalars["String"]>;
+  binaryFilename?: Maybe<Scalars["String"]>;
   json?: Maybe<Scalars["JSONObject"]>;
   url?: Maybe<Scalars["URL"]>;
   topics: Array<Scalars["IntID"]>;
@@ -86,6 +88,7 @@ export type UpdateContent = {
   label: Scalars["String"];
   projectId: Scalars["IntID"];
   binaryBase64?: Maybe<Scalars["String"]>;
+  binaryFilename?: Maybe<Scalars["String"]>;
   json?: Maybe<Scalars["JSONObject"]>;
   url?: Maybe<Scalars["URL"]>;
   topics: Array<Scalars["IntID"]>;
@@ -391,6 +394,11 @@ export type ContentResolvers<
   label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   description?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   binaryBase64?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  binaryFilename?: Resolver<
     Maybe<ResolversTypes["String"]>,
     ParentType,
     ContextType

@@ -153,6 +153,7 @@ Table Content {
   actions Action [not null]
   description String [not null]
   binary Bytes
+  binaryFilename String
   json Json
   url String
   createdAt DateTime [default: `now()`, not null]
