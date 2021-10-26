@@ -7,7 +7,7 @@
   "types": "src/index.ts",
   "scripts": {
     "dev": "graphql-codegen --config codegen.yml --watch",
-    "generate": "graphql-codegen --config codegen.yml"
+    "generate": "(graphql-codegen --config codegen.yml) || exit 0"
   },
   "dependencies": {
     "common": "workspace:^0.0.1",
