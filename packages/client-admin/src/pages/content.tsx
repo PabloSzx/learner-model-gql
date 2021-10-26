@@ -323,7 +323,7 @@ const EditContent = ({
             kcs: kcs.map((v) => v.value),
             projectId: content.project.id,
             tags,
-            topics: [],
+            topics: content.topics.map((v) => v.id),
             binaryBase64,
             binaryFilename: updateFile ? file?.name : content.binaryFilename,
             json: jsonEditor.parsedJson || null,

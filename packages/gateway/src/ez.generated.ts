@@ -563,6 +563,7 @@ export type KCsConnection = Connection & {
 
 export type AdminKCsFilter = {
   domains?: Maybe<Array<Scalars["IntID"]>>;
+  projects?: Maybe<Array<Scalars["IntID"]>>;
 };
 
 export type CreateKcInput = {

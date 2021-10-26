@@ -28,6 +28,7 @@ export const kcModule = registerModule(
 
     input AdminKCsFilter {
       domains: [IntID!]
+      projects: [IntID!]
     }
 
     extend type AdminDomainQueries {
@@ -96,11 +97,25 @@ export const kcModule = registerModule(
             return prisma.kC.findMany({
               ...connection,
               where: {
-                domainId: filters?.domains
-                  ? {
-                      in: filters.domains,
-                    }
-                  : undefined,
+                domain:
+                  filters?.domains || filters?.projects
+                    ? {
+                        id: filters?.domains
+                          ? {
+                              in: filters.domains,
+                            }
+                          : undefined,
+                        projects: filters?.projects
+                          ? {
+                              some: {
+                                id: {
+                                  in: filters.projects,
+                                },
+                              },
+                            }
+                          : undefined,
+                      }
+                    : undefined,
               },
             });
           });

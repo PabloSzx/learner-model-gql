@@ -427,6 +427,7 @@ type KCsConnection implements Connection {
 
 input AdminKCsFilter {
   domains: [IntID!]
+  projects: [IntID!]
 }
 
 input CreateKCInput {
