@@ -177,6 +177,10 @@ export type AdminDomainsFilter = {
   projects?: Maybe<Array<Scalars["IntID"]>>;
 };
 
+export type AdminGroupsFilter = {
+  tags?: Maybe<Array<Scalars["String"]>>;
+};
+
 export type AdminKCsFilter = {
   domains?: Maybe<Array<Scalars["IntID"]>>;
   projects?: Maybe<Array<Scalars["IntID"]>>;
@@ -254,6 +258,7 @@ export type AdminUserQueries = {
 };
 
 export type AdminUserQueriesAllGroupsArgs = {
+  filters?: Maybe<AdminGroupsFilter>;
   pagination: CursorConnectionArgs;
 };
 

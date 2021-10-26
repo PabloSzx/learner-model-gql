@@ -121,6 +121,10 @@ type GroupsConnection implements Connection {
   pageInfo: PageInfo!
 }
 
+input AdminGroupsFilter {
+  tags: [String!]
+}
+
 enum UserRole {
   ADMIN
   USER
@@ -157,7 +161,10 @@ type AdminUserQueries {
     pagination: CursorConnectionArgs!
     filters: AdminUsersFilter
   ): UsersConnection!
-  allGroups(pagination: CursorConnectionArgs!): GroupsConnection!
+  allGroups(
+    pagination: CursorConnectionArgs!
+    filters: AdminGroupsFilter
+  ): GroupsConnection!
 }
 
 input UpdateUserInput {

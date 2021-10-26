@@ -163,13 +163,15 @@ export const usersModule = registerModule(
           return ResolveCursorConnection(pagination, (connection) => {
             return prisma.user.findMany({
               ...connection,
-              where: {
-                tags: filters?.tags
-                  ? {
-                      hasSome: filters.tags,
-                    }
-                  : undefined,
-              },
+              where: filters
+                ? {
+                    tags: filters.tags
+                      ? {
+                          hasSome: filters.tags,
+                        }
+                      : undefined,
+                  }
+                : undefined,
             });
           });
         },

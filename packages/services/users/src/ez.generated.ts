@@ -98,6 +98,10 @@ export type GroupsConnection = Connection & {
   pageInfo: PageInfo;
 };
 
+export type AdminGroupsFilter = {
+  tags?: Maybe<Array<Scalars["String"]>>;
+};
+
 export type UserRole = "ADMIN" | "USER";
 
 export type User = {
@@ -140,6 +144,7 @@ export type AdminUserQueriesAllUsersArgs = {
 
 export type AdminUserQueriesAllGroupsArgs = {
   pagination: CursorConnectionArgs;
+  filters?: Maybe<AdminGroupsFilter>;
 };
 
 export type UpdateUserInput = {
@@ -356,6 +361,7 @@ export type ResolversTypes = {
   CreateGroupInput: CreateGroupInput;
   UpdateGroupInput: UpdateGroupInput;
   GroupsConnection: ResolverTypeWrapper<GroupsConnection>;
+  AdminGroupsFilter: AdminGroupsFilter;
   UserRole: UserRole;
   User: ResolverTypeWrapper<User>;
   UsersConnection: ResolverTypeWrapper<UsersConnection>;
@@ -392,6 +398,7 @@ export type ResolversParentTypes = {
   CreateGroupInput: CreateGroupInput;
   UpdateGroupInput: UpdateGroupInput;
   GroupsConnection: GroupsConnection;
+  AdminGroupsFilter: AdminGroupsFilter;
   User: User;
   UsersConnection: UsersConnection;
   AdminUsersFilter: AdminUsersFilter;

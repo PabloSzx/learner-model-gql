@@ -81,8 +81,15 @@ export const groupsModule = registerModule(
       pageInfo: PageInfo!
     }
 
+    input AdminGroupsFilter {
+      tags: [String!]
+    }
+
     extend type AdminUserQueries {
-      allGroups(pagination: CursorConnectionArgs!): GroupsConnection!
+      allGroups(
+        pagination: CursorConnectionArgs!
+        filters: AdminGroupsFilter
+      ): GroupsConnection!
     }
   `,
   {
@@ -143,10 +150,19 @@ export const groupsModule = registerModule(
         },
       },
       AdminUserQueries: {
-        allGroups(_root, { pagination }, { prisma }) {
+        allGroups(_root, { pagination, filters }, { prisma }) {
           return ResolveCursorConnection(pagination, (connection) => {
             return prisma.group.findMany({
               ...connection,
+              where: filters
+                ? {
+                    tags: filters.tags
+                      ? {
+                          hasSome: filters.tags,
+                        }
+                      : undefined,
+                  }
+                : undefined,
             });
           });
         },
