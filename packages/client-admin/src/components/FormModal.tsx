@@ -24,7 +24,7 @@ export function FormModal({
   modalProps,
 }: {
   title: string;
-  children: ReactNode;
+  children: ReactNode | (() => ReactNode);
   onSubmit?: () => Promise<void>;
   triggerButton?: ButtonProps;
   saveButton?: ButtonProps;
@@ -64,7 +64,7 @@ export function FormModal({
                 }
               }}
             >
-              {children}
+              {typeof children === "function" ? children() : children}
               <Button
                 colorScheme="facebook"
                 isDisabled={isLoading}

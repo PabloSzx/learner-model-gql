@@ -1,15 +1,17 @@
-import { logger, smartListen } from "api-base";
+import { ENV, logger, smartListen } from "api-base";
 import Fastify from "fastify";
+import { setTimeout } from "timers/promises";
 import { inspect } from "util";
 import { getGatewayPlugin } from "./app";
 import type { Subscription } from "./ez.generated";
 
-const app = Fastify({
-  logger,
-});
 inspect.defaultOptions.depth = null;
 
 async function main() {
+  const app = Fastify({
+    logger,
+  });
+
   await app.register(await getGatewayPlugin());
 
   await smartListen(app, 8080);
@@ -21,7 +23,17 @@ declare module "pg-gql-pubsub" {
   interface Channels extends PubSubData {}
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+if (ENV.IS_DEVELOPMENT) {
+  while (true) {
+    try {
+      await main();
+      break;
+    } catch (err) {
+      console.error(err);
+
+      await setTimeout(500);
+    }
+  }
+} else {
+  await main();
+}

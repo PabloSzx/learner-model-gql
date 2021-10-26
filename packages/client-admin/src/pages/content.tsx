@@ -1,15 +1,20 @@
 import {
   Box,
+  Button,
+  Checkbox,
   FormControl,
   FormHelperText,
   FormLabel,
   Input,
+  useToast,
+  useUpdateEffect,
   VStack,
-  Button,
 } from "@chakra-ui/react";
 import { ContentInfoFragment, gql, useGQLMutation, useGQLQuery } from "graph";
-import { memo, useRef } from "react";
-import { MdAdd, MdEdit } from "react-icons/md";
+import mime from "mime";
+import { memo, useMemo, useRef } from "react";
+import { MdAdd, MdDownload, MdEdit } from "react-icons/md";
+import { serializeError } from "serialize-error";
 import { useImmer } from "use-immer";
 import { AsyncSelect } from "../components/AsyncSelect";
 import { withAdminAuth } from "../components/Auth";
@@ -17,11 +22,10 @@ import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
 import { useJSONEditor } from "../components/jsonEditor";
 import { useTagsSelect } from "../components/TagsSelect";
-import { kcOptionLabel, useKCsBase, useSelectMultiKCs } from "../hooks/kcs";
+import { kcOptionLabel, useSelectMultiKCs } from "../hooks/kcs";
 import { useCursorPagination } from "../hooks/pagination";
 import { projectOptionLabel, useSelectSingleProject } from "../hooks/projects";
 import { queryClient } from "../rqClient";
-import useCopyToClipboard from "react-use/lib/useCopyToClipboard.js";
 
 gql(/* GraphQL */ `
   fragment ContentInfo on Content {
@@ -31,6 +35,7 @@ gql(/* GraphQL */ `
     description
     tags
     binaryBase64
+    binaryFilename
     json
     url
     project {
@@ -52,10 +57,21 @@ gql(/* GraphQL */ `
 `);
 
 function getBase64(file: File) {
-  return new Promise<string | null>((resolve, reject) => {
+  return new Promise<string>((resolve, reject) => {
+    if (mime.getType(file.name) == null)
+      return reject(Error("Invalid file type"));
+
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
+    reader.onload = () => {
+      if (typeof reader.result !== "string")
+        return reject("File could not be encoded to base64!");
+      const base64String = reader.result.split(",")[1];
+
+      if (typeof base64String !== "string")
+        return reject("File could not be encoded to base64!");
+      resolve(base64String);
+    };
     reader.onerror = (error) => reject(error);
   });
 }
@@ -126,6 +142,7 @@ const CreateContent = memo(function CreateContent() {
             tags: tagsRef.current?.getValue().map((v) => v.value) || [],
             topics: [],
             binaryBase64,
+            binaryFilename: file?.name,
             json: jsonEditor.parsedJson || null,
             url: urlRef.current?.value || null,
           },
@@ -133,6 +150,9 @@ const CreateContent = memo(function CreateContent() {
 
         codeRef.current.value = "";
         labelRef.current.value = "";
+      }}
+      modalProps={{
+        closeOnOverlayClick: false,
       }}
       triggerButton={{
         colorScheme: "facebook",
@@ -200,7 +220,12 @@ const EditContent = ({
 }: {
   row: { original: ContentInfoFragment };
 }) => {
-  const [form, produceForm] = useImmer(() => {
+  const oldBinaryContentType = useMemo(() => {
+    return content.binaryBase64 && content.binaryFilename
+      ? mime.getType(content.binaryFilename)
+      : null;
+  }, [content.binaryBase64, content.binaryFilename]);
+  function initForm() {
     const { code, label, description, tags, kcs } = content;
     return {
       code,
@@ -208,8 +233,16 @@ const EditContent = ({
       description,
       tags,
       kcs: kcs.map((kc) => ({ label: kcOptionLabel(kc), value: kc.id })),
+      updateFile: oldBinaryContentType ? false : true,
     };
-  });
+  }
+  const [form, produceForm] = useImmer(initForm);
+
+  const toast = useToast();
+
+  useUpdateEffect(() => {
+    produceForm(initForm);
+  }, [content.updatedAt, content.kcs.map((v) => v.id).join()]);
 
   const { tagsSelect } = useTagsSelect({
     defaultTags: content.tags,
@@ -246,25 +279,40 @@ const EditContent = ({
 
   const fileRef = useRef<HTMLInputElement>(null);
 
-  const jsonEditor = useJSONEditor();
+  const defaultJson = useMemo(
+    () => (content.json ? JSON.stringify(content.json) : undefined),
+    [content.json]
+  );
+
+  const jsonEditor = useJSONEditor({
+    defaultJson,
+  });
+
+  useUpdateEffect(() => {
+    jsonEditor.setJson(defaultJson || "");
+  }, [defaultJson]);
 
   const urlRef = useRef<HTMLInputElement>(null);
-
-  const [, copyToClipboard] = useCopyToClipboard();
 
   return (
     <FormModal
       onSubmit={async () => {
-        const { code, label, description, kcs, tags } = form;
+        const { code, label, description, kcs, tags, updateFile } = form;
 
         const file = fileRef.current?.files?.[0];
 
-        const binaryBase64 = file
-          ? (await getBase64(file)) ||
-            (() => {
-              throw Error("File could not be encoded to base64!");
-            })()
-          : null;
+        const binaryBase64 = updateFile
+          ? file
+            ? await getBase64(file).catch((err) => {
+                toast({
+                  status: "error",
+                  title: err.message || JSON.stringify(serializeError(err)),
+                });
+
+                throw err;
+              })
+            : null
+          : content.binaryBase64;
 
         await updateContent.mutateAsync({
           data: {
@@ -277,6 +325,7 @@ const EditContent = ({
             tags,
             topics: [],
             binaryBase64,
+            binaryFilename: updateFile ? file?.name : content.binaryFilename,
             json: jsonEditor.parsedJson || null,
             url: urlRef.current?.value || null,
           },
@@ -300,84 +349,112 @@ const EditContent = ({
         closeOnOverlayClick: false,
       }}
     >
-      <FormControl id="code">
-        <FormLabel>Code</FormLabel>
-        <Input
-          type="text"
-          value={form.code}
-          onChange={(ev) => {
-            produceForm((draft) => {
-              draft.code = ev.target.value;
-            });
-          }}
-        />
-      </FormControl>
-      <FormControl id="label">
-        <FormLabel>Label</FormLabel>
-        <Input
-          type="text"
-          value={form.label}
-          onChange={(ev) => {
-            produceForm((draft) => {
-              draft.label = ev.target.value;
-            });
-          }}
-        />
-      </FormControl>
-      <FormControl id="description">
-        <FormLabel>Description</FormLabel>
-        <Input
-          type="text"
-          value={form.description}
-          onChange={(ev) => {
-            produceForm((draft) => {
-              draft.description = ev.target.value;
-            });
-          }}
-        />
-      </FormControl>
-      <FormControl id="tags">
-        <FormLabel>Tags</FormLabel>
-        {tagsSelect}
-      </FormControl>
-      <FormControl id="kcs" minW="250px">
-        <FormLabel>KCs</FormLabel>
+      {() => {
+        return (
+          <>
+            <FormControl id="code">
+              <FormLabel>Code</FormLabel>
+              <Input
+                type="text"
+                value={form.code}
+                onChange={(ev) => {
+                  produceForm((draft) => {
+                    draft.code = ev.target.value;
+                  });
+                }}
+              />
+            </FormControl>
+            <FormControl id="label">
+              <FormLabel>Label</FormLabel>
+              <Input
+                type="text"
+                value={form.label}
+                onChange={(ev) => {
+                  produceForm((draft) => {
+                    draft.label = ev.target.value;
+                  });
+                }}
+              />
+            </FormControl>
+            <FormControl id="description">
+              <FormLabel>Description</FormLabel>
+              <Input
+                type="text"
+                value={form.description}
+                onChange={(ev) => {
+                  produceForm((draft) => {
+                    draft.description = ev.target.value;
+                  });
+                }}
+              />
+            </FormControl>
+            <FormControl id="tags">
+              <FormLabel>Tags</FormLabel>
+              {tagsSelect}
+            </FormControl>
+            <FormControl id="kcs" minW="250px">
+              <FormLabel>KCs</FormLabel>
 
-        {selectMultiKCComponent}
-      </FormControl>
-      {content.binaryBase64 ? (
-        <FormControl id="existingBase64">
-          <Button
-            onClick={() => {
-              copyToClipboard(content.binaryBase64!);
-            }}
-          >
-            Copy to Clipboard
-          </Button>
-        </FormControl>
-      ) : null}
-      <FormControl>
-        <FormLabel>Binary Content</FormLabel>
-        <Input
-          type="file"
-          ref={fileRef}
-          lineHeight="2rem"
-          sx={{ textAlignLast: "center" }}
-        />
-        <FormHelperText>
-          The file is going to be encoded to base64
-        </FormHelperText>
-      </FormControl>
-      <FormControl>
-        <FormLabel>JSON</FormLabel>
-        {jsonEditor.jsonEditor}
-        <FormHelperText>JSON Object</FormHelperText>
-      </FormControl>
-      <FormControl id="url">
-        <FormLabel>URL</FormLabel>
-        <Input type="url" ref={urlRef} />
-        <FormHelperText>Custom External URL</FormHelperText>
-      </FormControl>
+              {selectMultiKCComponent}
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Binary Content</FormLabel>
+              {oldBinaryContentType ? (
+                <FormControl id="existingBase64">
+                  <Button
+                    width="full"
+                    as="a"
+                    download={content.binaryFilename}
+                    href={`data:${oldBinaryContentType};base64,${content.binaryBase64}`}
+                    target="_blank"
+                    leftIcon={<MdDownload />}
+                  >
+                    Download current content file
+                  </Button>
+                </FormControl>
+              ) : null}
+              {oldBinaryContentType && (
+                <Checkbox
+                  checked={form.updateFile}
+                  onChange={() =>
+                    produceForm((draft) => {
+                      draft.updateFile = !draft.updateFile;
+                    })
+                  }
+                >
+                  Should update binary content
+                </Checkbox>
+              )}
+              {form.updateFile && (
+                <Input
+                  type="file"
+                  ref={fileRef}
+                  lineHeight="2rem"
+                  sx={{ textAlignLast: "center" }}
+                />
+              )}
+              <FormHelperText>
+                The file is going to be encoded to base64
+              </FormHelperText>
+            </FormControl>
+            <FormControl>
+              <FormLabel>JSON</FormLabel>
+              {jsonEditor.jsonEditor}
+              <FormHelperText>JSON Object</FormHelperText>
+            </FormControl>
+            <FormControl id="url">
+              <FormLabel>URL</FormLabel>
+              <Input
+                type="url"
+                ref={urlRef}
+                defaultValue={content.url || undefined}
+              />
+              <FormHelperText>Custom External URL</FormHelperText>
+            </FormControl>
+          </>
+        );
+      }}
     </FormModal>
   );
 };
@@ -406,8 +483,6 @@ export default withAdminAuth(function ContentPage() {
     }
   );
   pageInfo.current = data?.adminContent.allContent.pageInfo;
-
-  const kcsBase = useKCsBase();
 
   return (
     <VStack>
@@ -455,9 +530,6 @@ export default withAdminAuth(function ContentPage() {
               return (
                 <Box minW={kcs.length ? "250px" : undefined}>
                   <AsyncSelect
-                    key={kcsBase.asOptions.length}
-                    isLoading={kcsBase.isFetching}
-                    loadOptions={kcsBase.filteredOptions}
                     isMulti
                     placeholder="No KCs"
                     value={kcs.map((kc) => ({

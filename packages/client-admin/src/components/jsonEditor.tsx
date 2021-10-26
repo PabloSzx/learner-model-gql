@@ -11,10 +11,12 @@ import { SiPrettier } from "react-icons/si";
 
 export function useJSONEditor({
   textAreaProps,
+  defaultJson,
 }: {
   textAreaProps?: TextareaProps;
+  defaultJson?: string;
 } = {}) {
-  const [json, setJson] = useState("");
+  const [json, setJson] = useState(defaultJson || "");
 
   const latestJson = useLatestRef(json);
 

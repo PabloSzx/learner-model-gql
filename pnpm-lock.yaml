@@ -140,6 +140,7 @@ importers:
       '@chakra-ui/system': ^1.7.4
       '@emotion/react': ^11.5.0
       '@emotion/styled': ^11.3.0
+      '@types/mime': ^2.0.3
       '@types/nprogress': ^0.2.0
       '@types/react': ^17.0.32
       '@types/react-dom': ^17.0.10
@@ -149,6 +150,7 @@ importers:
       framer-motion: ^4.1.17
       graph: workspace:^0.0.1
       immer: ^9.0.6
+      mime: ^2.5.2
       next: ^11.1.2
       nprogress: ^0.2.0
       react: ^17.0.2
@@ -174,6 +176,7 @@ importers:
       framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
       graph: link:../graph
       immer: 9.0.6
+      mime: 2.5.2
       next: 11.1.2_8e3522129ef2816b3c737f17aecb3a9d
       nprogress: 0.2.0
       react: 17.0.2
@@ -186,6 +189,7 @@ importers:
       use-immer: 0.6.0_immer@9.0.6+react@17.0.2
       zustand: 3.6.0_react@17.0.2
     devDependencies:
+      '@types/mime': 2.0.3
       '@types/nprogress': 0.2.0
       '@types/react-table': 7.7.7
       typescript: 4.4.4
@@ -354,11 +358,16 @@ importers:
 
   packages/services/content:
     specifiers:
+      '@types/mime': ^2.0.3
       api-base: workspace:^0.0.1
       db: workspace:^0.0.1
+      mime: ^2.5.2
     dependencies:
       api-base: link:../../api-base
       db: link:../../db
+      mime: 2.5.2
+    devDependencies:
+      '@types/mime': 2.0.3
 
   packages/services/domain:
     specifiers:
@@ -3213,6 +3222,10 @@ packages:
 
   /@types/lodash/4.14.176:
     resolution: {integrity: sha512-xZmuPTa3rlZoIbtDUyJKZQimJV3bxCmzMIO2c9Pz9afyDro6kr7R79GwcB6mRhuoPmV2p1Vb66WOJH7F886WKQ==}
+
+  /@types/mime/2.0.3:
+    resolution: {integrity: sha512-Jus9s4CDbqwocc5pOAnh8ShfrnMcPHuJYzVcSUU7lrh8Ni5HuIqX3oilL86p3dlTrk0LzHRCgA/GQ7uNCw6l2Q==}
+    dev: true
 
   /@types/minimatch/3.0.5:
     resolution: {integrity: sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==}
@@ -6641,6 +6654,12 @@ packages:
     engines: {node: '>= 0.6'}
     dependencies:
       mime-db: 1.50.0
+
+  /mime/2.5.2:
+    resolution: {integrity: sha512-tqkh47FzKeCPD2PUiPB6pkbMzsCasjxAfC62/Wap5qrUWcb+sFasXUC5I3gYM5iBM8v/Qpn4UK0x+j0iHyFPDg==}
+    engines: {node: '>=4.0.0'}
+    hasBin: true
+    dev: false
 
   /mimic-fn/1.2.0:
     resolution: {integrity: sha512-jf84uxzwiuiIVKiOLpfYk7N46TSy8ubTonmneY9vrpHNAnp0QBt2BxWV9dO3/j+BoVAb+a5G6YDPW3M5HOdMWQ==}

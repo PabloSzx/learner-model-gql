@@ -877,6 +877,7 @@ export type ContentInfoFragment = {
   description: string;
   tags: Array<string>;
   binaryBase64?: string | null | undefined;
+  binaryFilename?: string | null | undefined;
   json?: Record<string, unknown> | null | undefined;
   url?: string | null | undefined;
   updatedAt: string;
@@ -934,6 +935,7 @@ export type AllContentQuery = {
         description: string;
         tags: Array<string>;
         binaryBase64?: string | null | undefined;
+        binaryFilename?: string | null | undefined;
         json?: Record<string, unknown> | null | undefined;
         url?: string | null | undefined;
         updatedAt: string;
@@ -1482,6 +1484,7 @@ export const ContentInfoFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "description" } },
           { kind: "Field", name: { kind: "Name", value: "tags" } },
           { kind: "Field", name: { kind: "Name", value: "binaryBase64" } },
+          { kind: "Field", name: { kind: "Name", value: "binaryFilename" } },
           { kind: "Field", name: { kind: "Name", value: "json" } },
           { kind: "Field", name: { kind: "Name", value: "url" } },
           {
