@@ -258,7 +258,12 @@ export type AdminUserQueriesAllGroupsArgs = {
 };
 
 export type AdminUserQueriesAllUsersArgs = {
+  filters?: Maybe<AdminUsersFilter>;
   pagination: CursorConnectionArgs;
+};
+
+export type AdminUsersFilter = {
+  tags?: Maybe<Array<Scalars["String"]>>;
 };
 
 export type Connection = {

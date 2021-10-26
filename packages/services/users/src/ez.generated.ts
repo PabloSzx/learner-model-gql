@@ -123,6 +123,10 @@ export type UsersConnection = Connection & {
   pageInfo: PageInfo;
 };
 
+export type AdminUsersFilter = {
+  tags?: Maybe<Array<Scalars["String"]>>;
+};
+
 export type AdminUserQueries = {
   __typename?: "AdminUserQueries";
   allUsers: UsersConnection;
@@ -131,6 +135,7 @@ export type AdminUserQueries = {
 
 export type AdminUserQueriesAllUsersArgs = {
   pagination: CursorConnectionArgs;
+  filters?: Maybe<AdminUsersFilter>;
 };
 
 export type AdminUserQueriesAllGroupsArgs = {
@@ -354,6 +359,7 @@ export type ResolversTypes = {
   UserRole: UserRole;
   User: ResolverTypeWrapper<User>;
   UsersConnection: ResolverTypeWrapper<UsersConnection>;
+  AdminUsersFilter: AdminUsersFilter;
   AdminUserQueries: ResolverTypeWrapper<AdminUserQueries>;
   UpdateUserInput: UpdateUserInput;
   AdminUserMutations: ResolverTypeWrapper<AdminUserMutations>;
@@ -388,6 +394,7 @@ export type ResolversParentTypes = {
   GroupsConnection: GroupsConnection;
   User: User;
   UsersConnection: UsersConnection;
+  AdminUsersFilter: AdminUsersFilter;
   AdminUserQueries: AdminUserQueries;
   UpdateUserInput: UpdateUserInput;
   AdminUserMutations: AdminUserMutations;

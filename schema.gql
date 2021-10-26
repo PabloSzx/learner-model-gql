@@ -148,8 +148,15 @@ type UsersConnection implements Connection {
   pageInfo: PageInfo!
 }
 
+input AdminUsersFilter {
+  tags: [String!]
+}
+
 type AdminUserQueries {
-  allUsers(pagination: CursorConnectionArgs!): UsersConnection!
+  allUsers(
+    pagination: CursorConnectionArgs!
+    filters: AdminUsersFilter
+  ): UsersConnection!
   allGroups(pagination: CursorConnectionArgs!): GroupsConnection!
 }
 

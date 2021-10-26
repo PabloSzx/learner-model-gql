@@ -32,8 +32,15 @@ export const usersModule = registerModule(
       pageInfo: PageInfo!
     }
 
+    input AdminUsersFilter {
+      tags: [String!]
+    }
+
     type AdminUserQueries {
-      allUsers(pagination: CursorConnectionArgs!): UsersConnection!
+      allUsers(
+        pagination: CursorConnectionArgs!
+        filters: AdminUsersFilter
+      ): UsersConnection!
     }
 
     input UpdateUserInput {
@@ -152,10 +159,17 @@ export const usersModule = registerModule(
         },
       },
       AdminUserQueries: {
-        allUsers(_root, { pagination }, { prisma }) {
+        allUsers(_root, { pagination, filters }, { prisma }) {
           return ResolveCursorConnection(pagination, (connection) => {
             return prisma.user.findMany({
               ...connection,
+              where: {
+                tags: filters?.tags
+                  ? {
+                      hasSome: filters.tags,
+                    }
+                  : undefined,
+              },
             });
           });
         },
