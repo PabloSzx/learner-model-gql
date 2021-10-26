@@ -329,15 +329,15 @@ importers:
       common: workspace:^0.0.1
       graphql: ^15.7.0
       prettier: ^2.4.1
-      react-query: ^3.28.0
+      react-query: ^3.29.0
       rq-gql: ^0.2.3
       valtio: ^1.2.5
     dependencies:
       common: link:../common
       graphql: 15.7.0
       prettier: 2.4.1
-      react-query: 3.28.0_react@17.0.2
-      rq-gql: 0.2.3_e140b82d081d0c20831dc2037e0ebeaf
+      react-query: 3.29.0_react@17.0.2
+      rq-gql: 0.2.3_2384d20bf283e831b8cd6490c1b311e0
       valtio: 1.2.5_react@17.0.2
     devDependencies:
       '@graphql-codegen/cli': 2.2.1_67b347153e0e2638008993d9393cbb44
@@ -7690,8 +7690,8 @@ packages:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
     dev: false
 
-  /react-query/3.28.0_react@17.0.2:
-    resolution: {integrity: sha512-OeX+nRqs7Zi0MvvtaKxKWE4N966UGtqSVuedOsz8cJh9eW195fgtYZ9nW3hZjIPPmeDY1PkArLUiV4wZvNRDPw==}
+  /react-query/3.29.0_react@17.0.2:
+    resolution: {integrity: sha512-RD5F8VMlIzYYU0rGM71rtGShut+RVwRSTQamUU+4cpWaIaRsUa0nIfXyzAgo6ssVrzGFCrAMEm4LPSazR4FkeA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0
       react-dom: '*'
@@ -8068,7 +8068,7 @@ packages:
       inherits: 2.0.4
     dev: false
 
-  /rq-gql/0.2.3_e140b82d081d0c20831dc2037e0ebeaf:
+  /rq-gql/0.2.3_2384d20bf283e831b8cd6490c1b311e0:
     resolution: {integrity: sha512-Nybx81UBd6DoG+lW/NhFVuT0cNSYP94ROVbDH/b0RzG/Pi9Mp8D5reelx93XdAwftt2FPdfQxCOgJMF2s4osUQ==}
     peerDependencies:
       '@graphql-typed-document-node/core': ^3.1.0
@@ -8086,7 +8086,7 @@ packages:
       '@graphql-typed-document-node/core': 3.1.0_graphql@15.7.0
       commander: 8.3.0
       graphql: 15.7.0
-      react-query: 3.28.0_react@17.0.2
+      react-query: 3.29.0_react@17.0.2
       valtio: 1.2.5_react@17.0.2
     transitivePeerDependencies:
       - '@babel/helper-module-imports'
