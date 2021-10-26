@@ -342,7 +342,9 @@ export default withAdminAuth(function UsersPage() {
                       UsersState[id]!.selectedProjects = value;
                     },
                   ],
-                  isDisabled: updateUser.isLoading,
+                  selectProps: {
+                    isDisabled: updateUser.isLoading,
+                  },
                 });
 
                 return selectMultiProjectComponent;

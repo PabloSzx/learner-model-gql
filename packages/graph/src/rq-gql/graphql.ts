@@ -1040,6 +1040,8 @@ export type GroupInfoFragment = {
   label: string;
   updatedAt: string;
   createdAt: string;
+  tags: Array<string>;
+  flags: { __typename?: "GroupFlags"; id: string; readProjectActions: boolean };
   projects: Array<{
     __typename?: "Project";
     id: string;
@@ -1074,6 +1076,12 @@ export type AllGroupsQuery = {
         label: string;
         updatedAt: string;
         createdAt: string;
+        tags: Array<string>;
+        flags: {
+          __typename?: "GroupFlags";
+          id: string;
+          readProjectActions: boolean;
+        };
         projects: Array<{
           __typename?: "Project";
           id: string;
@@ -1571,6 +1579,21 @@ export const GroupInfoFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "label" } },
           { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
           { kind: "Field", name: { kind: "Name", value: "createdAt" } },
+          { kind: "Field", name: { kind: "Name", value: "tags" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "flags" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "readProjectActions" },
+                },
+              ],
+            },
+          },
           {
             kind: "Field",
             name: { kind: "Name", value: "projects" },

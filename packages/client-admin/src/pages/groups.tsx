@@ -22,6 +22,7 @@ import { FaUsers } from "react-icons/fa";
 import { IoIosEye } from "react-icons/io";
 import { MdAdd, MdCheck, MdClose, MdEdit, MdSave } from "react-icons/md";
 import { proxy, ref, useSnapshot } from "valtio";
+import type { SelectRefType } from "../components/AsyncSelect";
 import { withAdminAuth } from "../components/Auth";
 import { Card } from "../components/Card/Card";
 import { CardContent } from "../components/Card/CardContent";
@@ -29,6 +30,7 @@ import { CardHeader } from "../components/Card/CardHeader";
 import { Property } from "../components/Card/Property";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
+import { useTagsSelect } from "../components/TagsSelect";
 import { useSelectMultiGroups } from "../hooks/groups";
 import { useCursorPagination } from "../hooks/pagination";
 import { projectOptionLabel, useSelectMultiProjects } from "../hooks/projects";
@@ -41,6 +43,11 @@ gql(/* GraphQL */ `
     label
     updatedAt
     createdAt
+    tags
+    flags {
+      id
+      readProjectActions
+    }
     projects {
       id
       code
@@ -288,6 +295,9 @@ const GroupsState = proxy<
       labelRef: { current: string };
       codeRef: { current: string };
       selectedProjects: Array<{ label: string; value: string }>;
+      tagsRef: {
+        current: SelectRefType | null;
+      };
     }
   >
 >({});
@@ -311,6 +321,9 @@ export default withAdminAuth(function GroupsPage() {
               label: projectOptionLabel({ code, label }),
               value: id,
             };
+          }),
+          tagsRef: ref({
+            current: null,
           }),
         }),
         group
@@ -417,35 +430,53 @@ export default withAdminAuth(function GroupsPage() {
             },
           },
           {
+            id: "tags",
+            Header: "Tags",
+            accessor: "id",
+            Cell({
+              row: {
+                original: { id, tags },
+              },
+            }) {
+              const state = GroupsState[id];
+
+              if (state?.isEditing) {
+                const { tagsSelect } = useTagsSelect({
+                  tagsRef: state.tagsRef,
+                  defaultTags: tags,
+                });
+
+                return tagsSelect;
+              }
+              return tags.join(" | ") || "-";
+            },
+          },
+          {
             id: "projects",
             Header: "Projects",
             accessor: "id",
             Cell({
               row: {
-                original: { projects, id },
+                original: { id },
               },
             }) {
-              const projectsCodes = projects.map((v) => v.code).join();
-
               const groupState = groupsState[id];
 
-              if (!groupState) return projectsCodes;
+              if (!groupState) return null;
 
-              if (groupState.isEditing) {
-                const { selectMultiProjectComponent } = useSelectMultiProjects({
-                  state: [
-                    groupState.selectedProjects,
-                    (value) => {
-                      GroupsState[id]!.selectedProjects = value;
-                    },
-                  ],
-                  isDisabled: updateGroup.isLoading,
-                });
+              const { selectMultiProjectComponent } = useSelectMultiProjects({
+                state: [
+                  groupState.selectedProjects,
+                  (value) => {
+                    GroupsState[id]!.selectedProjects = value;
+                  },
+                ],
+                selectProps: {
+                  isDisabled: updateGroup.isLoading || !groupState.isEditing,
+                },
+              });
 
-                return selectMultiProjectComponent;
-              }
-
-              return projectsCodes;
+              return selectMultiProjectComponent;
             },
           },
           {
@@ -474,8 +505,13 @@ export default withAdminAuth(function GroupsPage() {
 
               if (!groupState) return null;
 
-              const { isEditing, codeRef, labelRef, selectedProjects } =
-                groupState;
+              const {
+                isEditing,
+                codeRef,
+                labelRef,
+                selectedProjects,
+                tagsRef,
+              } = groupState;
 
               return (
                 <IconButton
@@ -487,6 +523,8 @@ export default withAdminAuth(function GroupsPage() {
                   }
                   isDisabled={updateGroup.isLoading}
                   onClick={() => {
+                    const tagsRefList =
+                      tagsRef.current?.getValue().map((v) => v.value) || [];
                     if (
                       isEditing &&
                       (original.code !== codeRef.current ||
@@ -498,7 +536,8 @@ export default withAdminAuth(function GroupsPage() {
                           selectedProjects
                             .map((v) => v.value)
                             .sort()
-                            .join())
+                            .join() ||
+                        original.tags.join() !== tagsRefList.join())
                     ) {
                       updateGroup
                         .mutateAsync({
@@ -507,7 +546,7 @@ export default withAdminAuth(function GroupsPage() {
                             code: codeRef.current,
                             label: labelRef.current,
                             projectIds: selectedProjects.map((v) => v.value),
-                            tags: [],
+                            tags: tagsRefList,
                           },
                         })
                         .then(() => {

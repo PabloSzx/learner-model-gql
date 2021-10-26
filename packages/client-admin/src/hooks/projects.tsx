@@ -141,10 +141,11 @@ export const useSelectSingleProject = ({
 
 export const useSelectMultiProjects = ({
   state,
-  ...selectProps
+  selectProps,
 }: {
   state?: [OptionValue[], (value: OptionValue[]) => void];
-} & Partial<AsyncSelectProps> = {}) => {
+  selectProps?: Partial<AsyncSelectProps>;
+} = {}) => {
   const { isFetching, isLoading, filteredOptions, asOptions } =
     useProjectsBase();
 
