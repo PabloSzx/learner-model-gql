@@ -271,6 +271,9 @@ export default withAdminAuth(function ProjectsPage() {
                 ],
                 selectProps: {
                   isDisabled: !state.isEditing,
+                  placeholder: state.isEditing
+                    ? "Search a domain"
+                    : "No domains",
                 },
               });
 
