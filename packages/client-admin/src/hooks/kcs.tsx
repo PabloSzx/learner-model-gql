@@ -219,7 +219,14 @@ export const useSelectMultiKCs = ({
         {...selectProps}
       />
     );
-  }, [filteredOptions, isLoading, isFetching, asOptions, selectedKCs]);
+  }, [
+    filteredOptions,
+    isLoading,
+    isFetching,
+    asOptions,
+    selectedKCs,
+    selectProps,
+  ]);
 
   return {
     selectedKCs,
@@ -228,5 +235,7 @@ export const useSelectMultiKCs = ({
     kcsFilter,
     produceKCsFilter,
     selectRef,
+    isFetching,
+    isLoading,
   };
 };

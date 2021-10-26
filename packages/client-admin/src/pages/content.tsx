@@ -12,11 +12,11 @@ import {
 } from "@chakra-ui/react";
 import { ContentInfoFragment, gql, useGQLMutation, useGQLQuery } from "graph";
 import mime from "mime";
-import { memo, useMemo, useRef } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { MdAdd, MdDownload, MdEdit } from "react-icons/md";
 import { serializeError } from "serialize-error";
 import { useImmer } from "use-immer";
-import { AsyncSelect } from "../components/AsyncSelect";
+import { AsyncSelect, AsyncSelectProps } from "../components/AsyncSelect";
 import { withAdminAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
@@ -105,7 +105,40 @@ const CreateContent = memo(function CreateContent() {
 
   const urlRef = useRef<HTMLInputElement>(null);
 
-  const { selectMultiKCComponent, selectedKCs } = useSelectMultiKCs({});
+  const [selectProps, setSelectProps] = useState<Partial<AsyncSelectProps>>(
+    () => {
+      return {
+        isDisabled: !selectedProject,
+      };
+    }
+  );
+
+  const {
+    selectMultiKCComponent,
+    selectedKCs,
+    produceKCsFilter,
+    isFetching: isKcsFetching,
+    setSelectedKCs,
+  } = useSelectMultiKCs({
+    selectProps,
+  });
+
+  useEffect(() => {
+    setSelectProps({
+      isDisabled: !selectedProject || isKcsFetching,
+    });
+  }, [isKcsFetching || !selectedProject]);
+
+  useEffect(() => {
+    produceKCsFilter(
+      selectedProject
+        ? {
+            projects: [selectedProject.value],
+          }
+        : null
+    );
+    setSelectedKCs([]);
+  }, [selectedProject?.value]);
 
   return (
     <FormModal
@@ -250,7 +283,7 @@ const EditContent = ({
 
   const { id } = content;
 
-  const { selectMultiKCComponent } = useSelectMultiKCs({
+  const { selectMultiKCComponent, produceKCsFilter } = useSelectMultiKCs({
     state: [
       form.kcs,
       (value) =>
@@ -259,6 +292,12 @@ const EditContent = ({
         }),
     ],
   });
+
+  useEffect(() => {
+    produceKCsFilter({
+      projects: [content.project.id],
+    });
+  }, [content.project.id]);
 
   const updateContent = useGQLMutation(
     gql(/* GraphQL */ `
