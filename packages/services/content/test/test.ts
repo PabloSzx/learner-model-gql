@@ -13,9 +13,8 @@ import {
 } from "testing";
 
 export async function CheckContentCreationRetrieval({
-  mutation,
-  query,
-}: Pick<TestClient, "mutation" | "query">) {
+  assertedQuery,
+}: Pick<TestClient, "assertedQuery">) {
   await prisma.$queryRaw`TRUNCATE "Content","User" CASCADE;`;
 
   const { project, projectId } = await CreateProject();
@@ -37,7 +36,7 @@ export async function CheckContentCreationRetrieval({
   const contentCode = generate();
   const contentLabel = generate();
 
-  const contentResult = await mutation(
+  const contentResult = await assertedQuery(
     gql(/* GraphQL */ `
       mutation CreateContent($data: CreateContent!) {
         adminContent {
@@ -58,6 +57,7 @@ export async function CheckContentCreationRetrieval({
           projectId,
           description: "Hello World",
           binaryBase64: binaryContent.toString("base64"),
+          binaryFilename: "helloWorld.txt",
           json: {
             hello: {
               world: "json",
@@ -73,31 +73,29 @@ export async function CheckContentCreationRetrieval({
     }
   );
 
-  const contentId = contentResult.data?.adminContent.createContent.id;
+  const contentId = contentResult?.adminContent.createContent.id;
 
   assert(contentId);
 
   expectDeepEqual(contentResult, {
-    data: {
-      adminContent: {
-        createContent: {
-          id: contentId,
-          description: "Hello World",
-          binaryBase64: binaryContent.toString("base64"),
-          json: {
-            hello: {
-              world: "json",
-            },
+    adminContent: {
+      createContent: {
+        id: contentId,
+        description: "Hello World",
+        binaryBase64: binaryContent.toString("base64"),
+        json: {
+          hello: {
+            world: "json",
           },
-          code: contentCode,
-          label: contentLabel,
         },
+        code: contentCode,
+        label: contentLabel,
       },
     },
   });
 
   {
-    const result = await query(
+    const result = await assertedQuery(
       gql(/* GraphQL */ `
         query AllContent($pagination: CursorConnectionArgs!) {
           adminContent {
@@ -124,9 +122,9 @@ export async function CheckContentCreationRetrieval({
       }
     );
 
-    equal(result.data?.adminContent.allContent.nodes.length, 1);
+    equal(result?.adminContent.allContent.nodes.length, 1);
 
-    expectDeepEqual(result.data.adminContent.allContent, {
+    expectDeepEqual(result.adminContent.allContent, {
       nodes: [
         {
           id: contentId,
@@ -144,11 +142,11 @@ export async function CheckContentCreationRetrieval({
       },
     });
 
-    assert(result.data.adminContent.allContent.nodes[0]?.binaryBase64);
+    assert(result.adminContent.allContent.nodes[0]?.binaryBase64);
 
     equal(
       Buffer.from(
-        result.data.adminContent.allContent.nodes[0]?.binaryBase64,
+        result.adminContent.allContent.nodes[0]?.binaryBase64,
         "base64"
       ).toString("utf-8"),
       "hello world in base64"
@@ -156,7 +154,7 @@ export async function CheckContentCreationRetrieval({
   }
 
   {
-    const result = await query(
+    const result = await assertedQuery(
       gql(/* GraphQL */ `
         query ContentFromTopic($ids: [IntID!]!) {
           topics(ids: $ids) {
@@ -177,30 +175,26 @@ export async function CheckContentCreationRetrieval({
       }
     );
 
-    equal(result.errors, undefined);
-
-    assert(result.data?.topics.length);
+    assert(result?.topics.length);
 
     expectDeepEqual(result, {
-      data: {
-        topics: [
-          {
-            id: topicId,
-            content: [
-              {
-                id: contentId,
-                description: "Hello World",
-                binaryBase64: binaryContent.toString("base64"),
-                json: {
-                  hello: {
-                    world: "json",
-                  },
+      topics: [
+        {
+          id: topicId,
+          content: [
+            {
+              id: contentId,
+              description: "Hello World",
+              binaryBase64: binaryContent.toString("base64"),
+              json: {
+                hello: {
+                  world: "json",
                 },
               },
-            ],
-          },
-        ],
-      },
+            },
+          ],
+        },
+      ],
     });
   }
 }
