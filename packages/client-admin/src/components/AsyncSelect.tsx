@@ -127,7 +127,12 @@ const components = {
       </Tag>
     ),
     MultiValueLabel: ({ children, innerRef, innerProps }: any) => (
-      <TagLabel ref={innerRef} {...innerProps}>
+      <TagLabel
+        ref={innerRef}
+        {...innerProps}
+        whiteSpace="pre-line !important"
+        wordBreak="break-word"
+      >
         {children}
       </TagLabel>
     ),

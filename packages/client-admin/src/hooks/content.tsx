@@ -47,6 +47,7 @@ export const useAllContentBase = () => {
             first: 20,
             after: pageParam,
           },
+          filters: contentFilter,
         };
       },
       {

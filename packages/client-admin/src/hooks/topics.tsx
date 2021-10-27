@@ -39,6 +39,14 @@ export const AllTopicsBaseDoc = gql(/* GraphQL */ `
             code
             label
           }
+          content {
+            id
+            code
+            label
+            tags
+          }
+          updatedAt
+          createdAt
         }
         ...Pagination
       }

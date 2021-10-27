@@ -8,6 +8,7 @@ import {
   Spinner,
   VStack,
 } from "@chakra-ui/react";
+import { formatSpanish } from "common";
 import { gql, useGQLMutation } from "graph";
 import { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { MdEdit, MdOutlineTopic, MdSave } from "react-icons/md";
@@ -21,6 +22,7 @@ import { CardContent } from "../components/Card/CardContent";
 import { CardHeader } from "../components/Card/CardHeader";
 import { Property } from "../components/Card/Property";
 import { FormModal } from "../components/FormModal";
+import { contentOptionLabel, useSelectMultiContent } from "../hooks/content";
 import { useSelectSingleProject } from "../hooks/projects";
 import {
   TopicInfo,
@@ -80,6 +82,28 @@ export const CreateTopic = () => {
     }, [!selectedProject]),
   });
 
+  const {
+    selectMultiContentComponent,
+    selectedContent,
+    produceContentFilter,
+    setSelectedContent,
+  } = useSelectMultiContent({
+    selectProps: {
+      isDisabled: !selectedProject,
+    },
+  });
+
+  useEffect(() => {
+    produceContentFilter({
+      projects: selectedProject ? [selectedProject.value] : [],
+    });
+    setSelectedContent([]);
+    parentTopic.produceTopicsFilter({
+      projects: selectedProject ? [selectedProject.value] : [],
+    });
+    parentTopic.setSelectedTopic(null);
+  }, [selectedProject]);
+
   return (
     <FormModal
       title="Create Topic"
@@ -96,7 +120,7 @@ export const CreateTopic = () => {
             projectId: selectedProject.value,
             code: codeRef.current.value,
             label: labelRef.current.value,
-            contentIds: [],
+            contentIds: selectedContent.map((v) => v.value),
             parentTopicId: parentTopic.selectedTopic?.value,
           },
         });
@@ -119,6 +143,11 @@ export const CreateTopic = () => {
         <FormLabel>Parent Topic</FormLabel>
 
         {parentTopic.selectSingleTopicComponent}
+      </FormControl>
+      <FormControl>
+        <FormLabel>Associated Content</FormLabel>
+
+        {selectMultiContentComponent}
       </FormControl>
       <FormControl id="code" isRequired>
         <FormLabel>Code</FormLabel>
@@ -160,15 +189,26 @@ export const TopicCard = memo(function TopicCard({
     }
   );
 
-  const [{ topicEdit, isEditing, selectedTopic }, edit] = useImmer(() => {
+  const initForm = () => {
     return {
       topicEdit: topic,
       selectedTopic: (topic.parent
         ? { label: topicOptionLabel(topic.parent), value: topic.parent.id }
         : null) as null | OptionValue,
+      selectedContent: topic.content.map((content) => ({
+        label: contentOptionLabel(content),
+        value: content.id,
+      })),
       isEditing: false,
     };
-  });
+  };
+
+  const [{ topicEdit, isEditing, selectedTopic, selectedContent }, edit] =
+    useImmer(initForm);
+
+  useUpdateEffect(() => {
+    edit(initForm);
+  }, [topic.updatedAt]);
 
   const deepChildrensAndSelfIds = useMemo(() => {
     const ids = new Set<string>([topic.id]);
@@ -208,8 +248,28 @@ export const TopicCard = memo(function TopicCard({
       },
     });
 
+  const { selectMultiContentComponent, produceContentFilter } =
+    useSelectMultiContent({
+      state: [
+        selectedContent,
+        (value) =>
+          edit((draft) => {
+            draft.selectedContent = value;
+          }),
+      ],
+      selectProps: {
+        isDisabled: !isEditing,
+        placeholder: isEditing
+          ? "Search Content"
+          : selectedContent.length
+          ? "Search Content"
+          : "No associated content",
+      },
+    });
+
   useEffect(() => {
     produceTopicsFilter({ projects: [topic.project.id] });
+    produceContentFilter({ projects: [topic.project.id] });
   }, [topic.project.id]);
 
   useUpdateEffect(() => {
@@ -241,14 +301,16 @@ export const TopicCard = memo(function TopicCard({
                 (topicEdit.code !== topic.code ||
                   topicEdit.label !== topic.label ||
                   selectedTopic?.value !== topic.parent?.id ||
-                  topicEdit.sortIndex !== topic.sortIndex)
+                  topicEdit.sortIndex !== topic.sortIndex ||
+                  selectedContent.map((v) => v.value).join() !==
+                    topic.content.map((v) => v.id).join())
               ) {
                 mutateAsync({
                   data: {
                     id: topic.id,
                     code: topicEdit.code,
                     label: topicEdit.label,
-                    contentIds: [],
+                    contentIds: selectedContent.map((v) => v.value),
                     parentTopicId: selectedTopic?.value,
                     sortIndex: topicEdit.sortIndex,
                   },
@@ -324,6 +386,19 @@ export const TopicCard = memo(function TopicCard({
               topic.sortIndex
             )
           }
+        />
+        <Property
+          label="updatedAt"
+          value={formatSpanish(new Date(topic.updatedAt), "PPpp O")}
+        />
+        <Property
+          label="createdAt"
+          value={formatSpanish(new Date(topic.createdAt), "PPpp O")}
+        />
+        <Property
+          label="Content"
+          value={selectMultiContentComponent}
+          maxW="min(70ch, 80vw)"
         />
         {isEditing && (
           <Property label="Parent" value={selectSingleTopicComponent} />

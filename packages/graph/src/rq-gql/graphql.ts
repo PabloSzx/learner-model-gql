@@ -909,6 +909,8 @@ export type AllTopicsBaseQuery = {
         code: string;
         label: string;
         sortIndex?: number | null | undefined;
+        updatedAt: string;
+        createdAt: string;
         parent?:
           | { __typename?: "Topic"; id: string; code: string; label: string }
           | null
@@ -919,6 +921,13 @@ export type AllTopicsBaseQuery = {
           code: string;
           label: string;
         };
+        content: Array<{
+          __typename?: "Content";
+          id: string;
+          code: string;
+          label: string;
+          tags: Array<string>;
+        }>;
       }>;
       pageInfo: {
         __typename?: "PageInfo";
@@ -2444,6 +2453,39 @@ export const AllTopicsBaseDocument = {
                                   },
                                 ],
                               },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "content" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "id" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "code" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "label" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "tags" },
+                                  },
+                                ],
+                              },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "updatedAt" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "createdAt" },
                             },
                           ],
                         },
