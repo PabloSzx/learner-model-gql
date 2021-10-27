@@ -103,7 +103,11 @@ export const usersModule = registerModule(
           return {};
         },
         async currentUser(_root, _args, { UserPromise }) {
-          return await UserPromise;
+          const user = await UserPromise;
+
+          if (user == null) return null;
+
+          return user as Omit<typeof user, "groups">;
         },
       },
       AdminUserMutations: {

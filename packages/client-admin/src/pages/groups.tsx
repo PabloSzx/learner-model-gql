@@ -1,5 +1,6 @@
 import {
   Button,
+  Checkbox,
   FormControl,
   FormHelperText,
   FormLabel,
@@ -20,7 +21,14 @@ import { gql, GroupInfoFragment, useGQLMutation, useGQLQuery } from "graph";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FaUsers } from "react-icons/fa";
 import { IoIosEye } from "react-icons/io";
-import { MdAdd, MdCheck, MdClose, MdEdit, MdSave } from "react-icons/md";
+import {
+  MdAdd,
+  MdCheck,
+  MdClose,
+  MdDoneOutline,
+  MdEdit,
+  MdSave,
+} from "react-icons/md";
 import { proxy, ref, useSnapshot } from "valtio";
 import type { SelectRefType } from "../components/AsyncSelect";
 import { withAdminAuth } from "../components/Auth";
@@ -492,6 +500,36 @@ export default withAdminAuth(function GroupsPage() {
               return <GroupsUsers users={users} label={label} code={code} />;
             },
           },
+          {
+            id: "readProjectActions",
+            Header: "Read Project Actions",
+            accessor: "id",
+            Cell({
+              row: {
+                original: {
+                  id,
+                  flags: { readProjectActions },
+                },
+              },
+            }) {
+              const state = GroupsState[id];
+
+              if (state?.isEditing) {
+                return (
+                  <Checkbox
+                    colorScheme="green"
+                    isChecked={state.flags.readProjectActions}
+                    onChange={() => {
+                      state.flags.readProjectActions =
+                        !state.flags.readProjectActions;
+                    }}
+                  />
+                );
+              }
+
+              return readProjectActions ? <MdDoneOutline /> : <MdClose />;
+            },
+          },
           getDateRow({ id: "createdAt", label: "Created At" }),
           getDateRow({ id: "updatedAt", label: "Updated At" }),
           {
@@ -512,6 +550,7 @@ export default withAdminAuth(function GroupsPage() {
                 labelRef,
                 selectedProjects,
                 tagsRef,
+                flags: { readProjectActions },
               } = groupState;
 
               return (
@@ -528,7 +567,9 @@ export default withAdminAuth(function GroupsPage() {
                       tagsRef.current?.getValue().map((v) => v.value) || [];
                     if (
                       isEditing &&
-                      (original.code !== codeRef.current ||
+                      (readProjectActions !==
+                        original.flags.readProjectActions ||
+                        original.code !== codeRef.current ||
                         original.label !== labelRef.current ||
                         original.projects
                           .map((v) => v.id)
@@ -548,6 +589,9 @@ export default withAdminAuth(function GroupsPage() {
                             label: labelRef.current,
                             projectIds: selectedProjects.map((v) => v.value),
                             tags: tagsRefList,
+                            flags: {
+                              readProjectActions,
+                            },
                           },
                         })
                         .then(() => {

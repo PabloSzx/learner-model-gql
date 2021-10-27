@@ -1,8 +1,8 @@
 import type { User as Auth0User } from "@auth0/auth0-react";
 import assert from "assert";
-import { ENV, PromiseAllCallbacks } from "common-api";
-import { prisma } from "db";
+import { ENV } from "common-api";
 import type { DBUser } from "db";
+import { prisma } from "db";
 import type { FastifyRequest } from "fastify";
 import FastifyAuth0 from "fastify-auth0-verify";
 import fp from "fastify-plugin";
@@ -92,25 +92,34 @@ export const Authorization = (userPromise: Promise<DBUser | null>) => {
     return Array.from(await expectUserProjectsSet);
   });
 
+  const projectIdCheckCache: Record<number, Promise<number>> = {};
+  const checkProjectIdExists = async (
+    projectIdPromise: number | Promise<number>
+  ) => {
+    const projectIdKey = await projectIdPromise;
+    return (projectIdCheckCache[projectIdKey] ||= LazyPromise(() =>
+      prisma.project
+        .findUnique({
+          where: {
+            id: projectIdKey,
+          },
+          select: {
+            id: true,
+          },
+          rejectOnNotFound: true,
+        })
+        .then((v) => v.id)
+    ));
+  };
+
   const expectAllowedUserProject = async (
     projectIdPromise: number | Promise<number>
   ) => {
-    const [user, usersProjectsSet, projectId] = await PromiseAllCallbacks(
-      () => expectUser,
-      () => expectUserProjectsSet,
-      async () =>
-        (
-          await prisma.project.findUnique({
-            where: {
-              id: await projectIdPromise,
-            },
-            select: {
-              id: true,
-            },
-            rejectOnNotFound: true,
-          })
-        ).id
-    );
+    const [user, usersProjectsSet, projectId] = await Promise.all([
+      expectUser,
+      expectUserProjectsSet,
+      checkProjectIdExists(projectIdPromise),
+    ]);
 
     if (user.role !== "ADMIN")
       assert(usersProjectsSet.has(projectId), "Forbidden Project!");
@@ -163,6 +172,30 @@ export const Authorization = (userPromise: Promise<DBUser | null>) => {
     } as const;
   });
 
+  const expectAllowedReadProjectActions = async (
+    projectIdPromise: number | Promise<number>
+  ) => {
+    const [user, projectId] = await Promise.all([
+      expectUser,
+      checkProjectIdExists(projectIdPromise),
+    ]);
+
+    if (user.role === "ADMIN") return;
+
+    if (
+      user.groups.some(({ flags, projects }) => {
+        return (
+          flags?.readProjectActions &&
+          projects.some(({ id }) => id === projectId)
+        );
+      })
+    ) {
+      return;
+    }
+
+    throw Error("Forbidden!");
+  };
+
   return {
     expectUser,
     expectAdmin,
@@ -172,5 +205,7 @@ export const Authorization = (userPromise: Promise<DBUser | null>) => {
     expectSomeProjectsInPrismaFilter,
     expectProjectsIdInPrismaFilter,
     expectProjectsInPrismaFilter,
+    expectAllowedReadProjectActions,
+    checkProjectIdExists,
   };
 };
