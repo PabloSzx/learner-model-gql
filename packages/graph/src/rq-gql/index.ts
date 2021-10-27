@@ -5,6 +5,8 @@ import * as graphql from "./graphql";
 const documents = {
   "\n      query currentUser {\n        currentUser {\n          id\n          email\n          name\n          role\n        }\n      }\n    ":
     graphql.CurrentUserDocument,
+  "\n  query AllContentBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminContentFilter\n  ) {\n    adminContent {\n      allContent(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n          tags\n        }\n        ...Pagination\n      }\n    }\n  }\n":
+    graphql.AllContentBaseDocument,
   "\n  query AllDomainsBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminDomainsFilter\n  ) {\n    adminDomain {\n      allDomains(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n        }\n        ...Pagination\n      }\n    }\n  }\n":
     graphql.AllDomainsBaseDocument,
   "\n        query AllGroupsBase($pagination: CursorConnectionArgs!) {\n          adminUsers {\n            allGroups(pagination: $pagination) {\n              nodes {\n                id\n                code\n                label\n              }\n              ...Pagination\n            }\n          }\n        }\n      ":
@@ -76,6 +78,9 @@ const documents = {
 export function gql(
   source: "\n      query currentUser {\n        currentUser {\n          id\n          email\n          name\n          role\n        }\n      }\n    "
 ): typeof documents["\n      query currentUser {\n        currentUser {\n          id\n          email\n          name\n          role\n        }\n      }\n    "];
+export function gql(
+  source: "\n  query AllContentBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminContentFilter\n  ) {\n    adminContent {\n      allContent(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n          tags\n        }\n        ...Pagination\n      }\n    }\n  }\n"
+): typeof documents["\n  query AllContentBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminContentFilter\n  ) {\n    adminContent {\n      allContent(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n          tags\n        }\n        ...Pagination\n      }\n    }\n  }\n"];
 export function gql(
   source: "\n  query AllDomainsBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminDomainsFilter\n  ) {\n    adminDomain {\n      allDomains(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n        }\n        ...Pagination\n      }\n    }\n  }\n"
 ): typeof documents["\n  query AllDomainsBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminDomainsFilter\n  ) {\n    adminDomain {\n      allDomains(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n        }\n        ...Pagination\n      }\n    }\n  }\n"];

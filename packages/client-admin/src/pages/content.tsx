@@ -259,12 +259,11 @@ const EditContent = ({
       : null;
   }, [content.binaryBase64, content.binaryFilename]);
   function initForm() {
-    const { code, label, description, tags, kcs } = content;
+    const { code, label, description, kcs } = content;
     return {
       code,
       label,
       description,
-      tags,
       kcs: kcs.map((kc) => ({ label: kcOptionLabel(kc), value: kc.id })),
       updateFile: oldBinaryContentType ? false : true,
     };
@@ -277,7 +276,7 @@ const EditContent = ({
     produceForm(initForm);
   }, [content.updatedAt, content.kcs.map((v) => v.id).join()]);
 
-  const { tagsSelect } = useTagsSelect({
+  const { tagsSelect, tagsRef } = useTagsSelect({
     defaultTags: content.tags,
   });
 
@@ -336,7 +335,7 @@ const EditContent = ({
   return (
     <FormModal
       onSubmit={async () => {
-        const { code, label, description, kcs, tags, updateFile } = form;
+        const { code, label, description, kcs, updateFile } = form;
 
         const file = fileRef.current?.files?.[0];
 
@@ -361,7 +360,7 @@ const EditContent = ({
             description,
             kcs: kcs.map((v) => v.value),
             projectId: content.project.id,
-            tags,
+            tags: tagsRef.current?.getValue().map((v) => v.value) || [],
             topics: content.topics.map((v) => v.id),
             binaryBase64,
             binaryFilename: updateFile ? file?.name : content.binaryFilename,

@@ -12,6 +12,7 @@ import { gql, useGQLMutation } from "graph";
 import { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { MdEdit, MdOutlineTopic, MdSave } from "react-icons/md";
 import { useUpdateEffect } from "react-use";
+import useMountedState from "react-use/lib/useMountedState.js";
 import { useImmer } from "use-immer";
 import type { OptionValue } from "../components/AsyncSelect";
 import { withAdminAuth } from "../components/Auth";
@@ -169,6 +170,28 @@ export const TopicCard = memo(function TopicCard({
     };
   });
 
+  const deepChildrensAndSelfIds = useMemo(() => {
+    const ids = new Set<string>([topic.id]);
+
+    const pendingChildrensList = [topic.childrens];
+
+    while (pendingChildrensList.length) {
+      const childrenList = pendingChildrensList.shift();
+
+      if (childrenList == null) continue;
+
+      for (const children of childrenList) {
+        ids.add(children.id);
+
+        if (children.childrens.length) {
+          pendingChildrensList.push(children.childrens);
+        }
+      }
+    }
+
+    return ids;
+  }, [topic]);
+
   const { selectSingleTopicComponent, produceTopicsFilter } =
     useSelectSingleTopic({
       state: [
@@ -178,9 +201,9 @@ export const TopicCard = memo(function TopicCard({
       topics: {
         jsFilter: useCallback(
           (topicValue: TopicInfo) => {
-            return topicValue.id !== topic.id;
+            return !deepChildrensAndSelfIds.has(topicValue.id);
           },
-          [topic.id]
+          [topic.id, deepChildrensAndSelfIds]
         ),
       },
     });
@@ -197,6 +220,8 @@ export const TopicCard = memo(function TopicCard({
       draft.topicEdit = topic;
     });
   }, [topic.code, topic.label, topic.parent?.id, edit]);
+
+  const isMounted = useMountedState();
 
   return (
     <Card key={topic.id} margin="0.2em !important" overflow="visible">
@@ -229,9 +254,11 @@ export const TopicCard = memo(function TopicCard({
                   },
                 })
                   .then(() => {
-                    edit((draft) => {
-                      draft.isEditing = false;
-                    });
+                    if (isMounted()) {
+                      edit((draft) => {
+                        draft.isEditing = false;
+                      });
+                    }
                   })
                   .catch(console.error);
               } else {
