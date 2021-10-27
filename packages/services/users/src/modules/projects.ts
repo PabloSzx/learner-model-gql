@@ -1,4 +1,5 @@
-import { gql, Prisma, registerModule } from "../ez";
+import type { PrismaNS } from "api-base";
+import { gql, registerModule } from "../ez";
 
 export const projectsModule = registerModule(
   gql`
@@ -20,7 +21,7 @@ export const projectsModule = registerModule(
     resolvers: {
       AdminUserMutations: {
         setProjectsToUsers(_root, { projectIds, userIds }, { prisma }) {
-          const projectsIdsDataSet: Prisma.UserUpdateInput = {
+          const projectsIdsDataSet: PrismaNS.UserUpdateInput = {
             projects: {
               set: projectIds.map((projectId) => {
                 return {
