@@ -397,11 +397,11 @@ importers:
     specifiers:
       api-base: workspace:^0.0.1
       db: workspace:^0.0.1
-      p-map: ^5.1.0
+      p-map: ^5.2.0
     dependencies:
       api-base: link:../../api-base
       db: link:../../db
-      p-map: 5.1.0
+      p-map: 5.2.0
 
   packages/testing:
     specifiers:
@@ -7153,8 +7153,8 @@ packages:
       aggregate-error: 3.1.0
     dev: false
 
-  /p-map/5.1.0:
-    resolution: {integrity: sha512-hDTnBRGPXM4hUkmV4Nbe9ZyFnqUAHFYq5S/3+P38TRf0KbmkQuRSzfGM+JngEJsvB0m6nHvhsSv5E6VsGSB2zA==}
+  /p-map/5.2.0:
+    resolution: {integrity: sha512-VJA0IG5Y+tDP6ndo/gZx71kxro1hZrYn8IbnkeQgJeoeArbfO4dH4aV5yFFfz1uIrviNdG1BbnUp5MlPb97feg==}
     engines: {node: '>=12'}
     dependencies:
       aggregate-error: 4.0.0

@@ -11,6 +11,6 @@
   "dependencies": {
     "api-base": "workspace:^0.0.1",
     "db": "workspace:^0.0.1",
-    "p-map": "^5.1.0"
+    "p-map": "^5.2.0"
   }
 }
