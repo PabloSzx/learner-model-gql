@@ -5,6 +5,7 @@ import {
   GetTestClient,
   MockAuthUser,
   gql,
+  CreateProject,
 } from "testing";
 import { actionModule } from "../src/modules/index";
 import { CheckActionsCreationRetrieval } from "./test";
@@ -104,6 +105,8 @@ describe("Actions service", () => {
 
       MockAuthUser.user = authUser;
 
+      const otherProject = await CreateProject();
+
       deepEqual(
         await mutation(
           gql(/* GraphQL */ `
@@ -114,7 +117,7 @@ describe("Actions service", () => {
           {
             variables: {
               data: {
-                projectId: "55",
+                projectId: otherProject.projectId,
                 timestamp: Date.now(),
                 verbName: "zxczx",
               },
