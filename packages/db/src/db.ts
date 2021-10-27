@@ -26,4 +26,8 @@ export const DB_PREPARED = LazyPromise(async () => {
   });
 });
 
+export const Prisma = PrismaClient.Prisma;
+
+export type { Prisma as PrismaNS } from "@prisma/client";
+
 export * from "@prisma/client";

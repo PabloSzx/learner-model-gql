@@ -386,12 +386,34 @@ export type ActionsConnection = {
   pageInfo: PageInfo;
 };
 
+export type ActionsVerbsConnection = {
+  __typename?: "ActionsVerbsConnection";
+  nodes: Array<ActionVerb>;
+  pageInfo: PageInfo;
+};
+
+export type AdminActionsFilter = {
+  verbNames?: Maybe<Array<Scalars["String"]>>;
+  users?: Maybe<Array<Scalars["IntID"]>>;
+  kcs?: Maybe<Array<Scalars["IntID"]>>;
+  content?: Maybe<Array<Scalars["IntID"]>>;
+  topics?: Maybe<Array<Scalars["IntID"]>>;
+  startDate?: Maybe<Scalars["DateTime"]>;
+  endDate?: Maybe<Scalars["DateTime"]>;
+};
+
 export type AdminActionQueries = {
   __typename?: "AdminActionQueries";
   allActions: ActionsConnection;
+  allActionsVerbs: ActionsVerbsConnection;
 };
 
 export type AdminActionQueriesAllActionsArgs = {
+  pagination: CursorConnectionArgs;
+  filters?: Maybe<AdminActionsFilter>;
+};
+
+export type AdminActionQueriesAllActionsVerbsArgs = {
   pagination: CursorConnectionArgs;
 };
 
@@ -789,6 +811,8 @@ export type ResolversTypes = {
   Float: ResolverTypeWrapper<Scalars["Float"]>;
   Action: ResolverTypeWrapper<Action>;
   ActionsConnection: ResolverTypeWrapper<ActionsConnection>;
+  ActionsVerbsConnection: ResolverTypeWrapper<ActionsVerbsConnection>;
+  AdminActionsFilter: AdminActionsFilter;
   AdminActionQueries: ResolverTypeWrapper<AdminActionQueries>;
   CreateContent: CreateContent;
   UpdateContent: UpdateContent;
@@ -868,6 +892,8 @@ export type ResolversParentTypes = {
   Float: Scalars["Float"];
   Action: Action;
   ActionsConnection: ActionsConnection;
+  ActionsVerbsConnection: ActionsVerbsConnection;
+  AdminActionsFilter: AdminActionsFilter;
   AdminActionQueries: AdminActionQueries;
   CreateContent: CreateContent;
   UpdateContent: UpdateContent;
@@ -1396,6 +1422,19 @@ export type ActionsConnectionResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type ActionsVerbsConnectionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["ActionsVerbsConnection"] = ResolversParentTypes["ActionsVerbsConnection"]
+> = {
+  nodes?: Resolver<
+    Array<ResolversTypes["ActionVerb"]>,
+    ParentType,
+    ContextType
+  >;
+  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type AdminActionQueriesResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["AdminActionQueries"] = ResolversParentTypes["AdminActionQueries"]
@@ -1405,6 +1444,12 @@ export type AdminActionQueriesResolvers<
     ParentType,
     ContextType,
     RequireFields<AdminActionQueriesAllActionsArgs, "pagination">
+  >;
+  allActionsVerbs?: Resolver<
+    ResolversTypes["ActionsVerbsConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminActionQueriesAllActionsVerbsArgs, "pagination">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -1628,6 +1673,7 @@ export type Resolvers<ContextType = EZContext> = {
   Topic?: TopicResolvers<ContextType>;
   Action?: ActionResolvers<ContextType>;
   ActionsConnection?: ActionsConnectionResolvers<ContextType>;
+  ActionsVerbsConnection?: ActionsVerbsConnectionResolvers<ContextType>;
   AdminActionQueries?: AdminActionQueriesResolvers<ContextType>;
   ContentConnection?: ContentConnectionResolvers<ContextType>;
   AdminContentMutations?: AdminContentMutationsResolvers<ContextType>;

@@ -79,13 +79,35 @@ export type ActionsConnection = {
   pageInfo: PageInfo;
 };
 
+export type ActionsVerbsConnection = {
+  __typename?: "ActionsVerbsConnection";
+  nodes: Array<ActionVerb>;
+  pageInfo: PageInfo;
+};
+
 export type AdminActionQueries = {
   __typename?: "AdminActionQueries";
   allActions: ActionsConnection;
+  allActionsVerbs: ActionsVerbsConnection;
 };
 
 export type AdminActionQueriesAllActionsArgs = {
+  filters?: Maybe<AdminActionsFilter>;
   pagination: CursorConnectionArgs;
+};
+
+export type AdminActionQueriesAllActionsVerbsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminActionsFilter = {
+  content?: Maybe<Array<Scalars["IntID"]>>;
+  endDate?: Maybe<Scalars["DateTime"]>;
+  kcs?: Maybe<Array<Scalars["IntID"]>>;
+  startDate?: Maybe<Scalars["DateTime"]>;
+  topics?: Maybe<Array<Scalars["IntID"]>>;
+  users?: Maybe<Array<Scalars["IntID"]>>;
+  verbNames?: Maybe<Array<Scalars["String"]>>;
 };
 
 export type AdminContentFilter = {

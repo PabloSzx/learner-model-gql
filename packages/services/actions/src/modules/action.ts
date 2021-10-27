@@ -4,6 +4,7 @@ import {
   ResolveCursorConnection,
   serializeError,
   isInt,
+  PrismaNS,
 } from "api-base";
 import assert from "assert";
 import { gql, registerModule } from "../ez";
@@ -98,8 +99,29 @@ export const actionModule = registerModule(
       pageInfo: PageInfo!
     }
 
+    type ActionsVerbsConnection {
+      nodes: [ActionVerb!]!
+      pageInfo: PageInfo!
+    }
+
+    input AdminActionsFilter {
+      verbNames: [String!]
+      users: [IntID!]
+      kcs: [IntID!]
+      content: [IntID!]
+      topics: [IntID!]
+      startDate: DateTime
+      endDate: DateTime
+    }
+
     type AdminActionQueries {
-      allActions(pagination: CursorConnectionArgs!): ActionsConnection!
+      allActions(
+        pagination: CursorConnectionArgs!
+        filters: AdminActionsFilter
+      ): ActionsConnection!
+      allActionsVerbs(
+        pagination: CursorConnectionArgs!
+      ): ActionsVerbsConnection!
     }
 
     extend type Query {
@@ -113,9 +135,79 @@ export const actionModule = registerModule(
   {
     resolvers: {
       AdminActionQueries: {
-        allActions(_root, { pagination }, { prisma }) {
+        allActions(_root, { pagination, filters }, { prisma }) {
+          const where: PrismaNS.ActionWhereInput = {};
+
+          if (filters) {
+            const {
+              verbNames,
+              users,
+              kcs,
+              content,
+              topics,
+              startDate,
+              endDate,
+            } = filters;
+            if (verbNames) {
+              where.verb = {
+                name: {
+                  in: verbNames,
+                },
+              };
+            }
+
+            if (users) {
+              where.user = {
+                id: {
+                  in: users,
+                },
+              };
+            }
+
+            if (kcs) {
+              where.kcs = {
+                some: {
+                  id: {
+                    in: kcs,
+                  },
+                },
+              };
+            }
+
+            if (content) {
+              where.content = {
+                id: {
+                  in: content,
+                },
+              };
+            }
+
+            if (topics) {
+              where.topic = {
+                id: {
+                  in: topics,
+                },
+              };
+            }
+
+            if (startDate || endDate) {
+              where.timestamp = {
+                gte: startDate || undefined,
+                lte: endDate || undefined,
+              };
+            }
+          }
+
           return ResolveCursorConnection(pagination, (args) => {
             return prisma.action.findMany({
+              ...args,
+              where,
+            });
+          });
+        },
+        allActionsVerbs(_root, { pagination }, { prisma }) {
+          return ResolveCursorConnection(pagination, (args) => {
+            return prisma.actionVerb.findMany({
               ...args,
             });
           });
@@ -223,6 +315,14 @@ export const actionModule = registerModule(
             projectId: userProjectId,
             user: { id: userId },
           } = await authorization.expectAllowedUserProject(projectId);
+
+          const currentYear = new Date().getFullYear();
+          const timestampYear = timestamp.getFullYear();
+          assert(
+            timestampYear >= currentYear - 1 &&
+              timestampYear <= currentYear + 1,
+            `Invalid timestamp`
+          );
 
           const [{ content }, { topic }, { kcs }] = await PromiseAllCallbacks(
             async () => {

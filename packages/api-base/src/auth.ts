@@ -1,6 +1,7 @@
 import type { User as Auth0User } from "@auth0/auth0-react";
 import assert from "assert";
-import { ENV } from "common-api";
+import { ENV, PromiseAllCallbacks } from "common-api";
+import { prisma } from "db";
 import type { DBUser } from "db";
 import type { FastifyRequest } from "fastify";
 import FastifyAuth0 from "fastify-auth0-verify";
@@ -94,11 +95,22 @@ export const Authorization = (userPromise: Promise<DBUser | null>) => {
   const expectAllowedUserProject = async (
     projectIdPromise: number | Promise<number>
   ) => {
-    const [user, usersProjectsSet, projectId] = await Promise.all([
-      expectUser,
-      expectUserProjectsSet,
-      projectIdPromise,
-    ]);
+    const [user, usersProjectsSet, projectId] = await PromiseAllCallbacks(
+      () => expectUser,
+      () => expectUserProjectsSet,
+      async () =>
+        (
+          await prisma.project.findUnique({
+            where: {
+              id: await projectIdPromise,
+            },
+            select: {
+              id: true,
+            },
+            rejectOnNotFound: true,
+          })
+        ).id
+    );
 
     if (user.role !== "ADMIN")
       assert(usersProjectsSet.has(projectId), "Forbidden Project!");

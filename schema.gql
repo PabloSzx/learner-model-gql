@@ -307,8 +307,27 @@ type ActionsConnection {
   pageInfo: PageInfo!
 }
 
+type ActionsVerbsConnection {
+  nodes: [ActionVerb!]!
+  pageInfo: PageInfo!
+}
+
+input AdminActionsFilter {
+  verbNames: [String!]
+  users: [IntID!]
+  kcs: [IntID!]
+  content: [IntID!]
+  topics: [IntID!]
+  startDate: DateTime
+  endDate: DateTime
+}
+
 type AdminActionQueries {
-  allActions(pagination: CursorConnectionArgs!): ActionsConnection!
+  allActions(
+    pagination: CursorConnectionArgs!
+    filters: AdminActionsFilter
+  ): ActionsConnection!
+  allActionsVerbs(pagination: CursorConnectionArgs!): ActionsVerbsConnection!
 }
 
 input CreateContent {
