@@ -78,6 +78,12 @@ export const chakraStyles = {
         color: "black",
       };
     },
+    container(provided) {
+      return {
+        ...provided,
+        minWidth: "35ch",
+      };
+    },
   } as StylesConfig<OptionValue>),
 };
 
@@ -130,7 +136,7 @@ const components = {
       <TagLabel
         ref={innerRef}
         {...innerProps}
-        whiteSpace="pre-line !important"
+        whiteSpace="break-spaces !important"
         wordBreak="break-word"
       >
         {children}

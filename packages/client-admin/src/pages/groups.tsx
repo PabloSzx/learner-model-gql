@@ -325,6 +325,7 @@ export default withAdminAuth(function GroupsPage() {
           tagsRef: ref({
             current: null,
           }),
+          isEditing: false,
         }),
         group
       );
