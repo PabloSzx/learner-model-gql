@@ -318,6 +318,7 @@ input AdminActionsFilter {
   kcs: [IntID!]
   content: [IntID!]
   topics: [IntID!]
+  projects: [IntID!]
   startDate: DateTime
   endDate: DateTime
 }

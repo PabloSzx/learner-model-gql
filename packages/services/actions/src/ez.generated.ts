@@ -131,6 +131,7 @@ export type AdminActionsFilter = {
   kcs?: Maybe<Array<Scalars["IntID"]>>;
   content?: Maybe<Array<Scalars["IntID"]>>;
   topics?: Maybe<Array<Scalars["IntID"]>>;
+  projects?: Maybe<Array<Scalars["IntID"]>>;
   startDate?: Maybe<Scalars["DateTime"]>;
   endDate?: Maybe<Scalars["DateTime"]>;
 };

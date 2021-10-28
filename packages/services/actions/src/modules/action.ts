@@ -110,6 +110,7 @@ export const actionModule = registerModule(
       kcs: [IntID!]
       content: [IntID!]
       topics: [IntID!]
+      projects: [IntID!]
       startDate: DateTime
       endDate: DateTime
     }
@@ -147,6 +148,7 @@ export const actionModule = registerModule(
               topics,
               startDate,
               endDate,
+              projects,
             } = filters;
             if (verbNames) {
               where.verb = {
@@ -194,6 +196,14 @@ export const actionModule = registerModule(
               where.timestamp = {
                 gte: startDate || undefined,
                 lte: endDate || undefined,
+              };
+            }
+
+            if (projects) {
+              where.project = {
+                id: {
+                  in: projects,
+                },
               };
             }
           }
