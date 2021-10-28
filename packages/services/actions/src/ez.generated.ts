@@ -111,15 +111,16 @@ export type Action = {
   amount?: Maybe<Scalars["Float"]>;
   detail?: Maybe<Scalars["String"]>;
   extra?: Maybe<Scalars["JSONObject"]>;
+  createdAt: Scalars["DateTime"];
 };
 
-export type ActionsConnection = {
+export type ActionsConnection = Connection & {
   __typename?: "ActionsConnection";
   nodes: Array<Action>;
   pageInfo: PageInfo;
 };
 
-export type ActionsVerbsConnection = {
+export type ActionsVerbsConnection = Connection & {
   __typename?: "ActionsVerbsConnection";
   nodes: Array<ActionVerb>;
   pageInfo: PageInfo;
@@ -349,7 +350,9 @@ export type ResolversTypes = {
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   Node: never;
-  Connection: never;
+  Connection:
+    | ResolversTypes["ActionsConnection"]
+    | ResolversTypes["ActionsVerbsConnection"];
   CursorConnectionArgs: CursorConnectionArgs;
   Query: ResolverTypeWrapper<{}>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -386,7 +389,9 @@ export type ResolversParentTypes = {
   PageInfo: PageInfo;
   Boolean: Scalars["Boolean"];
   Node: never;
-  Connection: never;
+  Connection:
+    | ResolversParentTypes["ActionsConnection"]
+    | ResolversParentTypes["ActionsVerbsConnection"];
   CursorConnectionArgs: CursorConnectionArgs;
   Query: {};
   Mutation: {};
@@ -503,6 +508,7 @@ export type ActionResolvers<
     ParentType,
     ContextType
   >;
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -596,7 +602,11 @@ export type ConnectionResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Connection"] = ResolversParentTypes["Connection"]
 > = {
-  __resolveType: TypeResolveFn<null, ParentType, ContextType>;
+  __resolveType: TypeResolveFn<
+    "ActionsConnection" | "ActionsVerbsConnection",
+    ParentType,
+    ContextType
+  >;
   pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
 };
 

@@ -39,6 +39,7 @@ export type Action = {
   __typename?: "Action";
   amount?: Maybe<Scalars["Float"]>;
   content?: Maybe<Content>;
+  createdAt: Scalars["DateTime"];
   detail?: Maybe<Scalars["String"]>;
   extra?: Maybe<Scalars["JSONObject"]>;
   hintID?: Maybe<Scalars["ID"]>;
@@ -73,13 +74,13 @@ export type ActionVerb = {
   name: Scalars["String"];
 };
 
-export type ActionsConnection = {
+export type ActionsConnection = Connection & {
   __typename?: "ActionsConnection";
   nodes: Array<Action>;
   pageInfo: PageInfo;
 };
 
-export type ActionsVerbsConnection = {
+export type ActionsVerbsConnection = Connection & {
   __typename?: "ActionsVerbsConnection";
   nodes: Array<ActionVerb>;
   pageInfo: PageInfo;

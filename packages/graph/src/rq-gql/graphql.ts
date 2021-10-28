@@ -39,6 +39,7 @@ export type Action = {
   __typename?: "Action";
   amount?: Maybe<Scalars["Float"]>;
   content?: Maybe<Content>;
+  createdAt: Scalars["DateTime"];
   detail?: Maybe<Scalars["String"]>;
   extra?: Maybe<Scalars["JSONObject"]>;
   hintID?: Maybe<Scalars["ID"]>;
@@ -73,13 +74,13 @@ export type ActionVerb = {
   name: Scalars["String"];
 };
 
-export type ActionsConnection = {
+export type ActionsConnection = Connection & {
   __typename?: "ActionsConnection";
   nodes: Array<Action>;
   pageInfo: PageInfo;
 };
 
-export type ActionsVerbsConnection = {
+export type ActionsVerbsConnection = Connection & {
   __typename?: "ActionsVerbsConnection";
   nodes: Array<ActionVerb>;
   pageInfo: PageInfo;
@@ -796,6 +797,28 @@ export type AllKCsBaseQuery = {
   };
 };
 
+type Pagination_ActionsConnection_Fragment = {
+  __typename?: "ActionsConnection";
+  pageInfo: {
+    __typename?: "PageInfo";
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+    startCursor?: string | null | undefined;
+    endCursor?: string | null | undefined;
+  };
+};
+
+type Pagination_ActionsVerbsConnection_Fragment = {
+  __typename?: "ActionsVerbsConnection";
+  pageInfo: {
+    __typename?: "PageInfo";
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+    startCursor?: string | null | undefined;
+    endCursor?: string | null | undefined;
+  };
+};
+
 type Pagination_ContentConnection_Fragment = {
   __typename?: "ContentConnection";
   pageInfo: {
@@ -874,6 +897,8 @@ type Pagination_UsersConnection_Fragment = {
 };
 
 export type PaginationFragment =
+  | Pagination_ActionsConnection_Fragment
+  | Pagination_ActionsVerbsConnection_Fragment
   | Pagination_ContentConnection_Fragment
   | Pagination_DomainsConnection_Fragment
   | Pagination_GroupsConnection_Fragment
@@ -944,6 +969,108 @@ export type AllTopicsBaseQuery = {
           code: string;
           label: string;
           tags: Array<string>;
+        }>;
+      }>;
+      pageInfo: {
+        __typename?: "PageInfo";
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null | undefined;
+        endCursor?: string | null | undefined;
+      };
+    };
+  };
+};
+
+export type ActionsInfoFragment = {
+  __typename?: "Action";
+  id: string;
+  timestamp: number;
+  result?: number | null | undefined;
+  stepID?: string | null | undefined;
+  hintID?: string | null | undefined;
+  amount?: number | null | undefined;
+  detail?: string | null | undefined;
+  extra?: Record<string, unknown> | null | undefined;
+  createdAt: string;
+  verb: { __typename?: "ActionVerb"; name: string };
+  user?:
+    | {
+        __typename?: "User";
+        id: string;
+        name?: string | null | undefined;
+        email: string;
+      }
+    | null
+    | undefined;
+  content?:
+    | {
+        __typename?: "Content";
+        id: string;
+        code: string;
+        label: string;
+        tags: Array<string>;
+      }
+    | null
+    | undefined;
+  topic?:
+    | { __typename?: "Topic"; id: string; code: string; label: string }
+    | null
+    | undefined;
+  kcs: Array<{ __typename?: "KC"; id: string; code: string; label: string }>;
+};
+
+export type AllActionsQueryVariables = Exact<{
+  pagination: CursorConnectionArgs;
+  filters?: Maybe<AdminActionsFilter>;
+}>;
+
+export type AllActionsQuery = {
+  __typename?: "Query";
+  adminActions: {
+    __typename?: "AdminActionQueries";
+    allActions: {
+      __typename?: "ActionsConnection";
+      nodes: Array<{
+        __typename?: "Action";
+        id: string;
+        timestamp: number;
+        result?: number | null | undefined;
+        stepID?: string | null | undefined;
+        hintID?: string | null | undefined;
+        amount?: number | null | undefined;
+        detail?: string | null | undefined;
+        extra?: Record<string, unknown> | null | undefined;
+        createdAt: string;
+        verb: { __typename?: "ActionVerb"; name: string };
+        user?:
+          | {
+              __typename?: "User";
+              id: string;
+              name?: string | null | undefined;
+              email: string;
+            }
+          | null
+          | undefined;
+        content?:
+          | {
+              __typename?: "Content";
+              id: string;
+              code: string;
+              label: string;
+              tags: Array<string>;
+            }
+          | null
+          | undefined;
+        topic?:
+          | { __typename?: "Topic"; id: string; code: string; label: string }
+          | null
+          | undefined;
+        kcs: Array<{
+          __typename?: "KC";
+          id: string;
+          code: string;
+          label: string;
         }>;
       }>;
       pageInfo: {
@@ -1561,6 +1688,92 @@ export const PaginationFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<PaginationFragment, unknown>;
+export const ActionsInfoFragmentDoc = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "ActionsInfo" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Action" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "verb" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+              ],
+            },
+          },
+          { kind: "Field", name: { kind: "Name", value: "timestamp" } },
+          { kind: "Field", name: { kind: "Name", value: "result" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "user" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "email" } },
+              ],
+            },
+          },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "content" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "code" } },
+                { kind: "Field", name: { kind: "Name", value: "label" } },
+                { kind: "Field", name: { kind: "Name", value: "tags" } },
+              ],
+            },
+          },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "topic" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "code" } },
+                { kind: "Field", name: { kind: "Name", value: "label" } },
+              ],
+            },
+          },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "kcs" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "code" } },
+                { kind: "Field", name: { kind: "Name", value: "label" } },
+              ],
+            },
+          },
+          { kind: "Field", name: { kind: "Name", value: "stepID" } },
+          { kind: "Field", name: { kind: "Name", value: "hintID" } },
+          { kind: "Field", name: { kind: "Name", value: "amount" } },
+          { kind: "Field", name: { kind: "Name", value: "detail" } },
+          { kind: "Field", name: { kind: "Name", value: "extra" } },
+          { kind: "Field", name: { kind: "Name", value: "createdAt" } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ActionsInfoFragment, unknown>;
 export const ContentInfoFragmentDoc = {
   kind: "Document",
   definitions: [
@@ -2523,6 +2736,103 @@ export const AllTopicsBaseDocument = {
     ...PaginationFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<AllTopicsBaseQuery, AllTopicsBaseQueryVariables>;
+export const AllActionsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "AllActions" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "pagination" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "CursorConnectionArgs" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "filters" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "AdminActionsFilter" },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminActions" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "allActions" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "pagination" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "pagination" },
+                      },
+                    },
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "filters" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "filters" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "nodes" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "FragmentSpread",
+                              name: { kind: "Name", value: "ActionsInfo" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "FragmentSpread",
+                        name: { kind: "Name", value: "Pagination" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...ActionsInfoFragmentDoc.definitions,
+    ...PaginationFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<AllActionsQuery, AllActionsQueryVariables>;
 export const CreateContentDocument = {
   kind: "Document",
   definitions: [

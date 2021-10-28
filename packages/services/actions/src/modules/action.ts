@@ -92,14 +92,16 @@ export const actionModule = registerModule(
       detail: String
 
       extra: JSONObject
+
+      createdAt: DateTime!
     }
 
-    type ActionsConnection {
+    type ActionsConnection implements Connection {
       nodes: [Action!]!
       pageInfo: PageInfo!
     }
 
-    type ActionsVerbsConnection {
+    type ActionsVerbsConnection implements Connection {
       nodes: [ActionVerb!]!
       pageInfo: PageInfo!
     }

@@ -4,7 +4,7 @@ import { FaBookReader } from "react-icons/fa";
 import { FiBook, FiUsers } from "react-icons/fi";
 import { MdOutlineTopic } from "react-icons/md";
 import { RiGroup2Line } from "react-icons/ri";
-import { VscProject } from "react-icons/vsc";
+import { VscGithubAction, VscProject } from "react-icons/vsc";
 import { useAuth } from "./Auth";
 import { DarkModeToggle } from "./DarkModeToggle";
 import { ScrollArea } from "./ScrollArea";
@@ -37,6 +37,9 @@ export function Navigation() {
             </SidebarLink>
             <SidebarLink href="/content" icon={<BiBookContent />}>
               Content
+            </SidebarLink>
+            <SidebarLink href="/actions" icon={<VscGithubAction />}>
+              Actions
             </SidebarLink>
           </>
         )}

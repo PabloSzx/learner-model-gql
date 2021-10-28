@@ -378,15 +378,16 @@ export type Action = {
   amount?: Maybe<Scalars["Float"]>;
   detail?: Maybe<Scalars["String"]>;
   extra?: Maybe<Scalars["JSONObject"]>;
+  createdAt: Scalars["DateTime"];
 };
 
-export type ActionsConnection = {
+export type ActionsConnection = Connection & {
   __typename?: "ActionsConnection";
   nodes: Array<Action>;
   pageInfo: PageInfo;
 };
 
-export type ActionsVerbsConnection = {
+export type ActionsVerbsConnection = Connection & {
   __typename?: "ActionsVerbsConnection";
   nodes: Array<ActionVerb>;
   pageInfo: PageInfo;
@@ -811,6 +812,8 @@ export type ResolversTypes = {
   Connection:
     | ResolversTypes["GroupsConnection"]
     | ResolversTypes["UsersConnection"]
+    | ResolversTypes["ActionsConnection"]
+    | ResolversTypes["ActionsVerbsConnection"]
     | ResolversTypes["ContentConnection"]
     | ResolversTypes["TopicsConnection"]
     | ResolversTypes["DomainsConnection"]
@@ -893,6 +896,8 @@ export type ResolversParentTypes = {
   Connection:
     | ResolversParentTypes["GroupsConnection"]
     | ResolversParentTypes["UsersConnection"]
+    | ResolversParentTypes["ActionsConnection"]
+    | ResolversParentTypes["ActionsVerbsConnection"]
     | ResolversParentTypes["ContentConnection"]
     | ResolversParentTypes["TopicsConnection"]
     | ResolversParentTypes["DomainsConnection"]
@@ -1307,6 +1312,8 @@ export type ConnectionResolvers<
   __resolveType: TypeResolveFn<
     | "GroupsConnection"
     | "UsersConnection"
+    | "ActionsConnection"
+    | "ActionsVerbsConnection"
     | "ContentConnection"
     | "TopicsConnection"
     | "DomainsConnection"
@@ -1429,6 +1436,7 @@ export type ActionResolvers<
     ParentType,
     ContextType
   >;
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
