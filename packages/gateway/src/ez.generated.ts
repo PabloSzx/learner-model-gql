@@ -58,13 +58,13 @@ export type Query = {
   currentUser?: Maybe<User>;
   users: Array<User>;
   adminActions: AdminActionQueries;
+  projects: Array<Project>;
   adminContent: AdminContentQueries;
   content: Array<Content>;
   topics: Array<Topic>;
   domains: Array<Domain>;
   adminDomain: AdminDomainQueries;
   kcs: Array<Kc>;
-  projects: Array<Project>;
   adminProjects: AdminProjectsQueries;
   hello2: Scalars["String"];
 };
@@ -74,6 +74,10 @@ export type QueryGroupsArgs = {
 };
 
 export type QueryUsersArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryProjectsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
@@ -90,10 +94,6 @@ export type QueryDomainsArgs = {
 };
 
 export type QueryKcsArgs = {
-  ids: Array<Scalars["IntID"]>;
-};
-
-export type QueryProjectsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
@@ -418,6 +418,32 @@ export type AdminActionQueriesAllActionsVerbsArgs = {
   pagination: CursorConnectionArgs;
 };
 
+export type Project = {
+  __typename?: "Project";
+  id: Scalars["IntID"];
+  actions: ActionsConnection;
+  domains: Array<Domain>;
+  code: Scalars["String"];
+  label: Scalars["String"];
+  createdAt: Scalars["DateTime"];
+  updatedAt: Scalars["DateTime"];
+};
+
+export type ProjectActionsArgs = {
+  pagination: CursorConnectionArgs;
+  filters?: Maybe<ProjectActionsFilter>;
+};
+
+export type ProjectActionsFilter = {
+  verbNames?: Maybe<Array<Scalars["String"]>>;
+  users?: Maybe<Array<Scalars["IntID"]>>;
+  kcs?: Maybe<Array<Scalars["IntID"]>>;
+  content?: Maybe<Array<Scalars["IntID"]>>;
+  topics?: Maybe<Array<Scalars["IntID"]>>;
+  startDate?: Maybe<Scalars["DateTime"]>;
+  endDate?: Maybe<Scalars["DateTime"]>;
+};
+
 export type CreateContent = {
   description: Scalars["String"];
   code: Scalars["String"];
@@ -609,16 +635,6 @@ export type UpdateKcInput = {
   id: Scalars["IntID"];
   code: Scalars["String"];
   label: Scalars["String"];
-};
-
-export type Project = {
-  __typename?: "Project";
-  id: Scalars["IntID"];
-  domains: Array<Domain>;
-  code: Scalars["String"];
-  label: Scalars["String"];
-  createdAt: Scalars["DateTime"];
-  updatedAt: Scalars["DateTime"];
 };
 
 export type ProjectsConnection = Connection & {
@@ -815,6 +831,8 @@ export type ResolversTypes = {
   ActionsVerbsConnection: ResolverTypeWrapper<ActionsVerbsConnection>;
   AdminActionsFilter: AdminActionsFilter;
   AdminActionQueries: ResolverTypeWrapper<AdminActionQueries>;
+  Project: ResolverTypeWrapper<Project>;
+  ProjectActionsFilter: ProjectActionsFilter;
   CreateContent: CreateContent;
   UpdateContent: UpdateContent;
   ContentConnection: ResolverTypeWrapper<ContentConnection>;
@@ -835,7 +853,6 @@ export type ResolversTypes = {
   AdminKCsFilter: AdminKCsFilter;
   CreateKCInput: CreateKcInput;
   UpdateKCInput: UpdateKcInput;
-  Project: ResolverTypeWrapper<Project>;
   ProjectsConnection: ResolverTypeWrapper<ProjectsConnection>;
   AdminProjectsQueries: ResolverTypeWrapper<AdminProjectsQueries>;
   CreateProject: CreateProject;
@@ -896,6 +913,8 @@ export type ResolversParentTypes = {
   ActionsVerbsConnection: ActionsVerbsConnection;
   AdminActionsFilter: AdminActionsFilter;
   AdminActionQueries: AdminActionQueries;
+  Project: Project;
+  ProjectActionsFilter: ProjectActionsFilter;
   CreateContent: CreateContent;
   UpdateContent: UpdateContent;
   ContentConnection: ContentConnection;
@@ -916,7 +935,6 @@ export type ResolversParentTypes = {
   AdminKCsFilter: AdminKCsFilter;
   CreateKCInput: CreateKcInput;
   UpdateKCInput: UpdateKcInput;
-  Project: Project;
   ProjectsConnection: ProjectsConnection;
   AdminProjectsQueries: AdminProjectsQueries;
   CreateProject: CreateProject;
@@ -956,6 +974,12 @@ export type QueryResolvers<
     ParentType,
     ContextType
   >;
+  projects?: Resolver<
+    Array<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryProjectsArgs, "ids">
+  >;
   adminContent?: Resolver<
     ResolversTypes["AdminContentQueries"],
     ParentType,
@@ -989,12 +1013,6 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     RequireFields<QueryKcsArgs, "ids">
-  >;
-  projects?: Resolver<
-    Array<ResolversTypes["Project"]>,
-    ParentType,
-    ContextType,
-    RequireFields<QueryProjectsArgs, "ids">
   >;
   adminProjects?: Resolver<
     ResolversTypes["AdminProjectsQueries"],
@@ -1455,6 +1473,25 @@ export type AdminActionQueriesResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type ProjectResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Project"] = ResolversParentTypes["Project"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  actions?: Resolver<
+    ResolversTypes["ActionsConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<ProjectActionsArgs, "pagination">
+  >;
+  domains?: Resolver<Array<ResolversTypes["Domain"]>, ParentType, ContextType>;
+  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type ContentConnectionResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["ContentConnection"] = ResolversParentTypes["ContentConnection"]
@@ -1591,19 +1628,6 @@ export type KCsConnectionResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ProjectResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Project"] = ResolversParentTypes["Project"]
-> = {
-  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-  domains?: Resolver<Array<ResolversTypes["Domain"]>, ParentType, ContextType>;
-  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
-  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type ProjectsConnectionResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["ProjectsConnection"] = ResolversParentTypes["ProjectsConnection"]
@@ -1676,6 +1700,7 @@ export type Resolvers<ContextType = EZContext> = {
   ActionsConnection?: ActionsConnectionResolvers<ContextType>;
   ActionsVerbsConnection?: ActionsVerbsConnectionResolvers<ContextType>;
   AdminActionQueries?: AdminActionQueriesResolvers<ContextType>;
+  Project?: ProjectResolvers<ContextType>;
   ContentConnection?: ContentConnectionResolvers<ContextType>;
   AdminContentMutations?: AdminContentMutationsResolvers<ContextType>;
   AdminContentQueries?: AdminContentQueriesResolvers<ContextType>;
@@ -1684,7 +1709,6 @@ export type Resolvers<ContextType = EZContext> = {
   AdminDomainQueries?: AdminDomainQueriesResolvers<ContextType>;
   AdminDomainMutations?: AdminDomainMutationsResolvers<ContextType>;
   KCsConnection?: KCsConnectionResolvers<ContextType>;
-  Project?: ProjectResolvers<ContextType>;
   ProjectsConnection?: ProjectsConnectionResolvers<ContextType>;
   AdminProjectsQueries?: AdminProjectsQueriesResolvers<ContextType>;
   AdminProjectsMutations?: AdminProjectsMutationsResolvers<ContextType>;

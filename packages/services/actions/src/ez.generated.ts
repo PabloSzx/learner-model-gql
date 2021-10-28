@@ -151,6 +151,27 @@ export type AdminActionQueriesAllActionsVerbsArgs = {
   pagination: CursorConnectionArgs;
 };
 
+export type Project = {
+  __typename?: "Project";
+  id: Scalars["IntID"];
+  actions: ActionsConnection;
+};
+
+export type ProjectActionsArgs = {
+  pagination: CursorConnectionArgs;
+  filters?: Maybe<ProjectActionsFilter>;
+};
+
+export type ProjectActionsFilter = {
+  verbNames?: Maybe<Array<Scalars["String"]>>;
+  users?: Maybe<Array<Scalars["IntID"]>>;
+  kcs?: Maybe<Array<Scalars["IntID"]>>;
+  content?: Maybe<Array<Scalars["IntID"]>>;
+  topics?: Maybe<Array<Scalars["IntID"]>>;
+  startDate?: Maybe<Scalars["DateTime"]>;
+  endDate?: Maybe<Scalars["DateTime"]>;
+};
+
 export type PageInfo = {
   __typename?: "PageInfo";
   startCursor?: Maybe<Scalars["String"]>;
@@ -178,6 +199,11 @@ export type Query = {
   __typename?: "Query";
   hello: Scalars["String"];
   adminActions: AdminActionQueries;
+  projects: Array<Project>;
+};
+
+export type QueryProjectsArgs = {
+  ids: Array<Scalars["IntID"]>;
 };
 
 export type Mutation = {
@@ -318,6 +344,8 @@ export type ResolversTypes = {
   ActionsVerbsConnection: ResolverTypeWrapper<ActionsVerbsConnection>;
   AdminActionsFilter: AdminActionsFilter;
   AdminActionQueries: ResolverTypeWrapper<AdminActionQueries>;
+  Project: ResolverTypeWrapper<Project>;
+  ProjectActionsFilter: ProjectActionsFilter;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   Node: never;
@@ -353,6 +381,8 @@ export type ResolversParentTypes = {
   ActionsVerbsConnection: ActionsVerbsConnection;
   AdminActionsFilter: AdminActionsFilter;
   AdminActionQueries: AdminActionQueries;
+  Project: Project;
+  ProjectActionsFilter: ProjectActionsFilter;
   PageInfo: PageInfo;
   Boolean: Scalars["Boolean"];
   Node: never;
@@ -517,6 +547,20 @@ export type AdminActionQueriesResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type ProjectResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Project"] = ResolversParentTypes["Project"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  actions?: Resolver<
+    ResolversTypes["ActionsConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<ProjectActionsArgs, "pagination">
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type PageInfoResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["PageInfo"] = ResolversParentTypes["PageInfo"]
@@ -566,6 +610,12 @@ export type QueryResolvers<
     ParentType,
     ContextType
   >;
+  projects?: Resolver<
+    Array<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryProjectsArgs, "ids">
+  >;
 };
 
 export type MutationResolvers<
@@ -612,6 +662,7 @@ export type Resolvers<ContextType = EZContext> = {
   ActionsConnection?: ActionsConnectionResolvers<ContextType>;
   ActionsVerbsConnection?: ActionsVerbsConnectionResolvers<ContextType>;
   AdminActionQueries?: AdminActionQueriesResolvers<ContextType>;
+  Project?: ProjectResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
   Node?: NodeResolvers<ContextType>;
   Connection?: ConnectionResolvers<ContextType>;

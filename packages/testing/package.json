@@ -6,7 +6,8 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "graphql-codegen generate --config codegen.yaml --watch",
-    "generate": "graphql-codegen generate --config codegen.yaml"
+    "generate": "graphql-codegen generate --config codegen.yaml",
+    "test:watch:generate": "graphql-codegen generate --config codegen.yaml --watch"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.2.1",

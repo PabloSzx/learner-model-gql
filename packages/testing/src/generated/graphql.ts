@@ -474,12 +474,28 @@ export type PageInfo = {
 
 export type Project = {
   __typename?: "Project";
+  actions: ActionsConnection;
   code: Scalars["String"];
   createdAt: Scalars["DateTime"];
   domains: Array<Domain>;
   id: Scalars["IntID"];
   label: Scalars["String"];
   updatedAt: Scalars["DateTime"];
+};
+
+export type ProjectActionsArgs = {
+  filters?: Maybe<ProjectActionsFilter>;
+  pagination: CursorConnectionArgs;
+};
+
+export type ProjectActionsFilter = {
+  content?: Maybe<Array<Scalars["IntID"]>>;
+  endDate?: Maybe<Scalars["DateTime"]>;
+  kcs?: Maybe<Array<Scalars["IntID"]>>;
+  startDate?: Maybe<Scalars["DateTime"]>;
+  topics?: Maybe<Array<Scalars["IntID"]>>;
+  users?: Maybe<Array<Scalars["IntID"]>>;
+  verbNames?: Maybe<Array<Scalars["String"]>>;
 };
 
 export type ProjectsConnection = Connection & {
@@ -684,6 +700,29 @@ export type AllActionsQuery = {
       pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean };
     };
   };
+};
+
+export type ProjectActionsQueryVariables = Exact<{
+  projectId: Scalars["IntID"];
+  pagination: CursorConnectionArgs;
+  filters?: Maybe<ProjectActionsFilter>;
+}>;
+
+export type ProjectActionsQuery = {
+  __typename?: "Query";
+  projects: Array<{
+    __typename?: "Project";
+    id: string;
+    actions: {
+      __typename?: "ActionsConnection";
+      nodes: Array<{
+        __typename?: "Action";
+        id: string;
+        verb: { __typename?: "ActionVerb"; name: string };
+      }>;
+      pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean };
+    };
+  }>;
 };
 
 export type AllContentQueryVariables = Exact<{
@@ -1683,6 +1722,150 @@ export const AllActionsDocument = {
     },
   ],
 } as unknown as DocumentNode<AllActionsQuery, AllActionsQueryVariables>;
+export const ProjectActionsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "ProjectActions" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "projectId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "IntID" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "pagination" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "CursorConnectionArgs" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "filters" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "ProjectActionsFilter" },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "projects" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "ids" },
+                value: {
+                  kind: "ListValue",
+                  values: [
+                    {
+                      kind: "Variable",
+                      name: { kind: "Name", value: "projectId" },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "actions" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "pagination" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "pagination" },
+                      },
+                    },
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "filters" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "filters" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "nodes" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "verb" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "name" },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "pageInfo" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "hasNextPage" },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ProjectActionsQuery, ProjectActionsQueryVariables>;
 export const AllContentDocument = {
   kind: "Document",
   definitions: [

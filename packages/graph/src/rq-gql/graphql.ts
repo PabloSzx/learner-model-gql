@@ -474,12 +474,28 @@ export type PageInfo = {
 
 export type Project = {
   __typename?: "Project";
+  actions: ActionsConnection;
   code: Scalars["String"];
   createdAt: Scalars["DateTime"];
   domains: Array<Domain>;
   id: Scalars["IntID"];
   label: Scalars["String"];
   updatedAt: Scalars["DateTime"];
+};
+
+export type ProjectActionsArgs = {
+  filters?: Maybe<ProjectActionsFilter>;
+  pagination: CursorConnectionArgs;
+};
+
+export type ProjectActionsFilter = {
+  content?: Maybe<Array<Scalars["IntID"]>>;
+  endDate?: Maybe<Scalars["DateTime"]>;
+  kcs?: Maybe<Array<Scalars["IntID"]>>;
+  startDate?: Maybe<Scalars["DateTime"]>;
+  topics?: Maybe<Array<Scalars["IntID"]>>;
+  users?: Maybe<Array<Scalars["IntID"]>>;
+  verbNames?: Maybe<Array<Scalars["String"]>>;
 };
 
 export type ProjectsConnection = Connection & {

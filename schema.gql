@@ -11,13 +11,13 @@ type Query {
   currentUser: User
   users(ids: [IntID!]!): [User!]!
   adminActions: AdminActionQueries!
+  projects(ids: [IntID!]!): [Project!]!
   adminContent: AdminContentQueries!
   content(ids: [IntID!]!): [Content!]!
   topics(ids: [IntID!]!): [Topic!]!
   domains(ids: [IntID!]!): [Domain!]!
   adminDomain: AdminDomainQueries!
   kcs(ids: [IntID!]!): [KC!]!
-  projects(ids: [IntID!]!): [Project!]!
   adminProjects: AdminProjectsQueries!
   hello2: String!
 }
@@ -331,6 +331,29 @@ type AdminActionQueries {
   allActionsVerbs(pagination: CursorConnectionArgs!): ActionsVerbsConnection!
 }
 
+type Project {
+  id: IntID!
+  actions(
+    pagination: CursorConnectionArgs!
+    filters: ProjectActionsFilter
+  ): ActionsConnection!
+  domains: [Domain!]!
+  code: String!
+  label: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input ProjectActionsFilter {
+  verbNames: [String!]
+  users: [IntID!]
+  kcs: [IntID!]
+  content: [IntID!]
+  topics: [IntID!]
+  startDate: DateTime
+  endDate: DateTime
+}
+
 input CreateContent {
   description: String!
   code: String!
@@ -474,15 +497,6 @@ input UpdateKCInput {
   id: IntID!
   code: String!
   label: String!
-}
-
-type Project {
-  id: IntID!
-  domains: [Domain!]!
-  code: String!
-  label: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
 }
 
 type ProjectsConnection implements Connection {

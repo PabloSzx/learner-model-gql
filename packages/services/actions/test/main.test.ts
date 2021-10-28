@@ -1,22 +1,20 @@
 import {
+  CreateProject,
   CreateUser,
   deepEqual,
   expectDeepEqual,
-  GetTestClient,
-  MockAuthUser,
   gql,
-  CreateProject,
+  MockAuthUser,
 } from "testing";
-import { actionModule } from "../src/modules/index";
-import { CheckActionsCreationRetrieval } from "./test";
+import {
+  ActionsTestClient,
+  CheckActionsCreationRetrieval,
+  CheckProjectActions,
+} from "./test";
 
 describe("Actions service", () => {
   it("Hello World", async () => {
-    const { query } = await GetTestClient({
-      prepare({ registerModule }) {
-        registerModule(actionModule);
-      },
-    });
+    const { query } = await ActionsTestClient();
 
     expectDeepEqual(
       await query(
@@ -35,11 +33,7 @@ describe("Actions service", () => {
   });
 
   it("actions creation and retrieval", async () => {
-    const { mutation, query } = await GetTestClient({
-      prepare({ registerModule }) {
-        registerModule(actionModule);
-      },
-    });
+    const { mutation, query } = await ActionsTestClient();
 
     await CheckActionsCreationRetrieval({
       mutation,
@@ -47,13 +41,15 @@ describe("Actions service", () => {
     });
   });
 
+  it("projects actions", async () => {
+    const test = await ActionsTestClient();
+
+    await CheckProjectActions(test);
+  });
+
   describe("authorization", async () => {
     it("create actions without user", async () => {
-      const { mutation } = await GetTestClient({
-        prepare({ registerModule }) {
-          registerModule(actionModule);
-        },
-      });
+      const { mutation } = await ActionsTestClient();
 
       deepEqual(
         await mutation(
@@ -93,11 +89,7 @@ describe("Actions service", () => {
     });
 
     it("create actions on not assigned project", async () => {
-      const { mutation } = await GetTestClient({
-        prepare({ registerModule }) {
-          registerModule(actionModule);
-        },
-      });
+      const { mutation } = await ActionsTestClient();
 
       const { authUser } = await CreateUser({
         role: "USER",
@@ -145,11 +137,7 @@ describe("Actions service", () => {
     });
 
     it("get actions not possible if not admin", async () => {
-      const { query } = await GetTestClient({
-        prepare({ registerModule }) {
-          registerModule(actionModule);
-        },
-      });
+      const { query } = await ActionsTestClient();
 
       const { authUser } = await CreateUser({ role: "USER" });
 
