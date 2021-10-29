@@ -94,6 +94,7 @@ export type AdminActionQueries = {
 
 export type AdminActionQueriesAllActionsArgs = {
   filters?: Maybe<AdminActionsFilter>;
+  orderBy?: Maybe<AdminActionsOrderBy>;
   pagination: CursorConnectionArgs;
 };
 
@@ -110,6 +111,10 @@ export type AdminActionsFilter = {
   topics?: Maybe<Array<Scalars["IntID"]>>;
   users?: Maybe<Array<Scalars["IntID"]>>;
   verbNames?: Maybe<Array<Scalars["String"]>>;
+};
+
+export type AdminActionsOrderBy = {
+  id?: Maybe<Order_By>;
 };
 
 export type AdminContentFilter = {
@@ -465,6 +470,12 @@ export type Node = {
   id: Scalars["IntID"];
 };
 
+export const Order_By = {
+  Asc: "ASC",
+  Desc: "DESC",
+} as const;
+
+export type Order_By = typeof Order_By[keyof typeof Order_By];
 export type PageInfo = {
   __typename?: "PageInfo";
   endCursor?: Maybe<Scalars["String"]>;

@@ -117,10 +117,20 @@ export const actionModule = registerModule(
       endDate: DateTime
     }
 
+    enum ORDER_BY {
+      ASC
+      DESC
+    }
+
+    input AdminActionsOrderBy {
+      id: ORDER_BY = DESC
+    }
+
     type AdminActionQueries {
       allActions(
         pagination: CursorConnectionArgs!
         filters: AdminActionsFilter
+        orderBy: AdminActionsOrderBy
       ): ActionsConnection!
       allActionsVerbs(
         pagination: CursorConnectionArgs!
@@ -138,7 +148,7 @@ export const actionModule = registerModule(
   {
     resolvers: {
       AdminActionQueries: {
-        allActions(_root, { pagination, filters }, { prisma }) {
+        allActions(_root, { pagination, filters, orderBy }, { prisma }) {
           const where: PrismaNS.ActionWhereInput = {};
 
           if (filters) {
@@ -214,6 +224,9 @@ export const actionModule = registerModule(
             return prisma.action.findMany({
               ...args,
               where,
+              orderBy: {
+                id: orderBy?.id === "ASC" ? "asc" : "desc",
+              },
             });
           });
         },

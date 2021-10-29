@@ -12,6 +12,7 @@ import { ezSchema } from "@graphql-ez/plugin-schema";
 import { ezVoyager } from "@graphql-ez/plugin-voyager";
 import { ezWebSockets } from "@graphql-ez/plugin-websockets";
 import { GetDBUser, prisma, pubSub } from "db";
+import { AltairIDEOptions } from "./altair";
 import { Auth0Verify, Authorization, GetAuth0User } from "./auth";
 import { ConnectionTypes } from "./connection";
 import { IntID } from "./customScalars";
@@ -26,6 +27,7 @@ export * from "./connection";
 export * from "./logger";
 export * from "./utils";
 export * from "./listen";
+export * from "./altair";
 export { default as isInt } from "validator/lib/isInt.js";
 
 async function buildContext({ fastify }: BuildContextArgs) {
@@ -69,7 +71,7 @@ export const ezServicePreset = CreateApp({
   cors: true,
   ez: {
     plugins: [
-      ezAltairIDE(),
+      ezAltairIDE(AltairIDEOptions),
       ezWebSockets("new"),
       ezSchema(),
       ezCodegen(codegenOptions),

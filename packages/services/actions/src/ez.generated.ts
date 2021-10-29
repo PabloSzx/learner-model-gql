@@ -137,6 +137,12 @@ export type AdminActionsFilter = {
   endDate?: Maybe<Scalars["DateTime"]>;
 };
 
+export type Order_By = "ASC" | "DESC";
+
+export type AdminActionsOrderBy = {
+  id?: Maybe<Order_By>;
+};
+
 export type AdminActionQueries = {
   __typename?: "AdminActionQueries";
   allActions: ActionsConnection;
@@ -146,6 +152,7 @@ export type AdminActionQueries = {
 export type AdminActionQueriesAllActionsArgs = {
   pagination: CursorConnectionArgs;
   filters?: Maybe<AdminActionsFilter>;
+  orderBy?: Maybe<AdminActionsOrderBy>;
 };
 
 export type AdminActionQueriesAllActionsVerbsArgs = {
@@ -344,6 +351,8 @@ export type ResolversTypes = {
   ActionsConnection: ResolverTypeWrapper<ActionsConnection>;
   ActionsVerbsConnection: ResolverTypeWrapper<ActionsVerbsConnection>;
   AdminActionsFilter: AdminActionsFilter;
+  ORDER_BY: Order_By;
+  AdminActionsOrderBy: AdminActionsOrderBy;
   AdminActionQueries: ResolverTypeWrapper<AdminActionQueries>;
   Project: ResolverTypeWrapper<Project>;
   ProjectActionsFilter: ProjectActionsFilter;
@@ -383,6 +392,7 @@ export type ResolversParentTypes = {
   ActionsConnection: ActionsConnection;
   ActionsVerbsConnection: ActionsVerbsConnection;
   AdminActionsFilter: AdminActionsFilter;
+  AdminActionsOrderBy: AdminActionsOrderBy;
   AdminActionQueries: AdminActionQueries;
   Project: Project;
   ProjectActionsFilter: ProjectActionsFilter;

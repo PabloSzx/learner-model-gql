@@ -3,8 +3,10 @@ import {
   BoxProps,
   createIcon,
   HStack,
+  Link,
   LinkBox,
   LinkOverlay,
+  LinkProps,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
@@ -13,10 +15,20 @@ interface SidebarLinkProps extends BoxProps {
   icon?: React.ReactElement;
   avatar?: React.ReactElement;
   href: string;
+  isExternal?: boolean;
+  target?: LinkProps["target"];
 }
 
 export const SidebarLink = (props: SidebarLinkProps) => {
-  const { children, icon = <ArrowRight />, avatar, href, ...rest } = props;
+  const {
+    children,
+    icon = <ArrowRight />,
+    avatar,
+    href,
+    isExternal,
+    target,
+    ...rest
+  } = props;
   const { push, prefetch, pathname } = useRouter();
 
   const activeBg = mode("blue.900", "gray.700");
@@ -43,19 +55,26 @@ export const SidebarLink = (props: SidebarLinkProps) => {
           {avatar || icon}
         </Box>
 
-        <LinkOverlay
-          onClick={(ev) => {
-            ev.preventDefault();
+        {isExternal ? (
+          <Link href={href} target={target} textDecor="none !important">
+            {children}
+          </Link>
+        ) : (
+          <LinkOverlay
+            onClick={(ev) => {
+              ev.preventDefault();
 
-            pathname !== href && push(href);
-          }}
-          onMouseOver={() => {
-            pathname !== href && prefetch(href);
-          }}
-          href={href}
-        >
-          {children}
-        </LinkOverlay>
+              pathname !== href && push(href);
+            }}
+            onMouseOver={() => {
+              pathname !== href && prefetch(href);
+            }}
+            href={href}
+            target={target}
+          >
+            {children}
+          </LinkOverlay>
+        )}
       </HStack>
     </LinkBox>
   );

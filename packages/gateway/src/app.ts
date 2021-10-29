@@ -2,7 +2,13 @@ import { CreateApp } from "@graphql-ez/fastify";
 import { ezAltairIDE } from "@graphql-ez/plugin-altair";
 import { ezCodegen } from "@graphql-ez/plugin-codegen";
 import { ezVoyager } from "@graphql-ez/plugin-voyager";
-import { codegenOptions, getDirname, logger, pubSub } from "api-base";
+import {
+  AltairIDEOptions,
+  codegenOptions,
+  getDirname,
+  logger,
+  pubSub,
+} from "api-base";
 import ms from "ms";
 import { resolve } from "path";
 import waitOn from "wait-on";
@@ -34,7 +40,7 @@ export const getGatewayPlugin = async () => {
           outputSchema,
           config: codegenOptions.config,
         }),
-        ezAltairIDE({}),
+        ezAltairIDE(AltairIDEOptions),
       ],
     },
     envelop: {

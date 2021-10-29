@@ -324,10 +324,20 @@ input AdminActionsFilter {
   endDate: DateTime
 }
 
+enum ORDER_BY {
+  ASC
+  DESC
+}
+
+input AdminActionsOrderBy {
+  id: ORDER_BY = DESC
+}
+
 type AdminActionQueries {
   allActions(
     pagination: CursorConnectionArgs!
     filters: AdminActionsFilter
+    orderBy: AdminActionsOrderBy
   ): ActionsConnection!
   allActionsVerbs(pagination: CursorConnectionArgs!): ActionsVerbsConnection!
 }

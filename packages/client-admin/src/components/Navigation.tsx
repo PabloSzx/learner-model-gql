@@ -1,4 +1,5 @@
 import { Stack } from "@chakra-ui/react";
+import { API_URL } from "common";
 import { BiBookContent } from "react-icons/bi";
 import { FaBookReader } from "react-icons/fa";
 import { FiBook, FiUsers } from "react-icons/fi";
@@ -9,9 +10,26 @@ import { useAuth } from "./Auth";
 import { DarkModeToggle } from "./DarkModeToggle";
 import { ScrollArea } from "./ScrollArea";
 import { SidebarLink } from "./SidebarLink";
+import { BiTestTube } from "react-icons/bi";
+import { useMemo } from "react";
 
 export function Navigation() {
-  const { user } = useAuth();
+  const {
+    user,
+    headers: { authorization },
+  } = useAuth();
+
+  const altairUrl = useMemo(() => {
+    if (!authorization) return null;
+
+    const altairUrlObject = new URL(API_URL);
+
+    altairUrlObject.pathname = "/altair";
+
+    altairUrlObject.searchParams.set("token", authorization);
+
+    return altairUrlObject.href;
+  }, [authorization]);
   return (
     <ScrollArea pt="5" pb="6">
       <Stack pb="6">
@@ -41,6 +59,16 @@ export function Navigation() {
             <SidebarLink href="/actions" icon={<VscGithubAction />}>
               Actions
             </SidebarLink>
+            {altairUrl ? (
+              <SidebarLink
+                href={altairUrl}
+                icon={<BiTestTube />}
+                isExternal
+                target="_blank"
+              >
+                Altair GraphQL Web Client
+              </SidebarLink>
+            ) : null}
           </>
         )}
       </Stack>

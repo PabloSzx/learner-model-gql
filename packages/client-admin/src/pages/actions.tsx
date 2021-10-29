@@ -91,6 +91,10 @@ export default withAdminAuth(function ActionsPage() {
             Header: "Verb",
             accessor: (v) => v.verb.name,
           },
+          getDateRow({
+            id: "timestamp",
+            label: "Timestamp",
+          }),
           {
             id: "result",
             Header: "Result",
@@ -150,10 +154,7 @@ export default withAdminAuth(function ActionsPage() {
             Header: "Extra",
             accessor: (v) => (v.extra ? JSON.stringify(v.extra, null, 2) : "-"),
           },
-          getDateRow({
-            id: "timestamp",
-            label: "Timestamp",
-          }),
+
           getDateRow({
             id: "createdAt",
             label: "Created At",

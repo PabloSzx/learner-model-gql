@@ -2,7 +2,7 @@ import { useAuth0, User as Auth0User } from "@auth0/auth0-react";
 import { Spinner } from "@chakra-ui/react";
 import { CurrentUserQuery, gql, useGQLQuery } from "graph";
 import Router from "next/router";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useMemo } from "react";
 import { proxy, useSnapshot } from "valtio";
 import { rqGQLClient } from "../rqClient";
 
@@ -61,7 +61,18 @@ export function SyncAuth() {
   return null;
 }
 
-export const useAuth = () => useSnapshot(AuthState);
+export const useAuth = () => {
+  const auth = useSnapshot(AuthState);
+  const headers = useSnapshot(rqGQLClient.headers);
+
+  return useMemo(
+    () => ({
+      ...auth,
+      headers,
+    }),
+    [auth, headers]
+  );
+};
 
 export function withAdminAuth<Props extends Record<string, unknown>>(
   Cmp: FC<Props>
