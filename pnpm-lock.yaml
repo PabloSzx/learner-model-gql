@@ -17,7 +17,7 @@ importers:
       '@types/mocha': ^9.0.0
       '@types/node': ^16.11.6
       '@types/prettier': ^2.4.1
-      '@types/randomstring': ^1.1.7
+      '@types/randomstring': ^1.1.8
       '@types/react': ^17.0.33
       api-base: workspace:^0.0.1
       bob-tsm: ^0.3.3
@@ -60,7 +60,7 @@ importers:
       '@types/mocha': 9.0.0
       '@types/node': 16.11.6
       '@types/prettier': 2.4.1
-      '@types/randomstring': 1.1.7
+      '@types/randomstring': 1.1.8
       '@types/react': 17.0.33
       bob-tsm: 0.3.3_esbuild@0.13.10
       bob-watch: 0.1.0
@@ -3332,8 +3332,8 @@ packages:
   /@types/prop-types/15.7.4:
     resolution: {integrity: sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==}
 
-  /@types/randomstring/1.1.7:
-    resolution: {integrity: sha512-S6NRYPiH8VGcLW4m9KEMUPtGxXqToCOLLCutQh8sSMaZGrL6/PEQCZAPGBtMP6SKd43ep5eWuPFN732h23h15w==}
+  /@types/randomstring/1.1.8:
+    resolution: {integrity: sha512-NPOJcW+TTjT9Qiog0UjSoG3Sj24c7EfzZO39BU9E61D7fQtwNmBNblyQhSsK9+5s9Fm0o31rvX+ZyZkpE/c7jA==}
     dev: true
 
   /@types/react-dom/17.0.10:
