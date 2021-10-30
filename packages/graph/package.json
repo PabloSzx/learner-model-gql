@@ -13,7 +13,7 @@
     "common": "workspace:^0.0.1",
     "graphql": "^16.0.0",
     "prettier": "^2.4.1",
-    "react-query": "^3.29.1",
+    "react-query": "^3.30.0",
     "rq-gql": "^0.2.3",
     "valtio": "^1.2.5"
   },
