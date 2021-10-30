@@ -97,6 +97,7 @@ importers:
       '@graphql-ez/plugin-schema': ^0.8.0
       '@graphql-ez/plugin-voyager': ^0.9.0
       '@graphql-ez/plugin-websockets': ^0.10.2
+      '@graphql-tools/schema': ^8.3.1
       '@types/validator': ^13.6.6
       '@types/wait-on': ^5.3.1
       common-api: workspace:^1.0.0
@@ -119,6 +120,7 @@ importers:
       '@graphql-ez/plugin-schema': 0.8.0_2a1088d611aed937e6384a686dbea8d4
       '@graphql-ez/plugin-voyager': 0.9.0_2a1088d611aed937e6384a686dbea8d4
       '@graphql-ez/plugin-websockets': 0.10.2_2a1088d611aed937e6384a686dbea8d4
+      '@graphql-tools/schema': 8.3.1_graphql@16.0.0
       common-api: link:../common-api
       db: link:../db
       fastify-auth0-verify: 0.6.0

@@ -11,7 +11,9 @@ import { ezScalars } from "@graphql-ez/plugin-scalars";
 import { ezSchema } from "@graphql-ez/plugin-schema";
 import { ezVoyager } from "@graphql-ez/plugin-voyager";
 import { ezWebSockets } from "@graphql-ez/plugin-websockets";
+import { makeExecutableSchema } from "@graphql-tools/schema";
 import { GetDBUser, prisma, pubSub } from "db";
+import { lexicographicSortSchema } from "graphql";
 import { AltairIDEOptions } from "./altair";
 import { Auth0Verify, Authorization, GetAuth0User } from "./auth";
 import { ConnectionTypes } from "./connection";
@@ -20,15 +22,15 @@ import { IntID } from "./customScalars";
 export * from "@graphql-ez/fastify";
 export * from "common-api";
 export * from "db";
+export { default as isInt } from "validator/lib/isInt.js";
 export * from "../../services/list";
+export * from "./altair";
 export * from "./auth";
 export * from "./casters";
 export * from "./connection";
+export * from "./listen";
 export * from "./logger";
 export * from "./utils";
-export * from "./listen";
-export * from "./altair";
-export { default as isInt } from "validator/lib/isInt.js";
 
 async function buildContext({ fastify }: BuildContextArgs) {
   const { Auth0UserPromise } = GetAuth0User(fastify?.request);
@@ -75,7 +77,16 @@ export const ezServicePreset = CreateApp({
       ezWebSockets("new"),
       ezSchema(),
       ezCodegen(codegenOptions),
-      ezGraphQLModules(),
+      ezGraphQLModules({
+        schemaBuilder({ typeDefs, resolvers }) {
+          return lexicographicSortSchema(
+            makeExecutableSchema({
+              typeDefs,
+              resolvers,
+            })
+          );
+        },
+      }),
       ezScalars(
         {
           DateTime: 1,

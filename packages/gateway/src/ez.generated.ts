@@ -34,351 +34,59 @@ export type Scalars = {
   Float: number;
   /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: string | Date;
-  /** The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
-  Timestamp: Date;
-  /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
-  JSONObject: any;
-  /** Integers that will have a value of 0 or more. */
-  NonNegativeInt: number;
-  /** Represents NULL values */
-  Void: unknown;
-  /** A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. */
-  URL: string;
   /** A field whose value conforms to the standard internet email address format as specified in RFC822: https://www.w3.org/Protocols/rfc822/. */
   EmailAddress: string;
   /** ID that parses as non-negative integer, serializes to string, and can be passed as string or number */
   IntID: number;
+  /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSONObject: any;
+  /** Integers that will have a value of 0 or more. */
+  NonNegativeInt: number;
+  /** The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
+  Timestamp: Date;
+  /** A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. */
+  URL: string;
+  /** Represents NULL values */
+  Void: unknown;
 };
 
-export type Query = {
-  __typename?: "Query";
-  hello: Scalars["String"];
-  groups: Array<Group>;
-  adminUsers: AdminUserQueries;
-  currentUser?: Maybe<User>;
-  users: Array<User>;
-  adminActions: AdminActionQueries;
-  projects: Array<Project>;
-  adminContent: AdminContentQueries;
-  content: Array<Content>;
-  topics: Array<Topic>;
-  domains: Array<Domain>;
-  adminDomain: AdminDomainQueries;
+export type Action = {
+  __typename?: "Action";
+  amount?: Maybe<Scalars["Float"]>;
+  content?: Maybe<Content>;
+  createdAt: Scalars["DateTime"];
+  detail?: Maybe<Scalars["String"]>;
+  extra?: Maybe<Scalars["JSONObject"]>;
+  hintID?: Maybe<Scalars["ID"]>;
+  id: Scalars["IntID"];
   kcs: Array<Kc>;
-  adminProjects: AdminProjectsQueries;
-  hello2: Scalars["String"];
+  result?: Maybe<Scalars["Float"]>;
+  stepID?: Maybe<Scalars["ID"]>;
+  timestamp: Scalars["Timestamp"];
+  topic?: Maybe<Topic>;
+  user?: Maybe<User>;
+  verb: ActionVerb;
 };
 
-export type QueryGroupsArgs = {
-  ids: Array<Scalars["IntID"]>;
-};
-
-export type QueryUsersArgs = {
-  ids: Array<Scalars["IntID"]>;
-};
-
-export type QueryProjectsArgs = {
-  ids: Array<Scalars["IntID"]>;
-};
-
-export type QueryContentArgs = {
-  ids: Array<Scalars["IntID"]>;
-};
-
-export type QueryTopicsArgs = {
-  ids: Array<Scalars["IntID"]>;
-};
-
-export type QueryDomainsArgs = {
-  ids: Array<Scalars["IntID"]>;
-};
-
-export type QueryKcsArgs = {
-  ids: Array<Scalars["IntID"]>;
-};
-
-export type Mutation = {
-  __typename?: "Mutation";
-  hello: Scalars["String"];
-  adminUsers: AdminUserMutations;
-  action?: Maybe<Scalars["Void"]>;
-  adminContent: AdminContentMutations;
-  adminDomain: AdminDomainMutations;
-  adminProjects: AdminProjectsMutations;
-};
-
-export type MutationActionArgs = {
-  data: ActionInput;
-};
-
-export type Subscription = {
-  __typename?: "Subscription";
-  hello: Scalars["String"];
-};
-
-export type Group = {
-  __typename?: "Group";
-  id: Scalars["IntID"];
-  code: Scalars["String"];
-  label: Scalars["String"];
-  users: Array<User>;
-  tags: Array<Scalars["String"]>;
-  flags: GroupFlags;
-  createdAt: Scalars["DateTime"];
-  updatedAt: Scalars["DateTime"];
-  projectsIds: Array<Scalars["IntID"]>;
-  projects: Array<Project>;
-};
-
-export type GroupFlags = {
-  __typename?: "GroupFlags";
-  id: Scalars["IntID"];
-  readProjectActions: Scalars["Boolean"];
-  createdAt: Scalars["DateTime"];
-  updatedAt: Scalars["DateTime"];
-};
-
-export type GroupFlagsInput = {
-  readProjectActions: Scalars["Boolean"];
-};
-
-export type CreateGroupInput = {
-  code: Scalars["String"];
-  label: Scalars["String"];
-  tags: Array<Scalars["String"]>;
-  projectIds: Array<Scalars["IntID"]>;
-  flags?: Maybe<GroupFlagsInput>;
-};
-
-export type UpdateGroupInput = {
-  id: Scalars["IntID"];
-  code: Scalars["String"];
-  label: Scalars["String"];
-  tags: Array<Scalars["String"]>;
-  projectIds: Array<Scalars["IntID"]>;
-  flags?: Maybe<GroupFlagsInput>;
-};
-
-export type GroupsConnection = Connection & {
-  __typename?: "GroupsConnection";
-  nodes: Array<Group>;
-  pageInfo: PageInfo;
-};
-
-export type AdminGroupsFilter = {
-  tags?: Maybe<Array<Scalars["String"]>>;
-};
-
-export type UserRole = "ADMIN" | "USER";
-
-export type User = {
-  __typename?: "User";
-  id: Scalars["IntID"];
-  enabled: Scalars["Boolean"];
-  email: Scalars["String"];
-  name?: Maybe<Scalars["String"]>;
-  locked: Scalars["Boolean"];
-  active: Scalars["Boolean"];
-  lastOnline?: Maybe<Scalars["DateTime"]>;
-  tags: Array<Scalars["String"]>;
-  role: UserRole;
-  createdAt: Scalars["DateTime"];
-  updatedAt: Scalars["DateTime"];
-  groups: Array<Group>;
-  projectsIds: Array<Scalars["IntID"]>;
-  projects: Array<Project>;
-};
-
-export type UsersConnection = Connection & {
-  __typename?: "UsersConnection";
-  nodes: Array<User>;
-  pageInfo: PageInfo;
-};
-
-export type AdminUsersFilter = {
-  tags?: Maybe<Array<Scalars["String"]>>;
-};
-
-export type AdminUserQueries = {
-  __typename?: "AdminUserQueries";
-  allUsers: UsersConnection;
-  allGroups: GroupsConnection;
-};
-
-export type AdminUserQueriesAllUsersArgs = {
-  pagination: CursorConnectionArgs;
-  filters?: Maybe<AdminUsersFilter>;
-};
-
-export type AdminUserQueriesAllGroupsArgs = {
-  pagination: CursorConnectionArgs;
-  filters?: Maybe<AdminGroupsFilter>;
-};
-
-export type UpdateUserInput = {
-  id: Scalars["IntID"];
-  name?: Maybe<Scalars["String"]>;
-  role: UserRole;
-  locked: Scalars["Boolean"];
-  projectIds: Array<Scalars["IntID"]>;
-  tags: Array<Scalars["String"]>;
-};
-
-export type AdminUserMutations = {
-  __typename?: "AdminUserMutations";
-  /** Upsert specified users with specified project */
-  upsertUsersWithProjects: Array<User>;
-  updateUser: User;
-  setUserGroups: Array<Group>;
-  createGroup: Group;
-  updateGroup: Group;
-  setProjectsToUsers: Array<User>;
-};
-
-export type AdminUserMutationsUpsertUsersWithProjectsArgs = {
-  emails: Array<Scalars["EmailAddress"]>;
-  projectsIds: Array<Scalars["IntID"]>;
-};
-
-export type AdminUserMutationsUpdateUserArgs = {
-  data: UpdateUserInput;
-};
-
-export type AdminUserMutationsSetUserGroupsArgs = {
-  usersEmails: Array<Scalars["EmailAddress"]>;
-  groupIds: Array<Scalars["IntID"]>;
-};
-
-export type AdminUserMutationsCreateGroupArgs = {
-  data: CreateGroupInput;
-};
-
-export type AdminUserMutationsUpdateGroupArgs = {
-  data: UpdateGroupInput;
-};
-
-export type AdminUserMutationsSetProjectsToUsersArgs = {
-  projectIds: Array<Scalars["IntID"]>;
-  userIds: Array<Scalars["IntID"]>;
-};
-
-export type PageInfo = {
-  __typename?: "PageInfo";
-  startCursor?: Maybe<Scalars["String"]>;
-  endCursor?: Maybe<Scalars["String"]>;
-  hasNextPage: Scalars["Boolean"];
-  hasPreviousPage: Scalars["Boolean"];
-};
-
-export type Node = {
-  id: Scalars["IntID"];
-};
-
-export type Connection = {
-  pageInfo: PageInfo;
-};
-
-export type CursorConnectionArgs = {
-  first?: Maybe<Scalars["NonNegativeInt"]>;
-  after?: Maybe<Scalars["IntID"]>;
-  last?: Maybe<Scalars["NonNegativeInt"]>;
-  before?: Maybe<Scalars["IntID"]>;
+export type ActionInput = {
+  amount?: Maybe<Scalars["Float"]>;
+  contentID?: Maybe<Scalars["ID"]>;
+  detail?: Maybe<Scalars["String"]>;
+  extra?: Maybe<Scalars["JSONObject"]>;
+  hintID?: Maybe<Scalars["ID"]>;
+  kcsIDs?: Maybe<Array<Scalars["ID"]>>;
+  projectId: Scalars["IntID"];
+  result?: Maybe<Scalars["Float"]>;
+  stepID?: Maybe<Scalars["ID"]>;
+  timestamp: Scalars["Timestamp"];
+  topicID?: Maybe<Scalars["ID"]>;
+  verbName: Scalars["String"];
 };
 
 export type ActionVerb = {
   __typename?: "ActionVerb";
   id: Scalars["IntID"];
   name: Scalars["String"];
-};
-
-export type Content = {
-  __typename?: "Content";
-  id: Scalars["IntID"];
-  code: Scalars["String"];
-  label: Scalars["String"];
-  description: Scalars["String"];
-  binaryBase64?: Maybe<Scalars["String"]>;
-  binaryFilename?: Maybe<Scalars["String"]>;
-  json?: Maybe<Scalars["JSONObject"]>;
-  url?: Maybe<Scalars["String"]>;
-  sortIndex?: Maybe<Scalars["Int"]>;
-  tags: Array<Scalars["String"]>;
-  createdAt: Scalars["DateTime"];
-  updatedAt: Scalars["DateTime"];
-  topics: Array<Topic>;
-  kcs: Array<Kc>;
-  project: Project;
-};
-
-export type Kc = {
-  __typename?: "KC";
-  id: Scalars["IntID"];
-  code: Scalars["String"];
-  label: Scalars["String"];
-  createdAt: Scalars["DateTime"];
-  updatedAt: Scalars["DateTime"];
-  domain: Domain;
-  topics: Array<Topic>;
-};
-
-export type Domain = {
-  __typename?: "Domain";
-  id: Scalars["IntID"];
-  code: Scalars["String"];
-  label: Scalars["String"];
-  topics: Array<Topic>;
-  createdAt: Scalars["DateTime"];
-  updatedAt: Scalars["DateTime"];
-  kcs: Array<Kc>;
-  projects: Array<Project>;
-};
-
-export type Topic = {
-  __typename?: "Topic";
-  id: Scalars["IntID"];
-  content: Array<Content>;
-  code: Scalars["String"];
-  label: Scalars["String"];
-  sortIndex?: Maybe<Scalars["Int"]>;
-  parent?: Maybe<Topic>;
-  childrens: Array<Topic>;
-  createdAt: Scalars["DateTime"];
-  updatedAt: Scalars["DateTime"];
-  kcs: Array<Kc>;
-  project: Project;
-};
-
-export type ActionInput = {
-  contentID?: Maybe<Scalars["ID"]>;
-  topicID?: Maybe<Scalars["ID"]>;
-  kcsIDs?: Maybe<Array<Scalars["ID"]>>;
-  stepID?: Maybe<Scalars["ID"]>;
-  hintID?: Maybe<Scalars["ID"]>;
-  amount?: Maybe<Scalars["Float"]>;
-  detail?: Maybe<Scalars["String"]>;
-  extra?: Maybe<Scalars["JSONObject"]>;
-  verbName: Scalars["String"];
-  timestamp: Scalars["Timestamp"];
-  projectId: Scalars["IntID"];
-  result?: Maybe<Scalars["Float"]>;
-};
-
-export type Action = {
-  __typename?: "Action";
-  id: Scalars["IntID"];
-  verb: ActionVerb;
-  timestamp: Scalars["Timestamp"];
-  result?: Maybe<Scalars["Float"]>;
-  user?: Maybe<User>;
-  content?: Maybe<Content>;
-  topic?: Maybe<Topic>;
-  kcs: Array<Kc>;
-  stepID?: Maybe<Scalars["ID"]>;
-  hintID?: Maybe<Scalars["ID"]>;
-  amount?: Maybe<Scalars["Float"]>;
-  detail?: Maybe<Scalars["String"]>;
-  extra?: Maybe<Scalars["JSONObject"]>;
-  createdAt: Scalars["DateTime"];
 };
 
 export type ActionsConnection = Connection & {
@@ -393,23 +101,6 @@ export type ActionsVerbsConnection = Connection & {
   pageInfo: PageInfo;
 };
 
-export type AdminActionsFilter = {
-  verbNames?: Maybe<Array<Scalars["String"]>>;
-  users?: Maybe<Array<Scalars["IntID"]>>;
-  kcs?: Maybe<Array<Scalars["IntID"]>>;
-  content?: Maybe<Array<Scalars["IntID"]>>;
-  topics?: Maybe<Array<Scalars["IntID"]>>;
-  projects?: Maybe<Array<Scalars["IntID"]>>;
-  startDate?: Maybe<Scalars["DateTime"]>;
-  endDate?: Maybe<Scalars["DateTime"]>;
-};
-
-export type Order_By = "ASC" | "DESC";
-
-export type AdminActionsOrderBy = {
-  id?: Maybe<Order_By>;
-};
-
 export type AdminActionQueries = {
   __typename?: "AdminActionQueries";
   allActions: ActionsConnection;
@@ -417,74 +108,33 @@ export type AdminActionQueries = {
 };
 
 export type AdminActionQueriesAllActionsArgs = {
-  pagination: CursorConnectionArgs;
   filters?: Maybe<AdminActionsFilter>;
   orderBy?: Maybe<AdminActionsOrderBy>;
+  pagination: CursorConnectionArgs;
 };
 
 export type AdminActionQueriesAllActionsVerbsArgs = {
   pagination: CursorConnectionArgs;
 };
 
-export type Project = {
-  __typename?: "Project";
-  id: Scalars["IntID"];
-  actions: ActionsConnection;
-  domains: Array<Domain>;
-  code: Scalars["String"];
-  label: Scalars["String"];
-  createdAt: Scalars["DateTime"];
-  updatedAt: Scalars["DateTime"];
-};
-
-export type ProjectActionsArgs = {
-  pagination: CursorConnectionArgs;
-  filters?: Maybe<ProjectActionsFilter>;
-};
-
-export type ProjectActionsFilter = {
-  verbNames?: Maybe<Array<Scalars["String"]>>;
-  users?: Maybe<Array<Scalars["IntID"]>>;
-  kcs?: Maybe<Array<Scalars["IntID"]>>;
+export type AdminActionsFilter = {
   content?: Maybe<Array<Scalars["IntID"]>>;
-  topics?: Maybe<Array<Scalars["IntID"]>>;
-  startDate?: Maybe<Scalars["DateTime"]>;
   endDate?: Maybe<Scalars["DateTime"]>;
+  kcs?: Maybe<Array<Scalars["IntID"]>>;
+  projects?: Maybe<Array<Scalars["IntID"]>>;
+  startDate?: Maybe<Scalars["DateTime"]>;
+  topics?: Maybe<Array<Scalars["IntID"]>>;
+  users?: Maybe<Array<Scalars["IntID"]>>;
+  verbNames?: Maybe<Array<Scalars["String"]>>;
 };
 
-export type CreateContent = {
-  description: Scalars["String"];
-  code: Scalars["String"];
-  label: Scalars["String"];
-  projectId: Scalars["IntID"];
-  binaryBase64?: Maybe<Scalars["String"]>;
-  binaryFilename?: Maybe<Scalars["String"]>;
-  json?: Maybe<Scalars["JSONObject"]>;
-  url?: Maybe<Scalars["URL"]>;
-  topics: Array<Scalars["IntID"]>;
-  kcs: Array<Scalars["IntID"]>;
-  tags: Array<Scalars["String"]>;
+export type AdminActionsOrderBy = {
+  id?: Maybe<Order_By>;
 };
 
-export type UpdateContent = {
-  id: Scalars["IntID"];
-  description: Scalars["String"];
-  code: Scalars["String"];
-  label: Scalars["String"];
-  projectId: Scalars["IntID"];
-  binaryBase64?: Maybe<Scalars["String"]>;
-  binaryFilename?: Maybe<Scalars["String"]>;
-  json?: Maybe<Scalars["JSONObject"]>;
-  url?: Maybe<Scalars["URL"]>;
-  topics: Array<Scalars["IntID"]>;
-  kcs: Array<Scalars["IntID"]>;
-  tags: Array<Scalars["String"]>;
-};
-
-export type ContentConnection = Connection & {
-  __typename?: "ContentConnection";
-  nodes: Array<Content>;
-  pageInfo: PageInfo;
+export type AdminContentFilter = {
+  projects?: Maybe<Array<Scalars["IntID"]>>;
+  tags?: Maybe<Array<Scalars["String"]>>;
 };
 
 export type AdminContentMutations = {
@@ -501,176 +151,83 @@ export type AdminContentMutationsUpdateContentArgs = {
   data: UpdateContent;
 };
 
-export type AdminContentFilter = {
-  tags?: Maybe<Array<Scalars["String"]>>;
-  projects?: Maybe<Array<Scalars["IntID"]>>;
-};
-
 export type AdminContentQueries = {
   __typename?: "AdminContentQueries";
   allContent: ContentConnection;
 };
 
 export type AdminContentQueriesAllContentArgs = {
-  pagination: CursorConnectionArgs;
   filters?: Maybe<AdminContentFilter>;
-};
-
-export type TopicsConnection = Connection & {
-  __typename?: "TopicsConnection";
-  nodes: Array<Topic>;
-  pageInfo: PageInfo;
-};
-
-export type DomainsConnection = Connection & {
-  __typename?: "DomainsConnection";
-  nodes: Array<Domain>;
-  pageInfo: PageInfo;
-};
-
-export type AdminDomainsFilter = {
-  projects?: Maybe<Array<Scalars["IntID"]>>;
-};
-
-export type AdminTopicsFilter = {
-  projects?: Maybe<Array<Scalars["IntID"]>>;
-};
-
-export type AdminDomainQueries = {
-  __typename?: "AdminDomainQueries";
-  allTopics: TopicsConnection;
-  allDomains: DomainsConnection;
-  allKCs: KCsConnection;
-};
-
-export type AdminDomainQueriesAllTopicsArgs = {
   pagination: CursorConnectionArgs;
-  filters?: Maybe<AdminTopicsFilter>;
-};
-
-export type AdminDomainQueriesAllDomainsArgs = {
-  pagination: CursorConnectionArgs;
-  filters?: Maybe<AdminDomainsFilter>;
-};
-
-export type AdminDomainQueriesAllKCsArgs = {
-  pagination: CursorConnectionArgs;
-  filters?: Maybe<AdminKCsFilter>;
-};
-
-export type CreateDomain = {
-  code: Scalars["String"];
-  label: Scalars["String"];
-  projectsIds: Array<Scalars["IntID"]>;
-};
-
-export type UpdateDomain = {
-  id: Scalars["IntID"];
-  code: Scalars["String"];
-  label: Scalars["String"];
-};
-
-export type CreateTopic = {
-  code: Scalars["String"];
-  label: Scalars["String"];
-  parentTopicId?: Maybe<Scalars["IntID"]>;
-  projectId: Scalars["IntID"];
-  contentIds: Array<Scalars["IntID"]>;
-  sortIndex?: Maybe<Scalars["Int"]>;
-};
-
-export type UpdateTopic = {
-  id: Scalars["IntID"];
-  code: Scalars["String"];
-  label: Scalars["String"];
-  parentTopicId?: Maybe<Scalars["IntID"]>;
-  contentIds: Array<Scalars["IntID"]>;
-  sortIndex?: Maybe<Scalars["Int"]>;
 };
 
 export type AdminDomainMutations = {
   __typename?: "AdminDomainMutations";
   createDomain: Domain;
-  updateDomain: Domain;
-  createTopic: Topic;
-  updateTopic: Topic;
   createKC: Kc;
+  createTopic: Topic;
+  updateDomain: Domain;
   updateKC: Kc;
+  updateTopic: Topic;
 };
 
 export type AdminDomainMutationsCreateDomainArgs = {
   input: CreateDomain;
 };
 
-export type AdminDomainMutationsUpdateDomainArgs = {
-  input: UpdateDomain;
+export type AdminDomainMutationsCreateKcArgs = {
+  data: CreateKcInput;
 };
 
 export type AdminDomainMutationsCreateTopicArgs = {
   input: CreateTopic;
 };
 
-export type AdminDomainMutationsUpdateTopicArgs = {
-  input: UpdateTopic;
-};
-
-export type AdminDomainMutationsCreateKcArgs = {
-  data: CreateKcInput;
+export type AdminDomainMutationsUpdateDomainArgs = {
+  input: UpdateDomain;
 };
 
 export type AdminDomainMutationsUpdateKcArgs = {
   data: UpdateKcInput;
 };
 
-export type KCsConnection = Connection & {
-  __typename?: "KCsConnection";
-  nodes: Array<Kc>;
-  pageInfo: PageInfo;
+export type AdminDomainMutationsUpdateTopicArgs = {
+  input: UpdateTopic;
+};
+
+export type AdminDomainQueries = {
+  __typename?: "AdminDomainQueries";
+  allDomains: DomainsConnection;
+  allKCs: KCsConnection;
+  allTopics: TopicsConnection;
+};
+
+export type AdminDomainQueriesAllDomainsArgs = {
+  filters?: Maybe<AdminDomainsFilter>;
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminDomainQueriesAllKCsArgs = {
+  filters?: Maybe<AdminKCsFilter>;
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminDomainQueriesAllTopicsArgs = {
+  filters?: Maybe<AdminTopicsFilter>;
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminDomainsFilter = {
+  projects?: Maybe<Array<Scalars["IntID"]>>;
+};
+
+export type AdminGroupsFilter = {
+  tags?: Maybe<Array<Scalars["String"]>>;
 };
 
 export type AdminKCsFilter = {
   domains?: Maybe<Array<Scalars["IntID"]>>;
   projects?: Maybe<Array<Scalars["IntID"]>>;
-};
-
-export type CreateKcInput = {
-  code: Scalars["String"];
-  label: Scalars["String"];
-  domainId: Scalars["IntID"];
-};
-
-export type UpdateKcInput = {
-  id: Scalars["IntID"];
-  code: Scalars["String"];
-  label: Scalars["String"];
-};
-
-export type ProjectsConnection = Connection & {
-  __typename?: "ProjectsConnection";
-  nodes: Array<Project>;
-  pageInfo: PageInfo;
-};
-
-export type AdminProjectsQueries = {
-  __typename?: "AdminProjectsQueries";
-  allProjects: ProjectsConnection;
-};
-
-export type AdminProjectsQueriesAllProjectsArgs = {
-  pagination: CursorConnectionArgs;
-};
-
-export type CreateProject = {
-  code: Scalars["String"];
-  label: Scalars["String"];
-  domains: Array<Scalars["IntID"]>;
-};
-
-export type UpdateProject = {
-  id: Scalars["IntID"];
-  code: Scalars["String"];
-  label: Scalars["String"];
-  domains: Array<Scalars["IntID"]>;
 };
 
 export type AdminProjectsMutations = {
@@ -685,6 +242,449 @@ export type AdminProjectsMutationsCreateProjectArgs = {
 
 export type AdminProjectsMutationsUpdateProjectArgs = {
   data: UpdateProject;
+};
+
+export type AdminProjectsQueries = {
+  __typename?: "AdminProjectsQueries";
+  allProjects: ProjectsConnection;
+};
+
+export type AdminProjectsQueriesAllProjectsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminTopicsFilter = {
+  projects?: Maybe<Array<Scalars["IntID"]>>;
+};
+
+export type AdminUserMutations = {
+  __typename?: "AdminUserMutations";
+  createGroup: Group;
+  setProjectsToUsers: Array<User>;
+  setUserGroups: Array<Group>;
+  updateGroup: Group;
+  updateUser: User;
+  /** Upsert specified users with specified project */
+  upsertUsersWithProjects: Array<User>;
+};
+
+export type AdminUserMutationsCreateGroupArgs = {
+  data: CreateGroupInput;
+};
+
+export type AdminUserMutationsSetProjectsToUsersArgs = {
+  projectIds: Array<Scalars["IntID"]>;
+  userIds: Array<Scalars["IntID"]>;
+};
+
+export type AdminUserMutationsSetUserGroupsArgs = {
+  groupIds: Array<Scalars["IntID"]>;
+  usersEmails: Array<Scalars["EmailAddress"]>;
+};
+
+export type AdminUserMutationsUpdateGroupArgs = {
+  data: UpdateGroupInput;
+};
+
+export type AdminUserMutationsUpdateUserArgs = {
+  data: UpdateUserInput;
+};
+
+export type AdminUserMutationsUpsertUsersWithProjectsArgs = {
+  emails: Array<Scalars["EmailAddress"]>;
+  projectsIds: Array<Scalars["IntID"]>;
+};
+
+export type AdminUserQueries = {
+  __typename?: "AdminUserQueries";
+  allGroups: GroupsConnection;
+  allUsers: UsersConnection;
+};
+
+export type AdminUserQueriesAllGroupsArgs = {
+  filters?: Maybe<AdminGroupsFilter>;
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminUserQueriesAllUsersArgs = {
+  filters?: Maybe<AdminUsersFilter>;
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminUsersFilter = {
+  tags?: Maybe<Array<Scalars["String"]>>;
+};
+
+export type Connection = {
+  pageInfo: PageInfo;
+};
+
+export type Content = {
+  __typename?: "Content";
+  binaryBase64?: Maybe<Scalars["String"]>;
+  binaryFilename?: Maybe<Scalars["String"]>;
+  code: Scalars["String"];
+  createdAt: Scalars["DateTime"];
+  description: Scalars["String"];
+  id: Scalars["IntID"];
+  json?: Maybe<Scalars["JSONObject"]>;
+  kcs: Array<Kc>;
+  label: Scalars["String"];
+  project: Project;
+  sortIndex?: Maybe<Scalars["Int"]>;
+  tags: Array<Scalars["String"]>;
+  topics: Array<Topic>;
+  updatedAt: Scalars["DateTime"];
+  url?: Maybe<Scalars["String"]>;
+};
+
+export type ContentConnection = Connection & {
+  __typename?: "ContentConnection";
+  nodes: Array<Content>;
+  pageInfo: PageInfo;
+};
+
+export type CreateContent = {
+  binaryBase64?: Maybe<Scalars["String"]>;
+  binaryFilename?: Maybe<Scalars["String"]>;
+  code: Scalars["String"];
+  description: Scalars["String"];
+  json?: Maybe<Scalars["JSONObject"]>;
+  kcs: Array<Scalars["IntID"]>;
+  label: Scalars["String"];
+  projectId: Scalars["IntID"];
+  tags: Array<Scalars["String"]>;
+  topics: Array<Scalars["IntID"]>;
+  url?: Maybe<Scalars["URL"]>;
+};
+
+export type CreateDomain = {
+  code: Scalars["String"];
+  label: Scalars["String"];
+  projectsIds: Array<Scalars["IntID"]>;
+};
+
+export type CreateGroupInput = {
+  code: Scalars["String"];
+  flags?: Maybe<GroupFlagsInput>;
+  label: Scalars["String"];
+  projectIds: Array<Scalars["IntID"]>;
+  tags: Array<Scalars["String"]>;
+};
+
+export type CreateKcInput = {
+  code: Scalars["String"];
+  domainId: Scalars["IntID"];
+  label: Scalars["String"];
+};
+
+export type CreateProject = {
+  code: Scalars["String"];
+  domains: Array<Scalars["IntID"]>;
+  label: Scalars["String"];
+};
+
+export type CreateTopic = {
+  code: Scalars["String"];
+  contentIds: Array<Scalars["IntID"]>;
+  label: Scalars["String"];
+  parentTopicId?: Maybe<Scalars["IntID"]>;
+  projectId: Scalars["IntID"];
+  sortIndex?: Maybe<Scalars["Int"]>;
+};
+
+export type CursorConnectionArgs = {
+  after?: Maybe<Scalars["IntID"]>;
+  before?: Maybe<Scalars["IntID"]>;
+  first?: Maybe<Scalars["NonNegativeInt"]>;
+  last?: Maybe<Scalars["NonNegativeInt"]>;
+};
+
+export type Domain = {
+  __typename?: "Domain";
+  code: Scalars["String"];
+  createdAt: Scalars["DateTime"];
+  id: Scalars["IntID"];
+  kcs: Array<Kc>;
+  label: Scalars["String"];
+  projects: Array<Project>;
+  topics: Array<Topic>;
+  updatedAt: Scalars["DateTime"];
+};
+
+export type DomainsConnection = Connection & {
+  __typename?: "DomainsConnection";
+  nodes: Array<Domain>;
+  pageInfo: PageInfo;
+};
+
+export type Group = {
+  __typename?: "Group";
+  code: Scalars["String"];
+  createdAt: Scalars["DateTime"];
+  flags: GroupFlags;
+  id: Scalars["IntID"];
+  label: Scalars["String"];
+  projects: Array<Project>;
+  projectsIds: Array<Scalars["IntID"]>;
+  tags: Array<Scalars["String"]>;
+  updatedAt: Scalars["DateTime"];
+  users: Array<User>;
+};
+
+export type GroupFlags = {
+  __typename?: "GroupFlags";
+  createdAt: Scalars["DateTime"];
+  id: Scalars["IntID"];
+  readProjectActions: Scalars["Boolean"];
+  updatedAt: Scalars["DateTime"];
+};
+
+export type GroupFlagsInput = {
+  readProjectActions: Scalars["Boolean"];
+};
+
+export type GroupsConnection = Connection & {
+  __typename?: "GroupsConnection";
+  nodes: Array<Group>;
+  pageInfo: PageInfo;
+};
+
+export type Kc = {
+  __typename?: "KC";
+  code: Scalars["String"];
+  createdAt: Scalars["DateTime"];
+  domain: Domain;
+  id: Scalars["IntID"];
+  label: Scalars["String"];
+  topics: Array<Topic>;
+  updatedAt: Scalars["DateTime"];
+};
+
+export type KCsConnection = Connection & {
+  __typename?: "KCsConnection";
+  nodes: Array<Kc>;
+  pageInfo: PageInfo;
+};
+
+export type Mutation = {
+  __typename?: "Mutation";
+  action?: Maybe<Scalars["Void"]>;
+  adminContent: AdminContentMutations;
+  adminDomain: AdminDomainMutations;
+  adminProjects: AdminProjectsMutations;
+  adminUsers: AdminUserMutations;
+  hello: Scalars["String"];
+};
+
+export type MutationActionArgs = {
+  data: ActionInput;
+};
+
+export type Node = {
+  id: Scalars["IntID"];
+};
+
+export type Order_By = "ASC" | "DESC";
+
+export type PageInfo = {
+  __typename?: "PageInfo";
+  endCursor?: Maybe<Scalars["String"]>;
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
+  startCursor?: Maybe<Scalars["String"]>;
+};
+
+export type Project = {
+  __typename?: "Project";
+  actions: ActionsConnection;
+  code: Scalars["String"];
+  createdAt: Scalars["DateTime"];
+  domains: Array<Domain>;
+  id: Scalars["IntID"];
+  label: Scalars["String"];
+  updatedAt: Scalars["DateTime"];
+};
+
+export type ProjectActionsArgs = {
+  filters?: Maybe<ProjectActionsFilter>;
+  pagination: CursorConnectionArgs;
+};
+
+export type ProjectActionsFilter = {
+  content?: Maybe<Array<Scalars["IntID"]>>;
+  endDate?: Maybe<Scalars["DateTime"]>;
+  kcs?: Maybe<Array<Scalars["IntID"]>>;
+  startDate?: Maybe<Scalars["DateTime"]>;
+  topics?: Maybe<Array<Scalars["IntID"]>>;
+  users?: Maybe<Array<Scalars["IntID"]>>;
+  verbNames?: Maybe<Array<Scalars["String"]>>;
+};
+
+export type ProjectsConnection = Connection & {
+  __typename?: "ProjectsConnection";
+  nodes: Array<Project>;
+  pageInfo: PageInfo;
+};
+
+export type Query = {
+  __typename?: "Query";
+  adminActions: AdminActionQueries;
+  adminContent: AdminContentQueries;
+  adminDomain: AdminDomainQueries;
+  adminProjects: AdminProjectsQueries;
+  adminUsers: AdminUserQueries;
+  content: Array<Content>;
+  currentUser?: Maybe<User>;
+  domains: Array<Domain>;
+  groups: Array<Group>;
+  hello: Scalars["String"];
+  hello2: Scalars["String"];
+  kcs: Array<Kc>;
+  projects: Array<Project>;
+  topics: Array<Topic>;
+  users: Array<User>;
+};
+
+export type QueryContentArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryDomainsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryGroupsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryKcsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryProjectsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryTopicsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryUsersArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type Subscription = {
+  __typename?: "Subscription";
+  hello: Scalars["String"];
+};
+
+export type Topic = {
+  __typename?: "Topic";
+  childrens: Array<Topic>;
+  code: Scalars["String"];
+  content: Array<Content>;
+  createdAt: Scalars["DateTime"];
+  id: Scalars["IntID"];
+  kcs: Array<Kc>;
+  label: Scalars["String"];
+  parent?: Maybe<Topic>;
+  project: Project;
+  sortIndex?: Maybe<Scalars["Int"]>;
+  updatedAt: Scalars["DateTime"];
+};
+
+export type TopicsConnection = Connection & {
+  __typename?: "TopicsConnection";
+  nodes: Array<Topic>;
+  pageInfo: PageInfo;
+};
+
+export type UpdateContent = {
+  binaryBase64?: Maybe<Scalars["String"]>;
+  binaryFilename?: Maybe<Scalars["String"]>;
+  code: Scalars["String"];
+  description: Scalars["String"];
+  id: Scalars["IntID"];
+  json?: Maybe<Scalars["JSONObject"]>;
+  kcs: Array<Scalars["IntID"]>;
+  label: Scalars["String"];
+  projectId: Scalars["IntID"];
+  tags: Array<Scalars["String"]>;
+  topics: Array<Scalars["IntID"]>;
+  url?: Maybe<Scalars["URL"]>;
+};
+
+export type UpdateDomain = {
+  code: Scalars["String"];
+  id: Scalars["IntID"];
+  label: Scalars["String"];
+};
+
+export type UpdateGroupInput = {
+  code: Scalars["String"];
+  flags?: Maybe<GroupFlagsInput>;
+  id: Scalars["IntID"];
+  label: Scalars["String"];
+  projectIds: Array<Scalars["IntID"]>;
+  tags: Array<Scalars["String"]>;
+};
+
+export type UpdateKcInput = {
+  code: Scalars["String"];
+  id: Scalars["IntID"];
+  label: Scalars["String"];
+};
+
+export type UpdateProject = {
+  code: Scalars["String"];
+  domains: Array<Scalars["IntID"]>;
+  id: Scalars["IntID"];
+  label: Scalars["String"];
+};
+
+export type UpdateTopic = {
+  code: Scalars["String"];
+  contentIds: Array<Scalars["IntID"]>;
+  id: Scalars["IntID"];
+  label: Scalars["String"];
+  parentTopicId?: Maybe<Scalars["IntID"]>;
+  sortIndex?: Maybe<Scalars["Int"]>;
+};
+
+export type UpdateUserInput = {
+  id: Scalars["IntID"];
+  locked: Scalars["Boolean"];
+  name?: Maybe<Scalars["String"]>;
+  projectIds: Array<Scalars["IntID"]>;
+  role: UserRole;
+  tags: Array<Scalars["String"]>;
+};
+
+export type User = {
+  __typename?: "User";
+  active: Scalars["Boolean"];
+  createdAt: Scalars["DateTime"];
+  email: Scalars["String"];
+  enabled: Scalars["Boolean"];
+  groups: Array<Group>;
+  id: Scalars["IntID"];
+  lastOnline?: Maybe<Scalars["DateTime"]>;
+  locked: Scalars["Boolean"];
+  name?: Maybe<Scalars["String"]>;
+  projects: Array<Project>;
+  projectsIds: Array<Scalars["IntID"]>;
+  role: UserRole;
+  tags: Array<Scalars["String"]>;
+  updatedAt: Scalars["DateTime"];
+};
+
+export type UserRole = "ADMIN" | "USER";
+
+export type UsersConnection = Connection & {
+  __typename?: "UsersConnection";
+  nodes: Array<User>;
+  pageInfo: PageInfo;
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -787,552 +787,199 @@ export type DirectiveResolverFn<
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Query: ResolverTypeWrapper<{}>;
+  Action: ResolverTypeWrapper<Action>;
+  Float: ResolverTypeWrapper<Scalars["Float"]>;
   String: ResolverTypeWrapper<Scalars["String"]>;
-  Mutation: ResolverTypeWrapper<{}>;
-  Subscription: ResolverTypeWrapper<{}>;
+  ID: ResolverTypeWrapper<Scalars["ID"]>;
+  ActionInput: ActionInput;
+  ActionVerb: ResolverTypeWrapper<ActionVerb>;
+  ActionsConnection: ResolverTypeWrapper<ActionsConnection>;
+  ActionsVerbsConnection: ResolverTypeWrapper<ActionsVerbsConnection>;
+  AdminActionQueries: ResolverTypeWrapper<AdminActionQueries>;
+  AdminActionsFilter: AdminActionsFilter;
+  AdminActionsOrderBy: AdminActionsOrderBy;
+  AdminContentFilter: AdminContentFilter;
+  AdminContentMutations: ResolverTypeWrapper<AdminContentMutations>;
+  AdminContentQueries: ResolverTypeWrapper<AdminContentQueries>;
+  AdminDomainMutations: ResolverTypeWrapper<AdminDomainMutations>;
+  AdminDomainQueries: ResolverTypeWrapper<AdminDomainQueries>;
+  AdminDomainsFilter: AdminDomainsFilter;
+  AdminGroupsFilter: AdminGroupsFilter;
+  AdminKCsFilter: AdminKCsFilter;
+  AdminProjectsMutations: ResolverTypeWrapper<AdminProjectsMutations>;
+  AdminProjectsQueries: ResolverTypeWrapper<AdminProjectsQueries>;
+  AdminTopicsFilter: AdminTopicsFilter;
+  AdminUserMutations: ResolverTypeWrapper<AdminUserMutations>;
+  AdminUserQueries: ResolverTypeWrapper<AdminUserQueries>;
+  AdminUsersFilter: AdminUsersFilter;
+  Connection:
+    | ResolversTypes["ActionsConnection"]
+    | ResolversTypes["ActionsVerbsConnection"]
+    | ResolversTypes["ContentConnection"]
+    | ResolversTypes["DomainsConnection"]
+    | ResolversTypes["GroupsConnection"]
+    | ResolversTypes["KCsConnection"]
+    | ResolversTypes["ProjectsConnection"]
+    | ResolversTypes["TopicsConnection"]
+    | ResolversTypes["UsersConnection"];
+  Content: ResolverTypeWrapper<Content>;
+  Int: ResolverTypeWrapper<Scalars["Int"]>;
+  ContentConnection: ResolverTypeWrapper<ContentConnection>;
+  CreateContent: CreateContent;
+  CreateDomain: CreateDomain;
+  CreateGroupInput: CreateGroupInput;
+  CreateKCInput: CreateKcInput;
+  CreateProject: CreateProject;
+  CreateTopic: CreateTopic;
+  CursorConnectionArgs: CursorConnectionArgs;
   DateTime: ResolverTypeWrapper<Scalars["DateTime"]>;
-  Timestamp: ResolverTypeWrapper<Scalars["Timestamp"]>;
-  JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
-  NonNegativeInt: ResolverTypeWrapper<Scalars["NonNegativeInt"]>;
-  Void: ResolverTypeWrapper<Scalars["Void"]>;
-  URL: ResolverTypeWrapper<Scalars["URL"]>;
+  Domain: ResolverTypeWrapper<Domain>;
+  DomainsConnection: ResolverTypeWrapper<DomainsConnection>;
   EmailAddress: ResolverTypeWrapper<Scalars["EmailAddress"]>;
-  IntID: ResolverTypeWrapper<Scalars["IntID"]>;
   Group: ResolverTypeWrapper<Group>;
   GroupFlags: ResolverTypeWrapper<GroupFlags>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   GroupFlagsInput: GroupFlagsInput;
-  CreateGroupInput: CreateGroupInput;
-  UpdateGroupInput: UpdateGroupInput;
   GroupsConnection: ResolverTypeWrapper<GroupsConnection>;
-  AdminGroupsFilter: AdminGroupsFilter;
-  UserRole: UserRole;
-  User: ResolverTypeWrapper<User>;
-  UsersConnection: ResolverTypeWrapper<UsersConnection>;
-  AdminUsersFilter: AdminUsersFilter;
-  AdminUserQueries: ResolverTypeWrapper<AdminUserQueries>;
-  UpdateUserInput: UpdateUserInput;
-  AdminUserMutations: ResolverTypeWrapper<AdminUserMutations>;
-  PageInfo: ResolverTypeWrapper<PageInfo>;
-  Node: never;
-  Connection:
-    | ResolversTypes["GroupsConnection"]
-    | ResolversTypes["UsersConnection"]
-    | ResolversTypes["ActionsConnection"]
-    | ResolversTypes["ActionsVerbsConnection"]
-    | ResolversTypes["ContentConnection"]
-    | ResolversTypes["TopicsConnection"]
-    | ResolversTypes["DomainsConnection"]
-    | ResolversTypes["KCsConnection"]
-    | ResolversTypes["ProjectsConnection"];
-  CursorConnectionArgs: CursorConnectionArgs;
-  ActionVerb: ResolverTypeWrapper<ActionVerb>;
-  Content: ResolverTypeWrapper<Content>;
-  Int: ResolverTypeWrapper<Scalars["Int"]>;
+  IntID: ResolverTypeWrapper<Scalars["IntID"]>;
+  JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
   KC: ResolverTypeWrapper<Kc>;
-  Domain: ResolverTypeWrapper<Domain>;
-  Topic: ResolverTypeWrapper<Topic>;
-  ActionInput: ActionInput;
-  ID: ResolverTypeWrapper<Scalars["ID"]>;
-  Float: ResolverTypeWrapper<Scalars["Float"]>;
-  Action: ResolverTypeWrapper<Action>;
-  ActionsConnection: ResolverTypeWrapper<ActionsConnection>;
-  ActionsVerbsConnection: ResolverTypeWrapper<ActionsVerbsConnection>;
-  AdminActionsFilter: AdminActionsFilter;
+  KCsConnection: ResolverTypeWrapper<KCsConnection>;
+  Mutation: ResolverTypeWrapper<{}>;
+  Node: never;
+  NonNegativeInt: ResolverTypeWrapper<Scalars["NonNegativeInt"]>;
   ORDER_BY: Order_By;
-  AdminActionsOrderBy: AdminActionsOrderBy;
-  AdminActionQueries: ResolverTypeWrapper<AdminActionQueries>;
+  PageInfo: ResolverTypeWrapper<PageInfo>;
   Project: ResolverTypeWrapper<Project>;
   ProjectActionsFilter: ProjectActionsFilter;
-  CreateContent: CreateContent;
-  UpdateContent: UpdateContent;
-  ContentConnection: ResolverTypeWrapper<ContentConnection>;
-  AdminContentMutations: ResolverTypeWrapper<AdminContentMutations>;
-  AdminContentFilter: AdminContentFilter;
-  AdminContentQueries: ResolverTypeWrapper<AdminContentQueries>;
-  TopicsConnection: ResolverTypeWrapper<TopicsConnection>;
-  DomainsConnection: ResolverTypeWrapper<DomainsConnection>;
-  AdminDomainsFilter: AdminDomainsFilter;
-  AdminTopicsFilter: AdminTopicsFilter;
-  AdminDomainQueries: ResolverTypeWrapper<AdminDomainQueries>;
-  CreateDomain: CreateDomain;
-  UpdateDomain: UpdateDomain;
-  CreateTopic: CreateTopic;
-  UpdateTopic: UpdateTopic;
-  AdminDomainMutations: ResolverTypeWrapper<AdminDomainMutations>;
-  KCsConnection: ResolverTypeWrapper<KCsConnection>;
-  AdminKCsFilter: AdminKCsFilter;
-  CreateKCInput: CreateKcInput;
-  UpdateKCInput: UpdateKcInput;
   ProjectsConnection: ResolverTypeWrapper<ProjectsConnection>;
-  AdminProjectsQueries: ResolverTypeWrapper<AdminProjectsQueries>;
-  CreateProject: CreateProject;
+  Query: ResolverTypeWrapper<{}>;
+  Subscription: ResolverTypeWrapper<{}>;
+  Timestamp: ResolverTypeWrapper<Scalars["Timestamp"]>;
+  Topic: ResolverTypeWrapper<Topic>;
+  TopicsConnection: ResolverTypeWrapper<TopicsConnection>;
+  URL: ResolverTypeWrapper<Scalars["URL"]>;
+  UpdateContent: UpdateContent;
+  UpdateDomain: UpdateDomain;
+  UpdateGroupInput: UpdateGroupInput;
+  UpdateKCInput: UpdateKcInput;
   UpdateProject: UpdateProject;
-  AdminProjectsMutations: ResolverTypeWrapper<AdminProjectsMutations>;
+  UpdateTopic: UpdateTopic;
+  UpdateUserInput: UpdateUserInput;
+  User: ResolverTypeWrapper<User>;
+  UserRole: UserRole;
+  UsersConnection: ResolverTypeWrapper<UsersConnection>;
+  Void: ResolverTypeWrapper<Scalars["Void"]>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Query: {};
+  Action: Action;
+  Float: Scalars["Float"];
   String: Scalars["String"];
-  Mutation: {};
-  Subscription: {};
+  ID: Scalars["ID"];
+  ActionInput: ActionInput;
+  ActionVerb: ActionVerb;
+  ActionsConnection: ActionsConnection;
+  ActionsVerbsConnection: ActionsVerbsConnection;
+  AdminActionQueries: AdminActionQueries;
+  AdminActionsFilter: AdminActionsFilter;
+  AdminActionsOrderBy: AdminActionsOrderBy;
+  AdminContentFilter: AdminContentFilter;
+  AdminContentMutations: AdminContentMutations;
+  AdminContentQueries: AdminContentQueries;
+  AdminDomainMutations: AdminDomainMutations;
+  AdminDomainQueries: AdminDomainQueries;
+  AdminDomainsFilter: AdminDomainsFilter;
+  AdminGroupsFilter: AdminGroupsFilter;
+  AdminKCsFilter: AdminKCsFilter;
+  AdminProjectsMutations: AdminProjectsMutations;
+  AdminProjectsQueries: AdminProjectsQueries;
+  AdminTopicsFilter: AdminTopicsFilter;
+  AdminUserMutations: AdminUserMutations;
+  AdminUserQueries: AdminUserQueries;
+  AdminUsersFilter: AdminUsersFilter;
+  Connection:
+    | ResolversParentTypes["ActionsConnection"]
+    | ResolversParentTypes["ActionsVerbsConnection"]
+    | ResolversParentTypes["ContentConnection"]
+    | ResolversParentTypes["DomainsConnection"]
+    | ResolversParentTypes["GroupsConnection"]
+    | ResolversParentTypes["KCsConnection"]
+    | ResolversParentTypes["ProjectsConnection"]
+    | ResolversParentTypes["TopicsConnection"]
+    | ResolversParentTypes["UsersConnection"];
+  Content: Content;
+  Int: Scalars["Int"];
+  ContentConnection: ContentConnection;
+  CreateContent: CreateContent;
+  CreateDomain: CreateDomain;
+  CreateGroupInput: CreateGroupInput;
+  CreateKCInput: CreateKcInput;
+  CreateProject: CreateProject;
+  CreateTopic: CreateTopic;
+  CursorConnectionArgs: CursorConnectionArgs;
   DateTime: Scalars["DateTime"];
-  Timestamp: Scalars["Timestamp"];
-  JSONObject: Scalars["JSONObject"];
-  NonNegativeInt: Scalars["NonNegativeInt"];
-  Void: Scalars["Void"];
-  URL: Scalars["URL"];
+  Domain: Domain;
+  DomainsConnection: DomainsConnection;
   EmailAddress: Scalars["EmailAddress"];
-  IntID: Scalars["IntID"];
   Group: Group;
   GroupFlags: GroupFlags;
   Boolean: Scalars["Boolean"];
   GroupFlagsInput: GroupFlagsInput;
-  CreateGroupInput: CreateGroupInput;
-  UpdateGroupInput: UpdateGroupInput;
   GroupsConnection: GroupsConnection;
-  AdminGroupsFilter: AdminGroupsFilter;
-  User: User;
-  UsersConnection: UsersConnection;
-  AdminUsersFilter: AdminUsersFilter;
-  AdminUserQueries: AdminUserQueries;
-  UpdateUserInput: UpdateUserInput;
-  AdminUserMutations: AdminUserMutations;
-  PageInfo: PageInfo;
-  Node: never;
-  Connection:
-    | ResolversParentTypes["GroupsConnection"]
-    | ResolversParentTypes["UsersConnection"]
-    | ResolversParentTypes["ActionsConnection"]
-    | ResolversParentTypes["ActionsVerbsConnection"]
-    | ResolversParentTypes["ContentConnection"]
-    | ResolversParentTypes["TopicsConnection"]
-    | ResolversParentTypes["DomainsConnection"]
-    | ResolversParentTypes["KCsConnection"]
-    | ResolversParentTypes["ProjectsConnection"];
-  CursorConnectionArgs: CursorConnectionArgs;
-  ActionVerb: ActionVerb;
-  Content: Content;
-  Int: Scalars["Int"];
+  IntID: Scalars["IntID"];
+  JSONObject: Scalars["JSONObject"];
   KC: Kc;
-  Domain: Domain;
-  Topic: Topic;
-  ActionInput: ActionInput;
-  ID: Scalars["ID"];
-  Float: Scalars["Float"];
-  Action: Action;
-  ActionsConnection: ActionsConnection;
-  ActionsVerbsConnection: ActionsVerbsConnection;
-  AdminActionsFilter: AdminActionsFilter;
-  AdminActionsOrderBy: AdminActionsOrderBy;
-  AdminActionQueries: AdminActionQueries;
+  KCsConnection: KCsConnection;
+  Mutation: {};
+  Node: never;
+  NonNegativeInt: Scalars["NonNegativeInt"];
+  PageInfo: PageInfo;
   Project: Project;
   ProjectActionsFilter: ProjectActionsFilter;
-  CreateContent: CreateContent;
-  UpdateContent: UpdateContent;
-  ContentConnection: ContentConnection;
-  AdminContentMutations: AdminContentMutations;
-  AdminContentFilter: AdminContentFilter;
-  AdminContentQueries: AdminContentQueries;
-  TopicsConnection: TopicsConnection;
-  DomainsConnection: DomainsConnection;
-  AdminDomainsFilter: AdminDomainsFilter;
-  AdminTopicsFilter: AdminTopicsFilter;
-  AdminDomainQueries: AdminDomainQueries;
-  CreateDomain: CreateDomain;
-  UpdateDomain: UpdateDomain;
-  CreateTopic: CreateTopic;
-  UpdateTopic: UpdateTopic;
-  AdminDomainMutations: AdminDomainMutations;
-  KCsConnection: KCsConnection;
-  AdminKCsFilter: AdminKCsFilter;
-  CreateKCInput: CreateKcInput;
-  UpdateKCInput: UpdateKcInput;
   ProjectsConnection: ProjectsConnection;
-  AdminProjectsQueries: AdminProjectsQueries;
-  CreateProject: CreateProject;
+  Query: {};
+  Subscription: {};
+  Timestamp: Scalars["Timestamp"];
+  Topic: Topic;
+  TopicsConnection: TopicsConnection;
+  URL: Scalars["URL"];
+  UpdateContent: UpdateContent;
+  UpdateDomain: UpdateDomain;
+  UpdateGroupInput: UpdateGroupInput;
+  UpdateKCInput: UpdateKcInput;
   UpdateProject: UpdateProject;
-  AdminProjectsMutations: AdminProjectsMutations;
+  UpdateTopic: UpdateTopic;
+  UpdateUserInput: UpdateUserInput;
+  User: User;
+  UsersConnection: UsersConnection;
+  Void: Scalars["Void"];
 };
 
-export type QueryResolvers<
+export type ActionResolvers<
   ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
+  ParentType extends ResolversParentTypes["Action"] = ResolversParentTypes["Action"]
 > = {
-  hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  groups?: Resolver<
-    Array<ResolversTypes["Group"]>,
-    ParentType,
-    ContextType,
-    RequireFields<QueryGroupsArgs, "ids">
-  >;
-  adminUsers?: Resolver<
-    ResolversTypes["AdminUserQueries"],
-    ParentType,
-    ContextType
-  >;
-  currentUser?: Resolver<
-    Maybe<ResolversTypes["User"]>,
-    ParentType,
-    ContextType
-  >;
-  users?: Resolver<
-    Array<ResolversTypes["User"]>,
-    ParentType,
-    ContextType,
-    RequireFields<QueryUsersArgs, "ids">
-  >;
-  adminActions?: Resolver<
-    ResolversTypes["AdminActionQueries"],
-    ParentType,
-    ContextType
-  >;
-  projects?: Resolver<
-    Array<ResolversTypes["Project"]>,
-    ParentType,
-    ContextType,
-    RequireFields<QueryProjectsArgs, "ids">
-  >;
-  adminContent?: Resolver<
-    ResolversTypes["AdminContentQueries"],
-    ParentType,
-    ContextType
-  >;
-  content?: Resolver<
-    Array<ResolversTypes["Content"]>,
-    ParentType,
-    ContextType,
-    RequireFields<QueryContentArgs, "ids">
-  >;
-  topics?: Resolver<
-    Array<ResolversTypes["Topic"]>,
-    ParentType,
-    ContextType,
-    RequireFields<QueryTopicsArgs, "ids">
-  >;
-  domains?: Resolver<
-    Array<ResolversTypes["Domain"]>,
-    ParentType,
-    ContextType,
-    RequireFields<QueryDomainsArgs, "ids">
-  >;
-  adminDomain?: Resolver<
-    ResolversTypes["AdminDomainQueries"],
-    ParentType,
-    ContextType
-  >;
-  kcs?: Resolver<
-    Array<ResolversTypes["KC"]>,
-    ParentType,
-    ContextType,
-    RequireFields<QueryKcsArgs, "ids">
-  >;
-  adminProjects?: Resolver<
-    ResolversTypes["AdminProjectsQueries"],
-    ParentType,
-    ContextType
-  >;
-  hello2?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-};
-
-export type MutationResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
-> = {
-  hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  adminUsers?: Resolver<
-    ResolversTypes["AdminUserMutations"],
-    ParentType,
-    ContextType
-  >;
-  action?: Resolver<
-    Maybe<ResolversTypes["Void"]>,
-    ParentType,
-    ContextType,
-    RequireFields<MutationActionArgs, "data">
-  >;
-  adminContent?: Resolver<
-    ResolversTypes["AdminContentMutations"],
-    ParentType,
-    ContextType
-  >;
-  adminDomain?: Resolver<
-    ResolversTypes["AdminDomainMutations"],
-    ParentType,
-    ContextType
-  >;
-  adminProjects?: Resolver<
-    ResolversTypes["AdminProjectsMutations"],
-    ParentType,
-    ContextType
-  >;
-};
-
-export type SubscriptionResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Subscription"] = ResolversParentTypes["Subscription"]
-> = {
-  hello?: SubscriptionResolver<
-    ResolversTypes["String"],
-    "hello",
-    ParentType,
-    ContextType
-  >;
-};
-
-export interface DateTimeScalarConfig
-  extends GraphQLScalarTypeConfig<ResolversTypes["DateTime"], any> {
-  name: "DateTime";
-}
-
-export interface TimestampScalarConfig
-  extends GraphQLScalarTypeConfig<ResolversTypes["Timestamp"], any> {
-  name: "Timestamp";
-}
-
-export interface JsonObjectScalarConfig
-  extends GraphQLScalarTypeConfig<ResolversTypes["JSONObject"], any> {
-  name: "JSONObject";
-}
-
-export interface NonNegativeIntScalarConfig
-  extends GraphQLScalarTypeConfig<ResolversTypes["NonNegativeInt"], any> {
-  name: "NonNegativeInt";
-}
-
-export interface VoidScalarConfig
-  extends GraphQLScalarTypeConfig<ResolversTypes["Void"], any> {
-  name: "Void";
-}
-
-export interface UrlScalarConfig
-  extends GraphQLScalarTypeConfig<ResolversTypes["URL"], any> {
-  name: "URL";
-}
-
-export interface EmailAddressScalarConfig
-  extends GraphQLScalarTypeConfig<ResolversTypes["EmailAddress"], any> {
-  name: "EmailAddress";
-}
-
-export interface IntIdScalarConfig
-  extends GraphQLScalarTypeConfig<ResolversTypes["IntID"], any> {
-  name: "IntID";
-}
-
-export type GroupResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Group"] = ResolversParentTypes["Group"]
-> = {
-  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  users?: Resolver<Array<ResolversTypes["User"]>, ParentType, ContextType>;
-  tags?: Resolver<Array<ResolversTypes["String"]>, ParentType, ContextType>;
-  flags?: Resolver<ResolversTypes["GroupFlags"], ParentType, ContextType>;
+  amount?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  content?: Resolver<Maybe<ResolversTypes["Content"]>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
-  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
-  projectsIds?: Resolver<
-    Array<ResolversTypes["IntID"]>,
+  detail?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  extra?: Resolver<
+    Maybe<ResolversTypes["JSONObject"]>,
     ParentType,
     ContextType
   >;
-  projects?: Resolver<
-    Array<ResolversTypes["Project"]>,
-    ParentType,
-    ContextType
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type GroupFlagsResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["GroupFlags"] = ResolversParentTypes["GroupFlags"]
-> = {
+  hintID?: Resolver<Maybe<ResolversTypes["ID"]>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-  readProjectActions?: Resolver<
-    ResolversTypes["Boolean"],
-    ParentType,
-    ContextType
-  >;
-  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
-  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  kcs?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
+  result?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  stepID?: Resolver<Maybe<ResolversTypes["ID"]>, ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes["Timestamp"], ParentType, ContextType>;
+  topic?: Resolver<Maybe<ResolversTypes["Topic"]>, ParentType, ContextType>;
+  user?: Resolver<Maybe<ResolversTypes["User"]>, ParentType, ContextType>;
+  verb?: Resolver<ResolversTypes["ActionVerb"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type GroupsConnectionResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["GroupsConnection"] = ResolversParentTypes["GroupsConnection"]
-> = {
-  nodes?: Resolver<Array<ResolversTypes["Group"]>, ParentType, ContextType>;
-  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type UserResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
-> = {
-  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-  enabled?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
-  email?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  locked?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
-  active?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
-  lastOnline?: Resolver<
-    Maybe<ResolversTypes["DateTime"]>,
-    ParentType,
-    ContextType
-  >;
-  tags?: Resolver<Array<ResolversTypes["String"]>, ParentType, ContextType>;
-  role?: Resolver<ResolversTypes["UserRole"], ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
-  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
-  groups?: Resolver<Array<ResolversTypes["Group"]>, ParentType, ContextType>;
-  projectsIds?: Resolver<
-    Array<ResolversTypes["IntID"]>,
-    ParentType,
-    ContextType
-  >;
-  projects?: Resolver<
-    Array<ResolversTypes["Project"]>,
-    ParentType,
-    ContextType
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type UsersConnectionResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["UsersConnection"] = ResolversParentTypes["UsersConnection"]
-> = {
-  nodes?: Resolver<Array<ResolversTypes["User"]>, ParentType, ContextType>;
-  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type AdminUserQueriesResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["AdminUserQueries"] = ResolversParentTypes["AdminUserQueries"]
-> = {
-  allUsers?: Resolver<
-    ResolversTypes["UsersConnection"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminUserQueriesAllUsersArgs, "pagination">
-  >;
-  allGroups?: Resolver<
-    ResolversTypes["GroupsConnection"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminUserQueriesAllGroupsArgs, "pagination">
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type AdminUserMutationsResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["AdminUserMutations"] = ResolversParentTypes["AdminUserMutations"]
-> = {
-  upsertUsersWithProjects?: Resolver<
-    Array<ResolversTypes["User"]>,
-    ParentType,
-    ContextType,
-    RequireFields<
-      AdminUserMutationsUpsertUsersWithProjectsArgs,
-      "emails" | "projectsIds"
-    >
-  >;
-  updateUser?: Resolver<
-    ResolversTypes["User"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminUserMutationsUpdateUserArgs, "data">
-  >;
-  setUserGroups?: Resolver<
-    Array<ResolversTypes["Group"]>,
-    ParentType,
-    ContextType,
-    RequireFields<
-      AdminUserMutationsSetUserGroupsArgs,
-      "usersEmails" | "groupIds"
-    >
-  >;
-  createGroup?: Resolver<
-    ResolversTypes["Group"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminUserMutationsCreateGroupArgs, "data">
-  >;
-  updateGroup?: Resolver<
-    ResolversTypes["Group"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminUserMutationsUpdateGroupArgs, "data">
-  >;
-  setProjectsToUsers?: Resolver<
-    Array<ResolversTypes["User"]>,
-    ParentType,
-    ContextType,
-    RequireFields<
-      AdminUserMutationsSetProjectsToUsersArgs,
-      "projectIds" | "userIds"
-    >
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type PageInfoResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["PageInfo"] = ResolversParentTypes["PageInfo"]
-> = {
-  startCursor?: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
-  endCursor?: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
-  hasNextPage?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
-  hasPreviousPage?: Resolver<
-    ResolversTypes["Boolean"],
-    ParentType,
-    ContextType
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type NodeResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Node"] = ResolversParentTypes["Node"]
-> = {
-  __resolveType: TypeResolveFn<null, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-};
-
-export type ConnectionResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Connection"] = ResolversParentTypes["Connection"]
-> = {
-  __resolveType: TypeResolveFn<
-    | "GroupsConnection"
-    | "UsersConnection"
-    | "ActionsConnection"
-    | "ActionsVerbsConnection"
-    | "ContentConnection"
-    | "TopicsConnection"
-    | "DomainsConnection"
-    | "KCsConnection"
-    | "ProjectsConnection",
-    ParentType,
-    ContextType
-  >;
-  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
 };
 
 export type ActionVerbResolvers<
@@ -1341,112 +988,6 @@ export type ActionVerbResolvers<
 > = {
   id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
   name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type ContentResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Content"] = ResolversParentTypes["Content"]
-> = {
-  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  description?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  binaryBase64?: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
-  binaryFilename?: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
-  json?: Resolver<Maybe<ResolversTypes["JSONObject"]>, ParentType, ContextType>;
-  url?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  sortIndex?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
-  tags?: Resolver<Array<ResolversTypes["String"]>, ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
-  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
-  topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
-  kcs?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
-  project?: Resolver<ResolversTypes["Project"], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type KcResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["KC"] = ResolversParentTypes["KC"]
-> = {
-  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
-  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
-  domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
-  topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type DomainResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Domain"] = ResolversParentTypes["Domain"]
-> = {
-  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
-  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
-  kcs?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
-  projects?: Resolver<
-    Array<ResolversTypes["Project"]>,
-    ParentType,
-    ContextType
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type TopicResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Topic"] = ResolversParentTypes["Topic"]
-> = {
-  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-  content?: Resolver<Array<ResolversTypes["Content"]>, ParentType, ContextType>;
-  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  sortIndex?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
-  parent?: Resolver<Maybe<ResolversTypes["Topic"]>, ParentType, ContextType>;
-  childrens?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
-  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
-  kcs?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
-  project?: Resolver<ResolversTypes["Project"], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type ActionResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Action"] = ResolversParentTypes["Action"]
-> = {
-  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-  verb?: Resolver<ResolversTypes["ActionVerb"], ParentType, ContextType>;
-  timestamp?: Resolver<ResolversTypes["Timestamp"], ParentType, ContextType>;
-  result?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
-  user?: Resolver<Maybe<ResolversTypes["User"]>, ParentType, ContextType>;
-  content?: Resolver<Maybe<ResolversTypes["Content"]>, ParentType, ContextType>;
-  topic?: Resolver<Maybe<ResolversTypes["Topic"]>, ParentType, ContextType>;
-  kcs?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
-  stepID?: Resolver<Maybe<ResolversTypes["ID"]>, ParentType, ContextType>;
-  hintID?: Resolver<Maybe<ResolversTypes["ID"]>, ParentType, ContextType>;
-  amount?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
-  detail?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  extra?: Resolver<
-    Maybe<ResolversTypes["JSONObject"]>,
-    ParentType,
-    ContextType
-  >;
-  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1491,34 +1032,6 @@ export type AdminActionQueriesResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ProjectResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Project"] = ResolversParentTypes["Project"]
-> = {
-  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-  actions?: Resolver<
-    ResolversTypes["ActionsConnection"],
-    ParentType,
-    ContextType,
-    RequireFields<ProjectActionsArgs, "pagination">
-  >;
-  domains?: Resolver<Array<ResolversTypes["Domain"]>, ParentType, ContextType>;
-  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
-  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type ContentConnectionResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["ContentConnection"] = ResolversParentTypes["ContentConnection"]
-> = {
-  nodes?: Resolver<Array<ResolversTypes["Content"]>, ParentType, ContextType>;
-  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type AdminContentMutationsResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["AdminContentMutations"] = ResolversParentTypes["AdminContentMutations"]
@@ -1551,21 +1064,46 @@ export type AdminContentQueriesResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type TopicsConnectionResolvers<
+export type AdminDomainMutationsResolvers<
   ContextType = EZContext,
-  ParentType extends ResolversParentTypes["TopicsConnection"] = ResolversParentTypes["TopicsConnection"]
+  ParentType extends ResolversParentTypes["AdminDomainMutations"] = ResolversParentTypes["AdminDomainMutations"]
 > = {
-  nodes?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
-  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type DomainsConnectionResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["DomainsConnection"] = ResolversParentTypes["DomainsConnection"]
-> = {
-  nodes?: Resolver<Array<ResolversTypes["Domain"]>, ParentType, ContextType>;
-  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
+  createDomain?: Resolver<
+    ResolversTypes["Domain"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminDomainMutationsCreateDomainArgs, "input">
+  >;
+  createKC?: Resolver<
+    ResolversTypes["KC"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminDomainMutationsCreateKcArgs, "data">
+  >;
+  createTopic?: Resolver<
+    ResolversTypes["Topic"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminDomainMutationsCreateTopicArgs, "input">
+  >;
+  updateDomain?: Resolver<
+    ResolversTypes["Domain"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminDomainMutationsUpdateDomainArgs, "input">
+  >;
+  updateKC?: Resolver<
+    ResolversTypes["KC"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminDomainMutationsUpdateKcArgs, "data">
+  >;
+  updateTopic?: Resolver<
+    ResolversTypes["Topic"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminDomainMutationsUpdateTopicArgs, "input">
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1573,12 +1111,6 @@ export type AdminDomainQueriesResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["AdminDomainQueries"] = ResolversParentTypes["AdminDomainQueries"]
 > = {
-  allTopics?: Resolver<
-    ResolversTypes["TopicsConnection"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminDomainQueriesAllTopicsArgs, "pagination">
-  >;
   allDomains?: Resolver<
     ResolversTypes["DomainsConnection"],
     ParentType,
@@ -1591,79 +1123,11 @@ export type AdminDomainQueriesResolvers<
     ContextType,
     RequireFields<AdminDomainQueriesAllKCsArgs, "pagination">
   >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type AdminDomainMutationsResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["AdminDomainMutations"] = ResolversParentTypes["AdminDomainMutations"]
-> = {
-  createDomain?: Resolver<
-    ResolversTypes["Domain"],
+  allTopics?: Resolver<
+    ResolversTypes["TopicsConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminDomainMutationsCreateDomainArgs, "input">
-  >;
-  updateDomain?: Resolver<
-    ResolversTypes["Domain"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminDomainMutationsUpdateDomainArgs, "input">
-  >;
-  createTopic?: Resolver<
-    ResolversTypes["Topic"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminDomainMutationsCreateTopicArgs, "input">
-  >;
-  updateTopic?: Resolver<
-    ResolversTypes["Topic"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminDomainMutationsUpdateTopicArgs, "input">
-  >;
-  createKC?: Resolver<
-    ResolversTypes["KC"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminDomainMutationsCreateKcArgs, "data">
-  >;
-  updateKC?: Resolver<
-    ResolversTypes["KC"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminDomainMutationsUpdateKcArgs, "data">
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type KCsConnectionResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["KCsConnection"] = ResolversParentTypes["KCsConnection"]
-> = {
-  nodes?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
-  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type ProjectsConnectionResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["ProjectsConnection"] = ResolversParentTypes["ProjectsConnection"]
-> = {
-  nodes?: Resolver<Array<ResolversTypes["Project"]>, ParentType, ContextType>;
-  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type AdminProjectsQueriesResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["AdminProjectsQueries"] = ResolversParentTypes["AdminProjectsQueries"]
-> = {
-  allProjects?: Resolver<
-    ResolversTypes["ProjectsConnection"],
-    ParentType,
-    ContextType,
-    RequireFields<AdminProjectsQueriesAllProjectsArgs, "pagination">
+    RequireFields<AdminDomainQueriesAllTopicsArgs, "pagination">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -1687,49 +1151,585 @@ export type AdminProjectsMutationsResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type AdminProjectsQueriesResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["AdminProjectsQueries"] = ResolversParentTypes["AdminProjectsQueries"]
+> = {
+  allProjects?: Resolver<
+    ResolversTypes["ProjectsConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminProjectsQueriesAllProjectsArgs, "pagination">
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type AdminUserMutationsResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["AdminUserMutations"] = ResolversParentTypes["AdminUserMutations"]
+> = {
+  createGroup?: Resolver<
+    ResolversTypes["Group"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminUserMutationsCreateGroupArgs, "data">
+  >;
+  setProjectsToUsers?: Resolver<
+    Array<ResolversTypes["User"]>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      AdminUserMutationsSetProjectsToUsersArgs,
+      "projectIds" | "userIds"
+    >
+  >;
+  setUserGroups?: Resolver<
+    Array<ResolversTypes["Group"]>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      AdminUserMutationsSetUserGroupsArgs,
+      "groupIds" | "usersEmails"
+    >
+  >;
+  updateGroup?: Resolver<
+    ResolversTypes["Group"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminUserMutationsUpdateGroupArgs, "data">
+  >;
+  updateUser?: Resolver<
+    ResolversTypes["User"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminUserMutationsUpdateUserArgs, "data">
+  >;
+  upsertUsersWithProjects?: Resolver<
+    Array<ResolversTypes["User"]>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      AdminUserMutationsUpsertUsersWithProjectsArgs,
+      "emails" | "projectsIds"
+    >
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type AdminUserQueriesResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["AdminUserQueries"] = ResolversParentTypes["AdminUserQueries"]
+> = {
+  allGroups?: Resolver<
+    ResolversTypes["GroupsConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminUserQueriesAllGroupsArgs, "pagination">
+  >;
+  allUsers?: Resolver<
+    ResolversTypes["UsersConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminUserQueriesAllUsersArgs, "pagination">
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ConnectionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Connection"] = ResolversParentTypes["Connection"]
+> = {
+  __resolveType: TypeResolveFn<
+    | "ActionsConnection"
+    | "ActionsVerbsConnection"
+    | "ContentConnection"
+    | "DomainsConnection"
+    | "GroupsConnection"
+    | "KCsConnection"
+    | "ProjectsConnection"
+    | "TopicsConnection"
+    | "UsersConnection",
+    ParentType,
+    ContextType
+  >;
+  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
+};
+
+export type ContentResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Content"] = ResolversParentTypes["Content"]
+> = {
+  binaryBase64?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  binaryFilename?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  description?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  json?: Resolver<Maybe<ResolversTypes["JSONObject"]>, ParentType, ContextType>;
+  kcs?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
+  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  project?: Resolver<ResolversTypes["Project"], ParentType, ContextType>;
+  sortIndex?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  tags?: Resolver<Array<ResolversTypes["String"]>, ParentType, ContextType>;
+  topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  url?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ContentConnectionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["ContentConnection"] = ResolversParentTypes["ContentConnection"]
+> = {
+  nodes?: Resolver<Array<ResolversTypes["Content"]>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export interface DateTimeScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["DateTime"], any> {
+  name: "DateTime";
+}
+
+export type DomainResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Domain"] = ResolversParentTypes["Domain"]
+> = {
+  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  kcs?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
+  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  projects?: Resolver<
+    Array<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType
+  >;
+  topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type DomainsConnectionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["DomainsConnection"] = ResolversParentTypes["DomainsConnection"]
+> = {
+  nodes?: Resolver<Array<ResolversTypes["Domain"]>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export interface EmailAddressScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["EmailAddress"], any> {
+  name: "EmailAddress";
+}
+
+export type GroupResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Group"] = ResolversParentTypes["Group"]
+> = {
+  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  flags?: Resolver<ResolversTypes["GroupFlags"], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  projects?: Resolver<
+    Array<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType
+  >;
+  projectsIds?: Resolver<
+    Array<ResolversTypes["IntID"]>,
+    ParentType,
+    ContextType
+  >;
+  tags?: Resolver<Array<ResolversTypes["String"]>, ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  users?: Resolver<Array<ResolversTypes["User"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type GroupFlagsResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["GroupFlags"] = ResolversParentTypes["GroupFlags"]
+> = {
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  readProjectActions?: Resolver<
+    ResolversTypes["Boolean"],
+    ParentType,
+    ContextType
+  >;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type GroupsConnectionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["GroupsConnection"] = ResolversParentTypes["GroupsConnection"]
+> = {
+  nodes?: Resolver<Array<ResolversTypes["Group"]>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export interface IntIdScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["IntID"], any> {
+  name: "IntID";
+}
+
+export interface JsonObjectScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["JSONObject"], any> {
+  name: "JSONObject";
+}
+
+export type KcResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["KC"] = ResolversParentTypes["KC"]
+> = {
+  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type KCsConnectionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["KCsConnection"] = ResolversParentTypes["KCsConnection"]
+> = {
+  nodes?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type MutationResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
+> = {
+  action?: Resolver<
+    Maybe<ResolversTypes["Void"]>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationActionArgs, "data">
+  >;
+  adminContent?: Resolver<
+    ResolversTypes["AdminContentMutations"],
+    ParentType,
+    ContextType
+  >;
+  adminDomain?: Resolver<
+    ResolversTypes["AdminDomainMutations"],
+    ParentType,
+    ContextType
+  >;
+  adminProjects?: Resolver<
+    ResolversTypes["AdminProjectsMutations"],
+    ParentType,
+    ContextType
+  >;
+  adminUsers?: Resolver<
+    ResolversTypes["AdminUserMutations"],
+    ParentType,
+    ContextType
+  >;
+  hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+};
+
+export type NodeResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Node"] = ResolversParentTypes["Node"]
+> = {
+  __resolveType: TypeResolveFn<null, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+};
+
+export interface NonNegativeIntScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["NonNegativeInt"], any> {
+  name: "NonNegativeInt";
+}
+
+export type PageInfoResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["PageInfo"] = ResolversParentTypes["PageInfo"]
+> = {
+  endCursor?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  hasNextPage?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  hasPreviousPage?: Resolver<
+    ResolversTypes["Boolean"],
+    ParentType,
+    ContextType
+  >;
+  startCursor?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProjectResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Project"] = ResolversParentTypes["Project"]
+> = {
+  actions?: Resolver<
+    ResolversTypes["ActionsConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<ProjectActionsArgs, "pagination">
+  >;
+  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  domains?: Resolver<Array<ResolversTypes["Domain"]>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProjectsConnectionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["ProjectsConnection"] = ResolversParentTypes["ProjectsConnection"]
+> = {
+  nodes?: Resolver<Array<ResolversTypes["Project"]>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type QueryResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
+> = {
+  adminActions?: Resolver<
+    ResolversTypes["AdminActionQueries"],
+    ParentType,
+    ContextType
+  >;
+  adminContent?: Resolver<
+    ResolversTypes["AdminContentQueries"],
+    ParentType,
+    ContextType
+  >;
+  adminDomain?: Resolver<
+    ResolversTypes["AdminDomainQueries"],
+    ParentType,
+    ContextType
+  >;
+  adminProjects?: Resolver<
+    ResolversTypes["AdminProjectsQueries"],
+    ParentType,
+    ContextType
+  >;
+  adminUsers?: Resolver<
+    ResolversTypes["AdminUserQueries"],
+    ParentType,
+    ContextType
+  >;
+  content?: Resolver<
+    Array<ResolversTypes["Content"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryContentArgs, "ids">
+  >;
+  currentUser?: Resolver<
+    Maybe<ResolversTypes["User"]>,
+    ParentType,
+    ContextType
+  >;
+  domains?: Resolver<
+    Array<ResolversTypes["Domain"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryDomainsArgs, "ids">
+  >;
+  groups?: Resolver<
+    Array<ResolversTypes["Group"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryGroupsArgs, "ids">
+  >;
+  hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  hello2?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  kcs?: Resolver<
+    Array<ResolversTypes["KC"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryKcsArgs, "ids">
+  >;
+  projects?: Resolver<
+    Array<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryProjectsArgs, "ids">
+  >;
+  topics?: Resolver<
+    Array<ResolversTypes["Topic"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryTopicsArgs, "ids">
+  >;
+  users?: Resolver<
+    Array<ResolversTypes["User"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryUsersArgs, "ids">
+  >;
+};
+
+export type SubscriptionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Subscription"] = ResolversParentTypes["Subscription"]
+> = {
+  hello?: SubscriptionResolver<
+    ResolversTypes["String"],
+    "hello",
+    ParentType,
+    ContextType
+  >;
+};
+
+export interface TimestampScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["Timestamp"], any> {
+  name: "Timestamp";
+}
+
+export type TopicResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Topic"] = ResolversParentTypes["Topic"]
+> = {
+  childrens?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
+  code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  content?: Resolver<Array<ResolversTypes["Content"]>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  kcs?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
+  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  parent?: Resolver<Maybe<ResolversTypes["Topic"]>, ParentType, ContextType>;
+  project?: Resolver<ResolversTypes["Project"], ParentType, ContextType>;
+  sortIndex?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type TopicsConnectionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["TopicsConnection"] = ResolversParentTypes["TopicsConnection"]
+> = {
+  nodes?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export interface UrlScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["URL"], any> {
+  name: "URL";
+}
+
+export type UserResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
+> = {
+  active?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  email?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  enabled?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  groups?: Resolver<Array<ResolversTypes["Group"]>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  lastOnline?: Resolver<
+    Maybe<ResolversTypes["DateTime"]>,
+    ParentType,
+    ContextType
+  >;
+  locked?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  projects?: Resolver<
+    Array<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType
+  >;
+  projectsIds?: Resolver<
+    Array<ResolversTypes["IntID"]>,
+    ParentType,
+    ContextType
+  >;
+  role?: Resolver<ResolversTypes["UserRole"], ParentType, ContextType>;
+  tags?: Resolver<Array<ResolversTypes["String"]>, ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type UsersConnectionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["UsersConnection"] = ResolversParentTypes["UsersConnection"]
+> = {
+  nodes?: Resolver<Array<ResolversTypes["User"]>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export interface VoidScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["Void"], any> {
+  name: "Void";
+}
+
 export type Resolvers<ContextType = EZContext> = {
-  Query?: QueryResolvers<ContextType>;
-  Mutation?: MutationResolvers<ContextType>;
-  Subscription?: SubscriptionResolvers<ContextType>;
-  DateTime?: GraphQLScalarType;
-  Timestamp?: GraphQLScalarType;
-  JSONObject?: GraphQLScalarType;
-  NonNegativeInt?: GraphQLScalarType;
-  Void?: GraphQLScalarType;
-  URL?: GraphQLScalarType;
-  EmailAddress?: GraphQLScalarType;
-  IntID?: GraphQLScalarType;
-  Group?: GroupResolvers<ContextType>;
-  GroupFlags?: GroupFlagsResolvers<ContextType>;
-  GroupsConnection?: GroupsConnectionResolvers<ContextType>;
-  User?: UserResolvers<ContextType>;
-  UsersConnection?: UsersConnectionResolvers<ContextType>;
-  AdminUserQueries?: AdminUserQueriesResolvers<ContextType>;
-  AdminUserMutations?: AdminUserMutationsResolvers<ContextType>;
-  PageInfo?: PageInfoResolvers<ContextType>;
-  Node?: NodeResolvers<ContextType>;
-  Connection?: ConnectionResolvers<ContextType>;
-  ActionVerb?: ActionVerbResolvers<ContextType>;
-  Content?: ContentResolvers<ContextType>;
-  KC?: KcResolvers<ContextType>;
-  Domain?: DomainResolvers<ContextType>;
-  Topic?: TopicResolvers<ContextType>;
   Action?: ActionResolvers<ContextType>;
+  ActionVerb?: ActionVerbResolvers<ContextType>;
   ActionsConnection?: ActionsConnectionResolvers<ContextType>;
   ActionsVerbsConnection?: ActionsVerbsConnectionResolvers<ContextType>;
   AdminActionQueries?: AdminActionQueriesResolvers<ContextType>;
-  Project?: ProjectResolvers<ContextType>;
-  ContentConnection?: ContentConnectionResolvers<ContextType>;
   AdminContentMutations?: AdminContentMutationsResolvers<ContextType>;
   AdminContentQueries?: AdminContentQueriesResolvers<ContextType>;
-  TopicsConnection?: TopicsConnectionResolvers<ContextType>;
-  DomainsConnection?: DomainsConnectionResolvers<ContextType>;
-  AdminDomainQueries?: AdminDomainQueriesResolvers<ContextType>;
   AdminDomainMutations?: AdminDomainMutationsResolvers<ContextType>;
-  KCsConnection?: KCsConnectionResolvers<ContextType>;
-  ProjectsConnection?: ProjectsConnectionResolvers<ContextType>;
-  AdminProjectsQueries?: AdminProjectsQueriesResolvers<ContextType>;
+  AdminDomainQueries?: AdminDomainQueriesResolvers<ContextType>;
   AdminProjectsMutations?: AdminProjectsMutationsResolvers<ContextType>;
+  AdminProjectsQueries?: AdminProjectsQueriesResolvers<ContextType>;
+  AdminUserMutations?: AdminUserMutationsResolvers<ContextType>;
+  AdminUserQueries?: AdminUserQueriesResolvers<ContextType>;
+  Connection?: ConnectionResolvers<ContextType>;
+  Content?: ContentResolvers<ContextType>;
+  ContentConnection?: ContentConnectionResolvers<ContextType>;
+  DateTime?: GraphQLScalarType;
+  Domain?: DomainResolvers<ContextType>;
+  DomainsConnection?: DomainsConnectionResolvers<ContextType>;
+  EmailAddress?: GraphQLScalarType;
+  Group?: GroupResolvers<ContextType>;
+  GroupFlags?: GroupFlagsResolvers<ContextType>;
+  GroupsConnection?: GroupsConnectionResolvers<ContextType>;
+  IntID?: GraphQLScalarType;
+  JSONObject?: GraphQLScalarType;
+  KC?: KcResolvers<ContextType>;
+  KCsConnection?: KCsConnectionResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
+  Node?: NodeResolvers<ContextType>;
+  NonNegativeInt?: GraphQLScalarType;
+  PageInfo?: PageInfoResolvers<ContextType>;
+  Project?: ProjectResolvers<ContextType>;
+  ProjectsConnection?: ProjectsConnectionResolvers<ContextType>;
+  Query?: QueryResolvers<ContextType>;
+  Subscription?: SubscriptionResolvers<ContextType>;
+  Timestamp?: GraphQLScalarType;
+  Topic?: TopicResolvers<ContextType>;
+  TopicsConnection?: TopicsConnectionResolvers<ContextType>;
+  URL?: GraphQLScalarType;
+  User?: UserResolvers<ContextType>;
+  UsersConnection?: UsersConnectionResolvers<ContextType>;
+  Void?: GraphQLScalarType;
 };
 
 declare module "graphql-ez" {
