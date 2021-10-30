@@ -515,6 +515,7 @@ type User {
   lastOnline: DateTime
   locked: Boolean!
   name: String
+  picture: String
   projects: [Project!]!
   projectsIds: [IntID!]!
   role: UserRole!

@@ -661,6 +661,7 @@ export type User = {
   lastOnline?: Maybe<Scalars["DateTime"]>;
   locked: Scalars["Boolean"];
   name?: Maybe<Scalars["String"]>;
+  picture?: Maybe<Scalars["String"]>;
   projects: Array<Project>;
   projectsIds: Array<Scalars["IntID"]>;
   role: UserRole;
@@ -691,6 +692,7 @@ export type CurrentUserQuery = {
         email: string;
         name?: string | null | undefined;
         role: UserRole;
+        picture?: string | null | undefined;
       }
     | null
     | undefined;
@@ -2067,6 +2069,7 @@ export const CurrentUserDocument = {
                 { kind: "Field", name: { kind: "Name", value: "email" } },
                 { kind: "Field", name: { kind: "Name", value: "name" } },
                 { kind: "Field", name: { kind: "Name", value: "role" } },
+                { kind: "Field", name: { kind: "Name", value: "picture" } },
               ],
             },
           },

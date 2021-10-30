@@ -672,6 +672,7 @@ export type User = {
   lastOnline?: Maybe<Scalars["DateTime"]>;
   locked: Scalars["Boolean"];
   name?: Maybe<Scalars["String"]>;
+  picture?: Maybe<Scalars["String"]>;
   projects: Array<Project>;
   projectsIds: Array<Scalars["IntID"]>;
   role: UserRole;
@@ -1657,6 +1658,7 @@ export type UserResolvers<
   >;
   locked?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  picture?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   projects?: Resolver<
     Array<ResolversTypes["Project"]>,
     ParentType,

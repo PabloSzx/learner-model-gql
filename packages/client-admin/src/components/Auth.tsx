@@ -32,6 +32,7 @@ export function SyncAuth() {
           email
           name
           role
+          picture
         }
       }
     `),

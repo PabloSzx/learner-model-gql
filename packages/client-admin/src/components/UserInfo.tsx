@@ -58,8 +58,7 @@ export const UserInfo = () => {
         Login
       </Button>
     );
-  const { name, email } = user;
-  const { picture } = auth0User;
+  const { name, email, picture } = user;
 
   return (
     <Popover>

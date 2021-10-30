@@ -661,6 +661,7 @@ export type User = {
   lastOnline?: Maybe<Scalars["DateTime"]>;
   locked: Scalars["Boolean"];
   name?: Maybe<Scalars["String"]>;
+  picture?: Maybe<Scalars["String"]>;
   projects: Array<Project>;
   projectsIds: Array<Scalars["IntID"]>;
   role: UserRole;

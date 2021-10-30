@@ -3,7 +3,7 @@ import type { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-
 import * as graphql from "./graphql";
 
 const documents = {
-  "\n      query currentUser {\n        currentUser {\n          id\n          email\n          name\n          role\n        }\n      }\n    ":
+  "\n      query currentUser {\n        currentUser {\n          id\n          email\n          name\n          role\n          picture\n        }\n      }\n    ":
     graphql.CurrentUserDocument,
   "\n  query AllContentBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminContentFilter\n  ) {\n    adminContent {\n      allContent(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n          tags\n        }\n        ...Pagination\n      }\n    }\n  }\n":
     graphql.AllContentBaseDocument,
@@ -80,8 +80,8 @@ const documents = {
 };
 
 export function gql(
-  source: "\n      query currentUser {\n        currentUser {\n          id\n          email\n          name\n          role\n        }\n      }\n    "
-): typeof documents["\n      query currentUser {\n        currentUser {\n          id\n          email\n          name\n          role\n        }\n      }\n    "];
+  source: "\n      query currentUser {\n        currentUser {\n          id\n          email\n          name\n          role\n          picture\n        }\n      }\n    "
+): typeof documents["\n      query currentUser {\n        currentUser {\n          id\n          email\n          name\n          role\n          picture\n        }\n      }\n    "];
 export function gql(
   source: "\n  query AllContentBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminContentFilter\n  ) {\n    adminContent {\n      allContent(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n          tags\n        }\n        ...Pagination\n      }\n    }\n  }\n"
 ): typeof documents["\n  query AllContentBase(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminContentFilter\n  ) {\n    adminContent {\n      allContent(pagination: $pagination, filters: $filters) {\n        nodes {\n          id\n          code\n          label\n          tags\n        }\n        ...Pagination\n      }\n    }\n  }\n"];

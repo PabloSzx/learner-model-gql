@@ -19,6 +19,8 @@ export const usersModule = registerModule(
       active: Boolean!
       lastOnline: DateTime
 
+      picture: String
+
       tags: [String!]!
 
       role: UserRole!
