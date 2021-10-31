@@ -698,6 +698,28 @@ export type CurrentUserQuery = {
     | undefined;
 };
 
+export type AllVerbNamesQueryVariables = Exact<{
+  pagination: CursorConnectionArgs;
+}>;
+
+export type AllVerbNamesQuery = {
+  __typename?: "Query";
+  adminActions: {
+    __typename?: "AdminActionQueries";
+    allActionsVerbs: {
+      __typename?: "ActionsVerbsConnection";
+      nodes: Array<{ __typename?: "ActionVerb"; id: string; name: string }>;
+      pageInfo: {
+        __typename?: "PageInfo";
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null | undefined;
+        endCursor?: string | null | undefined;
+      };
+    };
+  };
+};
+
 export type AllContentBaseQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
   filters?: Maybe<AdminContentFilter>;
@@ -983,6 +1005,33 @@ export type AllTopicsBaseQuery = {
           label: string;
           tags: Array<string>;
         }>;
+      }>;
+      pageInfo: {
+        __typename?: "PageInfo";
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null | undefined;
+        endCursor?: string | null | undefined;
+      };
+    };
+  };
+};
+
+export type AllUsersBaseQueryVariables = Exact<{
+  pagination: CursorConnectionArgs;
+}>;
+
+export type AllUsersBaseQuery = {
+  __typename?: "Query";
+  adminUsers: {
+    __typename?: "AdminUserQueries";
+    allUsers: {
+      __typename?: "UsersConnection";
+      nodes: Array<{
+        __typename?: "User";
+        id: string;
+        name?: string | null | undefined;
+        email: string;
       }>;
       pageInfo: {
         __typename?: "PageInfo";
@@ -2078,6 +2127,87 @@ export const CurrentUserDocument = {
     },
   ],
 } as unknown as DocumentNode<CurrentUserQuery, CurrentUserQueryVariables>;
+export const AllVerbNamesDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "AllVerbNames" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "pagination" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "CursorConnectionArgs" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminActions" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "allActionsVerbs" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "pagination" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "pagination" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "nodes" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "name" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "FragmentSpread",
+                        name: { kind: "Name", value: "Pagination" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...PaginationFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<AllVerbNamesQuery, AllVerbNamesQueryVariables>;
 export const AllContentBaseDocument = {
   kind: "Document",
   definitions: [
@@ -2750,6 +2880,91 @@ export const AllTopicsBaseDocument = {
     ...PaginationFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<AllTopicsBaseQuery, AllTopicsBaseQueryVariables>;
+export const AllUsersBaseDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "AllUsersBase" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "pagination" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "CursorConnectionArgs" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminUsers" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "allUsers" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "pagination" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "pagination" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "nodes" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "name" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "email" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "FragmentSpread",
+                        name: { kind: "Name", value: "Pagination" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...PaginationFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<AllUsersBaseQuery, AllUsersBaseQueryVariables>;
 export const AllActionsDocument = {
   kind: "Document",
   definitions: [

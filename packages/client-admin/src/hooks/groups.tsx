@@ -1,6 +1,9 @@
-import { gql, useGQLInfiniteQuery } from "graph";
+import { AllGroupsBaseQuery, gql, useGQLInfiniteQuery } from "graph";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AsyncSelect, OptionValue } from "../components/AsyncSelect";
+
+export type GroupInfo =
+  AllGroupsBaseQuery["adminUsers"]["allGroups"]["nodes"][number];
 
 export const useGroupsBase = () => {
   const { hasNextPage, fetchNextPage, isFetching, data, isLoading } =
@@ -50,22 +53,15 @@ export const useGroupsBase = () => {
   }, [hasNextPage, fetchNextPage, isFetching]);
 
   const groups = useMemo(() => {
-    const projects: Record<
-      string,
-      {
-        id: string;
-        code: string;
-        label: string;
-      }
-    > = {};
+    const groups: Record<string, GroupInfo> = {};
 
-    for (const project of data?.pages.flatMap(
+    for (const group of data?.pages.flatMap(
       (v) => v.adminUsers.allGroups.nodes
     ) || []) {
-      projects[project.id] = project;
+      groups[group.id] = group;
     }
 
-    return Object.values(projects);
+    return Object.values(groups);
   }, [data]);
 
   const asOptions = useMemo(() => {

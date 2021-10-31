@@ -224,7 +224,7 @@ export const useSelectMultiTopics = ({
   const [selectedTopics, setSelectedTopics] =
     state || useState<OptionValue[]>([]);
 
-  const selectMultiDomainComponent = useMemo(() => {
+  const selectMultiTopicComponent = useMemo(() => {
     return (
       <AsyncSelect
         key={isLoading ? -1 : asOptions.length}
@@ -243,7 +243,7 @@ export const useSelectMultiTopics = ({
 
   return {
     selectedTopics,
-    selectMultiDomainComponent,
+    selectMultiTopicComponent,
     setSelectedTopics,
     topicsFilter,
     produceTopicsFilter,

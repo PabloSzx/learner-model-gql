@@ -1,13 +1,17 @@
-import { VStack } from "@chakra-ui/react";
-import type { ActionsInfoFragment } from "graph";
+import { VStack, FormControl, FormLabel, HStack } from "@chakra-ui/react";
+import type { ActionsInfoFragment, AdminActionsFilter } from "graph";
 import { gql } from "graph";
+import { useMemo } from "react";
 import { useGQLQuery } from "rq-gql";
 import { withAdminAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
-import { contentOptionLabel } from "../hooks/content";
-import { kcOptionLabel } from "../hooks/kcs";
+import { useSelectMultiVerbs } from "../hooks/actions";
+import { contentOptionLabel, useSelectMultiContent } from "../hooks/content";
+import { kcOptionLabel, useSelectMultiKCs } from "../hooks/kcs";
 import { useCursorPagination } from "../hooks/pagination";
-import { topicOptionLabel } from "../hooks/topics";
+import { useSelectMultiProjects } from "../hooks/projects";
+import { topicOptionLabel, useSelectMultiTopics } from "../hooks/topics";
+import { useSelectMultiUsers } from "../hooks/users";
 
 gql(/* GraphQL */ `
   fragment ActionsInfo on Action {
@@ -53,6 +57,41 @@ export default withAdminAuth(function ActionsPage() {
     amount: 50,
   });
 
+  const { selectMultiContentComponent, selectedContent } =
+    useSelectMultiContent();
+  const { selectMultiKCComponent, selectedKCs } = useSelectMultiKCs();
+  const { selectMultiProjectComponent, selectedProjects } =
+    useSelectMultiProjects();
+  const { selectMultiTopicComponent, selectedTopics } = useSelectMultiTopics();
+
+  const { selectMultiVerbComponent, selectedVerbs } = useSelectMultiVerbs();
+
+  const { selectMultiUsersComponent, selectedUsers } = useSelectMultiUsers();
+
+  const filters: AdminActionsFilter = useMemo(() => {
+    return {
+      content: selectedContent.length
+        ? selectedContent.map((v) => v.value)
+        : null,
+      kcs: selectedKCs.length ? selectedKCs.map((v) => v.value) : null,
+      projects: selectedProjects.length
+        ? selectedProjects.map((v) => v.value)
+        : null,
+      topics: selectedTopics.length ? selectedTopics.map((v) => v.value) : null,
+      verbNames: selectedVerbs.length
+        ? selectedVerbs.map((v) => v.label)
+        : null,
+      users: selectedUsers.length ? selectedUsers.map((v) => v.value) : null,
+    };
+  }, [
+    selectedContent,
+    selectedKCs,
+    selectedProjects,
+    selectedTopics,
+    selectedVerbs,
+    selectedUsers,
+  ]);
+
   const { data } = useGQLQuery(
     gql(/* GraphQL */ `
       query AllActions(
@@ -71,12 +110,39 @@ export default withAdminAuth(function ActionsPage() {
     `),
     {
       pagination,
+      filters,
     }
   );
   pageInfo.current = data?.adminActions.allActions.pageInfo;
 
   return (
     <VStack>
+      <HStack wrap="wrap" align="center" justify="space-around" zIndex={1000}>
+        <FormControl maxW="500px">
+          <FormLabel>Content</FormLabel>
+          {selectMultiContentComponent}
+        </FormControl>
+        <FormControl maxW="500px">
+          <FormLabel>KCs</FormLabel>
+          {selectMultiKCComponent}
+        </FormControl>
+        <FormControl maxW="500px">
+          <FormLabel>Projects</FormLabel>
+          {selectMultiProjectComponent}
+        </FormControl>
+        <FormControl maxW="500px">
+          <FormLabel>Topics</FormLabel>
+          {selectMultiTopicComponent}
+        </FormControl>
+        <FormControl maxW="500px">
+          <FormLabel>Verbs</FormLabel>
+          {selectMultiVerbComponent}
+        </FormControl>
+        <FormControl maxW="500px">
+          <FormLabel>Users</FormLabel>
+          {selectMultiUsersComponent}
+        </FormControl>
+      </HStack>
       <DataTable<ActionsInfoFragment>
         data={data?.adminActions.allActions.nodes || []}
         prevPage={prevPage}
