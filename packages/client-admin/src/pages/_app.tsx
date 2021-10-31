@@ -33,6 +33,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <title>ADMIN - Learner Model GQL</title>
+        <link rel="stylesheet" href="/react-datepicker.css" />
       </Head>
       <Auth0Provider
         domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN!}

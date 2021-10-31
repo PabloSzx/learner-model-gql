@@ -1,8 +1,7 @@
 import { VStack, FormControl, FormLabel, HStack } from "@chakra-ui/react";
 import type { ActionsInfoFragment, AdminActionsFilter } from "graph";
-import { gql } from "graph";
+import { gql, useGQLQuery } from "graph";
 import { useMemo } from "react";
-import { useGQLQuery } from "rq-gql";
 import { withAdminAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
 import { useSelectMultiVerbs } from "../hooks/actions";

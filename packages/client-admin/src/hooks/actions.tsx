@@ -1,6 +1,5 @@
-import { AllVerbNamesQuery, gql } from "graph";
+import { AllVerbNamesQuery, gql, useGQLInfiniteQuery } from "graph";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useGQLInfiniteQuery } from "rq-gql";
 import {
   AsyncSelect,
   AsyncSelectProps,
