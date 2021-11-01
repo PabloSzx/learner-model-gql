@@ -2243,7 +2243,7 @@ packages:
       isomorphic-ws: 4.0.1_ws@8.2.3
       node-fetch: 2.6.5
       subscriptions-transport-ws-envelop: 2.0.1_graphql@16.0.0+ws@8.2.3
-      undici: 4.9.2
+      undici: 4.9.3
       ws: 8.2.3
     transitivePeerDependencies:
       - bufferutil
@@ -8978,15 +8978,9 @@ packages:
     resolution: {integrity: sha512-/j3YTZ5AobMB4ZrTY72mzM54uFUX32v0R/JRW9G2vOyF1uSKYAx+WT8dMsAcRS13TOFISv094TxIyWYk+WEPsA==}
     dev: false
 
-  /undici/4.9.2:
-    resolution: {integrity: sha512-O8D4fp0cT7/bOMe7XE2oc0PaBCyc0GsahzQ+nMSeWW0o0+EB2ykXYNhU0kY2nKP589zzS91pLj979NtJrBRwFQ==}
-    engines: {node: '>=12.18'}
-    dev: true
-
   /undici/4.9.3:
     resolution: {integrity: sha512-9WbSy4Y2At64gXTOclOjkEgkVrQj09DoH3sgyUYP6e8XCMU/VN8UbjIl+Syd084JgLnlYslgJ0jFM+3hx1ClvQ==}
     engines: {node: '>=12.18'}
-    dev: false
 
   /unfetch/4.2.0:
     resolution: {integrity: sha512-F9p7yYCn6cIW9El1zi0HI6vqpeIvBsr3dSuRO6Xuppb1u5rXpCPmMvLSyECLhybr9isec8Ohl0hPekMVrEinDA==}

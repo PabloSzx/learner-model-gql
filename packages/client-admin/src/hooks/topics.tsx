@@ -65,7 +65,7 @@ export const useAllTopics = ({ jsFilter }: AllTopicsOptions = {}) => {
       (pageParam) => {
         return {
           pagination: {
-            first: 20,
+            first: 50,
             after: pageParam,
           },
           filters: topicsFilter,

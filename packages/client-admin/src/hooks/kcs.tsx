@@ -40,7 +40,7 @@ export const useKCsBase = () => {
       (pageParam) => {
         return {
           pagination: {
-            first: 20,
+            first: 50,
             after: pageParam,
           },
           filters: kcsFilter,
