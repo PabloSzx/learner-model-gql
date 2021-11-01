@@ -108,7 +108,7 @@ importers:
       pino: ^7.0.5
       pino-pretty: ^7.1.0
       serialize-error: ^8.1.0
-      validator: ^13.6.0
+      validator: ^13.7.0
       wait-on: ^6.0.0
     dependencies:
       '@auth0/auth0-react': 1.8.0_react@17.0.2
@@ -129,7 +129,7 @@ importers:
       pino: 7.0.5
       pino-pretty: 7.1.0
       serialize-error: 8.1.0
-      validator: 13.6.0
+      validator: 13.7.0
       wait-on: 6.0.0
     devDependencies:
       '@types/validator': 13.6.6
@@ -9130,8 +9130,8 @@ packages:
       spdx-expression-parse: 3.0.1
     dev: false
 
-  /validator/13.6.0:
-    resolution: {integrity: sha512-gVgKbdbHgtxpRyR8K0O6oFZPhhB5tT1jeEHZR0Znr9Svg03U0+r9DXWMrnRAB+HtCStDQKlaIZm42tVsVjqtjg==}
+  /validator/13.7.0:
+    resolution: {integrity: sha512-nYXQLCBkpJ8X6ltALua9dRrZDHVYxjJ1wgskNt1lH9fzGjs3tgojGSCBjmEPwkWS1y29+DrizMTW19Pr9uB2nw==}
     engines: {node: '>= 0.10'}
     dev: false
 

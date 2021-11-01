@@ -24,7 +24,7 @@
     "pino": "^7.0.5",
     "pino-pretty": "^7.1.0",
     "serialize-error": "^8.1.0",
-    "validator": "^13.6.0",
+    "validator": "^13.7.0",
     "wait-on": "^6.0.0"
   },
   "devDependencies": {
