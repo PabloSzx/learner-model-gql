@@ -26,7 +26,7 @@
     "graphql-ez": "^0.13.3",
     "lodash": "^4.17.21",
     "ms": "^3.0.0-canary.1",
-    "undici": "^4.9.2",
+    "undici": "^4.9.3",
     "wait-on": "^6.0.0"
   },
   "devDependencies": {
