@@ -48,9 +48,18 @@ export const projectsModule = registerModule(
     }
 
     extend type Query {
+      "[ADMIN] Project related administration queries"
       adminProjects: AdminProjectsQueries!
 
       projects(ids: [IntID!]!): [Project!]!
+
+      """
+      Get specified project by either "id" or "code".
+
+      - If user is not authenticated it will always return NULL.
+      - If authenticated user has no permissions on the specified project it returns NULL.
+      """
+      project(id: IntID, code: String): Project
     }
 
     extend type Mutation {
@@ -118,6 +127,37 @@ export const projectsModule = registerModule(
             }),
             ids
           );
+        },
+        async project(
+          _root,
+          { code, id },
+          { prisma, authorization, UserPromise }
+        ) {
+          if (code == null && id == null)
+            throw Error("No identifier specified!");
+
+          const [project, user] = await Promise.all([
+            prisma.project.findUnique({
+              where: code
+                ? {
+                    code,
+                  }
+                : {
+                    id: id!,
+                  },
+            }),
+            UserPromise,
+          ]);
+
+          if (!project || !user) return null;
+
+          try {
+            await authorization.expectAllowedUserProject(project.id);
+
+            return project;
+          } catch (err) {
+            return null;
+          }
         },
       },
       Mutation: {

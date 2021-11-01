@@ -532,6 +532,7 @@ export type Query = {
   adminActions: AdminActionQueries;
   adminContent: AdminContentQueries;
   adminDomain: AdminDomainQueries;
+  /** [ADMIN] Project related administration queries */
   adminProjects: AdminProjectsQueries;
   adminUsers: AdminUserQueries;
   content: Array<Content>;
@@ -541,6 +542,13 @@ export type Query = {
   hello: Scalars["String"];
   hello2: Scalars["String"];
   kcs: Array<Kc>;
+  /**
+   * Get specified project by either "id" or "code".
+   *
+   * - If user is not authenticated it will always return NULL.
+   * - If authenticated user has no permissions on the specified project it returns NULL.
+   */
+  project?: Maybe<Project>;
   projects: Array<Project>;
   topics: Array<Topic>;
   users: Array<User>;
@@ -560,6 +568,11 @@ export type QueryGroupsArgs = {
 
 export type QueryKcsArgs = {
   ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryProjectArgs = {
+  code?: Maybe<Scalars["String"]>;
+  id?: Maybe<Scalars["IntID"]>;
 };
 
 export type QueryProjectsArgs = {
@@ -1571,6 +1584,12 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     RequireFields<QueryKcsArgs, "ids">
+  >;
+  project?: Resolver<
+    Maybe<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryProjectArgs, never>
   >;
   projects?: Resolver<
     Array<ResolversTypes["Project"]>,

@@ -397,6 +397,9 @@ type Query {
   adminActions: AdminActionQueries!
   adminContent: AdminContentQueries!
   adminDomain: AdminDomainQueries!
+  """
+  [ADMIN] Project related administration queries
+  """
   adminProjects: AdminProjectsQueries!
   adminUsers: AdminUserQueries!
   content(ids: [IntID!]!): [Content!]!
@@ -406,6 +409,13 @@ type Query {
   hello: String!
   hello2: String!
   kcs(ids: [IntID!]!): [KC!]!
+  """
+  Get specified project by either "id" or "code".
+
+  - If user is not authenticated it will always return NULL.
+  - If authenticated user has no permissions on the specified project it returns NULL.
+  """
+  project(code: String, id: IntID): Project
   projects(ids: [IntID!]!): [Project!]!
   topics(ids: [IntID!]!): [Topic!]!
   users(ids: [IntID!]!): [User!]!

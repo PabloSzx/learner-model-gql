@@ -143,11 +143,19 @@ export type ProjectsConnection = Connection & {
 
 export type Query = {
   __typename?: "Query";
+  /** [ADMIN] Project related administration queries */
   adminProjects: AdminProjectsQueries;
   content: Array<Content>;
   domains: Array<Domain>;
   groups: Array<Group>;
   hello: Scalars["String"];
+  /**
+   * Get specified project by either "id" or "code".
+   *
+   * - If user is not authenticated it will always return NULL.
+   * - If authenticated user has no permissions on the specified project it returns NULL.
+   */
+  project?: Maybe<Project>;
   projects: Array<Project>;
   topics: Array<Topic>;
   users: Array<User>;
@@ -163,6 +171,11 @@ export type QueryDomainsArgs = {
 
 export type QueryGroupsArgs = {
   ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryProjectArgs = {
+  code?: Maybe<Scalars["String"]>;
+  id?: Maybe<Scalars["IntID"]>;
 };
 
 export type QueryProjectsArgs = {
@@ -555,6 +568,12 @@ export type QueryResolvers<
     RequireFields<QueryGroupsArgs, "ids">
   >;
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  project?: Resolver<
+    Maybe<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryProjectArgs, never>
+  >;
   projects?: Resolver<
     Array<ResolversTypes["Project"]>,
     ParentType,
