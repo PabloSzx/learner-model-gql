@@ -1,9 +1,10 @@
-import { VStack, FormControl, FormLabel, HStack } from "@chakra-ui/react";
+import { FormControl, FormLabel, HStack, VStack } from "@chakra-ui/react";
 import type { ActionsInfoFragment, AdminActionsFilter } from "graph";
 import { gql, useGQLQuery } from "graph";
 import { useMemo } from "react";
 import { withAdminAuth } from "../components/Auth";
 import { DataTable, getDateRow } from "../components/DataTable";
+import { useDatepickerRange } from "../components/useDatepicker";
 import { useSelectMultiVerbs } from "../hooks/actions";
 import { contentOptionLabel, useSelectMultiContent } from "../hooks/content";
 import { kcOptionLabel, useSelectMultiKCs } from "../hooks/kcs";
@@ -67,6 +68,8 @@ export default withAdminAuth(function ActionsPage() {
 
   const { selectMultiUsersComponent, selectedUsers } = useSelectMultiUsers();
 
+  const { datepicker, selectedDate } = useDatepickerRange();
+
   const filters: AdminActionsFilter = useMemo(() => {
     return {
       content: selectedContent.length
@@ -81,6 +84,8 @@ export default withAdminAuth(function ActionsPage() {
         ? selectedVerbs.map((v) => v.label)
         : null,
       users: selectedUsers.length ? selectedUsers.map((v) => v.value) : null,
+      startDate: selectedDate.startDate?.toISOString(),
+      endDate: selectedDate.endDate?.toISOString(),
     };
   }, [
     selectedContent,
@@ -89,6 +94,7 @@ export default withAdminAuth(function ActionsPage() {
     selectedTopics,
     selectedVerbs,
     selectedUsers,
+    selectedDate,
   ]);
 
   const { data } = useGQLQuery(
@@ -140,6 +146,10 @@ export default withAdminAuth(function ActionsPage() {
         <FormControl maxW="500px">
           <FormLabel>Users</FormLabel>
           {selectMultiUsersComponent}
+        </FormControl>
+        <FormControl maxW="350px" paddingY="1em">
+          <FormLabel fontWeight="bold">Date Range</FormLabel>
+          {datepicker}
         </FormControl>
       </HStack>
       <DataTable<ActionsInfoFragment>

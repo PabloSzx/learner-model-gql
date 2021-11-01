@@ -3,7 +3,9 @@ import { ChakraProvider, extendTheme, Spinner } from "@chakra-ui/react";
 import { CombinedRQGQLProvider } from "graph";
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import "react-datepicker/dist/react-datepicker.min.css";
 import { useIsFetching } from "react-query";
+import "../../public/styles.css";
 import { SyncAuth } from "../components/Auth";
 import { MainLayout } from "../components/MainLayout";
 import { NextNProgress } from "../components/NextNProgress";
@@ -33,7 +35,6 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <title>ADMIN - Learner Model GQL</title>
-        <link rel="stylesheet" href="/react-datepicker.css" />
       </Head>
       <Auth0Provider
         domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN!}
