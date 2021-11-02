@@ -160,7 +160,7 @@ importers:
       react-datepicker: ^4.3.0
       react-dom: ^17.0.2
       react-icons: ^4.3.1
-      react-select: ^5.1.0
+      react-select: ^5.2.0
       react-table: ^7.7.0
       react-use: ^17.3.1
       serialize-error: ^8.1.0
@@ -187,7 +187,7 @@ importers:
       react-datepicker: 4.3.0_react-dom@17.0.2+react@17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-icons: 4.3.1_react@17.0.2
-      react-select: 5.1.0_14fc3c4d570feae7d722fbbd1b906730
+      react-select: 5.2.0_14fc3c4d570feae7d722fbbd1b906730
       react-table: 7.7.0_react@17.0.2
       react-use: 17.3.1_react-dom@17.0.2+react@17.0.2
       serialize-error: 8.1.0
@@ -7797,8 +7797,8 @@ packages:
       use-sidecar: 1.0.5_react@17.0.2
     dev: false
 
-  /react-select/5.1.0_14fc3c4d570feae7d722fbbd1b906730:
-    resolution: {integrity: sha512-SkEBD1AYsSXrIdNj5HBt7+Ehe+jxdiB448J0atJqR6lE3l/GcFlRf4JYB3NlHe/02jrW4AnIQLo1t0IqWrxXOw==}
+  /react-select/5.2.0_14fc3c4d570feae7d722fbbd1b906730:
+    resolution: {integrity: sha512-JLH2/ei/m1an0Vu4ERMKvGgDB6yHLsgxltho2QennOLTq4Fx35GwGwh+2MFnz5EWgslX6G9rjclUTZWAA2DuBg==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0
       react-dom: ^16.8.0 || ^17.0.0
