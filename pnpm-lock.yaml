@@ -153,7 +153,7 @@ importers:
       framer-motion: ^5.0.2
       graph: workspace:^0.0.1
       immer: ^9.0.6
-      mime: ^2.5.2
+      mime: ^2.6.0
       next: ^12.0.2
       nprogress: ^0.2.0
       react: ^17.0.2
@@ -180,7 +180,7 @@ importers:
       framer-motion: 5.0.2_react-dom@17.0.2+react@17.0.2
       graph: link:../graph
       immer: 9.0.6
-      mime: 2.5.2
+      mime: 2.6.0
       next: 12.0.2_react-dom@17.0.2+react@17.0.2
       nprogress: 0.2.0
       react: 17.0.2
@@ -367,11 +367,11 @@ importers:
       '@types/mime': ^2.0.3
       api-base: workspace:^0.0.1
       db: workspace:^0.0.1
-      mime: ^2.5.2
+      mime: ^2.6.0
     dependencies:
       api-base: link:../../api-base
       db: link:../../db
-      mime: 2.5.2
+      mime: 2.6.0
     devDependencies:
       '@types/mime': 2.0.3
 
@@ -6698,8 +6698,8 @@ packages:
     dependencies:
       mime-db: 1.50.0
 
-  /mime/2.5.2:
-    resolution: {integrity: sha512-tqkh47FzKeCPD2PUiPB6pkbMzsCasjxAfC62/Wap5qrUWcb+sFasXUC5I3gYM5iBM8v/Qpn4UK0x+j0iHyFPDg==}
+  /mime/2.6.0:
+    resolution: {integrity: sha512-USPkMeET31rOMiarsBNIHZKLGgvKc/LrjofAnBlOttf5ajRvqiRA8QsenbcooctK6d6Ts6aqZXBA+XbkKthiQg==}
     engines: {node: '>=4.0.0'}
     hasBin: true
     dev: false
