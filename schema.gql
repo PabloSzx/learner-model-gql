@@ -267,7 +267,6 @@ type Domain {
   kcs: [KC!]!
   label: String!
   projects: [Project!]!
-  topics: [Topic!]!
   updatedAt: DateTime!
 }
 

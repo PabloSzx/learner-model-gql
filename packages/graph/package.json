@@ -14,7 +14,7 @@
     "graphql": "^16.0.1",
     "prettier": "^2.4.1",
     "react-query": "^3.31.0",
-    "rq-gql": "^0.3.0",
+    "rq-gql": "^0.3.1",
     "valtio": "^1.2.5"
   },
   "devDependencies": {

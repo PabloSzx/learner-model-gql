@@ -33,8 +33,6 @@ export const domainModule = registerModule(
       code: String!
       label: String!
 
-      topics: [Topic!]!
-
       createdAt: DateTime!
       updatedAt: DateTime!
     }

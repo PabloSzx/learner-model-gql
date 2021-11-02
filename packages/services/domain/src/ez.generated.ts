@@ -165,7 +165,6 @@ export type Domain = {
   id: Scalars["IntID"];
   kcs: Array<Kc>;
   label: Scalars["String"];
-  topics: Array<Topic>;
   updatedAt: Scalars["DateTime"];
 };
 
@@ -582,7 +581,6 @@ export type DomainResolvers<
   id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
   kcs?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
   label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

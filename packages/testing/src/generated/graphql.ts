@@ -393,7 +393,6 @@ export type Domain = {
   kcs: Array<Kc>;
   label: Scalars["String"];
   projects: Array<Project>;
-  topics: Array<Topic>;
   updatedAt: Scalars["DateTime"];
 };
 

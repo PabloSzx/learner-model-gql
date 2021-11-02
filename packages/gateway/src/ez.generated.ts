@@ -408,7 +408,6 @@ export type Domain = {
   kcs: Array<Kc>;
   label: Scalars["String"];
   projects: Array<Project>;
-  topics: Array<Topic>;
   updatedAt: Scalars["DateTime"];
 };
 
@@ -1327,7 +1326,6 @@ export type DomainResolvers<
     ParentType,
     ContextType
   >;
-  topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
