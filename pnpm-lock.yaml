@@ -200,41 +200,6 @@ importers:
       '@types/react-table': 7.7.7
       typescript: 4.4.4
 
-  packages/client-nextjs:
-    specifiers:
-      '@auth0/auth0-react': ^1.8.0
-      '@chakra-ui/react': ^1.6.10
-      '@chakra-ui/system': ^1.7.4
-      '@emotion/react': ^11.5.0
-      '@emotion/styled': ^11.3.0
-      '@types/react': ^17.0.33
-      '@types/react-dom': ^17.0.10
-      common: workspace:^0.0.1
-      framer-motion: ^5.0.2
-      graph: workspace:^0.0.1
-      next: ^12.0.2
-      react: ^17.0.2
-      react-dom: ^17.0.2
-      react-icons: ^4.3.1
-      typescript: ^4.4.4
-    dependencies:
-      '@auth0/auth0-react': 1.8.0_react-dom@17.0.2+react@17.0.2
-      '@chakra-ui/react': 1.6.10_eb3f6bb40d691c086b55d4f6eeca5434
-      '@chakra-ui/system': 1.7.4_5a47a31437ffba27a84f7efb2b21ce86
-      '@emotion/react': 11.5.0_74cdfb704b70bfbe5b519e0c4564d995
-      '@emotion/styled': 11.3.0_a52010db4c91eadb6c09af1366ee3612
-      '@types/react': 17.0.33
-      '@types/react-dom': 17.0.10
-      common: link:../common
-      framer-motion: 5.0.2_react-dom@17.0.2+react@17.0.2
-      graph: link:../graph
-      next: 12.0.2_react-dom@17.0.2+react@17.0.2
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-      react-icons: 4.3.1_react@17.0.2
-    devDependencies:
-      typescript: 4.4.4
-
   packages/common:
     specifiers:
       date-fns: ^2.25.0
