@@ -31,6 +31,8 @@ export const UserInfo = () => {
 
   const loginVariant = useColorModeValue("solid", "outline");
 
+  const fontColor = useColorModeValue("black", "white");
+
   if (isLoading)
     return (
       <Flex justifyContent="center">
@@ -90,7 +92,7 @@ export const UserInfo = () => {
         </Box>
       </PopoverTrigger>
       <PopoverContent width="100%">
-        <PopoverCloseButton color="black" />
+        <PopoverCloseButton color={fontColor} />
         <PopoverBody>
           <Stack alignItems="flex-start" paddingTop="2em" paddingBottom="1em">
             <Logout />

@@ -16,15 +16,7 @@ export function SyncAuth() {
   const { user, getIdTokenClaims, isLoading } = useAuth0();
   const headersSnap = useSnapshot(rqGQLClient.headers);
 
-  useEffect(() => {
-    AuthState.isLoading = currentUser.isLoading || isLoading;
-  }, [isLoading]);
-
-  useEffect(() => {
-    AuthState.auth0User = user || null;
-  }, [user]);
-
-  const currentUser = useGQLQuery(
+  const { isLoading: currentUserIsLoading } = useGQLQuery(
     gql(/* GraphQL */ `
       query currentUser {
         currentUser {
@@ -47,6 +39,14 @@ export function SyncAuth() {
       },
     }
   );
+
+  useEffect(() => {
+    AuthState.isLoading = currentUserIsLoading || isLoading;
+  }, [isLoading, currentUserIsLoading]);
+
+  useEffect(() => {
+    AuthState.auth0User = user || null;
+  }, [user]);
 
   useEffect(() => {
     if (user) {
@@ -88,7 +88,7 @@ export function withAdminAuth<Props extends Record<string, unknown>>(
 
     if (user?.role === "ADMIN") return <Cmp {...props} />;
 
-    Router.replace("/");
+    typeof window !== "undefined" && Router.replace("/");
 
     return <Spinner />;
   };
