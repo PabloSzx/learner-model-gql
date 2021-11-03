@@ -146,7 +146,7 @@ importers:
       '@types/nprogress': ^0.2.0
       '@types/react': ^17.0.34
       '@types/react-datepicker': ^4.1.7
-      '@types/react-dom': ^17.0.10
+      '@types/react-dom': ^17.0.11
       '@types/react-table': ^7.7.7
       common: workspace:^0.0.1
       date-fns: ^2.25.0
@@ -174,7 +174,7 @@ importers:
       '@emotion/react': 11.5.0_27d7f75f5fffc1228c129be468caca5c
       '@emotion/styled': 11.3.0_4e86505ff6f3e0b8d0f6b2c7f9d7b098
       '@types/react': 17.0.34
-      '@types/react-dom': 17.0.10
+      '@types/react-dom': 17.0.11
       common: link:../common
       date-fns: 2.25.0
       framer-motion: 5.0.2_react-dom@17.0.2+react@17.0.2
@@ -3293,8 +3293,8 @@ packages:
       - react
     dev: true
 
-  /@types/react-dom/17.0.10:
-    resolution: {integrity: sha512-8oz3NAUId2z/zQdFI09IMhQPNgIbiP8Lslhv39DIDamr846/0spjZK0vnrMak0iB8EKb9QFTTIdg2Wj2zH5a3g==}
+  /@types/react-dom/17.0.11:
+    resolution: {integrity: sha512-f96K3k+24RaLGVu/Y2Ng3e1EbZ8/cVJvypZWd7cy0ofCBaf2lcM46xNhycMZ2xGwbBjRql7hOlZ+e2WlJ5MH3Q==}
     dependencies:
       '@types/react': 17.0.34
     dev: false
