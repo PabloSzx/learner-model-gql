@@ -1,7 +1,7 @@
 import { Stack } from "@chakra-ui/react";
 import { API_URL } from "common";
 import { BiBookContent } from "react-icons/bi";
-import { FaBookReader } from "react-icons/fa";
+import { FaBookReader, FaSatellite } from "react-icons/fa";
 import { FiBook, FiUsers } from "react-icons/fi";
 import { MdOutlineTopic } from "react-icons/md";
 import { RiGroup2Line } from "react-icons/ri";
@@ -69,6 +69,14 @@ export function Navigation() {
                 Altair GraphQL Web Client
               </SidebarLink>
             ) : null}
+            <SidebarLink
+              href={new URL("/voyager", API_URL).href}
+              icon={<FaSatellite />}
+              isExternal
+              target="_blank"
+            >
+              Voyager GraphQL Schema Visualization
+            </SidebarLink>
           </>
         )}
       </Stack>
