@@ -1,8 +1,11 @@
 /**
  * @type {import('next').NextConfig}
  */
-module.exports = {
+const config = {
   experimental: {
     externalDir: true,
   },
+  swcMinify: true,
 };
+
+export default config;
