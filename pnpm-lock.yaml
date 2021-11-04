@@ -106,7 +106,7 @@ importers:
       fastify-plugin: ^3.0.0
       pg-gql-pubsub: ^0.3.0
       pino: ^7.0.5
-      pino-pretty: ^7.1.0
+      pino-pretty: ^7.2.0
       serialize-error: ^8.1.0
       validator: ^13.7.0
       wait-on: ^6.0.0
@@ -127,7 +127,7 @@ importers:
       fastify-plugin: 3.0.0
       pg-gql-pubsub: 0.3.0
       pino: 7.0.5
-      pino-pretty: 7.1.0
+      pino-pretty: 7.2.0
       serialize-error: 8.1.0
       validator: 13.7.0
       wait-on: 6.0.0
@@ -7333,8 +7333,15 @@ packages:
       split2: 3.2.2
     dev: false
 
-  /pino-pretty/7.1.0:
-    resolution: {integrity: sha512-khuvWuuf2ABRp388AlPOv3sOzj+zEgnj9EeFOXw1VUqmSuPK1JqKfdvITk6prhxddVgnjQtbi5x63QeIcWencw==}
+  /pino-abstract-transport/0.5.0:
+    resolution: {integrity: sha512-+KAgmVeqXYbTtU2FScx1XS3kNyfZ5TrXY07V96QnUSFqo2gAqlvmaxH67Lj7SWazqsMabf+58ctdTcBgnOLUOQ==}
+    dependencies:
+      duplexify: 4.1.2
+      split2: 4.1.0
+    dev: false
+
+  /pino-pretty/7.2.0:
+    resolution: {integrity: sha512-pkZhaF1JiyQt4BRqkLANYWuZTxavmuXh3OHsb8goeQasTFgNdzOECXkZWyPYrA0YMRa8zKoVsCzeYz9lI2NYwA==}
     hasBin: true
     dependencies:
       args: 5.0.1
@@ -7342,7 +7349,7 @@ packages:
       dateformat: 4.6.3
       fast-safe-stringify: 2.1.1
       joycon: 3.0.1
-      pino-abstract-transport: 0.4.0
+      pino-abstract-transport: 0.5.0
       pump: 3.0.0
       readable-stream: 3.6.0
       rfdc: 1.3.0
@@ -8375,6 +8382,11 @@ packages:
     resolution: {integrity: sha512-9NThjpgZnifTkJpzTZ7Eue85S49QwpNhZTq6GRJwObb6jnLFNGB7Qm73V5HewTROPyxD0C29xqmaI68bQtV+hg==}
     dependencies:
       readable-stream: 3.6.0
+    dev: false
+
+  /split2/4.1.0:
+    resolution: {integrity: sha512-VBiJxFkxiXRlUIeyMQi8s4hgvKCSjtknJv/LVYbrgALPwf5zSKmEwV9Lst25AkvMDnvxODugjdl6KZgwKM1WYQ==}
+    engines: {node: '>= 10.x'}
     dev: false
 
   /sponge-case/1.0.1:

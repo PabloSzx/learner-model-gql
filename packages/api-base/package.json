@@ -22,7 +22,7 @@
     "fastify-plugin": "^3.0.0",
     "pg-gql-pubsub": "^0.3.0",
     "pino": "^7.0.5",
-    "pino-pretty": "^7.1.0",
+    "pino-pretty": "^7.2.0",
     "serialize-error": "^8.1.0",
     "validator": "^13.7.0",
     "wait-on": "^6.0.0"
