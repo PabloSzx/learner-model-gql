@@ -217,17 +217,17 @@ importers:
   packages/db:
     specifiers:
       '@graphql-ez/utils': ^0.1.2
-      '@prisma/client': ^3.4.0
+      '@prisma/client': ^3.4.1
       '@types/concurrently': ^6.3.0
       '@types/react': ^17.0.34
       common-api: workspace:^1.0.0
-      prisma: ^3.4.0
+      prisma: ^3.4.1
       prisma-dbml-generator: ^0.8.1
     dependencies:
       '@graphql-ez/utils': 0.1.2_e3c7d480b669599850aa03b9de4f5c92
-      '@prisma/client': 3.4.0_prisma@3.4.0
+      '@prisma/client': 3.4.1_prisma@3.4.1
       common-api: link:../common-api
-      prisma: 3.4.0
+      prisma: 3.4.1
       prisma-dbml-generator: 0.8.1
     devDependencies:
       '@types/concurrently': 6.3.0
@@ -2918,8 +2918,8 @@ packages:
     resolution: {integrity: sha512-1oO6+dN5kdIA3sKPZhRGJTfGVP4SWV6KqlMOwry4J3HfyD68sl/3KmG7DeYUzvN+RbhXDnv/D8vNNB8168tAMg==}
     dev: false
 
-  /@prisma/client/3.4.0_prisma@3.4.0:
-    resolution: {integrity: sha512-rjnp7dPVArqT/VgeWllUN+5927u224Gud//d16omL2hyXl9BnWzmeZJQ0plTYuP5yCR/M1N4iUC8ysDPlhA08g==}
+  /@prisma/client/3.4.1_prisma@3.4.1:
+    resolution: {integrity: sha512-tUlPSyGiZfmt9xTtvZK8d8cqu76QLCM+rFt7+ezpau/G0VwzetuGVmT28c61Eaw7OW2KmsTHRk8LUxI7HZS3kA==}
     engines: {node: '>=12.6'}
     requiresBuild: true
     peerDependencies:
@@ -2928,8 +2928,8 @@ packages:
       prisma:
         optional: true
     dependencies:
-      '@prisma/engines-version': 3.4.0-27.1c9fdaa9e2319b814822d6dbfd0a69e1fcc13a85
-      prisma: 3.4.0
+      '@prisma/engines-version': 3.4.1-2.57771c0558568c7d08bd34c7248af5244ae16bd9
+      prisma: 3.4.1
     dev: false
 
   /@prisma/debug/2.30.3:
@@ -2971,8 +2971,8 @@ packages:
       - supports-color
     dev: false
 
-  /@prisma/engines-version/3.4.0-27.1c9fdaa9e2319b814822d6dbfd0a69e1fcc13a85:
-    resolution: {integrity: sha512-acL30wD3lj6qGAN9JIA+fhcd8j5I+Db9d1Pge2jwmK/QVbmbnH+lhTMV5pYIdgxbZWs9R+DoNnOHvUQCOW1xeQ==}
+  /@prisma/engines-version/3.4.1-2.57771c0558568c7d08bd34c7248af5244ae16bd9:
+    resolution: {integrity: sha512-H8bnBT5jLap+0nULBAGjf+xb5XNn4d60U4J9cck+UanyEkeMS3aYCeHvNiQl46XwvN60jkUX8BwV3NOEmPh0SQ==}
     dev: false
 
   /@prisma/engines/2.31.0-32.2452cc6313d52b8b9a96999ac0e974d0aedf88db:
@@ -2980,8 +2980,8 @@ packages:
     requiresBuild: true
     dev: false
 
-  /@prisma/engines/3.4.0-27.1c9fdaa9e2319b814822d6dbfd0a69e1fcc13a85:
-    resolution: {integrity: sha512-jyCjXhX1ZUbzA7+6Hm0iEdeY+qFfpD/RB7iSwMrMoIhkVYvnncSdCLBgbK0yqxTJR2nglevkDY2ve3QDxFciMA==}
+  /@prisma/engines/3.4.1-2.57771c0558568c7d08bd34c7248af5244ae16bd9:
+    resolution: {integrity: sha512-NO4Q88k3CfUpYzfpDD+0wSVCqhaeljCFAGSe1XyvmXAOlMU2AAjCwmRn6S4UXlT9yEGB/LwFjdvGjcgfUQ+Mtw==}
     requiresBuild: true
     dev: false
 
@@ -7481,13 +7481,13 @@ packages:
       - supports-color
     dev: false
 
-  /prisma/3.4.0:
-    resolution: {integrity: sha512-W0AFjVxPOLW5SEnf0ZwbOu4k8ElX98ioFC1E8Gb9Q/nuO2brEwxFJebXglfG+N6zphGbu2bG1I3VAu7aYzR3VA==}
+  /prisma/3.4.1:
+    resolution: {integrity: sha512-APws/xRa1wYd064KV7hByQzWiBMUy/yQ501XXrsRZegXAQ/j1obG2HCk34MEbgn8IqLSRLaXyhCYz4R4HwRmMQ==}
     engines: {node: '>=12.6'}
     hasBin: true
     requiresBuild: true
     dependencies:
-      '@prisma/engines': 3.4.0-27.1c9fdaa9e2319b814822d6dbfd0a69e1fcc13a85
+      '@prisma/engines': 3.4.1-2.57771c0558568c7d08bd34c7248af5244ae16bd9
     dev: false
 
   /process-nextick-args/2.0.1:
