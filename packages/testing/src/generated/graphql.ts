@@ -491,6 +491,7 @@ export type Project = {
   domains: Array<Domain>;
   id: Scalars["IntID"];
   label: Scalars["String"];
+  topics: Array<Topic>;
   updatedAt: Scalars["DateTime"];
 };
 
@@ -538,6 +539,7 @@ export type Query = {
    */
   project?: Maybe<Project>;
   projects: Array<Project>;
+  topicByCode?: Maybe<Topic>;
   topics: Array<Topic>;
   users: Array<User>;
 };
@@ -565,6 +567,10 @@ export type QueryProjectArgs = {
 
 export type QueryProjectsArgs = {
   ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryTopicByCodeArgs = {
+  code: Scalars["String"];
 };
 
 export type QueryTopicsArgs = {

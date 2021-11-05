@@ -7,6 +7,8 @@ export const projectModule = registerModule(
       id: IntID!
 
       domains: [Domain!]!
+
+      topics: [Topic!]!
     }
 
     extend type Query {
@@ -50,6 +52,19 @@ export const projectModule = registerModule(
                 },
               })
               .domains()) || []
+          );
+        },
+        async topics({ id }, _args, { prisma, authorization }) {
+          await authorization.expectAllowedUserProject(id);
+
+          return (
+            (await prisma.project
+              .findUnique({
+                where: {
+                  id,
+                },
+              })
+              .topics()) || []
           );
         },
       },

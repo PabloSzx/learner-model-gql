@@ -118,6 +118,8 @@ export const domainModule = registerModule(
       topics(ids: [IntID!]!): [Topic!]!
       domains(ids: [IntID!]!): [Domain!]!
 
+      topicByCode(code: String!): Topic
+
       adminDomain: AdminDomainQueries!
     }
 
@@ -342,6 +344,14 @@ export const domainModule = registerModule(
             }),
             ids
           );
+        },
+        async topicByCode(_root, { code }, { prisma, authorization }) {
+          return prisma.topic.findFirst({
+            where: {
+              code,
+              project: await authorization.expectProjectsIdInPrismaFilter,
+            },
+          });
         },
         async domains(_root, { ids }, { prisma, authorization }) {
           return getNodeIdList(

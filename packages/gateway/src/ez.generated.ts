@@ -502,6 +502,7 @@ export type Project = {
   domains: Array<Domain>;
   id: Scalars["IntID"];
   label: Scalars["String"];
+  topics: Array<Topic>;
   updatedAt: Scalars["DateTime"];
 };
 
@@ -549,6 +550,7 @@ export type Query = {
    */
   project?: Maybe<Project>;
   projects: Array<Project>;
+  topicByCode?: Maybe<Topic>;
   topics: Array<Topic>;
   users: Array<User>;
 };
@@ -576,6 +578,10 @@ export type QueryProjectArgs = {
 
 export type QueryProjectsArgs = {
   ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryTopicByCodeArgs = {
+  code: Scalars["String"];
 };
 
 export type QueryTopicsArgs = {
@@ -1510,6 +1516,7 @@ export type ProjectResolvers<
   domains?: Resolver<Array<ResolversTypes["Domain"]>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
   label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -1594,6 +1601,12 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     RequireFields<QueryProjectsArgs, "ids">
+  >;
+  topicByCode?: Resolver<
+    Maybe<ResolversTypes["Topic"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryTopicByCodeArgs, "code">
   >;
   topics?: Resolver<
     Array<ResolversTypes["Topic"]>,

@@ -374,6 +374,7 @@ type Project {
   domains: [Domain!]!
   id: IntID!
   label: String!
+  topics: [Topic!]!
   updatedAt: DateTime!
 }
 
@@ -416,6 +417,7 @@ type Query {
   """
   project(code: String, id: IntID): Project
   projects(ids: [IntID!]!): [Project!]!
+  topicByCode(code: String!): Topic
   topics(ids: [IntID!]!): [Topic!]!
   users(ids: [IntID!]!): [User!]!
 }

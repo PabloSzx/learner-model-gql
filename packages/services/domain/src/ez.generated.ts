@@ -213,6 +213,7 @@ export type Project = {
   __typename?: "Project";
   domains: Array<Domain>;
   id: Scalars["IntID"];
+  topics: Array<Topic>;
 };
 
 export type Query = {
@@ -223,6 +224,7 @@ export type Query = {
   hello: Scalars["String"];
   kcs: Array<Kc>;
   projects: Array<Project>;
+  topicByCode?: Maybe<Topic>;
   topics: Array<Topic>;
 };
 
@@ -240,6 +242,10 @@ export type QueryKcsArgs = {
 
 export type QueryProjectsArgs = {
   ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryTopicByCodeArgs = {
+  code: Scalars["String"];
 };
 
 export type QueryTopicsArgs = {
@@ -686,6 +692,7 @@ export type ProjectResolvers<
 > = {
   domains?: Resolver<Array<ResolversTypes["Domain"]>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -722,6 +729,12 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     RequireFields<QueryProjectsArgs, "ids">
+  >;
+  topicByCode?: Resolver<
+    Maybe<ResolversTypes["Topic"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryTopicByCodeArgs, "code">
   >;
   topics?: Resolver<
     Array<ResolversTypes["Topic"]>,
