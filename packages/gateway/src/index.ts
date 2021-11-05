@@ -12,6 +12,12 @@ async function main() {
     logger,
   });
 
+  app.get("/", (_req, reply) => {
+    reply.send({
+      Hello: "World",
+    });
+  });
+
   await app.register(await getGatewayPlugin());
 
   await smartListen(app, 8080);
