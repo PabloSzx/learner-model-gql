@@ -30,7 +30,6 @@ importers:
       esbuild: ^0.13.12
       execa: ^5.1.1
       fastify: ^3.23.0
-      graph: workspace:^0.0.1
       graphql: ^16.0.1
       graphql-ez: ^0.13.3
       husky: ^7.0.4
@@ -49,7 +48,6 @@ importers:
     dependencies:
       api-base: link:packages/api-base
       common: link:packages/common
-      graph: link:packages/graph
       undici: 4.9.5
     devDependencies:
       '@graphql-ez/fastify': 0.9.4_7bdad666fabe5c8f897e1248cf7248bf
@@ -293,10 +291,10 @@ importers:
       '@graphql-codegen/cli': ^2.2.2
       '@graphql-codegen/core': ^2.3.0
       '@graphql-codegen/typed-document-node': ^2.2.0
-      '@graphql-codegen/typescript': ^2.3.0
+      '@graphql-codegen/typescript': ^2.3.1
       '@graphql-codegen/typescript-document-nodes': 2.2.0
       '@graphql-codegen/typescript-operations': ^2.2.0
-      '@graphql-codegen/typescript-react-query': ^3.1.0
+      '@graphql-codegen/typescript-react-query': ^3.1.1
       common: workspace:^0.0.1
       graphql: ^16.0.1
       prettier: ^2.4.1
@@ -378,16 +376,15 @@ importers:
     specifiers:
       '@graphql-codegen/cli': ^2.2.2
       '@graphql-codegen/core': ^2.3.0
-      '@graphql-codegen/gql-tag-operations-preset': ^1.2.0
+      '@graphql-codegen/gql-tag-operations-preset': ^1.2.1
       '@graphql-codegen/typed-document-node': ^2.2.0
-      '@graphql-codegen/typescript': ^2.3.0
+      '@graphql-codegen/typescript': ^2.3.1
       '@graphql-codegen/typescript-operations': ^2.2.0
       '@graphql-ez/fastify': ^0.9.4
       '@graphql-ez/fastify-testing': ^0.1.2
       '@graphql-typed-document-node/core': ^3.1.0
       api-base: workspace:^0.0.1
       db: workspace:^0.0.1
-      graph: workspace:^0.0.1
     devDependencies:
       '@graphql-codegen/cli': 2.2.2_2980e1257fac3bfcd4f9cdeedd7c375c
       '@graphql-codegen/core': 2.3.0_graphql@16.0.1
@@ -400,7 +397,6 @@ importers:
       '@graphql-typed-document-node/core': 3.1.0_graphql@16.0.1
       api-base: link:../api-base
       db: link:../db
-      graph: link:../graph
 
 packages:
 

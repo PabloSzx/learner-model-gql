@@ -1,6 +1,6 @@
 version: "3.7"
 services:
-  dev-users:
+  users:
     restart: always
     image: pabloszx/learner-model-gql
     ports:
@@ -11,7 +11,7 @@ services:
       AUTH0_CLIENT: ${AUTH0_CLIENT}
       AUTH0_SECRET: ${AUTH0_SECRET}
     command: pnpm -r start --filter=service-users
-  dev-actions:
+  actions:
     restart: always
     image: pabloszx/learner-model-gql
     ports:
@@ -22,7 +22,7 @@ services:
       AUTH0_CLIENT: ${AUTH0_CLIENT}
       AUTH0_SECRET: ${AUTH0_SECRET}
     command: pnpm -r start --filter=service-actions
-  dev-content:
+  content:
     restart: always
     image: pabloszx/learner-model-gql
     ports:
@@ -33,7 +33,7 @@ services:
       AUTH0_CLIENT: ${AUTH0_CLIENT}
       AUTH0_SECRET: ${AUTH0_SECRET}
     command: pnpm -r start --filter=service-content
-  dev-domain:
+  domain:
     restart: always
     image: pabloszx/learner-model-gql
     ports:
@@ -44,7 +44,7 @@ services:
       AUTH0_CLIENT: ${AUTH0_CLIENT}
       AUTH0_SECRET: ${AUTH0_SECRET}
     command: pnpm -r start --filter=service-domain
-  dev-projects:
+  projects:
     restart: always
     image: pabloszx/learner-model-gql
     ports:
@@ -55,7 +55,7 @@ services:
       AUTH0_CLIENT: ${AUTH0_CLIENT}
       AUTH0_SECRET: ${AUTH0_SECRET}
     command: pnpm -r start --filter=service-projects
-  dev-state:
+  state:
     restart: always
     image: pabloszx/learner-model-gql
     ports:
@@ -66,7 +66,7 @@ services:
       AUTH0_CLIENT: ${AUTH0_CLIENT}
       AUTH0_SECRET: ${AUTH0_SECRET}
     command: pnpm -r start --filter=service-state
-  dev-gateway:
+  gateway:
     restart: always
     build:
       dockerfile: Dockerfile.dev
@@ -78,4 +78,4 @@ services:
       AUTH0_DOMAIN: ${AUTH0_DOMAIN}
       AUTH0_CLIENT: ${AUTH0_CLIENT}
       AUTH0_SECRET: ${AUTH0_SECRET}
-    command: pnpm -r start --filter=gateway
+    command: pnpm -r start --filter=service-gateway

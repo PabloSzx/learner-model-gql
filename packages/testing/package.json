@@ -12,15 +12,14 @@
   "devDependencies": {
     "@graphql-codegen/cli": "^2.2.2",
     "@graphql-codegen/core": "^2.3.0",
-    "@graphql-codegen/gql-tag-operations-preset": "^1.2.0",
+    "@graphql-codegen/gql-tag-operations-preset": "^1.2.1",
     "@graphql-codegen/typed-document-node": "^2.2.0",
-    "@graphql-codegen/typescript": "^2.3.0",
+    "@graphql-codegen/typescript": "^2.3.1",
     "@graphql-codegen/typescript-operations": "^2.2.0",
     "@graphql-ez/fastify": "^0.9.4",
     "@graphql-ez/fastify-testing": "^0.1.2",
     "@graphql-typed-document-node/core": "^3.1.0",
     "api-base": "workspace:^0.0.1",
-    "db": "workspace:^0.0.1",
-    "graph": "workspace:^0.0.1"
+    "db": "workspace:^0.0.1"
   }
 }

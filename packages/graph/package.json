@@ -7,7 +7,7 @@
   "types": "src/index.ts",
   "scripts": {
     "dev": "graphql-codegen --config codegen.yml --watch",
-    "generate": "(graphql-codegen --config codegen.yml) || exit 0"
+    "generate": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
     "common": "workspace:^0.0.1",
@@ -21,9 +21,9 @@
     "@graphql-codegen/cli": "^2.2.2",
     "@graphql-codegen/core": "^2.3.0",
     "@graphql-codegen/typed-document-node": "^2.2.0",
-    "@graphql-codegen/typescript": "^2.3.0",
+    "@graphql-codegen/typescript": "^2.3.1",
     "@graphql-codegen/typescript-document-nodes": "2.2.0",
     "@graphql-codegen/typescript-operations": "^2.2.0",
-    "@graphql-codegen/typescript-react-query": "^3.1.0"
+    "@graphql-codegen/typescript-react-query": "^3.1.1"
   }
 }
