@@ -23,7 +23,7 @@
     "fastify": "^3.23.0",
     "fastify-cors": "^6.0.2",
     "graphql": "^16.0.1",
-    "graphql-ez": "^0.13.3",
+    "graphql-ez": "^0.13.4",
     "lodash": "^4.17.21",
     "ms": "^3.0.0-canary.1",
     "undici": "^4.9.5",
