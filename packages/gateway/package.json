@@ -9,7 +9,7 @@
   "dependencies": {
     "@graphql-ez/fastify": "^0.9.4",
     "@graphql-ez/plugin-altair": "^0.9.4",
-    "@graphql-ez/plugin-codegen": "^0.7.5",
+    "@graphql-ez/plugin-codegen": "^0.7.6",
     "@graphql-ez/plugin-voyager": "^0.9.0",
     "@graphql-tools/delegate": "^8.4.1",
     "@graphql-tools/stitch": "^8.4.1",
