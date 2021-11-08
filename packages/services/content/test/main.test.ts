@@ -4,21 +4,14 @@ import {
   CreateTopic,
   CreateUser,
   expectDeepEqual,
-  GetTestClient,
   gql,
   prisma,
 } from "testing";
-import { contentModule, domainModule } from "../src/modules/index";
-import { CheckContentCreationRetrieval } from "./test";
+import { CheckContentCreationRetrieval, ContentTestClient } from "./test";
 
 describe("Content service", () => {
   it("Hello World", async () => {
-    const { query } = await GetTestClient({
-      prepare({ registerModule }) {
-        registerModule(contentModule);
-        registerModule(domainModule);
-      },
-    });
+    const { query } = await ContentTestClient();
 
     expectDeepEqual(
       await query(
@@ -37,23 +30,13 @@ describe("Content service", () => {
   });
 
   it("create & retrieve content", async () => {
-    const testClient = await GetTestClient({
-      prepare({ registerModule }) {
-        registerModule(contentModule);
-        registerModule(domainModule);
-      },
-    });
+    const testClient = await ContentTestClient();
 
     await CheckContentCreationRetrieval(testClient);
   });
 
   it("admin authorization", async () => {
-    const { query, mutation } = await GetTestClient({
-      prepare({ registerModule }) {
-        registerModule(contentModule);
-        registerModule(domainModule);
-      },
-    });
+    const { query, mutation } = await ContentTestClient();
 
     {
       const result = await query(
@@ -122,12 +105,7 @@ describe("Content service", () => {
   });
 
   it("user authorization", async () => {
-    const { query } = await GetTestClient({
-      prepare({ registerModule }) {
-        registerModule(contentModule);
-        registerModule(domainModule);
-      },
-    });
+    const { query } = await ContentTestClient();
 
     withoutUser: {
       const result = await query(

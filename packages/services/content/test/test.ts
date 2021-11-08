@@ -7,10 +7,22 @@ import {
   CreateUser,
   equal,
   expectDeepEqual,
+  GetTestClient,
   gql,
   prisma,
   TestClient,
 } from "testing";
+import { contentModule, domainModule, projectModule } from "../src/modules";
+
+export const ContentTestClient = () => {
+  return GetTestClient({
+    prepare({ registerModule }) {
+      registerModule(contentModule);
+      registerModule(domainModule);
+      registerModule(projectModule);
+    },
+  });
+};
 
 export async function CheckContentCreationRetrieval({
   assertedQuery,

@@ -145,6 +145,27 @@ export type PageInfo = {
   startCursor?: Maybe<Scalars["String"]>;
 };
 
+export type Project = {
+  __typename?: "Project";
+  content: ContentConnection;
+  id: Scalars["IntID"];
+};
+
+export type ProjectContentArgs = {
+  filters?: Maybe<ProjectContentFilter>;
+  pagination: CursorConnectionArgs;
+};
+
+export type ProjectContentFilter = {
+  createdEndDate?: Maybe<Scalars["DateTime"]>;
+  createdStartDate?: Maybe<Scalars["DateTime"]>;
+  kcsIds?: Maybe<Array<Scalars["IntID"]>>;
+  tags?: Maybe<Array<Scalars["String"]>>;
+  topicsIds?: Maybe<Array<Scalars["IntID"]>>;
+  updatedEndDate?: Maybe<Scalars["DateTime"]>;
+  updatedStartDate?: Maybe<Scalars["DateTime"]>;
+};
+
 export type Query = {
   __typename?: "Query";
   adminContent: AdminContentQueries;
@@ -157,6 +178,7 @@ export type Query = {
    */
   contentByCode?: Maybe<Content>;
   hello: Scalars["String"];
+  projects: Array<Project>;
   topics: Array<Topic>;
 };
 
@@ -166,6 +188,10 @@ export type QueryContentArgs = {
 
 export type QueryContentByCodeArgs = {
   code: Scalars["String"];
+};
+
+export type QueryProjectsArgs = {
+  ids: Array<Scalars["IntID"]>;
 };
 
 export type QueryTopicsArgs = {
@@ -317,6 +343,8 @@ export type ResolversTypes = {
   NonNegativeInt: ResolverTypeWrapper<Scalars["NonNegativeInt"]>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
+  Project: ResolverTypeWrapper<Project>;
+  ProjectContentFilter: ProjectContentFilter;
   Query: ResolverTypeWrapper<{}>;
   Subscription: ResolverTypeWrapper<{}>;
   Timestamp: ResolverTypeWrapper<Scalars["Timestamp"]>;
@@ -347,6 +375,8 @@ export type ResolversParentTypes = {
   NonNegativeInt: Scalars["NonNegativeInt"];
   PageInfo: PageInfo;
   Boolean: Scalars["Boolean"];
+  Project: Project;
+  ProjectContentFilter: ProjectContentFilter;
   Query: {};
   Subscription: {};
   Timestamp: Scalars["Timestamp"];
@@ -501,6 +531,20 @@ export type PageInfoResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type ProjectResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Project"] = ResolversParentTypes["Project"]
+> = {
+  content?: Resolver<
+    ResolversTypes["ContentConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<ProjectContentArgs, "pagination">
+  >;
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type QueryResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
@@ -523,6 +567,12 @@ export type QueryResolvers<
     RequireFields<QueryContentByCodeArgs, "code">
   >;
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  projects?: Resolver<
+    Array<ResolversTypes["Project"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryProjectsArgs, "ids">
+  >;
   topics?: Resolver<
     Array<ResolversTypes["Topic"]>,
     ParentType,
@@ -581,6 +631,7 @@ export type Resolvers<ContextType = EZContext> = {
   Node?: NodeResolvers<ContextType>;
   NonNegativeInt?: GraphQLScalarType;
   PageInfo?: PageInfoResolvers<ContextType>;
+  Project?: ProjectResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
   Timestamp?: GraphQLScalarType;

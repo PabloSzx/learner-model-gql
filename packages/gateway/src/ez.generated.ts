@@ -498,6 +498,7 @@ export type Project = {
   __typename?: "Project";
   actions: ActionsConnection;
   code: Scalars["String"];
+  content: ContentConnection;
   createdAt: Scalars["DateTime"];
   domains: Array<Domain>;
   id: Scalars["IntID"];
@@ -511,6 +512,11 @@ export type ProjectActionsArgs = {
   pagination: CursorConnectionArgs;
 };
 
+export type ProjectContentArgs = {
+  filters?: Maybe<ProjectContentFilter>;
+  pagination: CursorConnectionArgs;
+};
+
 export type ProjectActionsFilter = {
   content?: Maybe<Array<Scalars["IntID"]>>;
   endDate?: Maybe<Scalars["DateTime"]>;
@@ -519,6 +525,16 @@ export type ProjectActionsFilter = {
   topics?: Maybe<Array<Scalars["IntID"]>>;
   users?: Maybe<Array<Scalars["IntID"]>>;
   verbNames?: Maybe<Array<Scalars["String"]>>;
+};
+
+export type ProjectContentFilter = {
+  createdEndDate?: Maybe<Scalars["DateTime"]>;
+  createdStartDate?: Maybe<Scalars["DateTime"]>;
+  kcsIds?: Maybe<Array<Scalars["IntID"]>>;
+  tags?: Maybe<Array<Scalars["String"]>>;
+  topicsIds?: Maybe<Array<Scalars["IntID"]>>;
+  updatedEndDate?: Maybe<Scalars["DateTime"]>;
+  updatedStartDate?: Maybe<Scalars["DateTime"]>;
 };
 
 export type ProjectsConnection = Connection & {
@@ -882,6 +898,7 @@ export type ResolversTypes = {
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Project: ResolverTypeWrapper<Project>;
   ProjectActionsFilter: ProjectActionsFilter;
+  ProjectContentFilter: ProjectContentFilter;
   ProjectsConnection: ResolverTypeWrapper<ProjectsConnection>;
   Query: ResolverTypeWrapper<{}>;
   Subscription: ResolverTypeWrapper<{}>;
@@ -968,6 +985,7 @@ export type ResolversParentTypes = {
   PageInfo: PageInfo;
   Project: Project;
   ProjectActionsFilter: ProjectActionsFilter;
+  ProjectContentFilter: ProjectContentFilter;
   ProjectsConnection: ProjectsConnection;
   Query: {};
   Subscription: {};
@@ -1523,6 +1541,12 @@ export type ProjectResolvers<
     RequireFields<ProjectActionsArgs, "pagination">
   >;
   code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  content?: Resolver<
+    ResolversTypes["ContentConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<ProjectContentArgs, "pagination">
+  >;
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   domains?: Resolver<Array<ResolversTypes["Domain"]>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;

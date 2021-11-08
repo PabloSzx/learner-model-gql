@@ -370,6 +370,10 @@ type Project {
     pagination: CursorConnectionArgs!
   ): ActionsConnection!
   code: String!
+  content(
+    filters: ProjectContentFilter
+    pagination: CursorConnectionArgs!
+  ): ContentConnection!
   createdAt: DateTime!
   domains: [Domain!]!
   id: IntID!
@@ -386,6 +390,16 @@ input ProjectActionsFilter {
   topics: [IntID!]
   users: [IntID!]
   verbNames: [String!]
+}
+
+input ProjectContentFilter {
+  createdEndDate: DateTime
+  createdStartDate: DateTime
+  kcsIds: [IntID!]
+  tags: [String!]
+  topicsIds: [IntID!]
+  updatedEndDate: DateTime
+  updatedStartDate: DateTime
 }
 
 type ProjectsConnection implements Connection {
