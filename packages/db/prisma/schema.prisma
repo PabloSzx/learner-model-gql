@@ -130,6 +130,8 @@ model Topic {
 
   sortIndex Int?
 
+  tags String[]
+
   project   Project @relation(fields: [projectId], references: [id])
   projectId Int
 

@@ -83,6 +83,7 @@ Table Topic {
   code String [unique, not null]
   label String [not null]
   sortIndex Int
+  tags String [not null]
   project Project [not null]
   projectId Int [not null]
   parent Topic
