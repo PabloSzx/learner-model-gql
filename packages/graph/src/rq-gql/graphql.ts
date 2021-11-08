@@ -525,6 +525,13 @@ export type Query = {
   adminProjects: AdminProjectsQueries;
   adminUsers: AdminUserQueries;
   content: Array<Content>;
+  /**
+   * Get specified content by "code".
+   *
+   * - If user is not authenticated it throws.
+   * - If authenticated user has no permissions on the specified project it returns NULL.
+   */
+  contentByCode?: Maybe<Content>;
   currentUser?: Maybe<User>;
   domains: Array<Domain>;
   groups: Array<Group>;
@@ -546,6 +553,10 @@ export type Query = {
 
 export type QueryContentArgs = {
   ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryContentByCodeArgs = {
+  code: Scalars["String"];
 };
 
 export type QueryDomainsArgs = {

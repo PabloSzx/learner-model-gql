@@ -98,6 +98,13 @@ export const contentModule = registerModule(
     extend type Query {
       adminContent: AdminContentQueries!
       content(ids: [IntID!]!): [Content!]!
+      """
+      Get specified content by "code".
+
+      - If user is not authenticated it throws.
+      - If authenticated user has no permissions on the specified project it returns NULL.
+      """
+      contentByCode(code: String!): Content
     }
     extend type Mutation {
       adminContent: AdminContentMutations!
@@ -272,6 +279,14 @@ export const contentModule = registerModule(
             }),
             ids
           );
+        },
+        async contentByCode(_root, { code }, { prisma, authorization }) {
+          return prisma.content.findFirst({
+            where: {
+              code,
+              project: await authorization.expectProjectsIdInPrismaFilter,
+            },
+          });
         },
       },
       Mutation: {

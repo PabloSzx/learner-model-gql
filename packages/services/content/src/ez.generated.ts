@@ -149,12 +149,23 @@ export type Query = {
   __typename?: "Query";
   adminContent: AdminContentQueries;
   content: Array<Content>;
+  /**
+   * Get specified content by "code".
+   *
+   * - If user is not authenticated it throws.
+   * - If authenticated user has no permissions on the specified project it returns NULL.
+   */
+  contentByCode?: Maybe<Content>;
   hello: Scalars["String"];
   topics: Array<Topic>;
 };
 
 export type QueryContentArgs = {
   ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryContentByCodeArgs = {
+  code: Scalars["String"];
 };
 
 export type QueryTopicsArgs = {
@@ -504,6 +515,12 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     RequireFields<QueryContentArgs, "ids">
+  >;
+  contentByCode?: Resolver<
+    Maybe<ResolversTypes["Content"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryContentByCodeArgs, "code">
   >;
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   topics?: Resolver<

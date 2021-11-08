@@ -403,6 +403,13 @@ type Query {
   adminProjects: AdminProjectsQueries!
   adminUsers: AdminUserQueries!
   content(ids: [IntID!]!): [Content!]!
+  """
+  Get specified content by "code".
+
+  - If user is not authenticated it throws.
+  - If authenticated user has no permissions on the specified project it returns NULL.
+  """
+  contentByCode(code: String!): Content
   currentUser: User
   domains(ids: [IntID!]!): [Domain!]!
   groups(ids: [IntID!]!): [Group!]!
