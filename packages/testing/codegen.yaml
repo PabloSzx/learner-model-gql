@@ -20,6 +20,7 @@ generates:
         IntID: "string"
         Latitude: "number"
         Longitude: "number"
+        JSON: "unknown"
 hooks:
   afterAllFileWrite:
     - node after-codegen-write.mjs

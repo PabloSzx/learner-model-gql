@@ -164,14 +164,16 @@ Table Content {
 }
 
 Table ModelStateType {
-  name String [pk, unique]
+  id Int [pk, increment]
+  name String [unique, not null]
   states ModelState [not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [default: `now()`, not null]
 }
 
 Table ModelStateCreator {
-  name String [pk, unique]
+  id Int [pk, increment]
+  name String [unique, not null]
   states ModelState [not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [default: `now()`, not null]

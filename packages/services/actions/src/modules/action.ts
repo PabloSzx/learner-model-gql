@@ -117,11 +117,6 @@ export const actionModule = registerModule(
       endDate: DateTime
     }
 
-    enum ORDER_BY {
-      ASC
-      DESC
-    }
-
     input AdminActionsOrderBy {
       id: ORDER_BY = DESC
     }

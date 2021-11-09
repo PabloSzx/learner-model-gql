@@ -1,19 +1,21 @@
 -- CreateTable
 CREATE TABLE "ModelStateType" (
+    "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "ModelStateType_pkey" PRIMARY KEY ("name")
+    CONSTRAINT "ModelStateType_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "ModelStateCreator" (
+    "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "ModelStateCreator_pkey" PRIMARY KEY ("name")
+    CONSTRAINT "ModelStateCreator_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable

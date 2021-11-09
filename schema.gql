@@ -138,6 +138,16 @@ type AdminProjectsQueries {
   allProjects(pagination: CursorConnectionArgs!): ProjectsConnection!
 }
 
+type AdminStateQueries {
+  allModelStateCreators(
+    pagination: CursorConnectionArgs!
+  ): ModelStateCreatorConnection!
+  allModelStateTypes(
+    pagination: CursorConnectionArgs!
+  ): ModelStateTypeConnection!
+  allModelStates(input: ModelStateConnectionInput!): ModelStateConnection!
+}
+
 input AdminTopicsFilter {
   projects: [IntID!]
 }
@@ -267,6 +277,7 @@ type Domain {
   id: IntID!
   kcs: [KC!]!
   label: String!
+  modelStates(input: ModelStateConnectionInput!): ModelStateConnection!
   projects: [Project!]!
   updatedAt: DateTime!
 }
@@ -316,6 +327,11 @@ ID that parses as non-negative integer, serializes to string, and can be passed 
 scalar IntID
 
 """
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+"""
 The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
 scalar JSONObject
@@ -332,6 +348,61 @@ type KC {
 
 type KCsConnection implements Connection {
   nodes: [KC!]!
+  pageInfo: PageInfo!
+}
+
+type ModelState {
+  createdAt: DateTime!
+  creator: String!
+  domain: Domain!
+  id: IntID!
+  json: JSON!
+  type: String
+  updatedAt: DateTime!
+  user: User!
+}
+
+type ModelStateConnection implements Connection {
+  nodes: [ModelState!]!
+  pageInfo: PageInfo!
+}
+
+input ModelStateConnectionInput {
+  filters: ModelStateFilter
+  orderBy: ModelStateOrderBy
+  pagination: CursorConnectionArgs!
+}
+
+type ModelStateCreator {
+  createdAt: DateTime!
+  id: IntID!
+  name: String!
+  updatedAt: DateTime!
+}
+
+type ModelStateCreatorConnection implements Connection {
+  nodes: [ModelStateCreator!]!
+  pageInfo: PageInfo!
+}
+
+input ModelStateFilter {
+  creators: [String!]
+  type: [String!]
+}
+
+input ModelStateOrderBy {
+  id: ORDER_BY = DESC
+}
+
+type ModelStateType {
+  createdAt: DateTime!
+  id: IntID!
+  name: String!
+  updatedAt: DateTime!
+}
+
+type ModelStateTypeConnection implements Connection {
+  nodes: [ModelStateType!]!
   pageInfo: PageInfo!
 }
 
@@ -416,6 +487,7 @@ type Query {
   [ADMIN] Project related administration queries
   """
   adminProjects: AdminProjectsQueries!
+  adminState: AdminStateQueries!
   adminUsers: AdminUserQueries!
   content(ids: [IntID!]!): [Content!]!
   """
@@ -429,7 +501,6 @@ type Query {
   domains(ids: [IntID!]!): [Domain!]!
   groups(ids: [IntID!]!): [Group!]!
   hello: String!
-  hello2: String!
   kcs(ids: [IntID!]!): [KC!]!
   """
   Get specified project by either "id" or "code".
@@ -549,6 +620,7 @@ type User {
   id: IntID!
   lastOnline: DateTime
   locked: Boolean!
+  modelStates(input: ModelStateConnectionInput!): ModelStateConnection!
   name: String
   picture: String
   projects: [Project!]!

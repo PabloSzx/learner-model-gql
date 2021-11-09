@@ -23,6 +23,8 @@ export type Scalars = {
   EmailAddress: string;
   /** ID that parses as non-negative integer, serializes to string, and can be passed as string or number */
   IntID: string;
+  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSON: unknown;
   /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSONObject: Record<string, unknown>;
   /** Integers that will have a value of 0 or more. */
@@ -238,6 +240,25 @@ export type AdminProjectsQueriesAllProjectsArgs = {
   pagination: CursorConnectionArgs;
 };
 
+export type AdminStateQueries = {
+  __typename?: "AdminStateQueries";
+  allModelStateCreators: ModelStateCreatorConnection;
+  allModelStateTypes: ModelStateTypeConnection;
+  allModelStates: ModelStateConnection;
+};
+
+export type AdminStateQueriesAllModelStateCreatorsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminStateQueriesAllModelStateTypesArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminStateQueriesAllModelStatesArgs = {
+  input: ModelStateConnectionInput;
+};
+
 export type AdminTopicsFilter = {
   projects?: Maybe<Array<Scalars["IntID"]>>;
 };
@@ -393,8 +414,13 @@ export type Domain = {
   id: Scalars["IntID"];
   kcs: Array<Kc>;
   label: Scalars["String"];
+  modelStates: ModelStateConnection;
   projects: Array<Project>;
   updatedAt: Scalars["DateTime"];
+};
+
+export type DomainModelStatesArgs = {
+  input: ModelStateConnectionInput;
 };
 
 export type DomainsConnection = Connection & {
@@ -449,6 +475,67 @@ export type Kc = {
 export type KCsConnection = Connection & {
   __typename?: "KCsConnection";
   nodes: Array<Kc>;
+  pageInfo: PageInfo;
+};
+
+export type ModelState = {
+  __typename?: "ModelState";
+  createdAt: Scalars["DateTime"];
+  creator: Scalars["String"];
+  domain: Domain;
+  id: Scalars["IntID"];
+  json: Scalars["JSON"];
+  type?: Maybe<Scalars["String"]>;
+  updatedAt: Scalars["DateTime"];
+  user: User;
+};
+
+export type ModelStateConnection = Connection & {
+  __typename?: "ModelStateConnection";
+  nodes: Array<ModelState>;
+  pageInfo: PageInfo;
+};
+
+export type ModelStateConnectionInput = {
+  filters?: Maybe<ModelStateFilter>;
+  orderBy?: Maybe<ModelStateOrderBy>;
+  pagination: CursorConnectionArgs;
+};
+
+export type ModelStateCreator = {
+  __typename?: "ModelStateCreator";
+  createdAt: Scalars["DateTime"];
+  id: Scalars["IntID"];
+  name: Scalars["String"];
+  updatedAt: Scalars["DateTime"];
+};
+
+export type ModelStateCreatorConnection = Connection & {
+  __typename?: "ModelStateCreatorConnection";
+  nodes: Array<ModelStateCreator>;
+  pageInfo: PageInfo;
+};
+
+export type ModelStateFilter = {
+  creators?: Maybe<Array<Scalars["String"]>>;
+  type?: Maybe<Array<Scalars["String"]>>;
+};
+
+export type ModelStateOrderBy = {
+  id?: Maybe<Order_By>;
+};
+
+export type ModelStateType = {
+  __typename?: "ModelStateType";
+  createdAt: Scalars["DateTime"];
+  id: Scalars["IntID"];
+  name: Scalars["String"];
+  updatedAt: Scalars["DateTime"];
+};
+
+export type ModelStateTypeConnection = Connection & {
+  __typename?: "ModelStateTypeConnection";
+  nodes: Array<ModelStateType>;
   pageInfo: PageInfo;
 };
 
@@ -540,6 +627,7 @@ export type Query = {
   adminDomain: AdminDomainQueries;
   /** [ADMIN] Project related administration queries */
   adminProjects: AdminProjectsQueries;
+  adminState: AdminStateQueries;
   adminUsers: AdminUserQueries;
   content: Array<Content>;
   /**
@@ -553,7 +641,6 @@ export type Query = {
   domains: Array<Domain>;
   groups: Array<Group>;
   hello: Scalars["String"];
-  hello2: Scalars["String"];
   kcs: Array<Kc>;
   /**
    * Get specified project by either "id" or "code".
@@ -708,6 +795,7 @@ export type User = {
   id: Scalars["IntID"];
   lastOnline?: Maybe<Scalars["DateTime"]>;
   locked: Scalars["Boolean"];
+  modelStates: ModelStateConnection;
   name?: Maybe<Scalars["String"]>;
   picture?: Maybe<Scalars["String"]>;
   projects: Array<Project>;
@@ -715,6 +803,10 @@ export type User = {
   role: UserRole;
   tags: Array<Scalars["String"]>;
   updatedAt: Scalars["DateTime"];
+};
+
+export type UserModelStatesArgs = {
+  input: ModelStateConnectionInput;
 };
 
 export const UserRole = {

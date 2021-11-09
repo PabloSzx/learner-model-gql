@@ -22,6 +22,9 @@ export type ResolverFn<TResult, TParent, TContext, TArgs> = (
 ) =>
   | Promise<import("graphql-ez").DeepPartial<TResult>>
   | import("graphql-ez").DeepPartial<TResult>;
+export type RequireFields<T, K extends keyof T> = {
+  [X in Exclude<keyof T, K>]?: T[X];
+} & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -35,6 +38,8 @@ export type Scalars = {
   EmailAddress: string;
   /** ID that parses as non-negative integer, serializes to string, and can be passed as string or number */
   IntID: number;
+  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSON: unknown;
   /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSONObject: any;
   /** Integers that will have a value of 0 or more. */
@@ -45,6 +50,25 @@ export type Scalars = {
   URL: string;
   /** Represents NULL values */
   Void: unknown;
+};
+
+export type AdminStateQueries = {
+  __typename?: "AdminStateQueries";
+  allModelStateCreators: ModelStateCreatorConnection;
+  allModelStateTypes: ModelStateTypeConnection;
+  allModelStates: ModelStateConnection;
+};
+
+export type AdminStateQueriesAllModelStateCreatorsArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminStateQueriesAllModelStateTypesArgs = {
+  pagination: CursorConnectionArgs;
+};
+
+export type AdminStateQueriesAllModelStatesArgs = {
+  input: ModelStateConnectionInput;
 };
 
 export type Connection = {
@@ -58,6 +82,77 @@ export type CursorConnectionArgs = {
   last?: Maybe<Scalars["NonNegativeInt"]>;
 };
 
+export type Domain = {
+  __typename?: "Domain";
+  id: Scalars["IntID"];
+  modelStates: ModelStateConnection;
+};
+
+export type DomainModelStatesArgs = {
+  input: ModelStateConnectionInput;
+};
+
+export type ModelState = {
+  __typename?: "ModelState";
+  createdAt: Scalars["DateTime"];
+  creator: Scalars["String"];
+  domain: Domain;
+  id: Scalars["IntID"];
+  json: Scalars["JSON"];
+  type?: Maybe<Scalars["String"]>;
+  updatedAt: Scalars["DateTime"];
+  user: User;
+};
+
+export type ModelStateConnection = Connection & {
+  __typename?: "ModelStateConnection";
+  nodes: Array<ModelState>;
+  pageInfo: PageInfo;
+};
+
+export type ModelStateConnectionInput = {
+  filters?: Maybe<ModelStateFilter>;
+  orderBy?: Maybe<ModelStateOrderBy>;
+  pagination: CursorConnectionArgs;
+};
+
+export type ModelStateCreator = {
+  __typename?: "ModelStateCreator";
+  createdAt: Scalars["DateTime"];
+  id: Scalars["IntID"];
+  name: Scalars["String"];
+  updatedAt: Scalars["DateTime"];
+};
+
+export type ModelStateCreatorConnection = Connection & {
+  __typename?: "ModelStateCreatorConnection";
+  nodes: Array<ModelStateCreator>;
+  pageInfo: PageInfo;
+};
+
+export type ModelStateFilter = {
+  creators?: Maybe<Array<Scalars["String"]>>;
+  type?: Maybe<Array<Scalars["String"]>>;
+};
+
+export type ModelStateOrderBy = {
+  id?: Maybe<Order_By>;
+};
+
+export type ModelStateType = {
+  __typename?: "ModelStateType";
+  createdAt: Scalars["DateTime"];
+  id: Scalars["IntID"];
+  name: Scalars["String"];
+  updatedAt: Scalars["DateTime"];
+};
+
+export type ModelStateTypeConnection = Connection & {
+  __typename?: "ModelStateTypeConnection";
+  nodes: Array<ModelStateType>;
+  pageInfo: PageInfo;
+};
+
 export type Mutation = {
   __typename?: "Mutation";
   hello: Scalars["String"];
@@ -66,6 +161,8 @@ export type Mutation = {
 export type Node = {
   id: Scalars["IntID"];
 };
+
+export type Order_By = "ASC" | "DESC";
 
 export type PageInfo = {
   __typename?: "PageInfo";
@@ -77,13 +174,33 @@ export type PageInfo = {
 
 export type Query = {
   __typename?: "Query";
+  adminState: AdminStateQueries;
+  domains: Array<Domain>;
   hello: Scalars["String"];
-  hello2: Scalars["String"];
+  users: Array<User>;
+};
+
+export type QueryDomainsArgs = {
+  ids: Array<Scalars["IntID"]>;
+};
+
+export type QueryUsersArgs = {
+  ids: Array<Scalars["IntID"]>;
 };
 
 export type Subscription = {
   __typename?: "Subscription";
   hello: Scalars["String"];
+};
+
+export type User = {
+  __typename?: "User";
+  id: Scalars["IntID"];
+  modelStates: ModelStateConnection;
+};
+
+export type UserModelStatesArgs = {
+  input: ModelStateConnectionInput;
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -186,35 +303,67 @@ export type DirectiveResolverFn<
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Connection: never;
+  AdminStateQueries: ResolverTypeWrapper<AdminStateQueries>;
+  Connection:
+    | ResolversTypes["ModelStateConnection"]
+    | ResolversTypes["ModelStateCreatorConnection"]
+    | ResolversTypes["ModelStateTypeConnection"];
   CursorConnectionArgs: CursorConnectionArgs;
   DateTime: ResolverTypeWrapper<Scalars["DateTime"]>;
+  Domain: ResolverTypeWrapper<Domain>;
   EmailAddress: ResolverTypeWrapper<Scalars["EmailAddress"]>;
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
+  JSON: ResolverTypeWrapper<Scalars["JSON"]>;
   JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
-  Mutation: ResolverTypeWrapper<{}>;
+  ModelState: ResolverTypeWrapper<ModelState>;
   String: ResolverTypeWrapper<Scalars["String"]>;
+  ModelStateConnection: ResolverTypeWrapper<ModelStateConnection>;
+  ModelStateConnectionInput: ModelStateConnectionInput;
+  ModelStateCreator: ResolverTypeWrapper<ModelStateCreator>;
+  ModelStateCreatorConnection: ResolverTypeWrapper<ModelStateCreatorConnection>;
+  ModelStateFilter: ModelStateFilter;
+  ModelStateOrderBy: ModelStateOrderBy;
+  ModelStateType: ResolverTypeWrapper<ModelStateType>;
+  ModelStateTypeConnection: ResolverTypeWrapper<ModelStateTypeConnection>;
+  Mutation: ResolverTypeWrapper<{}>;
   Node: never;
   NonNegativeInt: ResolverTypeWrapper<Scalars["NonNegativeInt"]>;
+  ORDER_BY: Order_By;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   Query: ResolverTypeWrapper<{}>;
   Subscription: ResolverTypeWrapper<{}>;
   Timestamp: ResolverTypeWrapper<Scalars["Timestamp"]>;
   URL: ResolverTypeWrapper<Scalars["URL"]>;
+  User: ResolverTypeWrapper<User>;
   Void: ResolverTypeWrapper<Scalars["Void"]>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Connection: never;
+  AdminStateQueries: AdminStateQueries;
+  Connection:
+    | ResolversParentTypes["ModelStateConnection"]
+    | ResolversParentTypes["ModelStateCreatorConnection"]
+    | ResolversParentTypes["ModelStateTypeConnection"];
   CursorConnectionArgs: CursorConnectionArgs;
   DateTime: Scalars["DateTime"];
+  Domain: Domain;
   EmailAddress: Scalars["EmailAddress"];
   IntID: Scalars["IntID"];
+  JSON: Scalars["JSON"];
   JSONObject: Scalars["JSONObject"];
-  Mutation: {};
+  ModelState: ModelState;
   String: Scalars["String"];
+  ModelStateConnection: ModelStateConnection;
+  ModelStateConnectionInput: ModelStateConnectionInput;
+  ModelStateCreator: ModelStateCreator;
+  ModelStateCreatorConnection: ModelStateCreatorConnection;
+  ModelStateFilter: ModelStateFilter;
+  ModelStateOrderBy: ModelStateOrderBy;
+  ModelStateType: ModelStateType;
+  ModelStateTypeConnection: ModelStateTypeConnection;
+  Mutation: {};
   Node: never;
   NonNegativeInt: Scalars["NonNegativeInt"];
   PageInfo: PageInfo;
@@ -223,14 +372,46 @@ export type ResolversParentTypes = {
   Subscription: {};
   Timestamp: Scalars["Timestamp"];
   URL: Scalars["URL"];
+  User: User;
   Void: Scalars["Void"];
+};
+
+export type AdminStateQueriesResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["AdminStateQueries"] = ResolversParentTypes["AdminStateQueries"]
+> = {
+  allModelStateCreators?: Resolver<
+    ResolversTypes["ModelStateCreatorConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminStateQueriesAllModelStateCreatorsArgs, "pagination">
+  >;
+  allModelStateTypes?: Resolver<
+    ResolversTypes["ModelStateTypeConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminStateQueriesAllModelStateTypesArgs, "pagination">
+  >;
+  allModelStates?: Resolver<
+    ResolversTypes["ModelStateConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminStateQueriesAllModelStatesArgs, "input">
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type ConnectionResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Connection"] = ResolversParentTypes["Connection"]
 > = {
-  __resolveType: TypeResolveFn<null, ParentType, ContextType>;
+  __resolveType: TypeResolveFn<
+    | "ModelStateConnection"
+    | "ModelStateCreatorConnection"
+    | "ModelStateTypeConnection",
+    ParentType,
+    ContextType
+  >;
   pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
 };
 
@@ -238,6 +419,20 @@ export interface DateTimeScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["DateTime"], any> {
   name: "DateTime";
 }
+
+export type DomainResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Domain"] = ResolversParentTypes["Domain"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  modelStates?: Resolver<
+    ResolversTypes["ModelStateConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<DomainModelStatesArgs, "input">
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
 
 export interface EmailAddressScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["EmailAddress"], any> {
@@ -249,10 +444,91 @@ export interface IntIdScalarConfig
   name: "IntID";
 }
 
+export interface JsonScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["JSON"], any> {
+  name: "JSON";
+}
+
 export interface JsonObjectScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["JSONObject"], any> {
   name: "JSONObject";
 }
+
+export type ModelStateResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["ModelState"] = ResolversParentTypes["ModelState"]
+> = {
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  creator?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  json?: Resolver<ResolversTypes["JSON"], ParentType, ContextType>;
+  type?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModelStateConnectionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["ModelStateConnection"] = ResolversParentTypes["ModelStateConnection"]
+> = {
+  nodes?: Resolver<
+    Array<ResolversTypes["ModelState"]>,
+    ParentType,
+    ContextType
+  >;
+  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModelStateCreatorResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["ModelStateCreator"] = ResolversParentTypes["ModelStateCreator"]
+> = {
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModelStateCreatorConnectionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["ModelStateCreatorConnection"] = ResolversParentTypes["ModelStateCreatorConnection"]
+> = {
+  nodes?: Resolver<
+    Array<ResolversTypes["ModelStateCreator"]>,
+    ParentType,
+    ContextType
+  >;
+  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModelStateTypeResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["ModelStateType"] = ResolversParentTypes["ModelStateType"]
+> = {
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModelStateTypeConnectionResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["ModelStateTypeConnection"] = ResolversParentTypes["ModelStateTypeConnection"]
+> = {
+  nodes?: Resolver<
+    Array<ResolversTypes["ModelStateType"]>,
+    ParentType,
+    ContextType
+  >;
+  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
 
 export type MutationResolvers<
   ContextType = EZContext,
@@ -301,8 +577,24 @@ export type QueryResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = {
+  adminState?: Resolver<
+    ResolversTypes["AdminStateQueries"],
+    ParentType,
+    ContextType
+  >;
+  domains?: Resolver<
+    Array<ResolversTypes["Domain"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryDomainsArgs, "ids">
+  >;
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  hello2?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  users?: Resolver<
+    Array<ResolversTypes["User"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryUsersArgs, "ids">
+  >;
 };
 
 export type SubscriptionResolvers<
@@ -327,17 +619,40 @@ export interface UrlScalarConfig
   name: "URL";
 }
 
+export type UserResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  modelStates?: Resolver<
+    ResolversTypes["ModelStateConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<UserModelStatesArgs, "input">
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export interface VoidScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["Void"], any> {
   name: "Void";
 }
 
 export type Resolvers<ContextType = EZContext> = {
+  AdminStateQueries?: AdminStateQueriesResolvers<ContextType>;
   Connection?: ConnectionResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
+  Domain?: DomainResolvers<ContextType>;
   EmailAddress?: GraphQLScalarType;
   IntID?: GraphQLScalarType;
+  JSON?: GraphQLScalarType;
   JSONObject?: GraphQLScalarType;
+  ModelState?: ModelStateResolvers<ContextType>;
+  ModelStateConnection?: ModelStateConnectionResolvers<ContextType>;
+  ModelStateCreator?: ModelStateCreatorResolvers<ContextType>;
+  ModelStateCreatorConnection?: ModelStateCreatorConnectionResolvers<ContextType>;
+  ModelStateType?: ModelStateTypeResolvers<ContextType>;
+  ModelStateTypeConnection?: ModelStateTypeConnectionResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Node?: NodeResolvers<ContextType>;
   NonNegativeInt?: GraphQLScalarType;
@@ -346,6 +661,7 @@ export type Resolvers<ContextType = EZContext> = {
   Subscription?: SubscriptionResolvers<ContextType>;
   Timestamp?: GraphQLScalarType;
   URL?: GraphQLScalarType;
+  User?: UserResolvers<ContextType>;
   Void?: GraphQLScalarType;
 };
 

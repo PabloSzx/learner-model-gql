@@ -38,6 +38,8 @@ export type Scalars = {
   EmailAddress: string;
   /** ID that parses as non-negative integer, serializes to string, and can be passed as string or number */
   IntID: number;
+  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSON: unknown;
   /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSONObject: any;
   /** Integers that will have a value of 0 or more. */
@@ -171,6 +173,8 @@ export type Mutation = {
 export type Node = {
   id: Scalars["IntID"];
 };
+
+export type Order_By = "ASC" | "DESC";
 
 export type PageInfo = {
   __typename?: "PageInfo";
@@ -364,10 +368,12 @@ export type ResolversTypes = {
   GroupFlagsInput: GroupFlagsInput;
   GroupsConnection: ResolverTypeWrapper<GroupsConnection>;
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
+  JSON: ResolverTypeWrapper<Scalars["JSON"]>;
   JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
   Mutation: ResolverTypeWrapper<{}>;
   Node: never;
   NonNegativeInt: ResolverTypeWrapper<Scalars["NonNegativeInt"]>;
+  ORDER_BY: Order_By;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Query: ResolverTypeWrapper<{}>;
   Subscription: ResolverTypeWrapper<{}>;
@@ -401,6 +407,7 @@ export type ResolversParentTypes = {
   GroupFlagsInput: GroupFlagsInput;
   GroupsConnection: GroupsConnection;
   IntID: Scalars["IntID"];
+  JSON: Scalars["JSON"];
   JSONObject: Scalars["JSONObject"];
   Mutation: {};
   Node: never;
@@ -557,6 +564,11 @@ export type GroupsConnectionResolvers<
 export interface IntIdScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["IntID"], any> {
   name: "IntID";
+}
+
+export interface JsonScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["JSON"], any> {
+  name: "JSON";
 }
 
 export interface JsonObjectScalarConfig
@@ -716,6 +728,7 @@ export type Resolvers<ContextType = EZContext> = {
   GroupFlags?: GroupFlagsResolvers<ContextType>;
   GroupsConnection?: GroupsConnectionResolvers<ContextType>;
   IntID?: GraphQLScalarType;
+  JSON?: GraphQLScalarType;
   JSONObject?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
   Node?: NodeResolvers<ContextType>;

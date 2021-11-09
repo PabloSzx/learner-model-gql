@@ -38,6 +38,8 @@ export type Scalars = {
   EmailAddress: string;
   /** ID that parses as non-negative integer, serializes to string, and can be passed as string or number */
   IntID: number;
+  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSON: unknown;
   /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSONObject: any;
   /** Integers that will have a value of 0 or more. */
@@ -349,6 +351,7 @@ export type ResolversTypes = {
   Domain: ResolverTypeWrapper<Domain>;
   EmailAddress: ResolverTypeWrapper<Scalars["EmailAddress"]>;
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
+  JSON: ResolverTypeWrapper<Scalars["JSON"]>;
   JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
   KC: ResolverTypeWrapper<Kc>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -390,6 +393,7 @@ export type ResolversParentTypes = {
   Domain: Domain;
   EmailAddress: Scalars["EmailAddress"];
   IntID: Scalars["IntID"];
+  JSON: Scalars["JSON"];
   JSONObject: Scalars["JSONObject"];
   KC: Kc;
   Mutation: {};
@@ -524,6 +528,11 @@ export interface EmailAddressScalarConfig
 export interface IntIdScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["IntID"], any> {
   name: "IntID";
+}
+
+export interface JsonScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["JSON"], any> {
+  name: "JSON";
 }
 
 export interface JsonObjectScalarConfig
@@ -675,6 +684,7 @@ export type Resolvers<ContextType = EZContext> = {
   Domain?: DomainResolvers<ContextType>;
   EmailAddress?: GraphQLScalarType;
   IntID?: GraphQLScalarType;
+  JSON?: GraphQLScalarType;
   JSONObject?: GraphQLScalarType;
   KC?: KcResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;

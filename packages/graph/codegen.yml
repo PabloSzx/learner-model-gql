@@ -21,6 +21,7 @@ generates:
         IntID: "string"
         Latitude: "number"
         Longitude: "number"
+        JSON: "unknown"
 
 hooks:
   afterAllFileWrite:

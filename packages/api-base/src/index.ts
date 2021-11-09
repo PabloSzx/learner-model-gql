@@ -16,8 +16,9 @@ import { GetDBUser, prisma, pubSub } from "db";
 import { lexicographicSortSchema } from "graphql";
 import { AltairIDEOptions } from "./altair";
 import { Auth0Verify, Authorization, GetAuth0User } from "./auth";
-import { ConnectionTypes } from "./connection";
+import { ConnectionTypes, ResolveCursorConnection } from "./connection";
 import { IntID } from "./customScalars";
+import { getNodeIdList, getIdsIntersection } from "./utils";
 
 export * from "@graphql-ez/fastify";
 export * from "common-api";
@@ -45,6 +46,9 @@ async function buildContext({ fastify }: BuildContextArgs) {
     prisma,
     authorization,
     pubSub,
+    ResolveCursorConnection,
+    getNodeIdList,
+    getIdsIntersection,
   };
 }
 
@@ -63,6 +67,7 @@ export const codegenOptions: CodegenOptions = {
       Void: "unknown",
       URL: "string",
       EmailAddress: "string",
+      JSON: "unknown",
     },
     deepPartialResolvers: true,
     enumsAsTypes: true,
@@ -96,6 +101,7 @@ export const ezServicePreset = CreateApp({
           Void: 1,
           URL: 1,
           EmailAddress: 1,
+          JSON: 1,
         },
         {
           IntID,
@@ -122,6 +128,11 @@ export const ezServicePreset = CreateApp({
 
                 type Subscription {
                   hello: String!
+                }
+
+                enum ORDER_BY {
+                  ASC
+                  DESC
                 }
               `,
             ],

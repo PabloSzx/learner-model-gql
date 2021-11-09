@@ -255,7 +255,9 @@ model Content {
 }
 
 model ModelStateType {
-  name String @id @unique
+  id Int @id @default(autoincrement())
+
+  name String @unique
 
   states ModelState[]
 
@@ -264,7 +266,9 @@ model ModelStateType {
 }
 
 model ModelStateCreator {
-  name String @id @unique
+  id Int @id @default(autoincrement())
+
+  name String @unique
 
   states ModelState[]
 

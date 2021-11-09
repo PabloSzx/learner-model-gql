@@ -7,3 +7,5 @@ export const { buildApp, gql, registerModule } = CreateApp({
     preset: ezServicePreset,
   },
 });
+
+export * from "./connection";
