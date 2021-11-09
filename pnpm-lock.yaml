@@ -164,7 +164,7 @@ importers:
       serialize-error: ^8.1.0
       typescript: ^4.4.4
       use-immer: ^0.6.0
-      zustand: ^3.6.4
+      zustand: ^3.6.5
     dependencies:
       '@auth0/auth0-react': 1.8.0_react-dom@17.0.2+react@17.0.2
       '@chakra-ui/react': 1.6.12_efbf0a6edcf78a1aa6126212d44f0ef1
@@ -190,7 +190,7 @@ importers:
       react-use: 17.3.1_react-dom@17.0.2+react@17.0.2
       serialize-error: 8.1.0
       use-immer: 0.6.0_immer@9.0.6+react@17.0.2
-      zustand: 3.6.4_react@17.0.2
+      zustand: 3.6.5_react@17.0.2
     devDependencies:
       '@types/mime': 2.0.3
       '@types/nprogress': 0.2.0
@@ -9410,8 +9410,8 @@ packages:
       readable-stream: 3.6.0
     dev: false
 
-  /zustand/3.6.4_react@17.0.2:
-    resolution: {integrity: sha512-liH2ZaEOSiEaVEl7N0CVzoKYZCQPpibfsIgB2ksrjvfu17WME8Eh7XV/MCi5OQM5AnbuYbLowplR03UP5yrNYw==}
+  /zustand/3.6.5_react@17.0.2:
+    resolution: {integrity: sha512-/WfLJuXiEJimt61KGMHebrFBwckkCHGhAgVXTgPQHl6IMzjqm6MREb1OnDSnCRiSmRdhgdFCctceg6tSm79hiw==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
       react: '>=16.8'
