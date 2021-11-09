@@ -15,6 +15,8 @@ export const domainModule = registerModule(
 
       parent: Topic
 
+      tags: [String!]!
+
       childrens: [Topic!]!
 
       createdAt: DateTime!
@@ -85,6 +87,8 @@ export const domainModule = registerModule(
       code: String!
       label: String!
 
+      tags: [String!]!
+
       parentTopicId: IntID
 
       projectId: IntID!
@@ -99,6 +103,8 @@ export const domainModule = registerModule(
 
       code: String!
       label: String!
+
+      tags: [String!]!
 
       parentTopicId: IntID
 
@@ -167,6 +173,7 @@ export const domainModule = registerModule(
               parentTopicId,
               contentIds,
               sortIndex,
+              tags,
             },
           },
           { prisma }
@@ -192,12 +199,25 @@ export const domainModule = registerModule(
                 connect: contentIds.map((id) => ({ id })),
               },
               sortIndex,
+              tags: {
+                set: tags,
+              },
             },
           });
         },
         async updateTopic(
           _root,
-          { input: { code, label, parentTopicId, id, contentIds, sortIndex } },
+          {
+            input: {
+              code,
+              label,
+              parentTopicId,
+              id,
+              contentIds,
+              sortIndex,
+              tags,
+            },
+          },
           { prisma }
         ) {
           const topic = await prisma.topic.update({
@@ -219,6 +239,9 @@ export const domainModule = registerModule(
                 set: contentIds.map((id) => ({ id })),
               },
               sortIndex,
+              tags: {
+                set: tags,
+              },
             },
           });
 

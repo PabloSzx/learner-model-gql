@@ -283,6 +283,7 @@ export async function CheckTopicsCreationRetrieval({
           label: firstTopicLabel,
           projectId,
           contentIds: [],
+          tags: [],
         },
       },
     }
@@ -323,6 +324,7 @@ export async function CheckTopicsCreationRetrieval({
           projectId,
           parentTopicId: firstTopic.id,
           contentIds: [],
+          tags: [],
         },
       },
     }
@@ -419,6 +421,7 @@ export async function CheckTopicsCreationRetrieval({
             id: firstTopic.id,
             parentTopicId: secondTopic.id,
             contentIds: [],
+            tags: [],
           },
         },
       }
@@ -466,6 +469,7 @@ export async function CheckTopicsCreationRetrieval({
             id: secondTopic.id,
             parentTopicId: null,
             contentIds: [],
+            tags: [],
           },
         },
       }

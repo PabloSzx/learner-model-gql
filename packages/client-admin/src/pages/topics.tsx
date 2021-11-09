@@ -22,6 +22,7 @@ import { CardContent } from "../components/Card/CardContent";
 import { CardHeader } from "../components/Card/CardHeader";
 import { Property } from "../components/Card/Property";
 import { FormModal } from "../components/FormModal";
+import { useTagsSelect } from "../components/TagsSelect";
 import { contentOptionLabel, useSelectMultiContent } from "../hooks/content";
 import { useSelectSingleProject } from "../hooks/projects";
 import {
@@ -82,6 +83,8 @@ export const CreateTopic = () => {
     }, [!selectedProject]),
   });
 
+  const { tagsRef, tagsSelect } = useTagsSelect();
+
   const {
     selectMultiContentComponent,
     selectedContent,
@@ -122,6 +125,7 @@ export const CreateTopic = () => {
             label: labelRef.current.value,
             contentIds: selectedContent.map((v) => v.value),
             parentTopicId: parentTopic.selectedTopic?.value,
+            tags: tagsRef.current?.getValue().map((v) => v.value) || [],
           },
         });
       }}
@@ -148,6 +152,10 @@ export const CreateTopic = () => {
         <FormLabel>Associated Content</FormLabel>
 
         {selectMultiContentComponent}
+      </FormControl>
+      <FormControl id="tags">
+        <FormLabel>Tags</FormLabel>
+        {tagsSelect}
       </FormControl>
       <FormControl id="code" isRequired>
         <FormLabel>Code</FormLabel>
@@ -232,6 +240,13 @@ export const TopicCard = memo(function TopicCard({
     return ids;
   }, [topic]);
 
+  const { tagsSelect, tagsRef } = useTagsSelect({
+    defaultTags: topic.tags,
+    selectProps: {
+      isDisabled: !isEditing,
+    },
+  });
+
   const { selectSingleTopicComponent, produceTopicsFilter } =
     useSelectSingleTopic({
       state: [
@@ -296,6 +311,9 @@ export const TopicCard = memo(function TopicCard({
             isDisabled={isLoading}
             icon={isEditing ? <MdSave /> : <MdEdit />}
             onClick={() => {
+              const tagsRefList =
+                tagsRef.current?.getValue().map((v) => v.value) || [];
+
               if (
                 isEditing &&
                 (topicEdit.code !== topic.code ||
@@ -303,7 +321,8 @@ export const TopicCard = memo(function TopicCard({
                   selectedTopic?.value !== topic.parent?.id ||
                   topicEdit.sortIndex !== topic.sortIndex ||
                   selectedContent.map((v) => v.value).join() !==
-                    topic.content.map((v) => v.id).join())
+                    topic.content.map((v) => v.id).join() ||
+                  topic.tags.join() !== tagsRefList?.join())
               ) {
                 mutateAsync({
                   data: {
@@ -313,6 +332,7 @@ export const TopicCard = memo(function TopicCard({
                     contentIds: selectedContent.map((v) => v.value),
                     parentTopicId: selectedTopic?.value,
                     sortIndex: topicEdit.sortIndex,
+                    tags: tagsRefList,
                   },
                 })
                   .then(() => {
@@ -395,6 +415,7 @@ export const TopicCard = memo(function TopicCard({
           label="createdAt"
           value={formatSpanish(new Date(topic.createdAt), "PPpp O")}
         />
+        <Property label="Tags" value={tagsSelect} />
         <Property
           label="Content"
           value={selectMultiContentComponent}

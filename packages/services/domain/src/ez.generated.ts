@@ -149,6 +149,7 @@ export type CreateTopic = {
   parentTopicId?: Maybe<Scalars["IntID"]>;
   projectId: Scalars["IntID"];
   sortIndex?: Maybe<Scalars["Int"]>;
+  tags: Array<Scalars["String"]>;
 };
 
 export type CursorConnectionArgs = {
@@ -267,6 +268,7 @@ export type Topic = {
   label: Scalars["String"];
   parent?: Maybe<Topic>;
   sortIndex?: Maybe<Scalars["Int"]>;
+  tags: Array<Scalars["String"]>;
   updatedAt: Scalars["DateTime"];
 };
 
@@ -295,6 +297,7 @@ export type UpdateTopic = {
   label: Scalars["String"];
   parentTopicId?: Maybe<Scalars["IntID"]>;
   sortIndex?: Maybe<Scalars["Int"]>;
+  tags: Array<Scalars["String"]>;
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -773,6 +776,7 @@ export type TopicResolvers<
   label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   parent?: Resolver<Maybe<ResolversTypes["Topic"]>, ParentType, ContextType>;
   sortIndex?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  tags?: Resolver<Array<ResolversTypes["String"]>, ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

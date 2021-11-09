@@ -45,6 +45,7 @@ export const AllTopicsBaseDoc = gql(/* GraphQL */ `
             label
             tags
           }
+          tags
           updatedAt
           createdAt
         }

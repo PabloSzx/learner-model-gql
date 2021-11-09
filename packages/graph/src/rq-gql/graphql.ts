@@ -376,6 +376,7 @@ export type CreateTopic = {
   parentTopicId?: Maybe<Scalars["IntID"]>;
   projectId: Scalars["IntID"];
   sortIndex?: Maybe<Scalars["Int"]>;
+  tags: Array<Scalars["String"]>;
 };
 
 export type CursorConnectionArgs = {
@@ -625,6 +626,7 @@ export type Topic = {
   parent?: Maybe<Topic>;
   project: Project;
   sortIndex?: Maybe<Scalars["Int"]>;
+  tags: Array<Scalars["String"]>;
   updatedAt: Scalars["DateTime"];
 };
 
@@ -684,6 +686,7 @@ export type UpdateTopic = {
   label: Scalars["String"];
   parentTopicId?: Maybe<Scalars["IntID"]>;
   sortIndex?: Maybe<Scalars["Int"]>;
+  tags: Array<Scalars["String"]>;
 };
 
 export type UpdateUserInput = {
@@ -1031,6 +1034,7 @@ export type AllTopicsBaseQuery = {
         code: string;
         label: string;
         sortIndex?: number | null | undefined;
+        tags: Array<string>;
         updatedAt: string;
         createdAt: string;
         parent?:
@@ -2897,6 +2901,10 @@ export const AllTopicsBaseDocument = {
                                   },
                                 ],
                               },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "tags" },
                             },
                             {
                               kind: "Field",

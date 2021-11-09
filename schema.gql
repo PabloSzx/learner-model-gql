@@ -246,6 +246,7 @@ input CreateTopic {
   parentTopicId: IntID
   projectId: IntID!
   sortIndex: Int
+  tags: [String!]!
 }
 
 input CursorConnectionArgs {
@@ -463,6 +464,7 @@ type Topic {
   parent: Topic
   project: Project!
   sortIndex: Int
+  tags: [String!]!
   updatedAt: DateTime!
 }
 
@@ -526,6 +528,7 @@ input UpdateTopic {
   label: String!
   parentTopicId: IntID
   sortIndex: Int
+  tags: [String!]!
 }
 
 input UpdateUserInput {

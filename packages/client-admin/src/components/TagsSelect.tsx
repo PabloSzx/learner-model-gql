@@ -9,6 +9,7 @@ export const useTagsSelect = (
       current: SelectRefType | null;
     };
     defaultTags?: string[];
+    selectProps?: { isDisabled?: boolean };
   } = {}
 ) => {
   const tagsRef: typeof props["tagsRef"] =
@@ -28,10 +29,16 @@ export const useTagsSelect = (
             value,
           }))}
           {...selectStyles}
+          {...props.selectProps}
         />
       </Box>
     ),
-    [selectStyles, props.defaultTags, props.tagsRef]
+    [
+      selectStyles,
+      props.defaultTags,
+      props.tagsRef,
+      props.selectProps?.isDisabled,
+    ]
   );
 
   return {
