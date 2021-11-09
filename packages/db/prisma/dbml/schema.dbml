@@ -19,6 +19,7 @@ Table User {
   groups Group [not null]
   projects Project [not null]
   actions Action [not null]
+  modelStates ModelState [not null]
 
   indexes {
     (id, enabled) [unique]
@@ -74,6 +75,7 @@ Table Domain {
   label String [not null]
   projects Project [not null]
   kcs KC [not null]
+  modelStates ModelState [not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [default: `now()`, not null]
 }
@@ -161,6 +163,35 @@ Table Content {
   updatedAt DateTime [default: `now()`, not null]
 }
 
+Table ModelStateType {
+  name String [pk, unique]
+  states ModelState [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [default: `now()`, not null]
+}
+
+Table ModelStateCreator {
+  name String [pk, unique]
+  states ModelState [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [default: `now()`, not null]
+}
+
+Table ModelState {
+  id Int [pk, increment]
+  user User [not null]
+  userId Int [not null]
+  stateType ModelStateType
+  type String
+  stateCreator ModelStateCreator [not null]
+  creator String [not null]
+  domain Domain [not null]
+  domainId Int [not null]
+  json Json [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [default: `now()`, not null]
+}
+
 Table GroupToUser {
   groupsId Int [ref: > Group.id]
   usersId Int [ref: > User.id]
@@ -227,3 +258,11 @@ Ref: Action.contentId > Content.id
 Ref: Action.topicId > Topic.id
 
 Ref: Content.projectId > Project.id
+
+Ref: ModelState.userId > User.id
+
+Ref: ModelState.type > ModelStateType.name
+
+Ref: ModelState.creator > ModelStateCreator.name
+
+Ref: ModelState.domainId > Domain.id

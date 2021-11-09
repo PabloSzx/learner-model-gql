@@ -44,6 +44,8 @@ model User {
 
   actions Action[]
 
+  modelStates ModelState[]
+
   @@unique([id, enabled])
 }
 
@@ -117,6 +119,8 @@ model Domain {
 
 
   kcs KC[]
+
+  modelStates ModelState[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
@@ -245,6 +249,45 @@ model Content {
 
   json Json?
   url  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model ModelStateType {
+  name String @id @unique
+
+  states ModelState[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model ModelStateCreator {
+  name String @id @unique
+
+  states ModelState[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model ModelState {
+  id Int @id @default(autoincrement())
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  stateType ModelStateType? @relation(fields: [type], references: [name])
+  type      String?
+
+  stateCreator ModelStateCreator @relation(fields: [creator], references: [name])
+  creator      String
+
+  domain   Domain @relation(fields: [domainId], references: [id])
+  domainId Int
+
+  json Json
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
