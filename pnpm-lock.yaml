@@ -103,7 +103,7 @@ importers:
       fastify-auth0-verify: ^0.6.0
       fastify-plugin: ^3.0.0
       pg-gql-pubsub: ^0.3.0
-      pino: ^7.1.0
+      pino: ^7.2.0
       pino-pretty: ^7.2.0
       serialize-error: ^8.1.0
       validator: ^13.7.0
@@ -124,7 +124,7 @@ importers:
       fastify-auth0-verify: 0.6.0
       fastify-plugin: 3.0.0
       pg-gql-pubsub: 0.3.0
-      pino: 7.1.0
+      pino: 7.2.0
       pino-pretty: 7.2.0
       serialize-error: 8.1.0
       validator: 13.7.0
@@ -7385,8 +7385,8 @@ packages:
       quick-format-unescaped: 4.0.4
       sonic-boom: 1.4.1
 
-  /pino/7.1.0:
-    resolution: {integrity: sha512-EdNpwNxlNK2gt48V4P8uvGmfTH7yW+in4MAMGgU69ovtNQqBj+kA3xGjgPQHMXo5vr4rq+vWuBgNiz/LmfK++A==}
+  /pino/7.2.0:
+    resolution: {integrity: sha512-85EiMfTy2E7S+QSHgaN7oCfnfgxv/8PxG6Yf+CRXUZbRL+Rb9qHQAEATLubjJMSl3RvfrTKNkAP3D2hNNx41Aw==}
     hasBin: true
     dependencies:
       fast-redact: 3.0.2
@@ -7396,9 +7396,10 @@ packages:
       pino-abstract-transport: 0.5.0
       pino-std-serializers: 4.0.0
       quick-format-unescaped: 4.0.4
+      real-require: 0.1.0
       safe-stable-stringify: 2.2.0
       sonic-boom: 2.3.1
-      thread-stream: 0.12.1
+      thread-stream: 0.13.0
     dev: false
 
   /pkg-dir/4.2.0:
@@ -7935,6 +7936,11 @@ packages:
     dependencies:
       picomatch: 2.3.0
     dev: true
+
+  /real-require/0.1.0:
+    resolution: {integrity: sha512-r/H9MzAWtrv8aSVjPCMFpDMl5q66GqtmmRkRjpHTsp4zBAa+snZyiQNlMONiUmEJcsnaw0wCauJ2GWODr/aFkg==}
+    engines: {node: '>= 12.13.0'}
+    dev: false
 
   /regenerator-runtime/0.13.4:
     resolution: {integrity: sha512-plpwicqEzfEyTQohIKktWigcLzmNStMGwbOUbykx51/29Z3JOGYldaaNGK7ngNXV+UcoqvIMmloZ48Sr74sd+g==}
@@ -8797,8 +8803,10 @@ packages:
       minimatch: 3.0.4
     dev: true
 
-  /thread-stream/0.12.1:
-    resolution: {integrity: sha512-eFgcefesjNohVbqtNG/rh54HekZeId2xbuVXZpP5PBXTe5S+WIBfAFTbh2KRa4o/4pocgWTOTfnS0MaGOEiFTA==}
+  /thread-stream/0.13.0:
+    resolution: {integrity: sha512-kTMZeX4Dzlb1zZ00/01aerGaTw2i8NE4sWF0TvF1uXewRhCiUjCvatQkvxIvFqauWG2ADFS2Wpd3qBeYL9i3dg==}
+    dependencies:
+      real-require: 0.1.0
     dev: false
 
   /throttle-debounce/3.0.1:
