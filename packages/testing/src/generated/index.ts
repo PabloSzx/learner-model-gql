@@ -71,6 +71,8 @@ const documents = {
     graphql.AdminProjectFromUserDocument,
   "\n          query AdminProjectFromGroup($ids: [IntID!]!) {\n            groups(ids: $ids) {\n              id\n              projects {\n                id\n              }\n            }\n          }\n        ":
     graphql.AdminProjectFromGroupDocument,
+  "\n      query AllStatesTest {\n        adminState {\n          allModelStates(input: { pagination: { first: 10 } }) {\n            pageInfo {\n              hasNextPage\n            }\n            nodes {\n              id\n              json\n              creator\n              type\n              user {\n                id\n              }\n              domain {\n                id\n              }\n            }\n          }\n        }\n      }\n    ":
+    graphql.AllStatesTestDocument,
   "\n  fragment UserInfo on User {\n    id\n    enabled\n    email\n    name\n    locked\n    active\n    lastOnline\n    role\n    createdAt\n    updatedAt\n  }\n":
     graphql.UserInfoFragmentDoc,
   "\n  fragment GroupInfo on Group {\n    id\n    code\n    label\n    users {\n      id\n      email\n    }\n    projectsIds\n  }\n":
@@ -205,6 +207,9 @@ export function gql(
 export function gql(
   source: "\n          query AdminProjectFromGroup($ids: [IntID!]!) {\n            groups(ids: $ids) {\n              id\n              projects {\n                id\n              }\n            }\n          }\n        "
 ): typeof documents["\n          query AdminProjectFromGroup($ids: [IntID!]!) {\n            groups(ids: $ids) {\n              id\n              projects {\n                id\n              }\n            }\n          }\n        "];
+export function gql(
+  source: "\n      query AllStatesTest {\n        adminState {\n          allModelStates(input: { pagination: { first: 10 } }) {\n            pageInfo {\n              hasNextPage\n            }\n            nodes {\n              id\n              json\n              creator\n              type\n              user {\n                id\n              }\n              domain {\n                id\n              }\n            }\n          }\n        }\n      }\n    "
+): typeof documents["\n      query AllStatesTest {\n        adminState {\n          allModelStates(input: { pagination: { first: 10 } }) {\n            pageInfo {\n              hasNextPage\n            }\n            nodes {\n              id\n              json\n              creator\n              type\n              user {\n                id\n              }\n              domain {\n                id\n              }\n            }\n          }\n        }\n      }\n    "];
 export function gql(
   source: "\n  fragment UserInfo on User {\n    id\n    enabled\n    email\n    name\n    locked\n    active\n    lastOnline\n    role\n    createdAt\n    updatedAt\n  }\n"
 ): typeof documents["\n  fragment UserInfo on User {\n    id\n    enabled\n    email\n    name\n    locked\n    active\n    lastOnline\n    role\n    createdAt\n    updatedAt\n  }\n"];

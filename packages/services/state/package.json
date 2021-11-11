@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "bob-tsm --node-env=dev --watch=src src/index.ts",
-    "start": "bob-tsm --node-env=prod src/index.ts"
+    "start": "bob-tsm --node-env=prod src/index.ts",
+    "test": "c8 mocha",
+    "test:watch": "bob-watch -w src test -c mocha"
   },
   "dependencies": {
     "api-base": "workspace:^0.0.1",

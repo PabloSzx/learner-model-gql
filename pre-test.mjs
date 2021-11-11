@@ -5,6 +5,14 @@ import { fileURLToPath } from "url";
 
 const testDir = resolve(dirname(fileURLToPath(import.meta.url)), "./test");
 
+// Generate testing code if not in CI
+const testGenerate = Promise.allSettled([
+  !process.env.CI &&
+    command("pnpm -r test:generate", {
+      stdio: "inherit",
+    }),
+]);
+
 await command("docker-compose up -d", {
   cwd: testDir,
 });
@@ -25,4 +33,8 @@ await command("pnpm -r migrate:push", {
     DATABASE_URL,
   },
   stdio: "inherit",
+});
+
+await testGenerate.then(([result]) => {
+  if (result.status === "rejected") throw result.reason;
 });

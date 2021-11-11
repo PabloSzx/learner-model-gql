@@ -8,12 +8,29 @@ import {
   CreateUser,
   expectDeepEqual,
   generate,
+  GetTestClient,
   gql,
   MockAuthUser,
   prisma,
   PromiseAllCallbacks,
   TestClient,
 } from "testing";
+import {
+  projectsModule,
+  contentModule,
+  domainModule,
+  usersModule,
+} from "../src/modules";
+
+export const TestProjectsClient = () =>
+  GetTestClient({
+    prepare({ registerModule }) {
+      registerModule(projectsModule);
+      registerModule(contentModule);
+      registerModule(domainModule);
+      registerModule(usersModule);
+    },
+  });
 
 export async function CheckProjectCreationRetrieval({
   mutation,

@@ -1279,6 +1279,28 @@ export type AdminProjectFromGroupQuery = {
   }>;
 };
 
+export type AllStatesTestQueryVariables = Exact<{ [key: string]: never }>;
+
+export type AllStatesTestQuery = {
+  __typename?: "Query";
+  adminState: {
+    __typename?: "AdminStateQueries";
+    allModelStates: {
+      __typename?: "ModelStateConnection";
+      pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean };
+      nodes: Array<{
+        __typename?: "ModelState";
+        id: string;
+        json: unknown;
+        creator: string;
+        type?: string | null | undefined;
+        user: { __typename?: "User"; id: string };
+        domain: { __typename?: "Domain"; id: string };
+      }>;
+    };
+  };
+};
+
 export type UserInfoFragment = {
   __typename?: "User";
   id: string;
@@ -3560,6 +3582,128 @@ export const AdminProjectFromGroupDocument = {
   AdminProjectFromGroupQuery,
   AdminProjectFromGroupQueryVariables
 >;
+export const AllStatesTestDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "AllStatesTest" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminState" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "allModelStates" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "input" },
+                      value: {
+                        kind: "ObjectValue",
+                        fields: [
+                          {
+                            kind: "ObjectField",
+                            name: { kind: "Name", value: "pagination" },
+                            value: {
+                              kind: "ObjectValue",
+                              fields: [
+                                {
+                                  kind: "ObjectField",
+                                  name: { kind: "Name", value: "first" },
+                                  value: { kind: "IntValue", value: "10" },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "pageInfo" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "hasNextPage" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "nodes" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "json" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "creator" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "type" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "user" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "id" },
+                                  },
+                                ],
+                              },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "domain" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "id" },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<AllStatesTestQuery, AllStatesTestQueryVariables>;
 export const UsersByIdDocument = {
   kind: "Document",
   definitions: [

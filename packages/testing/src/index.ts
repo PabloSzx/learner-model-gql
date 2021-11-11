@@ -20,6 +20,8 @@ import { inspect } from "util";
 
 inspect.defaultOptions.depth = null;
 
+typeof it !== "undefined" && (globalThis.test ||= it);
+
 if (URL_DATABASE.hostname !== "localhost" || URL_DATABASE.port !== "5789") {
   throw Error(`Unexpected database used for testing! ` + DATABASE_URL);
 }

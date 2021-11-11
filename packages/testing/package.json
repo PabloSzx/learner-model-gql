@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "graphql-codegen generate --config codegen.yaml --watch",
     "generate": "graphql-codegen generate --config codegen.yaml",
+    "test:generate": "graphql-codegen generate --config codegen.yaml",
     "test:watch:generate": "graphql-codegen generate --config codegen.yaml --watch"
   },
   "devDependencies": {

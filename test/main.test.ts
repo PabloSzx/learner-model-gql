@@ -4,8 +4,8 @@ import { CheckContentCreationRetrieval } from "../packages/services/content/test
 import {
   CheckDomainCreationRetrieval,
   CheckDomainsOfProjects,
-  CheckTopicsCreationRetrieval,
   CheckKCs,
+  CheckTopicsCreationRetrieval,
 } from "../packages/services/domain/test/test";
 import {
   CheckProjectCreationRetrieval,
@@ -13,6 +13,7 @@ import {
   CheckProjectFromDomainAndTopic,
   CheckProjectFromUser,
 } from "../packages/services/projects/test/test";
+import { CheckServiceState } from "../packages/services/state/test/test";
 import { CheckGroups, CheckUsers } from "../packages/services/users/test/test";
 import {
   expectDeepEqual,
@@ -23,20 +24,22 @@ import {
 export const TestStitchedSchema = async () => {
   const ActionService = GetTestClient({
     async prepare({ registerModule }) {
-      const { actionModule } = await import(
+      const { actionModule, projectsModule } = await import(
         "../packages/services/actions/src/modules/index"
       );
       registerModule(actionModule);
+      registerModule(projectsModule);
     },
   });
 
   const ContentService = GetTestClient({
     async prepare({ registerModule }) {
-      const { contentModule, domainModule } = await import(
+      const { contentModule, domainModule, projectModule } = await import(
         "../packages/services/content/src/modules/index"
       );
       registerModule(contentModule);
       registerModule(domainModule);
+      registerModule(projectModule);
     },
   });
 
@@ -76,6 +79,18 @@ export const TestStitchedSchema = async () => {
     },
   });
 
+  const StateService = GetTestClient({
+    async prepare({ registerModule }) {
+      const { domainModule, stateModule, userModule } = await import(
+        "../packages/services/state/src/modules/index"
+      );
+
+      registerModule(domainModule);
+      registerModule(stateModule);
+      registerModule(userModule);
+    },
+  });
+
   const stitchedSchema = await getStitchedSchema([
     {
       name: "actions",
@@ -97,6 +112,10 @@ export const TestStitchedSchema = async () => {
       name: "users",
       href: (await UsersService).origin,
     },
+    {
+      name: "state",
+      href: (await StateService).origin,
+    },
   ]);
 
   const GatewayClient = await GetTestClient({
@@ -108,7 +127,7 @@ export const TestStitchedSchema = async () => {
   };
 };
 
-describe("gateway", () => {
+describe("Gateway", () => {
   it("Gateway Hello World", async () => {
     const { GatewayClient } = await TestStitchedSchema();
 
@@ -200,6 +219,14 @@ describe("gateway", () => {
       const { GatewayClient } = await TestStitchedSchema();
 
       await CheckGroups(GatewayClient);
+    });
+  });
+
+  describe("state gateway", async () => {
+    it("state", async () => {
+      const { GatewayClient } = await TestStitchedSchema();
+
+      await CheckServiceState(GatewayClient);
     });
   });
 });

@@ -1,31 +1,15 @@
-import { expectDeepEqual, GetTestClient, gql } from "testing";
-
-import {
-  contentModule,
-  domainModule,
-  projectsModule,
-  usersModule,
-} from "../src/modules/index";
+import { expectDeepEqual, gql } from "testing";
 import {
   CheckProjectCreationRetrieval,
   CheckProjectFromContent,
   CheckProjectFromDomainAndTopic,
   CheckProjectFromUser,
+  TestProjectsClient,
 } from "./test";
-
-const ProjectsClient = () =>
-  GetTestClient({
-    prepare({ registerModule }) {
-      registerModule(projectsModule);
-      registerModule(contentModule);
-      registerModule(domainModule);
-      registerModule(usersModule);
-    },
-  });
 
 describe("Projects service", () => {
   it("hello world", async () => {
-    const { query } = await ProjectsClient();
+    const { query } = await TestProjectsClient();
 
     expectDeepEqual(
       await query(
@@ -44,25 +28,25 @@ describe("Projects service", () => {
   });
 
   it("project creation & retrieval", async () => {
-    const testClient = await ProjectsClient();
+    const testClient = await TestProjectsClient();
 
     await CheckProjectCreationRetrieval(testClient);
   });
 
   it("project from content", async () => {
-    const testClient = await ProjectsClient();
+    const testClient = await TestProjectsClient();
 
     await CheckProjectFromContent(testClient);
   });
 
   it("project from domain & topic", async () => {
-    const testClient = await ProjectsClient();
+    const testClient = await TestProjectsClient();
 
     await CheckProjectFromDomainAndTopic(testClient);
   });
 
   it("project from users", async () => {
-    const testClient = await ProjectsClient();
+    const testClient = await TestProjectsClient();
 
     await CheckProjectFromUser(testClient);
   });

@@ -22,7 +22,7 @@ importers:
       '@types/react': ^17.0.34
       api-base: workspace:^0.0.1
       bob-tsm: ^0.3.4
-      bob-watch: ^0.1.0
+      bob-watch: ^0.1.1
       c8: ^7.10.0
       common: workspace:^0.0.1
       concurrently: ^6.3.0
@@ -64,7 +64,7 @@ importers:
       '@types/randomstring': 1.1.8
       '@types/react': 17.0.34
       bob-tsm: 0.3.4_esbuild@0.13.13
-      bob-watch: 0.1.0
+      bob-watch: 0.1.1
       c8: 7.10.0
       concurrently: 6.3.0
       cross-env: 7.0.3
@@ -3766,14 +3766,11 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /bob-watch/0.1.0:
-    resolution: {integrity: sha512-EY26sc6yofC7eoJM22yO4TG49SKtYUl+RheDp5K1fdWVwgqYM5ydMaFBgQSM1qk6NtjqM+/uh8A/Vd3SS/2KPA==}
+  /bob-watch/0.1.1:
+    resolution: {integrity: sha512-FnmJjv8pkZwrC+SeLXvhX+RIdU5ekCm59WZDSUKwumSWWP44jNMaiBTTCeekhrb62fwo4URjjKXPkbIc7EBbPA==}
     hasBin: true
-    dependencies:
-      chokidar: 3.5.2
-      commander: 8.3.0
-      execa: 5.1.1
-      tree-kill: 1.2.2
+    optionalDependencies:
+      fsevents: 2.3.2
     dev: true
 
   /brace-expansion/1.1.11:
