@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^1.8.0",
-    "@chakra-ui/react": "^1.6.12",
-    "@chakra-ui/system": "^1.7.6",
+    "@chakra-ui/react": "^1.7.0",
+    "@chakra-ui/system": "^1.8.0",
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@types/react": "^17.0.34",
