@@ -448,11 +448,13 @@ export type GroupFlags = {
   createdAt: Scalars["DateTime"];
   id: Scalars["IntID"];
   readProjectActions: Scalars["Boolean"];
+  readProjectModelStates: Scalars["Boolean"];
   updatedAt: Scalars["DateTime"];
 };
 
 export type GroupFlagsInput = {
   readProjectActions: Scalars["Boolean"];
+  readProjectModelStates: Scalars["Boolean"];
 };
 
 export type GroupsConnection = Connection & {
@@ -1494,7 +1496,12 @@ export type GroupInfoFragment = {
   updatedAt: string;
   createdAt: string;
   tags: Array<string>;
-  flags: { __typename?: "GroupFlags"; id: string; readProjectActions: boolean };
+  flags: {
+    __typename?: "GroupFlags";
+    id: string;
+    readProjectActions: boolean;
+    readProjectModelStates: boolean;
+  };
   projects: Array<{
     __typename?: "Project";
     id: string;
@@ -1534,6 +1541,7 @@ export type AllGroupsQuery = {
           __typename?: "GroupFlags";
           id: string;
           readProjectActions: boolean;
+          readProjectModelStates: boolean;
         };
         projects: Array<{
           __typename?: "Project";
@@ -2129,6 +2137,10 @@ export const GroupInfoFragmentDoc = {
                 {
                   kind: "Field",
                   name: { kind: "Name", value: "readProjectActions" },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "readProjectModelStates" },
                 },
               ],
             },

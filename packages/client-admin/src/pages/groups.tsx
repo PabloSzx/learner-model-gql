@@ -55,6 +55,7 @@ gql(/* GraphQL */ `
     flags {
       id
       readProjectActions
+      readProjectModelStates
     }
     projects {
       id
@@ -523,11 +524,43 @@ export default withAdminAuth(function GroupsPage() {
                       state.flags.readProjectActions =
                         !state.flags.readProjectActions;
                     }}
+                    borderColor="#555"
                   />
                 );
               }
 
               return readProjectActions ? <MdDoneOutline /> : <MdClose />;
+            },
+          },
+          {
+            id: "readProjectModelStates",
+            Header: "Read Project Model States",
+            accessor: "id",
+            Cell({
+              row: {
+                original: {
+                  id,
+                  flags: { readProjectModelStates },
+                },
+              },
+            }) {
+              const state = GroupsState[id];
+
+              if (state?.isEditing) {
+                return (
+                  <Checkbox
+                    colorScheme="green"
+                    isChecked={state.flags.readProjectModelStates}
+                    onChange={() => {
+                      state.flags.readProjectModelStates =
+                        !state.flags.readProjectModelStates;
+                    }}
+                    borderColor="#555"
+                  />
+                );
+              }
+
+              return readProjectModelStates ? <MdDoneOutline /> : <MdClose />;
             },
           },
           getDateRow({ id: "createdAt", label: "Created At" }),
@@ -550,7 +583,7 @@ export default withAdminAuth(function GroupsPage() {
                 labelRef,
                 selectedProjects,
                 tagsRef,
-                flags: { readProjectActions },
+                flags: { readProjectActions, readProjectModelStates },
               } = groupState;
 
               return (
@@ -569,7 +602,9 @@ export default withAdminAuth(function GroupsPage() {
                       isEditing &&
                       (readProjectActions !==
                         original.flags.readProjectActions ||
-                        original.code !== codeRef.current ||
+                        readProjectModelStates !==
+                          original.flags.readProjectModelStates,
+                      original.code !== codeRef.current ||
                         original.label !== labelRef.current ||
                         original.projects
                           .map((v) => v.id)
@@ -591,6 +626,7 @@ export default withAdminAuth(function GroupsPage() {
                             tags: tagsRefList,
                             flags: {
                               readProjectActions,
+                              readProjectModelStates,
                             },
                           },
                         })

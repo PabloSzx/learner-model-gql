@@ -25,6 +25,7 @@ export const groupsModule = registerModule(
       id: IntID!
 
       readProjectActions: Boolean!
+      readProjectModelStates: Boolean!
 
       createdAt: DateTime!
       updatedAt: DateTime!
@@ -36,6 +37,7 @@ export const groupsModule = registerModule(
 
     input GroupFlagsInput {
       readProjectActions: Boolean!
+      readProjectModelStates: Boolean!
     }
 
     input CreateGroupInput {

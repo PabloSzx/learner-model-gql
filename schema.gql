@@ -309,11 +309,13 @@ type GroupFlags {
   createdAt: DateTime!
   id: IntID!
   readProjectActions: Boolean!
+  readProjectModelStates: Boolean!
   updatedAt: DateTime!
 }
 
 input GroupFlagsInput {
   readProjectActions: Boolean!
+  readProjectModelStates: Boolean!
 }
 
 type GroupsConnection implements Connection {

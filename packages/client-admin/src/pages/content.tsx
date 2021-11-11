@@ -460,6 +460,7 @@ const EditContent = ({
                       draft.updateFile = !draft.updateFile;
                     })
                   }
+                  borderColor="#555"
                 >
                   Should update binary content
                 </Checkbox>

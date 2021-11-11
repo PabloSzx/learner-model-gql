@@ -49,6 +49,7 @@ Table Group {
 Table GroupFlags {
   id Int [pk, increment]
   readProjectActions Boolean [not null, default: false]
+  readProjectModelStates Boolean [not null, default: false]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [default: `now()`, not null]
   group Group [not null]

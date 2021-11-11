@@ -196,6 +196,30 @@ export const Authorization = (userPromise: Promise<DBUser | null>) => {
     throw Error("Forbidden!");
   };
 
+  const expectAllowedReadProjectModelStates = async (
+    projectIdsPromise: number[] | Promise<number[]>
+  ) => {
+    const [user, projectIds] = await Promise.all([
+      expectUser,
+      projectIdsPromise,
+    ]);
+
+    if (user.role === "ADMIN") return;
+
+    if (
+      user.groups.some(({ flags, projects }) => {
+        return (
+          flags?.readProjectActions &&
+          projects.some(({ id }) => projectIds.includes(id))
+        );
+      })
+    ) {
+      return;
+    }
+
+    throw Error("Forbidden!");
+  };
+
   return {
     expectUser,
     expectAdmin,
@@ -207,5 +231,6 @@ export const Authorization = (userPromise: Promise<DBUser | null>) => {
     expectProjectsInPrismaFilter,
     expectAllowedReadProjectActions,
     checkProjectIdExists,
+    expectAllowedReadProjectModelStates,
   };
 };

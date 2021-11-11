@@ -43,7 +43,7 @@ const documents = {
     graphql.AllDomainsDocument,
   "\n      mutation UpdateDomain($data: UpdateDomain!) {\n        adminDomain {\n          updateDomain(input: $data) {\n            __typename\n          }\n        }\n      }\n    ":
     graphql.UpdateDomainDocument,
-  "\n  fragment GroupInfo on Group {\n    id\n    code\n    label\n    updatedAt\n    createdAt\n    tags\n    flags {\n      id\n      readProjectActions\n    }\n    projects {\n      id\n      code\n      label\n    }\n    users {\n      id\n      email\n      name\n      role\n      active\n      lastOnline\n    }\n  }\n":
+  "\n  fragment GroupInfo on Group {\n    id\n    code\n    label\n    updatedAt\n    createdAt\n    tags\n    flags {\n      id\n      readProjectActions\n      readProjectModelStates\n    }\n    projects {\n      id\n      code\n      label\n    }\n    users {\n      id\n      email\n      name\n      role\n      active\n      lastOnline\n    }\n  }\n":
     graphql.GroupInfoFragmentDoc,
   "\n  query AllGroups($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allGroups(pagination: $pagination) {\n        nodes {\n          ...GroupInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n":
     graphql.AllGroupsDocument,
@@ -144,8 +144,8 @@ export function gql(
   source: "\n      mutation UpdateDomain($data: UpdateDomain!) {\n        adminDomain {\n          updateDomain(input: $data) {\n            __typename\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation UpdateDomain($data: UpdateDomain!) {\n        adminDomain {\n          updateDomain(input: $data) {\n            __typename\n          }\n        }\n      }\n    "];
 export function gql(
-  source: "\n  fragment GroupInfo on Group {\n    id\n    code\n    label\n    updatedAt\n    createdAt\n    tags\n    flags {\n      id\n      readProjectActions\n    }\n    projects {\n      id\n      code\n      label\n    }\n    users {\n      id\n      email\n      name\n      role\n      active\n      lastOnline\n    }\n  }\n"
-): typeof documents["\n  fragment GroupInfo on Group {\n    id\n    code\n    label\n    updatedAt\n    createdAt\n    tags\n    flags {\n      id\n      readProjectActions\n    }\n    projects {\n      id\n      code\n      label\n    }\n    users {\n      id\n      email\n      name\n      role\n      active\n      lastOnline\n    }\n  }\n"];
+  source: "\n  fragment GroupInfo on Group {\n    id\n    code\n    label\n    updatedAt\n    createdAt\n    tags\n    flags {\n      id\n      readProjectActions\n      readProjectModelStates\n    }\n    projects {\n      id\n      code\n      label\n    }\n    users {\n      id\n      email\n      name\n      role\n      active\n      lastOnline\n    }\n  }\n"
+): typeof documents["\n  fragment GroupInfo on Group {\n    id\n    code\n    label\n    updatedAt\n    createdAt\n    tags\n    flags {\n      id\n      readProjectActions\n      readProjectModelStates\n    }\n    projects {\n      id\n      code\n      label\n    }\n    users {\n      id\n      email\n      name\n      role\n      active\n      lastOnline\n    }\n  }\n"];
 export function gql(
   source: "\n  query AllGroups($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allGroups(pagination: $pagination) {\n        nodes {\n          ...GroupInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"
 ): typeof documents["\n  query AllGroups($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allGroups(pagination: $pagination) {\n        nodes {\n          ...GroupInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"];

@@ -80,7 +80,8 @@ model Group {
 model GroupFlags {
   id Int @id @default(autoincrement())
 
-  readProjectActions Boolean @default(false)
+  readProjectActions     Boolean @default(false)
+  readProjectModelStates Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt

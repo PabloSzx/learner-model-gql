@@ -448,11 +448,13 @@ export type GroupFlags = {
   createdAt: Scalars["DateTime"];
   id: Scalars["IntID"];
   readProjectActions: Scalars["Boolean"];
+  readProjectModelStates: Scalars["Boolean"];
   updatedAt: Scalars["DateTime"];
 };
 
 export type GroupFlagsInput = {
   readProjectActions: Scalars["Boolean"];
+  readProjectModelStates: Scalars["Boolean"];
 };
 
 export type GroupsConnection = Connection & {
