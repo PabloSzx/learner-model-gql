@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   testing-db:
-    image: postgres:13.4-alpine
+    image: postgres:13.5-alpine
     ports:
       - 5789:5432
     restart: "no"
