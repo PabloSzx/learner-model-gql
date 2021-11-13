@@ -17,7 +17,7 @@ importers:
       '@types/concurrently': ^6.3.0
       '@types/mocha': ^9.0.0
       '@types/node': ^16.11.7
-      '@types/prettier': ^2.4.1
+      '@types/prettier': ^2.4.2
       '@types/randomstring': ^1.1.8
       '@types/react': ^17.0.34
       api-base: workspace:^0.0.1
@@ -60,7 +60,7 @@ importers:
       '@types/concurrently': 6.3.0
       '@types/mocha': 9.0.0
       '@types/node': 16.11.7
-      '@types/prettier': 2.4.1
+      '@types/prettier': 2.4.2
       '@types/randomstring': 1.1.8
       '@types/react': 17.0.34
       bob-tsm: 0.3.5_esbuild@0.13.13
@@ -3303,8 +3303,8 @@ packages:
       pg-types: 2.2.0
     dev: false
 
-  /@types/prettier/2.4.1:
-    resolution: {integrity: sha512-Fo79ojj3vdEZOHg3wR9ksAMRz4P3S5fDB5e/YWZiFnyFQI1WY2Vftu9XoXVVtJfxB7Bpce/QTqWSSntkz2Znrw==}
+  /@types/prettier/2.4.2:
+    resolution: {integrity: sha512-ekoj4qOQYp7CvjX8ZDBgN86w3MqQhLE1hczEJbEIjgFEumDy+na/4AJAbLXfgEWFNB2pKadM5rPFtuSGMWK7xA==}
     dev: true
 
   /@types/prop-types/15.7.4:
