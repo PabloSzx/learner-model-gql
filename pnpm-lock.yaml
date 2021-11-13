@@ -25,7 +25,7 @@ importers:
       bob-watch: ^0.1.1
       c8: ^7.10.0
       common: workspace:^0.0.1
-      concurrently: ^6.3.0
+      concurrently: ^6.4.0
       cross-env: ^7.0.3
       dotenv: ^10.0.0
       esbuild: ^0.13.13
@@ -66,7 +66,7 @@ importers:
       bob-tsm: 0.3.5_esbuild@0.13.13
       bob-watch: 0.1.1
       c8: 7.10.0
-      concurrently: 6.3.0
+      concurrently: 6.4.0
       cross-env: 7.0.3
       dotenv: 10.0.0
       esbuild: 0.13.13
@@ -258,7 +258,7 @@ importers:
       '@types/lodash': ^4.14.176
       '@types/wait-on': ^5.3.1
       api-base: workspace:^0.0.1
-      concurrently: ^6.3.0
+      concurrently: ^6.4.0
       content-type: ^1.0.4
       cross-env: ^7.0.3
       db: workspace:^0.0.1
@@ -281,7 +281,7 @@ importers:
       '@graphql-tools/utils': 8.5.3_graphql@16.0.1
       '@graphql-tools/wrap': 8.3.2_graphql@16.0.1
       api-base: link:../api-base
-      concurrently: 6.3.0
+      concurrently: 6.4.0
       content-type: 1.0.4
       cross-env: 7.0.3
       db: link:../db
@@ -4298,8 +4298,8 @@ packages:
   /concat-map/0.0.1:
     resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
 
-  /concurrently/6.3.0:
-    resolution: {integrity: sha512-k4k1jQGHHKsfbqzkUszVf29qECBrkvBKkcPJEUDTyVR7tZd1G/JOfnst4g1sYbFvJ4UjHZisj1aWQR8yLKpGPw==}
+  /concurrently/6.4.0:
+    resolution: {integrity: sha512-HZ3D0RTQMH3oS4gvtYj1P+NBc6PzE2McEra6yEFcQKrUQ9HvtTGU4Dbne083F034p+LRb7kWU0tPRNvSGs1UCQ==}
     engines: {node: '>=10.0.0'}
     hasBin: true
     dependencies:
