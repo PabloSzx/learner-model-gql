@@ -14,7 +14,7 @@ importers:
       '@graphql-tools/graphql-tag-pluck': ^7.1.3
       '@graphql-typed-document-node/core': ^3.1.0
       '@prisma/client': ^3.4.2
-      '@types/concurrently': ^6.3.0
+      '@types/concurrently': ^6.4.0
       '@types/mocha': ^9.0.0
       '@types/node': ^16.11.7
       '@types/prettier': ^2.4.2
@@ -57,7 +57,7 @@ importers:
       '@graphql-tools/graphql-tag-pluck': 7.1.3_graphql@16.0.1
       '@graphql-typed-document-node/core': 3.1.0_graphql@16.0.1
       '@prisma/client': 3.4.2
-      '@types/concurrently': 6.3.0
+      '@types/concurrently': 6.4.0
       '@types/mocha': 9.0.0
       '@types/node': 16.11.7
       '@types/prettier': 2.4.2
@@ -226,7 +226,7 @@ importers:
     specifiers:
       '@graphql-ez/utils': ^0.1.2
       '@prisma/client': ^3.4.2
-      '@types/concurrently': ^6.3.0
+      '@types/concurrently': ^6.4.0
       '@types/react': ^17.0.34
       common-api: workspace:^1.0.0
       pg-gql-pubsub: ^0.3.0
@@ -240,7 +240,7 @@ importers:
       prisma: 3.4.2
       prisma-dbml-generator: 0.8.1
     devDependencies:
-      '@types/concurrently': 6.3.0
+      '@types/concurrently': 6.4.0
       '@types/react': 17.0.34
 
   packages/gateway:
@@ -253,7 +253,7 @@ importers:
       '@graphql-tools/stitch': ^8.4.1
       '@graphql-tools/utils': ^8.5.3
       '@graphql-tools/wrap': ^8.3.2
-      '@types/concurrently': ^6.3.0
+      '@types/concurrently': ^6.4.0
       '@types/content-type': ^1.1.5
       '@types/lodash': ^4.14.176
       '@types/wait-on': ^5.3.1
@@ -295,7 +295,7 @@ importers:
       undici: 4.10.0
       wait-on: 6.0.0
     devDependencies:
-      '@types/concurrently': 6.3.0
+      '@types/concurrently': 6.4.0
       '@types/content-type': 1.1.5
       '@types/lodash': 4.14.176
       '@types/wait-on': 5.3.1
@@ -3214,8 +3214,8 @@ packages:
     engines: {node: '>= 10'}
     dev: true
 
-  /@types/concurrently/6.3.0:
-    resolution: {integrity: sha512-R0M9Dt330vtNgNlBYQYniDfI3I3Sk6cu27M1EKS5VFoio2rZqTMuOBGe9DX+ISM0B6y+RGrgtpWCv2k2VBLtbQ==}
+  /@types/concurrently/6.4.0:
+    resolution: {integrity: sha512-CYU1eyFHsIa2IZIsb8gfUOdiewfnZcyM2Hg1Zaq95xnmB0Ix/bTRM8SttqZ2Cjy6JGPZLttHjZewVsDg1yvnJg==}
     dependencies:
       '@types/node': 16.11.7
       chalk: 4.1.2
