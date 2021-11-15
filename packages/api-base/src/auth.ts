@@ -2,7 +2,7 @@ import type { User as Auth0User } from "@auth0/auth0-react";
 import assert from "assert";
 import { ENV } from "common-api";
 import type { DBUser } from "db";
-import { prisma } from "db";
+import { GroupFlags, prisma } from "db";
 import type { FastifyRequest } from "fastify";
 import FastifyAuth0 from "fastify-auth0-verify";
 import fp from "fastify-plugin";
@@ -113,12 +113,13 @@ export const Authorization = (userPromise: Promise<DBUser | null>) => {
   };
 
   const expectAllowedUserProject = async (
-    projectIdPromise: number | Promise<number>
+    projectIdPromise: number | Promise<number>,
+    { checkExists = true }: { checkExists?: boolean } = {}
   ) => {
     const [user, usersProjectsSet, projectId] = await Promise.all([
       expectUser,
       expectUserProjectsSet,
-      checkProjectIdExists(projectIdPromise),
+      checkExists ? checkProjectIdExists(projectIdPromise) : projectIdPromise,
     ]);
 
     if (user.role !== "ADMIN")
@@ -196,29 +197,45 @@ export const Authorization = (userPromise: Promise<DBUser | null>) => {
     throw Error("Forbidden!");
   };
 
-  const expectAllowedReadProjectModelStates = async (
-    projectIdsPromise: number[] | Promise<number[]>
-  ) => {
-    const [user, projectIds] = await Promise.all([
-      expectUser,
-      projectIdsPromise,
-    ]);
+  const expectGroupProjectsFlags = LazyPromise(async () => {
+    return (await expectUser).groups.reduce<
+      Record<
+        number,
+        Pick<GroupFlags, "readProjectActions" | "readProjectModelStates">
+      >
+    >((acc, { flags, projects }) => {
+      const { readProjectActions = false, readProjectModelStates = false } =
+        flags || {};
 
-    if (user.role === "ADMIN") return;
+      for (const project of projects) {
+        const projectFlags = (acc[project.id] ||= {
+          readProjectActions: false,
+          readProjectModelStates: false,
+        });
 
-    if (
-      user.groups.some(({ flags, projects }) => {
-        return (
-          flags?.readProjectActions &&
-          projects.some(({ id }) => projectIds.includes(id))
-        );
-      })
-    ) {
-      return;
-    }
+        projectFlags.readProjectActions ||= readProjectActions;
+        projectFlags.readProjectModelStates ||= readProjectModelStates;
+      }
 
-    throw Error("Forbidden!");
-  };
+      return acc;
+    }, {});
+  });
+
+  const expectNotAdminAllowedProjectsIdsModelStates = LazyPromise(async () => {
+    const user = await expectUser;
+
+    if (user.role === "ADMIN") return undefined;
+
+    const allowedProjectsIdsSet = Object.entries(
+      await expectGroupProjectsFlags
+    ).reduce((acc, [projectIdString, { readProjectModelStates }]) => {
+      if (readProjectModelStates) acc.add(parseInt(projectIdString));
+
+      return acc;
+    }, new Set<number>());
+
+    return Array.from(allowedProjectsIdsSet);
+  });
 
   return {
     expectUser,
@@ -231,6 +248,7 @@ export const Authorization = (userPromise: Promise<DBUser | null>) => {
     expectProjectsInPrismaFilter,
     expectAllowedReadProjectActions,
     checkProjectIdExists,
-    expectAllowedReadProjectModelStates,
+    expectGroupProjectsFlags,
+    expectNotAdminAllowedProjectsIdsModelStates,
   };
 };

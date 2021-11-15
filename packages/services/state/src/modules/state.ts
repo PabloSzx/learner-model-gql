@@ -1,5 +1,4 @@
 import { gql, ModelStateConnection, registerModule } from "../ez";
-import type { ModelState } from "../ez.generated";
 
 export const stateModule = registerModule(
   gql`
@@ -82,42 +81,6 @@ export const stateModule = registerModule(
   `,
   {
     resolvers: {
-      ModelState: {
-        async id(
-          { id, userId }: ModelState & { userId?: number },
-          _args,
-          { authorization, prisma }
-        ) {
-          const user = await authorization.expectUser;
-
-          if (userId === user.id || user.role === "ADMIN") return id;
-
-          const domainProjects =
-            (
-              await prisma.modelState
-                .findUnique({
-                  where: {
-                    id,
-                  },
-                })
-                .domain({
-                  select: {
-                    projects: {
-                      select: {
-                        id: true,
-                      },
-                    },
-                  },
-                })
-            )?.projects.map((v) => v.id) || [];
-
-          await authorization.expectAllowedReadProjectModelStates(
-            domainProjects
-          );
-
-          return id;
-        },
-      },
       Query: {
         hello() {
           return "Hello World!";

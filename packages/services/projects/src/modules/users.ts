@@ -25,7 +25,7 @@ export const usersModule = registerModule(
     dirname: import.meta.url,
     resolvers: {
       User: {
-        async projects({ id }, _args, { prisma }) {
+        async projects({ id }, _args, { prisma, authorization }) {
           return (
             (await prisma.user
               .findUnique({
@@ -33,12 +33,14 @@ export const usersModule = registerModule(
                   id,
                 },
               })
-              .projects()) || []
+              .projects({
+                where: await authorization.expectProjectsIdInPrismaFilter,
+              })) || []
           );
         },
       },
       Group: {
-        async projects({ id }, _args, { prisma }) {
+        async projects({ id }, _args, { prisma, authorization }) {
           return (
             (await prisma.group
               .findUnique({
@@ -46,7 +48,9 @@ export const usersModule = registerModule(
                   id,
                 },
               })
-              .projects()) || []
+              .projects({
+                where: await authorization.expectProjectsIdInPrismaFilter,
+              })) || []
           );
         },
       },

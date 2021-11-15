@@ -76,6 +76,7 @@ export function GetDBUser(auth0UserPromise: Promise<Auth0User | null>) {
                   flags: {
                     select: {
                       readProjectActions: true,
+                      readProjectModelStates: true,
                     },
                   },
                 },

@@ -61,7 +61,7 @@ export const domainModule = registerModule(
         },
       },
       Domain: {
-        async projects({ id }, _args, { prisma }) {
+        async projects({ id }, _args, { prisma, authorization }) {
           return (
             (await prisma.domain
               .findUnique({
@@ -69,12 +69,14 @@ export const domainModule = registerModule(
                   id,
                 },
               })
-              .projects()) || []
+              .projects({
+                where: await authorization.expectProjectsIdInPrismaFilter,
+              })) || []
           );
         },
       },
       Topic: {
-        async project({ id }, _args, { prisma }) {
+        async project({ id }, _args, { prisma, authorization }) {
           const project = await prisma.topic
             .findUnique({
               where: {
@@ -84,6 +86,10 @@ export const domainModule = registerModule(
             .project();
 
           assert(project, "Project could not be found for topic " + id);
+
+          await authorization.expectAllowedUserProject(project.id, {
+            checkExists: false,
+          });
 
           return project;
         },

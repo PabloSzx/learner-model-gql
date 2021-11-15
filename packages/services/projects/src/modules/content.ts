@@ -19,7 +19,7 @@ export const contentModule = registerModule(
     dirname: import.meta.url,
     resolvers: {
       Content: {
-        async project({ id }, _args, { prisma }) {
+        async project({ id }, _args, { prisma, authorization }) {
           const project = await prisma.content
             .findUnique({
               where: {
@@ -29,6 +29,10 @@ export const contentModule = registerModule(
             .project();
 
           assert(project, "Project could not be found for Content " + id);
+
+          await authorization.expectAllowedUserProject(project.id, {
+            checkExists: false,
+          });
 
           return project;
         },
