@@ -100,7 +100,7 @@ importers:
       '@graphql-ez/plugin-voyager': ^0.9.0
       '@graphql-ez/plugin-websockets': ^0.10.2
       '@graphql-tools/schema': ^8.3.1
-      '@types/validator': ^13.6.6
+      '@types/validator': ^13.7.0
       '@types/wait-on': ^5.3.1
       common-api: workspace:^1.0.0
       db: workspace:^0.0.1
@@ -132,7 +132,7 @@ importers:
       validator: 13.7.0
       wait-on: 6.0.0
     devDependencies:
-      '@types/validator': 13.6.6
+      '@types/validator': 13.7.0
       '@types/wait-on': 5.3.1
 
   packages/client-admin:
@@ -3367,8 +3367,8 @@ packages:
   /@types/scheduler/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
 
-  /@types/validator/13.6.6:
-    resolution: {integrity: sha512-+qogUELb4gMhrMjSh/seKmGVvN+uQLfyqJAqYRWqVHsvBsUO2xDBCL8CJ/ZSukbd8vXaoYbpIssAmfLEzzBHEw==}
+  /@types/validator/13.7.0:
+    resolution: {integrity: sha512-+jBxVvXVuggZOrm04NR8z+5+bgoW4VZyLzUO+hmPPW1mVFL/HaitLAkizfv4yg9TbG8lkfHWVMQ11yDqrVVCzA==}
     dev: true
 
   /@types/wait-on/5.3.1:
