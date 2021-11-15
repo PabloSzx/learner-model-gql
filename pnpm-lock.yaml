@@ -302,10 +302,10 @@ importers:
 
   packages/graph:
     specifiers:
-      '@graphql-codegen/cli': ^2.2.2
+      '@graphql-codegen/cli': ^2.3.0
       '@graphql-codegen/core': ^2.3.0
       '@graphql-codegen/typed-document-node': ^2.2.0
-      '@graphql-codegen/typescript': ^2.3.1
+      '@graphql-codegen/typescript': ^2.4.0
       '@graphql-codegen/typescript-document-nodes': 2.2.0
       '@graphql-codegen/typescript-operations': ^2.2.0
       '@graphql-codegen/typescript-react-query': ^3.1.1
@@ -388,11 +388,11 @@ importers:
 
   packages/testing:
     specifiers:
-      '@graphql-codegen/cli': ^2.2.2
+      '@graphql-codegen/cli': ^2.3.0
       '@graphql-codegen/core': ^2.3.0
       '@graphql-codegen/gql-tag-operations-preset': ^1.2.1
       '@graphql-codegen/typed-document-node': ^2.2.0
-      '@graphql-codegen/typescript': ^2.3.1
+      '@graphql-codegen/typescript': ^2.4.0
       '@graphql-codegen/typescript-operations': ^2.2.0
       '@graphql-ez/fastify': ^0.9.4
       '@graphql-ez/fastify-testing': ^0.1.3
