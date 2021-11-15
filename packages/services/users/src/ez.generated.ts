@@ -5,6 +5,7 @@ import type {
 } from "graphql";
 import type { EZContext } from "graphql-ez";
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
 };
@@ -53,7 +54,7 @@ export type Scalars = {
 };
 
 export type AdminGroupsFilter = {
-  tags?: Maybe<Array<Scalars["String"]>>;
+  tags?: InputMaybe<Array<Scalars["String"]>>;
 };
 
 export type AdminUserMutations = {
@@ -101,17 +102,17 @@ export type AdminUserQueries = {
 };
 
 export type AdminUserQueriesAllGroupsArgs = {
-  filters?: Maybe<AdminGroupsFilter>;
+  filters?: InputMaybe<AdminGroupsFilter>;
   pagination: CursorConnectionArgs;
 };
 
 export type AdminUserQueriesAllUsersArgs = {
-  filters?: Maybe<AdminUsersFilter>;
+  filters?: InputMaybe<AdminUsersFilter>;
   pagination: CursorConnectionArgs;
 };
 
 export type AdminUsersFilter = {
-  tags?: Maybe<Array<Scalars["String"]>>;
+  tags?: InputMaybe<Array<Scalars["String"]>>;
 };
 
 export type Connection = {
@@ -120,17 +121,17 @@ export type Connection = {
 
 export type CreateGroupInput = {
   code: Scalars["String"];
-  flags?: Maybe<GroupFlagsInput>;
+  flags?: InputMaybe<GroupFlagsInput>;
   label: Scalars["String"];
   projectIds: Array<Scalars["IntID"]>;
   tags: Array<Scalars["String"]>;
 };
 
 export type CursorConnectionArgs = {
-  after?: Maybe<Scalars["IntID"]>;
-  before?: Maybe<Scalars["IntID"]>;
-  first?: Maybe<Scalars["NonNegativeInt"]>;
-  last?: Maybe<Scalars["NonNegativeInt"]>;
+  after?: InputMaybe<Scalars["IntID"]>;
+  before?: InputMaybe<Scalars["IntID"]>;
+  first?: InputMaybe<Scalars["NonNegativeInt"]>;
+  last?: InputMaybe<Scalars["NonNegativeInt"]>;
 };
 
 export type Group = {
@@ -210,7 +211,7 @@ export type Subscription = {
 
 export type UpdateGroupInput = {
   code: Scalars["String"];
-  flags?: Maybe<GroupFlagsInput>;
+  flags?: InputMaybe<GroupFlagsInput>;
   id: Scalars["IntID"];
   label: Scalars["String"];
   projectIds: Array<Scalars["IntID"]>;
@@ -220,7 +221,7 @@ export type UpdateGroupInput = {
 export type UpdateUserInput = {
   id: Scalars["IntID"];
   locked: Scalars["Boolean"];
-  name?: Maybe<Scalars["String"]>;
+  name?: InputMaybe<Scalars["String"]>;
   projectIds: Array<Scalars["IntID"]>;
   role: UserRole;
   tags: Array<Scalars["String"]>;
@@ -266,7 +267,7 @@ export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
   args: TArgs,
   context: TContext,
   info: GraphQLResolveInfo
-) => AsyncIterator<TResult> | Promise<AsyncIterator<TResult>>;
+) => AsyncIterable<TResult> | Promise<AsyncIterable<TResult>>;
 
 export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,

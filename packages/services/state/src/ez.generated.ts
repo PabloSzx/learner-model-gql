@@ -5,6 +5,7 @@ import type {
 } from "graphql";
 import type { EZContext } from "graphql-ez";
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
 };
@@ -76,10 +77,10 @@ export type Connection = {
 };
 
 export type CursorConnectionArgs = {
-  after?: Maybe<Scalars["IntID"]>;
-  before?: Maybe<Scalars["IntID"]>;
-  first?: Maybe<Scalars["NonNegativeInt"]>;
-  last?: Maybe<Scalars["NonNegativeInt"]>;
+  after?: InputMaybe<Scalars["IntID"]>;
+  before?: InputMaybe<Scalars["IntID"]>;
+  first?: InputMaybe<Scalars["NonNegativeInt"]>;
+  last?: InputMaybe<Scalars["NonNegativeInt"]>;
 };
 
 export type Domain = {
@@ -111,8 +112,8 @@ export type ModelStateConnection = Connection & {
 };
 
 export type ModelStateConnectionInput = {
-  filters?: Maybe<ModelStateFilter>;
-  orderBy?: Maybe<ModelStateOrderBy>;
+  filters?: InputMaybe<ModelStateFilter>;
+  orderBy?: InputMaybe<ModelStateOrderBy>;
   pagination: CursorConnectionArgs;
 };
 
@@ -131,12 +132,12 @@ export type ModelStateCreatorConnection = Connection & {
 };
 
 export type ModelStateFilter = {
-  creators?: Maybe<Array<Scalars["String"]>>;
-  type?: Maybe<Array<Scalars["String"]>>;
+  creators?: InputMaybe<Array<Scalars["String"]>>;
+  type?: InputMaybe<Array<Scalars["String"]>>;
 };
 
 export type ModelStateOrderBy = {
-  id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 export type ModelStateType = {
@@ -217,7 +218,7 @@ export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
   args: TArgs,
   context: TContext,
   info: GraphQLResolveInfo
-) => AsyncIterator<TResult> | Promise<AsyncIterator<TResult>>;
+) => AsyncIterable<TResult> | Promise<AsyncIterable<TResult>>;
 
 export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,

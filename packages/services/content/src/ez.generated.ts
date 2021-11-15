@@ -5,6 +5,7 @@ import type {
 } from "graphql";
 import type { EZContext } from "graphql-ez";
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
 };
@@ -53,8 +54,8 @@ export type Scalars = {
 };
 
 export type AdminContentFilter = {
-  projects?: Maybe<Array<Scalars["IntID"]>>;
-  tags?: Maybe<Array<Scalars["String"]>>;
+  projects?: InputMaybe<Array<Scalars["IntID"]>>;
+  tags?: InputMaybe<Array<Scalars["String"]>>;
 };
 
 export type AdminContentMutations = {
@@ -77,7 +78,7 @@ export type AdminContentQueries = {
 };
 
 export type AdminContentQueriesAllContentArgs = {
-  filters?: Maybe<AdminContentFilter>;
+  filters?: InputMaybe<AdminContentFilter>;
   pagination: CursorConnectionArgs;
 };
 
@@ -109,24 +110,24 @@ export type ContentConnection = Connection & {
 };
 
 export type CreateContent = {
-  binaryBase64?: Maybe<Scalars["String"]>;
-  binaryFilename?: Maybe<Scalars["String"]>;
+  binaryBase64?: InputMaybe<Scalars["String"]>;
+  binaryFilename?: InputMaybe<Scalars["String"]>;
   code: Scalars["String"];
   description: Scalars["String"];
-  json?: Maybe<Scalars["JSONObject"]>;
+  json?: InputMaybe<Scalars["JSONObject"]>;
   kcs: Array<Scalars["IntID"]>;
   label: Scalars["String"];
   projectId: Scalars["IntID"];
   tags: Array<Scalars["String"]>;
   topics: Array<Scalars["IntID"]>;
-  url?: Maybe<Scalars["URL"]>;
+  url?: InputMaybe<Scalars["URL"]>;
 };
 
 export type CursorConnectionArgs = {
-  after?: Maybe<Scalars["IntID"]>;
-  before?: Maybe<Scalars["IntID"]>;
-  first?: Maybe<Scalars["NonNegativeInt"]>;
-  last?: Maybe<Scalars["NonNegativeInt"]>;
+  after?: InputMaybe<Scalars["IntID"]>;
+  before?: InputMaybe<Scalars["IntID"]>;
+  first?: InputMaybe<Scalars["NonNegativeInt"]>;
+  last?: InputMaybe<Scalars["NonNegativeInt"]>;
 };
 
 export type Mutation = {
@@ -156,18 +157,18 @@ export type Project = {
 };
 
 export type ProjectContentArgs = {
-  filters?: Maybe<ProjectContentFilter>;
+  filters?: InputMaybe<ProjectContentFilter>;
   pagination: CursorConnectionArgs;
 };
 
 export type ProjectContentFilter = {
-  createdEndDate?: Maybe<Scalars["DateTime"]>;
-  createdStartDate?: Maybe<Scalars["DateTime"]>;
-  kcsIds?: Maybe<Array<Scalars["IntID"]>>;
-  tags?: Maybe<Array<Scalars["String"]>>;
-  topicsIds?: Maybe<Array<Scalars["IntID"]>>;
-  updatedEndDate?: Maybe<Scalars["DateTime"]>;
-  updatedStartDate?: Maybe<Scalars["DateTime"]>;
+  createdEndDate?: InputMaybe<Scalars["DateTime"]>;
+  createdStartDate?: InputMaybe<Scalars["DateTime"]>;
+  kcsIds?: InputMaybe<Array<Scalars["IntID"]>>;
+  tags?: InputMaybe<Array<Scalars["String"]>>;
+  topicsIds?: InputMaybe<Array<Scalars["IntID"]>>;
+  updatedEndDate?: InputMaybe<Scalars["DateTime"]>;
+  updatedStartDate?: InputMaybe<Scalars["DateTime"]>;
 };
 
 export type Query = {
@@ -214,18 +215,18 @@ export type Topic = {
 };
 
 export type UpdateContent = {
-  binaryBase64?: Maybe<Scalars["String"]>;
-  binaryFilename?: Maybe<Scalars["String"]>;
+  binaryBase64?: InputMaybe<Scalars["String"]>;
+  binaryFilename?: InputMaybe<Scalars["String"]>;
   code: Scalars["String"];
   description: Scalars["String"];
   id: Scalars["IntID"];
-  json?: Maybe<Scalars["JSONObject"]>;
+  json?: InputMaybe<Scalars["JSONObject"]>;
   kcs: Array<Scalars["IntID"]>;
   label: Scalars["String"];
   projectId: Scalars["IntID"];
   tags: Array<Scalars["String"]>;
   topics: Array<Scalars["IntID"]>;
-  url?: Maybe<Scalars["URL"]>;
+  url?: InputMaybe<Scalars["URL"]>;
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -242,7 +243,7 @@ export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
   args: TArgs,
   context: TContext,
   info: GraphQLResolveInfo
-) => AsyncIterator<TResult> | Promise<AsyncIterator<TResult>>;
+) => AsyncIterable<TResult> | Promise<AsyncIterable<TResult>>;
 
 export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,

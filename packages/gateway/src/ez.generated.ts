@@ -5,6 +5,7 @@ import type {
 } from "graphql";
 import type { EZContext } from "graphql-ez";
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
 };
@@ -71,17 +72,17 @@ export type Action = {
 };
 
 export type ActionInput = {
-  amount?: Maybe<Scalars["Float"]>;
-  contentID?: Maybe<Scalars["ID"]>;
-  detail?: Maybe<Scalars["String"]>;
-  extra?: Maybe<Scalars["JSONObject"]>;
-  hintID?: Maybe<Scalars["ID"]>;
-  kcsIDs?: Maybe<Array<Scalars["ID"]>>;
+  amount?: InputMaybe<Scalars["Float"]>;
+  contentID?: InputMaybe<Scalars["ID"]>;
+  detail?: InputMaybe<Scalars["String"]>;
+  extra?: InputMaybe<Scalars["JSONObject"]>;
+  hintID?: InputMaybe<Scalars["ID"]>;
+  kcsIDs?: InputMaybe<Array<Scalars["ID"]>>;
   projectId: Scalars["IntID"];
-  result?: Maybe<Scalars["Float"]>;
-  stepID?: Maybe<Scalars["ID"]>;
+  result?: InputMaybe<Scalars["Float"]>;
+  stepID?: InputMaybe<Scalars["ID"]>;
   timestamp: Scalars["Timestamp"];
-  topicID?: Maybe<Scalars["ID"]>;
+  topicID?: InputMaybe<Scalars["ID"]>;
   verbName: Scalars["String"];
 };
 
@@ -110,8 +111,8 @@ export type AdminActionQueries = {
 };
 
 export type AdminActionQueriesAllActionsArgs = {
-  filters?: Maybe<AdminActionsFilter>;
-  orderBy?: Maybe<AdminActionsOrderBy>;
+  filters?: InputMaybe<AdminActionsFilter>;
+  orderBy?: InputMaybe<AdminActionsOrderBy>;
   pagination: CursorConnectionArgs;
 };
 
@@ -120,23 +121,23 @@ export type AdminActionQueriesAllActionsVerbsArgs = {
 };
 
 export type AdminActionsFilter = {
-  content?: Maybe<Array<Scalars["IntID"]>>;
-  endDate?: Maybe<Scalars["DateTime"]>;
-  kcs?: Maybe<Array<Scalars["IntID"]>>;
-  projects?: Maybe<Array<Scalars["IntID"]>>;
-  startDate?: Maybe<Scalars["DateTime"]>;
-  topics?: Maybe<Array<Scalars["IntID"]>>;
-  users?: Maybe<Array<Scalars["IntID"]>>;
-  verbNames?: Maybe<Array<Scalars["String"]>>;
+  content?: InputMaybe<Array<Scalars["IntID"]>>;
+  endDate?: InputMaybe<Scalars["DateTime"]>;
+  kcs?: InputMaybe<Array<Scalars["IntID"]>>;
+  projects?: InputMaybe<Array<Scalars["IntID"]>>;
+  startDate?: InputMaybe<Scalars["DateTime"]>;
+  topics?: InputMaybe<Array<Scalars["IntID"]>>;
+  users?: InputMaybe<Array<Scalars["IntID"]>>;
+  verbNames?: InputMaybe<Array<Scalars["String"]>>;
 };
 
 export type AdminActionsOrderBy = {
-  id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 export type AdminContentFilter = {
-  projects?: Maybe<Array<Scalars["IntID"]>>;
-  tags?: Maybe<Array<Scalars["String"]>>;
+  projects?: InputMaybe<Array<Scalars["IntID"]>>;
+  tags?: InputMaybe<Array<Scalars["String"]>>;
 };
 
 export type AdminContentMutations = {
@@ -159,7 +160,7 @@ export type AdminContentQueries = {
 };
 
 export type AdminContentQueriesAllContentArgs = {
-  filters?: Maybe<AdminContentFilter>;
+  filters?: InputMaybe<AdminContentFilter>;
   pagination: CursorConnectionArgs;
 };
 
@@ -205,31 +206,31 @@ export type AdminDomainQueries = {
 };
 
 export type AdminDomainQueriesAllDomainsArgs = {
-  filters?: Maybe<AdminDomainsFilter>;
+  filters?: InputMaybe<AdminDomainsFilter>;
   pagination: CursorConnectionArgs;
 };
 
 export type AdminDomainQueriesAllKCsArgs = {
-  filters?: Maybe<AdminKCsFilter>;
+  filters?: InputMaybe<AdminKCsFilter>;
   pagination: CursorConnectionArgs;
 };
 
 export type AdminDomainQueriesAllTopicsArgs = {
-  filters?: Maybe<AdminTopicsFilter>;
+  filters?: InputMaybe<AdminTopicsFilter>;
   pagination: CursorConnectionArgs;
 };
 
 export type AdminDomainsFilter = {
-  projects?: Maybe<Array<Scalars["IntID"]>>;
+  projects?: InputMaybe<Array<Scalars["IntID"]>>;
 };
 
 export type AdminGroupsFilter = {
-  tags?: Maybe<Array<Scalars["String"]>>;
+  tags?: InputMaybe<Array<Scalars["String"]>>;
 };
 
 export type AdminKCsFilter = {
-  domains?: Maybe<Array<Scalars["IntID"]>>;
-  projects?: Maybe<Array<Scalars["IntID"]>>;
+  domains?: InputMaybe<Array<Scalars["IntID"]>>;
+  projects?: InputMaybe<Array<Scalars["IntID"]>>;
 };
 
 export type AdminProjectsMutations = {
@@ -275,7 +276,7 @@ export type AdminStateQueriesAllModelStatesArgs = {
 };
 
 export type AdminTopicsFilter = {
-  projects?: Maybe<Array<Scalars["IntID"]>>;
+  projects?: InputMaybe<Array<Scalars["IntID"]>>;
 };
 
 export type AdminUserMutations = {
@@ -323,17 +324,17 @@ export type AdminUserQueries = {
 };
 
 export type AdminUserQueriesAllGroupsArgs = {
-  filters?: Maybe<AdminGroupsFilter>;
+  filters?: InputMaybe<AdminGroupsFilter>;
   pagination: CursorConnectionArgs;
 };
 
 export type AdminUserQueriesAllUsersArgs = {
-  filters?: Maybe<AdminUsersFilter>;
+  filters?: InputMaybe<AdminUsersFilter>;
   pagination: CursorConnectionArgs;
 };
 
 export type AdminUsersFilter = {
-  tags?: Maybe<Array<Scalars["String"]>>;
+  tags?: InputMaybe<Array<Scalars["String"]>>;
 };
 
 export type Connection = {
@@ -366,17 +367,17 @@ export type ContentConnection = Connection & {
 };
 
 export type CreateContent = {
-  binaryBase64?: Maybe<Scalars["String"]>;
-  binaryFilename?: Maybe<Scalars["String"]>;
+  binaryBase64?: InputMaybe<Scalars["String"]>;
+  binaryFilename?: InputMaybe<Scalars["String"]>;
   code: Scalars["String"];
   description: Scalars["String"];
-  json?: Maybe<Scalars["JSONObject"]>;
+  json?: InputMaybe<Scalars["JSONObject"]>;
   kcs: Array<Scalars["IntID"]>;
   label: Scalars["String"];
   projectId: Scalars["IntID"];
   tags: Array<Scalars["String"]>;
   topics: Array<Scalars["IntID"]>;
-  url?: Maybe<Scalars["URL"]>;
+  url?: InputMaybe<Scalars["URL"]>;
 };
 
 export type CreateDomain = {
@@ -387,7 +388,7 @@ export type CreateDomain = {
 
 export type CreateGroupInput = {
   code: Scalars["String"];
-  flags?: Maybe<GroupFlagsInput>;
+  flags?: InputMaybe<GroupFlagsInput>;
   label: Scalars["String"];
   projectIds: Array<Scalars["IntID"]>;
   tags: Array<Scalars["String"]>;
@@ -409,17 +410,17 @@ export type CreateTopic = {
   code: Scalars["String"];
   contentIds: Array<Scalars["IntID"]>;
   label: Scalars["String"];
-  parentTopicId?: Maybe<Scalars["IntID"]>;
+  parentTopicId?: InputMaybe<Scalars["IntID"]>;
   projectId: Scalars["IntID"];
-  sortIndex?: Maybe<Scalars["Int"]>;
+  sortIndex?: InputMaybe<Scalars["Int"]>;
   tags: Array<Scalars["String"]>;
 };
 
 export type CursorConnectionArgs = {
-  after?: Maybe<Scalars["IntID"]>;
-  before?: Maybe<Scalars["IntID"]>;
-  first?: Maybe<Scalars["NonNegativeInt"]>;
-  last?: Maybe<Scalars["NonNegativeInt"]>;
+  after?: InputMaybe<Scalars["IntID"]>;
+  before?: InputMaybe<Scalars["IntID"]>;
+  first?: InputMaybe<Scalars["NonNegativeInt"]>;
+  last?: InputMaybe<Scalars["NonNegativeInt"]>;
 };
 
 export type Domain = {
@@ -514,8 +515,8 @@ export type ModelStateConnection = Connection & {
 };
 
 export type ModelStateConnectionInput = {
-  filters?: Maybe<ModelStateFilter>;
-  orderBy?: Maybe<ModelStateOrderBy>;
+  filters?: InputMaybe<ModelStateFilter>;
+  orderBy?: InputMaybe<ModelStateOrderBy>;
   pagination: CursorConnectionArgs;
 };
 
@@ -534,12 +535,12 @@ export type ModelStateCreatorConnection = Connection & {
 };
 
 export type ModelStateFilter = {
-  creators?: Maybe<Array<Scalars["String"]>>;
-  type?: Maybe<Array<Scalars["String"]>>;
+  creators?: InputMaybe<Array<Scalars["String"]>>;
+  type?: InputMaybe<Array<Scalars["String"]>>;
 };
 
 export type ModelStateOrderBy = {
-  id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 export type ModelStateType = {
@@ -598,33 +599,33 @@ export type Project = {
 };
 
 export type ProjectActionsArgs = {
-  filters?: Maybe<ProjectActionsFilter>;
+  filters?: InputMaybe<ProjectActionsFilter>;
   pagination: CursorConnectionArgs;
 };
 
 export type ProjectContentArgs = {
-  filters?: Maybe<ProjectContentFilter>;
+  filters?: InputMaybe<ProjectContentFilter>;
   pagination: CursorConnectionArgs;
 };
 
 export type ProjectActionsFilter = {
-  content?: Maybe<Array<Scalars["IntID"]>>;
-  endDate?: Maybe<Scalars["DateTime"]>;
-  kcs?: Maybe<Array<Scalars["IntID"]>>;
-  startDate?: Maybe<Scalars["DateTime"]>;
-  topics?: Maybe<Array<Scalars["IntID"]>>;
-  users?: Maybe<Array<Scalars["IntID"]>>;
-  verbNames?: Maybe<Array<Scalars["String"]>>;
+  content?: InputMaybe<Array<Scalars["IntID"]>>;
+  endDate?: InputMaybe<Scalars["DateTime"]>;
+  kcs?: InputMaybe<Array<Scalars["IntID"]>>;
+  startDate?: InputMaybe<Scalars["DateTime"]>;
+  topics?: InputMaybe<Array<Scalars["IntID"]>>;
+  users?: InputMaybe<Array<Scalars["IntID"]>>;
+  verbNames?: InputMaybe<Array<Scalars["String"]>>;
 };
 
 export type ProjectContentFilter = {
-  createdEndDate?: Maybe<Scalars["DateTime"]>;
-  createdStartDate?: Maybe<Scalars["DateTime"]>;
-  kcsIds?: Maybe<Array<Scalars["IntID"]>>;
-  tags?: Maybe<Array<Scalars["String"]>>;
-  topicsIds?: Maybe<Array<Scalars["IntID"]>>;
-  updatedEndDate?: Maybe<Scalars["DateTime"]>;
-  updatedStartDate?: Maybe<Scalars["DateTime"]>;
+  createdEndDate?: InputMaybe<Scalars["DateTime"]>;
+  createdStartDate?: InputMaybe<Scalars["DateTime"]>;
+  kcsIds?: InputMaybe<Array<Scalars["IntID"]>>;
+  tags?: InputMaybe<Array<Scalars["String"]>>;
+  topicsIds?: InputMaybe<Array<Scalars["IntID"]>>;
+  updatedEndDate?: InputMaybe<Scalars["DateTime"]>;
+  updatedStartDate?: InputMaybe<Scalars["DateTime"]>;
 };
 
 export type ProjectsConnection = Connection & {
@@ -689,8 +690,8 @@ export type QueryKcsArgs = {
 };
 
 export type QueryProjectArgs = {
-  code?: Maybe<Scalars["String"]>;
-  id?: Maybe<Scalars["IntID"]>;
+  code?: InputMaybe<Scalars["String"]>;
+  id?: InputMaybe<Scalars["IntID"]>;
 };
 
 export type QueryProjectsArgs = {
@@ -737,18 +738,18 @@ export type TopicsConnection = Connection & {
 };
 
 export type UpdateContent = {
-  binaryBase64?: Maybe<Scalars["String"]>;
-  binaryFilename?: Maybe<Scalars["String"]>;
+  binaryBase64?: InputMaybe<Scalars["String"]>;
+  binaryFilename?: InputMaybe<Scalars["String"]>;
   code: Scalars["String"];
   description: Scalars["String"];
   id: Scalars["IntID"];
-  json?: Maybe<Scalars["JSONObject"]>;
+  json?: InputMaybe<Scalars["JSONObject"]>;
   kcs: Array<Scalars["IntID"]>;
   label: Scalars["String"];
   projectId: Scalars["IntID"];
   tags: Array<Scalars["String"]>;
   topics: Array<Scalars["IntID"]>;
-  url?: Maybe<Scalars["URL"]>;
+  url?: InputMaybe<Scalars["URL"]>;
 };
 
 export type UpdateDomain = {
@@ -759,7 +760,7 @@ export type UpdateDomain = {
 
 export type UpdateGroupInput = {
   code: Scalars["String"];
-  flags?: Maybe<GroupFlagsInput>;
+  flags?: InputMaybe<GroupFlagsInput>;
   id: Scalars["IntID"];
   label: Scalars["String"];
   projectIds: Array<Scalars["IntID"]>;
@@ -784,15 +785,15 @@ export type UpdateTopic = {
   contentIds: Array<Scalars["IntID"]>;
   id: Scalars["IntID"];
   label: Scalars["String"];
-  parentTopicId?: Maybe<Scalars["IntID"]>;
-  sortIndex?: Maybe<Scalars["Int"]>;
+  parentTopicId?: InputMaybe<Scalars["IntID"]>;
+  sortIndex?: InputMaybe<Scalars["Int"]>;
   tags: Array<Scalars["String"]>;
 };
 
 export type UpdateUserInput = {
   id: Scalars["IntID"];
   locked: Scalars["Boolean"];
-  name?: Maybe<Scalars["String"]>;
+  name?: InputMaybe<Scalars["String"]>;
   projectIds: Array<Scalars["IntID"]>;
   role: UserRole;
   tags: Array<Scalars["String"]>;
@@ -844,7 +845,7 @@ export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
   args: TArgs,
   context: TContext,
   info: GraphQLResolveInfo
-) => AsyncIterator<TResult> | Promise<AsyncIterator<TResult>>;
+) => AsyncIterable<TResult> | Promise<AsyncIterable<TResult>>;
 
 export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,

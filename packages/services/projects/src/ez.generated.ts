@@ -5,6 +5,7 @@ import type {
 } from "graphql";
 import type { EZContext } from "graphql-ez";
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
 };
@@ -92,10 +93,10 @@ export type CreateProject = {
 };
 
 export type CursorConnectionArgs = {
-  after?: Maybe<Scalars["IntID"]>;
-  before?: Maybe<Scalars["IntID"]>;
-  first?: Maybe<Scalars["NonNegativeInt"]>;
-  last?: Maybe<Scalars["NonNegativeInt"]>;
+  after?: InputMaybe<Scalars["IntID"]>;
+  before?: InputMaybe<Scalars["IntID"]>;
+  first?: InputMaybe<Scalars["NonNegativeInt"]>;
+  last?: InputMaybe<Scalars["NonNegativeInt"]>;
 };
 
 export type Domain = {
@@ -178,8 +179,8 @@ export type QueryGroupsArgs = {
 };
 
 export type QueryProjectArgs = {
-  code?: Maybe<Scalars["String"]>;
-  id?: Maybe<Scalars["IntID"]>;
+  code?: InputMaybe<Scalars["String"]>;
+  id?: InputMaybe<Scalars["IntID"]>;
 };
 
 export type QueryProjectsArgs = {
@@ -232,7 +233,7 @@ export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
   args: TArgs,
   context: TContext,
   info: GraphQLResolveInfo
-) => AsyncIterator<TResult> | Promise<AsyncIterator<TResult>>;
+) => AsyncIterable<TResult> | Promise<AsyncIterable<TResult>>;
 
 export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,

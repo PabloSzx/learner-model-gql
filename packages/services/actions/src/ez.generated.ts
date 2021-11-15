@@ -5,6 +5,7 @@ import type {
 } from "graphql";
 import type { EZContext } from "graphql-ez";
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
 };
@@ -71,17 +72,17 @@ export type Action = {
 };
 
 export type ActionInput = {
-  amount?: Maybe<Scalars["Float"]>;
-  contentID?: Maybe<Scalars["ID"]>;
-  detail?: Maybe<Scalars["String"]>;
-  extra?: Maybe<Scalars["JSONObject"]>;
-  hintID?: Maybe<Scalars["ID"]>;
-  kcsIDs?: Maybe<Array<Scalars["ID"]>>;
+  amount?: InputMaybe<Scalars["Float"]>;
+  contentID?: InputMaybe<Scalars["ID"]>;
+  detail?: InputMaybe<Scalars["String"]>;
+  extra?: InputMaybe<Scalars["JSONObject"]>;
+  hintID?: InputMaybe<Scalars["ID"]>;
+  kcsIDs?: InputMaybe<Array<Scalars["ID"]>>;
   projectId: Scalars["IntID"];
-  result?: Maybe<Scalars["Float"]>;
-  stepID?: Maybe<Scalars["ID"]>;
+  result?: InputMaybe<Scalars["Float"]>;
+  stepID?: InputMaybe<Scalars["ID"]>;
   timestamp: Scalars["Timestamp"];
-  topicID?: Maybe<Scalars["ID"]>;
+  topicID?: InputMaybe<Scalars["ID"]>;
   verbName: Scalars["String"];
 };
 
@@ -110,8 +111,8 @@ export type AdminActionQueries = {
 };
 
 export type AdminActionQueriesAllActionsArgs = {
-  filters?: Maybe<AdminActionsFilter>;
-  orderBy?: Maybe<AdminActionsOrderBy>;
+  filters?: InputMaybe<AdminActionsFilter>;
+  orderBy?: InputMaybe<AdminActionsOrderBy>;
   pagination: CursorConnectionArgs;
 };
 
@@ -120,18 +121,18 @@ export type AdminActionQueriesAllActionsVerbsArgs = {
 };
 
 export type AdminActionsFilter = {
-  content?: Maybe<Array<Scalars["IntID"]>>;
-  endDate?: Maybe<Scalars["DateTime"]>;
-  kcs?: Maybe<Array<Scalars["IntID"]>>;
-  projects?: Maybe<Array<Scalars["IntID"]>>;
-  startDate?: Maybe<Scalars["DateTime"]>;
-  topics?: Maybe<Array<Scalars["IntID"]>>;
-  users?: Maybe<Array<Scalars["IntID"]>>;
-  verbNames?: Maybe<Array<Scalars["String"]>>;
+  content?: InputMaybe<Array<Scalars["IntID"]>>;
+  endDate?: InputMaybe<Scalars["DateTime"]>;
+  kcs?: InputMaybe<Array<Scalars["IntID"]>>;
+  projects?: InputMaybe<Array<Scalars["IntID"]>>;
+  startDate?: InputMaybe<Scalars["DateTime"]>;
+  topics?: InputMaybe<Array<Scalars["IntID"]>>;
+  users?: InputMaybe<Array<Scalars["IntID"]>>;
+  verbNames?: InputMaybe<Array<Scalars["String"]>>;
 };
 
 export type AdminActionsOrderBy = {
-  id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 export type Connection = {
@@ -144,10 +145,10 @@ export type Content = {
 };
 
 export type CursorConnectionArgs = {
-  after?: Maybe<Scalars["IntID"]>;
-  before?: Maybe<Scalars["IntID"]>;
-  first?: Maybe<Scalars["NonNegativeInt"]>;
-  last?: Maybe<Scalars["NonNegativeInt"]>;
+  after?: InputMaybe<Scalars["IntID"]>;
+  before?: InputMaybe<Scalars["IntID"]>;
+  first?: InputMaybe<Scalars["NonNegativeInt"]>;
+  last?: InputMaybe<Scalars["NonNegativeInt"]>;
 };
 
 export type Domain = {
@@ -191,18 +192,18 @@ export type Project = {
 };
 
 export type ProjectActionsArgs = {
-  filters?: Maybe<ProjectActionsFilter>;
+  filters?: InputMaybe<ProjectActionsFilter>;
   pagination: CursorConnectionArgs;
 };
 
 export type ProjectActionsFilter = {
-  content?: Maybe<Array<Scalars["IntID"]>>;
-  endDate?: Maybe<Scalars["DateTime"]>;
-  kcs?: Maybe<Array<Scalars["IntID"]>>;
-  startDate?: Maybe<Scalars["DateTime"]>;
-  topics?: Maybe<Array<Scalars["IntID"]>>;
-  users?: Maybe<Array<Scalars["IntID"]>>;
-  verbNames?: Maybe<Array<Scalars["String"]>>;
+  content?: InputMaybe<Array<Scalars["IntID"]>>;
+  endDate?: InputMaybe<Scalars["DateTime"]>;
+  kcs?: InputMaybe<Array<Scalars["IntID"]>>;
+  startDate?: InputMaybe<Scalars["DateTime"]>;
+  topics?: InputMaybe<Array<Scalars["IntID"]>>;
+  users?: InputMaybe<Array<Scalars["IntID"]>>;
+  verbNames?: InputMaybe<Array<Scalars["String"]>>;
 };
 
 export type Query = {
@@ -245,7 +246,7 @@ export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
   args: TArgs,
   context: TContext,
   info: GraphQLResolveInfo
-) => AsyncIterator<TResult> | Promise<AsyncIterator<TResult>>;
+) => AsyncIterable<TResult> | Promise<AsyncIterable<TResult>>;
 
 export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,

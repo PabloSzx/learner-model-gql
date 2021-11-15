@@ -5,6 +5,7 @@ import type {
 } from "graphql";
 import type { EZContext } from "graphql-ez";
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
 };
@@ -94,31 +95,31 @@ export type AdminDomainQueries = {
 };
 
 export type AdminDomainQueriesAllDomainsArgs = {
-  filters?: Maybe<AdminDomainsFilter>;
+  filters?: InputMaybe<AdminDomainsFilter>;
   pagination: CursorConnectionArgs;
 };
 
 export type AdminDomainQueriesAllKCsArgs = {
-  filters?: Maybe<AdminKCsFilter>;
+  filters?: InputMaybe<AdminKCsFilter>;
   pagination: CursorConnectionArgs;
 };
 
 export type AdminDomainQueriesAllTopicsArgs = {
-  filters?: Maybe<AdminTopicsFilter>;
+  filters?: InputMaybe<AdminTopicsFilter>;
   pagination: CursorConnectionArgs;
 };
 
 export type AdminDomainsFilter = {
-  projects?: Maybe<Array<Scalars["IntID"]>>;
+  projects?: InputMaybe<Array<Scalars["IntID"]>>;
 };
 
 export type AdminKCsFilter = {
-  domains?: Maybe<Array<Scalars["IntID"]>>;
-  projects?: Maybe<Array<Scalars["IntID"]>>;
+  domains?: InputMaybe<Array<Scalars["IntID"]>>;
+  projects?: InputMaybe<Array<Scalars["IntID"]>>;
 };
 
 export type AdminTopicsFilter = {
-  projects?: Maybe<Array<Scalars["IntID"]>>;
+  projects?: InputMaybe<Array<Scalars["IntID"]>>;
 };
 
 export type Connection = {
@@ -148,17 +149,17 @@ export type CreateTopic = {
   code: Scalars["String"];
   contentIds: Array<Scalars["IntID"]>;
   label: Scalars["String"];
-  parentTopicId?: Maybe<Scalars["IntID"]>;
+  parentTopicId?: InputMaybe<Scalars["IntID"]>;
   projectId: Scalars["IntID"];
-  sortIndex?: Maybe<Scalars["Int"]>;
+  sortIndex?: InputMaybe<Scalars["Int"]>;
   tags: Array<Scalars["String"]>;
 };
 
 export type CursorConnectionArgs = {
-  after?: Maybe<Scalars["IntID"]>;
-  before?: Maybe<Scalars["IntID"]>;
-  first?: Maybe<Scalars["NonNegativeInt"]>;
-  last?: Maybe<Scalars["NonNegativeInt"]>;
+  after?: InputMaybe<Scalars["IntID"]>;
+  before?: InputMaybe<Scalars["IntID"]>;
+  first?: InputMaybe<Scalars["NonNegativeInt"]>;
+  last?: InputMaybe<Scalars["NonNegativeInt"]>;
 };
 
 export type Domain = {
@@ -299,8 +300,8 @@ export type UpdateTopic = {
   contentIds: Array<Scalars["IntID"]>;
   id: Scalars["IntID"];
   label: Scalars["String"];
-  parentTopicId?: Maybe<Scalars["IntID"]>;
-  sortIndex?: Maybe<Scalars["Int"]>;
+  parentTopicId?: InputMaybe<Scalars["IntID"]>;
+  sortIndex?: InputMaybe<Scalars["Int"]>;
   tags: Array<Scalars["String"]>;
 };
 
@@ -318,7 +319,7 @@ export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
   args: TArgs,
   context: TContext,
   info: GraphQLResolveInfo
-) => AsyncIterator<TResult> | Promise<AsyncIterator<TResult>>;
+) => AsyncIterable<TResult> | Promise<AsyncIterable<TResult>>;
 
 export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
