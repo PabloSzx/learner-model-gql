@@ -603,8 +603,8 @@ export default withAdminAuth(function GroupsPage() {
                       (readProjectActions !==
                         original.flags.readProjectActions ||
                         readProjectModelStates !==
-                          original.flags.readProjectModelStates,
-                      original.code !== codeRef.current ||
+                          original.flags.readProjectModelStates ||
+                        original.code !== codeRef.current ||
                         original.label !== labelRef.current ||
                         original.projects
                           .map((v) => v.id)
