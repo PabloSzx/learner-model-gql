@@ -38,7 +38,7 @@ importers:
       lodash: ^4.17.21
       mocha: ^9.1.3
       prettier: ^2.4.1
-      pretty-quick: ^3.1.1
+      pretty-quick: ^3.1.2
       randomstring: ^1.2.1
       react: ^17.0.2
       rimraf: ^3.0.2
@@ -79,7 +79,7 @@ importers:
       lodash: 4.17.21
       mocha: 9.1.3
       prettier: 2.4.1
-      pretty-quick: 3.1.1_prettier@2.4.1
+      pretty-quick: 3.1.2_prettier@2.4.1
       randomstring: 1.2.1
       react: 17.0.2
       rimraf: 3.0.2
@@ -7471,8 +7471,8 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  /pretty-quick/3.1.1_prettier@2.4.1:
-    resolution: {integrity: sha512-ZYLGiMoV2jcaas3vTJrLvKAYsxDoXQBUn8OSTxkl67Fyov9lyXivJTl0+2WVh+y6EovGcw7Lm5ThYpH+Sh3XxQ==}
+  /pretty-quick/3.1.2_prettier@2.4.1:
+    resolution: {integrity: sha512-T+fpTJrDjTzewql4p3lKrRA7z3MrNyjBK1MKeaBm5PpKwATgVm885TpY7TgY8KFt5Q1Qn3QDseRQcyX9AKTKkA==}
     engines: {node: '>=10.13'}
     hasBin: true
     peerDependencies:
