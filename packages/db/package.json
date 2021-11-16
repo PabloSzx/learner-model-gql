@@ -19,7 +19,7 @@
     "common-api": "workspace:^1.0.0",
     "pg-gql-pubsub": "^0.3.0",
     "prisma": "^3.4.2",
-    "prisma-dbml-generator": "^0.8.1"
+    "prisma-dbml-generator": "^0.8.2"
   },
   "devDependencies": {
     "@types/concurrently": "^6.4.0",
