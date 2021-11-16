@@ -308,7 +308,7 @@ importers:
       '@graphql-codegen/typescript': ^2.4.0
       '@graphql-codegen/typescript-document-nodes': 2.2.0
       '@graphql-codegen/typescript-operations': ^2.2.0
-      '@graphql-codegen/typescript-react-query': ^3.1.1
+      '@graphql-codegen/typescript-react-query': ^3.2.0
       common: workspace:^0.0.1
       graphql: ^16.0.1
       prettier: ^2.4.1
@@ -326,7 +326,7 @@ importers:
       '@graphql-codegen/typescript': 2.4.0_graphql@16.0.1
       '@graphql-codegen/typescript-document-nodes': 2.2.0_graphql@16.0.1
       '@graphql-codegen/typescript-operations': 2.2.0_graphql@16.0.1
-      '@graphql-codegen/typescript-react-query': 3.1.1_graphql@16.0.1
+      '@graphql-codegen/typescript-react-query': 3.2.0_graphql@16.0.1
       react-query: 3.32.3_react@17.0.2
       rq-gql: 0.3.1_46013979660c6e2d66bbf6e8ab8cff07
       valtio: 1.2.6_react@17.0.2
@@ -2150,8 +2150,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@graphql-codegen/typescript-react-query/3.1.1_graphql@16.0.1:
-    resolution: {integrity: sha512-ETEnHEPm4bRBOkXA3PRsRqjanUgGuEOqoEgDsA+8iZj6RVjupge2XE6zqJfJS8fdskSGpfWw5vX//pAu/CQ0gw==}
+  /@graphql-codegen/typescript-react-query/3.2.0_graphql@16.0.1:
+    resolution: {integrity: sha512-SYISUShMiHpHDhKRCkKygPkxeJ6f49egYZF+QTHnvLyryAm5/d8PAzoN3XCBQ4FzGL8QABuUeRl5RGnxzEjVnw==}
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
       graphql-tag: ^2.0.0
