@@ -15,10 +15,10 @@
   },
   "dependencies": {
     "@graphql-ez/utils": "^0.1.2",
-    "@prisma/client": "^3.4.2",
+    "@prisma/client": "^3.5.0",
     "common-api": "workspace:^1.0.0",
     "pg-gql-pubsub": "^0.3.0",
-    "prisma": "^3.4.2",
+    "prisma": "^3.5.0",
     "prisma-dbml-generator": "^0.8.2"
   },
   "devDependencies": {
