@@ -32,7 +32,7 @@
     "react-table": "^7.7.0",
     "react-use": "^17.3.1",
     "rq-gql": "^0.3.1",
-    "serialize-error": "^8.1.0",
+    "serialize-error": "^9.0.0",
     "use-immer": "^0.6.0",
     "valtio": "^1.2.6",
     "zustand": "^3.6.5"
