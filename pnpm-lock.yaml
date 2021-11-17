@@ -12,7 +12,7 @@ importers:
       '@graphql-ez/fastify': ^0.9.4
       '@graphql-tools/code-file-loader': ^7.2.2
       '@graphql-tools/graphql-tag-pluck': ^7.1.3
-      '@graphql-typed-document-node/core': ^3.1.0
+      '@graphql-typed-document-node/core': ^3.1.1
       '@prisma/client': ^3.5.0
       '@types/concurrently': ^6.4.0
       '@types/mocha': ^9.0.0
@@ -55,7 +55,7 @@ importers:
       '@graphql-ez/fastify': 0.9.4_6138950c93eb36e54af588ebfa98c134
       '@graphql-tools/code-file-loader': 7.2.2_graphql@16.0.1
       '@graphql-tools/graphql-tag-pluck': 7.1.3_graphql@16.0.1
-      '@graphql-typed-document-node/core': 3.1.0_graphql@16.0.1
+      '@graphql-typed-document-node/core': 3.1.1_graphql@16.0.1
       '@prisma/client': 3.5.0
       '@types/concurrently': 6.4.0
       '@types/mocha': 9.0.0
@@ -195,7 +195,7 @@ importers:
       react-select: 5.2.1_754373e9ff7ac084ec3ce5a222b8dbcc
       react-table: 7.7.0_react@17.0.2
       react-use: 17.3.1_react-dom@17.0.2+react@17.0.2
-      rq-gql: 0.3.1_46013979660c6e2d66bbf6e8ab8cff07
+      rq-gql: 0.3.1_ba1b7f90749b0096cde3a8f5b971713f
       serialize-error: 9.0.0
       use-immer: 0.6.0_immer@9.0.6+react@17.0.2
       valtio: 1.2.6_react@17.0.2
@@ -328,7 +328,7 @@ importers:
       '@graphql-codegen/typescript-operations': 2.2.0_graphql@16.0.1
       '@graphql-codegen/typescript-react-query': 3.2.0_graphql@16.0.1
       react-query: 3.32.3_react@17.0.2
-      rq-gql: 0.3.1_46013979660c6e2d66bbf6e8ab8cff07
+      rq-gql: 0.3.1_ba1b7f90749b0096cde3a8f5b971713f
       valtio: 1.2.6_react@17.0.2
 
   packages/services/actions:
@@ -396,7 +396,7 @@ importers:
       '@graphql-codegen/typescript-operations': ^2.2.0
       '@graphql-ez/fastify': ^0.9.4
       '@graphql-ez/fastify-testing': ^0.1.3
-      '@graphql-typed-document-node/core': ^3.1.0
+      '@graphql-typed-document-node/core': ^3.1.1
       api-base: workspace:^0.0.1
       db: workspace:^0.0.1
     devDependencies:
@@ -408,7 +408,7 @@ importers:
       '@graphql-codegen/typescript-operations': 2.2.0_graphql@16.0.1
       '@graphql-ez/fastify': 0.9.4_6138950c93eb36e54af588ebfa98c134
       '@graphql-ez/fastify-testing': 0.1.3_11726983ea81d063c55ea39c9627528b
-      '@graphql-typed-document-node/core': 3.1.0_graphql@16.0.1
+      '@graphql-typed-document-node/core': 3.1.1_graphql@16.0.1
       api-base: link:../api-base
       db: link:../db
 
@@ -2710,6 +2710,15 @@ packages:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
     dependencies:
       graphql: 16.0.1
+    dev: false
+
+  /@graphql-typed-document-node/core/3.1.1_graphql@16.0.1:
+    resolution: {integrity: sha512-NQ17ii0rK1b34VZonlmT2QMJFI70m0TRwbknO/ihlbatXyaktDhN/98vBiUU6kNBPljqGqyIrl2T4nY2RpFANg==}
+    peerDependencies:
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+    dependencies:
+      graphql: 16.0.1
+    dev: true
 
   /@hapi/accept/5.0.2:
     resolution: {integrity: sha512-CmzBx/bXUR8451fnZRuZAJRlzgm0Jgu5dltTX/bszmR2lheb9BpyN47Q1RbaGTsvFzn0PXAEs+lXDKfshccYZw==}
@@ -8134,7 +8143,7 @@ packages:
       inherits: 2.0.4
     dev: false
 
-  /rq-gql/0.3.1_46013979660c6e2d66bbf6e8ab8cff07:
+  /rq-gql/0.3.1_ba1b7f90749b0096cde3a8f5b971713f:
     resolution: {integrity: sha512-K4MKVJXwt+nYLW3K2enCG9wdwbg8Timmyex+2p+Yjop53yeZJbUMe94UE/mnCyg8EmpW5OAt64HJICto2EZHtg==}
     peerDependencies:
       '@graphql-typed-document-node/core': ^3.1.0
@@ -8149,7 +8158,7 @@ packages:
       '@graphql-codegen/typescript-operations': 2.2.0_graphql@16.0.1
       '@graphql-codegen/visitor-plugin-common': 2.5.0_graphql@16.0.1
       '@graphql-tools/utils': 8.5.3_graphql@16.0.1
-      '@graphql-typed-document-node/core': 3.1.0_graphql@16.0.1
+      '@graphql-typed-document-node/core': 3.1.1_graphql@16.0.1
       commander: 8.3.0
       graphql: 16.0.1
       react-query: 3.32.3_react-dom@17.0.2+react@17.0.2
