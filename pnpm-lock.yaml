@@ -108,7 +108,7 @@ importers:
       fastify-plugin: ^3.0.0
       pino: ^7.2.0
       pino-pretty: ^7.2.0
-      serialize-error: ^8.1.0
+      serialize-error: ^9.0.0
       validator: ^13.7.0
       wait-on: ^6.0.0
     dependencies:
@@ -128,7 +128,7 @@ importers:
       fastify-plugin: 3.0.0
       pino: 7.2.0
       pino-pretty: 7.2.0
-      serialize-error: 8.1.0
+      serialize-error: 9.0.0
       validator: 13.7.0
       wait-on: 6.0.0
     devDependencies:
@@ -166,7 +166,7 @@ importers:
       react-table: ^7.7.0
       react-use: ^17.3.1
       rq-gql: ^0.3.1
-      serialize-error: ^8.1.0
+      serialize-error: ^9.0.0
       typescript: ^4.4.4
       use-immer: ^0.6.0
       valtio: ^1.2.6
@@ -196,7 +196,7 @@ importers:
       react-table: 7.7.0_react@17.0.2
       react-use: 17.3.1_react-dom@17.0.2+react@17.0.2
       rq-gql: 0.3.1_46013979660c6e2d66bbf6e8ab8cff07
-      serialize-error: 8.1.0
+      serialize-error: 9.0.0
       use-immer: 0.6.0_immer@9.0.6+react@17.0.2
       valtio: 1.2.6_react@17.0.2
       zustand: 3.6.5_react@17.0.2
@@ -8251,11 +8251,11 @@ packages:
       tslib: 2.3.1
       upper-case-first: 2.0.2
 
-  /serialize-error/8.1.0:
-    resolution: {integrity: sha512-3NnuWfM6vBYoy5gZFvHiYsVbafvI9vZv/+jlIigFn4oP4zjNPK3LhcY0xSCgeb1a5L8jO71Mit9LlNoi2UfDDQ==}
-    engines: {node: '>=10'}
+  /serialize-error/9.0.0:
+    resolution: {integrity: sha512-g2bg8Axwii7KlEkLAKXbLuGXS8rkvEdOY7VAlh8OpvG7lZH6Fcj3cyWVPU7HhiJMIe/1udV+Te3ON0Ch3TFlWQ==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
-      type-fest: 0.20.2
+      type-fest: 2.5.3
     dev: false
 
   /serialize-javascript/6.0.0:
@@ -8961,11 +8961,6 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  /type-fest/0.20.2:
-    resolution: {integrity: sha512-Ne+eE4r0/iWnpAxD852z3A+N0Bt5RN//NjJwRd2VFHEmrywxf5vsZlh4R6lixl6B+wz/8d+maTSAkN1FIkI3LQ==}
-    engines: {node: '>=10'}
-    dev: false
-
   /type-fest/0.21.3:
     resolution: {integrity: sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==}
     engines: {node: '>=10'}
@@ -8983,6 +8978,11 @@ packages:
   /type-fest/0.8.1:
     resolution: {integrity: sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==}
     engines: {node: '>=8'}
+    dev: false
+
+  /type-fest/2.5.3:
+    resolution: {integrity: sha512-7VNmE7FlsrdcWjKbtuRuynZz96Gmf35p5DvoR2tbceNP0vd58ISx87PvUUInlhtRC49vSX6qlxEKc7AoiHRirg==}
+    engines: {node: '>=12.20'}
     dev: false
 
   /typescript/4.4.4:
