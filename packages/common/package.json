@@ -6,6 +6,6 @@
   "main": "src/index.ts",
   "types": "src/index.ts",
   "dependencies": {
-    "date-fns": "^2.25.0"
+    "date-fns": "^2.26.0"
   }
 }

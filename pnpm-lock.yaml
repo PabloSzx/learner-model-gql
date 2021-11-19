@@ -150,7 +150,7 @@ importers:
       '@types/react-table': ^7.7.8
       common: workspace:^0.0.1
       cross-env: ^7.0.3
-      date-fns: ^2.25.0
+      date-fns: ^2.26.0
       framer-motion: ^5.3.1
       graph: workspace:^0.0.1
       immer: ^9.0.6
@@ -180,7 +180,7 @@ importers:
       '@types/react': 17.0.35
       '@types/react-dom': 17.0.11
       common: link:../common
-      date-fns: 2.25.0
+      date-fns: 2.26.0
       framer-motion: 5.3.1_react-dom@17.0.2+react@17.0.2
       graph: link:../graph
       immer: 9.0.6
@@ -210,9 +210,9 @@ importers:
 
   packages/common:
     specifiers:
-      date-fns: ^2.25.0
+      date-fns: ^2.26.0
     dependencies:
-      date-fns: 2.25.0
+      date-fns: 2.26.0
 
   packages/common-api:
     specifiers:
@@ -3397,7 +3397,7 @@ packages:
     dependencies:
       '@popperjs/core': 2.10.2
       '@types/react': 17.0.35
-      date-fns: 2.25.0
+      date-fns: 2.26.0
       react-popper: 2.2.5_838acf1c84808345430cf17171f87518
     transitivePeerDependencies:
       - react
@@ -4633,6 +4633,10 @@ packages:
 
   /date-fns/2.25.0:
     resolution: {integrity: sha512-ovYRFnTrbGPD4nqaEqescPEv1mNwvt+UTqI3Ay9SzNtey9NZnYu6E2qCcBBgJ6/2VF1zGGygpyTDITqpQQ5e+w==}
+    engines: {node: '>=0.11'}
+
+  /date-fns/2.26.0:
+    resolution: {integrity: sha512-VQI812dRi3cusdY/fhoBKvc6l2W8BPWU1FNVnFH9Nttjx4AFBRzfSVb/Eyc7jBT6e9sg1XtAGsYpBQ6c/jygbg==}
     engines: {node: '>=0.11'}
 
   /dateformat/4.6.3:
@@ -7736,7 +7740,7 @@ packages:
     dependencies:
       '@popperjs/core': 2.10.2
       classnames: 2.3.1
-      date-fns: 2.25.0
+      date-fns: 2.26.0
       prop-types: 15.7.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
