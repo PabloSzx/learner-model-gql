@@ -1,4 +1,4 @@
-import { command } from "execa";
+import { execaCommand as command } from "execa";
 import { dirname, resolve } from "path";
 import { generate } from "randomstring";
 import { fileURLToPath } from "url";

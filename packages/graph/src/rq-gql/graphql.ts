@@ -865,7 +865,7 @@ export type AllVerbNamesQuery = {
 
 export type AllContentBaseQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
-  filters?: Maybe<AdminContentFilter>;
+  filters?: InputMaybe<AdminContentFilter>;
 }>;
 
 export type AllContentBaseQuery = {
@@ -894,7 +894,7 @@ export type AllContentBaseQuery = {
 
 export type AllDomainsBaseQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
-  filters?: Maybe<AdminDomainsFilter>;
+  filters?: InputMaybe<AdminDomainsFilter>;
 }>;
 
 export type AllDomainsBaseQuery = {
@@ -949,7 +949,7 @@ export type AllGroupsBaseQuery = {
 
 export type AllKCsBaseQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
-  filters?: Maybe<AdminKCsFilter>;
+  filters?: InputMaybe<AdminKCsFilter>;
 }>;
 
 export type AllKCsBaseQuery = {
@@ -1150,7 +1150,7 @@ export type AllProjectsBaseQuery = {
 
 export type AllTopicsBaseQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
-  filters?: Maybe<AdminTopicsFilter>;
+  filters?: InputMaybe<AdminTopicsFilter>;
 }>;
 
 export type AllTopicsBaseQuery = {
@@ -1264,7 +1264,7 @@ export type ActionsInfoFragment = {
 
 export type AllActionsQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
-  filters?: Maybe<AdminActionsFilter>;
+  filters?: InputMaybe<AdminActionsFilter>;
 }>;
 
 export type AllActionsQuery = {
@@ -1375,7 +1375,7 @@ export type UpdateContentMutation = {
 
 export type AllContentQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
-  filters?: Maybe<AdminContentFilter>;
+  filters?: InputMaybe<AdminContentFilter>;
 }>;
 
 export type AllContentQuery = {
@@ -1637,7 +1637,7 @@ export type CreateKcMutation = {
 
 export type AllKCsQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
-  filters?: Maybe<AdminKCsFilter>;
+  filters?: InputMaybe<AdminKCsFilter>;
 }>;
 
 export type AllKCsQuery = {

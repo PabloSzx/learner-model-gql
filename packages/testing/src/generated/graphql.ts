@@ -861,7 +861,7 @@ export type AllActionsQuery = {
 export type ProjectActionsQueryVariables = Exact<{
   projectId: Scalars["IntID"];
   pagination: CursorConnectionArgs;
-  filters?: Maybe<ProjectActionsFilter>;
+  filters?: InputMaybe<ProjectActionsFilter>;
 }>;
 
 export type ProjectActionsQuery = {
