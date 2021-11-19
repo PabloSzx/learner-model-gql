@@ -28,7 +28,7 @@
   "dependencies": {
     "api-base": "workspace:^0.0.1",
     "common": "workspace:^0.0.1",
-    "undici": "^4.10.0"
+    "undici": "^4.10.1"
   },
   "devDependencies": {
     "@graphql-ez/fastify": "^0.9.4",
