@@ -1,0 +1,19 @@
+- Introduccion
+- Marco Teorico
+  - Arquitectura de sistema educativos..
+  - Microservicios
+  - Especificaciones usadas...
+- Metodología
+- Desarrollo de la arquitectura de microservicios
+  - Autenticacion
+  - Comunicacion entre servicios
+  - Stitching
+- Modelamiento de datos y entidades
+  - ...Explicaciones por tabla
+- Servicios esenciales
+  - Cuales son, funcion
+  - Relacion con modelamiento de datos
+- Despliegue
+- Plantillas de uso y desarrollo
+- Capacitaciones
+- Conclusiones
