@@ -69,7 +69,7 @@
   },
   "engines": {
     "node": ">=v16.13.0",
-    "pnpm": ">=6.22.1"
+    "pnpm": ">=6.23.1"
   },
   "pnpm": {
     "overrides": {
