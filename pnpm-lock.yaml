@@ -2230,11 +2230,11 @@ packages:
       form-data: 4.0.0
       graphql: 16.0.1
       graphql-ws: 5.5.5_graphql@16.0.1
-      isomorphic-ws: 4.0.1_ws@8.2.3
+      isomorphic-ws: 4.0.1_ws@8.3.0
       node-fetch: 2.6.6
-      subscriptions-transport-ws-envelop: 2.0.1_graphql@16.0.1+ws@8.2.3
+      subscriptions-transport-ws-envelop: 2.0.1_graphql@16.0.1+ws@8.3.0
       undici: 4.10.2
-      ws: 8.2.3
+      ws: 8.3.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -2394,8 +2394,8 @@ packages:
       graphql: 16.0.1
       graphql-ez: 0.13.5_04033c2aef52f0b4ba2166b5a4a566fb
       graphql-ws: 5.5.5_graphql@16.0.1
-      subscriptions-transport-ws-envelop: 2.0.1_graphql@16.0.1+ws@8.2.3
-      ws: 8.2.3
+      subscriptions-transport-ws-envelop: 2.0.1_graphql@16.0.1+ws@8.3.0
+      ws: 8.3.0
     transitivePeerDependencies:
       - '@types/node'
       - bufferutil
@@ -2739,7 +2739,7 @@ packages:
   /@imqueue/pg-pubsub/1.5.5:
     resolution: {integrity: sha512-TzzzBFlWtFK4Nxve04aZsfP4cYAFgzRWiVcNs1Y1NyfCrPJW3iVFlp6adW/R4OLYAIiKwaxzG/bFJvEHa1pc7Q==}
     dependencies:
-      '@types/node': 16.11.9
+      '@types/node': 16.11.10
       '@types/pg': 8.6.1
       '@types/pg-format': 1.0.2
       pg: 8.7.1
@@ -3218,7 +3218,7 @@ packages:
   /@types/cross-spawn/6.0.2:
     resolution: {integrity: sha512-KuwNhp3eza+Rhu8IFI5HUXRP0LIhqH5cAjubUvGXXthh4YYBuP2ntwEX+Cz8GJoZUHlKo247wPWOfA9LYEq4cw==}
     dependencies:
-      '@types/node': 16.11.9
+      '@types/node': 16.11.10
     dev: false
 
   /@types/debug/4.1.7:
@@ -3250,7 +3250,7 @@ packages:
   /@types/jsonwebtoken/8.5.6:
     resolution: {integrity: sha512-+P3O/xC7nzVizIi5VbF34YtqSonFsdnbXBnWUCYRiKOi1f9gA4sEFvXkrGr/QVV23IbMYvcoerI7nnhDUiWXRQ==}
     dependencies:
-      '@types/node': 16.11.9
+      '@types/node': 16.11.10
 
   /@types/lodash.mergewith/4.6.6:
     resolution: {integrity: sha512-RY/8IaVENjG19rxTZu9Nukqh0W2UrYgmBj5sdns4hWRZaV8PqR7wIKHFKzvOTjo4zVRV7sVI+yFhAJql12Kfqg==}
@@ -3279,10 +3279,6 @@ packages:
 
   /@types/node/16.11.10:
     resolution: {integrity: sha512-3aRnHa1KlOEEhJ6+CvyHKK5vE9BcLGjtUpwvqYLRvYNQKMfabu3BwfJaA/SLW8dxe28LsNDjtHwePTuzn3gmOA==}
-    dev: true
-
-  /@types/node/16.11.9:
-    resolution: {integrity: sha512-MKmdASMf3LtPzwLyRrFjtFFZ48cMf8jmX5VRYrDQiJa8Ybu5VAmkqBWqKU8fdCwD8ysw4mQ9nrEHvzg6gunR7A==}
 
   /@types/normalize-package-data/2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
@@ -3302,7 +3298,7 @@ packages:
   /@types/pg/8.6.1:
     resolution: {integrity: sha512-1Kc4oAGzAl7uqUStZCDvaLFqZrW9qWSjXOmBfdgyBP5La7Us6Mg4GBvRlSoaZMhQF/zSj1C8CtKMBkoiT8eL8w==}
     dependencies:
-      '@types/node': 16.11.9
+      '@types/node': 16.11.10
       pg-protocol: 1.5.0
       pg-types: 2.2.0
     dev: false
@@ -3368,7 +3364,7 @@ packages:
   /@types/wait-on/5.3.1:
     resolution: {integrity: sha512-2FFOKCF/YydrMUaqg+fkk49qf0e5rDgwt6aQsMzFQzbS419h2gNOXyiwp/o2yYy27bi/C1z+HgfncryjGzlvgQ==}
     dependencies:
-      '@types/node': 16.11.9
+      '@types/node': 16.11.10
     dev: true
 
   /@types/warning/3.0.0:
@@ -3378,13 +3374,13 @@ packages:
   /@types/websocket/1.0.4:
     resolution: {integrity: sha512-qn1LkcFEKK8RPp459jkjzsfpbsx36BBt3oC3pITYtkoBw/aVX+EZFa5j3ThCRTNpLFvIMr5dSTD4RaMdilIOpA==}
     dependencies:
-      '@types/node': 16.11.9
+      '@types/node': 16.11.10
     dev: true
 
   /@types/ws/8.2.0:
     resolution: {integrity: sha512-cyeefcUCgJlEk+hk2h3N+MqKKsPViQgF5boi9TTHSK+PoR9KWBb/C5ccPcDyAqgsbAYHTwulch725DV84+pSpg==}
     dependencies:
-      '@types/node': 16.11.9
+      '@types/node': 16.11.10
 
   /@ungap/promise-all-settled/1.1.2:
     resolution: {integrity: sha512-sL/cEvJWAnClXw0wHk85/2L0G6Sj8UB0Ctc1TEMbKSsmpRosqhwj9gWgFRZSrBr2f9tiXISwNhCPmlfqUqyb9Q==}
@@ -3874,7 +3870,7 @@ packages:
     dependencies:
       caniuse-lite: 1.0.30001282
       colorette: 1.4.0
-      electron-to-chromium: 1.3.904
+      electron-to-chromium: 1.3.907
       escalade: 3.1.1
       node-releases: 1.1.77
     dev: false
@@ -3885,7 +3881,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001282
-      electron-to-chromium: 1.3.904
+      electron-to-chromium: 1.3.907
       escalade: 3.1.1
       node-releases: 2.0.1
       picocolors: 1.0.0
@@ -4750,8 +4746,8 @@ packages:
     dependencies:
       safe-buffer: 5.2.1
 
-  /electron-to-chromium/1.3.904:
-    resolution: {integrity: sha512-x5uZWXcVNYkTh4JubD7KSC1VMKz0vZwJUqVwY3ihsW0bst1BXDe494Uqbg3Y0fDGVjJqA8vEeGuvO5foyH2+qw==}
+  /electron-to-chromium/1.3.907:
+    resolution: {integrity: sha512-xoUPSkjimw51d9ryeH38XUwmR3HmCA+eky4hk0YEgsWeBWGyhb35OCvT3lWAdmvIkcGYCRNOB8LvtO00dJQpOA==}
 
   /elegant-spinner/1.0.1:
     resolution: {integrity: sha1-2wQ1IcldfjA/2PNFvtwzSc+wcp4=}
@@ -5187,7 +5183,7 @@ packages:
     resolution: {integrity: sha512-WT6Uek2IA3fEZlWdRP6p18MIQlUqzuoc8zQLgnAwx8hb62u1ZhDCAl1FePF9d16tsHCvcCf3WyfL8HlZNCZhDA==}
     engines: {node: '>= 12.0.0'}
     dependencies:
-      fastify-cookie: 5.3.2
+      fastify-cookie: 5.4.0
       fastify-jwt: 3.2.1
       fastify-plugin: 3.0.0
       http-errors: 1.8.1
@@ -5195,10 +5191,9 @@ packages:
       node-fetch: 2.6.6
     dev: false
 
-  /fastify-cookie/5.3.2:
-    resolution: {integrity: sha512-7ZrRDOxlzO8dxgQSYd3yOd1AWRghpXTP/GxiBel44GVyRyPiYgHeLfqjcoyPNJYPYAEUpxi+6NHkc96Zl8yh9w==}
+  /fastify-cookie/5.4.0:
+    resolution: {integrity: sha512-uKTbOLx6pSyKqA9oD2G9hpMuRTVtKRm98bRwJVg4ga7GCm+RR6771stmfhbblXxHHcQQHuHvwdOdPeHJjr2sgg==}
     dependencies:
-      cookie: 0.4.1
       cookie-signature: 1.1.0
       fastify-plugin: 3.0.0
     dev: false
@@ -5240,7 +5235,7 @@ packages:
       fastify-warning: 0.2.0
       find-my-way: 4.4.0
       flatstr: 1.0.12
-      light-my-request: 4.6.0
+      light-my-request: 4.7.0
       pino: 6.13.3
       proxy-addr: 2.0.7
       rfdc: 1.3.0
@@ -6275,6 +6270,14 @@ packages:
       ws: '*'
     dependencies:
       ws: 8.2.3
+    dev: true
+
+  /isomorphic-ws/4.0.1_ws@8.3.0:
+    resolution: {integrity: sha512-BhBvN2MBpWTaSHdWRb/bwdZJ1WaehQ2L1KngkCkfLUGF0mAWAT1sQUQacEmQ0jXkFw/czDXPNQSL5u2/Krsz1w==}
+    peerDependencies:
+      ws: '*'
+    dependencies:
+      ws: 8.3.0
 
   /istanbul-lib-coverage/3.2.0:
     resolution: {integrity: sha512-eOeJ5BHCmHYvQK7xt9GkdHuzuCGS1Y6g9Gvnx3Ym33fz/HpLRYxiS0wHNr+m/MBC8B647Xt608vCDEvhl9c6Mw==}
@@ -6305,7 +6308,7 @@ packages:
     resolution: {integrity: sha512-mk0umAQ5lT+CaOJ+Qp01N6kz48sJG2kr2n1rX0koqKf6FIygQV0qLOdN9SCYID4IVeSigDOcPeGLozdMLYfb5g==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     dependencies:
-      '@types/node': 16.11.9
+      '@types/node': 16.11.10
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: false
@@ -6444,8 +6447,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
-  /light-my-request/4.6.0:
-    resolution: {integrity: sha512-wQWGwMr7l7fzYPzzzutRoEI1vuREpIpJpTi3t8cHlGdsnBrOF5iR559Bkh+nkDGgnUJtNuuutjnqbxP7zPWKkA==}
+  /light-my-request/4.7.0:
+    resolution: {integrity: sha512-LTa8YZp3K2AUpqUnwwKajoIHcsKOBnzwJNQSrk7unziPwo6CjOYjyO0F9wfkxFvP+nBsCGe3eMPnedVgIIgdAw==}
     dependencies:
       ajv: 8.8.2
       cookie: 0.4.1
@@ -8310,7 +8313,7 @@ packages:
     resolution: {integrity: sha512-g2bg8Axwii7KlEkLAKXbLuGXS8rkvEdOY7VAlh8OpvG7lZH6Fcj3cyWVPU7HhiJMIe/1udV+Te3ON0Ch3TFlWQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
-      type-fest: 2.5.4
+      type-fest: 2.6.0
     dev: false
 
   /serialize-javascript/6.0.0:
@@ -8733,7 +8736,7 @@ packages:
     resolution: {integrity: sha512-m3k+dk7QeJw660eIKRRn3xPF6uuvHs/FFzjX3HQ5ove0qYsiygoAhwn5a3IYKaZPo5LrYD0rfVmtv1gNY1uYwg==}
     dev: false
 
-  /subscriptions-transport-ws-envelop/2.0.1_graphql@16.0.1+ws@8.2.3:
+  /subscriptions-transport-ws-envelop/2.0.1_graphql@16.0.1+ws@8.3.0:
     resolution: {integrity: sha512-Y3olO759E5as/nTdFVkSC45q0TOe3OaEQIUzINg0mIXM6cggvJ4Tb0OExHVt6ASKJP7mXHmitFyI/XGkI1dYmw==}
     peerDependencies:
       graphql: '>=0.10.0'
@@ -8742,10 +8745,10 @@ packages:
       backo2: 1.0.2
       eventemitter3: 4.0.7
       graphql: 16.0.1
-      isomorphic-ws: 4.0.1_ws@8.2.3
+      isomorphic-ws: 4.0.1_ws@8.3.0
       iterall: 1.3.0
       symbol-observable: 4.0.0
-      ws: 8.2.3
+      ws: 8.3.0
 
   /subscriptions-transport-ws/0.11.0_graphql@16.0.1:
     resolution: {integrity: sha512-8D4C6DIH5tGiAIpp5I0wD/xRlNiZAPGHygzCe7VzyzUoxHtawzjNAY9SUTXU05/EY2NMY9/9GF0ycizkXr1CWQ==}
@@ -8757,7 +8760,7 @@ packages:
       graphql: 16.0.1
       iterall: 1.3.0
       symbol-observable: 1.2.0
-      ws: 7.5.5
+      ws: 7.5.6
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -9040,8 +9043,8 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /type-fest/2.5.4:
-    resolution: {integrity: sha512-zyPomVvb6u7+gJ/GPYUH6/nLDNiTtVOqXVUHtxFv5PmZQh6skgfeRtFYzWC01T5KeNWNIx5/0P111rKFLlkFvA==}
+  /type-fest/2.6.0:
+    resolution: {integrity: sha512-XN1FDGGtaSDA6CFsCW5iolTQqFsnJ+ZF6JqSz0SqXoh4F8GY0xqUv5RYnTilpmL+sOH8OH4FX8tf9YyAPM2LDA==}
     engines: {node: '>=12.20'}
     dev: false
 
@@ -9374,8 +9377,8 @@ packages:
   /wrappy/1.0.2:
     resolution: {integrity: sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=}
 
-  /ws/7.5.5:
-    resolution: {integrity: sha512-BAkMFcAzl8as1G/hArkxOxq3G7pjUqQ3gzYbLL0/5zNkph70e+lCoxBGnm6AW1+/aiNeV4fnKqZ8m4GZewmH2w==}
+  /ws/7.5.6:
+    resolution: {integrity: sha512-6GLgCqo2cy2A2rjCNFlxQS6ZljG/coZfZXclldI8FB/1G3CCI36Zd8xy2HrFVACi8tfk5XrgLQEk+P0Tnz9UcA==}
     engines: {node: '>=8.3.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -9389,6 +9392,19 @@ packages:
 
   /ws/8.2.3:
     resolution: {integrity: sha512-wBuoj1BDpC6ZQ1B7DWQBYVLphPWkm8i9Y0/3YdHjHKHiohOJ1ws+3OccDWtH+PoC9DZD5WOTrJvNbWvjS6JWaA==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: ^5.0.2
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+    dev: true
+
+  /ws/8.3.0:
+    resolution: {integrity: sha512-Gs5EZtpqZzLvmIM59w4igITU57lrtYVFneaa434VROv4thzJyV6UjIL3D42lslWlI+D4KzLYnxSwtfuiO79sNw==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
