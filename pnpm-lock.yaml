@@ -153,7 +153,7 @@ importers:
       date-fns: ^2.26.0
       framer-motion: ^5.3.3
       graph: workspace:^0.0.1
-      immer: ^9.0.6
+      immer: ^9.0.7
       mime: ^3.0.0
       next: ^12.0.4
       nprogress: ^0.2.0
@@ -183,7 +183,7 @@ importers:
       date-fns: 2.26.0
       framer-motion: 5.3.3_react-dom@17.0.2+react@17.0.2
       graph: link:../graph
-      immer: 9.0.6
+      immer: 9.0.7
       mime: 3.0.0
       next: 12.0.4_react-dom@17.0.2+react@17.0.2
       nprogress: 0.2.0
@@ -197,7 +197,7 @@ importers:
       react-use: 17.3.1_react-dom@17.0.2+react@17.0.2
       rq-gql: 0.3.1_74b9d0a8cb6c240effbfbd881c95b6d2
       serialize-error: 9.0.0
-      use-immer: 0.6.0_immer@9.0.6+react@17.0.2
+      use-immer: 0.6.0_immer@9.0.7+react@17.0.2
       valtio: 1.2.6_react@17.0.2
       zustand: 3.6.5_react@17.0.2
     devDependencies:
@@ -5916,8 +5916,8 @@ packages:
       queue: 6.0.2
     dev: false
 
-  /immer/9.0.6:
-    resolution: {integrity: sha512-G95ivKpy+EvVAnAab4fVa4YGYn24J1SpEktnJX7JJ45Bd7xqME/SCplFzYFmTbrkwZbQ4xJK1xMTUYBkN6pWsQ==}
+  /immer/9.0.7:
+    resolution: {integrity: sha512-KGllzpbamZDvOIxnmJ0jI840g7Oikx58lBPWV0hUh7dtAyZpFqqrBZdKka5GlTwMTZ1Tjc/bKKW4VSFAt6BqMA==}
     dev: false
 
   /immutable/3.7.6:
@@ -9155,13 +9155,13 @@ packages:
       react: 17.0.2
     dev: false
 
-  /use-immer/0.6.0_immer@9.0.6+react@17.0.2:
+  /use-immer/0.6.0_immer@9.0.7+react@17.0.2:
     resolution: {integrity: sha512-dFGRfvWCqPDTOt/S431ETYTg6+uxbpb7A1pptufwXVzGJY3RlXr38+3wyLNpc6SbbmAKjWl6+EP6uW74fkEsXQ==}
     peerDependencies:
       immer: '>=2.0.0'
       react: ^16.8.0 || ^17.0.1
     dependencies:
-      immer: 9.0.6
+      immer: 9.0.7
       react: 17.0.2
     dev: false
 
