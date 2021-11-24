@@ -53,60 +53,128 @@ export type Scalars = {
   Void: unknown;
 };
 
+/** User-emitted actions related to system, data mainly used for logging and modeling purposes */
 export type Action = {
   __typename?: "Action";
+  /** Arbitrary numeric amount */
   amount?: Maybe<Scalars["Float"]>;
+  /** Related content */
   content?: Maybe<Content>;
+  /** Timestamp of the action, set by the database on row creation */
   createdAt: Scalars["DateTime"];
+  /** Arbitrary string content detail */
   detail?: Maybe<Scalars["String"]>;
+  /** Arbitrary JSON object data */
   extra?: Maybe<Scalars["JSONObject"]>;
+  /** Arbitrary hint identifier */
   hintID?: Maybe<Scalars["ID"]>;
   id: Scalars["IntID"];
+  /** Related KCs */
   kcs: Array<Kc>;
+  /** Arbitrary numeric result */
   result?: Maybe<Scalars["Float"]>;
+  /** Arbitrary step identifier */
   stepID?: Maybe<Scalars["ID"]>;
+  /** Timestamp of the action, set by the action emitter */
   timestamp: Scalars["Timestamp"];
+  /** Related topic */
   topic?: Maybe<Topic>;
+  /** User that emitted the action */
   user?: Maybe<User>;
+  /** Type of action */
   verb: ActionVerb;
 };
 
 export type ActionInput = {
+  /** Arbitrary numeric amount */
   amount?: InputMaybe<Scalars["Float"]>;
+  /**
+   * Content identifier
+   *
+   * If it's numeric, it points to the "id" property of the content, otherwise, it points to the "code" property.
+   *
+   * Validation of content presence/authorization is made before confirming action
+   */
   contentID?: InputMaybe<Scalars["ID"]>;
+  /** Arbitrary string content detail */
   detail?: InputMaybe<Scalars["String"]>;
+  /** Arbitrary JSON object data */
   extra?: InputMaybe<Scalars["JSONObject"]>;
+  /** Arbitrary hint identifier */
   hintID?: InputMaybe<Scalars["ID"]>;
+  /**
+   * KCs identifiers
+   *
+   * If it's numeric, it points to the "id" property of the content, otherwise, it points to the "code" property.
+   *
+   * Validation of kc presence/authorization is made before confirming action
+   */
   kcsIDs?: InputMaybe<Array<Scalars["ID"]>>;
+  /**
+   * Identifier of project related to action.
+   *
+   * It's verified based on authenticated user, and attached validated ids are validated against the specified project
+   */
   projectId: Scalars["IntID"];
+  /** Arbitrary numeric result */
   result?: InputMaybe<Scalars["Float"]>;
+  /** Arbitrary step identifier */
   stepID?: InputMaybe<Scalars["ID"]>;
+  /**
+   * Timestamp of the action.
+   *
+   * Format in number of milliseconds elapsed since January 1, 1970 00:00:00 UTC
+   */
   timestamp: Scalars["Timestamp"];
+  /**
+   * Topic identifier
+   *
+   * If it's numeric, it points to the "id" property of the content, otherwise, it points to the "code" property.
+   *
+   * Validation of topic presence/authorization is made before confirming action
+   */
   topicID?: InputMaybe<Scalars["ID"]>;
+  /** Type of action, if specified verb doesn't exist, it's automatically created */
   verbName: Scalars["String"];
 };
 
+/**
+ * Action Verb
+ *
+ * Main action categorization system
+ */
 export type ActionVerb = {
   __typename?: "ActionVerb";
   id: Scalars["IntID"];
+  /** Name of the verb */
   name: Scalars["String"];
 };
 
 export type ActionsConnection = Connection & {
   __typename?: "ActionsConnection";
+  /** Nodes of the current page */
   nodes: Array<Action>;
+  /** Pagination related information */
   pageInfo: PageInfo;
 };
 
 export type ActionsVerbsConnection = Connection & {
   __typename?: "ActionsVerbsConnection";
+  /** Nodes of the current page */
   nodes: Array<ActionVerb>;
+  /** Pagination related information */
   pageInfo: PageInfo;
 };
 
 export type AdminActionQueries = {
   __typename?: "AdminActionQueries";
+  /**
+   * [ADMIN] Get all the actions currently in the system
+   *
+   * Pagination parameters are mandatory, but filters and orderBy are optional, and therefore the search can be customized.
+   */
   allActions: ActionsConnection;
+  /** [ADMIN] Get all the action's verbs currently in the system */
   allActionsVerbs: ActionsVerbsConnection;
 };
 
@@ -121,17 +189,64 @@ export type AdminActionQueriesAllActionsVerbsArgs = {
 };
 
 export type AdminActionsFilter = {
+  /**
+   * Filter by the specified content
+   *
+   * If action's content matches any of the specified content, the action is included
+   */
   content?: InputMaybe<Array<Scalars["IntID"]>>;
+  /**
+   * Filter by the specified end date
+   *
+   * If action's timestamp is before the specified date, the action is included
+   */
   endDate?: InputMaybe<Scalars["DateTime"]>;
+  /**
+   * Filter by the specified KCs
+   *
+   * If any of the action's KCs matches any of the specified KCs, the action is included
+   */
   kcs?: InputMaybe<Array<Scalars["IntID"]>>;
+  /**
+   * Filter by the specified projects
+   *
+   * If action's project matches any of the specified projects, the action is included
+   */
   projects?: InputMaybe<Array<Scalars["IntID"]>>;
+  /**
+   * Filter by the specified starting date
+   *
+   * If action's timestamp is after the specified date, the action is included
+   */
   startDate?: InputMaybe<Scalars["DateTime"]>;
+  /**
+   * Filter by the specified topics
+   *
+   * If action's topic matches any of the specified topics, the action is included
+   */
   topics?: InputMaybe<Array<Scalars["IntID"]>>;
+  /**
+   * Filter by the specified users
+   *
+   * If action's user matches any of the specified users, the action is included
+   */
   users?: InputMaybe<Array<Scalars["IntID"]>>;
+  /**
+   * Filter by the specified verbs
+   *
+   * If action's verb matches any of the specified verbs, the action is included
+   */
   verbNames?: InputMaybe<Array<Scalars["String"]>>;
 };
 
 export type AdminActionsOrderBy = {
+  /**
+   * Order the actions ascendingly or descendingly
+   *
+   * Following the cursor pagination's nature, ordering by "id" tends to follow the action creation date, but it can't be guaranteed
+   *
+   * By default the actions are ordered descendingly, showing the newer actions first
+   */
   id?: InputMaybe<Order_By>;
 };
 
@@ -163,6 +278,12 @@ export type Kc = {
 
 export type Mutation = {
   __typename?: "Mutation";
+  /**
+   * Report an action to the modeling service
+   *
+   * - User authentication is required
+   * - Authenticated user has to be associated with specified project
+   */
   action?: Maybe<Scalars["Void"]>;
   hello: Scalars["String"];
 };
@@ -208,6 +329,7 @@ export type ProjectActionsFilter = {
 
 export type Query = {
   __typename?: "Query";
+  /** [ADMIN] Admin related actions, only authenticated users with the role "ADMIN" can access */
   adminActions: AdminActionQueries;
   hello: Scalars["String"];
   projects: Array<Project>;

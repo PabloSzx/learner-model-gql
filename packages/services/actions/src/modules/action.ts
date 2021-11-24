@@ -11,12 +11,15 @@ import { gql, registerModule } from "../ez";
 
 export const actionModule = registerModule(
   gql`
+    """
+    Action Verb
+
+    Main action categorization system
+    """
     type ActionVerb {
       id: IntID!
 
-      # TRY_STEP REQUEST_HINT CLICK_STEP_TAB
-      # FINISH_CONTENT DRAG_RESPONSE SELECT_TEXT
-      # LOAD_CONTENT
+      "Name of the verb"
       name: String!
     }
 
@@ -41,102 +44,233 @@ export const actionModule = registerModule(
     }
 
     input ActionInput {
+      """
+      Content identifier
+
+      If it's numeric, it points to the "id" property of the content, otherwise, it points to the "code" property.
+
+      Validation of content presence/authorization is made before confirming action
+      """
       contentID: ID
 
+      """
+      Topic identifier
+
+      If it's numeric, it points to the "id" property of the content, otherwise, it points to the "code" property.
+
+      Validation of topic presence/authorization is made before confirming action
+      """
       topicID: ID
 
+      """
+      KCs identifiers
+
+      If it's numeric, it points to the "id" property of the content, otherwise, it points to the "code" property.
+
+      Validation of kc presence/authorization is made before confirming action
+      """
       kcsIDs: [ID!]
 
+      "Arbitrary step identifier"
       stepID: ID
 
+      """
+      Arbitrary hint identifier
+      """
       hintID: ID
 
+      "Arbitrary numeric amount"
       amount: Float
 
+      "Arbitrary string content detail"
       detail: String
 
+      "Arbitrary JSON object data"
       extra: JSONObject
 
+      """
+      Type of action, if specified verb doesn't exist, it's automatically created
+      """
       verbName: String!
 
+      """
+      Timestamp of the action.
+
+      Format in number of milliseconds elapsed since January 1, 1970 00:00:00 UTC
+      """
       timestamp: Timestamp!
 
+      """
+      Identifier of project related to action.
+
+      It's verified based on authenticated user, and attached validated ids are validated against the specified project
+      """
       projectId: IntID!
 
+      "Arbitrary numeric result"
       result: Float
     }
 
+    """
+    User-emitted actions related to system, data mainly used for logging and modeling purposes
+    """
     type Action {
       id: IntID!
 
+      "Type of action"
       verb: ActionVerb!
 
+      "Timestamp of the action, set by the action emitter"
       timestamp: Timestamp!
 
+      "Arbitrary numeric result"
       result: Float
 
+      "User that emitted the action"
       user: User
 
+      "Related content"
       content: Content
 
+      "Related topic"
       topic: Topic
 
+      "Related KCs"
       kcs: [KC!]!
 
+      "Arbitrary step identifier"
       stepID: ID
 
+      "Arbitrary hint identifier"
       hintID: ID
 
+      "Arbitrary numeric amount"
       amount: Float
 
+      "Arbitrary string content detail"
       detail: String
 
+      "Arbitrary JSON object data"
       extra: JSONObject
 
+      "Timestamp of the action, set by the database on row creation"
       createdAt: DateTime!
     }
 
     type ActionsConnection implements Connection {
+      "Nodes of the current page"
       nodes: [Action!]!
+
+      "Pagination related information"
       pageInfo: PageInfo!
     }
 
     type ActionsVerbsConnection implements Connection {
+      "Nodes of the current page"
       nodes: [ActionVerb!]!
+      "Pagination related information"
       pageInfo: PageInfo!
     }
 
     input AdminActionsFilter {
+      """
+      Filter by the specified verbs
+
+      If action's verb matches any of the specified verbs, the action is included
+      """
       verbNames: [String!]
+
+      """
+      Filter by the specified users
+
+      If action's user matches any of the specified users, the action is included
+      """
       users: [IntID!]
+
+      """
+      Filter by the specified KCs
+
+      If any of the action's KCs matches any of the specified KCs, the action is included
+      """
       kcs: [IntID!]
+      """
+      Filter by the specified content
+
+      If action's content matches any of the specified content, the action is included
+      """
       content: [IntID!]
+      """
+      Filter by the specified topics
+
+      If action's topic matches any of the specified topics, the action is included
+      """
       topics: [IntID!]
+      """
+      Filter by the specified projects
+
+      If action's project matches any of the specified projects, the action is included
+      """
       projects: [IntID!]
+      """
+      Filter by the specified starting date
+
+      If action's timestamp is after the specified date, the action is included
+      """
       startDate: DateTime
+
+      """
+      Filter by the specified end date
+
+      If action's timestamp is before the specified date, the action is included
+      """
       endDate: DateTime
     }
 
     input AdminActionsOrderBy {
+      """
+      Order the actions ascendingly or descendingly
+
+      Following the cursor pagination's nature, ordering by "id" tends to follow the action creation date, but it can't be guaranteed
+
+      By default the actions are ordered descendingly, showing the newer actions first
+      """
       id: ORDER_BY = DESC
     }
 
     type AdminActionQueries {
+      """
+      [ADMIN] Get all the actions currently in the system
+
+      Pagination parameters are mandatory, but filters and orderBy are optional, and therefore the search can be customized.
+      """
       allActions(
         pagination: CursorConnectionArgs!
         filters: AdminActionsFilter
         orderBy: AdminActionsOrderBy
       ): ActionsConnection!
+
+      """
+      [ADMIN] Get all the action's verbs currently in the system
+      """
       allActionsVerbs(
         pagination: CursorConnectionArgs!
       ): ActionsVerbsConnection!
     }
 
     extend type Query {
+      """
+      [ADMIN] Admin related actions, only authenticated users with the role "ADMIN" can access
+      """
       adminActions: AdminActionQueries!
     }
 
     extend type Mutation {
+      """
+      Report an action to the modeling service
+
+      - User authentication is required
+      - Authenticated user has to be associated with specified project
+      """
       action(data: ActionInput!): Void
     }
   `,
