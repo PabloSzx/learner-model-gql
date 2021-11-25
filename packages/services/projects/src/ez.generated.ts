@@ -161,6 +161,13 @@ export type Query = {
    * - If authenticated user has no permissions on the specified project it returns NULL.
    */
   project?: Maybe<Project>;
+  /**
+   * Get all the projects associated with the specified identifiers
+   *
+   * The projects data is guaranteed to follow the specified identifiers order
+   *
+   * If any of the specified identifiers is not found or forbidden, query fails
+   */
   projects: Array<Project>;
   topics: Array<Topic>;
   users: Array<User>;

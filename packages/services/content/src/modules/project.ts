@@ -34,6 +34,13 @@ export const projectModule = registerModule(
     }
 
     extend type Query {
+      """
+      Get all the projects associated with the specified identifiers
+
+      The projects data is guaranteed to follow the specified identifiers order
+
+      If any of the specified identifiers is not found or forbidden, query fails
+      """
       projects(ids: [IntID!]!): [Project!]!
     }
   `,

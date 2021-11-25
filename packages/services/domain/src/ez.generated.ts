@@ -229,6 +229,13 @@ export type Query = {
   domains: Array<Domain>;
   hello: Scalars["String"];
   kcs: Array<Kc>;
+  /**
+   * Get all the projects associated with the specified identifiers
+   *
+   * The projects data is guaranteed to follow the specified identifiers order
+   *
+   * If any of the specified identifiers is not found or forbidden, query fails
+   */
   projects: Array<Project>;
   topicByCode?: Maybe<Topic>;
   topics: Array<Topic>;

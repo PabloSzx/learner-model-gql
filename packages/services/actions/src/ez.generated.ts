@@ -85,6 +85,7 @@ export type Action = {
   verb: ActionVerb;
 };
 
+/** Input of action report */
 export type ActionInput = {
   /** Arbitrary numeric amount */
   amount?: InputMaybe<Scalars["Float"]>;
@@ -150,6 +151,7 @@ export type ActionVerb = {
   name: Scalars["String"];
 };
 
+/** Paginated Actions */
 export type ActionsConnection = Connection & {
   __typename?: "ActionsConnection";
   /** Nodes of the current page */
@@ -158,6 +160,7 @@ export type ActionsConnection = Connection & {
   pageInfo: PageInfo;
 };
 
+/** Paginated Actions Verbs */
 export type ActionsVerbsConnection = Connection & {
   __typename?: "ActionsVerbsConnection";
   /** Nodes of the current page */
@@ -166,6 +169,7 @@ export type ActionsVerbsConnection = Connection & {
   pageInfo: PageInfo;
 };
 
+/** Admin Action-Related Queries */
 export type AdminActionQueries = {
   __typename?: "AdminActionQueries";
   /**
@@ -178,16 +182,19 @@ export type AdminActionQueries = {
   allActionsVerbs: ActionsVerbsConnection;
 };
 
+/** Admin Action-Related Queries */
 export type AdminActionQueriesAllActionsArgs = {
   filters?: InputMaybe<AdminActionsFilter>;
   orderBy?: InputMaybe<AdminActionsOrderBy>;
   pagination: CursorConnectionArgs;
 };
 
+/** Admin Action-Related Queries */
 export type AdminActionQueriesAllActionsVerbsArgs = {
   pagination: CursorConnectionArgs;
 };
 
+/** Filter all actions of admin query */
 export type AdminActionsFilter = {
   /**
    * Filter by the specified content
@@ -239,6 +246,7 @@ export type AdminActionsFilter = {
   verbNames?: InputMaybe<Array<Scalars["String"]>>;
 };
 
+/** Order Admin Actions */
 export type AdminActionsOrderBy = {
   /**
    * Order the actions ascendingly or descendingly
@@ -308,6 +316,11 @@ export type PageInfo = {
 
 export type Project = {
   __typename?: "Project";
+  /**
+   * All actions of the project
+   *
+   * ADMIN User role or "readProjectActions" group permissions flag required
+   */
   actions: ActionsConnection;
   id: Scalars["IntID"];
 };
@@ -317,13 +330,49 @@ export type ProjectActionsArgs = {
   pagination: CursorConnectionArgs;
 };
 
+/** Filter the actions of a project */
 export type ProjectActionsFilter = {
+  /**
+   * Filter by the specified content
+   *
+   * If action's content matches any of the specified content, the action is included
+   */
   content?: InputMaybe<Array<Scalars["IntID"]>>;
+  /**
+   * Filter by the specified end date
+   *
+   * If action's timestamp is before the specified date, the action is included
+   */
   endDate?: InputMaybe<Scalars["DateTime"]>;
+  /**
+   * Filter by the specified KCs
+   *
+   * If any of the action's KCs matches any of the specified KCs, the action is included
+   */
   kcs?: InputMaybe<Array<Scalars["IntID"]>>;
+  /**
+   * Filter by the specified starting date
+   *
+   * If action's timestamp is after the specified date, the action is included
+   */
   startDate?: InputMaybe<Scalars["DateTime"]>;
+  /**
+   * Filter by the specified topics
+   *
+   * If action's topic matches any of the specified topics, the action is included
+   */
   topics?: InputMaybe<Array<Scalars["IntID"]>>;
+  /**
+   * Filter by the specified users
+   *
+   * If action's user matches any of the specified users, the action is included
+   */
   users?: InputMaybe<Array<Scalars["IntID"]>>;
+  /**
+   * Filter by the specified verbs
+   *
+   * If action's verb matches any of the specified verbs, the action is included
+   */
   verbNames?: InputMaybe<Array<Scalars["String"]>>;
 };
 
@@ -332,6 +381,13 @@ export type Query = {
   /** [ADMIN] Admin related actions, only authenticated users with the role "ADMIN" can access */
   adminActions: AdminActionQueries;
   hello: Scalars["String"];
+  /**
+   * Get all the projects associated with the specified identifiers
+   *
+   * The projects data is guaranteed to follow the specified identifiers order
+   *
+   * If any of the specified identifiers is not found or forbidden, query fails
+   */
   projects: Array<Project>;
 };
 

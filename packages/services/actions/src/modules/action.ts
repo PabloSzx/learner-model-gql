@@ -43,6 +43,7 @@ export const actionModule = registerModule(
       id: IntID!
     }
 
+    "Input of action report"
     input ActionInput {
       """
       Content identifier
@@ -157,6 +158,7 @@ export const actionModule = registerModule(
       createdAt: DateTime!
     }
 
+    "Paginated Actions"
     type ActionsConnection implements Connection {
       "Nodes of the current page"
       nodes: [Action!]!
@@ -165,6 +167,7 @@ export const actionModule = registerModule(
       pageInfo: PageInfo!
     }
 
+    "Paginated Actions Verbs"
     type ActionsVerbsConnection implements Connection {
       "Nodes of the current page"
       nodes: [ActionVerb!]!
@@ -172,6 +175,7 @@ export const actionModule = registerModule(
       pageInfo: PageInfo!
     }
 
+    "Filter all actions of admin query"
     input AdminActionsFilter {
       """
       Filter by the specified verbs
@@ -226,6 +230,7 @@ export const actionModule = registerModule(
       endDate: DateTime
     }
 
+    "Order Admin Actions"
     input AdminActionsOrderBy {
       """
       Order the actions ascendingly or descendingly
@@ -237,6 +242,7 @@ export const actionModule = registerModule(
       id: ORDER_BY = DESC
     }
 
+    "Admin Action-Related Queries"
     type AdminActionQueries {
       """
       [ADMIN] Get all the actions currently in the system
