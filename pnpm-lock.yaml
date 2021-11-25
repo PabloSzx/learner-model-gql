@@ -11,7 +11,7 @@ importers:
     specifiers:
       '@graphql-ez/fastify': ^0.9.4
       '@graphql-tools/code-file-loader': ^7.2.2
-      '@graphql-tools/graphql-tag-pluck': ^7.1.3
+      '@graphql-tools/graphql-tag-pluck': ^7.1.4
       '@graphql-typed-document-node/core': ^3.1.1
       '@prisma/client': ^3.5.0
       '@types/concurrently': ^6.4.0
@@ -54,7 +54,7 @@ importers:
     devDependencies:
       '@graphql-ez/fastify': 0.9.4_e45b61ffe865ce8aea7aff22b6dd8227
       '@graphql-tools/code-file-loader': 7.2.2_graphql@16.0.1
-      '@graphql-tools/graphql-tag-pluck': 7.1.3_graphql@16.0.1
+      '@graphql-tools/graphql-tag-pluck': 7.1.4_graphql@16.0.1
       '@graphql-typed-document-node/core': 3.1.1_graphql@16.0.1
       '@prisma/client': 3.5.0
       '@types/concurrently': 6.4.0
@@ -250,7 +250,7 @@ importers:
       '@graphql-ez/plugin-codegen': ^0.7.6
       '@graphql-ez/plugin-voyager': ^0.9.0
       '@graphql-tools/delegate': ^8.4.2
-      '@graphql-tools/stitch': ^8.4.1
+      '@graphql-tools/stitch': ^8.4.2
       '@graphql-tools/utils': ^8.5.3
       '@graphql-tools/wrap': ^8.3.2
       '@types/concurrently': ^6.4.0
@@ -277,7 +277,7 @@ importers:
       '@graphql-ez/plugin-codegen': 0.7.6_ab80e18f86c6cab3b2f0e0271a1737c2
       '@graphql-ez/plugin-voyager': 0.9.0_ab80e18f86c6cab3b2f0e0271a1737c2
       '@graphql-tools/delegate': 8.4.2_graphql@16.0.1
-      '@graphql-tools/stitch': 8.4.1_graphql@16.0.1
+      '@graphql-tools/stitch': 8.4.2_graphql@16.0.1
       '@graphql-tools/utils': 8.5.3_graphql@16.0.1
       '@graphql-tools/wrap': 8.3.2_graphql@16.0.1
       api-base: link:../api-base
@@ -2423,8 +2423,8 @@ packages:
       tslib: 2.3.1
     dev: true
 
-  /@graphql-tools/batch-delegate/8.2.1_graphql@16.0.1:
-    resolution: {integrity: sha512-gE4zLRzJnWQeg3GySjPgY9s4YmCXsR/b13lLIJKGupT3yhdSgGov687ZAaOixRZY/PrOlE3BGBoaFmi7/IowCw==}
+  /@graphql-tools/batch-delegate/8.2.2_graphql@16.0.1:
+    resolution: {integrity: sha512-zFQvr1cPnPuw0kqivzN20Xyni/pKht0Jy9o6TaopjXMpM5TtlKltr8E+CroA1UfZKELlqkbkncmwtdyu50l6og==}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
     dependencies:
@@ -2451,7 +2451,7 @@ packages:
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
     dependencies:
-      '@graphql-tools/graphql-tag-pluck': 7.1.3_graphql@16.0.1
+      '@graphql-tools/graphql-tag-pluck': 7.1.4_graphql@16.0.1
       '@graphql-tools/utils': 8.5.3_graphql@16.0.1
       globby: 11.0.4
       graphql: 16.0.1
@@ -2525,6 +2525,21 @@ packages:
       '@babel/parser': 7.15.8
       '@babel/traverse': 7.15.4
       '@babel/types': 7.15.6
+      '@graphql-tools/utils': 8.5.3_graphql@16.0.1
+      graphql: 16.0.1
+      tslib: 2.3.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@graphql-tools/graphql-tag-pluck/7.1.4_graphql@16.0.1:
+    resolution: {integrity: sha512-0V2AY68ip3YmJ9rnIwQGxXsokCeGD9FTQOeSLzpwG74U0VY6bphfaCp5KVGW+W5sGJchTj3HvnmvdmWZnEZWZA==}
+    peerDependencies:
+      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
+    dependencies:
+      '@babel/parser': 7.16.4
+      '@babel/traverse': 7.16.3
+      '@babel/types': 7.16.0
       '@graphql-tools/utils': 8.5.3_graphql@16.0.1
       graphql: 16.0.1
       tslib: 2.3.1
@@ -2638,12 +2653,12 @@ packages:
       tslib: 2.3.1
       value-or-promise: 1.0.11
 
-  /@graphql-tools/stitch/8.4.1_graphql@16.0.1:
-    resolution: {integrity: sha512-WfbWyTo+6Jo9dLvfmIubnmpwUbma2WU1Ygnv/ePxgTDZfcnRbpYi/dAMOZ0Aqq18ecui8RwoyzR+VjmTrQjecg==}
+  /@graphql-tools/stitch/8.4.2_graphql@16.0.1:
+    resolution: {integrity: sha512-lgwyb1pqKUVSz98cyhQ6sU39sdpk+6wFkVU4q2kx4GCm3uIChAf4QCSt5uqO35MwsXw4JGwlp5jfWKp5VIgMWg==}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
     dependencies:
-      '@graphql-tools/batch-delegate': 8.2.1_graphql@16.0.1
+      '@graphql-tools/batch-delegate': 8.2.2_graphql@16.0.1
       '@graphql-tools/delegate': 8.4.2_graphql@16.0.1
       '@graphql-tools/merge': 8.2.1_graphql@16.0.1
       '@graphql-tools/schema': 8.3.1_graphql@16.0.1
