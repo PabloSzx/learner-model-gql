@@ -4,10 +4,13 @@ import { gql, registerModule } from "../ez";
 export const projectModule = registerModule(
   gql`
     type Project {
+      "Unique numeric identifier"
       id: IntID!
 
+      "Domains associated with the project"
       domains: [Domain!]!
 
+      "Topics associated with the project"
       topics: [Topic!]!
     }
 

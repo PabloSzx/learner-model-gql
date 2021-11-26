@@ -3,6 +3,7 @@ import { gql, registerModule } from "../ez";
 export const domainModule = registerModule(
   gql`
     type Topic {
+      "Unique numeric identifier"
       id: IntID!
 
       "Content associated with topic"

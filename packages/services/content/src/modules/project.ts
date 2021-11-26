@@ -58,6 +58,7 @@ export const projectModule = registerModule(
     }
 
     type Project {
+      "Unique numeric identifier"
       id: IntID!
 
       "Content associated with project"

@@ -9,6 +9,7 @@ import { gql, registerModule } from "../ez";
 export const projectsModule = registerModule(
   gql`
     type Project {
+      "Unique numeric identifier"
       id: IntID!
 
       """

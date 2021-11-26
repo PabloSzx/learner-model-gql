@@ -53,6 +53,7 @@ export type Action = {
   extra?: Maybe<Scalars["JSONObject"]>;
   /** Arbitrary hint identifier */
   hintID?: Maybe<Scalars["ID"]>;
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** Related KCs */
   kcs: Array<Kc>;
@@ -131,6 +132,7 @@ export type ActionInput = {
  */
 export type ActionVerb = {
   __typename?: "ActionVerb";
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** Name of the verb */
   name: Scalars["String"];
@@ -295,63 +297,101 @@ export type AdminContentQueriesAllContentArgs = {
   pagination: CursorConnectionArgs;
 };
 
+/** Admin Domain-Related Queries */
 export type AdminDomainMutations = {
   __typename?: "AdminDomainMutations";
+  /** [ADMIN] Create a new domain entity */
   createDomain: Domain;
+  /** [ADMIN] Create a new KC entity */
   createKC: Kc;
+  /** [ADMIN] Create a new topic entity */
   createTopic: Topic;
+  /** [ADMIN] Update an existent domain entity */
   updateDomain: Domain;
+  /** [ADMIN] Update an existent KC entity */
   updateKC: Kc;
+  /** [ADMIN] Update an existent topic entity */
   updateTopic: Topic;
 };
 
+/** Admin Domain-Related Queries */
 export type AdminDomainMutationsCreateDomainArgs = {
   input: CreateDomain;
 };
 
+/** Admin Domain-Related Queries */
 export type AdminDomainMutationsCreateKcArgs = {
   data: CreateKcInput;
 };
 
+/** Admin Domain-Related Queries */
 export type AdminDomainMutationsCreateTopicArgs = {
   input: CreateTopic;
 };
 
+/** Admin Domain-Related Queries */
 export type AdminDomainMutationsUpdateDomainArgs = {
   input: UpdateDomain;
 };
 
+/** Admin Domain-Related Queries */
 export type AdminDomainMutationsUpdateKcArgs = {
   data: UpdateKcInput;
 };
 
+/** Admin Domain-Related Queries */
 export type AdminDomainMutationsUpdateTopicArgs = {
   input: UpdateTopic;
 };
 
+/** Admin Domain-Related Queries */
 export type AdminDomainQueries = {
   __typename?: "AdminDomainQueries";
+  /**
+   * [ADMIN] Get all the domains currently in the system
+   *
+   * Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
+   */
   allDomains: DomainsConnection;
+  /**
+   * [ADMIN] Get all the KCs currently in the system
+   *
+   * Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
+   */
   allKCs: KCsConnection;
+  /**
+   * [ADMIN] Get all the topics currently in the system
+   *
+   * Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
+   */
   allTopics: TopicsConnection;
 };
 
+/** Admin Domain-Related Queries */
 export type AdminDomainQueriesAllDomainsArgs = {
   filters?: InputMaybe<AdminDomainsFilter>;
   pagination: CursorConnectionArgs;
 };
 
+/** Admin Domain-Related Queries */
 export type AdminDomainQueriesAllKCsArgs = {
   filters?: InputMaybe<AdminKCsFilter>;
   pagination: CursorConnectionArgs;
 };
 
+/** Admin Domain-Related Queries */
 export type AdminDomainQueriesAllTopicsArgs = {
   filters?: InputMaybe<AdminTopicsFilter>;
   pagination: CursorConnectionArgs;
 };
 
+/** Filter all domains of admin query */
 export type AdminDomainsFilter = {
+  /**
+   * Filter by the specified projects
+   *
+   * If the domain's project matches any of the specified projects, the domain is included
+   */
   projects?: InputMaybe<Array<Scalars["IntID"]>>;
 };
 
@@ -359,9 +399,26 @@ export type AdminGroupsFilter = {
   tags?: InputMaybe<Array<Scalars["String"]>>;
 };
 
+/** Filter all KCs of admin query */
 export type AdminKCsFilter = {
+  /**
+   * Filter by the specified projects
+   *
+   * If the KC's domain matches any of the specified projects, the KC is included
+   */
   domains?: InputMaybe<Array<Scalars["IntID"]>>;
+  /**
+   * Filter by the specified projects
+   *
+   * If the KC's project matches any of the specified projects, the KC is included
+   */
   projects?: InputMaybe<Array<Scalars["IntID"]>>;
+  /**
+   * Filter by the specified topics
+   *
+   * If any of the KC's topics matches any of the specified topics, the KC is included
+   */
+  topics?: InputMaybe<Array<Scalars["IntID"]>>;
 };
 
 export type AdminProjectsMutations = {
@@ -406,7 +463,13 @@ export type AdminStateQueriesAllModelStatesArgs = {
   input: ModelStateConnectionInput;
 };
 
+/** Filter all topics of admin query */
 export type AdminTopicsFilter = {
+  /**
+   * Filter by the specified projects
+   *
+   * If the topic's project matches any of the specified projects, the topic is included
+   */
   projects?: InputMaybe<Array<Scalars["IntID"]>>;
 };
 
@@ -497,6 +560,7 @@ export type Content = {
   id: Scalars["IntID"];
   /** Arbitrary JSON object data */
   json?: Maybe<Scalars["JSONObject"]>;
+  /** KCs associated with the content */
   kcs: Array<Kc>;
   /** Human readable identifier */
   label: Scalars["String"];
@@ -509,8 +573,9 @@ export type Content = {
    * Tags can be used to categorize or filter
    */
   tags: Array<Scalars["String"]>;
+  /** Topics associated with the content */
   topics: Array<Topic>;
-  /** Date of latest update */
+  /** Date of last update */
   updatedAt: Scalars["DateTime"];
   /** External URL */
   url?: Maybe<Scalars["String"]>;
@@ -563,9 +628,13 @@ export type CreateContent = {
   url?: InputMaybe<Scalars["URL"]>;
 };
 
+/** Domain creation input data */
 export type CreateDomain = {
+  /** Unique string identifier */
   code: Scalars["String"];
+  /** Human readable identifier */
   label: Scalars["String"];
+  /** Projects associated with domain */
   projectsIds: Array<Scalars["IntID"]>;
 };
 
@@ -577,9 +646,13 @@ export type CreateGroupInput = {
   tags: Array<Scalars["String"]>;
 };
 
+/** KC creation input data */
 export type CreateKcInput = {
+  /** Unique string identifier */
   code: Scalars["String"];
+  /** Domain associated with KC */
   domainId: Scalars["IntID"];
+  /** Human readable identifier */
   label: Scalars["String"];
 };
 
@@ -589,13 +662,29 @@ export type CreateProject = {
   label: Scalars["String"];
 };
 
+/** Topic creation input data */
 export type CreateTopic = {
+  /** Unique string identifier */
   code: Scalars["String"];
+  /** Content associated with topic */
   contentIds: Array<Scalars["IntID"]>;
+  /** Human readable identifier */
   label: Scalars["String"];
+  /**
+   * Parent topic
+   *
+   * Used to set the hierarchy of topics
+   */
   parentTopicId?: InputMaybe<Scalars["IntID"]>;
+  /** Project associated with topic */
   projectId: Scalars["IntID"];
+  /** Parameter that can be used to sort a list of topics */
   sortIndex?: InputMaybe<Scalars["Int"]>;
+  /**
+   * Tags associated with the topic
+   *
+   * Tags can be used to categorize or filter
+   */
   tags: Array<Scalars["String"]>;
 };
 
@@ -608,13 +697,18 @@ export type CursorConnectionArgs = {
 
 export type Domain = {
   __typename?: "Domain";
+  /** Unique string identifier */
   code: Scalars["String"];
+  /** Date of creation */
   createdAt: Scalars["DateTime"];
   id: Scalars["IntID"];
+  /** KCs associated with the domain */
   kcs: Array<Kc>;
+  /** Human readable identifier */
   label: Scalars["String"];
   modelStates: ModelStateConnection;
   projects: Array<Project>;
+  /** Date of last update */
   updatedAt: Scalars["DateTime"];
 };
 
@@ -622,9 +716,12 @@ export type DomainModelStatesArgs = {
   input: ModelStateConnectionInput;
 };
 
+/** Paginated Domains */
 export type DomainsConnection = Connection & {
   __typename?: "DomainsConnection";
+  /** Nodes of the current page */
   nodes: Array<Domain>;
+  /** Pagination related information */
   pageInfo: PageInfo;
 };
 
@@ -662,20 +759,31 @@ export type GroupsConnection = Connection & {
   pageInfo: PageInfo;
 };
 
+/** KC / Knowledge Component Entity */
 export type Kc = {
   __typename?: "KC";
+  /** Unique string identifier */
   code: Scalars["String"];
+  /** Date of creation */
   createdAt: Scalars["DateTime"];
+  /** Domain associated with the KC */
   domain: Domain;
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
+  /** Human readable identifier */
   label: Scalars["String"];
+  /** Topics associated with the KC */
   topics: Array<Topic>;
+  /** Date of last update */
   updatedAt: Scalars["DateTime"];
 };
 
+/** Paginated KCs */
 export type KCsConnection = Connection & {
   __typename?: "KCsConnection";
+  /** Nodes of the current page */
   nodes: Array<Kc>;
+  /** Pagination related information */
   pageInfo: PageInfo;
 };
 
@@ -751,6 +859,7 @@ export type Mutation = {
   action?: Maybe<Scalars["Void"]>;
   /** [ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access */
   adminContent: AdminContentMutations;
+  /** [ADMIN] Admin related domain mutations, only authenticated users with the role "ADMIN" can access */
   adminDomain: AdminDomainMutations;
   adminProjects: AdminProjectsMutations;
   adminUsers: AdminUserMutations;
@@ -791,9 +900,11 @@ export type Project = {
   /** Content associated with project */
   content: ContentConnection;
   createdAt: Scalars["DateTime"];
+  /** Domains associated with the project */
   domains: Array<Domain>;
   id: Scalars["IntID"];
   label: Scalars["String"];
+  /** Topics associated with the project */
   topics: Array<Topic>;
   updatedAt: Scalars["DateTime"];
 };
@@ -912,6 +1023,7 @@ export type Query = {
   adminActions: AdminActionQueries;
   /** [ADMIN] Admin related content queries, only authenticated users with the role "ADMIN" can access */
   adminContent: AdminContentQueries;
+  /** [ADMIN] Admin related domain queries, only authenticated users with the role "ADMIN" can access */
   adminDomain: AdminDomainQueries;
   /** [ADMIN] Project related administration queries */
   adminProjects: AdminProjectsQueries;
@@ -922,13 +1034,20 @@ export type Query = {
    * Get specified content by "code".
    *
    * - If user is not authenticated it throws.
-   * - If authenticated user has no permissions on the specified project it returns NULL.
+   * - If authenticated user has no permissions on the corresponding project it returns NULL.
    */
   contentByCode?: Maybe<Content>;
   currentUser?: Maybe<User>;
   domains: Array<Domain>;
   groups: Array<Group>;
   hello: Scalars["String"];
+  /**
+   * Get all the KCs associated with the specified identifiers
+   *
+   * The KCs data is guaranteed to follow the specified identifiers order
+   *
+   * If any of the specified identifiers is not found or forbidden, query fails
+   */
   kcs: Array<Kc>;
   /**
    * Get specified project by either "id" or "code".
@@ -945,6 +1064,12 @@ export type Query = {
    * If any of the specified identifiers is not found or forbidden, query fails
    */
   projects: Array<Project>;
+  /**
+   * Get specified topic by "code".
+   *
+   * - If user is not authenticated it throws.
+   * - If authenticated user has no permissions on the corresponding project it returns NULL.
+   */
   topicByCode?: Maybe<Topic>;
   topics: Array<Topic>;
   users: Array<User>;
@@ -998,24 +1123,50 @@ export type Subscription = {
 
 export type Topic = {
   __typename?: "Topic";
+  /**
+   * Childrens topics
+   *
+   * Direct childrens of the current topic
+   *
+   * To build the topics tree, use the "parent" topic
+   */
   childrens: Array<Topic>;
+  /** Unique string identifier */
   code: Scalars["String"];
   /** Content associated with topic */
   content: Array<Content>;
+  /** Date of creation */
   createdAt: Scalars["DateTime"];
   id: Scalars["IntID"];
+  /** KCs associated with the topic */
   kcs: Array<Kc>;
+  /** Human readable identifier */
   label: Scalars["String"];
+  /**
+   * Parent topic
+   *
+   * Used to set the hierarchy of topics
+   */
   parent?: Maybe<Topic>;
   project: Project;
+  /** Parameter that can be used to sort a list of domains */
   sortIndex?: Maybe<Scalars["Int"]>;
+  /**
+   * Tags associated with the domain
+   *
+   * Tags can be used to categorize or filter
+   */
   tags: Array<Scalars["String"]>;
+  /** Date of last update */
   updatedAt: Scalars["DateTime"];
 };
 
+/** Paginated Topics */
 export type TopicsConnection = Connection & {
   __typename?: "TopicsConnection";
+  /** Nodes of the current page */
   nodes: Array<Topic>;
+  /** Pagination related information */
   pageInfo: PageInfo;
 };
 
@@ -1059,9 +1210,13 @@ export type UpdateContent = {
   url?: InputMaybe<Scalars["URL"]>;
 };
 
+/** Domain update input data */
 export type UpdateDomain = {
+  /** Unique string identifier */
   code: Scalars["String"];
+  /** Current domain identifier */
   id: Scalars["IntID"];
+  /** Human readable identifier */
   label: Scalars["String"];
 };
 
@@ -1075,8 +1230,11 @@ export type UpdateGroupInput = {
 };
 
 export type UpdateKcInput = {
+  /** Unique string identifier */
   code: Scalars["String"];
+  /** Unique numeric identifier of the current KC */
   id: Scalars["IntID"];
+  /** Human readable identifier */
   label: Scalars["String"];
 };
 
@@ -1087,13 +1245,29 @@ export type UpdateProject = {
   label: Scalars["String"];
 };
 
+/** Topic update input data */
 export type UpdateTopic = {
+  /** Unique string identifier */
   code: Scalars["String"];
+  /** Content associated with topic */
   contentIds: Array<Scalars["IntID"]>;
+  /** Current topic identifier */
   id: Scalars["IntID"];
+  /** Human readable identifier */
   label: Scalars["String"];
+  /**
+   * Parent topic
+   *
+   * Used to set the hierarchy of topics
+   */
   parentTopicId?: InputMaybe<Scalars["IntID"]>;
+  /** Parameter that can be used to sort a list of topics */
   sortIndex?: InputMaybe<Scalars["Int"]>;
+  /**
+   * Tags associated with the topic
+   *
+   * Tags can be used to categorize or filter
+   */
   tags: Array<Scalars["String"]>;
 };
 

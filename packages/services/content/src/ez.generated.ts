@@ -132,6 +132,7 @@ export type Content = {
   createdAt: Scalars["DateTime"];
   /** Arbitrary content description */
   description: Scalars["String"];
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** Arbitrary JSON object data */
   json?: Maybe<Scalars["JSONObject"]>;
@@ -147,7 +148,7 @@ export type Content = {
   tags: Array<Scalars["String"]>;
   /** Topics associated with content */
   topics: Array<Topic>;
-  /** Date of latest update */
+  /** Date of last update */
   updatedAt: Scalars["DateTime"];
   /** External URL */
   url?: Maybe<Scalars["String"]>;
@@ -215,6 +216,7 @@ export type Mutation = {
 };
 
 export type Node = {
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
 };
 
@@ -232,6 +234,7 @@ export type Project = {
   __typename?: "Project";
   /** Content associated with project */
   content: ContentConnection;
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
 };
 
@@ -302,7 +305,7 @@ export type Query = {
    * Get specified content by "code".
    *
    * - If user is not authenticated it throws.
-   * - If authenticated user has no permissions on the specified project it returns NULL.
+   * - If authenticated user has no permissions on the corresponding project it returns NULL.
    */
   contentByCode?: Maybe<Content>;
   hello: Scalars["String"];
@@ -349,6 +352,7 @@ export type Topic = {
   __typename?: "Topic";
   /** Content associated with topic */
   content: Array<Content>;
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
 };
 

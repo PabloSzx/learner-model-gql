@@ -17,6 +17,7 @@ export const actionModule = registerModule(
     Main action categorization system
     """
     type ActionVerb {
+      "Unique numeric identifier"
       id: IntID!
 
       "Name of the verb"
@@ -24,22 +25,27 @@ export const actionModule = registerModule(
     }
 
     type Content {
+      "Unique numeric identifier"
       id: IntID!
     }
 
     type KC {
+      "Unique numeric identifier"
       id: IntID!
     }
 
     type Domain {
+      "Unique numeric identifier"
       id: IntID!
     }
 
     type Topic {
+      "Unique numeric identifier"
       id: IntID!
     }
 
     type User {
+      "Unique numeric identifier"
       id: IntID!
     }
 
@@ -116,6 +122,7 @@ export const actionModule = registerModule(
     User-emitted actions related to system, data mainly used for logging and modeling purposes
     """
     type Action {
+      "Unique numeric identifier"
       id: IntID!
 
       "Type of action"

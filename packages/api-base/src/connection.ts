@@ -13,6 +13,7 @@ export const ConnectionTypes = gql`
   }
 
   interface Node {
+    "Unique numeric identifier"
     id: IntID!
   }
 

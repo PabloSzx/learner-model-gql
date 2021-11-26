@@ -32,6 +32,9 @@ type Action {
   Arbitrary hint identifier
   """
   hintID: ID
+  """
+  Unique numeric identifier
+  """
   id: IntID!
   """
   Related KCs
@@ -139,6 +142,9 @@ Action Verb
 Main action categorization system
 """
 type ActionVerb {
+  """
+  Unique numeric identifier
+  """
   id: IntID!
   """
   Name of the verb
@@ -309,31 +315,78 @@ type AdminContentQueries {
   ): ContentConnection!
 }
 
+"""
+Admin Domain-Related Queries
+"""
 type AdminDomainMutations {
+  """
+  [ADMIN] Create a new domain entity
+  """
   createDomain(input: CreateDomain!): Domain!
+  """
+  [ADMIN] Create a new KC entity
+  """
   createKC(data: CreateKCInput!): KC!
+  """
+  [ADMIN] Create a new topic entity
+  """
   createTopic(input: CreateTopic!): Topic!
+  """
+  [ADMIN] Update an existent domain entity
+  """
   updateDomain(input: UpdateDomain!): Domain!
+  """
+  [ADMIN] Update an existent KC entity
+  """
   updateKC(data: UpdateKCInput!): KC!
+  """
+  [ADMIN] Update an existent topic entity
+  """
   updateTopic(input: UpdateTopic!): Topic!
 }
 
+"""
+Admin Domain-Related Queries
+"""
 type AdminDomainQueries {
+  """
+  [ADMIN] Get all the domains currently in the system
+
+  Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
+  """
   allDomains(
     filters: AdminDomainsFilter
     pagination: CursorConnectionArgs!
   ): DomainsConnection!
+  """
+  [ADMIN] Get all the KCs currently in the system
+
+  Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
+  """
   allKCs(
     filters: AdminKCsFilter
     pagination: CursorConnectionArgs!
   ): KCsConnection!
+  """
+  [ADMIN] Get all the topics currently in the system
+
+  Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
+  """
   allTopics(
     filters: AdminTopicsFilter
     pagination: CursorConnectionArgs!
   ): TopicsConnection!
 }
 
+"""
+Filter all domains of admin query
+"""
 input AdminDomainsFilter {
+  """
+  Filter by the specified projects
+
+  If the domain's project matches any of the specified projects, the domain is included
+  """
   projects: [IntID!]
 }
 
@@ -341,9 +394,28 @@ input AdminGroupsFilter {
   tags: [String!]
 }
 
+"""
+Filter all KCs of admin query
+"""
 input AdminKCsFilter {
+  """
+  Filter by the specified projects
+
+  If the KC's domain matches any of the specified projects, the KC is included
+  """
   domains: [IntID!]
+  """
+  Filter by the specified projects
+
+  If the KC's project matches any of the specified projects, the KC is included
+  """
   projects: [IntID!]
+  """
+  Filter by the specified topics
+
+  If any of the KC's topics matches any of the specified topics, the KC is included
+  """
+  topics: [IntID!]
 }
 
 type AdminProjectsMutations {
@@ -365,7 +437,15 @@ type AdminStateQueries {
   allModelStates(input: ModelStateConnectionInput!): ModelStateConnection!
 }
 
+"""
+Filter all topics of admin query
+"""
 input AdminTopicsFilter {
+  """
+  Filter by the specified projects
+
+  If the topic's project matches any of the specified projects, the topic is included
+  """
   projects: [IntID!]
 }
 
@@ -435,6 +515,9 @@ type Content {
   Arbitrary JSON object data
   """
   json: JSONObject
+  """
+  KCs associated with the content
+  """
   kcs: [KC!]!
   """
   Human readable identifier
@@ -451,9 +534,12 @@ type Content {
   Tags can be used to categorize or filter
   """
   tags: [String!]!
+  """
+  Topics associated with the content
+  """
   topics: [Topic!]!
   """
-  Date of latest update
+  Date of last update
   """
   updatedAt: DateTime!
   """
@@ -532,9 +618,21 @@ input CreateContent {
   url: URL
 }
 
+"""
+Domain creation input data
+"""
 input CreateDomain {
+  """
+  Unique string identifier
+  """
   code: String!
+  """
+  Human readable identifier
+  """
   label: String!
+  """
+  Projects associated with domain
+  """
   projectsIds: [IntID!]!
 }
 
@@ -546,9 +644,21 @@ input CreateGroupInput {
   tags: [String!]!
 }
 
+"""
+KC creation input data
+"""
 input CreateKCInput {
+  """
+  Unique string identifier
+  """
   code: String!
+  """
+  Domain associated with KC
+  """
   domainId: IntID!
+  """
+  Human readable identifier
+  """
   label: String!
 }
 
@@ -558,13 +668,41 @@ input CreateProject {
   label: String!
 }
 
+"""
+Topic creation input data
+"""
 input CreateTopic {
+  """
+  Unique string identifier
+  """
   code: String!
+  """
+  Content associated with topic
+  """
   contentIds: [IntID!]!
+  """
+  Human readable identifier
+  """
   label: String!
+  """
+  Parent topic
+
+  Used to set the hierarchy of topics
+  """
   parentTopicId: IntID
+  """
+  Project associated with topic
+  """
   projectId: IntID!
+  """
+  Parameter that can be used to sort a list of topics
+  """
   sortIndex: Int
+  """
+  Tags associated with the topic
+
+  Tags can be used to categorize or filter
+  """
   tags: [String!]!
 }
 
@@ -581,18 +719,42 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 scalar DateTime
 
 type Domain {
+  """
+  Unique string identifier
+  """
   code: String!
+  """
+  Date of creation
+  """
   createdAt: DateTime!
   id: IntID!
+  """
+  KCs associated with the domain
+  """
   kcs: [KC!]!
+  """
+  Human readable identifier
+  """
   label: String!
   modelStates(input: ModelStateConnectionInput!): ModelStateConnection!
   projects: [Project!]!
+  """
+  Date of last update
+  """
   updatedAt: DateTime!
 }
 
+"""
+Paginated Domains
+"""
 type DomainsConnection implements Connection {
+  """
+  Nodes of the current page
+  """
   nodes: [Domain!]!
+  """
+  Pagination related information
+  """
   pageInfo: PageInfo!
 }
 
@@ -647,18 +809,51 @@ The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](
 """
 scalar JSONObject
 
+"""
+KC / Knowledge Component Entity
+"""
 type KC {
+  """
+  Unique string identifier
+  """
   code: String!
+  """
+  Date of creation
+  """
   createdAt: DateTime!
+  """
+  Domain associated with the KC
+  """
   domain: Domain!
+  """
+  Unique numeric identifier
+  """
   id: IntID!
+  """
+  Human readable identifier
+  """
   label: String!
+  """
+  Topics associated with the KC
+  """
   topics: [Topic!]!
+  """
+  Date of last update
+  """
   updatedAt: DateTime!
 }
 
+"""
+Paginated KCs
+"""
 type KCsConnection implements Connection {
+  """
+  Nodes of the current page
+  """
   nodes: [KC!]!
+  """
+  Pagination related information
+  """
   pageInfo: PageInfo!
 }
 
@@ -729,6 +924,9 @@ type Mutation {
   [ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access
   """
   adminContent: AdminContentMutations!
+  """
+  [ADMIN] Admin related domain mutations, only authenticated users with the role "ADMIN" can access
+  """
   adminDomain: AdminDomainMutations!
   adminProjects: AdminProjectsMutations!
   adminUsers: AdminUserMutations!
@@ -775,9 +973,15 @@ type Project {
     pagination: CursorConnectionArgs!
   ): ContentConnection!
   createdAt: DateTime!
+  """
+  Domains associated with the project
+  """
   domains: [Domain!]!
   id: IntID!
   label: String!
+  """
+  Topics associated with the project
+  """
   topics: [Topic!]!
   updatedAt: DateTime!
 }
@@ -892,6 +1096,9 @@ type Query {
   [ADMIN] Admin related content queries, only authenticated users with the role "ADMIN" can access
   """
   adminContent: AdminContentQueries!
+  """
+  [ADMIN] Admin related domain queries, only authenticated users with the role "ADMIN" can access
+  """
   adminDomain: AdminDomainQueries!
   """
   [ADMIN] Project related administration queries
@@ -904,13 +1111,20 @@ type Query {
   Get specified content by "code".
 
   - If user is not authenticated it throws.
-  - If authenticated user has no permissions on the specified project it returns NULL.
+  - If authenticated user has no permissions on the corresponding project it returns NULL.
   """
   contentByCode(code: String!): Content
   currentUser: User
   domains(ids: [IntID!]!): [Domain!]!
   groups(ids: [IntID!]!): [Group!]!
   hello: String!
+  """
+  Get all the KCs associated with the specified identifiers
+
+  The KCs data is guaranteed to follow the specified identifiers order
+
+  If any of the specified identifiers is not found or forbidden, query fails
+  """
   kcs(ids: [IntID!]!): [KC!]!
   """
   Get specified project by either "id" or "code".
@@ -927,6 +1141,12 @@ type Query {
   If any of the specified identifiers is not found or forbidden, query fails
   """
   projects(ids: [IntID!]!): [Project!]!
+  """
+  Get specified topic by "code".
+
+  - If user is not authenticated it throws.
+  - If authenticated user has no permissions on the corresponding project it returns NULL.
+  """
   topicByCode(code: String!): Topic
   topics(ids: [IntID!]!): [Topic!]!
   users(ids: [IntID!]!): [User!]!
@@ -942,25 +1162,69 @@ The javascript `Date` as integer. Type represents date and time as number of mil
 scalar Timestamp
 
 type Topic {
+  """
+  Childrens topics
+
+  Direct childrens of the current topic
+
+  To build the topics tree, use the "parent" topic
+  """
   childrens: [Topic!]!
+  """
+  Unique string identifier
+  """
   code: String!
   """
   Content associated with topic
   """
   content: [Content!]!
+  """
+  Date of creation
+  """
   createdAt: DateTime!
   id: IntID!
+  """
+  KCs associated with the topic
+  """
   kcs: [KC!]!
+  """
+  Human readable identifier
+  """
   label: String!
+  """
+  Parent topic
+
+  Used to set the hierarchy of topics
+  """
   parent: Topic
   project: Project!
+  """
+  Parameter that can be used to sort a list of domains
+  """
   sortIndex: Int
+  """
+  Tags associated with the domain
+
+  Tags can be used to categorize or filter
+  """
   tags: [String!]!
+  """
+  Date of last update
+  """
   updatedAt: DateTime!
 }
 
+"""
+Paginated Topics
+"""
 type TopicsConnection implements Connection {
+  """
+  Nodes of the current page
+  """
   nodes: [Topic!]!
+  """
+  Pagination related information
+  """
   pageInfo: PageInfo!
 }
 
@@ -1029,9 +1293,21 @@ input UpdateContent {
   url: URL
 }
 
+"""
+Domain update input data
+"""
 input UpdateDomain {
+  """
+  Unique string identifier
+  """
   code: String!
+  """
+  Current domain identifier
+  """
   id: IntID!
+  """
+  Human readable identifier
+  """
   label: String!
 }
 
@@ -1045,8 +1321,17 @@ input UpdateGroupInput {
 }
 
 input UpdateKCInput {
+  """
+  Unique string identifier
+  """
   code: String!
+  """
+  Unique numeric identifier of the current KC
+  """
   id: IntID!
+  """
+  Human readable identifier
+  """
   label: String!
 }
 
@@ -1057,13 +1342,41 @@ input UpdateProject {
   label: String!
 }
 
+"""
+Topic update input data
+"""
 input UpdateTopic {
+  """
+  Unique string identifier
+  """
   code: String!
+  """
+  Content associated with topic
+  """
   contentIds: [IntID!]!
+  """
+  Current topic identifier
+  """
   id: IntID!
+  """
+  Human readable identifier
+  """
   label: String!
+  """
+  Parent topic
+
+  Used to set the hierarchy of topics
+  """
   parentTopicId: IntID
+  """
+  Parameter that can be used to sort a list of topics
+  """
   sortIndex: Int
+  """
+  Tags associated with the topic
+
+  Tags can be used to categorize or filter
+  """
   tags: [String!]!
 }
 

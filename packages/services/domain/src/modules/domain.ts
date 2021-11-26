@@ -5,131 +5,277 @@ import { gql, registerModule } from "../ez";
 
 export const domainModule = registerModule(
   gql`
+    "Topic entity"
     type Topic {
+      "Unique numeric identifier"
       id: IntID!
 
+      "Unique string identifier"
       code: String!
+
+      "Human readable identifier"
       label: String!
 
+      "Parameter that can be used to sort a list of domains"
       sortIndex: Int
 
+      """
+      Parent topic
+
+      Used to set the hierarchy of topics
+      """
       parent: Topic
 
+      """
+      Tags associated with the domain
+
+      Tags can be used to categorize or filter
+      """
       tags: [String!]!
 
+      """
+      Childrens topics
+
+      Direct childrens of the current topic
+
+      To build the topics tree, use the "parent" topic
+      """
       childrens: [Topic!]!
 
+      "Date of creation"
       createdAt: DateTime!
+
+      "Date of last update"
       updatedAt: DateTime!
     }
 
     extend type KC {
+      "Domain associated with the KC"
       domain: Domain!
 
+      "Topics associated with the KC"
       topics: [Topic!]!
     }
 
+    "Domain entity"
     type Domain {
+      "Unique numeric identifier"
       id: IntID!
 
+      "Unique string identifier"
       code: String!
+
+      "Human readable identifier"
       label: String!
 
+      "Date of creation"
       createdAt: DateTime!
+
+      "Date of last update"
       updatedAt: DateTime!
     }
 
+    "Paginated Topics"
     type TopicsConnection implements Connection {
+      "Nodes of the current page"
       nodes: [Topic!]!
+
+      "Pagination related information"
       pageInfo: PageInfo!
     }
 
+    "Paginated Domains"
     type DomainsConnection implements Connection {
+      "Nodes of the current page"
       nodes: [Domain!]!
+
+      "Pagination related information"
       pageInfo: PageInfo!
     }
 
+    "Filter all domains of admin query"
     input AdminDomainsFilter {
+      """
+      Filter by the specified projects
+
+      If the domain's project matches any of the specified projects, the domain is included
+      """
       projects: [IntID!]
     }
 
+    "Filter all topics of admin query"
     input AdminTopicsFilter {
+      """
+      Filter by the specified projects
+
+      If the topic's project matches any of the specified projects, the topic is included
+      """
       projects: [IntID!]
     }
 
+    "Admin Domain-Related Queries"
     type AdminDomainQueries {
+      """
+      [ADMIN] Get all the topics currently in the system
+
+      Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
+      """
       allTopics(
         pagination: CursorConnectionArgs!
         filters: AdminTopicsFilter
       ): TopicsConnection!
+
+      """
+      [ADMIN] Get all the domains currently in the system
+
+      Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
+      """
       allDomains(
         pagination: CursorConnectionArgs!
         filters: AdminDomainsFilter
       ): DomainsConnection!
     }
 
+    "Domain creation input data"
     input CreateDomain {
+      "Unique string identifier"
       code: String!
+
+      "Human readable identifier"
       label: String!
 
+      "Projects associated with domain"
       projectsIds: [IntID!]!
     }
 
+    "Domain update input data"
     input UpdateDomain {
+      "Current domain identifier"
       id: IntID!
 
+      "Unique string identifier"
       code: String!
 
+      "Human readable identifier"
       label: String!
     }
 
+    "Topic creation input data"
     input CreateTopic {
+      "Unique string identifier"
       code: String!
+
+      "Human readable identifier"
       label: String!
 
+      """
+      Tags associated with the topic
+
+      Tags can be used to categorize or filter
+      """
       tags: [String!]!
 
+      """
+      Parent topic
+
+      Used to set the hierarchy of topics
+      """
       parentTopicId: IntID
 
+      "Project associated with topic"
       projectId: IntID!
 
+      "Content associated with topic"
       contentIds: [IntID!]!
 
+      "Parameter that can be used to sort a list of topics"
       sortIndex: Int
     }
 
+    "Topic update input data"
     input UpdateTopic {
+      "Current topic identifier"
       id: IntID!
 
+      "Unique string identifier"
       code: String!
+
+      "Human readable identifier"
       label: String!
 
+      """
+      Tags associated with the topic
+
+      Tags can be used to categorize or filter
+      """
       tags: [String!]!
 
+      """
+      Parent topic
+
+      Used to set the hierarchy of topics
+      """
       parentTopicId: IntID
 
+      "Content associated with topic"
       contentIds: [IntID!]!
 
+      "Parameter that can be used to sort a list of topics"
       sortIndex: Int
     }
 
+    "Admin Domain-Related Queries"
     type AdminDomainMutations {
+      "[ADMIN] Create a new domain entity"
       createDomain(input: CreateDomain!): Domain!
+
+      "[ADMIN] Update an existent domain entity"
       updateDomain(input: UpdateDomain!): Domain!
+
+      "[ADMIN] Create a new topic entity"
       createTopic(input: CreateTopic!): Topic!
+
+      "[ADMIN] Update an existent topic entity"
       updateTopic(input: UpdateTopic!): Topic!
     }
 
     extend type Query {
+      """
+      Get all the topics associated with the specified identifiers
+
+      The topics data is guaranteed to follow the specified identifiers order
+
+      If any of the specified identifiers is not found or forbidden, query fails
+      """
       topics(ids: [IntID!]!): [Topic!]!
+
+      """
+      Get all the domains associated with the specified identifiers
+
+      The domains data is guaranteed to follow the specified identifiers order
+
+      If any of the specified identifiers is not found or forbidden, query fails
+      """
       domains(ids: [IntID!]!): [Domain!]!
 
+      """
+      Get specified topic by "code".
+
+      - If user is not authenticated it throws.
+      - If authenticated user has no permissions on the corresponding project it returns NULL.
+      """
       topicByCode(code: String!): Topic
 
+      """
+      [ADMIN] Admin related domain queries, only authenticated users with the role "ADMIN" can access
+      """
       adminDomain: AdminDomainQueries!
     }
 
     extend type Mutation {
+      """
+      [ADMIN] Admin related domain mutations, only authenticated users with the role "ADMIN" can access
+      """
       adminDomain: AdminDomainMutations!
     }
   `,

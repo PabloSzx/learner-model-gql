@@ -68,6 +68,7 @@ export type Action = {
   extra?: Maybe<Scalars["JSONObject"]>;
   /** Arbitrary hint identifier */
   hintID?: Maybe<Scalars["ID"]>;
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** Related KCs */
   kcs: Array<Kc>;
@@ -146,6 +147,7 @@ export type ActionInput = {
  */
 export type ActionVerb = {
   __typename?: "ActionVerb";
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** Name of the verb */
   name: Scalars["String"];
@@ -264,6 +266,7 @@ export type Connection = {
 
 export type Content = {
   __typename?: "Content";
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
 };
 
@@ -276,11 +279,13 @@ export type CursorConnectionArgs = {
 
 export type Domain = {
   __typename?: "Domain";
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
 };
 
 export type Kc = {
   __typename?: "KC";
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
 };
 
@@ -301,6 +306,7 @@ export type MutationActionArgs = {
 };
 
 export type Node = {
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
 };
 
@@ -322,6 +328,7 @@ export type Project = {
    * ADMIN User role or "readProjectActions" group permissions flag required
    */
   actions: ActionsConnection;
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
 };
 
@@ -402,11 +409,13 @@ export type Subscription = {
 
 export type Topic = {
   __typename?: "Topic";
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
 };
 
 export type User = {
   __typename?: "User";
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
 };
 

@@ -10,6 +10,7 @@ export const contentModule = registerModule(
   gql`
     "Content entity"
     type Content {
+      "Unique numeric identifier"
       id: IntID!
 
       "Unique string identifier"
@@ -55,7 +56,7 @@ export const contentModule = registerModule(
       "Date of creation"
       createdAt: DateTime!
 
-      "Date of latest update"
+      "Date of last update"
       updatedAt: DateTime!
     }
 
@@ -223,7 +224,7 @@ export const contentModule = registerModule(
       Get specified content by "code".
 
       - If user is not authenticated it throws.
-      - If authenticated user has no permissions on the specified project it returns NULL.
+      - If authenticated user has no permissions on the corresponding project it returns NULL.
       """
       contentByCode(code: String!): Content
     }
