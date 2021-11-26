@@ -118,6 +118,7 @@ export type Mutation = {
 };
 
 export type Node = {
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
 };
 

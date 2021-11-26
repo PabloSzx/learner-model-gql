@@ -934,6 +934,9 @@ type Mutation {
 }
 
 interface Node {
+  """
+  Unique numeric identifier
+  """
   id: IntID!
 }
 

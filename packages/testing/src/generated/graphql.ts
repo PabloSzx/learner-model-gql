@@ -871,6 +871,7 @@ export type MutationActionArgs = {
 };
 
 export type Node = {
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
 };
 
