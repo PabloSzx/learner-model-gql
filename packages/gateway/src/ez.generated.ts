@@ -258,30 +258,53 @@ export type AdminActionsOrderBy = {
   id?: InputMaybe<Order_By>;
 };
 
+/** Filter all content of admin query */
 export type AdminContentFilter = {
+  /**
+   * Filter by the specified projects
+   *
+   * If the content's project matches any of the specified projects, the content is included
+   */
   projects?: InputMaybe<Array<Scalars["IntID"]>>;
+  /**
+   * Filter by the specified tags
+   *
+   * If any of the content's tags matches any of the specified tags, the content is included
+   */
   tags?: InputMaybe<Array<Scalars["String"]>>;
 };
 
+/** [ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access */
 export type AdminContentMutations = {
   __typename?: "AdminContentMutations";
+  /** [ADMIN] Create a new content entity */
   createContent: Content;
+  /** [ADMIN] Update an existent content entity */
   updateContent: Content;
 };
 
+/** [ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access */
 export type AdminContentMutationsCreateContentArgs = {
   data: CreateContent;
 };
 
+/** [ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access */
 export type AdminContentMutationsUpdateContentArgs = {
   data: UpdateContent;
 };
 
+/** Admin Content-Related Queries */
 export type AdminContentQueries = {
   __typename?: "AdminContentQueries";
+  /**
+   * [ADMIN] Get all the content currently in the system
+   *
+   * Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
+   */
   allContent: ContentConnection;
 };
 
+/** Admin Content-Related Queries */
 export type AdminContentQueriesAllContentArgs = {
   filters?: InputMaybe<AdminContentFilter>;
   pagination: CursorConnectionArgs;
@@ -466,40 +489,92 @@ export type Connection = {
 
 export type Content = {
   __typename?: "Content";
+  /**
+   * Binary content encoded in base64
+   *
+   * If present, it's guaranteed to be present alongisde binaryFilename
+   */
   binaryBase64?: Maybe<Scalars["String"]>;
+  /**
+   * Binary content filename
+   *
+   * If present, it's guaranteed to be present alongisde binaryBase64
+   *
+   * It's required and guaranteed to contain an extension where the mimetype can be inferred
+   */
   binaryFilename?: Maybe<Scalars["String"]>;
+  /** Unique string identifier */
   code: Scalars["String"];
+  /** Date of creation */
   createdAt: Scalars["DateTime"];
+  /** Arbitrary content description */
   description: Scalars["String"];
   id: Scalars["IntID"];
+  /** Arbitrary JSON object data */
   json?: Maybe<Scalars["JSONObject"]>;
   kcs: Array<Kc>;
+  /** Human readable identifier */
   label: Scalars["String"];
   project: Project;
+  /** Parameter that can be used to sort a list of content */
   sortIndex?: Maybe<Scalars["Int"]>;
+  /**
+   * Tags associated with the content
+   *
+   * Tags can be used to categorize or filter
+   */
   tags: Array<Scalars["String"]>;
   topics: Array<Topic>;
+  /** Date of latest update */
   updatedAt: Scalars["DateTime"];
+  /** External URL */
   url?: Maybe<Scalars["String"]>;
 };
 
+/** Paginated Content */
 export type ContentConnection = Connection & {
   __typename?: "ContentConnection";
+  /** Nodes of the current page */
   nodes: Array<Content>;
+  /** Pagination related information */
   pageInfo: PageInfo;
 };
 
+/** Content creation input data */
 export type CreateContent = {
+  /**
+   * Binary content encoded in base64
+   *
+   * If present, binaryFilename has to be specified
+   */
   binaryBase64?: InputMaybe<Scalars["String"]>;
+  /**
+   * Binary content filename
+   *
+   * If present, it's required to contain an extension where the mimetype can be inferred
+   */
   binaryFilename?: InputMaybe<Scalars["String"]>;
+  /** Unique string identifier */
   code: Scalars["String"];
+  /** Arbitrary content description */
   description: Scalars["String"];
+  /** Arbitrary JSON object data */
   json?: InputMaybe<Scalars["JSONObject"]>;
+  /** KCs associated with the content */
   kcs: Array<Scalars["IntID"]>;
+  /** Human readable identifier */
   label: Scalars["String"];
+  /** Project associated with new content */
   projectId: Scalars["IntID"];
+  /**
+   * Tags associated with the content
+   *
+   * Tags can be used to categorize or filter
+   */
   tags: Array<Scalars["String"]>;
+  /** Topics associated with the content */
   topics: Array<Scalars["IntID"]>;
+  /** External URL */
   url?: InputMaybe<Scalars["URL"]>;
 };
 
@@ -689,6 +764,7 @@ export type Mutation = {
    * - Authenticated user has to be associated with specified project
    */
   action?: Maybe<Scalars["Void"]>;
+  /** [ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access */
   adminContent: AdminContentMutations;
   adminDomain: AdminDomainMutations;
   adminProjects: AdminProjectsMutations;
@@ -723,6 +799,7 @@ export type Project = {
    */
   actions: ActionsConnection;
   code: Scalars["String"];
+  /** Content associated with project */
   content: ContentConnection;
   createdAt: Scalars["DateTime"];
   domains: Array<Domain>;
@@ -788,13 +865,49 @@ export type ProjectActionsFilter = {
   verbNames?: InputMaybe<Array<Scalars["String"]>>;
 };
 
+/** Filter project content */
 export type ProjectContentFilter = {
+  /**
+   * Filter by the specified ending created date
+   *
+   * If content's creation date is before the specified date, the content is included
+   */
   createdEndDate?: InputMaybe<Scalars["DateTime"]>;
+  /**
+   * Filter by the specified starting created date
+   *
+   * If content's creation date is after the specified date, the content is included
+   */
   createdStartDate?: InputMaybe<Scalars["DateTime"]>;
-  kcsIds?: InputMaybe<Array<Scalars["IntID"]>>;
+  /**
+   * Filter by the specified KCs
+   *
+   * If any of the content's KCs matches any of the specified KCs, the content is included
+   */
+  kcs?: InputMaybe<Array<Scalars["IntID"]>>;
+  /**
+   * Filter by the specified tags
+   *
+   * If any of the content's tags matches any of the specified tags, the content is included
+   */
   tags?: InputMaybe<Array<Scalars["String"]>>;
-  topicsIds?: InputMaybe<Array<Scalars["IntID"]>>;
+  /**
+   * Filter by the specified topics
+   *
+   * If content's topic matches any of the specified topics, the content is included
+   */
+  topics?: InputMaybe<Array<Scalars["IntID"]>>;
+  /**
+   * Filter by the specified ending last updated date
+   *
+   * If content's last updated date is before the specified date, the content is included
+   */
   updatedEndDate?: InputMaybe<Scalars["DateTime"]>;
+  /**
+   * Filter by the specified starting last updated date
+   *
+   * If content's last updated date is after the specified date, the content is included
+   */
   updatedStartDate?: InputMaybe<Scalars["DateTime"]>;
 };
 
@@ -806,8 +919,9 @@ export type ProjectsConnection = Connection & {
 
 export type Query = {
   __typename?: "Query";
-  /** [ADMIN] Admin related actions, only authenticated users with the role "ADMIN" can access */
+  /** [ADMIN] Admin related actions queries, only authenticated users with the role "ADMIN" can access */
   adminActions: AdminActionQueries;
+  /** [ADMIN] Admin related content queries, only authenticated users with the role "ADMIN" can access */
   adminContent: AdminContentQueries;
   adminDomain: AdminDomainQueries;
   /** [ADMIN] Project related administration queries */
@@ -897,6 +1011,7 @@ export type Topic = {
   __typename?: "Topic";
   childrens: Array<Topic>;
   code: Scalars["String"];
+  /** Content associated with topic */
   content: Array<Content>;
   createdAt: Scalars["DateTime"];
   id: Scalars["IntID"];
@@ -915,18 +1030,43 @@ export type TopicsConnection = Connection & {
   pageInfo: PageInfo;
 };
 
+/** Content update input data */
 export type UpdateContent = {
+  /**
+   * Binary content encoded in base64
+   *
+   * If present, binaryFilename has to be specified
+   */
   binaryBase64?: InputMaybe<Scalars["String"]>;
+  /**
+   * Binary content filename
+   *
+   * If present, it's required to contain an extension where the mimetype can be inferred
+   */
   binaryFilename?: InputMaybe<Scalars["String"]>;
+  /** Unique string identifier */
   code: Scalars["String"];
+  /** Arbitrary content description */
   description: Scalars["String"];
+  /** Current content identifier */
   id: Scalars["IntID"];
+  /** Arbitrary JSON object data */
   json?: InputMaybe<Scalars["JSONObject"]>;
+  /** KCs associated with the content */
   kcs: Array<Scalars["IntID"]>;
+  /** Human readable identifier */
   label: Scalars["String"];
+  /** Project associated with content */
   projectId: Scalars["IntID"];
+  /**
+   * Tags associated with the content
+   *
+   * Tags can be used to categorize or filter
+   */
   tags: Array<Scalars["String"]>;
+  /** Topics associated with the content */
   topics: Array<Scalars["IntID"]>;
+  /** External URL */
   url?: InputMaybe<Scalars["URL"]>;
 };
 

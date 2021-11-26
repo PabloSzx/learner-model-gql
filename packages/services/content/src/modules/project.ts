@@ -7,30 +7,64 @@ import { gql, registerModule } from "../ez";
 
 export const projectModule = registerModule(
   gql`
+    "Filter project content"
     input ProjectContentFilter {
-      tags: [String!]
-      topicsIds: [IntID!]
-      kcsIds: [IntID!]
+      """
+      Filter by the specified tags
 
+      If any of the content's tags matches any of the specified tags, the content is included
+      """
+      tags: [String!]
+
+      """
+      Filter by the specified topics
+
+      If content's topic matches any of the specified topics, the content is included
+      """
+      topics: [IntID!]
+
+      """
+      Filter by the specified KCs
+
+      If any of the content's KCs matches any of the specified KCs, the content is included
+      """
+      kcs: [IntID!]
+
+      """
+      Filter by the specified starting created date
+
+      If content's creation date is after the specified date, the content is included
+      """
       createdStartDate: DateTime
+      """
+      Filter by the specified ending created date
+
+      If content's creation date is before the specified date, the content is included
+      """
       createdEndDate: DateTime
 
+      """
+      Filter by the specified starting last updated date
+
+      If content's last updated date is after the specified date, the content is included
+      """
       updatedStartDate: DateTime
+      """
+      Filter by the specified ending last updated date
+
+      If content's last updated date is before the specified date, the content is included
+      """
       updatedEndDate: DateTime
     }
 
     type Project {
       id: IntID!
 
+      "Content associated with project"
       content(
         pagination: CursorConnectionArgs!
         filters: ProjectContentFilter
       ): ContentConnection!
-    }
-
-    type ContentConnection implements Connection {
-      nodes: [Content!]!
-      pageInfo: PageInfo!
     }
 
     extend type Query {
@@ -83,11 +117,11 @@ export const projectModule = registerModule(
                       hasSome: filters.tags,
                     }
                   : undefined,
-                topics: filters?.topicsIds
+                topics: filters?.topics
                   ? {
                       some: {
                         id: {
-                          in: filters.topicsIds,
+                          in: filters.topics,
                         },
                       },
                     }
@@ -106,11 +140,11 @@ export const projectModule = registerModule(
                         lte: filters.createdEndDate || undefined,
                       }
                     : undefined,
-                kcs: filters?.kcsIds
+                kcs: filters?.kcs
                   ? {
                       some: {
                         id: {
-                          in: filters.kcsIds,
+                          in: filters.kcs,
                         },
                       },
                     }

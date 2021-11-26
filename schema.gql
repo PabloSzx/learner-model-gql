@@ -262,17 +262,47 @@ input AdminActionsOrderBy {
   id: ORDER_BY = DESC
 }
 
+"""
+Filter all content of admin query
+"""
 input AdminContentFilter {
+  """
+  Filter by the specified projects
+
+  If the content's project matches any of the specified projects, the content is included
+  """
   projects: [IntID!]
+  """
+  Filter by the specified tags
+
+  If any of the content's tags matches any of the specified tags, the content is included
+  """
   tags: [String!]
 }
 
+"""
+[ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access
+"""
 type AdminContentMutations {
+  """
+  [ADMIN] Create a new content entity
+  """
   createContent(data: CreateContent!): Content!
+  """
+  [ADMIN] Update an existent content entity
+  """
   updateContent(data: UpdateContent!): Content!
 }
 
+"""
+Admin Content-Related Queries
+"""
 type AdminContentQueries {
+  """
+  [ADMIN] Get all the content currently in the system
+
+  Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
+  """
   allContent(
     filters: AdminContentFilter
     pagination: CursorConnectionArgs!
@@ -374,39 +404,131 @@ interface Connection {
 }
 
 type Content {
+  """
+  Binary content encoded in base64
+
+  If present, it's guaranteed to be present alongisde binaryFilename
+  """
   binaryBase64: String
+  """
+  Binary content filename
+
+  If present, it's guaranteed to be present alongisde binaryBase64
+
+  It's required and guaranteed to contain an extension where the mimetype can be inferred
+  """
   binaryFilename: String
+  """
+  Unique string identifier
+  """
   code: String!
+  """
+  Date of creation
+  """
   createdAt: DateTime!
+  """
+  Arbitrary content description
+  """
   description: String!
   id: IntID!
+  """
+  Arbitrary JSON object data
+  """
   json: JSONObject
   kcs: [KC!]!
+  """
+  Human readable identifier
+  """
   label: String!
   project: Project!
+  """
+  Parameter that can be used to sort a list of content
+  """
   sortIndex: Int
+  """
+  Tags associated with the content
+
+  Tags can be used to categorize or filter
+  """
   tags: [String!]!
   topics: [Topic!]!
+  """
+  Date of latest update
+  """
   updatedAt: DateTime!
+  """
+  External URL
+  """
   url: String
 }
 
+"""
+Paginated Content
+"""
 type ContentConnection implements Connection {
+  """
+  Nodes of the current page
+  """
   nodes: [Content!]!
+  """
+  Pagination related information
+  """
   pageInfo: PageInfo!
 }
 
+"""
+Content creation input data
+"""
 input CreateContent {
+  """
+  Binary content encoded in base64
+
+  If present, binaryFilename has to be specified
+  """
   binaryBase64: String
+  """
+  Binary content filename
+
+  If present, it's required to contain an extension where the mimetype can be inferred
+  """
   binaryFilename: String
+  """
+  Unique string identifier
+  """
   code: String!
+  """
+  Arbitrary content description
+  """
   description: String!
+  """
+  Arbitrary JSON object data
+  """
   json: JSONObject
+  """
+  KCs associated with the content
+  """
   kcs: [IntID!]!
+  """
+  Human readable identifier
+  """
   label: String!
+  """
+  Project associated with new content
+  """
   projectId: IntID!
+  """
+  Tags associated with the content
+
+  Tags can be used to categorize or filter
+  """
   tags: [String!]!
+  """
+  Topics associated with the content
+  """
   topics: [IntID!]!
+  """
+  External URL
+  """
   url: URL
 }
 
@@ -603,6 +725,9 @@ type Mutation {
   - Authenticated user has to be associated with specified project
   """
   action(data: ActionInput!): Void
+  """
+  [ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access
+  """
   adminContent: AdminContentMutations!
   adminDomain: AdminDomainMutations!
   adminProjects: AdminProjectsMutations!
@@ -642,6 +767,9 @@ type Project {
     pagination: CursorConnectionArgs!
   ): ActionsConnection!
   code: String!
+  """
+  Content associated with project
+  """
   content(
     filters: ProjectContentFilter
     pagination: CursorConnectionArgs!
@@ -702,13 +830,51 @@ input ProjectActionsFilter {
   verbNames: [String!]
 }
 
+"""
+Filter project content
+"""
 input ProjectContentFilter {
+  """
+  Filter by the specified ending created date
+
+  If content's creation date is before the specified date, the content is included
+  """
   createdEndDate: DateTime
+  """
+  Filter by the specified starting created date
+
+  If content's creation date is after the specified date, the content is included
+  """
   createdStartDate: DateTime
-  kcsIds: [IntID!]
+  """
+  Filter by the specified KCs
+
+  If any of the content's KCs matches any of the specified KCs, the content is included
+  """
+  kcs: [IntID!]
+  """
+  Filter by the specified tags
+
+  If any of the content's tags matches any of the specified tags, the content is included
+  """
   tags: [String!]
-  topicsIds: [IntID!]
+  """
+  Filter by the specified topics
+
+  If content's topic matches any of the specified topics, the content is included
+  """
+  topics: [IntID!]
+  """
+  Filter by the specified ending last updated date
+
+  If content's last updated date is before the specified date, the content is included
+  """
   updatedEndDate: DateTime
+  """
+  Filter by the specified starting last updated date
+
+  If content's last updated date is after the specified date, the content is included
+  """
   updatedStartDate: DateTime
 }
 
@@ -719,9 +885,12 @@ type ProjectsConnection implements Connection {
 
 type Query {
   """
-  [ADMIN] Admin related actions, only authenticated users with the role "ADMIN" can access
+  [ADMIN] Admin related actions queries, only authenticated users with the role "ADMIN" can access
   """
   adminActions: AdminActionQueries!
+  """
+  [ADMIN] Admin related content queries, only authenticated users with the role "ADMIN" can access
+  """
   adminContent: AdminContentQueries!
   adminDomain: AdminDomainQueries!
   """
@@ -775,6 +944,9 @@ scalar Timestamp
 type Topic {
   childrens: [Topic!]!
   code: String!
+  """
+  Content associated with topic
+  """
   content: [Content!]!
   createdAt: DateTime!
   id: IntID!
@@ -797,18 +969,63 @@ A field whose value conforms to the standard URL format as specified in RFC3986:
 """
 scalar URL
 
+"""
+Content update input data
+"""
 input UpdateContent {
+  """
+  Binary content encoded in base64
+
+  If present, binaryFilename has to be specified
+  """
   binaryBase64: String
+  """
+  Binary content filename
+
+  If present, it's required to contain an extension where the mimetype can be inferred
+  """
   binaryFilename: String
+  """
+  Unique string identifier
+  """
   code: String!
+  """
+  Arbitrary content description
+  """
   description: String!
+  """
+  Current content identifier
+  """
   id: IntID!
+  """
+  Arbitrary JSON object data
+  """
   json: JSONObject
+  """
+  KCs associated with the content
+  """
   kcs: [IntID!]!
+  """
+  Human readable identifier
+  """
   label: String!
+  """
+  Project associated with content
+  """
   projectId: IntID!
+  """
+  Tags associated with the content
+
+  Tags can be used to categorize or filter
+  """
   tags: [String!]!
+  """
+  Topics associated with the content
+  """
   topics: [IntID!]!
+  """
+  External URL
+  """
   url: URL
 }
 

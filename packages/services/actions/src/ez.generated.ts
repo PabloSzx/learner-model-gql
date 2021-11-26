@@ -378,7 +378,7 @@ export type ProjectActionsFilter = {
 
 export type Query = {
   __typename?: "Query";
-  /** [ADMIN] Admin related actions, only authenticated users with the role "ADMIN" can access */
+  /** [ADMIN] Admin related actions queries, only authenticated users with the role "ADMIN" can access */
   adminActions: AdminActionQueries;
   hello: Scalars["String"];
   /**
