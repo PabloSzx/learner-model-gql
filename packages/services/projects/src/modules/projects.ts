@@ -7,43 +7,74 @@ import { gql, registerModule } from "../ez";
 
 export const projectsModule = registerModule(
   gql`
+    "Project entity"
     type Project {
+      "Unique numeric identifier"
       id: IntID!
 
+      "Unique string identifier"
       code: String!
+
+      "Human readable identifier"
       label: String!
 
+      "Date of creation"
       createdAt: DateTime!
+
+      "Date of last update"
       updatedAt: DateTime!
     }
 
+    "Paginated Projects"
     type ProjectsConnection implements Connection {
+      "Nodes of the current page"
       nodes: [Project!]!
+
+      "Pagination related information"
       pageInfo: PageInfo!
     }
 
+    "Admin Project-Related Queries"
     type AdminProjectsQueries {
+      """
+      [ADMIN] Get all the projects currently in the system
+      """
       allProjects(pagination: CursorConnectionArgs!): ProjectsConnection!
     }
 
+    "Project creation input data"
     input CreateProject {
+      "Unique string identifier"
       code: String!
+
+      "Human readable identifier"
       label: String!
 
+      "Domains associated with project"
       domains: [IntID!]!
     }
 
+    "Project update input data"
     input UpdateProject {
+      "Current project identifier"
       id: IntID!
 
+      "Unique string identifier"
       code: String!
+
+      "Human readable identifier"
       label: String!
 
+      "Domains associated with project"
       domains: [IntID!]!
     }
 
+    "Admin Project-Related Mutations"
     type AdminProjectsMutations {
+      "[ADMIN] Create a new project entity"
       createProject(data: CreateProject!): Project!
+
+      "[ADMIN] Update an existent project entity"
       updateProject(data: UpdateProject!): Project!
     }
 
@@ -70,6 +101,9 @@ export const projectsModule = registerModule(
     }
 
     extend type Mutation {
+      """
+      [ADMIN] Admin related project mutations, only authenticated users with the role "ADMIN" can access
+      """
       adminProjects: AdminProjectsMutations!
     }
   `,

@@ -418,12 +418,27 @@ input AdminKCsFilter {
   topics: [IntID!]
 }
 
+"""
+Admin Project-Related Mutations
+"""
 type AdminProjectsMutations {
+  """
+  [ADMIN] Create a new project entity
+  """
   createProject(data: CreateProject!): Project!
+  """
+  [ADMIN] Update an existent project entity
+  """
   updateProject(data: UpdateProject!): Project!
 }
 
+"""
+Admin Project-Related Queries
+"""
 type AdminProjectsQueries {
+  """
+  [ADMIN] Get all the projects currently in the system
+  """
   allProjects(pagination: CursorConnectionArgs!): ProjectsConnection!
 }
 
@@ -510,6 +525,9 @@ type Content {
   Arbitrary content description
   """
   description: String!
+  """
+  Unique numeric identifier
+  """
   id: IntID!
   """
   Arbitrary JSON object data
@@ -523,6 +541,9 @@ type Content {
   Human readable identifier
   """
   label: String!
+  """
+  Project associated with the content
+  """
   project: Project!
   """
   Parameter that can be used to sort a list of content
@@ -662,9 +683,21 @@ input CreateKCInput {
   label: String!
 }
 
+"""
+Project creation input data
+"""
 input CreateProject {
+  """
+  Unique string identifier
+  """
   code: String!
+  """
+  Domains associated with project
+  """
   domains: [IntID!]!
+  """
+  Human readable identifier
+  """
   label: String!
 }
 
@@ -737,6 +770,9 @@ type Domain {
   """
   label: String!
   modelStates(input: ModelStateConnectionInput!): ModelStateConnection!
+  """
+  Projects associated with the domain
+  """
   projects: [Project!]!
   """
   Date of last update
@@ -767,8 +803,14 @@ type Group {
   code: String!
   createdAt: DateTime!
   flags: GroupFlags!
+  """
+  Unique numeric identifier
+  """
   id: IntID!
   label: String!
+  """
+  Projects associated with the group
+  """
   projects: [Project!]!
   projectsIds: [IntID!]!
   tags: [String!]!
@@ -928,6 +970,9 @@ type Mutation {
   [ADMIN] Admin related domain mutations, only authenticated users with the role "ADMIN" can access
   """
   adminDomain: AdminDomainMutations!
+  """
+  [ADMIN] Admin related project mutations, only authenticated users with the role "ADMIN" can access
+  """
   adminProjects: AdminProjectsMutations!
   adminUsers: AdminUserMutations!
   hello: String!
@@ -957,6 +1002,9 @@ type PageInfo {
   startCursor: String
 }
 
+"""
+Project entity
+"""
 type Project {
   """
   All actions of the project
@@ -967,6 +1015,9 @@ type Project {
     filters: ProjectActionsFilter
     pagination: CursorConnectionArgs!
   ): ActionsConnection!
+  """
+  Unique string identifier
+  """
   code: String!
   """
   Content associated with project
@@ -975,17 +1026,29 @@ type Project {
     filters: ProjectContentFilter
     pagination: CursorConnectionArgs!
   ): ContentConnection!
+  """
+  Date of creation
+  """
   createdAt: DateTime!
   """
   Domains associated with the project
   """
   domains: [Domain!]!
+  """
+  Unique numeric identifier
+  """
   id: IntID!
+  """
+  Human readable identifier
+  """
   label: String!
   """
   Topics associated with the project
   """
   topics: [Topic!]!
+  """
+  Date of last update
+  """
   updatedAt: DateTime!
 }
 
@@ -1085,8 +1148,17 @@ input ProjectContentFilter {
   updatedStartDate: DateTime
 }
 
+"""
+Paginated Projects
+"""
 type ProjectsConnection implements Connection {
+  """
+  Nodes of the current page
+  """
   nodes: [Project!]!
+  """
+  Pagination related information
+  """
   pageInfo: PageInfo!
 }
 
@@ -1109,6 +1181,13 @@ type Query {
   adminProjects: AdminProjectsQueries!
   adminState: AdminStateQueries!
   adminUsers: AdminUserQueries!
+  """
+  Get all the content associated with the specified identifiers
+
+  The content data is guaranteed to follow the specified identifiers order
+
+  If any of the specified identifiers is not found or forbidden, query fails
+  """
   content(ids: [IntID!]!): [Content!]!
   """
   Get specified content by "code".
@@ -1119,6 +1198,13 @@ type Query {
   contentByCode(code: String!): Content
   currentUser: User
   domains(ids: [IntID!]!): [Domain!]!
+  """
+  Get all the groups associated with the specified identifiers
+
+  The groups data is guaranteed to follow the specified identifiers order
+
+  If any of the specified identifiers is not found or forbidden, query fails
+  """
   groups(ids: [IntID!]!): [Group!]!
   hello: String!
   """
@@ -1151,6 +1237,13 @@ type Query {
   - If authenticated user has no permissions on the corresponding project it returns NULL.
   """
   topicByCode(code: String!): Topic
+  """
+  Get all the topics associated with the specified identifiers
+
+  The topics data is guaranteed to follow the specified identifiers order
+
+  If any of the specified identifiers is not found or forbidden, query fails
+  """
   topics(ids: [IntID!]!): [Topic!]!
   users(ids: [IntID!]!): [User!]!
 }
@@ -1185,6 +1278,9 @@ type Topic {
   Date of creation
   """
   createdAt: DateTime!
+  """
+  Unique numeric identifier
+  """
   id: IntID!
   """
   KCs associated with the topic
@@ -1200,6 +1296,9 @@ type Topic {
   Used to set the hierarchy of topics
   """
   parent: Topic
+  """
+  Project associated with the topic
+  """
   project: Project!
   """
   Parameter that can be used to sort a list of domains
@@ -1338,10 +1437,25 @@ input UpdateKCInput {
   label: String!
 }
 
+"""
+Project update input data
+"""
 input UpdateProject {
+  """
+  Unique string identifier
+  """
   code: String!
+  """
+  Domains associated with project
+  """
   domains: [IntID!]!
+  """
+  Current project identifier
+  """
   id: IntID!
+  """
+  Human readable identifier
+  """
   label: String!
 }
 
@@ -1404,6 +1518,9 @@ type User {
   modelStates(input: ModelStateConnectionInput!): ModelStateConnection!
   name: String
   picture: String
+  """
+  Projects associated with the user
+  """
   projects: [Project!]!
   projectsIds: [IntID!]!
   role: UserRole!

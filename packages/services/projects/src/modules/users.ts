@@ -4,19 +4,38 @@ import { gql, registerModule } from "../ez";
 export const usersModule = registerModule(
   gql`
     type User {
+      "Unique numeric identifier"
       id: IntID!
 
+      "Projects associated with the user"
       projects: [Project!]!
     }
 
     type Group {
+      "Unique numeric identifier"
       id: IntID!
 
+      "Projects associated with the group"
       projects: [Project!]!
     }
 
     extend type Query {
+      """
+      Get all the users associated with the specified identifiers
+
+      The users data is guaranteed to follow the specified identifiers order
+
+      If any of the specified identifiers is not found or forbidden, query fails
+      """
       users(ids: [IntID!]!): [User!]!
+
+      """
+      Get all the groups associated with the specified identifiers
+
+      The groups data is guaranteed to follow the specified identifiers order
+
+      If any of the specified identifiers is not found or forbidden, query fails
+      """
       groups(ids: [IntID!]!): [Group!]!
     }
   `,

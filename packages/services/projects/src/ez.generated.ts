@@ -53,25 +53,33 @@ export type Scalars = {
   Void: unknown;
 };
 
+/** Admin Project-Related Mutations */
 export type AdminProjectsMutations = {
   __typename?: "AdminProjectsMutations";
+  /** [ADMIN] Create a new project entity */
   createProject: Project;
+  /** [ADMIN] Update an existent project entity */
   updateProject: Project;
 };
 
+/** Admin Project-Related Mutations */
 export type AdminProjectsMutationsCreateProjectArgs = {
   data: CreateProject;
 };
 
+/** Admin Project-Related Mutations */
 export type AdminProjectsMutationsUpdateProjectArgs = {
   data: UpdateProject;
 };
 
+/** Admin Project-Related Queries */
 export type AdminProjectsQueries = {
   __typename?: "AdminProjectsQueries";
+  /** [ADMIN] Get all the projects currently in the system */
   allProjects: ProjectsConnection;
 };
 
+/** Admin Project-Related Queries */
 export type AdminProjectsQueriesAllProjectsArgs = {
   pagination: CursorConnectionArgs;
 };
@@ -82,13 +90,19 @@ export type Connection = {
 
 export type Content = {
   __typename?: "Content";
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
+  /** Project associated with the content */
   project: Project;
 };
 
+/** Project creation input data */
 export type CreateProject = {
+  /** Unique string identifier */
   code: Scalars["String"];
+  /** Domains associated with project */
   domains: Array<Scalars["IntID"]>;
+  /** Human readable identifier */
   label: Scalars["String"];
 };
 
@@ -101,18 +115,23 @@ export type CursorConnectionArgs = {
 
 export type Domain = {
   __typename?: "Domain";
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
+  /** Projects associated with the domain */
   projects: Array<Project>;
 };
 
 export type Group = {
   __typename?: "Group";
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
+  /** Projects associated with the group */
   projects: Array<Project>;
 };
 
 export type Mutation = {
   __typename?: "Mutation";
+  /** [ADMIN] Admin related project mutations, only authenticated users with the role "ADMIN" can access */
   adminProjects: AdminProjectsMutations;
   hello: Scalars["String"];
 };
@@ -132,18 +151,27 @@ export type PageInfo = {
   startCursor?: Maybe<Scalars["String"]>;
 };
 
+/** Project entity */
 export type Project = {
   __typename?: "Project";
+  /** Unique string identifier */
   code: Scalars["String"];
+  /** Date of creation */
   createdAt: Scalars["DateTime"];
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
+  /** Human readable identifier */
   label: Scalars["String"];
+  /** Date of last update */
   updatedAt: Scalars["DateTime"];
 };
 
+/** Paginated Projects */
 export type ProjectsConnection = Connection & {
   __typename?: "ProjectsConnection";
+  /** Nodes of the current page */
   nodes: Array<Project>;
+  /** Pagination related information */
   pageInfo: PageInfo;
 };
 
@@ -151,8 +179,29 @@ export type Query = {
   __typename?: "Query";
   /** [ADMIN] Project related administration queries */
   adminProjects: AdminProjectsQueries;
+  /**
+   * Get all the content associated with the specified identifiers
+   *
+   * The content data is guaranteed to follow the specified identifiers order
+   *
+   * If any of the specified identifiers is not found or forbidden, query fails
+   */
   content: Array<Content>;
+  /**
+   * Get all the domains associated with the specified identifiers
+   *
+   * The domains data is guaranteed to follow the specified identifiers order
+   *
+   * If any of the specified identifiers is not found or forbidden, query fails
+   */
   domains: Array<Domain>;
+  /**
+   * Get all the groups associated with the specified identifiers
+   *
+   * The groups data is guaranteed to follow the specified identifiers order
+   *
+   * If any of the specified identifiers is not found or forbidden, query fails
+   */
   groups: Array<Group>;
   hello: Scalars["String"];
   /**
@@ -170,7 +219,21 @@ export type Query = {
    * If any of the specified identifiers is not found or forbidden, query fails
    */
   projects: Array<Project>;
+  /**
+   * Get all the topics associated with the specified identifiers
+   *
+   * The topics data is guaranteed to follow the specified identifiers order
+   *
+   * If any of the specified identifiers is not found or forbidden, query fails
+   */
   topics: Array<Topic>;
+  /**
+   * Get all the users associated with the specified identifiers
+   *
+   * The users data is guaranteed to follow the specified identifiers order
+   *
+   * If any of the specified identifiers is not found or forbidden, query fails
+   */
   users: Array<User>;
 };
 
@@ -210,20 +273,29 @@ export type Subscription = {
 
 export type Topic = {
   __typename?: "Topic";
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
+  /** Project associated with the topic */
   project: Project;
 };
 
+/** Project update input data */
 export type UpdateProject = {
+  /** Unique string identifier */
   code: Scalars["String"];
+  /** Domains associated with project */
   domains: Array<Scalars["IntID"]>;
+  /** Current project identifier */
   id: Scalars["IntID"];
+  /** Human readable identifier */
   label: Scalars["String"];
 };
 
 export type User = {
   __typename?: "User";
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
+  /** Projects associated with the user */
   projects: Array<Project>;
 };
 

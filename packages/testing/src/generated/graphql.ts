@@ -421,25 +421,33 @@ export type AdminKCsFilter = {
   topics?: InputMaybe<Array<Scalars["IntID"]>>;
 };
 
+/** Admin Project-Related Mutations */
 export type AdminProjectsMutations = {
   __typename?: "AdminProjectsMutations";
+  /** [ADMIN] Create a new project entity */
   createProject: Project;
+  /** [ADMIN] Update an existent project entity */
   updateProject: Project;
 };
 
+/** Admin Project-Related Mutations */
 export type AdminProjectsMutationsCreateProjectArgs = {
   data: CreateProject;
 };
 
+/** Admin Project-Related Mutations */
 export type AdminProjectsMutationsUpdateProjectArgs = {
   data: UpdateProject;
 };
 
+/** Admin Project-Related Queries */
 export type AdminProjectsQueries = {
   __typename?: "AdminProjectsQueries";
+  /** [ADMIN] Get all the projects currently in the system */
   allProjects: ProjectsConnection;
 };
 
+/** Admin Project-Related Queries */
 export type AdminProjectsQueriesAllProjectsArgs = {
   pagination: CursorConnectionArgs;
 };
@@ -557,6 +565,7 @@ export type Content = {
   createdAt: Scalars["DateTime"];
   /** Arbitrary content description */
   description: Scalars["String"];
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** Arbitrary JSON object data */
   json?: Maybe<Scalars["JSONObject"]>;
@@ -564,6 +573,7 @@ export type Content = {
   kcs: Array<Kc>;
   /** Human readable identifier */
   label: Scalars["String"];
+  /** Project associated with the content */
   project: Project;
   /** Parameter that can be used to sort a list of content */
   sortIndex?: Maybe<Scalars["Int"]>;
@@ -656,9 +666,13 @@ export type CreateKcInput = {
   label: Scalars["String"];
 };
 
+/** Project creation input data */
 export type CreateProject = {
+  /** Unique string identifier */
   code: Scalars["String"];
+  /** Domains associated with project */
   domains: Array<Scalars["IntID"]>;
+  /** Human readable identifier */
   label: Scalars["String"];
 };
 
@@ -707,6 +721,7 @@ export type Domain = {
   /** Human readable identifier */
   label: Scalars["String"];
   modelStates: ModelStateConnection;
+  /** Projects associated with the domain */
   projects: Array<Project>;
   /** Date of last update */
   updatedAt: Scalars["DateTime"];
@@ -730,8 +745,10 @@ export type Group = {
   code: Scalars["String"];
   createdAt: Scalars["DateTime"];
   flags: GroupFlags;
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
   label: Scalars["String"];
+  /** Projects associated with the group */
   projects: Array<Project>;
   projectsIds: Array<Scalars["IntID"]>;
   tags: Array<Scalars["String"]>;
@@ -861,6 +878,7 @@ export type Mutation = {
   adminContent: AdminContentMutations;
   /** [ADMIN] Admin related domain mutations, only authenticated users with the role "ADMIN" can access */
   adminDomain: AdminDomainMutations;
+  /** [ADMIN] Admin related project mutations, only authenticated users with the role "ADMIN" can access */
   adminProjects: AdminProjectsMutations;
   adminUsers: AdminUserMutations;
   hello: Scalars["String"];
@@ -889,6 +907,7 @@ export type PageInfo = {
   startCursor?: Maybe<Scalars["String"]>;
 };
 
+/** Project entity */
 export type Project = {
   __typename?: "Project";
   /**
@@ -897,24 +916,31 @@ export type Project = {
    * ADMIN User role or "readProjectActions" group permissions flag required
    */
   actions: ActionsConnection;
+  /** Unique string identifier */
   code: Scalars["String"];
   /** Content associated with project */
   content: ContentConnection;
+  /** Date of creation */
   createdAt: Scalars["DateTime"];
   /** Domains associated with the project */
   domains: Array<Domain>;
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
+  /** Human readable identifier */
   label: Scalars["String"];
   /** Topics associated with the project */
   topics: Array<Topic>;
+  /** Date of last update */
   updatedAt: Scalars["DateTime"];
 };
 
+/** Project entity */
 export type ProjectActionsArgs = {
   filters?: InputMaybe<ProjectActionsFilter>;
   pagination: CursorConnectionArgs;
 };
 
+/** Project entity */
 export type ProjectContentArgs = {
   filters?: InputMaybe<ProjectContentFilter>;
   pagination: CursorConnectionArgs;
@@ -1012,9 +1038,12 @@ export type ProjectContentFilter = {
   updatedStartDate?: InputMaybe<Scalars["DateTime"]>;
 };
 
+/** Paginated Projects */
 export type ProjectsConnection = Connection & {
   __typename?: "ProjectsConnection";
+  /** Nodes of the current page */
   nodes: Array<Project>;
+  /** Pagination related information */
   pageInfo: PageInfo;
 };
 
@@ -1030,6 +1059,13 @@ export type Query = {
   adminProjects: AdminProjectsQueries;
   adminState: AdminStateQueries;
   adminUsers: AdminUserQueries;
+  /**
+   * Get all the content associated with the specified identifiers
+   *
+   * The content data is guaranteed to follow the specified identifiers order
+   *
+   * If any of the specified identifiers is not found or forbidden, query fails
+   */
   content: Array<Content>;
   /**
    * Get specified content by "code".
@@ -1040,6 +1076,13 @@ export type Query = {
   contentByCode?: Maybe<Content>;
   currentUser?: Maybe<User>;
   domains: Array<Domain>;
+  /**
+   * Get all the groups associated with the specified identifiers
+   *
+   * The groups data is guaranteed to follow the specified identifiers order
+   *
+   * If any of the specified identifiers is not found or forbidden, query fails
+   */
   groups: Array<Group>;
   hello: Scalars["String"];
   /**
@@ -1072,6 +1115,13 @@ export type Query = {
    * - If authenticated user has no permissions on the corresponding project it returns NULL.
    */
   topicByCode?: Maybe<Topic>;
+  /**
+   * Get all the topics associated with the specified identifiers
+   *
+   * The topics data is guaranteed to follow the specified identifiers order
+   *
+   * If any of the specified identifiers is not found or forbidden, query fails
+   */
   topics: Array<Topic>;
   users: Array<User>;
 };
@@ -1138,6 +1188,7 @@ export type Topic = {
   content: Array<Content>;
   /** Date of creation */
   createdAt: Scalars["DateTime"];
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** KCs associated with the topic */
   kcs: Array<Kc>;
@@ -1149,6 +1200,7 @@ export type Topic = {
    * Used to set the hierarchy of topics
    */
   parent?: Maybe<Topic>;
+  /** Project associated with the topic */
   project: Project;
   /** Parameter that can be used to sort a list of domains */
   sortIndex?: Maybe<Scalars["Int"]>;
@@ -1239,10 +1291,15 @@ export type UpdateKcInput = {
   label: Scalars["String"];
 };
 
+/** Project update input data */
 export type UpdateProject = {
+  /** Unique string identifier */
   code: Scalars["String"];
+  /** Domains associated with project */
   domains: Array<Scalars["IntID"]>;
+  /** Current project identifier */
   id: Scalars["IntID"];
+  /** Human readable identifier */
   label: Scalars["String"];
 };
 
@@ -1294,6 +1351,7 @@ export type User = {
   modelStates: ModelStateConnection;
   name?: Maybe<Scalars["String"]>;
   picture?: Maybe<Scalars["String"]>;
+  /** Projects associated with the user */
   projects: Array<Project>;
   projectsIds: Array<Scalars["IntID"]>;
   role: UserRole;
