@@ -4,16 +4,26 @@ import { gql, ModelStateConnection, registerModule } from "../ez";
 export const userModule = registerModule(
   gql`
     type User {
+      "Unique numeric identifier"
       id: IntID!
 
+      "Model States associated with user"
       modelStates(input: ModelStateConnectionInput!): ModelStateConnection!
     }
 
     extend type ModelState {
+      "User associated with Model State"
       user: User!
     }
 
     extend type Query {
+      """
+      Get all the users associated with the specified identifiers
+
+      The users data is guaranteed to follow the specified identifiers order
+
+      If any of the specified identifiers is not found or forbidden, query fails
+      """
       users(ids: [IntID!]!): [User!]!
     }
   `,

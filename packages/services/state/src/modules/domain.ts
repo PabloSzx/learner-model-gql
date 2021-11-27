@@ -4,16 +4,26 @@ import { gql, ModelStateConnection, registerModule } from "../ez";
 export const domainModule = registerModule(
   gql`
     type Domain {
+      "Unique numeric identifier"
       id: IntID!
 
+      "Model States associated with domain"
       modelStates(input: ModelStateConnectionInput!): ModelStateConnection!
     }
 
     extend type ModelState {
+      "Domain associated with Model State"
       domain: Domain!
     }
 
     extend type Query {
+      """
+      Get all the domains associated with the specified identifiers
+
+      The domains data is guaranteed to follow the specified identifiers order
+
+      If any of the specified identifiers is not found or forbidden, query fails
+      """
       domains(ids: [IntID!]!): [Domain!]!
     }
   `,

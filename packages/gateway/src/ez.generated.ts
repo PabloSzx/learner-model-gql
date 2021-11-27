@@ -467,21 +467,32 @@ export type AdminProjectsQueriesAllProjectsArgs = {
   pagination: CursorConnectionArgs;
 };
 
+/** Admin State-Related Queries */
 export type AdminStateQueries = {
   __typename?: "AdminStateQueries";
+  /** [ADMIN] Get all the model states creators currently in the system */
   allModelStateCreators: ModelStateCreatorConnection;
+  /** [ADMIN] Get all the model statestypes currently in the system */
   allModelStateTypes: ModelStateTypeConnection;
+  /**
+   * [ADMIN] Get all the model states currently in the system
+   *
+   * Pagination parameters are mandatory, but filters and orderBy are optional, and therefore the search can be customized.
+   */
   allModelStates: ModelStateConnection;
 };
 
+/** Admin State-Related Queries */
 export type AdminStateQueriesAllModelStateCreatorsArgs = {
   pagination: CursorConnectionArgs;
 };
 
+/** Admin State-Related Queries */
 export type AdminStateQueriesAllModelStateTypesArgs = {
   pagination: CursorConnectionArgs;
 };
 
+/** Admin State-Related Queries */
 export type AdminStateQueriesAllModelStatesArgs = {
   input: ModelStateConnectionInput;
 };
@@ -730,11 +741,13 @@ export type Domain = {
   code: Scalars["String"];
   /** Date of creation */
   createdAt: Scalars["DateTime"];
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** KCs associated with the domain */
   kcs: Array<Kc>;
   /** Human readable identifier */
   label: Scalars["String"];
+  /** Model States associated with domain */
   modelStates: ModelStateConnection;
   /** Projects associated with the domain */
   projects: Array<Project>;
@@ -819,64 +832,114 @@ export type KCsConnection = Connection & {
   pageInfo: PageInfo;
 };
 
+/** Model State Entity */
 export type ModelState = {
   __typename?: "ModelState";
+  /** Date of creation */
   createdAt: Scalars["DateTime"];
+  /** Creator of model state */
   creator: Scalars["String"];
+  /** Domain associated with Model State */
   domain: Domain;
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
+  /** Arbitrary JSON Data */
   json: Scalars["JSON"];
+  /** Type / Category of model state */
   type?: Maybe<Scalars["String"]>;
+  /** Date of last update */
   updatedAt: Scalars["DateTime"];
+  /** User associated with Model State */
   user: User;
 };
 
+/** Paginated Model States */
 export type ModelStateConnection = Connection & {
   __typename?: "ModelStateConnection";
+  /** Nodes of the current page */
   nodes: Array<ModelState>;
+  /** Pagination related information */
   pageInfo: PageInfo;
 };
 
+/** Pagination parameters of Model States */
 export type ModelStateConnectionInput = {
+  /** Customize search/filter parameters */
   filters?: InputMaybe<ModelStateFilter>;
+  /** Customize order, by default it orders descendingly by id */
   orderBy?: InputMaybe<ModelStateOrderBy>;
+  /** Pagination-specific parameters */
   pagination: CursorConnectionArgs;
 };
 
+/** Creators of Model States */
 export type ModelStateCreator = {
   __typename?: "ModelStateCreator";
+  /** Date of creation */
   createdAt: Scalars["DateTime"];
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
   name: Scalars["String"];
+  /** Date of last update */
   updatedAt: Scalars["DateTime"];
 };
 
+/** Paginated Model State Creators */
 export type ModelStateCreatorConnection = Connection & {
   __typename?: "ModelStateCreatorConnection";
+  /** Nodes of the current page */
   nodes: Array<ModelStateCreator>;
+  /** Pagination related information */
   pageInfo: PageInfo;
 };
 
+/** Filter model states data */
 export type ModelStateFilter = {
+  /**
+   * Filter by the specified creators
+   *
+   * If states's creator matches any of the specified creators, the state is included
+   */
   creators?: InputMaybe<Array<Scalars["String"]>>;
+  /**
+   * Filter by the specified types
+   *
+   * If state's type matches any of the specified types, the state is included
+   */
   type?: InputMaybe<Array<Scalars["String"]>>;
 };
 
+/** Order Model States */
 export type ModelStateOrderBy = {
+  /**
+   * Order the model states ascendingly or descendingly
+   *
+   * Following the cursor pagination's nature, ordering by "id" tends to follow the state creation date, but it can't be guaranteed
+   *
+   * By default the states are ordered descendingly, showing the newer states first
+   */
   id?: InputMaybe<Order_By>;
 };
 
+/** Types/Categories of Model States */
 export type ModelStateType = {
   __typename?: "ModelStateType";
+  /** Date of creation */
   createdAt: Scalars["DateTime"];
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
+  /** Name of the model type */
   name: Scalars["String"];
+  /** Date of last update */
   updatedAt: Scalars["DateTime"];
 };
 
+/** Paginated Model State Types */
 export type ModelStateTypeConnection = Connection & {
   __typename?: "ModelStateTypeConnection";
+  /** Nodes of the current page */
   nodes: Array<ModelStateType>;
+  /** Pagination related information */
   pageInfo: PageInfo;
 };
 
@@ -1068,6 +1131,7 @@ export type Query = {
   adminDomain: AdminDomainQueries;
   /** [ADMIN] Project related administration queries */
   adminProjects: AdminProjectsQueries;
+  /** [ADMIN] Admin related state queries, only authenticated users with the role "ADMIN" can access */
   adminState: AdminStateQueries;
   adminUsers: AdminUserQueries;
   /**
@@ -1086,6 +1150,13 @@ export type Query = {
    */
   contentByCode?: Maybe<Content>;
   currentUser?: Maybe<User>;
+  /**
+   * Get all the domains associated with the specified identifiers
+   *
+   * The domains data is guaranteed to follow the specified identifiers order
+   *
+   * If any of the specified identifiers is not found or forbidden, query fails
+   */
   domains: Array<Domain>;
   /**
    * Get all the groups associated with the specified identifiers
@@ -1134,6 +1205,13 @@ export type Query = {
    * If any of the specified identifiers is not found or forbidden, query fails
    */
   topics: Array<Topic>;
+  /**
+   * Get all the users associated with the specified identifiers
+   *
+   * The users data is guaranteed to follow the specified identifiers order
+   *
+   * If any of the specified identifiers is not found or forbidden, query fails
+   */
   users: Array<User>;
 };
 
@@ -1356,9 +1434,11 @@ export type User = {
   email: Scalars["String"];
   enabled: Scalars["Boolean"];
   groups: Array<Group>;
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
   lastOnline?: Maybe<Scalars["DateTime"]>;
   locked: Scalars["Boolean"];
+  /** Model States associated with user */
   modelStates: ModelStateConnection;
   name?: Maybe<Scalars["String"]>;
   picture?: Maybe<Scalars["String"]>;

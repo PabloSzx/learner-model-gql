@@ -442,13 +442,27 @@ type AdminProjectsQueries {
   allProjects(pagination: CursorConnectionArgs!): ProjectsConnection!
 }
 
+"""
+Admin State-Related Queries
+"""
 type AdminStateQueries {
+  """
+  [ADMIN] Get all the model states creators currently in the system
+  """
   allModelStateCreators(
     pagination: CursorConnectionArgs!
   ): ModelStateCreatorConnection!
+  """
+  [ADMIN] Get all the model statestypes currently in the system
+  """
   allModelStateTypes(
     pagination: CursorConnectionArgs!
   ): ModelStateTypeConnection!
+  """
+  [ADMIN] Get all the model states currently in the system
+
+  Pagination parameters are mandatory, but filters and orderBy are optional, and therefore the search can be customized.
+  """
   allModelStates(input: ModelStateConnectionInput!): ModelStateConnection!
 }
 
@@ -760,6 +774,9 @@ type Domain {
   Date of creation
   """
   createdAt: DateTime!
+  """
+  Unique numeric identifier
+  """
   id: IntID!
   """
   KCs associated with the domain
@@ -769,6 +786,9 @@ type Domain {
   Human readable identifier
   """
   label: String!
+  """
+  Model States associated with domain
+  """
   modelStates(input: ModelStateConnectionInput!): ModelStateConnection!
   """
   Projects associated with the domain
@@ -899,58 +919,174 @@ type KCsConnection implements Connection {
   pageInfo: PageInfo!
 }
 
+"""
+Model State Entity
+"""
 type ModelState {
+  """
+  Date of creation
+  """
   createdAt: DateTime!
+  """
+  Creator of model state
+  """
   creator: String!
+  """
+  Domain associated with Model State
+  """
   domain: Domain!
+  """
+  Unique numeric identifier
+  """
   id: IntID!
+  """
+  Arbitrary JSON Data
+  """
   json: JSON!
+  """
+  Type / Category of model state
+  """
   type: String
+  """
+  Date of last update
+  """
   updatedAt: DateTime!
+  """
+  User associated with Model State
+  """
   user: User!
 }
 
+"""
+Paginated Model States
+"""
 type ModelStateConnection implements Connection {
+  """
+  Nodes of the current page
+  """
   nodes: [ModelState!]!
+  """
+  Pagination related information
+  """
   pageInfo: PageInfo!
 }
 
+"""
+Pagination parameters of Model States
+"""
 input ModelStateConnectionInput {
+  """
+  Customize search/filter parameters
+  """
   filters: ModelStateFilter
+  """
+  Customize order, by default it orders descendingly by id
+  """
   orderBy: ModelStateOrderBy
+  """
+  Pagination-specific parameters
+  """
   pagination: CursorConnectionArgs!
 }
 
+"""
+Creators of Model States
+"""
 type ModelStateCreator {
+  """
+  Date of creation
+  """
   createdAt: DateTime!
+  """
+  Unique numeric identifier
+  """
   id: IntID!
   name: String!
+  """
+  Date of last update
+  """
   updatedAt: DateTime!
 }
 
+"""
+Paginated Model State Creators
+"""
 type ModelStateCreatorConnection implements Connection {
+  """
+  Nodes of the current page
+  """
   nodes: [ModelStateCreator!]!
+  """
+  Pagination related information
+  """
   pageInfo: PageInfo!
 }
 
+"""
+Filter model states data
+"""
 input ModelStateFilter {
+  """
+  Filter by the specified creators
+
+  If states's creator matches any of the specified creators, the state is included
+  """
   creators: [String!]
+  """
+  Filter by the specified types
+
+  If state's type matches any of the specified types, the state is included
+  """
   type: [String!]
 }
 
+"""
+Order Model States
+"""
 input ModelStateOrderBy {
+  """
+  Order the model states ascendingly or descendingly
+
+  Following the cursor pagination's nature, ordering by "id" tends to follow the state creation date, but it can't be guaranteed
+
+  By default the states are ordered descendingly, showing the newer states first
+  """
   id: ORDER_BY = DESC
 }
 
+"""
+Types/Categories of Model States
+"""
 type ModelStateType {
+  """
+  Date of creation
+  """
   createdAt: DateTime!
+  """
+  Unique numeric identifier
+  """
   id: IntID!
+  """
+  Name of the model type
+  """
   name: String!
+  """
+  Date of last update
+  """
   updatedAt: DateTime!
 }
 
+"""
+Paginated Model State Types
+"""
 type ModelStateTypeConnection implements Connection {
+  """
+  Nodes of the current page
+  """
   nodes: [ModelStateType!]!
+  """
+  Pagination related information
+  """
   pageInfo: PageInfo!
 }
 
@@ -1179,6 +1315,9 @@ type Query {
   [ADMIN] Project related administration queries
   """
   adminProjects: AdminProjectsQueries!
+  """
+  [ADMIN] Admin related state queries, only authenticated users with the role "ADMIN" can access
+  """
   adminState: AdminStateQueries!
   adminUsers: AdminUserQueries!
   """
@@ -1197,6 +1336,13 @@ type Query {
   """
   contentByCode(code: String!): Content
   currentUser: User
+  """
+  Get all the domains associated with the specified identifiers
+
+  The domains data is guaranteed to follow the specified identifiers order
+
+  If any of the specified identifiers is not found or forbidden, query fails
+  """
   domains(ids: [IntID!]!): [Domain!]!
   """
   Get all the groups associated with the specified identifiers
@@ -1245,6 +1391,13 @@ type Query {
   If any of the specified identifiers is not found or forbidden, query fails
   """
   topics(ids: [IntID!]!): [Topic!]!
+  """
+  Get all the users associated with the specified identifiers
+
+  The users data is guaranteed to follow the specified identifiers order
+
+  If any of the specified identifiers is not found or forbidden, query fails
+  """
   users(ids: [IntID!]!): [User!]!
 }
 
@@ -1512,9 +1665,15 @@ type User {
   email: String!
   enabled: Boolean!
   groups: [Group!]!
+  """
+  Unique numeric identifier
+  """
   id: IntID!
   lastOnline: DateTime
   locked: Boolean!
+  """
+  Model States associated with user
+  """
   modelStates(input: ModelStateConnectionInput!): ModelStateConnection!
   name: String
   picture: String
