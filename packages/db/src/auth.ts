@@ -85,7 +85,7 @@ export function GetDBUser(auth0UserPromise: Promise<Auth0User | null>) {
           },
         },
       })
-      .then((data) => data.user);
+      .then((data) => (data.user?.locked ? null : data.user));
 
     if (userDb && (!userDb.name || !userDb.picture) && (name || picture)) {
       const updatedUser = await prisma.user.update({
