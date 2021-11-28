@@ -158,7 +158,7 @@ importers:
       next: ^12.0.4
       nprogress: ^0.2.0
       react: ^17.0.2
-      react-datepicker: ^4.3.0
+      react-datepicker: ^4.4.0
       react-dom: ^17.0.2
       react-icons: ^4.3.1
       react-query: ^3.33.7
@@ -188,7 +188,7 @@ importers:
       next: 12.0.4_react-dom@17.0.2+react@17.0.2
       nprogress: 0.2.0
       react: 17.0.2
-      react-datepicker: 4.3.0_react-dom@17.0.2+react@17.0.2
+      react-datepicker: 4.4.0_react-dom@17.0.2+react@17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-icons: 4.3.1_react@17.0.2
       react-query: 3.33.7_react-dom@17.0.2+react@17.0.2
@@ -7678,8 +7678,8 @@ packages:
       react: 17.0.2
     dev: false
 
-  /react-datepicker/4.3.0_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-cg+gp4YnPcZc6iZ0+v7VuRgcFG22KL7izHYrCxXeSLOn5VGkyxTfcu5qA/cGIsngurCt/u0NtgVTlHB1Fwap1g==}
+  /react-datepicker/4.4.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-QWCDCKTW9i+L33+yyYaDWZkVCDcFjru7wEmSqO6dNsGo4hSaReQ/EaT9IKzjEmvMXfMHn9ixzgGh/4ydnLP08w==}
     peerDependencies:
       react: ^16.9.0 || ^17
       react-dom: ^16.9.0 || ^17
