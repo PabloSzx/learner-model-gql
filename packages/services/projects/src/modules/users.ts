@@ -3,6 +3,7 @@ import { gql, registerModule } from "../ez";
 
 export const usersModule = registerModule(
   gql`
+    "User entity"
     type User {
       "Unique numeric identifier"
       id: IntID!
@@ -11,6 +12,13 @@ export const usersModule = registerModule(
       projects: [Project!]!
     }
 
+    """
+    Group Entity
+
+    - Used to group/cluster users
+    - Set permissions flags to the users
+    - Associate projects to users, allowing users to access the projects
+    """
     type Group {
       "Unique numeric identifier"
       id: IntID!

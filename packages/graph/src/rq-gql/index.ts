@@ -73,7 +73,7 @@ const documents = {
     graphql.CreateTopicDocument,
   "\n      mutation UpdateTopic($data: UpdateTopic!) {\n        adminDomain {\n          updateTopic(input: $data) {\n            id\n            code\n            label\n          }\n        }\n      }\n    ":
     graphql.UpdateTopicDocument,
-  "\n  fragment UserInfo on User {\n    __typename\n    id\n    email\n    name\n    active\n    lastOnline\n    createdAt\n    role\n    enabled\n    updatedAt\n    locked\n    tags\n    projects {\n      id\n      code\n      label\n    }\n  }\n":
+  "\n  fragment UserInfo on User {\n    __typename\n    id\n    email\n    name\n    active\n    lastOnline\n    createdAt\n    role\n    updatedAt\n    locked\n    tags\n    projects {\n      id\n      code\n      label\n    }\n  }\n":
     graphql.UserInfoFragmentDoc,
   "\n  query AdminUsers($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allUsers(pagination: $pagination) {\n        nodes {\n          ...UserInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n":
     graphql.AdminUsersDocument,
@@ -189,8 +189,8 @@ export function gql(
   source: "\n      mutation UpdateTopic($data: UpdateTopic!) {\n        adminDomain {\n          updateTopic(input: $data) {\n            id\n            code\n            label\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation UpdateTopic($data: UpdateTopic!) {\n        adminDomain {\n          updateTopic(input: $data) {\n            id\n            code\n            label\n          }\n        }\n      }\n    "];
 export function gql(
-  source: "\n  fragment UserInfo on User {\n    __typename\n    id\n    email\n    name\n    active\n    lastOnline\n    createdAt\n    role\n    enabled\n    updatedAt\n    locked\n    tags\n    projects {\n      id\n      code\n      label\n    }\n  }\n"
-): typeof documents["\n  fragment UserInfo on User {\n    __typename\n    id\n    email\n    name\n    active\n    lastOnline\n    createdAt\n    role\n    enabled\n    updatedAt\n    locked\n    tags\n    projects {\n      id\n      code\n      label\n    }\n  }\n"];
+  source: "\n  fragment UserInfo on User {\n    __typename\n    id\n    email\n    name\n    active\n    lastOnline\n    createdAt\n    role\n    updatedAt\n    locked\n    tags\n    projects {\n      id\n      code\n      label\n    }\n  }\n"
+): typeof documents["\n  fragment UserInfo on User {\n    __typename\n    id\n    email\n    name\n    active\n    lastOnline\n    createdAt\n    role\n    updatedAt\n    locked\n    tags\n    projects {\n      id\n      code\n      label\n    }\n  }\n"];
 export function gql(
   source: "\n  query AdminUsers($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allUsers(pagination: $pagination) {\n        nodes {\n          ...UserInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"
 ): typeof documents["\n  query AdminUsers($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allUsers(pagination: $pagination) {\n        nodes {\n          ...UserInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"];

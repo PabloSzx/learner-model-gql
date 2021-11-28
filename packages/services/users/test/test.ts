@@ -16,7 +16,6 @@ import {
 export const UserInfo = gql(/* GraphQL */ `
   fragment UserInfo on User {
     id
-    enabled
     email
     name
     locked
@@ -98,7 +97,6 @@ export async function CheckUsers({
               updatedAt: resultUser.updatedAt,
               lastOnline: resultUser.lastOnline,
               email: authUser.user.email,
-              enabled: true,
               id: authUser.userId,
               locked: false,
               role: "ADMIN",
@@ -153,7 +151,6 @@ export async function CheckUsers({
                   updatedAt: resultUser.updatedAt,
                   lastOnline: resultUser.lastOnline,
                   email: authUser.user.email,
-                  enabled: true,
                   id: authUser.userId,
                   locked: false,
                   role: "ADMIN",
@@ -208,7 +205,6 @@ export async function CheckUsers({
             active: false,
             createdAt: upsertedResultUser.createdAt,
             email: newEmail,
-            enabled: true,
             id: upsertedResultUser.id,
             locked: false,
             role: "USER",
@@ -257,7 +253,6 @@ export async function CheckUsers({
             active: false,
             createdAt: upsertedResultUser.createdAt,
             email: newEmail,
-            enabled: true,
             id: upsertedResultUser.id,
             locked: false,
             role: "USER",

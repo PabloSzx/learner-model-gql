@@ -221,7 +221,7 @@ export const Authorization = (userPromise: Promise<DBUser | null>) => {
     }, {});
   });
 
-  const expectNotAdminAllowedProjectsIdsModelStates = LazyPromise(async () => {
+  const expectAllowedProjectsIdsModelStates = LazyPromise(async () => {
     const user = await expectUser;
 
     if (user.role === "ADMIN") return undefined;
@@ -249,6 +249,6 @@ export const Authorization = (userPromise: Promise<DBUser | null>) => {
     expectAllowedReadProjectActions,
     checkProjectIdExists,
     expectGroupProjectsFlags,
-    expectNotAdminAllowedProjectsIdsModelStates,
+    expectAllowedProjectsIdsModelStates,
   };
 };

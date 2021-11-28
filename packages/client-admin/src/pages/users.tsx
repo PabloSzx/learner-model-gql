@@ -47,7 +47,6 @@ gql(/* GraphQL */ `
     lastOnline
     createdAt
     role
-    enabled
     updatedAt
     locked
     tags

@@ -260,23 +260,56 @@ export type AdminActionsOrderBy = {
   id?: InputMaybe<Order_By>;
 };
 
+/** Pagination Interface */
 export type Connection = {
+  /** Pagination information */
   pageInfo: PageInfo;
 };
 
+/** Content entity */
 export type Content = {
   __typename?: "Content";
   /** Unique numeric identifier */
   id: Scalars["IntID"];
 };
 
+/**
+ * Pagination parameters
+ *
+ * Forward pagination parameters can't be mixed with Backward pagination parameters simultaneously
+ *
+ * first & after => Forward Pagination
+ *
+ * last & before => Backward Pagination
+ */
 export type CursorConnectionArgs = {
+  /**
+   * Set the minimum boundary
+   *
+   * Use the "endCursor" field of "pageInfo"
+   */
   after?: InputMaybe<Scalars["IntID"]>;
+  /**
+   * Set the maximum boundary
+   *
+   * Use the "startCursor" field of "pageInfo"
+   */
   before?: InputMaybe<Scalars["IntID"]>;
+  /**
+   * Set the limit of nodes to be fetched
+   *
+   * It can't be more than 50
+   */
   first?: InputMaybe<Scalars["NonNegativeInt"]>;
+  /**
+   * Set the limit of nodes to be fetched
+   *
+   * It can't be more than 50
+   */
   last?: InputMaybe<Scalars["NonNegativeInt"]>;
 };
 
+/** Domain entity */
 export type Domain = {
   __typename?: "Domain";
   /** Unique numeric identifier */
@@ -289,6 +322,7 @@ export type Kc = {
   id: Scalars["IntID"];
 };
 
+/** Mutation */
 export type Mutation = {
   __typename?: "Mutation";
   /**
@@ -298,25 +332,34 @@ export type Mutation = {
    * - Authenticated user has to be associated with specified project
    */
   action?: Maybe<Scalars["Void"]>;
+  /** Returns 'Hello World!' */
   hello: Scalars["String"];
 };
 
+/** Mutation */
 export type MutationActionArgs = {
   data: ActionInput;
 };
 
+/** Minimum Entity Information */
 export type Node = {
   /** Unique numeric identifier */
   id: Scalars["IntID"];
 };
 
+/** Order ascendingly or descendingly */
 export type Order_By = "ASC" | "DESC";
 
+/** Paginated related information */
 export type PageInfo = {
   __typename?: "PageInfo";
+  /** Cursor parameter normally used for forward pagination */
   endCursor?: Maybe<Scalars["String"]>;
+  /** Utility field that returns "true" if a next page can be fetched */
   hasNextPage: Scalars["Boolean"];
+  /** Utility field that returns "true" if a previous page can be fetched */
   hasPreviousPage: Scalars["Boolean"];
+  /** Cursor parameter normally used for backward pagination */
   startCursor?: Maybe<Scalars["String"]>;
 };
 
@@ -383,10 +426,12 @@ export type ProjectActionsFilter = {
   verbNames?: InputMaybe<Array<Scalars["String"]>>;
 };
 
+/** Query */
 export type Query = {
   __typename?: "Query";
   /** [ADMIN] Admin related actions queries, only authenticated users with the role "ADMIN" can access */
   adminActions: AdminActionQueries;
+  /** Returns 'Hello World!' */
   hello: Scalars["String"];
   /**
    * Get all the projects associated with the specified identifiers
@@ -398,21 +443,26 @@ export type Query = {
   projects: Array<Project>;
 };
 
+/** Query */
 export type QueryProjectsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+/** Subscription */
 export type Subscription = {
   __typename?: "Subscription";
+  /** Emits 'Hello World1', 'Hello World2', 'Hello World3', 'Hello World4' and 'Hello World5' */
   hello: Scalars["String"];
 };
 
+/** Topic entity */
 export type Topic = {
   __typename?: "Topic";
   /** Unique numeric identifier */
   id: Scalars["IntID"];
 };
 
+/** User entity */
 export type User = {
   __typename?: "User";
   /** Unique numeric identifier */

@@ -395,7 +395,13 @@ export type AdminDomainsFilter = {
   projects?: InputMaybe<Array<Scalars["IntID"]>>;
 };
 
+/** Filter all groups of admin query */
 export type AdminGroupsFilter = {
+  /**
+   * Tags associated with the group
+   *
+   * Tags can be used to categorize or filter
+   */
   tags?: InputMaybe<Array<Scalars["String"]>>;
 };
 
@@ -492,68 +498,102 @@ export type AdminTopicsFilter = {
   projects?: InputMaybe<Array<Scalars["IntID"]>>;
 };
 
+/** Admin User-Related Queries */
 export type AdminUserMutations = {
   __typename?: "AdminUserMutations";
+  /** [ADMIN] Create a new group entity */
   createGroup: Group;
+  /** Set the projects of the specified users */
   setProjectsToUsers: Array<User>;
+  /** [ADMIN] Set the users (by email) associated with the groups */
   setUserGroups: Array<Group>;
+  /** [ADMIN] Update an existent group entity */
   updateGroup: Group;
+  /** [ADMIN] Update an existent user entity */
   updateUser: User;
-  /** Upsert specified users with specified project */
+  /** Upsert specified users with specified projects */
   upsertUsersWithProjects: Array<User>;
 };
 
+/** Admin User-Related Queries */
 export type AdminUserMutationsCreateGroupArgs = {
   data: CreateGroupInput;
 };
 
+/** Admin User-Related Queries */
 export type AdminUserMutationsSetProjectsToUsersArgs = {
   projectIds: Array<Scalars["IntID"]>;
   userIds: Array<Scalars["IntID"]>;
 };
 
+/** Admin User-Related Queries */
 export type AdminUserMutationsSetUserGroupsArgs = {
   groupIds: Array<Scalars["IntID"]>;
   usersEmails: Array<Scalars["EmailAddress"]>;
 };
 
+/** Admin User-Related Queries */
 export type AdminUserMutationsUpdateGroupArgs = {
   data: UpdateGroupInput;
 };
 
+/** Admin User-Related Queries */
 export type AdminUserMutationsUpdateUserArgs = {
   data: UpdateUserInput;
 };
 
+/** Admin User-Related Queries */
 export type AdminUserMutationsUpsertUsersWithProjectsArgs = {
   emails: Array<Scalars["EmailAddress"]>;
   projectsIds: Array<Scalars["IntID"]>;
 };
 
+/** Admin User-Related Queries */
 export type AdminUserQueries = {
   __typename?: "AdminUserQueries";
+  /**
+   * [ADMIN] Get all the groups currently in the system
+   *
+   * Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
+   */
   allGroups: GroupsConnection;
+  /**
+   * [ADMIN] Get all the users currently in the system
+   *
+   * Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
+   */
   allUsers: UsersConnection;
 };
 
+/** Admin User-Related Queries */
 export type AdminUserQueriesAllGroupsArgs = {
   filters?: InputMaybe<AdminGroupsFilter>;
   pagination: CursorConnectionArgs;
 };
 
+/** Admin User-Related Queries */
 export type AdminUserQueriesAllUsersArgs = {
   filters?: InputMaybe<AdminUsersFilter>;
   pagination: CursorConnectionArgs;
 };
 
+/** Filter all users of admin query */
 export type AdminUsersFilter = {
+  /**
+   * Filter by the specified tags
+   *
+   * If any of the user's tags matches any of the specified tags, the user is included
+   */
   tags?: InputMaybe<Array<Scalars["String"]>>;
 };
 
+/** Pagination Interface */
 export type Connection = {
+  /** Pagination information */
   pageInfo: PageInfo;
 };
 
+/** Content entity */
 export type Content = {
   __typename?: "Content";
   /**
@@ -659,11 +699,21 @@ export type CreateDomain = {
   projectsIds: Array<Scalars["IntID"]>;
 };
 
+/** Group creation input data */
 export type CreateGroupInput = {
+  /** Unique string identifier */
   code: Scalars["String"];
+  /** Permissions flags */
   flags?: InputMaybe<GroupFlagsInput>;
+  /** Human readable identifier */
   label: Scalars["String"];
+  /** Projects associated with the group */
   projectIds: Array<Scalars["IntID"]>;
+  /**
+   * Tags associated with the group
+   *
+   * Tags can be used to categorize or filter
+   */
   tags: Array<Scalars["String"]>;
 };
 
@@ -713,13 +763,43 @@ export type CreateTopic = {
   tags: Array<Scalars["String"]>;
 };
 
+/**
+ * Pagination parameters
+ *
+ * Forward pagination parameters can't be mixed with Backward pagination parameters simultaneously
+ *
+ * first & after => Forward Pagination
+ *
+ * last & before => Backward Pagination
+ */
 export type CursorConnectionArgs = {
+  /**
+   * Set the minimum boundary
+   *
+   * Use the "endCursor" field of "pageInfo"
+   */
   after?: InputMaybe<Scalars["IntID"]>;
+  /**
+   * Set the maximum boundary
+   *
+   * Use the "startCursor" field of "pageInfo"
+   */
   before?: InputMaybe<Scalars["IntID"]>;
+  /**
+   * Set the limit of nodes to be fetched
+   *
+   * It can't be more than 50
+   */
   first?: InputMaybe<Scalars["NonNegativeInt"]>;
+  /**
+   * Set the limit of nodes to be fetched
+   *
+   * It can't be more than 50
+   */
   last?: InputMaybe<Scalars["NonNegativeInt"]>;
 };
 
+/** Domain entity */
 export type Domain = {
   __typename?: "Domain";
   /** Unique string identifier */
@@ -740,6 +820,7 @@ export type Domain = {
   updatedAt: Scalars["DateTime"];
 };
 
+/** Domain entity */
 export type DomainModelStatesArgs = {
   input: ModelStateConnectionInput;
 };
@@ -753,39 +834,70 @@ export type DomainsConnection = Connection & {
   pageInfo: PageInfo;
 };
 
+/**
+ * Group Entity
+ *
+ * - Used to group/cluster users
+ * - Set permissions flags to the users
+ * - Associate projects to users, allowing users to access the projects
+ */
 export type Group = {
   __typename?: "Group";
+  /** Unique string identifier */
   code: Scalars["String"];
+  /** Date of creation */
   createdAt: Scalars["DateTime"];
+  /** Permissions flags */
   flags: GroupFlags;
   /** Unique numeric identifier */
   id: Scalars["IntID"];
+  /** Human readable identifier */
   label: Scalars["String"];
   /** Projects associated with the group */
   projects: Array<Project>;
+  /** IDs of projects associated with the group */
   projectsIds: Array<Scalars["IntID"]>;
+  /**
+   * Tags associated with the group
+   *
+   * Tags can be used to categorize or filter
+   */
   tags: Array<Scalars["String"]>;
+  /** Date of last update */
   updatedAt: Scalars["DateTime"];
+  /** Users associated with the group */
   users: Array<User>;
 };
 
+/** Permissions flags of group */
 export type GroupFlags = {
   __typename?: "GroupFlags";
+  /** Date of creation */
   createdAt: Scalars["DateTime"];
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
+  /** Allows the users part of the group to read all the actions of the projects of the group */
   readProjectActions: Scalars["Boolean"];
+  /** Allows the users part of the group to read all the model states of the projects of the group */
   readProjectModelStates: Scalars["Boolean"];
+  /** Date of last update */
   updatedAt: Scalars["DateTime"];
 };
 
+/** Group Flags input data */
 export type GroupFlagsInput = {
+  /** Allows the users part of the group to read all the actions of the projects of the group */
   readProjectActions: Scalars["Boolean"];
+  /** Allows the users part of the group to read all the model states of the projects of the group */
   readProjectModelStates: Scalars["Boolean"];
 };
 
+/** Paginated Groups */
 export type GroupsConnection = Connection & {
   __typename?: "GroupsConnection";
+  /** Nodes of the current page */
   nodes: Array<Group>;
+  /** Pagination related information */
   pageInfo: PageInfo;
 };
 
@@ -928,6 +1040,7 @@ export type ModelStateTypeConnection = Connection & {
   pageInfo: PageInfo;
 };
 
+/** Mutation */
 export type Mutation = {
   __typename?: "Mutation";
   /**
@@ -943,30 +1056,40 @@ export type Mutation = {
   adminDomain: AdminDomainMutations;
   /** [ADMIN] Admin related project mutations, only authenticated users with the role "ADMIN" can access */
   adminProjects: AdminProjectsMutations;
+  /** [ADMIN] Admin related user mutations, only authenticated users with the role "ADMIN" can access */
   adminUsers: AdminUserMutations;
+  /** Returns 'Hello World!' */
   hello: Scalars["String"];
 };
 
+/** Mutation */
 export type MutationActionArgs = {
   data: ActionInput;
 };
 
+/** Minimum Entity Information */
 export type Node = {
   /** Unique numeric identifier */
   id: Scalars["IntID"];
 };
 
+/** Order ascendingly or descendingly */
 export const Order_By = {
   Asc: "ASC",
   Desc: "DESC",
 } as const;
 
 export type Order_By = typeof Order_By[keyof typeof Order_By];
+/** Paginated related information */
 export type PageInfo = {
   __typename?: "PageInfo";
+  /** Cursor parameter normally used for forward pagination */
   endCursor?: Maybe<Scalars["String"]>;
+  /** Utility field that returns "true" if a next page can be fetched */
   hasNextPage: Scalars["Boolean"];
+  /** Utility field that returns "true" if a previous page can be fetched */
   hasPreviousPage: Scalars["Boolean"];
+  /** Cursor parameter normally used for backward pagination */
   startCursor?: Maybe<Scalars["String"]>;
 };
 
@@ -1110,6 +1233,7 @@ export type ProjectsConnection = Connection & {
   pageInfo: PageInfo;
 };
 
+/** Query */
 export type Query = {
   __typename?: "Query";
   /** [ADMIN] Admin related actions queries, only authenticated users with the role "ADMIN" can access */
@@ -1122,6 +1246,7 @@ export type Query = {
   adminProjects: AdminProjectsQueries;
   /** [ADMIN] Admin related state queries, only authenticated users with the role "ADMIN" can access */
   adminState: AdminStateQueries;
+  /** [ADMIN] Admin related user queries, only authenticated users with the role "ADMIN" can access */
   adminUsers: AdminUserQueries;
   /**
    * Get all the content associated with the specified identifiers
@@ -1138,6 +1263,7 @@ export type Query = {
    * - If authenticated user has no permissions on the corresponding project it returns NULL.
    */
   contentByCode?: Maybe<Content>;
+  /** Authenticated user information */
   currentUser?: Maybe<User>;
   /**
    * Get all the domains associated with the specified identifiers
@@ -1155,6 +1281,7 @@ export type Query = {
    * If any of the specified identifiers is not found or forbidden, query fails
    */
   groups: Array<Group>;
+  /** Returns 'Hello World!' */
   hello: Scalars["String"];
   /**
    * Get all the KCs associated with the specified identifiers
@@ -1204,52 +1331,65 @@ export type Query = {
   users: Array<User>;
 };
 
+/** Query */
 export type QueryContentArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+/** Query */
 export type QueryContentByCodeArgs = {
   code: Scalars["String"];
 };
 
+/** Query */
 export type QueryDomainsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+/** Query */
 export type QueryGroupsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+/** Query */
 export type QueryKcsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+/** Query */
 export type QueryProjectArgs = {
   code?: InputMaybe<Scalars["String"]>;
   id?: InputMaybe<Scalars["IntID"]>;
 };
 
+/** Query */
 export type QueryProjectsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+/** Query */
 export type QueryTopicByCodeArgs = {
   code: Scalars["String"];
 };
 
+/** Query */
 export type QueryTopicsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+/** Query */
 export type QueryUsersArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+/** Subscription */
 export type Subscription = {
   __typename?: "Subscription";
+  /** Emits 'Hello World1', 'Hello World2', 'Hello World3', 'Hello World4' and 'Hello World5' */
   hello: Scalars["String"];
 };
 
+/** Topic entity */
 export type Topic = {
   __typename?: "Topic";
   /**
@@ -1351,12 +1491,23 @@ export type UpdateDomain = {
   label: Scalars["String"];
 };
 
+/** Group update input data */
 export type UpdateGroupInput = {
+  /** Unique string identifier */
   code: Scalars["String"];
+  /** Permissions flags of group */
   flags?: InputMaybe<GroupFlagsInput>;
+  /** Current group identifier */
   id: Scalars["IntID"];
+  /** Human readable identifier */
   label: Scalars["String"];
+  /** Projects associated with the group */
   projectIds: Array<Scalars["IntID"]>;
+  /**
+   * Tags associated with the group
+   *
+   * Tags can be used to categorize or filter
+   */
   tags: Array<Scalars["String"]>;
 };
 
@@ -1407,51 +1558,97 @@ export type UpdateTopic = {
   tags: Array<Scalars["String"]>;
 };
 
+/** User update input data */
 export type UpdateUserInput = {
+  /** Current user identifier */
   id: Scalars["IntID"];
+  /** Locked flag */
   locked: Scalars["Boolean"];
+  /** Name of person */
   name?: InputMaybe<Scalars["String"]>;
+  /** Projects associated with user */
   projectIds: Array<Scalars["IntID"]>;
+  /** Role of user */
   role: UserRole;
+  /**
+   * Tags associated with the user
+   *
+   * Tags can be used to categorize or filter
+   */
   tags: Array<Scalars["String"]>;
 };
 
+/** User entity */
 export type User = {
   __typename?: "User";
+  /**
+   * Active flag
+   *
+   * By default it starts as "false", and the first time the user access the system, it's set as "true"
+   */
   active: Scalars["Boolean"];
+  /** Date of creation */
   createdAt: Scalars["DateTime"];
+  /** Email Address */
   email: Scalars["String"];
-  enabled: Scalars["Boolean"];
+  /** Groups associated with the user */
   groups: Array<Group>;
   /** Unique numeric identifier */
   id: Scalars["IntID"];
+  /** Date of latest user access */
   lastOnline?: Maybe<Scalars["DateTime"]>;
+  /**
+   * Locked user authentication
+   *
+   * If set as "true", user won't be able to use the system
+   */
   locked: Scalars["Boolean"];
   /** Model States associated with user */
   modelStates: ModelStateConnection;
+  /** Name of person */
   name?: Maybe<Scalars["String"]>;
+  /** Picture of user, set by external authentication service */
   picture?: Maybe<Scalars["String"]>;
   /** Projects associated with the user */
   projects: Array<Project>;
+  /** IDs of projects associated with the user */
   projectsIds: Array<Scalars["IntID"]>;
+  /** User role, by default is USER */
   role: UserRole;
+  /**
+   * Tags associated with the user
+   *
+   * Tags can be used to categorize or filter
+   */
   tags: Array<Scalars["String"]>;
+  /** Date of last update */
   updatedAt: Scalars["DateTime"];
 };
 
+/** User entity */
 export type UserModelStatesArgs = {
   input: ModelStateConnectionInput;
 };
 
+/** Possible roles of an authenticated user */
 export const UserRole = {
+  /**
+   * Administrator of the system
+   *
+   * Most of the authorization logic is enabled
+   */
   Admin: "ADMIN",
+  /** Default user role */
   User: "USER",
 } as const;
 
 export type UserRole = typeof UserRole[keyof typeof UserRole];
+/** Paginated Users */
 export type UsersConnection = Connection & {
   __typename?: "UsersConnection";
+  /** Nodes of the current page */
   nodes: Array<User>;
+  /** Pagination related information */
   pageInfo: PageInfo;
 };
 
@@ -1938,7 +2135,6 @@ export type AllStatesTestQuery = {
 export type UserInfoFragment = {
   __typename?: "User";
   id: string;
-  enabled: boolean;
   email: string;
   name?: string | null | undefined;
   locked: boolean;
@@ -1981,7 +2177,6 @@ export type UsersByIdQuery = {
   users: Array<{
     __typename?: "User";
     id: string;
-    enabled: boolean;
     email: string;
     name?: string | null | undefined;
     locked: boolean;
@@ -2006,7 +2201,6 @@ export type AdminAllUsersQuery = {
       nodes: Array<{
         __typename?: "User";
         id: string;
-        enabled: boolean;
         email: string;
         name?: string | null | undefined;
         locked: boolean;
@@ -2033,7 +2227,6 @@ export type UpsertUsersWithProjectsMutation = {
     upsertUsersWithProjects: Array<{
       __typename?: "User";
       id: string;
-      enabled: boolean;
       email: string;
       name?: string | null | undefined;
       locked: boolean;
@@ -2054,7 +2247,6 @@ export type CurrentUserQuery = {
     | {
         __typename?: "User";
         id: string;
-        enabled: boolean;
         email: string;
         name?: string | null | undefined;
         locked: boolean;
@@ -2280,7 +2472,6 @@ export const UserInfoFragmentDoc = {
         kind: "SelectionSet",
         selections: [
           { kind: "Field", name: { kind: "Name", value: "id" } },
-          { kind: "Field", name: { kind: "Name", value: "enabled" } },
           { kind: "Field", name: { kind: "Name", value: "email" } },
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "locked" } },

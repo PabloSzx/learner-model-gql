@@ -183,10 +183,13 @@ export type AdminTopicsFilter = {
   projects?: InputMaybe<Array<Scalars["IntID"]>>;
 };
 
+/** Pagination Interface */
 export type Connection = {
+  /** Pagination information */
   pageInfo: PageInfo;
 };
 
+/** Content entity */
 export type Content = {
   __typename?: "Content";
   /** Unique numeric identifier */
@@ -243,10 +246,39 @@ export type CreateTopic = {
   tags: Array<Scalars["String"]>;
 };
 
+/**
+ * Pagination parameters
+ *
+ * Forward pagination parameters can't be mixed with Backward pagination parameters simultaneously
+ *
+ * first & after => Forward Pagination
+ *
+ * last & before => Backward Pagination
+ */
 export type CursorConnectionArgs = {
+  /**
+   * Set the minimum boundary
+   *
+   * Use the "endCursor" field of "pageInfo"
+   */
   after?: InputMaybe<Scalars["IntID"]>;
+  /**
+   * Set the maximum boundary
+   *
+   * Use the "startCursor" field of "pageInfo"
+   */
   before?: InputMaybe<Scalars["IntID"]>;
+  /**
+   * Set the limit of nodes to be fetched
+   *
+   * It can't be more than 50
+   */
   first?: InputMaybe<Scalars["NonNegativeInt"]>;
+  /**
+   * Set the limit of nodes to be fetched
+   *
+   * It can't be more than 50
+   */
   last?: InputMaybe<Scalars["NonNegativeInt"]>;
 };
 
@@ -304,25 +336,34 @@ export type KCsConnection = Connection & {
   pageInfo: PageInfo;
 };
 
+/** Mutation */
 export type Mutation = {
   __typename?: "Mutation";
   /** [ADMIN] Admin related domain mutations, only authenticated users with the role "ADMIN" can access */
   adminDomain: AdminDomainMutations;
+  /** Returns 'Hello World!' */
   hello: Scalars["String"];
 };
 
+/** Minimum Entity Information */
 export type Node = {
   /** Unique numeric identifier */
   id: Scalars["IntID"];
 };
 
+/** Order ascendingly or descendingly */
 export type Order_By = "ASC" | "DESC";
 
+/** Paginated related information */
 export type PageInfo = {
   __typename?: "PageInfo";
+  /** Cursor parameter normally used for forward pagination */
   endCursor?: Maybe<Scalars["String"]>;
+  /** Utility field that returns "true" if a next page can be fetched */
   hasNextPage: Scalars["Boolean"];
+  /** Utility field that returns "true" if a previous page can be fetched */
   hasPreviousPage: Scalars["Boolean"];
+  /** Cursor parameter normally used for backward pagination */
   startCursor?: Maybe<Scalars["String"]>;
 };
 
@@ -336,6 +377,7 @@ export type Project = {
   topics: Array<Topic>;
 };
 
+/** Query */
 export type Query = {
   __typename?: "Query";
   /** [ADMIN] Admin related domain queries, only authenticated users with the role "ADMIN" can access */
@@ -356,6 +398,7 @@ export type Query = {
    * If any of the specified identifiers is not found or forbidden, query fails
    */
   domains: Array<Domain>;
+  /** Returns 'Hello World!' */
   hello: Scalars["String"];
   /**
    * Get all the KCs associated with the specified identifiers
@@ -390,32 +433,40 @@ export type Query = {
   topics: Array<Topic>;
 };
 
+/** Query */
 export type QueryContentArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+/** Query */
 export type QueryDomainsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+/** Query */
 export type QueryKcsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+/** Query */
 export type QueryProjectsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+/** Query */
 export type QueryTopicByCodeArgs = {
   code: Scalars["String"];
 };
 
+/** Query */
 export type QueryTopicsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+/** Subscription */
 export type Subscription = {
   __typename?: "Subscription";
+  /** Emits 'Hello World1', 'Hello World2', 'Hello World3', 'Hello World4' and 'Hello World5' */
   hello: Scalars["String"];
 };
 

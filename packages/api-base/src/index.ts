@@ -119,17 +119,21 @@ export const ezServicePreset = CreateApp({
               ConnectionTypes,
               gql`
                 type Query {
+                  "Returns 'Hello World!'"
                   hello: String!
                 }
 
                 type Mutation {
+                  "Returns 'Hello World!'"
                   hello: String!
                 }
 
                 type Subscription {
+                  "Emits 'Hello World1', 'Hello World2', 'Hello World3', 'Hello World4' and 'Hello World5'"
                   hello: String!
                 }
 
+                "Order ascendingly or descendingly"
                 enum ORDER_BY {
                   ASC
                   DESC

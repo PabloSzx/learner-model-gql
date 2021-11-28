@@ -390,7 +390,15 @@ input AdminDomainsFilter {
   projects: [IntID!]
 }
 
+"""
+Filter all groups of admin query
+"""
 input AdminGroupsFilter {
+  """
+  Tags associated with the group
+
+  Tags can be used to categorize or filter
+  """
   tags: [String!]
 }
 
@@ -478,14 +486,32 @@ input AdminTopicsFilter {
   projects: [IntID!]
 }
 
+"""
+Admin User-Related Queries
+"""
 type AdminUserMutations {
+  """
+  [ADMIN] Create a new group entity
+  """
   createGroup(data: CreateGroupInput!): Group!
+  """
+  Set the projects of the specified users
+  """
   setProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
+  """
+  [ADMIN] Set the users (by email) associated with the groups
+  """
   setUserGroups(groupIds: [IntID!]!, usersEmails: [EmailAddress!]!): [Group!]!
+  """
+  [ADMIN] Update an existent group entity
+  """
   updateGroup(data: UpdateGroupInput!): Group!
+  """
+  [ADMIN] Update an existent user entity
+  """
   updateUser(data: UpdateUserInput!): User!
   """
-  Upsert specified users with specified project
+  Upsert specified users with specified projects
   """
   upsertUsersWithProjects(
     emails: [EmailAddress!]!
@@ -493,25 +519,55 @@ type AdminUserMutations {
   ): [User!]!
 }
 
+"""
+Admin User-Related Queries
+"""
 type AdminUserQueries {
+  """
+  [ADMIN] Get all the groups currently in the system
+
+  Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
+  """
   allGroups(
     filters: AdminGroupsFilter
     pagination: CursorConnectionArgs!
   ): GroupsConnection!
+  """
+  [ADMIN] Get all the users currently in the system
+
+  Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
+  """
   allUsers(
     filters: AdminUsersFilter
     pagination: CursorConnectionArgs!
   ): UsersConnection!
 }
 
+"""
+Filter all users of admin query
+"""
 input AdminUsersFilter {
+  """
+  Filter by the specified tags
+
+  If any of the user's tags matches any of the specified tags, the user is included
+  """
   tags: [String!]
 }
 
+"""
+Pagination Interface
+"""
 interface Connection {
+  """
+  Pagination information
+  """
   pageInfo: PageInfo!
 }
 
+"""
+Content entity
+"""
 type Content {
   """
   Binary content encoded in base64
@@ -671,11 +727,31 @@ input CreateDomain {
   projectsIds: [IntID!]!
 }
 
+"""
+Group creation input data
+"""
 input CreateGroupInput {
+  """
+  Unique string identifier
+  """
   code: String!
+  """
+  Permissions flags
+  """
   flags: GroupFlagsInput
+  """
+  Human readable identifier
+  """
   label: String!
+  """
+  Projects associated with the group
+  """
   projectIds: [IntID!]!
+  """
+  Tags associated with the group
+
+  Tags can be used to categorize or filter
+  """
   tags: [String!]!
 }
 
@@ -753,10 +829,39 @@ input CreateTopic {
   tags: [String!]!
 }
 
+"""
+Pagination parameters
+
+Forward pagination parameters can't be mixed with Backward pagination parameters simultaneously
+
+first & after => Forward Pagination
+
+last & before => Backward Pagination
+"""
 input CursorConnectionArgs {
+  """
+  Set the minimum boundary
+
+  Use the "endCursor" field of "pageInfo"
+  """
   after: IntID
+  """
+  Set the maximum boundary
+
+  Use the "startCursor" field of "pageInfo"
+  """
   before: IntID
+  """
+  Set the limit of nodes to be fetched
+
+  It can't be more than 50
+  """
   first: NonNegativeInt
+  """
+  Set the limit of nodes to be fetched
+
+  It can't be more than 50
+  """
   last: NonNegativeInt
 }
 
@@ -765,6 +870,9 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 """
 scalar DateTime
 
+"""
+Domain entity
+"""
 type Domain {
   """
   Unique string identifier
@@ -819,40 +927,109 @@ A field whose value conforms to the standard internet email address format as sp
 """
 scalar EmailAddress
 
+"""
+Group Entity
+
+- Used to group/cluster users
+- Set permissions flags to the users
+- Associate projects to users, allowing users to access the projects
+"""
 type Group {
+  """
+  Unique string identifier
+  """
   code: String!
+  """
+  Date of creation
+  """
   createdAt: DateTime!
+  """
+  Permissions flags
+  """
   flags: GroupFlags!
   """
   Unique numeric identifier
   """
   id: IntID!
+  """
+  Human readable identifier
+  """
   label: String!
   """
   Projects associated with the group
   """
   projects: [Project!]!
+  """
+  IDs of projects associated with the group
+  """
   projectsIds: [IntID!]!
+  """
+  Tags associated with the group
+
+  Tags can be used to categorize or filter
+  """
   tags: [String!]!
+  """
+  Date of last update
+  """
   updatedAt: DateTime!
+  """
+  Users associated with the group
+  """
   users: [User!]!
 }
 
+"""
+Permissions flags of group
+"""
 type GroupFlags {
+  """
+  Date of creation
+  """
   createdAt: DateTime!
+  """
+  Unique numeric identifier
+  """
   id: IntID!
+  """
+  Allows the users part of the group to read all the actions of the projects of the group
+  """
   readProjectActions: Boolean!
+  """
+  Allows the users part of the group to read all the model states of the projects of the group
+  """
   readProjectModelStates: Boolean!
+  """
+  Date of last update
+  """
   updatedAt: DateTime!
 }
 
+"""
+Group Flags input data
+"""
 input GroupFlagsInput {
+  """
+  Allows the users part of the group to read all the actions of the projects of the group
+  """
   readProjectActions: Boolean!
+  """
+  Allows the users part of the group to read all the model states of the projects of the group
+  """
   readProjectModelStates: Boolean!
 }
 
+"""
+Paginated Groups
+"""
 type GroupsConnection implements Connection {
+  """
+  Nodes of the current page
+  """
   nodes: [Group!]!
+  """
+  Pagination related information
+  """
   pageInfo: PageInfo!
 }
 
@@ -1090,6 +1267,9 @@ type ModelStateTypeConnection implements Connection {
   pageInfo: PageInfo!
 }
 
+"""
+Mutation
+"""
 type Mutation {
   """
   Report an action to the modeling service
@@ -1110,10 +1290,19 @@ type Mutation {
   [ADMIN] Admin related project mutations, only authenticated users with the role "ADMIN" can access
   """
   adminProjects: AdminProjectsMutations!
+  """
+  [ADMIN] Admin related user mutations, only authenticated users with the role "ADMIN" can access
+  """
   adminUsers: AdminUserMutations!
+  """
+  Returns 'Hello World!'
+  """
   hello: String!
 }
 
+"""
+Minimum Entity Information
+"""
 interface Node {
   """
   Unique numeric identifier
@@ -1126,15 +1315,33 @@ Integers that will have a value of 0 or more.
 """
 scalar NonNegativeInt
 
+"""
+Order ascendingly or descendingly
+"""
 enum ORDER_BY {
   ASC
   DESC
 }
 
+"""
+Paginated related information
+"""
 type PageInfo {
+  """
+  Cursor parameter normally used for forward pagination
+  """
   endCursor: String
+  """
+  Utility field that returns "true" if a next page can be fetched
+  """
   hasNextPage: Boolean!
+  """
+  Utility field that returns "true" if a previous page can be fetched
+  """
   hasPreviousPage: Boolean!
+  """
+  Cursor parameter normally used for backward pagination
+  """
   startCursor: String
 }
 
@@ -1298,6 +1505,9 @@ type ProjectsConnection implements Connection {
   pageInfo: PageInfo!
 }
 
+"""
+Query
+"""
 type Query {
   """
   [ADMIN] Admin related actions queries, only authenticated users with the role "ADMIN" can access
@@ -1319,6 +1529,9 @@ type Query {
   [ADMIN] Admin related state queries, only authenticated users with the role "ADMIN" can access
   """
   adminState: AdminStateQueries!
+  """
+  [ADMIN] Admin related user queries, only authenticated users with the role "ADMIN" can access
+  """
   adminUsers: AdminUserQueries!
   """
   Get all the content associated with the specified identifiers
@@ -1335,6 +1548,9 @@ type Query {
   - If authenticated user has no permissions on the corresponding project it returns NULL.
   """
   contentByCode(code: String!): Content
+  """
+  Authenticated user information
+  """
   currentUser: User
   """
   Get all the domains associated with the specified identifiers
@@ -1352,6 +1568,9 @@ type Query {
   If any of the specified identifiers is not found or forbidden, query fails
   """
   groups(ids: [IntID!]!): [Group!]!
+  """
+  Returns 'Hello World!'
+  """
   hello: String!
   """
   Get all the KCs associated with the specified identifiers
@@ -1401,7 +1620,13 @@ type Query {
   users(ids: [IntID!]!): [User!]!
 }
 
+"""
+Subscription
+"""
 type Subscription {
+  """
+  Emits 'Hello World1', 'Hello World2', 'Hello World3', 'Hello World4' and 'Hello World5'
+  """
   hello: String!
 }
 
@@ -1410,6 +1635,9 @@ The javascript `Date` as integer. Type represents date and time as number of mil
 """
 scalar Timestamp
 
+"""
+Topic entity
+"""
 type Topic {
   """
   Childrens topics
@@ -1566,12 +1794,35 @@ input UpdateDomain {
   label: String!
 }
 
+"""
+Group update input data
+"""
 input UpdateGroupInput {
+  """
+  Unique string identifier
+  """
   code: String!
+  """
+  Permissions flags of group
+  """
   flags: GroupFlagsInput
+  """
+  Current group identifier
+  """
   id: IntID!
+  """
+  Human readable identifier
+  """
   label: String!
+  """
+  Projects associated with the group
+  """
   projectIds: [IntID!]!
+  """
+  Tags associated with the group
+
+  Tags can be used to categorize or filter
+  """
   tags: [String!]!
 }
 
@@ -1650,50 +1901,137 @@ input UpdateTopic {
   tags: [String!]!
 }
 
+"""
+User update input data
+"""
 input UpdateUserInput {
+  """
+  Current user identifier
+  """
   id: IntID!
+  """
+  Locked flag
+  """
   locked: Boolean!
+  """
+  Name of person
+  """
   name: String
+  """
+  Projects associated with user
+  """
   projectIds: [IntID!]!
+  """
+  Role of user
+  """
   role: UserRole!
+  """
+  Tags associated with the user
+
+  Tags can be used to categorize or filter
+  """
   tags: [String!]!
 }
 
+"""
+User entity
+"""
 type User {
+  """
+  Active flag
+
+  By default it starts as "false", and the first time the user access the system, it's set as "true"
+  """
   active: Boolean!
+  """
+  Date of creation
+  """
   createdAt: DateTime!
+  """
+  Email Address
+  """
   email: String!
-  enabled: Boolean!
+  """
+  Groups associated with the user
+  """
   groups: [Group!]!
   """
   Unique numeric identifier
   """
   id: IntID!
+  """
+  Date of latest user access
+  """
   lastOnline: DateTime
+  """
+  Locked user authentication
+
+  If set as "true", user won't be able to use the system
+  """
   locked: Boolean!
   """
   Model States associated with user
   """
   modelStates(input: ModelStateConnectionInput!): ModelStateConnection!
+  """
+  Name of person
+  """
   name: String
+  """
+  Picture of user, set by external authentication service
+  """
   picture: String
   """
   Projects associated with the user
   """
   projects: [Project!]!
+  """
+  IDs of projects associated with the user
+  """
   projectsIds: [IntID!]!
+  """
+  User role, by default is USER
+  """
   role: UserRole!
+  """
+  Tags associated with the user
+
+  Tags can be used to categorize or filter
+  """
   tags: [String!]!
+  """
+  Date of last update
+  """
   updatedAt: DateTime!
 }
 
+"""
+Possible roles of an authenticated user
+"""
 enum UserRole {
+  """
+  Administrator of the system
+
+  Most of the authorization logic is enabled
+  """
   ADMIN
+  """
+  Default user role
+  """
   USER
 }
 
+"""
+Paginated Users
+"""
 type UsersConnection implements Connection {
+  """
+  Nodes of the current page
+  """
   nodes: [User!]!
+  """
+  Pagination related information
+  """
   pageInfo: PageInfo!
 }
 

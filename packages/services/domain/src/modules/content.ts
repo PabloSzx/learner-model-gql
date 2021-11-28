@@ -3,6 +3,7 @@ import { gql, registerModule } from "../ez";
 
 export const contentModule = registerModule(
   gql`
+    "Content entity"
     type Content {
       "Unique numeric identifier"
       id: IntID!

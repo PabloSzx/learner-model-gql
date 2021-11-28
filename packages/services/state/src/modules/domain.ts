@@ -3,6 +3,7 @@ import { gql, ModelStateConnection, registerModule } from "../ez";
 
 export const domainModule = registerModule(
   gql`
+    "Domain entity"
     type Domain {
       "Unique numeric identifier"
       id: IntID!
@@ -48,19 +49,19 @@ export const domainModule = registerModule(
       },
       Domain: {
         async modelStates({ id }, { input }, { authorization }) {
-          const notAdminAllowedProjectsIds =
-            await authorization.expectNotAdminAllowedProjectsIdsModelStates;
+          const allowedProjectsIds =
+            await authorization.expectAllowedProjectsIdsModelStates;
 
           return ModelStateConnection(input, {
             where: {
               domain: {
                 id,
                 // If user is not admin, filter out not-authorized projects
-                projects: notAdminAllowedProjectsIds
+                projects: allowedProjectsIds
                   ? {
                       some: {
                         id: {
-                          in: notAdminAllowedProjectsIds,
+                          in: allowedProjectsIds,
                         },
                       },
                     }

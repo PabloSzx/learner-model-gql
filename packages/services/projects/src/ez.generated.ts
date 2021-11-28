@@ -84,10 +84,13 @@ export type AdminProjectsQueriesAllProjectsArgs = {
   pagination: CursorConnectionArgs;
 };
 
+/** Pagination Interface */
 export type Connection = {
+  /** Pagination information */
   pageInfo: PageInfo;
 };
 
+/** Content entity */
 export type Content = {
   __typename?: "Content";
   /** Unique numeric identifier */
@@ -106,13 +109,43 @@ export type CreateProject = {
   label: Scalars["String"];
 };
 
+/**
+ * Pagination parameters
+ *
+ * Forward pagination parameters can't be mixed with Backward pagination parameters simultaneously
+ *
+ * first & after => Forward Pagination
+ *
+ * last & before => Backward Pagination
+ */
 export type CursorConnectionArgs = {
+  /**
+   * Set the minimum boundary
+   *
+   * Use the "endCursor" field of "pageInfo"
+   */
   after?: InputMaybe<Scalars["IntID"]>;
+  /**
+   * Set the maximum boundary
+   *
+   * Use the "startCursor" field of "pageInfo"
+   */
   before?: InputMaybe<Scalars["IntID"]>;
+  /**
+   * Set the limit of nodes to be fetched
+   *
+   * It can't be more than 50
+   */
   first?: InputMaybe<Scalars["NonNegativeInt"]>;
+  /**
+   * Set the limit of nodes to be fetched
+   *
+   * It can't be more than 50
+   */
   last?: InputMaybe<Scalars["NonNegativeInt"]>;
 };
 
+/** Domain entity */
 export type Domain = {
   __typename?: "Domain";
   /** Unique numeric identifier */
@@ -121,6 +154,13 @@ export type Domain = {
   projects: Array<Project>;
 };
 
+/**
+ * Group Entity
+ *
+ * - Used to group/cluster users
+ * - Set permissions flags to the users
+ * - Associate projects to users, allowing users to access the projects
+ */
 export type Group = {
   __typename?: "Group";
   /** Unique numeric identifier */
@@ -129,25 +169,34 @@ export type Group = {
   projects: Array<Project>;
 };
 
+/** Mutation */
 export type Mutation = {
   __typename?: "Mutation";
   /** [ADMIN] Admin related project mutations, only authenticated users with the role "ADMIN" can access */
   adminProjects: AdminProjectsMutations;
+  /** Returns 'Hello World!' */
   hello: Scalars["String"];
 };
 
+/** Minimum Entity Information */
 export type Node = {
   /** Unique numeric identifier */
   id: Scalars["IntID"];
 };
 
+/** Order ascendingly or descendingly */
 export type Order_By = "ASC" | "DESC";
 
+/** Paginated related information */
 export type PageInfo = {
   __typename?: "PageInfo";
+  /** Cursor parameter normally used for forward pagination */
   endCursor?: Maybe<Scalars["String"]>;
+  /** Utility field that returns "true" if a next page can be fetched */
   hasNextPage: Scalars["Boolean"];
+  /** Utility field that returns "true" if a previous page can be fetched */
   hasPreviousPage: Scalars["Boolean"];
+  /** Cursor parameter normally used for backward pagination */
   startCursor?: Maybe<Scalars["String"]>;
 };
 
@@ -175,6 +224,7 @@ export type ProjectsConnection = Connection & {
   pageInfo: PageInfo;
 };
 
+/** Query */
 export type Query = {
   __typename?: "Query";
   /** [ADMIN] Project related administration queries */
@@ -203,6 +253,7 @@ export type Query = {
    * If any of the specified identifiers is not found or forbidden, query fails
    */
   groups: Array<Group>;
+  /** Returns 'Hello World!' */
   hello: Scalars["String"];
   /**
    * Get specified project by either "id" or "code".
@@ -237,40 +288,50 @@ export type Query = {
   users: Array<User>;
 };
 
+/** Query */
 export type QueryContentArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+/** Query */
 export type QueryDomainsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+/** Query */
 export type QueryGroupsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+/** Query */
 export type QueryProjectArgs = {
   code?: InputMaybe<Scalars["String"]>;
   id?: InputMaybe<Scalars["IntID"]>;
 };
 
+/** Query */
 export type QueryProjectsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+/** Query */
 export type QueryTopicsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+/** Query */
 export type QueryUsersArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
+/** Subscription */
 export type Subscription = {
   __typename?: "Subscription";
+  /** Emits 'Hello World1', 'Hello World2', 'Hello World3', 'Hello World4' and 'Hello World5' */
   hello: Scalars["String"];
 };
 
+/** Topic entity */
 export type Topic = {
   __typename?: "Topic";
   /** Unique numeric identifier */
@@ -291,6 +352,7 @@ export type UpdateProject = {
   label: Scalars["String"];
 };
 
+/** User entity */
 export type User = {
   __typename?: "User";
   /** Unique numeric identifier */

@@ -4,14 +4,17 @@ import { gql, registerModule } from "../ez";
 export const projectsModule = registerModule(
   gql`
     extend type User {
+      "IDs of projects associated with the user"
       projectsIds: [IntID!]!
     }
 
     extend type Group {
+      "IDs of projects associated with the group"
       projectsIds: [IntID!]!
     }
 
     extend type AdminUserMutations {
+      "Set the projects of the specified users"
       setProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
     }
   `,

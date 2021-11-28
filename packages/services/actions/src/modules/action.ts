@@ -24,6 +24,7 @@ export const actionModule = registerModule(
       name: String!
     }
 
+    "Content entity"
     type Content {
       "Unique numeric identifier"
       id: IntID!
@@ -34,16 +35,19 @@ export const actionModule = registerModule(
       id: IntID!
     }
 
+    "Domain entity"
     type Domain {
       "Unique numeric identifier"
       id: IntID!
     }
 
+    "Topic entity"
     type Topic {
       "Unique numeric identifier"
       id: IntID!
     }
 
+    "User entity"
     type User {
       "Unique numeric identifier"
       id: IntID!

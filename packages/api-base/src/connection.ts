@@ -4,28 +4,71 @@ import { gql } from "graphql-ez/utils";
 import { toNonNegativeInteger } from "./casters";
 
 export const ConnectionTypes = gql`
+  "Paginated related information"
   type PageInfo {
+    "Cursor parameter normally used for backward pagination"
     startCursor: String
+
+    "Cursor parameter normally used for forward pagination"
     endCursor: String
 
+    """
+    Utility field that returns "true" if a next page can be fetched
+    """
     hasNextPage: Boolean!
+
+    """
+    Utility field that returns "true" if a previous page can be fetched
+    """
     hasPreviousPage: Boolean!
   }
 
+  "Minimum Entity Information"
   interface Node {
     "Unique numeric identifier"
     id: IntID!
   }
 
+  "Pagination Interface"
   interface Connection {
+    "Pagination information"
     pageInfo: PageInfo!
   }
 
+  """
+  Pagination parameters
+
+  Forward pagination parameters can't be mixed with Backward pagination parameters simultaneously
+
+  first & after => Forward Pagination
+
+  last & before => Backward Pagination
+  """
   input CursorConnectionArgs {
+    """
+    Set the limit of nodes to be fetched
+
+    It can't be more than 50
+    """
     first: NonNegativeInt
+    """
+    Set the minimum boundary
+
+    Use the "endCursor" field of "pageInfo"
+    """
     after: IntID
 
+    """
+    Set the limit of nodes to be fetched
+
+    It can't be more than 50
+    """
     last: NonNegativeInt
+    """
+    Set the maximum boundary
+
+    Use the "startCursor" field of "pageInfo"
+    """
     before: IntID
   }
 `;
