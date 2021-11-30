@@ -107,7 +107,15 @@ export const ezServicePreset = CreateApp({
           IntID,
         }
       ),
-      ezVoyager(),
+      ezVoyager({
+        displayOptions: {
+          hideRoot: false,
+          showLeafFields: true,
+          skipRelay: false,
+          skipDeprecated: true,
+          sortByAlphabet: true,
+        },
+      }),
       {
         name: "LearnerModelGQL",
         compatibilityList: {
