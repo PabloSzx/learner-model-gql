@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@graphql-ez/utils": "^0.1.2",
-    "@prisma/client": "^3.5.0",
+    "@prisma/client": "^3.6.0",
     "common-api": "workspace:^1.0.0",
     "pg-gql-pubsub": "^0.3.0",
     "prisma": "^3.5.0",
