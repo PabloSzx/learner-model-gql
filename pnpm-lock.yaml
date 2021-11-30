@@ -230,14 +230,14 @@ importers:
       '@types/react': ^17.0.37
       common-api: workspace:^1.0.0
       pg-gql-pubsub: ^0.3.0
-      prisma: ^3.5.0
+      prisma: ^3.6.0
       prisma-dbml-generator: ^0.8.2
     dependencies:
       '@graphql-ez/utils': 0.1.2_5729e77aee8e1d9e0be05a207808de7c
-      '@prisma/client': 3.6.0_prisma@3.5.0
+      '@prisma/client': 3.6.0_prisma@3.6.0
       common-api: link:../common-api
       pg-gql-pubsub: 0.3.0
-      prisma: 3.5.0
+      prisma: 3.6.0
       prisma-dbml-generator: 0.8.2
     devDependencies:
       '@types/concurrently': 6.4.0
@@ -2920,7 +2920,7 @@ packages:
       '@prisma/engines-version': 3.6.0-24.dc520b92b1ebb2d28dc3161f9f82e875bd35d727
     dev: true
 
-  /@prisma/client/3.6.0_prisma@3.5.0:
+  /@prisma/client/3.6.0_prisma@3.6.0:
     resolution: {integrity: sha512-ycSGY9EZGROtje0iCNsgC5Zqi/ttX2sO7BNMYaLsUMiTlf3F69ZPH+08pRo0hrDfkZzyimXYqeXJlaoYDH1w7A==}
     engines: {node: '>=12.6'}
     requiresBuild: true
@@ -2931,7 +2931,7 @@ packages:
         optional: true
     dependencies:
       '@prisma/engines-version': 3.6.0-24.dc520b92b1ebb2d28dc3161f9f82e875bd35d727
-      prisma: 3.5.0
+      prisma: 3.6.0
     dev: false
 
   /@prisma/debug/2.30.3:
@@ -2981,8 +2981,8 @@ packages:
     requiresBuild: true
     dev: false
 
-  /@prisma/engines/3.5.0-38.78a5df6def6943431f4c022e1428dbc3e833cf8e:
-    resolution: {integrity: sha512-MqZUrxuLlIbjB3wu8LrRJOKcvR4k3dunKoI4Q2bPfAwLQY0XlpsLZ3TRVW1c32ooVk939p6iGNkaCUo63Et36g==}
+  /@prisma/engines/3.6.0-24.dc520b92b1ebb2d28dc3161f9f82e875bd35d727:
+    resolution: {integrity: sha512-dRClHS7DsTVchDKzeG72OaEyeDskCv91pnZ72Fftn0mp4BkUvX2LvWup65hCNzwwQm5IDd6A88APldKDnMiEMA==}
     requiresBuild: true
     dev: false
 
@@ -7537,13 +7537,13 @@ packages:
       - supports-color
     dev: false
 
-  /prisma/3.5.0:
-    resolution: {integrity: sha512-WEYQ+H98O0yigG+lI0gfh4iyBChvnM6QTXPDtY9eFraLXAmyb6tf/T2mUdrUAU1AEvHLVzQA5A+RpONZlQozBg==}
+  /prisma/3.6.0:
+    resolution: {integrity: sha512-6SqgHS/5Rq6HtHjsWsTxlj+ySamGyCLBUQfotc2lStOjPv52IQuDVpp58GieNqc9VnfuFyHUvTZw7aQB+G2fvQ==}
     engines: {node: '>=12.6'}
     hasBin: true
     requiresBuild: true
     dependencies:
-      '@prisma/engines': 3.5.0-38.78a5df6def6943431f4c022e1428dbc3e833cf8e
+      '@prisma/engines': 3.6.0-24.dc520b92b1ebb2d28dc3161f9f82e875bd35d727
     dev: false
 
   /process-nextick-args/2.0.1:
