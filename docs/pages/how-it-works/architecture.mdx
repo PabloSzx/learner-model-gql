@@ -1,3 +1,14 @@
 ---
 title: Architecture
 ---
+
+# Architecture
+
+Learner Model GQL follows a [Microservices architecture style](https://docs.microsoft.com/en-us/azure/architecture/guide/architecture-styles/microservices) while leveraging [GraphQL](https://graphql.org), the client-side of the project interacts with a single GraphQL API gateway,
+which orchestrates the different GraphQL microservices based on the request query.
+
+![Microservices diagram](/microservices.png)
+
+## Schema Stitching
+
+The GraphQL services design and API gateway rely on schema stitching, using the [GraphQL Tools](https://www.graphql-tools.com/) library [@graphql-tools/stitch](https://www.graphql-tools.com/docs/schema-stitching/stitch-combining-schemas).
