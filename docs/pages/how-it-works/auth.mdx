@@ -6,6 +6,63 @@ title: Auth
 
 ## Authentication
 
+The authentication process uses the external service [Auth0](https://auth0.com/),
+this couples perfectly with the microservices architecture of the project, giving out-of-the-box traditional Email+Password authentication,
+and enables easier integration with social connections,
+like [Google / Gmail](https://marketplace.auth0.com/integrations/google-social-connection) and
+[Microsoft Accounts](https://marketplace.auth0.com/integrations/microsoft-account-social-connection),
+which are the currently enabled connections, and with further subscription plans, has the potential
+for integration with [Google Workspace](https://marketplace.auth0.com/integrations/google-workspace-sso) and
+[Office 365](https://marketplace.auth0.com/integrations/office-365-sso).
+
 ### Auth0
 
+One of the best advantages of using Auth0 is that it makes its usage easier for both client-side and server-side.
+
+#### Client side
+
+For client-side, and more specifically in [learner-model-gql-template](https://github.com/PabloSzx/learner-model-gql-template),
+the project uses the **auth0-react** library, the source code and lower-level documentation is available in [GitHub](https://github.com/auth0/auth0-react),
+meanwhile the higher level documentation is available in the [Auth0 Website](https://auth0.com/docs/libraries/auth0-react).
+
+Other than configuring the Auth0 integration in [manage.auth0.com](https://manage.auth0.com/), to re-use the existing integration already created and available,
+a couple of basic configurations on the client-side of the project have to be done, for example, setting, for example, the following environment variables:
+
+```
+NEXT_PUBLIC_AUTH0_DOMAIN=learner-model-gql.us.auth0.com
+NEXT_PUBLIC_AUTH0_CLIENT_ID=RRfBLJvPlx2R6opfhYqGSb23oh7vZUFx
+```
+
+And the Auth0 Provider of **auth0-react** as it follows:
+
+```tsx
+<Auth0Provider
+  domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN!}
+  clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID!}
+  redirectUri={
+    typeof window !== "undefined" ? window.location.origin : undefined
+  }
+>
+  ...
+</Auth0Provider>
+```
+
+The service expects the raw token in the `authorization` header, with the prefix `Bearer`, something like:
+
+```ts
+({
+  headers: {
+    authorization: `Bearer ${token}`,
+  },
+});
+```
+
+#### Server side
+
+On the server-side, the services use the plugin [fastify-auth0-verify](https://github.com/nearform/fastify-auth0-verify), which
+given the `AUTH0_DOMAIN`, `AUTH0_CLIENT` and `AUTH0_SECRET` secret environment variables, it decodes the authorization token provided in the `authorization` header,
+and the services can identify the authenticated user.
+
 ## Authorization
+
+...

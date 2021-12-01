@@ -11,6 +11,8 @@ importers:
       nextra: ^1.1.0
       nextra-theme-docs: ^1.2.6
       open-cli: ^7.0.1
+      prism-react-renderer: ^1.2.1
+      prismjs: ^1.25.0
       react: ^17.0.2
       react-dom: ^17.0.2
       typescript: ^4.5.2
@@ -19,6 +21,8 @@ importers:
       next: 12.0.4_react-dom@17.0.2+react@17.0.2
       nextra: 1.1.0_react@17.0.2
       nextra-theme-docs: 1.2.6_3ab6be46011dee47190641e2dfd1587e
+      prism-react-renderer: 1.2.1_react@17.0.2
+      prismjs: 1.25.0
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     devDependencies:
@@ -3509,6 +3513,10 @@ packages:
       react: '>=0.14.9'
     dependencies:
       react: 17.0.2
+    dev: false
+
+  /prismjs/1.25.0:
+    resolution: {integrity: sha512-WCjJHl1KEWbnkQom1+SzftbtXMKQoezOCYs5rECqMN+jP+apI7ftoflyqigqzopSO3hMhTEb0mFClA8lkolgEg==}
     dev: false
 
   /process-nextick-args/2.0.1:
