@@ -45,7 +45,7 @@ importers:
       testing: workspace:*
       typescript: ^4.5.2
       undici: ^4.10.3
-      valtio: ^1.2.6
+      valtio: ^1.2.7
       wait-on: ^6.0.0
     dependencies:
       api-base: link:packages/api-base
@@ -85,7 +85,7 @@ importers:
       rimraf: 3.0.2
       testing: link:packages/testing
       typescript: 4.5.2
-      valtio: 1.2.6_react@17.0.2
+      valtio: 1.2.7_react@17.0.2
       wait-on: 6.0.0
 
   packages/api-base:
@@ -169,7 +169,7 @@ importers:
       serialize-error: ^9.0.0
       typescript: ^4.5.2
       use-immer: ^0.6.0
-      valtio: ^1.2.6
+      valtio: ^1.2.7
       zustand: ^3.6.5
     dependencies:
       '@auth0/auth0-react': 1.8.0_react-dom@17.0.2+react@17.0.2
@@ -198,7 +198,7 @@ importers:
       rq-gql: 0.3.1_289ebc129a2d87e9a4640b4b923e92e3
       serialize-error: 9.0.0
       use-immer: 0.6.0_immer@9.0.7+react@17.0.2
-      valtio: 1.2.6_react@17.0.2
+      valtio: 1.2.7_react@17.0.2
       zustand: 3.6.5_react@17.0.2
     devDependencies:
       '@types/mime': 2.0.3
@@ -314,7 +314,7 @@ importers:
       prettier: ^2.5.0
       react-query: ^3.34.0
       rq-gql: ^0.3.1
-      valtio: ^1.2.6
+      valtio: ^1.2.7
     dependencies:
       common: link:../common
       graphql: 16.0.1
@@ -329,7 +329,7 @@ importers:
       '@graphql-codegen/typescript-react-query': 3.2.1_graphql@16.0.1
       react-query: 3.34.0_react@17.0.2
       rq-gql: 0.3.1_289ebc129a2d87e9a4640b4b923e92e3
-      valtio: 1.2.6_react@17.0.2
+      valtio: 1.2.7_react@17.0.2
 
   packages/services/actions:
     specifiers:
@@ -8188,7 +8188,7 @@ packages:
       commander: 8.3.0
       graphql: 16.0.1
       react-query: 3.34.0_react-dom@17.0.2+react@17.0.2
-      valtio: 1.2.6_react@17.0.2
+      valtio: 1.2.7_react@17.0.2
     transitivePeerDependencies:
       - '@babel/helper-module-imports'
       - '@babel/types'
@@ -9207,8 +9207,8 @@ packages:
     engines: {node: '>= 0.10'}
     dev: false
 
-  /valtio/1.2.6_react@17.0.2:
-    resolution: {integrity: sha512-TnGAdGAnbzj+K3WA8tKql6O6+7qXSDSYVoaWHFQp27twoNVyfJPPtHObZ79WLZ7I6N+aeWEO0bdO3yjq+GOWew==}
+  /valtio/1.2.7_react@17.0.2:
+    resolution: {integrity: sha512-vm9XwsndXVt+XTFwmb2Myo2p319Ssu/SDVRjBhDGQcNi6Epc8g0Pf/QaWAr67A3P1x4b1NApjK7qHjdL1WpuaQ==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
       '@babel/helper-module-imports': '>=7.12'
