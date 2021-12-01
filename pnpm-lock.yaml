@@ -161,7 +161,7 @@ importers:
       react-datepicker: ^4.4.0
       react-dom: ^17.0.2
       react-icons: ^4.3.1
-      react-query: ^3.33.7
+      react-query: ^3.34.0
       react-select: ^5.2.1
       react-table: ^7.7.0
       react-use: ^17.3.1
@@ -191,11 +191,11 @@ importers:
       react-datepicker: 4.4.0_react-dom@17.0.2+react@17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-icons: 4.3.1_react@17.0.2
-      react-query: 3.33.7_react-dom@17.0.2+react@17.0.2
+      react-query: 3.34.0_react-dom@17.0.2+react@17.0.2
       react-select: 5.2.1_5539cae010396b202b015f3568914e95
       react-table: 7.7.0_react@17.0.2
       react-use: 17.3.1_react-dom@17.0.2+react@17.0.2
-      rq-gql: 0.3.1_550dbd2596137eb715b612e0af16c1ea
+      rq-gql: 0.3.1_289ebc129a2d87e9a4640b4b923e92e3
       serialize-error: 9.0.0
       use-immer: 0.6.0_immer@9.0.7+react@17.0.2
       valtio: 1.2.6_react@17.0.2
@@ -312,7 +312,7 @@ importers:
       common: workspace:^0.0.1
       graphql: ^16.0.1
       prettier: ^2.5.0
-      react-query: ^3.33.7
+      react-query: ^3.34.0
       rq-gql: ^0.3.1
       valtio: ^1.2.6
     dependencies:
@@ -327,8 +327,8 @@ importers:
       '@graphql-codegen/typescript-document-nodes': 2.2.1_graphql@16.0.1
       '@graphql-codegen/typescript-operations': 2.2.1_graphql@16.0.1
       '@graphql-codegen/typescript-react-query': 3.2.1_graphql@16.0.1
-      react-query: 3.33.7_react@17.0.2
-      rq-gql: 0.3.1_550dbd2596137eb715b612e0af16c1ea
+      react-query: 3.34.0_react@17.0.2
+      rq-gql: 0.3.1_289ebc129a2d87e9a4640b4b923e92e3
       valtio: 1.2.6_react@17.0.2
 
   packages/services/actions:
@@ -7769,8 +7769,8 @@ packages:
       react-fast-compare: 3.2.0
       warning: 4.0.3
 
-  /react-query/3.33.7_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-uL/1ZatxcRyvfhbNPeuOlLVbcdMQKzQ2t+SQLJMrMM0plfa/Al3buaPbGsbsmIwvyWeI4CVkkSBKzQIkU4p9MQ==}
+  /react-query/3.34.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-g6L90FeCLzz6+53CbVKYJALBiZR5icOYPjqGGiNgHNeufcnddLZaQGE9wheclk10k6g+o+Dd4/jAtswhjVblXw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0
       react-dom: '*'
@@ -7788,8 +7788,8 @@ packages:
       react-dom: 17.0.2_react@17.0.2
     dev: false
 
-  /react-query/3.33.7_react@17.0.2:
-    resolution: {integrity: sha512-uL/1ZatxcRyvfhbNPeuOlLVbcdMQKzQ2t+SQLJMrMM0plfa/Al3buaPbGsbsmIwvyWeI4CVkkSBKzQIkU4p9MQ==}
+  /react-query/3.34.0_react@17.0.2:
+    resolution: {integrity: sha512-g6L90FeCLzz6+53CbVKYJALBiZR5icOYPjqGGiNgHNeufcnddLZaQGE9wheclk10k6g+o+Dd4/jAtswhjVblXw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0
       react-dom: '*'
@@ -8170,7 +8170,7 @@ packages:
       inherits: 2.0.4
     dev: false
 
-  /rq-gql/0.3.1_550dbd2596137eb715b612e0af16c1ea:
+  /rq-gql/0.3.1_289ebc129a2d87e9a4640b4b923e92e3:
     resolution: {integrity: sha512-K4MKVJXwt+nYLW3K2enCG9wdwbg8Timmyex+2p+Yjop53yeZJbUMe94UE/mnCyg8EmpW5OAt64HJICto2EZHtg==}
     peerDependencies:
       '@graphql-typed-document-node/core': ^3.1.0
@@ -8188,7 +8188,7 @@ packages:
       '@graphql-typed-document-node/core': 3.1.1_graphql@16.0.1
       commander: 8.3.0
       graphql: 16.0.1
-      react-query: 3.33.7_react-dom@17.0.2+react@17.0.2
+      react-query: 3.34.0_react-dom@17.0.2+react@17.0.2
       valtio: 1.2.6_react@17.0.2
     transitivePeerDependencies:
       - '@babel/helper-module-imports'
