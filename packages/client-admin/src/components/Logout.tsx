@@ -47,7 +47,9 @@ export function Logout() {
                 colorScheme="red"
                 onClick={() => {
                   AuthState.isLoading = true;
-                  logout();
+                  logout({
+                    returnTo: window.location.origin,
+                  });
                   onClose();
                 }}
                 ml={3}
