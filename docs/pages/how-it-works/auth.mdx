@@ -65,4 +65,33 @@ and the services can identify the authenticated user.
 
 ## Authorization
 
-...
+The authorization process relies on the local [database](/how-it-works/database) user modeling,
+by using the "email" field provided by Auth0, and connecting the Auth0's uid to a local database user.
+
+After the services have access to the "user" entity, they check the projects of the user (including projects of the user's groups) compared to the requested projects.
+
+The majority of the logic of the authorization rules are shared between all the services in [/packages/api-base/src/auth.ts](https://github.com/PabloSzx/learner-model-gql/blob/main/packages/api-base/src/auth.ts),
+many of them defined as Lazy [JavaScript Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise), where based on where they are [awaited](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await),
+they are applied in the respective resolver.
+
+An example of the mention authorization checkers is the `expectAdmin` rule, which is defined as:
+
+```ts
+const expectUser = LazyPromise(async () => {
+  const user = await userPromise;
+
+  assert(user, "Forbidden!");
+
+  return user;
+});
+
+const expectAdmin = LazyPromise(async () => {
+  const user = await expectUser;
+
+  assert(user.role === "ADMIN", "Forbidden");
+
+  return user;
+});
+```
+
+The `expectUser` asserts that the user exists and is authenticated, and the `expectAdmin` re-uses the `expectUser` rule, and asserts that the user has the role `ADMIN`.
