@@ -6,6 +6,6 @@
   "types": "src/index.ts",
   "dependencies": {
     "common": "workspace:^0.0.1",
-    "require-env-variable": "^3.1.2"
+    "require-env-variable": "^4.0.0"
   }
 }

@@ -217,10 +217,10 @@ importers:
   packages/common-api:
     specifiers:
       common: workspace:^0.0.1
-      require-env-variable: ^3.1.2
+      require-env-variable: ^4.0.0
     dependencies:
       common: link:../common
-      require-env-variable: 3.1.2
+      require-env-variable: 4.0.0
 
   packages/db:
     specifiers:
@@ -4222,11 +4222,6 @@ packages:
     resolution: {integrity: sha512-hUewv7oMjCp+wkBv5Rm0v87eJhq4woh5rSR+42YSQJKecCqgIqNkZ6lAlQms/BwHPJA5NKMRlpxPRv0n8HQW6g==}
     dev: false
 
-  /colors/1.4.0:
-    resolution: {integrity: sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==}
-    engines: {node: '>=0.1.90'}
-    dev: false
-
   /combined-stream/1.0.8:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
     engines: {node: '>= 0.8'}
@@ -8087,10 +8082,8 @@ packages:
     resolution: {integrity: sha1-jGStX9MNqxyXbiNE/+f3kqam30I=}
     engines: {node: '>=0.10.0'}
 
-  /require-env-variable/3.1.2:
-    resolution: {integrity: sha512-PVvFZtNudTfKjgKOcy8ej3bBAVPaefPrPD7xbqA8h0rY/LjarisgRRk6fLZMH3IkDvd6NRhkg3Kn0Wgttx+Nkg==}
-    dependencies:
-      colors: 1.4.0
+  /require-env-variable/4.0.0:
+    resolution: {integrity: sha512-6nkgGxHiRDaajQfkxW8shR/iZWxpYeJyQ0xzzAXyxt+ceU4Z5PF+rydSNglVd2YD2Slgj/yAak0VU6wB9UD2Sg==}
     dev: false
 
   /require-from-string/2.0.2:
