@@ -250,7 +250,6 @@ export type ModelStateTypeConnection = Connection & {
   pageInfo: PageInfo;
 };
 
-/** Mutation */
 export type Mutation = {
   __typename?: "Mutation";
   /** Returns 'Hello World!' */
@@ -279,7 +278,6 @@ export type PageInfo = {
   startCursor?: Maybe<Scalars["String"]>;
 };
 
-/** Query */
 export type Query = {
   __typename?: "Query";
   /** [ADMIN] Admin related state queries, only authenticated users with the role "ADMIN" can access */
@@ -304,17 +302,14 @@ export type Query = {
   users: Array<User>;
 };
 
-/** Query */
 export type QueryDomainsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-/** Query */
 export type QueryUsersArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-/** Subscription */
 export type Subscription = {
   __typename?: "Subscription";
   /** Emits 'Hello World1', 'Hello World2', 'Hello World3', 'Hello World4' and 'Hello World5' */

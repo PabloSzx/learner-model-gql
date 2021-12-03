@@ -1,13 +1,16 @@
 import type { EZContext } from "@graphql-ez/fastify";
 import type { SubschemaConfig } from "@graphql-tools/delegate";
 import type { AsyncExecutor } from "@graphql-tools/utils";
+import { observableToAsyncIterable } from "@graphql-tools/utils";
 import { introspectSchema } from "@graphql-tools/wrap";
-import type { ServiceName } from "api-base";
+import { logger, ServiceName } from "api-base";
 import { parse } from "content-type";
 import type { DocumentNode } from "graphql";
-import { print } from "graphql";
+import { OperationTypeNode, print } from "graphql";
+import { Client as WsClient, createClient as createWsClient } from "graphql-ws";
 import merge from "lodash/fp/merge.js";
 import { Client } from "undici";
+import ws from "ws";
 import { servicesSubschemaConfig } from "./stitchConfig";
 
 export type ServicesSubSchemasConfig = {
@@ -37,6 +40,7 @@ export type ServiceSchemaConfig = {
 const DocumentPrintCache = new WeakMap<DocumentNode, string>();
 
 export const ServicesClients: Record<string, Client> = {};
+export const WSServicesClients: Record<string, WsClient> = {};
 
 if (typeof after !== "undefined") {
   after(() => {
@@ -50,21 +54,87 @@ export async function getServiceSchema({
   port,
   config = servicesSubschemaConfig,
 }: ServiceSchemaConfig) {
-  const serviceUrl =
+  const serviceUrl = new URL(
     href ||
-    `http://127.0.0.1:${
-      port ||
-      (() => {
-        throw Error(`Missing port for service ${name}`);
-      })()
-    }`;
+      `http://127.0.0.1:${
+        port ||
+        (() => {
+          throw Error(`Missing port for service ${name}`);
+        })()
+      }/graphql`
+  );
 
-  const client = (ServicesClients[serviceUrl] ||= new Client(serviceUrl, {
-    pipelining: 10,
-  }));
+  const pathname = serviceUrl.pathname;
+
+  const client = (ServicesClients[serviceUrl.origin] ||= new Client(
+    serviceUrl.origin,
+    {
+      pipelining: 10,
+    }
+  ));
+
+  const wsServiceUrl = new URL(serviceUrl);
+  wsServiceUrl.protocol = wsServiceUrl.protocol.replace("http", "ws");
+
+  const subscriptionClient = (WSServicesClients[wsServiceUrl.href] ||=
+    createWsClient({
+      url: wsServiceUrl.href,
+      webSocketImpl: ws,
+    }));
+
+  const wsExecutor: AsyncExecutor<Partial<EZContext>> = async ({
+    document,
+    variables,
+    operationName,
+  }) =>
+    observableToAsyncIterable({
+      subscribe: (observer) => {
+        let query = DocumentPrintCache.get(document);
+
+        if (query == null) {
+          query = print(document);
+          DocumentPrintCache.set(document, query);
+        }
+
+        return {
+          unsubscribe: subscriptionClient.subscribe(
+            {
+              query,
+              variables: variables as Record<string, any>,
+              operationName,
+            },
+            {
+              next: (data) => {
+                observer.next && observer.next(data as Record<string, any>);
+              },
+              error: (err) => {
+                if (!observer.error) return;
+                if (err instanceof Error) {
+                  observer.error(err);
+                } else if (Array.isArray(err)) {
+                  // GraphQLError[]
+                  observer.error(
+                    new Error(err.map(({ message }) => message).join(", "))
+                  );
+                } else {
+                  logger.error(err);
+                }
+              },
+              complete: () => observer.complete && observer.complete(),
+            }
+          ),
+        };
+      },
+    });
 
   const remoteExecutor: AsyncExecutor<Partial<EZContext>> =
-    async function remoteExecutor({ document, variables, context }) {
+    async function remoteExecutor(args) {
+      const { document, variables, context, operationName, operationType } =
+        args;
+
+      if (operationType === OperationTypeNode.SUBSCRIPTION)
+        return wsExecutor(args);
+
       let query = DocumentPrintCache.get(document);
 
       if (query == null) {
@@ -75,8 +145,8 @@ export async function getServiceSchema({
       const authorization = context?.request?.headers.authorization;
 
       const { body, headers } = await client.request({
-        path: "/graphql",
-        body: JSON.stringify({ query, variables }),
+        path: pathname,
+        body: JSON.stringify({ query, variables, operationName }),
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -110,7 +180,6 @@ export async function getServiceSchema({
       } as Partial<SubschemaConfig>,
       config[name]
     ),
-    // subscriber: remoteSubscriber,
   };
 
   return serviceSubschema;

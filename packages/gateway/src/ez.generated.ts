@@ -1055,7 +1055,6 @@ export type ModelStateTypeConnection = Connection & {
   pageInfo: PageInfo;
 };
 
-/** Mutation */
 export type Mutation = {
   __typename?: "Mutation";
   /**
@@ -1077,7 +1076,6 @@ export type Mutation = {
   hello: Scalars["String"];
 };
 
-/** Mutation */
 export type MutationActionArgs = {
   data: ActionInput;
 };
@@ -1244,7 +1242,6 @@ export type ProjectsConnection = Connection & {
   pageInfo: PageInfo;
 };
 
-/** Query */
 export type Query = {
   __typename?: "Query";
   /** [ADMIN] Admin related actions queries, only authenticated users with the role "ADMIN" can access */
@@ -1342,58 +1339,47 @@ export type Query = {
   users: Array<User>;
 };
 
-/** Query */
 export type QueryContentArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-/** Query */
 export type QueryContentByCodeArgs = {
   code: Scalars["String"];
 };
 
-/** Query */
 export type QueryDomainsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-/** Query */
 export type QueryGroupsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-/** Query */
 export type QueryKcsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-/** Query */
 export type QueryProjectArgs = {
   code?: InputMaybe<Scalars["String"]>;
   id?: InputMaybe<Scalars["IntID"]>;
 };
 
-/** Query */
 export type QueryProjectsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-/** Query */
 export type QueryTopicByCodeArgs = {
   code: Scalars["String"];
 };
 
-/** Query */
 export type QueryTopicsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-/** Query */
 export type QueryUsersArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-/** Subscription */
 export type Subscription = {
   __typename?: "Subscription";
   /** Emits 'Hello World1', 'Hello World2', 'Hello World3', 'Hello World4' and 'Hello World5' */
@@ -1595,7 +1581,7 @@ export type User = {
   /**
    * Active flag
    *
-   * By default it starts as "false", and the first time the user access the system, it's set as "true"
+   * By default it starts as "false", and the first time the user accesses the system, it's set as "true"
    */
   active: Scalars["Boolean"];
   /** Date of creation */

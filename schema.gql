@@ -1267,9 +1267,6 @@ type ModelStateTypeConnection implements Connection {
   pageInfo: PageInfo!
 }
 
-"""
-Mutation
-"""
 type Mutation {
   """
   Report an action to the modeling service
@@ -1505,9 +1502,6 @@ type ProjectsConnection implements Connection {
   pageInfo: PageInfo!
 }
 
-"""
-Query
-"""
 type Query {
   """
   [ADMIN] Admin related actions queries, only authenticated users with the role "ADMIN" can access
@@ -1620,9 +1614,6 @@ type Query {
   users(ids: [IntID!]!): [User!]!
 }
 
-"""
-Subscription
-"""
 type Subscription {
   """
   Emits 'Hello World1', 'Hello World2', 'Hello World3', 'Hello World4' and 'Hello World5'
@@ -1940,7 +1931,7 @@ type User {
   """
   Active flag
 
-  By default it starts as "false", and the first time the user access the system, it's set as "true"
+  By default it starts as "false", and the first time the user accesses the system, it's set as "true"
   """
   active: Boolean!
   """

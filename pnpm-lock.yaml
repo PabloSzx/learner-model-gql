@@ -249,6 +249,7 @@ importers:
       '@graphql-ez/plugin-altair': ^0.9.4
       '@graphql-ez/plugin-codegen': ^0.7.6
       '@graphql-ez/plugin-voyager': ^0.9.0
+      '@graphql-ez/plugin-websockets': ^0.10.2
       '@graphql-tools/delegate': ^8.4.2
       '@graphql-tools/stitch': ^8.4.2
       '@graphql-tools/utils': ^8.5.3
@@ -257,6 +258,7 @@ importers:
       '@types/content-type': ^1.1.5
       '@types/lodash': ^4.14.177
       '@types/wait-on': ^5.3.1
+      '@types/ws': ^8.2.1
       api-base: workspace:^0.0.1
       concurrently: ^6.4.0
       content-type: ^1.0.4
@@ -266,16 +268,19 @@ importers:
       fastify-cors: ^6.0.2
       graphql: ^16.0.1
       graphql-ez: ^0.13.5
+      graphql-ws: ^5.5.5
       lodash: ^4.17.21
       ms: ^3.0.0-canary.1
       pg-gql-pubsub: ^0.3.0
       undici: ^4.10.4
       wait-on: ^6.0.0
+      ws: ^8.3.0
     dependencies:
       '@graphql-ez/fastify': 0.9.4_4cc601993a6cd7667dd69b708f7472d7
       '@graphql-ez/plugin-altair': 0.9.4_d4be3edb4476305d5074c9b9ddeac878
       '@graphql-ez/plugin-codegen': 0.7.6_d4be3edb4476305d5074c9b9ddeac878
       '@graphql-ez/plugin-voyager': 0.9.0_d4be3edb4476305d5074c9b9ddeac878
+      '@graphql-ez/plugin-websockets': 0.10.2_d4be3edb4476305d5074c9b9ddeac878
       '@graphql-tools/delegate': 8.4.2_graphql@16.0.1
       '@graphql-tools/stitch': 8.4.2_graphql@16.0.1
       '@graphql-tools/utils': 8.5.3_graphql@16.0.1
@@ -289,16 +294,19 @@ importers:
       fastify-cors: 6.0.2
       graphql: 16.0.1
       graphql-ez: 0.13.5_5729e77aee8e1d9e0be05a207808de7c
+      graphql-ws: 5.5.5_graphql@16.0.1
       lodash: 4.17.21
       ms: 3.0.0-canary.1
       pg-gql-pubsub: 0.3.0
       undici: 4.10.4
       wait-on: 6.0.0
+      ws: 8.3.0
     devDependencies:
       '@types/concurrently': 6.4.0
       '@types/content-type': 1.1.5
       '@types/lodash': 4.14.177
       '@types/wait-on': 5.3.1
+      '@types/ws': 8.2.1
 
   packages/graph:
     specifiers:

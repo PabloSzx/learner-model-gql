@@ -322,7 +322,6 @@ export type Kc = {
   id: Scalars["IntID"];
 };
 
-/** Mutation */
 export type Mutation = {
   __typename?: "Mutation";
   /**
@@ -336,7 +335,6 @@ export type Mutation = {
   hello: Scalars["String"];
 };
 
-/** Mutation */
 export type MutationActionArgs = {
   data: ActionInput;
 };
@@ -426,7 +424,6 @@ export type ProjectActionsFilter = {
   verbNames?: InputMaybe<Array<Scalars["String"]>>;
 };
 
-/** Query */
 export type Query = {
   __typename?: "Query";
   /** [ADMIN] Admin related actions queries, only authenticated users with the role "ADMIN" can access */
@@ -443,12 +440,10 @@ export type Query = {
   projects: Array<Project>;
 };
 
-/** Query */
 export type QueryProjectsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-/** Subscription */
 export type Subscription = {
   __typename?: "Subscription";
   /** Emits 'Hello World1', 'Hello World2', 'Hello World3', 'Hello World4' and 'Hello World5' */

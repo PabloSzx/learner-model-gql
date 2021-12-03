@@ -1,11 +1,8 @@
 import { ENV, logger, smartListen } from "api-base";
 import Fastify from "fastify";
 import { setTimeout } from "timers/promises";
-import { inspect } from "util";
 import { getGatewayPlugin } from "./app";
 import type { Subscription } from "./ez.generated";
-
-inspect.defaultOptions.depth = null;
 
 async function main() {
   const app = Fastify({

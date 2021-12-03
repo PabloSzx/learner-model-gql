@@ -336,7 +336,6 @@ export type KCsConnection = Connection & {
   pageInfo: PageInfo;
 };
 
-/** Mutation */
 export type Mutation = {
   __typename?: "Mutation";
   /** [ADMIN] Admin related domain mutations, only authenticated users with the role "ADMIN" can access */
@@ -377,7 +376,6 @@ export type Project = {
   topics: Array<Topic>;
 };
 
-/** Query */
 export type Query = {
   __typename?: "Query";
   /** [ADMIN] Admin related domain queries, only authenticated users with the role "ADMIN" can access */
@@ -433,37 +431,30 @@ export type Query = {
   topics: Array<Topic>;
 };
 
-/** Query */
 export type QueryContentArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-/** Query */
 export type QueryDomainsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-/** Query */
 export type QueryKcsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-/** Query */
 export type QueryProjectsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-/** Query */
 export type QueryTopicByCodeArgs = {
   code: Scalars["String"];
 };
 
-/** Query */
 export type QueryTopicsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-/** Subscription */
 export type Subscription = {
   __typename?: "Subscription";
   /** Emits 'Hello World1', 'Hello World2', 'Hello World3', 'Hello World4' and 'Hello World5' */

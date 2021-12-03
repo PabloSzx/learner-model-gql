@@ -16,9 +16,6 @@ import {
 } from "assert/strict";
 import type { UserRole } from "db";
 import { generate } from "randomstring";
-import { inspect } from "util";
-
-inspect.defaultOptions.depth = null;
 
 typeof it !== "undefined" && (globalThis.test ||= it);
 
