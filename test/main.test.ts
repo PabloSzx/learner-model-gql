@@ -94,27 +94,27 @@ export const TestStitchedSchema = async () => {
   const stitchedSchema = await getStitchedSchema([
     {
       name: "actions",
-      href: (await ActionService).origin,
+      href: (await ActionService).endpoint,
     },
     {
       name: "content",
-      href: (await ContentService).origin,
+      href: (await ContentService).endpoint,
     },
     {
       name: "domain",
-      href: (await DomainService).origin,
+      href: (await DomainService).endpoint,
     },
     {
       name: "projects",
-      href: (await ProjectsService).origin,
+      href: (await ProjectsService).endpoint,
     },
     {
       name: "users",
-      href: (await UsersService).origin,
+      href: (await UsersService).endpoint,
     },
     {
       name: "state",
-      href: (await StateService).origin,
+      href: (await StateService).endpoint,
     },
   ]);
 

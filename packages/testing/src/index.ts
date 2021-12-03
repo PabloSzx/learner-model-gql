@@ -62,10 +62,7 @@ export const GetTestClient = async ({ ez, ...rest }: FastifyAppOptions) => {
     ...rest,
   });
 
-  return {
-    ...TestClient,
-    origin: new URL(TestClient.endpoint).origin,
-  };
+  return TestClient;
 };
 
 export function expectDeepEqual<T, U extends T>(
