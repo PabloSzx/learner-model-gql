@@ -2210,7 +2210,7 @@ packages:
       isomorphic-ws: 4.0.1_ws@8.3.0
       node-fetch: 2.6.6
       subscriptions-transport-ws-envelop: 2.0.1_graphql@16.0.1+ws@8.3.0
-      undici: 4.10.4
+      undici: 4.11.0
       ws: 8.3.0
     transitivePeerDependencies:
       - bufferutil
@@ -2573,7 +2573,7 @@ packages:
       debug: 4.3.3
       dotenv: 10.0.0
       graphql: 16.0.1
-      graphql-request: 3.6.1_graphql@16.0.1
+      graphql-request: 3.7.0_graphql@16.0.1
       http-proxy-agent: 5.0.0
       https-proxy-agent: 5.0.0
       isomorphic-fetch: 3.0.0
@@ -3845,9 +3845,9 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001283
+      caniuse-lite: 1.0.30001284
       colorette: 1.4.0
-      electron-to-chromium: 1.4.8
+      electron-to-chromium: 1.4.10
       escalade: 3.1.1
       node-releases: 1.1.77
     dev: false
@@ -3857,8 +3857,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001283
-      electron-to-chromium: 1.4.8
+      caniuse-lite: 1.0.30001284
+      electron-to-chromium: 1.4.10
       escalade: 3.1.1
       node-releases: 2.0.1
       picocolors: 1.0.0
@@ -3972,8 +3972,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /caniuse-lite/1.0.30001283:
-    resolution: {integrity: sha512-9RoKo841j1GQFSJz/nCXOj0sD7tHBtlowjYlrqIUS812x9/emfBLBt6IyMz1zIaYc/eRL8Cs6HPUVi2Hzq4sIg==}
+  /caniuse-lite/1.0.30001284:
+    resolution: {integrity: sha512-t28SKa7g6kiIQi6NHeOcKrOrGMzCRrXvlasPwWC26TH2QNdglgzQIRUuJ0cR3NeQPH+5jpuveeeSFDLm2zbkEw==}
 
   /capital-case/1.0.4:
     resolution: {integrity: sha512-ds37W8CytHgwnhGGTi88pcPyR15qoNkOpYwmMMfnWqqWgESapLqvDx6huFjQ5vqWSn2Z06173XNA7LtMOeUh1A==}
@@ -4440,7 +4440,7 @@ packages:
       abort-controller: 3.0.0
       form-data: 4.0.0
       node-fetch: 2.6.6
-      undici: 4.10.4
+      undici: 4.11.0
     dev: true
 
   /cross-undici-fetch/0.0.26:
@@ -4449,7 +4449,7 @@ packages:
       abort-controller: 3.0.0
       form-data: 4.0.0
       node-fetch: 2.6.6
-      undici: 4.10.4
+      undici: 4.11.0
     dev: true
 
   /crypto-browserify/3.12.0:
@@ -4503,7 +4503,7 @@ packages:
     peerDependencies:
       postcss: ^8.2.15
     dependencies:
-      caniuse-lite: 1.0.30001283
+      caniuse-lite: 1.0.30001284
       postcss: 8.2.15
     dev: false
 
@@ -4739,8 +4739,8 @@ packages:
     dependencies:
       safe-buffer: 5.2.1
 
-  /electron-to-chromium/1.4.8:
-    resolution: {integrity: sha512-Cu5+dbg55+1E3ohlsa8HT0s4b8D0gBewXEGG8s5wBl8ynWv60VuvYW25GpsOeTVXpulhyU/U8JYZH+yxASSJBQ==}
+  /electron-to-chromium/1.4.10:
+    resolution: {integrity: sha512-tFgA40Iq2oy4k2PnZrLJowbgpij+lD6ZLxkw8Ht1NKTYyN8dvSvC5xlo8X0WW2jqhKSzITrbr5mpB4/AZ/8OUA==}
 
   /elegant-spinner/1.0.1:
     resolution: {integrity: sha1-2wQ1IcldfjA/2PNFvtwzSc+wcp4=}
@@ -5638,10 +5638,10 @@ packages:
       ramda: 0.27.1
     dev: false
 
-  /graphql-request/3.6.1_graphql@16.0.1:
-    resolution: {integrity: sha512-Nm1EasrAQVZllyNTlHDLnLZjlhC6eRWnWP6KH//ytnAL08pjlLkdI2K+s6OV92p45hn5b/kUlLbDwACmRoLwrQ==}
+  /graphql-request/3.7.0_graphql@16.0.1:
+    resolution: {integrity: sha512-dw5PxHCgBneN2DDNqpWu8QkbbJ07oOziy8z+bK/TAXufsOLaETuVO4GkXrbs0WjhdKhBMN3BkpN/RIvUHkmNUQ==}
     peerDependencies:
-      graphql: 14.x || 15.x
+      graphql: 14 - 16
     dependencies:
       cross-fetch: 3.1.4
       extract-files: 9.0.0
@@ -6298,8 +6298,8 @@ packages:
       supports-color: 8.1.1
     dev: false
 
-  /joi/17.4.3:
-    resolution: {integrity: sha512-8W3oOogFRuy2aLAdlhMpzS4fNBIMiyIa3xBaBYMFgA272/d5sob1DAth6jjo+5VrOlzbEgmbBGbU4cLrffPKog==}
+  /joi/17.5.0:
+    resolution: {integrity: sha512-R7hR50COp7StzLnDi4ywOXHrBrgNXuUUfJWIR5lPY5Bm/pOD3jZaTwpluUXVLRWcoWZxkrHBBJ5hLxgnlehbdw==}
     dependencies:
       '@hapi/hoek': 9.2.1
       '@hapi/topo': 5.1.0
@@ -6911,7 +6911,7 @@ packages:
       browserify-zlib: 0.2.0
       browserslist: 4.16.6
       buffer: 5.6.0
-      caniuse-lite: 1.0.30001283
+      caniuse-lite: 1.0.30001284
       chalk: 2.4.2
       chokidar: 3.5.1
       constants-browserify: 1.0.0
@@ -9057,15 +9057,9 @@ packages:
     resolution: {integrity: sha512-/j3YTZ5AobMB4ZrTY72mzM54uFUX32v0R/JRW9G2vOyF1uSKYAx+WT8dMsAcRS13TOFISv094TxIyWYk+WEPsA==}
     dev: false
 
-  /undici/4.10.4:
-    resolution: {integrity: sha512-hpT3oKnZOZfOav5Gk+MzGPuiiQGtNPcMhZo6lf8+NCI8VNxMF/YakziTqhB0gij5m9LSEmNc5y+6vbeVu6ZhVA==}
-    engines: {node: '>=12.18'}
-    dev: true
-
   /undici/4.11.0:
     resolution: {integrity: sha512-gofXRqAdm81rzaZgPbMf98qvrNGd3ptJ26+mCcF3EXoC817p//MtL8XcDpTvHUXxdW27rAM2jvTae+KyAchorw==}
     engines: {node: '>=12.18'}
-    dev: false
 
   /unfetch/4.2.0:
     resolution: {integrity: sha512-F9p7yYCn6cIW9El1zi0HI6vqpeIvBsr3dSuRO6Xuppb1u5rXpCPmMvLSyECLhybr9isec8Ohl0hPekMVrEinDA==}
@@ -9258,7 +9252,7 @@ packages:
     hasBin: true
     dependencies:
       axios: 0.21.4
-      joi: 17.4.3
+      joi: 17.5.0
       lodash: 4.17.21
       minimist: 1.2.5
       rxjs: 7.4.0
