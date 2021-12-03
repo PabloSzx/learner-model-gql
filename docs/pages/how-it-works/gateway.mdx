@@ -3,3 +3,20 @@ title: Gateway
 ---
 
 # Gateway
+
+As I mentioned in [Architecture#Schema Stitching](/how-it-works/architecture),
+the gateway relies heavily on [@graphql-tools/stitch](https://www.graphql-tools.com/docs/schema-stitching/stitch-combining-schemas),
+and most of the gateway code is defined in [packages/gateway/src](https://github.com/PabloSzx/learner-model-gql/tree/main/packages/gateway/src).
+
+The list of services including development/fallback listening ports of the services are defined in [packages/services/list.ts](https://github.com/PabloSzx/learner-model-gql/blob/main/packages/services/list.ts)
+
+The gateway expects the following environment variables that point to the services, and if they are **not** found, the gateway fallbacks to the services list ports in localhost:
+
+- Users: USERS_URL | Fallback to `http://127.0.0.1:3002/graphql`
+- Actions: ACTIONS_URL | Fallback to `http://127.0.0.1:3003/graphql`
+- Content: CONTENT_URL | Fallback to `http://127.0.0.1:3004/graphql`
+- Domain: DOMAIN_URL | Fallback to `http://127.0.0.1:3005/graphql`
+- Projects: PROJECTS_URL | Fallback to `http://127.0.0.1:3006/graphql`
+- State: STATE_URL | Fallback to `http://127.0.0.1:3007/graphql`
+
+The target service url should have the http protocol, GraphQL pathname, host and port if its different than 80 for http or 443 for https, for example: `http://127.0.0.1:8080/graphql` or `https://domain.learner-model-gql.com/graphql`.

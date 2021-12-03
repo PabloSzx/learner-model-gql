@@ -22,3 +22,17 @@ This project uses [Prisma](https://www.prisma.io) as Next-generation Node.js and
 
 The database schema is defined in [packages/db/prisma/schema.prisma](https://github.com/PabloSzx/learner-model-gql/blob/main/packages/db/prisma/schema.prisma).
 You can read more about how the Prisma schema works in [prisma.io/docs/concepts/components/prisma-schema](https://www.prisma.io/docs/concepts/components/prisma-schema).
+
+### Database Environment Variable
+
+All the services expect the same shared environment variable `"DATABASE_URL"`, which follows the [official PostgreSQLI format](https://www.postgresql.org/docs/current/libpq-connect.html), extended by the [Prisma database connector](https://www.prisma.io/docs/concepts/database-connectors/postgresql).
+
+An expected database connection url re-using the test local database should look something like this:
+
+```
+DATABASE_URL=postgresql://postgres:postgres@localhost:5789/postgres
+```
+
+And in the root of the cloned Git of the project, a `.env` file should start looking like this:
+
+![Database environment variable file](/database_env_variable.png)
