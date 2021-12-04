@@ -944,7 +944,7 @@ packages:
     resolution: {integrity: sha512-99catp6bHCaxr4sJ/DbTGgHS4+Rs2RVd2g7iOap6SLGPDknRK9ztKNsE/Fg6QhSeh1FGE5f6gHGQmvvn3I3xhw==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      regenerator-runtime: 0.13.9
+      regenerator-runtime: 0.13.4
     dev: false
 
   /@babel/runtime/7.16.3:
@@ -2298,7 +2298,7 @@ packages:
       graphql: 16.0.1
       graphql-ez: 0.13.5_5729e77aee8e1d9e0be05a207808de7c
       mkdirp: 1.0.4
-      prettier: 2.5.0
+      prettier: 2.5.1
     transitivePeerDependencies:
       - '@types/node'
       - supports-color
@@ -3855,7 +3855,7 @@ packages:
     dependencies:
       caniuse-lite: 1.0.30001284
       colorette: 1.4.0
-      electron-to-chromium: 1.4.10
+      electron-to-chromium: 1.4.11
       escalade: 3.1.1
       node-releases: 1.1.77
     dev: false
@@ -3866,7 +3866,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001284
-      electron-to-chromium: 1.4.10
+      electron-to-chromium: 1.4.11
       escalade: 3.1.1
       node-releases: 2.0.1
       picocolors: 1.0.0
@@ -4747,8 +4747,8 @@ packages:
     dependencies:
       safe-buffer: 5.2.1
 
-  /electron-to-chromium/1.4.10:
-    resolution: {integrity: sha512-tFgA40Iq2oy4k2PnZrLJowbgpij+lD6ZLxkw8Ht1NKTYyN8dvSvC5xlo8X0WW2jqhKSzITrbr5mpB4/AZ/8OUA==}
+  /electron-to-chromium/1.4.11:
+    resolution: {integrity: sha512-2OhsaYgsWGhWjx2et8kaUcdktPbBGjKM2X0BReUCKcSCPttEY+hz2zie820JLbttU8jwL92+JJysWwkut3wZgA==}
 
   /elegant-spinner/1.0.1:
     resolution: {integrity: sha1-2wQ1IcldfjA/2PNFvtwzSc+wcp4=}
@@ -7456,7 +7456,7 @@ packages:
       pino-std-serializers: 4.0.0
       quick-format-unescaped: 4.0.4
       real-require: 0.1.0
-      safe-stable-stringify: 2.3.0
+      safe-stable-stringify: 2.3.1
       sonic-boom: 2.4.1
       thread-stream: 0.13.0
     dev: false
@@ -7516,12 +7516,6 @@ packages:
     resolution: {integrity: sha1-6SQ0v6XqjBn0HN/UAddBo8gZ2Jc=}
     engines: {node: '>=4'}
     dev: true
-
-  /prettier/2.5.0:
-    resolution: {integrity: sha512-FM/zAKgWTxj40rH03VxzIPdXmj39SwSjwG0heUcNFwI+EMZJnY93yAiKXM3dObIKAM5TA88werc8T/EwhB45eg==}
-    engines: {node: '>=10.13.0'}
-    hasBin: true
-    dev: false
 
   /prettier/2.5.1:
     resolution: {integrity: sha512-vBZcPRUR5MZJwoyi3ZoyQlc1rXeEck8KgeC9AwwOn+exuxLxq5toTRDTSaVrXHxelDMHy9zlicw8u66yxoSUFg==}
@@ -8254,8 +8248,8 @@ packages:
     dependencies:
       ret: 0.2.2
 
-  /safe-stable-stringify/2.3.0:
-    resolution: {integrity: sha512-VFlmNrvZ44a0QnRY2yfEIUhbMh8BjTFWf2mRG/8mCEAKTfQYV8xxfn6P+00OLej0gznC5C+hfgcEF7AGrN5Stw==}
+  /safe-stable-stringify/2.3.1:
+    resolution: {integrity: sha512-kYBSfT+troD9cDA85VDnHZ1rpHC50O0g1e6WlGHVCz/g+JS+9WKLj+XwFYyR8UbrZN8ll9HUpDAAddY58MGisg==}
     engines: {node: '>=10'}
     dev: false
 
