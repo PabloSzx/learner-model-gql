@@ -13,6 +13,34 @@ Learner Model GQL is a project based on a [microservices architecture](/how-it-w
 For development with learner-model-gql it is required to have installed:
 
 - Node.js v16.x, which can be installed in different ways based on the platform, or you can visit [nodejs.org](https://nodejs.org/)
-- [Docker](https://www.docker.com/) for local database usage, [Docker Desktop](https://www.docker.com/products/docker-desktop) can be used in macOS or Windows
+- [Docker](https://www.docker.com/) for local database usage and testing, [Docker Desktop](https://www.docker.com/products/docker-desktop) can be used in macOS or Windows
+- [Git](https://git-scm.com/) version control system
 
 ### Development
+
+This project requires [pnpm](https://pnpm.io), which is a dependency manager for Node.js, which you can install by following the instructions on [pnpm.io/installation](https://pnpm.io/installation).
+
+> Assumming you already have access to the confidential Auth0 Credentials
+
+1. Clone [`https://github.com/PabloSzx/learner-model-gql`](https://github.com/PabloSzx/learner-model-gql)
+2. Insise the cloned repository, run `pnpm i` to install all the required dependencies
+3. Run `pnpm db:local`, this will start a local postgres database in the port `5789`, which can be used for development and its required for automated testing.
+4. In the root of the cloned repository, an empty `.env` should be present, you have to manually modify it to look something like:
+
+   ```env
+   DATABASE_URL=postgresql://postgres:postgres@localhost:5789/postgres
+
+   AUTH0_DOMAIN=learner-model-gql.us.auth0.com
+   AUTH0_CLIENT=___
+   AUTH0_SECRET=___
+
+   ADMIN_USER_EMAIL=put_your_email_here@gmail.com
+   ```
+
+   The `AUTH0` environment variables have to changed based on the confidential credentials,
+   the `DATABASE_URL` can be adapted to point to an external database if required,
+   and `ADMIN_USER_EMAIL` should be changed to set the starting admin user.
+
+5. After the local database is running and the `.env` is filled, run `pnpm migrate`, which will run the migrations on the local database.
+6. Run `pnpm dev`. The gateway's [Altair GraphQL Client](https://altair.sirmuel.design/) is going to be available at [`http://localhost:8080/altair`](http://localhost:8080/altair),
+   and administration client will be available at [`http://localhost:4010`](http://localhost:4010).
