@@ -19,6 +19,8 @@
     "predev": "pnpm -r db:generate",
     "dev": "concurrently -r \"cross-env NEXT_PUBLIC_API_URL=http://localhost:8080/graphql pnpm -r --no-bail dev\" \"tsc --watch\"",
     "generate": "pnpm -r generate",
+    "db:local": "docker-compose -f test/docker-compose.yml up -d",
+    "migrate": "pnpm -r migrate:dev",
     "prepare": "husky install",
     "pretty": "pretty-quick",
     "pretty:all": "prettier --write \"**/*.{ts,tsx,gql,json}\"",
