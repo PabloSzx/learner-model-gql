@@ -19,10 +19,11 @@
     "common-api": "workspace:^1.0.0",
     "pg-gql-pubsub": "^0.3.0",
     "prisma": "^3.6.0",
-    "prisma-dbml-generator": "^0.8.3"
+    "prisma-dbml-generator": "^0.8.3",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
-    "@types/concurrently": "^6.4.0",
-    "@types/react": "^17.0.37"
+    "@types/react": "^17.0.37",
+    "@types/validator": "^13.7.0"
   }
 }
