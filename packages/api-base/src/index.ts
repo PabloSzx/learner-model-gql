@@ -30,7 +30,6 @@ export * from "./auth";
 export * from "./casters";
 export * from "./connection";
 export * from "./listen";
-export * from "./logger";
 export * from "./utils";
 
 async function buildContext({ fastify }: BuildContextArgs) {

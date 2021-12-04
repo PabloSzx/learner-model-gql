@@ -217,21 +217,28 @@ importers:
   packages/common-api:
     specifiers:
       common: workspace:^0.0.1
+      pino: ^7.5.1
+      pino-pretty: ^7.2.0
       require-env-variable: ^4.0.0
+      serialize-error: ^9.0.0
     dependencies:
       common: link:../common
+      pino: 7.5.1
+      pino-pretty: 7.2.0
       require-env-variable: 4.0.0
+      serialize-error: 9.0.0
 
   packages/db:
     specifiers:
       '@graphql-ez/utils': ^0.1.2
       '@prisma/client': ^3.6.0
-      '@types/concurrently': ^6.4.0
       '@types/react': ^17.0.37
+      '@types/validator': ^13.7.0
       common-api: workspace:^1.0.0
       pg-gql-pubsub: ^0.3.0
       prisma: ^3.6.0
       prisma-dbml-generator: ^0.8.3
+      validator: ^13.7.0
     dependencies:
       '@graphql-ez/utils': 0.1.2_5729e77aee8e1d9e0be05a207808de7c
       '@prisma/client': 3.6.0_prisma@3.6.0
@@ -239,9 +246,10 @@ importers:
       pg-gql-pubsub: 0.3.0
       prisma: 3.6.0
       prisma-dbml-generator: 0.8.3
+      validator: 13.7.0
     devDependencies:
-      '@types/concurrently': 6.4.0
       '@types/react': 17.0.37
+      '@types/validator': 13.7.0
 
   packages/gateway:
     specifiers:
