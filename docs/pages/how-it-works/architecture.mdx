@@ -18,7 +18,9 @@ Some critical designs to be followed to do the schema stitching are:
 - Every entity to be extended by more than a single service needs a unique "id" field
 - Every service that extends an entity needs a standardized query that accepts a list of ids and returns a list of the requested entities in the same order as the "ids" parameter. If any of the requested entities is not found, the query must fail.
 
-## Learner Model GQL Services
+## Services
+
+### Current services
 
 - Actions | [packages/services/actions](https://github.com/PabloSzx/learner-model-gql/tree/main/packages/services/actions)
 - Content | [packages/services/content](https://github.com/PabloSzx/learner-model-gql/tree/main/packages/services/content)
@@ -26,3 +28,24 @@ Some critical designs to be followed to do the schema stitching are:
 - Projects | [packages/services/projects](https://github.com/PabloSzx/learner-model-gql/tree/main/packages/services/projects)
 - State | [packages/services/state](https://github.com/PabloSzx/learner-model-gql/tree/main/packages/services/state)
 - Users | [packages/services/users](https://github.com/PabloSzx/learner-model-gql/tree/main/packages/services/users)
+
+### Ecosystem
+
+All the services are currently made using [TypeScript](https://www.typescriptlang.org/) with [Node.js](https://nodejs.org/),
+but there isn't any specific requirement for new services to be made the same way, new GraphQL services could be made with different ecosystems,
+like [Go](https://go.dev/) or [Rust](https://www.rust-lang.org/), and just work by following the mentioned design constraints of `Schema Stitching`.
+
+### Important libraries
+
+- GraphQL EZ - [graphql-ez.com](https://www.graphql-ez.com/) - GraphQL API Framework, with support for multiple web frameworks and the latest GraphQL features.
+
+  Which also relies on:
+
+  - graphql-js - [github.com/graphql/graphql-js](https://github.com/graphql/graphql-js) - Reference implementation of GraphQL for JavaScript
+  - Envelop - [envelop.dev](https://www.envelop.dev/) - GraphQL API plugin system
+
+- Fastify - [fastify.io](https://www.fastify.io/) - Fast and low overhead web framework for Node.js
+- Prisma Client - [prisma.io/client](https://www.prisma.io/client) - Intuitive Database Client for TypeScript and Node.js
+- bob-tsm - [github.com/PabloSzx/bob-esbuild/tree/main/packages/bob-tsm](https://github.com/PabloSzx/bob-esbuild/tree/main/packages/bob-tsm) - TypeScript Module Loader, automatically running TypeScript modules seamlessly
+- GraphQL Tools - [graphql-tools.com](https://www.graphql-tools.com/) - A set of utilities for faster development of GraphQL Schemas
+- GraphQL Code Generator - [graphql-code-generator.com](https://www.graphql-code-generator.com/) - TypeScript code generator from GraphQL schemas for full type-safety.
