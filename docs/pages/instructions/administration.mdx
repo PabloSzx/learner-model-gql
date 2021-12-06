@@ -63,8 +63,33 @@ The last column has an `Edit` button, which allows you to edit some fields of th
 
 #### Domains
 
-Basic domains management
+Table of Domains, and `Create Domain` button
+
+The last column has an Edit button, which allows you to edit some fields of the domain. After pressing the edit button, make the changes you want, and press again the new Edit button which saves the changes
 
 ![Admin Domains](/admin-12.png)
-![Admin Domains](/admin-13.png)
 ![Admin Domains](/admin-14.png)
+
+`Create Domain` button opens a new modal, where you can create a new domain entering basic information.
+
+![Admin Domains](/admin-13.png)
+
+#### Topics
+
+The `Topics` administration is divided by project, after specifying the project in the select, every topic associated with the project is showed:
+
+Due to the possible associations between topics to create a hierarchy, every topic without "Parent" starts a new column of topics, in which, recursively, every topic is contained by it's parent.
+
+![Admin Topics](/admin-topics-1.png)
+
+![Admin Topics](/admin-topics-2.png)
+
+When an existent topic is being edited, any change is saved when the `Save` button is pressed.
+
+The hierarchy can be modified by changing the "Parent" of every topic, but allowing only changes that doesn't make a circular reference between topics hierarchy.
+
+![Admin Topics Save](/admin-topics-3.png)
+
+The `Create Topic` button works as expected, filtering the fields accordingly to the selected project.
+
+![Admin Topics Create](/admin-topics-4.png)
