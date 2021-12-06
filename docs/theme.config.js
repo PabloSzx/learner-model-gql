@@ -10,4 +10,5 @@ export default {
   nextLinks: true,
   footer: true,
   search: true,
+  floatTOC: true,
 };

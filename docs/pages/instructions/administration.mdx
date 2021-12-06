@@ -2,9 +2,9 @@
 title: Administration
 ---
 
-## Administration
+# Administration
 
-This project administration panel is available on [`https://admin.learner-model-gql.pablosz.dev/`](https://admin.learner-model-gql.pablosz.dev/).
+This project administration panel is available on [`https://admin.learner-model-gql.pablosz.dev`](https://admin.learner-model-gql.pablosz.dev).
 
 The admin panel code is available in [packages/client-admin](https://github.com/PabloSzx/learner-model-gql/tree/main/packages/client-admin), which is made using, for example:
 
@@ -12,3 +12,59 @@ The admin panel code is available in [packages/client-admin](https://github.com/
 - [React Query](https://react-query.tanstack.com/)
 - [GraphQL Code Generator](https://www.graphql-code-generator.com/)
 - [Chakra UI](https://chakra-ui.com/)
+
+## Usage
+
+### Login
+
+The admin panel uses the same Auth0 logic, but requires that the user has the `ADMIN` role.
+
+![Admin Login](/admin-1.png)
+
+### Categories
+
+![Admin Categories](/admin-2.png)
+
+#### Users
+
+Table of users, and `Upsert Users` button:
+
+![Admin Users](/admin-3.png)
+
+The last column has an `Edit` button, which allows you to edit some fields of the user. After pressing the edit button, make the changes you want, and press again the new `Edit` button which saves the changes.
+
+![Admin Users Edit](/admin-4.png)
+
+![Admin Users Edit Save](/admin-5.png)
+
+The `Upsert Users` button opens a new modal, where you can add new user's emails, separated with a new line, and optionally assign specific projects. If an user already exists, the specified projects are going to be added to the user.
+
+![Admin Users Upsert](/admin-6.png)
+
+#### Groups
+
+Table of groups, `Create Group` button and `Assign Users to Groups` button.
+
+![Admin Groups](/admin-7.png)
+
+`Create Group` button opens a new modal, where you can create a new group entering basic information.
+
+![Admin Groups Create](/admin-8.png)
+
+`Assign Users to Groups` button opens a new modal, where you can set the users of the specified groups. Every user already has to exist, otherwise, its going to fail.
+
+![Admins Groups Users Assign](/admin-9.png)
+
+The last column has an `Edit` button, which allows you to edit some fields of the group. After pressing the edit button, make the changes you want, and press again the new `Edit` button which saves the changes.
+
+![Admin Groups Edit](/admin-10.png)
+
+![Admin Groups Edit Save](/admin-11.png)
+
+#### Domains
+
+Basic domains management
+
+![Admin Domains](/admin-12.png)
+![Admin Domains](/admin-13.png)
+![Admin Domains](/admin-14.png)
