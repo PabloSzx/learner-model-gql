@@ -278,7 +278,7 @@ export default withAdminAuth(function KCPage() {
           getDateRow({ id: "updatedAt", label: "Updated At" }),
           {
             id: "edit",
-            Header: "Editar",
+            Header: "Edit",
             defaultCanSort: false,
             defaultCanFilter: false,
             defaultCanGroupBy: false,

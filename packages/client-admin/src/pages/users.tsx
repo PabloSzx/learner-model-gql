@@ -379,7 +379,7 @@ export default withAdminAuth(function UsersPage() {
           getDateRow({ id: "updatedAt", label: "Updated At" }),
           {
             id: "edit",
-            Header: "Editar",
+            Header: "Edit",
             defaultCanSort: false,
             defaultCanFilter: false,
             defaultCanGroupBy: false,
