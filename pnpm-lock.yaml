@@ -152,7 +152,7 @@ importers:
       common: workspace:^0.0.1
       cross-env: ^7.0.3
       date-fns: ^2.27.0
-      framer-motion: ^5.4.0
+      framer-motion: ^5.4.1
       graph: workspace:^0.0.1
       immer: ^9.0.7
       mime: ^3.0.0
