@@ -9,6 +9,7 @@ import {
   getDirname,
   logger,
   pubSub,
+  voyagerOptions,
 } from "api-base";
 import ms from "ms";
 import { resolve } from "path";
@@ -36,7 +37,7 @@ export const getGatewayPlugin = async () => {
     schema,
     ez: {
       plugins: [
-        ezVoyager(),
+        ezVoyager(voyagerOptions),
         ezCodegen({
           outputSchema,
           config: codegenOptions.config,

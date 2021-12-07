@@ -9,7 +9,7 @@ import { CodegenOptions, ezCodegen } from "@graphql-ez/plugin-codegen";
 import { ezGraphQLModules } from "@graphql-ez/plugin-modules";
 import { ezScalars } from "@graphql-ez/plugin-scalars";
 import { ezSchema } from "@graphql-ez/plugin-schema";
-import { ezVoyager } from "@graphql-ez/plugin-voyager";
+import { ezVoyager, VoyagerPluginOptions } from "@graphql-ez/plugin-voyager";
 import { ezWebSockets } from "@graphql-ez/plugin-websockets";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import assert from "assert/strict";
@@ -76,6 +76,16 @@ export const codegenOptions: CodegenOptions = {
   },
 };
 
+export const voyagerOptions: VoyagerPluginOptions = {
+  displayOptions: {
+    hideRoot: false,
+    showLeafFields: true,
+    skipRelay: false,
+    skipDeprecated: true,
+    sortByAlphabet: true,
+  },
+};
+
 export const ezServicePreset = CreateApp({
   cors: true,
   ez: {
@@ -109,15 +119,7 @@ export const ezServicePreset = CreateApp({
           IntID,
         }
       ),
-      ezVoyager({
-        displayOptions: {
-          hideRoot: false,
-          showLeafFields: true,
-          skipRelay: false,
-          skipDeprecated: true,
-          sortByAlphabet: true,
-        },
-      }),
+      ezVoyager(voyagerOptions),
       {
         name: "LearnerModelGQL",
         compatibilityList: {
