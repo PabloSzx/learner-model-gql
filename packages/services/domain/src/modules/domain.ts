@@ -286,8 +286,10 @@ export const domainModule = registerModule(
         createDomain(
           _root,
           { input: { code, label, projectsIds } },
-          { prisma }
+          { prisma, assertNotNumericCode }
         ) {
+          assertNotNumericCode(code);
+
           return prisma.domain.create({
             data: {
               code,
@@ -298,7 +300,13 @@ export const domainModule = registerModule(
             },
           });
         },
-        updateDomain(_root, { input: { id, label, code } }, { prisma }) {
+        updateDomain(
+          _root,
+          { input: { id, label, code } },
+          { prisma, assertNotNumericCode }
+        ) {
+          assertNotNumericCode(code);
+
           return prisma.domain.update({
             where: {
               id,
@@ -322,8 +330,10 @@ export const domainModule = registerModule(
               tags,
             },
           },
-          { prisma }
+          { prisma, assertNotNumericCode }
         ) {
+          assertNotNumericCode(code);
+
           return prisma.topic.create({
             data: {
               code,
@@ -364,8 +374,10 @@ export const domainModule = registerModule(
               tags,
             },
           },
-          { prisma }
+          { prisma, assertNotNumericCode }
         ) {
+          assertNotNumericCode(code);
+
           const topic = await prisma.topic.update({
             where: {
               id,

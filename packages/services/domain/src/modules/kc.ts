@@ -187,7 +187,13 @@ export const kcModule = registerModule(
         },
       },
       AdminDomainMutations: {
-        createKC(_root, { data: { domainId, ...data } }, { prisma }) {
+        createKC(
+          _root,
+          { data: { domainId, ...data } },
+          { prisma, assertNotNumericCode }
+        ) {
+          assertNotNumericCode(data.code);
+
           return prisma.kC.create({
             data: {
               domain: {
@@ -199,7 +205,13 @@ export const kcModule = registerModule(
             },
           });
         },
-        updateKC(_root, { data: { id, ...data } }, { prisma }) {
+        updateKC(
+          _root,
+          { data: { id, ...data } },
+          { prisma, assertNotNumericCode }
+        ) {
+          assertNotNumericCode(data.code);
+
           return prisma.kC.update({
             where: {
               id,

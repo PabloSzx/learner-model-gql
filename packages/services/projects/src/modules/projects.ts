@@ -121,7 +121,13 @@ export const projectsModule = registerModule(
         },
       },
       AdminProjectsMutations: {
-        createProject(_root, { data: { domains, ...data } }, { prisma }) {
+        createProject(
+          _root,
+          { data: { domains, ...data } },
+          { prisma, assertNotNumericCode }
+        ) {
+          assertNotNumericCode(data.code);
+
           return prisma.project.create({
             data: {
               ...data,
@@ -131,7 +137,13 @@ export const projectsModule = registerModule(
             },
           });
         },
-        updateProject(_root, { data: { id, domains, ...data } }, { prisma }) {
+        updateProject(
+          _root,
+          { data: { id, domains, ...data } },
+          { prisma, assertNotNumericCode }
+        ) {
+          assertNotNumericCode(data.code);
+
           return prisma.project.update({
             where: {
               id,

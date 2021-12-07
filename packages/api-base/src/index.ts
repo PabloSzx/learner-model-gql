@@ -12,13 +12,15 @@ import { ezSchema } from "@graphql-ez/plugin-schema";
 import { ezVoyager } from "@graphql-ez/plugin-voyager";
 import { ezWebSockets } from "@graphql-ez/plugin-websockets";
 import { makeExecutableSchema } from "@graphql-tools/schema";
+import assert from "assert/strict";
 import { GetDBUser, prisma, pubSub } from "db";
 import { lexicographicSortSchema } from "graphql";
+import { default as isNumeric } from "validator/lib/isNumeric.js";
 import { AltairIDEOptions } from "./altair";
 import { Auth0Verify, Authorization, GetAuth0User } from "./auth";
 import { ConnectionTypes, ResolveCursorConnection } from "./connection";
 import { IntID } from "./customScalars";
-import { getNodeIdList, getIdsIntersection } from "./utils";
+import { getIdsIntersection, getNodeIdList } from "./utils";
 
 export * from "@graphql-ez/fastify";
 export * from "common-api";
@@ -48,6 +50,7 @@ async function buildContext({ fastify }: BuildContextArgs) {
     ResolveCursorConnection,
     getNodeIdList,
     getIdsIntersection,
+    assertNotNumericCode,
   };
 }
 
@@ -191,3 +194,9 @@ export const ezServicePreset = CreateApp({
   },
   buildContext,
 }).asPreset;
+
+export function assertNotNumericCode(value: string | number) {
+  if (typeof value !== "string") return;
+
+  assert(!isNumeric(value), `Code "${value}" can't be numeric.`);
+}

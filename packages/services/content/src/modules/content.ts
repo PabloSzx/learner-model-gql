@@ -255,11 +255,13 @@ export const contentModule = registerModule(
               kcs,
             },
           },
-          { prisma }
+          { prisma, assertNotNumericCode }
         ) {
           if (binaryFilename) {
             assert(mime.getType(binaryFilename) != null, "Invalid File");
           }
+
+          assertNotNumericCode(code);
 
           return prisma.content.create({
             data: {
@@ -312,11 +314,13 @@ export const contentModule = registerModule(
               kcs,
             },
           },
-          { prisma }
+          { prisma, assertNotNumericCode }
         ) {
           if (binaryFilename) {
             assert(mime.getType(binaryFilename) != null, "Invalid File");
           }
+
+          assertNotNumericCode(code);
 
           return prisma.content.update({
             where: {
