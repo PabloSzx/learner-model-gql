@@ -267,7 +267,7 @@ importers:
       '@types/content-type': ^1.1.5
       '@types/lodash': ^4.14.177
       '@types/wait-on': ^5.3.1
-      '@types/ws': ^8.2.1
+      '@types/ws': ^8.2.2
       api-base: workspace:^0.0.1
       concurrently: ^6.4.0
       content-type: ^1.0.4
@@ -315,7 +315,7 @@ importers:
       '@types/content-type': 1.1.5
       '@types/lodash': 4.14.177
       '@types/wait-on': 5.3.1
-      '@types/ws': 8.2.1
+      '@types/ws': 8.2.2
 
   packages/graph:
     specifiers:
@@ -3367,6 +3367,12 @@ packages:
     resolution: {integrity: sha512-SqQ+LhVZaJi7c7sYVkjWALDigi/Wy7h7Iu72gkQp8Y8OWw/DddEVBrTSKu86pQftV2+Gm8lYM61hadPKqyaIeg==}
     dependencies:
       '@types/node': 16.11.11
+
+  /@types/ws/8.2.2:
+    resolution: {integrity: sha512-NOn5eIcgWLOo6qW8AcuLZ7G8PycXu0xTxxkS6Q18VWFxgPUSOwV0pBj2a/4viNZVu25i7RIB7GttdkAIUUXOOg==}
+    dependencies:
+      '@types/node': 16.11.11
+    dev: true
 
   /@ungap/promise-all-settled/1.1.2:
     resolution: {integrity: sha512-sL/cEvJWAnClXw0wHk85/2L0G6Sj8UB0Ctc1TEMbKSsmpRosqhwj9gWgFRZSrBr2f9tiXISwNhCPmlfqUqyb9Q==}
