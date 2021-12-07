@@ -105,7 +105,7 @@ importers:
       '@types/wait-on': ^5.3.1
       common-api: workspace:^1.0.0
       db: workspace:^0.0.1
-      fastify-auth0-verify: ^0.6.0
+      fastify-auth0-verify: ^0.7.0
       fastify-plugin: ^3.0.0
       pino: ^7.5.1
       pino-pretty: ^7.2.0
@@ -125,7 +125,7 @@ importers:
       '@graphql-tools/schema': 8.3.1_graphql@16.0.1
       common-api: link:../common-api
       db: link:../db
-      fastify-auth0-verify: 0.6.0
+      fastify-auth0-verify: 0.7.0
       fastify-plugin: 3.0.0
       pino: 7.5.1
       pino-pretty: 7.2.0
@@ -2740,6 +2740,11 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /@lukeed/ms/2.0.0:
+    resolution: {integrity: sha512-NOlhE40rGptwLwJhE0ZW259hcoa+nkpQRQ1FUKV4Sr2z1Eh2WfkHQ3jjBNF7YEqOrF0TOpqnyU1wClvWBrXByg==}
+    engines: {node: '>=8'}
+    dev: false
+
   /@n1ru4l/graphql-live-query/0.9.0_graphql@16.0.1:
     resolution: {integrity: sha512-BTpWy1e+FxN82RnLz4x1+JcEewVdfmUhV1C6/XYD5AjS7PQp9QFF7K8bCD6gzPTr2l+prvqOyVueQhFJxB1vfg==}
     peerDependencies:
@@ -3237,6 +3242,7 @@ packages:
     resolution: {integrity: sha512-+P3O/xC7nzVizIi5VbF34YtqSonFsdnbXBnWUCYRiKOi1f9gA4sEFvXkrGr/QVV23IbMYvcoerI7nnhDUiWXRQ==}
     dependencies:
       '@types/node': 16.11.11
+    dev: true
 
   /@types/lodash.mergewith/4.6.6:
     resolution: {integrity: sha512-RY/8IaVENjG19rxTZu9Nukqh0W2UrYgmBj5sdns4hWRZaV8PqR7wIKHFKzvOTjo4zVRV7sVI+yFhAJql12Kfqg==}
@@ -3888,6 +3894,7 @@ packages:
 
   /buffer-equal-constant-time/1.0.1:
     resolution: {integrity: sha1-+OcRMvf/5uAaXJaXpMbz5I1cyBk=}
+    dev: true
 
   /buffer-from/1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
@@ -5156,6 +5163,15 @@ packages:
       rfdc: 1.3.0
       string-similarity: 4.0.4
 
+  /fast-jwt/1.4.0:
+    resolution: {integrity: sha512-foIMzhiDhZlWVMp5brRc17qDhBnOyI4YVvoRytvpUjBhborG6ubVkH6pyvOxPqno1jzspVOFmtqoRCu3KpU7hg==}
+    engines: {node: '>= 10.12.0'}
+    dependencies:
+      asn1.js: 5.4.1
+      ecdsa-sig-formatter: 1.0.11
+      mnemonist: 0.39.0
+    dev: false
+
   /fast-redact/3.0.2:
     resolution: {integrity: sha512-YN+CYfCVRVMUZOUPeinHNKgytM1wPI/C/UCLEi56EsY2dwwvI00kIJHJoI7pMVqGoMew8SMZ2SSfHKHULHXDsg==}
     engines: {node: '>=6'}
@@ -5186,12 +5202,12 @@ packages:
       reusify: 1.0.4
     dev: false
 
-  /fastify-auth0-verify/0.6.0:
-    resolution: {integrity: sha512-WT6Uek2IA3fEZlWdRP6p18MIQlUqzuoc8zQLgnAwx8hb62u1ZhDCAl1FePF9d16tsHCvcCf3WyfL8HlZNCZhDA==}
+  /fastify-auth0-verify/0.7.0:
+    resolution: {integrity: sha512-osU1RRPuXh+JxvBIaCOeUC4U0AmVXO0kn0armWxeERNDegsPGJey3iBrG6dwfZVT2K4zGLffg68OhSc+8+y9gQ==}
     engines: {node: '>= 12.0.0'}
     dependencies:
       fastify-cookie: 5.4.0
-      fastify-jwt: 3.2.1
+      fastify-jwt: 4.1.0
       fastify-plugin: 3.0.0
       http-errors: 1.8.1
       node-cache: 5.1.2
@@ -5214,14 +5230,14 @@ packages:
   /fastify-error/0.3.1:
     resolution: {integrity: sha512-oCfpcsDndgnDVgiI7bwFKAun2dO+4h84vBlkWsWnz/OUK9Reff5UFoFl241xTiLeHWX/vU9zkDVXqYUxjOwHcQ==}
 
-  /fastify-jwt/3.2.1:
-    resolution: {integrity: sha512-MzGSn4r+zthk21WKo2/1YTU1djhekrc9u4Zlo95PlCRMwBUytXfIjlO/D31/+oGnrEW1+vUFPT37hY1lCk1eJw==}
+  /fastify-jwt/4.1.0:
+    resolution: {integrity: sha512-SbPgjD+XCZJwD/mTvhgIekY4vvk2kj9/xNHutBIyt0UZPhjmdtRb6a+i56eV1nhWOrG66Mjnh1uuTKVBW6Zmqg==}
     engines: {node: '>=10'}
     dependencies:
-      '@types/jsonwebtoken': 8.5.6
+      '@lukeed/ms': 2.0.0
+      fast-jwt: 1.4.0
       fastify-plugin: 3.0.0
       http-errors: 1.8.1
-      jsonwebtoken: 8.5.1
       steed: 1.1.3
     dev: false
 
@@ -6414,6 +6430,7 @@ packages:
       lodash.once: 4.1.1
       ms: 2.1.3
       semver: 5.7.1
+    dev: true
 
   /jwa/1.4.1:
     resolution: {integrity: sha512-qiLX/xhEEFKUAJ6FiBMbes3w9ATzyk5W7Hvzpa/SLYdxNtng+gcurvrI7TbACjIXlsJyr05/S1oUhZrc63evQA==}
@@ -6421,12 +6438,14 @@ packages:
       buffer-equal-constant-time: 1.0.1
       ecdsa-sig-formatter: 1.0.11
       safe-buffer: 5.2.1
+    dev: true
 
   /jws/3.2.2:
     resolution: {integrity: sha512-YHlZCB6lMTllWDtSPHz/ZXTsi8S00usEV6v1tjq8tOUZzw7DpSDWVXjXDre6ed1w/pd495ODpHZYSdkRTsa0HA==}
     dependencies:
       jwa: 1.4.1
       safe-buffer: 5.2.1
+    dev: true
 
   /keyv/3.1.0:
     resolution: {integrity: sha512-9ykJ/46SN/9KPM/sichzQ7OvXyGDYKGTaDlKMGCAlg2UK8KRy4jb0d8sFc+0Tt0YYnThq8X2RZgCg74RPxgcVA==}
@@ -6552,21 +6571,26 @@ packages:
 
   /lodash.includes/4.3.0:
     resolution: {integrity: sha1-YLuYqHy5I8aMoeUTJUgzFISfVT8=}
+    dev: true
 
   /lodash.isboolean/3.0.3:
     resolution: {integrity: sha1-bC4XHbKiV82WgC/UOwGyDV9YcPY=}
+    dev: true
 
   /lodash.isinteger/4.0.4:
     resolution: {integrity: sha1-YZwK89A/iwTDH1iChAt3sRzWg0M=}
+    dev: true
 
   /lodash.isnumber/3.0.3:
     resolution: {integrity: sha1-POdoEMWSjQM1IwGsKHMX8RwLH/w=}
+    dev: true
 
   /lodash.isplainobject/4.0.6:
     resolution: {integrity: sha1-fFJqUtibRcRcxpC4gWO+BJf1UMs=}
 
   /lodash.isstring/4.0.1:
     resolution: {integrity: sha1-1SfftUVuynzJu5XV2ur4i6VKVFE=}
+    dev: true
 
   /lodash.mergewith/4.6.2:
     resolution: {integrity: sha512-GK3g5RPZWTRSeLSpgP8Xhra+pnjBC56q9FZYe1d5RN3TJ35dbkGy3YqBSMbyCrlbi+CM9Z3Jk5yTL7RCsqboyQ==}
@@ -6574,6 +6598,7 @@ packages:
 
   /lodash.once/4.1.1:
     resolution: {integrity: sha1-DdOXEhPHxW34gJd9UEyI+0cal6w=}
+    dev: true
 
   /lodash.sortby/4.7.0:
     resolution: {integrity: sha1-7dFMgk4sycHgsKG0K7UhBRakJDg=}
@@ -6790,6 +6815,12 @@ packages:
     resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}
     engines: {node: '>=10'}
     hasBin: true
+
+  /mnemonist/0.39.0:
+    resolution: {integrity: sha512-7v08Ldk1lnlywnIShqfKYN7EW4WKLUnkoWApdmR47N1xA2xmEtWERfEvyRCepbuFCETG5OnfaGQpp/p4Bus6ZQ==}
+    dependencies:
+      obliterator: 2.0.1
+    dev: false
 
   /mocha/9.1.3:
     resolution: {integrity: sha512-Xcpl9FqXOAYqI3j79pEtHBBnQgVXIhpULjGQa7DVb0Po+VzmSIK9kanAiWLHoRR/dbZ2qpdPshuXr8l1VaHCzw==}
@@ -7104,6 +7135,10 @@ packages:
       define-properties: 1.1.3
       has-symbols: 1.0.2
       object-keys: 1.1.1
+
+  /obliterator/2.0.1:
+    resolution: {integrity: sha512-XnkiCrrBcIZQitJPAI36mrrpEUvatbte8hLcTcQwKA1v9NkCKasSi+UAguLsLDs/out7MoRzAlmz7VXvY6ph6w==}
+    dev: false
 
   /oblivious-set/1.0.0:
     resolution: {integrity: sha512-z+pI07qxo4c2CulUHCDf9lcqDlMSo72N/4rLUpRXf6fu+q8vjt8y0xS+Tlf8NTJDdTXHbdeO1n3MlbctwEoXZw==}
