@@ -148,7 +148,7 @@ importers:
       '@types/react': ^17.0.37
       '@types/react-datepicker': ^4.3.2
       '@types/react-dom': ^17.0.11
-      '@types/react-table': ^7.7.8
+      '@types/react-table': ^7.7.9
       common: workspace:^0.0.1
       cross-env: ^7.0.3
       date-fns: ^2.27.0
@@ -205,7 +205,7 @@ importers:
       '@types/mime': 2.0.3
       '@types/nprogress': 0.2.0
       '@types/react-datepicker': 4.3.2_react@17.0.2
-      '@types/react-table': 7.7.8
+      '@types/react-table': 7.7.9
       cross-env: 7.0.3
       typescript: 4.5.2
 
@@ -3317,8 +3317,8 @@ packages:
       '@types/react': 17.0.37
     dev: false
 
-  /@types/react-table/7.7.8:
-    resolution: {integrity: sha512-OMhbPlf+uUGte3M1WdArEKeBkyQ1XJxKvFYs+o1dGGGyaSVIqxPPQmBZ6Skkw0V9y0F/kOY7rnTD8r9GbfpBOg==}
+  /@types/react-table/7.7.9:
+    resolution: {integrity: sha512-ejP/J20Zlj9VmuLh73YgYkW2xOSFTW39G43rPH93M4mYWdMmqv66lCCr+axZpkdtlNLGjvMG2CwzT4S6abaeGQ==}
     dependencies:
       '@types/react': 17.0.37
     dev: true
