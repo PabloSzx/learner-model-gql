@@ -313,7 +313,7 @@ importers:
     devDependencies:
       '@types/concurrently': 6.4.0
       '@types/content-type': 1.1.5
-      '@types/lodash': 4.14.177
+      '@types/lodash': 4.14.178
       '@types/wait-on': 5.3.1
       '@types/ws': 8.2.2
 
@@ -2219,7 +2219,7 @@ packages:
       isomorphic-ws: 4.0.1_ws@8.3.0
       node-fetch: 2.6.6
       subscriptions-transport-ws-envelop: 2.0.1_graphql@16.1.0+ws@8.3.0
-      undici: 4.11.1
+      undici: 4.11.3
       ws: 8.3.0
     transitivePeerDependencies:
       - bufferutil
@@ -3247,11 +3247,11 @@ packages:
   /@types/lodash.mergewith/4.6.6:
     resolution: {integrity: sha512-RY/8IaVENjG19rxTZu9Nukqh0W2UrYgmBj5sdns4hWRZaV8PqR7wIKHFKzvOTjo4zVRV7sVI+yFhAJql12Kfqg==}
     dependencies:
-      '@types/lodash': 4.14.177
+      '@types/lodash': 4.14.178
     dev: false
 
-  /@types/lodash/4.14.177:
-    resolution: {integrity: sha512-0fDwydE2clKe9MNfvXHBHF9WEahRuj+msTuQqOmAApNORFvhMYZKNGGJdCzuhheVjMps/ti0Ak/iJPACMaevvw==}
+  /@types/lodash/4.14.178:
+    resolution: {integrity: sha512-0d5Wd09ItQWH1qFbEyQ7oTQ3GZrMfth5JkbN3EvTKLXcHLRDSXeLnlvlOn0wvxVIwK5o2M8JzP/OWz7T3NRsbw==}
 
   /@types/mime/2.0.3:
     resolution: {integrity: sha512-Jus9s4CDbqwocc5pOAnh8ShfrnMcPHuJYzVcSUU7lrh8Ni5HuIqX3oilL86p3dlTrk0LzHRCgA/GQ7uNCw6l2Q==}
@@ -3644,7 +3644,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.5
+      follow-redirects: 1.14.6
     transitivePeerDependencies:
       - debug
 
@@ -3857,7 +3857,7 @@ packages:
     dependencies:
       caniuse-lite: 1.0.30001285
       colorette: 1.4.0
-      electron-to-chromium: 1.4.12
+      electron-to-chromium: 1.4.14
       escalade: 3.1.1
       node-releases: 1.1.77
     dev: false
@@ -3868,7 +3868,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001285
-      electron-to-chromium: 1.4.12
+      electron-to-chromium: 1.4.14
       escalade: 3.1.1
       node-releases: 2.0.1
       picocolors: 1.0.0
@@ -4451,7 +4451,7 @@ packages:
       abort-controller: 3.0.0
       form-data: 4.0.0
       node-fetch: 2.6.6
-      undici: 4.11.1
+      undici: 4.11.3
     dev: true
 
   /cross-undici-fetch/0.0.26:
@@ -4460,7 +4460,7 @@ packages:
       abort-controller: 3.0.0
       form-data: 4.0.0
       node-fetch: 2.6.6
-      undici: 4.11.1
+      undici: 4.11.3
     dev: true
 
   /crypto-browserify/3.12.0:
@@ -4749,8 +4749,8 @@ packages:
     dependencies:
       safe-buffer: 5.2.1
 
-  /electron-to-chromium/1.4.12:
-    resolution: {integrity: sha512-zjfhG9Us/hIy8AlQ5OzfbR/C4aBv1Dg/ak4GX35CELYlJ4tDAtoEcQivXvyBdqdNQ+R6PhlgQqV8UNPJmhkJog==}
+  /electron-to-chromium/1.4.14:
+    resolution: {integrity: sha512-RsGkAN9JEAYMObS72kzUsPPcPGMqX1rBqGuXi9aa4TBKLzICoLf+DAAtd0fVFzrniJqYzpby47gthCUoObfs0Q==}
 
   /elegant-spinner/1.0.1:
     resolution: {integrity: sha1-2wQ1IcldfjA/2PNFvtwzSc+wcp4=}
@@ -5383,8 +5383,8 @@ packages:
       tslib: 2.3.1
     dev: false
 
-  /follow-redirects/1.14.5:
-    resolution: {integrity: sha512-wtphSXy7d4/OR+MvIFbCVBDzZ5520qV8XfPklSN5QtxuMUJZ+b0Wnst1e1lCDocfzuCkHqj8k0FpZqO+UIaKNA==}
+  /follow-redirects/1.14.6:
+    resolution: {integrity: sha512-fhUl5EwSJbbl8AR+uYL2KQDxLkdSjZGR36xy46AO7cOMTrCMON6Sa28FmAnC2tRTDbd/Uuzz3aJBv7EBN7JH8A==}
     engines: {node: '>=4.0'}
     peerDependencies:
       debug: '*'
@@ -9119,15 +9119,9 @@ packages:
     resolution: {integrity: sha512-/j3YTZ5AobMB4ZrTY72mzM54uFUX32v0R/JRW9G2vOyF1uSKYAx+WT8dMsAcRS13TOFISv094TxIyWYk+WEPsA==}
     dev: false
 
-  /undici/4.11.1:
-    resolution: {integrity: sha512-7oP3g5QpnPVz8qSwEygDkx7RH4TrGiThOiPooWiNAXrfUyH4jDmXVq9MidwwKV5YlpkZW66s10VoC8t2SvmPBQ==}
-    engines: {node: '>=12.18'}
-    dev: true
-
   /undici/4.11.3:
     resolution: {integrity: sha512-bLOCH2juB9gAkqE4a4zb+eMGhI8XD4SH1tF9Qu9J3Y8TA379Xxg7lWRMiDvc36pRWV1z9/HICv05fXkeeLw1Dg==}
     engines: {node: '>=12.18'}
-    dev: false
 
   /unfetch/4.2.0:
     resolution: {integrity: sha512-F9p7yYCn6cIW9El1zi0HI6vqpeIvBsr3dSuRO6Xuppb1u5rXpCPmMvLSyECLhybr9isec8Ohl0hPekMVrEinDA==}
