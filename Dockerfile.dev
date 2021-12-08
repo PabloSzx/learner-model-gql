@@ -6,8 +6,6 @@ COPY pnpm-lock.yaml ./
 
 RUN npm install -g pnpm@latest
 
-RUN pnpm env use --global 16.13.1
-
 RUN pnpm fetch
 
 COPY tsconfig.json package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc schema.gql ./
