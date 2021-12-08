@@ -265,7 +265,7 @@ importers:
       '@graphql-tools/wrap': ^8.3.2
       '@types/concurrently': ^6.4.0
       '@types/content-type': ^1.1.5
-      '@types/lodash': ^4.14.177
+      '@types/lodash': ^4.14.178
       '@types/wait-on': ^5.3.1
       '@types/ws': ^8.2.2
       api-base: workspace:^0.0.1
