@@ -1,6 +1,6 @@
 import type { SubschemaConfig } from "@graphql-tools/delegate";
+import { ServiceName, servicesNames } from "api-base";
 import type { Node } from "./ez.generated";
-import type { ServiceName } from "api-base";
 
 export const ProjectMerge: NonNullable<SubschemaConfig["merge"]>[string] = {
   fieldName: "projects",
@@ -61,43 +61,17 @@ const defaultMergeConfig = {
   KC: KCMerge,
 };
 
-export const servicesSubschemaConfig: {
-  [k in ServiceName]?: Partial<SubschemaConfig>;
-} = {
-  domain: {
-    batch: true,
-    merge: {
-      ...defaultMergeConfig,
-    },
+export const servicesSubschemaConfig = servicesNames.reduce(
+  (acum, serviceName) => {
+    acum[serviceName] = {
+      batch: true,
+      merge: {
+        ...defaultMergeConfig,
+      },
+    };
+    return acum;
   },
-  users: {
-    batch: true,
-    merge: {
-      ...defaultMergeConfig,
-    },
-  },
-  projects: {
-    batch: true,
-    merge: {
-      ...defaultMergeConfig,
-    },
-  },
-  content: {
-    batch: true,
-    merge: {
-      ...defaultMergeConfig,
-    },
-  },
-  actions: {
-    batch: true,
-    merge: {
-      ...defaultMergeConfig,
-    },
-  },
-  state: {
-    batch: true,
-    merge: {
-      ...defaultMergeConfig,
-    },
-  },
-};
+  {} as {
+    [k in ServiceName]: Omit<SubschemaConfig, "schema">;
+  }
+);

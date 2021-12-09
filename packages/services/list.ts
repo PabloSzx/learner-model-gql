@@ -7,4 +7,6 @@ export const baseServicesList = {
   state: 3007,
 } as const;
 
+export const servicesNames = Object.keys(baseServicesList) as ServiceName[];
+
 export type ServiceName = keyof typeof baseServicesList;
