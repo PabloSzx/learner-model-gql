@@ -6,6 +6,8 @@ title: Client side template
 
 The client side template for a web application that uses the Learner Model GQL service is available at [`https://github.com/PabloSzx/learner-model-gql-template`](https://github.com/PabloSzx/learner-model-gql-template).
 
+## Relevant Libraries
+
 The template uses specific libraries to handle specific needs:
 
 - [Next.js](https://nextjs.org/) - Fully fledged [React](https://reactjs.org/) framework for web applications.
@@ -14,3 +16,47 @@ The template uses specific libraries to handle specific needs:
 - [Chakra UI](https://chakra-ui.com/) - Simple, Modular & Accessible UI Components
 - [GraphQL Code Generator](https://www.graphql-code-generator.com/) - Generate code for complete type-safety and easier usage of GraphQL APIs
 - [React Query](https://react-query.tanstack.com/) - Hooks for fetching, caching and updating asynchronous data in React
+
+## Important code
+
+- [src/rqClient.ts](https://github.com/PabloSzx/learner-model-gql-template/blob/main/src/rqClient.ts) - React API Client definition, having defined the default behavior like showing a [Chakra UI Toast](https://chakra-ui.com/docs/feedback/toast) when any error is received from the API.
+- [src/components/Auth.tsx](https://github.com/PabloSzx/learner-model-gql-template/blob/main/src/components/Auth.tsx) - Basic authentication implementation.
+
+  Inside the GraphQL operation, the target project code `"example"` should be changed accordingly:
+
+  ![Auth Project Code](/auth-project.png)
+
+- [src/utils/action.ts#L9](https://github.com/PabloSzx/learner-model-gql-template/blob/main/src/utils/action.ts#L9) - Custom hook that defines standard usage of `action` mutation, reusing the authentication project and automatically adding the `timestamp` field.
+- [src/components/Auth.tsx#L11](https://github.com/PabloSzx/learner-model-gql-template/blob/main/src/components/Auth.tsx#L111) - `withAuth` higher order component that lets protect specific React component to only be rendered if user is authenticated, basic usage example in [src/pages/protected.tsx](https://github.com/PabloSzx/learner-model-gql-template/blob/main/src/pages/protected.tsx)
+- [src/components/MainLayout.tsx](https://github.com/PabloSzx/learner-model-gql-template/blob/main/src/components/MainLayout.tsx) - Layout of application
+- [src/components/Navigation.tsx](https://github.com/PabloSzx/learner-model-gql-template/blob/main/src/components/Navigation.tsx) - Navigation bar of application
+
+## Usage
+
+### Development
+
+Install dependencies:
+
+```sh
+pnpm i
+```
+
+Then, to run in localhost:
+
+```sh
+pnpm dev
+```
+
+The application is going to run and open on [`http://localhost:3000`](http://localhost:3000)
+
+### Deployment
+
+Some instructions recommended in the Next.js documentation can be found in [`https://nextjs.org/docs/deployment`](https://nextjs.org/docs/deployment).
+
+It's recommended to use [`Vercel`](https://vercel.com/), but for using [`pnpm`](https://pnpm.io/) inside Vercel a couple of extra configuration has to be defined:
+
+![Vercel PNPM Deployment](/template-vercel-deploy.png)
+
+Build Command: `pnpm build`
+
+Install Command: `npm i -g pnpm && pnpm i --store=node_modules/.pnpm-store`
