@@ -1,5 +1,6 @@
 import { mkdir, readdir } from "fs/promises";
 import inquirer from "inquirer";
+import open from "open";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { pubSub } from "./src";
@@ -20,3 +21,5 @@ const { scriptName } = await inquirer.prompt([
 ]);
 
 await import("./scripts/" + scriptName);
+
+await open("scripts_data");

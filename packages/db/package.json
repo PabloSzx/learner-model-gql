@@ -30,6 +30,7 @@
     "@types/react": "^17.0.37",
     "@types/validator": "^13.7.0",
     "inquirer": "^8.2.0",
-    "json2csv": "^5.0.6"
+    "json2csv": "^5.0.6",
+    "open": "^8.4.0"
   }
 }
