@@ -3,3 +3,90 @@ title: Database tooling
 ---
 
 # Database tooling
+
+## Scripts
+
+Included database tooling scripts logic in available in [packages/db/scripts](https://github.com/PabloSzx/learner-model-gql/tree/main/packages/db/scripts)
+
+These scripts should be called through calling `pnpm scripts` while being inside the `packages/db` directory.
+
+![Database Tooling Scripts](/database-tooling-0.png)
+
+You can use `arrow keys ↑ ↓` to select the desired script, and press `Enter` to confirm the selection.
+
+![Database Tooling Scripts](/database-tooling-1.png)
+
+- [download-actions-csv.ts](https://github.com/PabloSzx/learner-model-gql/blob/main/packages/db/scripts/download-actions-csv.ts)
+
+This script does a basic `"get everything"` including `user` and `project` basic data, and creates a new `.csv` file, using [json2csv](https://www.npmjs.com/package/json2csv) to convert the json to csv seamlessly.
+
+```ts
+import { writeFile } from "fs/promises";
+import json2csv from "json2csv";
+import { prisma } from "../src";
+
+const actions = await prisma.action.findMany({
+  include: {
+    user: {
+      select: {
+        email: true,
+        name: true,
+      },
+    },
+    project: {
+      select: {
+        code: true,
+        label: true,
+      },
+    },
+  },
+});
+
+const now = new Date().toISOString();
+
+const csv = await json2csv.parseAsync(actions);
+
+await writeFile(`./scripts_data/actions_${now}.csv`, csv, "utf-8");
+```
+
+The result is saved in the `scripts_data` directory, which should open automatically after the script is executed successfully.
+
+- [download-actions-json.ts](https://github.com/PabloSzx/learner-model-gql/blob/main/packages/db/scripts/download-actions-json.ts)
+
+This script, just as `download-actions-csv`, does a basic `"get everything"` including `user` and `project` basic data, but creates a `.json` file instead, which might be more useful in certain environments or programmatic usage.
+
+```ts
+import { writeFile } from "fs/promises";
+import { prisma } from "../src";
+
+const actions = await prisma.action.findMany({
+  include: {
+    user: {
+      select: {
+        email: true,
+        name: true,
+      },
+    },
+    project: {
+      select: {
+        code: true,
+        label: true,
+      },
+    },
+  },
+});
+
+const now = new Date().toISOString();
+
+await writeFile(
+  `./scripts_data/actions_${now}.json`,
+  JSON.stringify(actions, null, 2),
+  "utf-8"
+);
+```
+
+### Create your own script / Modify the existing scripts
+
+You are completely free to create your own new scripts or modify the existing scripts based on your needs.
+
+The `pnpm scripts` selection will automatically accept any new script file, the CLI logic code is available in [packages/db/run-scripts.ts](https://github.com/PabloSzx/learner-model-gql/blob/main/packages/db/run-scripts.ts).
