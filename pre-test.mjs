@@ -28,7 +28,7 @@ const DATABASE_URL =
     }
   )}`);
 
-await command("pnpm -r migrate:push", {
+await command("pnpm -r migrate:deploy", {
   env: {
     DATABASE_URL,
   },

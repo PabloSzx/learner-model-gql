@@ -9,6 +9,7 @@
     "build": "prisma db push",
     "db:generate": "prisma generate",
     "generate": "prisma generate",
+    "migrate:deploy": "prisma migrate deploy",
     "migrate:dev": "prisma migrate dev",
     "migrate:push": "prisma db push",
     "prepare": "touch ../../.env && ln -f ../../.env prisma/.env"
