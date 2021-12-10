@@ -3,3 +3,43 @@ title: Deployment
 ---
 
 # Deployment
+
+The deployment process relies on [Docker containers](https://www.docker.com/resources/what-container), which can be deployed through horizontal scaling solutions
+like [Kubernetes](https://kubernetes.io/) or [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/), just to give a couple of examples.
+
+## Docker Image
+
+An automated docker image is built via continous integration using [Docker Hub](https://hub.docker.com/), and is publicly available as [pabloszx/learner-model-gql](https://hub.docker.com/r/pabloszx/learner-model-gql). The [Dockerfile](https://docs.docker.com/engine/reference/builder/) of the image is available at the root as [/Dockerfile](https://github.com/PabloSzx/learner-model-gql/blob/main/Dockerfile).
+
+### Commands
+
+The Docker image doesn't have any default command, it has to be manually specified.
+
+Expected possible commands:
+
+- Gateway: `pnpm -r start --filter=service-gateway`
+- State Service: `pnpm -r start --filter=service-state`
+- Projects Service: `pnpm -r start --filter=service-projects`
+- Domain Service: `pnpm -r start --filter=service-domain`
+- Content Service: `pnpm -r start --filter=service-content`
+- Actions Service: `pnpm -r start --filter=service-actions`
+- Users Service: `pnpm -r start --filter=service-users`
+
+### Environment Variables
+
+Every service expects the following environment variables:
+
+- `DATABASE_URL`: Connection URL to Postgres Database
+- `AUTH0_DOMAIN` + `AUTH0_CLIENT` + `AUTH0_SECRET`: Auth0 credentials
+
+By default every service will listen depending on the environment variable `PORT`, but if not present, it fallbacks to the port specified in [`packages/services/list.ts`](https://github.com/PabloSzx/learner-model-gql/blob/main/packages/services/list.ts).
+
+The Gateway also can use the environment variable `PORT`, but if not present, it fallbacks to the port `8080`.
+
+## Single server host deployment
+
+The project can also be deployed in a single server host, which for this use-case its recommended to leverage [Docker Compose](https://docs.docker.com/compose/).
+
+In the root of the project's repository a [docker-compose.yml](https://github.com/PabloSzx/learner-model-gql/blob/main/docker-compose.yml) is available,
+which has all the minimum configuration required to deploy the system in a single host.
+The recommended docker-compose.yml expects to have a `.env` file besides, containing all the credentials just as mentioned in the [Getting Started](/#development) page.

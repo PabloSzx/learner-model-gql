@@ -68,9 +68,6 @@ services:
     command: pnpm -r start --filter=service-state
   gateway:
     restart: always
-    build:
-      dockerfile: Dockerfile.dev
-      context: .
     image: pabloszx/learner-model-gql
     network_mode: host
     environment:
