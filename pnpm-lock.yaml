@@ -22,7 +22,7 @@ importers:
       '@types/randomstring': ^1.1.8
       '@types/react': ^17.0.37
       api-base: workspace:^0.0.1
-      bob-tsm: ^0.3.6
+      bob-tsm: ^0.3.7
       bob-watch: ^0.1.1
       c8: ^7.10.0
       common: workspace:^0.0.1
@@ -64,7 +64,7 @@ importers:
       '@types/prettier': 2.4.2
       '@types/randomstring': 1.1.8
       '@types/react': 17.0.37
-      bob-tsm: 0.3.6_esbuild@0.14.2
+      bob-tsm: 0.3.7_esbuild@0.14.2
       bob-watch: 0.1.1
       c8: 7.10.0
       concurrently: 6.4.0
@@ -3765,12 +3765,12 @@ packages:
     resolution: {integrity: sha512-D7iWRBvnZE8ecXiLj/9wbxH7Tk79fAh8IHaTNq1RWRixsS02W+5qS+iE9yq6RYl0asXx5tw0bLhmT5pIfbSquw==}
     dev: false
 
-  /bob-tsm/0.3.6_esbuild@0.14.2:
-    resolution: {integrity: sha512-5H89vaFejs6tuu2j7FAyxgQHJuidWC5hQ4MiWy2OM3jownqmrJPOR3O+i1ocjR7ueGINMwnUwNQb+NyF2mmSXg==}
+  /bob-tsm/0.3.7_esbuild@0.14.2:
+    resolution: {integrity: sha512-gifu6hrsOM1oAUkHhgokhjAH4JaTknndT3HMqnZwIcmaJPAYFuAQcQoI3dTzWVM8VQrDcVXuEdXfcpDkkYLBXQ==}
     engines: {node: ^12.20.0 || >=14.13.0}
     hasBin: true
     peerDependencies:
-      esbuild: '*'
+      esbuild: '>=13.14'
     dependencies:
       esbuild: 0.14.2
     optionalDependencies:
