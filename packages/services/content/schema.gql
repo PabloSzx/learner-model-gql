@@ -1,0 +1,413 @@
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+"Filter all content of admin query"
+input AdminContentFilter {
+  """
+  Filter by the specified projects
+
+  If the content's project matches any of the specified projects, the content is included
+  """
+  projects: [IntID!]
+  """
+  Filter by the specified tags
+
+  If any of the content's tags matches any of the specified tags, the content is included
+  """
+  tags: [String!]
+}
+
+"""
+[ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access
+"""
+type AdminContentMutations {
+  "[ADMIN] Create a new content entity"
+  createContent(data: CreateContent!): Content!
+  "[ADMIN] Update an existent content entity"
+  updateContent(data: UpdateContent!): Content!
+}
+
+"Admin Content-Related Queries"
+type AdminContentQueries {
+  """
+  [ADMIN] Get all the content currently in the system
+
+  Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
+  """
+  allContent(
+    filters: AdminContentFilter
+    pagination: CursorConnectionArgs!
+  ): ContentConnection!
+}
+
+"Pagination Interface"
+interface Connection {
+  "Pagination information"
+  pageInfo: PageInfo!
+}
+
+"Content entity"
+type Content {
+  """
+  Binary content encoded in base64
+
+  If present, it's guaranteed to be present alongisde binaryFilename
+  """
+  binaryBase64: String
+  """
+  Binary content filename
+
+  If present, it's guaranteed to be present alongisde binaryBase64
+
+  It's required and guaranteed to contain an extension where the mimetype can be inferred
+  """
+  binaryFilename: String
+  "Unique string identifier"
+  code: String!
+  "Date of creation"
+  createdAt: DateTime!
+  "Arbitrary content description"
+  description: String!
+  "Unique numeric identifier"
+  id: IntID!
+  "Arbitrary JSON object data"
+  json: JSONObject
+  "Human readable identifier"
+  label: String!
+  "Parameter that can be used to sort a list of content"
+  sortIndex: Int
+  """
+  Tags associated with the content
+
+  Tags can be used to categorize or filter
+  """
+  tags: [String!]!
+  "Topics associated with content"
+  topics: [Topic!]!
+  "Date of last update"
+  updatedAt: DateTime!
+  "External URL"
+  url: String
+}
+
+"Paginated Content"
+type ContentConnection implements Connection {
+  "Nodes of the current page"
+  nodes: [Content!]!
+  "Pagination related information"
+  pageInfo: PageInfo!
+}
+
+"Content creation input data"
+input CreateContent {
+  """
+  Binary content encoded in base64
+
+  If present, binaryFilename has to be specified
+  """
+  binaryBase64: String
+  """
+  Binary content filename
+
+  If present, it's required to contain an extension where the mimetype can be inferred
+  """
+  binaryFilename: String
+  "Unique string identifier"
+  code: String!
+  "Arbitrary content description"
+  description: String!
+  "Arbitrary JSON object data"
+  json: JSONObject
+  "KCs associated with the content"
+  kcs: [IntID!]!
+  "Human readable identifier"
+  label: String!
+  "Project associated with new content"
+  projectId: IntID!
+  """
+  Tags associated with the content
+
+  Tags can be used to categorize or filter
+  """
+  tags: [String!]!
+  "Topics associated with the content"
+  topics: [IntID!]!
+  "External URL"
+  url: URL
+}
+
+"""
+Pagination parameters
+
+Forward pagination parameters can't be mixed with Backward pagination parameters simultaneously
+
+first & after => Forward Pagination
+
+last & before => Backward Pagination
+"""
+input CursorConnectionArgs {
+  """
+  Set the minimum boundary
+
+  Use the "endCursor" field of "pageInfo"
+  """
+  after: IntID
+  """
+  Set the maximum boundary
+
+  Use the "startCursor" field of "pageInfo"
+  """
+  before: IntID
+  """
+  Set the limit of nodes to be fetched
+
+  It can't be more than 50
+  """
+  first: NonNegativeInt
+  """
+  Set the limit of nodes to be fetched
+
+  It can't be more than 50
+  """
+  last: NonNegativeInt
+}
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+"""
+A field whose value conforms to the standard internet email address format as specified in RFC822: https://www.w3.org/Protocols/rfc822/.
+"""
+scalar EmailAddress @specifiedBy(url: "https://www.w3.org/Protocols/rfc822/")
+
+"""
+ID that parses as non-negative integer, serializes to string, and can be passed as string or number
+"""
+scalar IntID
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+  @specifiedBy(
+    url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf"
+  )
+
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSONObject
+  @specifiedBy(
+    url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf"
+  )
+
+type Mutation {
+  """
+  [ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access
+  """
+  adminContent: AdminContentMutations!
+  "Returns 'Hello World!'"
+  hello: String!
+}
+
+"Minimum Entity Information"
+interface Node {
+  "Unique numeric identifier"
+  id: IntID!
+}
+
+"""
+Integers that will have a value of 0 or more.
+"""
+scalar NonNegativeInt
+
+"Order ascendingly or descendingly"
+enum ORDER_BY {
+  ASC
+  DESC
+}
+
+"Paginated related information"
+type PageInfo {
+  "Cursor parameter normally used for forward pagination"
+  endCursor: String
+  """
+  Utility field that returns "true" if a next page can be fetched
+  """
+  hasNextPage: Boolean!
+  """
+  Utility field that returns "true" if a previous page can be fetched
+  """
+  hasPreviousPage: Boolean!
+  "Cursor parameter normally used for backward pagination"
+  startCursor: String
+}
+
+type Project {
+  "Content associated with project"
+  content(
+    filters: ProjectContentFilter
+    pagination: CursorConnectionArgs!
+  ): ContentConnection!
+  "Unique numeric identifier"
+  id: IntID!
+}
+
+"Filter project content"
+input ProjectContentFilter {
+  """
+  Filter by the specified ending created date
+
+  If content's creation date is before the specified date, the content is included
+  """
+  createdEndDate: DateTime
+  """
+  Filter by the specified starting created date
+
+  If content's creation date is after the specified date, the content is included
+  """
+  createdStartDate: DateTime
+  """
+  Filter by the specified KCs
+
+  If any of the content's KCs matches any of the specified KCs, the content is included
+  """
+  kcs: [IntID!]
+  """
+  Filter by the specified tags
+
+  If any of the content's tags matches any of the specified tags, the content is included
+  """
+  tags: [String!]
+  """
+  Filter by the specified topics
+
+  If content's topic matches any of the specified topics, the content is included
+  """
+  topics: [IntID!]
+  """
+  Filter by the specified ending last updated date
+
+  If content's last updated date is before the specified date, the content is included
+  """
+  updatedEndDate: DateTime
+  """
+  Filter by the specified starting last updated date
+
+  If content's last updated date is after the specified date, the content is included
+  """
+  updatedStartDate: DateTime
+}
+
+type Query {
+  """
+  [ADMIN] Admin related content queries, only authenticated users with the role "ADMIN" can access
+  """
+  adminContent: AdminContentQueries!
+  """
+  Get all the content associated with the specified identifiers
+
+  The content data is guaranteed to follow the specified identifiers order
+
+  If any of the specified identifiers is not found or forbidden, query fails
+  """
+  content(ids: [IntID!]!): [Content!]!
+  """
+  Get specified content by "code".
+
+  - If user is not authenticated it throws.
+  - If authenticated user has no permissions on the corresponding project it returns NULL.
+  """
+  contentByCode(code: String!): Content
+  "Returns 'Hello World!'"
+  hello: String!
+  """
+  Get all the projects associated with the specified identifiers
+
+  The projects data is guaranteed to follow the specified identifiers order
+
+  If any of the specified identifiers is not found or forbidden, query fails
+  """
+  projects(ids: [IntID!]!): [Project!]!
+  """
+  Get all the topics associated with the specified identifiers
+
+  The topics data is guaranteed to follow the specified identifiers order
+
+  If any of the specified identifiers is not found or forbidden, query fails
+  """
+  topics(ids: [IntID!]!): [Topic!]!
+}
+
+type Subscription {
+  "Emits 'Hello World1', 'Hello World2', 'Hello World3', 'Hello World4' and 'Hello World5'"
+  hello: String!
+}
+
+"""
+The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+"Topic entity"
+type Topic {
+  "Content associated with topic"
+  content: [Content!]!
+  "Unique numeric identifier"
+  id: IntID!
+}
+
+"""
+A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt.
+"""
+scalar URL
+
+"Content update input data"
+input UpdateContent {
+  """
+  Binary content encoded in base64
+
+  If present, binaryFilename has to be specified
+  """
+  binaryBase64: String
+  """
+  Binary content filename
+
+  If present, it's required to contain an extension where the mimetype can be inferred
+  """
+  binaryFilename: String
+  "Unique string identifier"
+  code: String!
+  "Arbitrary content description"
+  description: String!
+  "Current content identifier"
+  id: IntID!
+  "Arbitrary JSON object data"
+  json: JSONObject
+  "KCs associated with the content"
+  kcs: [IntID!]!
+  "Human readable identifier"
+  label: String!
+  "Project associated with content"
+  projectId: IntID!
+  """
+  Tags associated with the content
+
+  Tags can be used to categorize or filter
+  """
+  tags: [String!]!
+  "Topics associated with the content"
+  topics: [IntID!]!
+  "External URL"
+  url: URL
+}
+
+"""
+Represents NULL values
+"""
+scalar Void

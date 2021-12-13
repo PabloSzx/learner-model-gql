@@ -74,6 +74,7 @@ export const codegenOptions: CodegenOptions = {
     deepPartialResolvers: true,
     enumsAsTypes: true,
   },
+  outputSchema: true,
 };
 
 export const voyagerOptions: VoyagerPluginOptions = {

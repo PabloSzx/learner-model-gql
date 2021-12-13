@@ -1,0 +1,491 @@
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+"Admin Domain-Related Queries"
+type AdminDomainMutations {
+  "[ADMIN] Create a new domain entity"
+  createDomain(input: CreateDomain!): Domain!
+  "[ADMIN] Create a new KC entity"
+  createKC(data: CreateKCInput!): KC!
+  "[ADMIN] Create a new topic entity"
+  createTopic(input: CreateTopic!): Topic!
+  "[ADMIN] Update an existent domain entity"
+  updateDomain(input: UpdateDomain!): Domain!
+  "[ADMIN] Update an existent KC entity"
+  updateKC(data: UpdateKCInput!): KC!
+  "[ADMIN] Update an existent topic entity"
+  updateTopic(input: UpdateTopic!): Topic!
+}
+
+"Admin Domain-Related Queries"
+type AdminDomainQueries {
+  """
+  [ADMIN] Get all the domains currently in the system
+
+  Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
+  """
+  allDomains(
+    filters: AdminDomainsFilter
+    pagination: CursorConnectionArgs!
+  ): DomainsConnection!
+  """
+  [ADMIN] Get all the KCs currently in the system
+
+  Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
+  """
+  allKCs(
+    filters: AdminKCsFilter
+    pagination: CursorConnectionArgs!
+  ): KCsConnection!
+  """
+  [ADMIN] Get all the topics currently in the system
+
+  Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
+  """
+  allTopics(
+    filters: AdminTopicsFilter
+    pagination: CursorConnectionArgs!
+  ): TopicsConnection!
+}
+
+"Filter all domains of admin query"
+input AdminDomainsFilter {
+  """
+  Filter by the specified projects
+
+  If the domain's project matches any of the specified projects, the domain is included
+  """
+  projects: [IntID!]
+}
+
+"Filter all KCs of admin query"
+input AdminKCsFilter {
+  """
+  Filter by the specified projects
+
+  If the KC's domain matches any of the specified projects, the KC is included
+  """
+  domains: [IntID!]
+  """
+  Filter by the specified projects
+
+  If the KC's project matches any of the specified projects, the KC is included
+  """
+  projects: [IntID!]
+  """
+  Filter by the specified topics
+
+  If any of the KC's topics matches any of the specified topics, the KC is included
+  """
+  topics: [IntID!]
+}
+
+"Filter all topics of admin query"
+input AdminTopicsFilter {
+  """
+  Filter by the specified projects
+
+  If the topic's project matches any of the specified projects, the topic is included
+  """
+  projects: [IntID!]
+}
+
+"Pagination Interface"
+interface Connection {
+  "Pagination information"
+  pageInfo: PageInfo!
+}
+
+"Content entity"
+type Content {
+  "Unique numeric identifier"
+  id: IntID!
+  "KCs associated with the content"
+  kcs: [KC!]!
+  "Topics associated with the content"
+  topics: [Topic!]!
+}
+
+"Domain creation input data"
+input CreateDomain {
+  "Unique string identifier"
+  code: String!
+  "Human readable identifier"
+  label: String!
+  "Projects associated with domain"
+  projectsIds: [IntID!]!
+}
+
+"KC creation input data"
+input CreateKCInput {
+  "Unique string identifier"
+  code: String!
+  "Domain associated with KC"
+  domainId: IntID!
+  "Human readable identifier"
+  label: String!
+}
+
+"Topic creation input data"
+input CreateTopic {
+  "Unique string identifier"
+  code: String!
+  "Content associated with topic"
+  contentIds: [IntID!]!
+  "Human readable identifier"
+  label: String!
+  """
+  Parent topic
+
+  Used to set the hierarchy of topics
+  """
+  parentTopicId: IntID
+  "Project associated with topic"
+  projectId: IntID!
+  "Parameter that can be used to sort a list of topics"
+  sortIndex: Int
+  """
+  Tags associated with the topic
+
+  Tags can be used to categorize or filter
+  """
+  tags: [String!]!
+}
+
+"""
+Pagination parameters
+
+Forward pagination parameters can't be mixed with Backward pagination parameters simultaneously
+
+first & after => Forward Pagination
+
+last & before => Backward Pagination
+"""
+input CursorConnectionArgs {
+  """
+  Set the minimum boundary
+
+  Use the "endCursor" field of "pageInfo"
+  """
+  after: IntID
+  """
+  Set the maximum boundary
+
+  Use the "startCursor" field of "pageInfo"
+  """
+  before: IntID
+  """
+  Set the limit of nodes to be fetched
+
+  It can't be more than 50
+  """
+  first: NonNegativeInt
+  """
+  Set the limit of nodes to be fetched
+
+  It can't be more than 50
+  """
+  last: NonNegativeInt
+}
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+"Domain entity"
+type Domain {
+  "Unique string identifier"
+  code: String!
+  "Date of creation"
+  createdAt: DateTime!
+  "Unique numeric identifier"
+  id: IntID!
+  "KCs associated with the domain"
+  kcs: [KC!]!
+  "Human readable identifier"
+  label: String!
+  "Date of last update"
+  updatedAt: DateTime!
+}
+
+"Paginated Domains"
+type DomainsConnection implements Connection {
+  "Nodes of the current page"
+  nodes: [Domain!]!
+  "Pagination related information"
+  pageInfo: PageInfo!
+}
+
+"""
+A field whose value conforms to the standard internet email address format as specified in RFC822: https://www.w3.org/Protocols/rfc822/.
+"""
+scalar EmailAddress @specifiedBy(url: "https://www.w3.org/Protocols/rfc822/")
+
+"""
+ID that parses as non-negative integer, serializes to string, and can be passed as string or number
+"""
+scalar IntID
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+  @specifiedBy(
+    url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf"
+  )
+
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSONObject
+  @specifiedBy(
+    url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf"
+  )
+
+"KC / Knowledge Component Entity"
+type KC {
+  "Unique string identifier"
+  code: String!
+  "Date of creation"
+  createdAt: DateTime!
+  "Domain associated with the KC"
+  domain: Domain!
+  "Unique numeric identifier"
+  id: IntID!
+  "Human readable identifier"
+  label: String!
+  "Topics associated with the KC"
+  topics: [Topic!]!
+  "Date of last update"
+  updatedAt: DateTime!
+}
+
+"Paginated KCs"
+type KCsConnection implements Connection {
+  "Nodes of the current page"
+  nodes: [KC!]!
+  "Pagination related information"
+  pageInfo: PageInfo!
+}
+
+type Mutation {
+  """
+  [ADMIN] Admin related domain mutations, only authenticated users with the role "ADMIN" can access
+  """
+  adminDomain: AdminDomainMutations!
+  "Returns 'Hello World!'"
+  hello: String!
+}
+
+"Minimum Entity Information"
+interface Node {
+  "Unique numeric identifier"
+  id: IntID!
+}
+
+"""
+Integers that will have a value of 0 or more.
+"""
+scalar NonNegativeInt
+
+"Order ascendingly or descendingly"
+enum ORDER_BY {
+  ASC
+  DESC
+}
+
+"Paginated related information"
+type PageInfo {
+  "Cursor parameter normally used for forward pagination"
+  endCursor: String
+  """
+  Utility field that returns "true" if a next page can be fetched
+  """
+  hasNextPage: Boolean!
+  """
+  Utility field that returns "true" if a previous page can be fetched
+  """
+  hasPreviousPage: Boolean!
+  "Cursor parameter normally used for backward pagination"
+  startCursor: String
+}
+
+type Project {
+  "Domains associated with the project"
+  domains: [Domain!]!
+  "Unique numeric identifier"
+  id: IntID!
+  "Topics associated with the project"
+  topics: [Topic!]!
+}
+
+type Query {
+  """
+  [ADMIN] Admin related domain queries, only authenticated users with the role "ADMIN" can access
+  """
+  adminDomain: AdminDomainQueries!
+  """
+  Get all the content associated with the specified identifiers
+
+  The content data is guaranteed to follow the specified identifiers order
+
+  If any of the specified identifiers is not found or forbidden, query fails
+  """
+  content(ids: [IntID!]!): [Content!]!
+  """
+  Get all the domains associated with the specified identifiers
+
+  The domains data is guaranteed to follow the specified identifiers order
+
+  If any of the specified identifiers is not found or forbidden, query fails
+  """
+  domains(ids: [IntID!]!): [Domain!]!
+  "Returns 'Hello World!'"
+  hello: String!
+  """
+  Get all the KCs associated with the specified identifiers
+
+  The KCs data is guaranteed to follow the specified identifiers order
+
+  If any of the specified identifiers is not found or forbidden, query fails
+  """
+  kcs(ids: [IntID!]!): [KC!]!
+  """
+  Get all the projects associated with the specified identifiers
+
+  The projects data is guaranteed to follow the specified identifiers order
+
+  If any of the specified identifiers is not found or forbidden, query fails
+  """
+  projects(ids: [IntID!]!): [Project!]!
+  """
+  Get specified topic by "code".
+
+  - If user is not authenticated it throws.
+  - If authenticated user has no permissions on the corresponding project it returns NULL.
+  """
+  topicByCode(code: String!): Topic
+  """
+  Get all the topics associated with the specified identifiers
+
+  The topics data is guaranteed to follow the specified identifiers order
+
+  If any of the specified identifiers is not found or forbidden, query fails
+  """
+  topics(ids: [IntID!]!): [Topic!]!
+}
+
+type Subscription {
+  "Emits 'Hello World1', 'Hello World2', 'Hello World3', 'Hello World4' and 'Hello World5'"
+  hello: String!
+}
+
+"""
+The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+"Topic entity"
+type Topic {
+  """
+  Childrens topics
+
+  Direct childrens of the current topic
+
+  To build the topics tree, use the "parent" topic
+  """
+  childrens: [Topic!]!
+  "Unique string identifier"
+  code: String!
+  "Date of creation"
+  createdAt: DateTime!
+  "Unique numeric identifier"
+  id: IntID!
+  "KCs associated with the topic"
+  kcs: [KC!]!
+  "Human readable identifier"
+  label: String!
+  """
+  Parent topic
+
+  Used to set the hierarchy of topics
+  """
+  parent: Topic
+  "Parameter that can be used to sort a list of domains"
+  sortIndex: Int
+  """
+  Tags associated with the domain
+
+  Tags can be used to categorize or filter
+  """
+  tags: [String!]!
+  "Date of last update"
+  updatedAt: DateTime!
+}
+
+"Paginated Topics"
+type TopicsConnection implements Connection {
+  "Nodes of the current page"
+  nodes: [Topic!]!
+  "Pagination related information"
+  pageInfo: PageInfo!
+}
+
+"""
+A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt.
+"""
+scalar URL
+
+"Domain update input data"
+input UpdateDomain {
+  "Unique string identifier"
+  code: String!
+  "Current domain identifier"
+  id: IntID!
+  "Human readable identifier"
+  label: String!
+}
+
+input UpdateKCInput {
+  "Unique string identifier"
+  code: String!
+  "Unique numeric identifier of the current KC"
+  id: IntID!
+  "Human readable identifier"
+  label: String!
+}
+
+"Topic update input data"
+input UpdateTopic {
+  "Unique string identifier"
+  code: String!
+  "Content associated with topic"
+  contentIds: [IntID!]!
+  "Current topic identifier"
+  id: IntID!
+  "Human readable identifier"
+  label: String!
+  """
+  Parent topic
+
+  Used to set the hierarchy of topics
+  """
+  parentTopicId: IntID
+  "Parameter that can be used to sort a list of topics"
+  sortIndex: Int
+  """
+  Tags associated with the topic
+
+  Tags can be used to categorize or filter
+  """
+  tags: [String!]!
+}
+
+"""
+Represents NULL values
+"""
+scalar Void
