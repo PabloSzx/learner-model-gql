@@ -108,7 +108,7 @@ importers:
       fastify-auth0-verify: ^0.7.0
       fastify-plugin: ^3.0.0
       pino: ^7.5.1
-      pino-pretty: ^7.2.0
+      pino-pretty: ^7.3.0
       serialize-error: ^9.0.0
       validator: ^13.7.0
       wait-on: ^6.0.0
@@ -128,7 +128,7 @@ importers:
       fastify-auth0-verify: 0.7.0
       fastify-plugin: 3.0.0
       pino: 7.5.1
-      pino-pretty: 7.2.0
+      pino-pretty: 7.3.0
       serialize-error: 9.0.0
       validator: 13.7.0
       wait-on: 6.0.0
@@ -219,13 +219,13 @@ importers:
     specifiers:
       common: workspace:^0.0.1
       pino: ^7.5.1
-      pino-pretty: ^7.2.0
+      pino-pretty: ^7.3.0
       require-env-variable: ^4.0.0
       serialize-error: ^9.0.0
     dependencies:
       common: link:../common
       pino: 7.5.1
-      pino-pretty: 7.2.0
+      pino-pretty: 7.3.0
       require-env-variable: 4.0.0
       serialize-error: 9.0.0
 
@@ -7595,8 +7595,8 @@ packages:
       split2: 4.1.0
     dev: false
 
-  /pino-pretty/7.2.0:
-    resolution: {integrity: sha512-pkZhaF1JiyQt4BRqkLANYWuZTxavmuXh3OHsb8goeQasTFgNdzOECXkZWyPYrA0YMRa8zKoVsCzeYz9lI2NYwA==}
+  /pino-pretty/7.3.0:
+    resolution: {integrity: sha512-HAhShJ2z2QzxXhYAn6XfwYpF13o1PQbjzSNA9q+30FAvhjOmeACit9lprhV/mCOw/8YFWSyyNk0YCq2EDYGYpw==}
     hasBin: true
     dependencies:
       args: 5.0.1
