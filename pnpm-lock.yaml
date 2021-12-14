@@ -31,7 +31,7 @@ importers:
       dotenv: ^10.0.0
       esbuild: ^0.14.3
       execa: ^6.0.0
-      fastify: ^3.24.1
+      fastify: ^3.25.0
       graphql: ^16.1.0
       graphql-ez: ^0.13.5
       husky: ^7.0.4
@@ -53,7 +53,7 @@ importers:
       common: link:packages/common
       undici: 4.11.3
     devDependencies:
-      '@graphql-ez/fastify': 0.9.4_9ad560df5067d6297c1b71512efa8ebf
+      '@graphql-ez/fastify': 0.9.4_d89812975f73751454f361c3e5b1bfc9
       '@graphql-tools/code-file-loader': 7.2.3_graphql@16.1.0
       '@graphql-tools/graphql-tag-pluck': 7.1.4_graphql@16.1.0
       '@graphql-typed-document-node/core': 3.1.1_graphql@16.1.0
@@ -72,7 +72,7 @@ importers:
       dotenv: 10.0.0
       esbuild: 0.14.3
       execa: 6.0.0
-      fastify: 3.24.1
+      fastify: 3.25.0
       graphql: 16.1.0
       graphql-ez: 0.13.5_efce413f7032332ae395099c6f3e17c0
       husky: 7.0.4
@@ -114,7 +114,7 @@ importers:
       wait-on: ^6.0.0
     dependencies:
       '@auth0/auth0-react': 1.8.0_react@17.0.2
-      '@graphql-ez/fastify': 0.9.4_9ad560df5067d6297c1b71512efa8ebf
+      '@graphql-ez/fastify': 0.9.4_d89812975f73751454f361c3e5b1bfc9
       '@graphql-ez/plugin-altair': 0.9.4_adce139fb8e993f6dd5a6d4a6b7dd4f2
       '@graphql-ez/plugin-codegen': 0.7.6_adce139fb8e993f6dd5a6d4a6b7dd4f2
       '@graphql-ez/plugin-modules': 0.9.1_adce139fb8e993f6dd5a6d4a6b7dd4f2
@@ -283,7 +283,7 @@ importers:
       content-type: ^1.0.4
       cross-env: ^7.0.3
       db: workspace:^0.0.1
-      fastify: ^3.24.1
+      fastify: ^3.25.0
       fastify-cors: ^6.0.2
       graphql: ^16.1.0
       graphql-ez: ^0.13.5
@@ -295,7 +295,7 @@ importers:
       wait-on: ^6.0.0
       ws: ^8.3.0
     dependencies:
-      '@graphql-ez/fastify': 0.9.4_9ad560df5067d6297c1b71512efa8ebf
+      '@graphql-ez/fastify': 0.9.4_d89812975f73751454f361c3e5b1bfc9
       '@graphql-ez/plugin-altair': 0.9.4_adce139fb8e993f6dd5a6d4a6b7dd4f2
       '@graphql-ez/plugin-codegen': 0.7.6_adce139fb8e993f6dd5a6d4a6b7dd4f2
       '@graphql-ez/plugin-voyager': 0.9.0_adce139fb8e993f6dd5a6d4a6b7dd4f2
@@ -309,7 +309,7 @@ importers:
       content-type: 1.0.4
       cross-env: 7.0.3
       db: link:../db
-      fastify: 3.24.1
+      fastify: 3.25.0
       fastify-cors: 6.0.2
       graphql: 16.1.0
       graphql-ez: 0.13.5_efce413f7032332ae395099c6f3e17c0
@@ -433,8 +433,8 @@ importers:
       '@graphql-codegen/typed-document-node': 2.2.1_graphql@16.1.0
       '@graphql-codegen/typescript': 2.4.1_graphql@16.1.0
       '@graphql-codegen/typescript-operations': 2.2.1_graphql@16.1.0
-      '@graphql-ez/fastify': 0.9.4_9ad560df5067d6297c1b71512efa8ebf
-      '@graphql-ez/fastify-testing': 0.1.3_baf49a3c8a866097e9f5d2b45d4f3fd3
+      '@graphql-ez/fastify': 0.9.4_d89812975f73751454f361c3e5b1bfc9
+      '@graphql-ez/fastify-testing': 0.1.3_6cd9268541b55e0678898efd0588c79b
       '@graphql-typed-document-node/core': 3.1.1_graphql@16.1.0
       api-base: link:../api-base
       db: link:../db
@@ -2236,7 +2236,7 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@graphql-ez/fastify-testing/0.1.3_baf49a3c8a866097e9f5d2b45d4f3fd3:
+  /@graphql-ez/fastify-testing/0.1.3_6cd9268541b55e0678898efd0588c79b:
     resolution: {integrity: sha512-zol5Csbv+wU+fT5XTCWT3B4vchYSyIk5yk2ZiFm9TTsjpuuYVYp8O4SCQT/SOOmmlMUMJP1DoFHz1QcX1/LXBg==}
     peerDependencies:
       '@graphql-ez/fastify': ^0.9.4
@@ -2245,9 +2245,9 @@ packages:
       graphql-ez: ^0.13.5
     dependencies:
       '@graphql-ez/client': 0.2.3_efce413f7032332ae395099c6f3e17c0
-      '@graphql-ez/fastify': 0.9.4_9ad560df5067d6297c1b71512efa8ebf
+      '@graphql-ez/fastify': 0.9.4_d89812975f73751454f361c3e5b1bfc9
       '@graphql-ez/utils': 0.1.2_efce413f7032332ae395099c6f3e17c0
-      fastify: 3.24.1
+      fastify: 3.25.0
       graphql: 16.1.0
       graphql-ez: 0.13.5_efce413f7032332ae395099c6f3e17c0
     transitivePeerDependencies:
@@ -2256,7 +2256,7 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@graphql-ez/fastify/0.9.4_9ad560df5067d6297c1b71512efa8ebf:
+  /@graphql-ez/fastify/0.9.4_d89812975f73751454f361c3e5b1bfc9:
     resolution: {integrity: sha512-O04UxbJSU+4ZLOgxxuY5ib68FJXtzXJN3O067omZRw/s5A271ELY1wcLXtNsrZC2bNIye2Gl7lIsgdUDjHMQxQ==}
     engines: {node: ^12.20.0 || >=14.13.0}
     peerDependencies:
@@ -2267,7 +2267,7 @@ packages:
     dependencies:
       '@graphql-ez/utils': 0.1.2_efce413f7032332ae395099c6f3e17c0
       '@types/node': 16.11.12
-      fastify: 3.24.1
+      fastify: 3.25.0
       fastify-cors: 6.0.2
       graphql: 16.1.0
       graphql-ez: 0.13.5_efce413f7032332ae395099c6f3e17c0
@@ -5291,8 +5291,8 @@ packages:
   /fastify-warning/0.2.0:
     resolution: {integrity: sha512-s1EQguBw/9qtc1p/WTY4eq9WMRIACkj+HTcOIK1in4MV5aFaQC9ZCIt0dJ7pr5bIf4lPpHvAtP2ywpTNgs7hqw==}
 
-  /fastify/3.24.1:
-    resolution: {integrity: sha512-ZL0V6u37d65tAY8lMwVMFtFvnEeJcG80QBNSdChqCm4i4x+is/38OU14gzJuRXhpenTL+pTJzNcu5Kn1ouzM3Q==}
+  /fastify/3.25.0:
+    resolution: {integrity: sha512-GblpjS7yuJ9jpkz1guHTyzlVQn9NYvGrMkDLtoxctEt7n1d6MSwA9i3p10HjNiY+zVurPf3YdOqXsJmVgAR3cg==}
     dependencies:
       '@fastify/ajv-compiler': 1.1.0
       abstract-logging: 2.0.1
