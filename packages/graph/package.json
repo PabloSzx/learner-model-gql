@@ -22,12 +22,12 @@
     "@graphql-codegen/typescript-document-nodes": "2.2.1",
     "@graphql-codegen/typescript-operations": "^2.2.1",
     "@graphql-codegen/typescript-react-query": "^3.2.2",
-    "react-query": "^3.34.4",
+    "react-query": "^3.34.5",
     "rq-gql": "^0.3.1",
     "valtio": "^1.2.7"
   },
   "peerDependencies": {
-    "react-query": "^3.34.4",
+    "react-query": "^3.34.5",
     "rq-gql": "^0.3.1",
     "valtio": "^1.2.7"
   }
