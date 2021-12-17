@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "common": "workspace:^0.0.1",
-    "graphql": "^16.1.0",
+    "graphql": "^16.2.0",
     "prettier": "^2.5.1"
   },
   "devDependencies": {
