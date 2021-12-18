@@ -4,6 +4,7 @@ import { buildApp } from "./ez";
 
 const app = Fastify({
   logger,
+  pluginTimeout: 30000,
 });
 
 const ezApp = buildApp({

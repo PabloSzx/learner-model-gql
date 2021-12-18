@@ -39,6 +39,7 @@ To create a service, you have to:
    // This creates the new web server
    const app = Fastify({
      logger,
+     pluginTimeout: 30000,
    });
 
    // This builds the GraphQL EZ API

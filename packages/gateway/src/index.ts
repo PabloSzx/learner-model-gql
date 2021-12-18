@@ -7,6 +7,7 @@ import type { Subscription } from "./ez.generated";
 async function main() {
   const app = Fastify({
     logger,
+    pluginTimeout: 30000,
   });
 
   app.get("/", (_req, reply) => {
