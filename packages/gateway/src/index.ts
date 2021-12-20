@@ -1,4 +1,4 @@
-import { ENV, logger, smartListen } from "api-base";
+import { DB_PREPARED, ENV, logger, smartListen } from "api-base";
 import Fastify from "fastify";
 import { setTimeout } from "timers/promises";
 import { getGatewayPlugin } from "./app";
@@ -16,7 +16,7 @@ async function main() {
     });
   });
 
-  await app.register(await getGatewayPlugin());
+  await Promise.all([DB_PREPARED, app.register(await getGatewayPlugin())]);
 
   await smartListen(app, 8080);
 }

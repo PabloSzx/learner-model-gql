@@ -38,6 +38,8 @@ export const DB_PREPARED = LazyPromise(async () => {
     });
 
     logger.warn(`EMAIL "${ADMIN_USER_EMAIL}" HAS BEEN SET AS ADMIN USER`);
+  } else {
+    await prisma.$queryRawUnsafe("SELECT 1;");
   }
 });
 
