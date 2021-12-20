@@ -10,6 +10,7 @@ services:
       AUTH0_DOMAIN: ${AUTH0_DOMAIN}
       AUTH0_CLIENT: ${AUTH0_CLIENT}
       AUTH0_SECRET: ${AUTH0_SECRET}
+      ADMIN_USER_EMAIL: ${ADMIN_USER_EMAIL}
     command: pnpm -r start --filter=service-users
   actions:
     restart: always
@@ -21,6 +22,7 @@ services:
       AUTH0_DOMAIN: ${AUTH0_DOMAIN}
       AUTH0_CLIENT: ${AUTH0_CLIENT}
       AUTH0_SECRET: ${AUTH0_SECRET}
+      ADMIN_USER_EMAIL: ${ADMIN_USER_EMAIL}
     command: pnpm -r start --filter=service-actions
   content:
     restart: always
@@ -32,6 +34,7 @@ services:
       AUTH0_DOMAIN: ${AUTH0_DOMAIN}
       AUTH0_CLIENT: ${AUTH0_CLIENT}
       AUTH0_SECRET: ${AUTH0_SECRET}
+      ADMIN_USER_EMAIL: ${ADMIN_USER_EMAIL}
     command: pnpm -r start --filter=service-content
   domain:
     restart: always
@@ -43,6 +46,7 @@ services:
       AUTH0_DOMAIN: ${AUTH0_DOMAIN}
       AUTH0_CLIENT: ${AUTH0_CLIENT}
       AUTH0_SECRET: ${AUTH0_SECRET}
+      ADMIN_USER_EMAIL: ${ADMIN_USER_EMAIL}
     command: pnpm -r start --filter=service-domain
   projects:
     restart: always
@@ -54,6 +58,7 @@ services:
       AUTH0_DOMAIN: ${AUTH0_DOMAIN}
       AUTH0_CLIENT: ${AUTH0_CLIENT}
       AUTH0_SECRET: ${AUTH0_SECRET}
+      ADMIN_USER_EMAIL: ${ADMIN_USER_EMAIL}
     command: pnpm -r start --filter=service-projects
   state:
     restart: always
@@ -65,6 +70,7 @@ services:
       AUTH0_DOMAIN: ${AUTH0_DOMAIN}
       AUTH0_CLIENT: ${AUTH0_CLIENT}
       AUTH0_SECRET: ${AUTH0_SECRET}
+      ADMIN_USER_EMAIL: ${ADMIN_USER_EMAIL}
     command: pnpm -r start --filter=service-state
   gateway:
     restart: always
@@ -75,4 +81,5 @@ services:
       AUTH0_DOMAIN: ${AUTH0_DOMAIN}
       AUTH0_CLIENT: ${AUTH0_CLIENT}
       AUTH0_SECRET: ${AUTH0_SECRET}
+      ADMIN_USER_EMAIL: ${ADMIN_USER_EMAIL}
     command: pnpm -r start --filter=service-gateway
