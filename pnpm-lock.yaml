@@ -293,7 +293,7 @@ importers:
       pg-gql-pubsub: ^0.3.0
       undici: ^4.12.0
       wait-on: ^6.0.0
-      ws: ^8.3.0
+      ws: ^8.4.0
     dependencies:
       '@graphql-ez/fastify': 0.9.4_6b3205ce24810b9e0c18ee21480d8858
       '@graphql-ez/plugin-altair': 0.9.5_94943575759095d5ebf48f97e788de7d
@@ -319,7 +319,7 @@ importers:
       pg-gql-pubsub: 0.3.0
       undici: 4.12.0
       wait-on: 6.0.0
-      ws: 8.3.0
+      ws: 8.4.0
     devDependencies:
       '@types/concurrently': 6.4.0
       '@types/content-type': 1.1.5
@@ -9620,6 +9620,19 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
+
+  /ws/8.4.0:
+    resolution: {integrity: sha512-IHVsKe2pjajSUIl4KYMQOdlyliovpEPquKkqbwswulszzI7r0SfQrxnXdWAEqOlDCLrVSJzo+O1hAwdog2sKSQ==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: ^5.0.2
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+    dev: false
 
   /xtend/4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
