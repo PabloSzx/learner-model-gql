@@ -45,13 +45,13 @@ importers:
       rimraf: ^3.0.2
       testing: workspace:*
       typescript: ^4.5.4
-      undici: ^4.12.0
+      undici: ^4.12.1
       valtio: ^1.2.7
       wait-on: ^6.0.0
     dependencies:
       api-base: link:packages/api-base
       common: link:packages/common
-      undici: 4.12.0
+      undici: 4.12.1
     devDependencies:
       '@graphql-ez/fastify': 0.9.4_0766ea46d4834b51837d0003b8c9da27
       '@graphql-tools/code-file-loader': 7.2.3_graphql@16.2.0
@@ -291,7 +291,7 @@ importers:
       lodash: ^4.17.21
       ms: ^3.0.0-canary.1
       pg-gql-pubsub: ^0.3.0
-      undici: ^4.12.0
+      undici: ^4.12.1
       wait-on: ^6.0.0
       ws: ^8.4.0
     dependencies:
@@ -317,7 +317,7 @@ importers:
       lodash: 4.17.21
       ms: 3.0.0-canary.1
       pg-gql-pubsub: 0.3.0
-      undici: 4.12.0
+      undici: 4.12.1
       wait-on: 6.0.0
       ws: 8.4.0
     devDependencies:
@@ -9282,8 +9282,8 @@ packages:
     engines: {node: '>=12.18'}
     dev: true
 
-  /undici/4.12.0:
-    resolution: {integrity: sha512-sJ4CyO3ZPaoxWpLQTJpH/gWD+tCIra2OJ9UPvrX1siyJkgh8NOAybRejJ/g2xHyOdAuoSE0lPRJwRl8AZSXYJQ==}
+  /undici/4.12.1:
+    resolution: {integrity: sha512-MSfap7YiQJqTPP12C11PFRs9raZuVicDbwsZHTjB0a8+SsCqt7KdUis54f373yf7ZFhJzAkGJLaKm0202OIxHg==}
     engines: {node: '>=12.18'}
     dev: false
 
