@@ -5,7 +5,7 @@ importers:
   .:
     specifiers:
       '@types/node': ^16.11.17
-      '@types/react': ^17.0.37
+      '@types/react': ^17.0.38
       concurrently: ^6.5.1
       next: ^12.0.7
       nextra: ^2.0.0-beta.5
@@ -20,14 +20,14 @@ importers:
     dependencies:
       next: 12.0.7_react-dom@17.0.2+react@17.0.2
       nextra: 2.0.0-beta.5_react@17.0.2
-      nextra-theme-docs: 2.0.0-beta.5_29eed56be0bdeede098eb6f2e43fa1df
+      nextra-theme-docs: 2.0.0-beta.5_676434e83a07d0ba4ed04d5ca6a47005
       prism-react-renderer: 1.2.1_react@17.0.2
       prismjs: 1.25.0
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     devDependencies:
       '@types/node': 16.11.17
-      '@types/react': 17.0.37
+      '@types/react': 17.0.38
       concurrently: 6.5.1
       open-cli: 7.0.1
       typescript: 4.5.4
@@ -159,7 +159,7 @@ packages:
       react: '>=16'
     dependencies:
       '@types/mdx': 2.0.1
-      '@types/react': 17.0.37
+      '@types/react': 17.0.38
       react: 17.0.2
     dev: false
 
@@ -444,8 +444,8 @@ packages:
   /@types/prop-types/15.7.4:
     resolution: {integrity: sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==}
 
-  /@types/react/17.0.37:
-    resolution: {integrity: sha512-2FS1oTqBGcH/s0E+CjrCCR9+JMpsu9b69RTFO+40ua43ZqP5MmQ4iUde/dMjWR909KxZwmOQIFq6AV6NjEG5xg==}
+  /@types/react/17.0.38:
+    resolution: {integrity: sha512-SI92X1IA+FMnP3qM5m4QReluXzhcmovhZnLNm3pyeQlooi02qI7sLiepEYqT678uNiyc25XfCqxREFpy3W7YhQ==}
     dependencies:
       '@types/prop-types': 15.7.4
       '@types/scheduler': 0.16.2
@@ -3111,7 +3111,7 @@ packages:
       - webpack
     dev: false
 
-  /nextra-theme-docs/2.0.0-beta.5_29eed56be0bdeede098eb6f2e43fa1df:
+  /nextra-theme-docs/2.0.0-beta.5_676434e83a07d0ba4ed04d5ca6a47005:
     resolution: {integrity: sha512-VUNdcyTBK5REuQNocWOeXaFY88RyZq9wsym4So0+6yQVJSpf8eYCLHKozQOC2v6cyqBP5zGFcaFq6rDRp3Zt9w==}
     peerDependencies:
       next: '>=9.5.3'
@@ -3132,7 +3132,7 @@ packages:
       prism-react-renderer: 1.2.1_react@17.0.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      react-innertext: 1.1.5_cfedea9b3ed0faf0dded75c187406c5e
+      react-innertext: 1.1.5_b08e3c15324cbe90a6ff8fcd416c932c
       title: 3.4.3
     transitivePeerDependencies:
       - '@types/react'
@@ -3607,13 +3607,13 @@ packages:
       scheduler: 0.20.2
     dev: false
 
-  /react-innertext/1.1.5_cfedea9b3ed0faf0dded75c187406c5e:
+  /react-innertext/1.1.5_b08e3c15324cbe90a6ff8fcd416c932c:
     resolution: {integrity: sha512-PWAqdqhxhHIv80dT9znP2KvS+hfkbRovFp4zFYHFFlOoQLRiawIic81gKb3U1wEyJZgMwgs3JoLtwryASRWP3Q==}
     peerDependencies:
       '@types/react': '>=0.0.0 <=99'
       react: '>=0.0.0 <=99'
     dependencies:
-      '@types/react': 17.0.37
+      '@types/react': 17.0.38
       react: 17.0.2
     dev: false
 
