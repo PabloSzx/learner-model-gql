@@ -5,7 +5,6 @@
 Table User {
   id Int [pk, increment]
   uids UserUID [not null]
-  enabled Boolean [not null, default: true]
   email String [unique, not null]
   name String
   picture String
@@ -20,10 +19,6 @@ Table User {
   projects Project [not null]
   actions Action [not null]
   modelStates ModelState [not null]
-
-  indexes {
-    (id, enabled) [unique]
-  }
 }
 
 Table UserUID {

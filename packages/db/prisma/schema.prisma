@@ -20,8 +20,6 @@ model User {
   id   Int       @id @default(autoincrement())
   uids UserUID[]
 
-  enabled Boolean @default(true)
-
   email   String  @unique
   name    String?
   picture String?
@@ -45,8 +43,6 @@ model User {
   actions Action[]
 
   modelStates ModelState[]
-
-  @@unique([id, enabled])
 }
 
 model UserUID {
