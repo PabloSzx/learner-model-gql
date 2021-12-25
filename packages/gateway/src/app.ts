@@ -11,11 +11,13 @@ import {
   pubSub,
   voyagerOptions,
 } from "api-base";
+import debounce from "lodash/debounce.js";
 import ms from "ms";
 import { resolve } from "path";
 import waitOn from "wait-on";
 import { getServicesConfigFromEnv } from "./services";
 import { getStitchedSchema } from "./stitch";
+import { setTimeout } from "timers/promises";
 
 const __dirname = getDirname(import.meta.url);
 
@@ -49,17 +51,27 @@ export const getGatewayPlugin = async () => {
     envelop: {
       plugins: [
         {
-          async onSchemaChange({ replaceSchema }) {
-            for await (const data of pubSub.subscribe("updateGateway")) {
-              logger.info(`Update service ${data}`);
-              getStitchedSchema(servicesConfig)
-                .then((schema) => {
-                  replaceSchema(schema);
-                })
-                .catch(console.error);
+          onPluginInit({ setSchema }) {
+            const debounceUpdateStitchedSchema = debounce(
+              () => {
+                logger.info(`Updating stitched schema!`);
+                getStitchedSchema(servicesConfig)
+                  .then(setSchema)
+                  .catch(logger.error);
+              },
+              1000,
+              {
+                leading: false,
+                trailing: true,
+              }
+            );
 
-              break;
-            }
+            keepTrying(async () => {
+              for await (const data of pubSub.subscribe("updateGateway")) {
+                logger.info(`Update service ${data}`);
+                debounceUpdateStitchedSchema();
+              }
+            });
           },
         },
       ],
@@ -72,3 +84,14 @@ export const getGatewayPlugin = async () => {
 
   return fastifyPlugin;
 };
+
+async function keepTrying(fn: () => Promise<void>) {
+  while (true) {
+    try {
+      await fn();
+      await setTimeout(1000);
+    } catch (err) {
+      logger.error(err);
+    }
+  }
+}

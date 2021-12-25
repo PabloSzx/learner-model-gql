@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "bob-tsm --node-env=dev --watch src ../api-base/src \"../services/*/src/**\" -- src/index.ts",
+    "dev": "bob-tsm --node-env=dev --watch src ../api-base/src -- src/index.ts",
     "start": "bob-tsm --node-env=prod src/index.ts"
   },
   "dependencies": {
