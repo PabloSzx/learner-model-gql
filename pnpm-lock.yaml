@@ -241,6 +241,7 @@ importers:
       inquirer: ^8.2.0
       json2csv: ^5.0.6
       open: ^8.4.0
+      pablosz-prisma-dbml-generator: ^0.8.4
       pg-gql-pubsub: ^0.3.0
       prisma: ^3.7.0
       prisma-dbml-generator: ^0.8.3
@@ -249,6 +250,7 @@ importers:
       '@graphql-ez/utils': 0.1.2_7e70af8425d7c515eda9f85c6be85888
       '@prisma/client': 3.7.0_prisma@3.7.0
       common-api: link:../common-api
+      pablosz-prisma-dbml-generator: 0.8.4
       pg-gql-pubsub: 0.3.0
       prisma: 3.7.0
       prisma-dbml-generator: 0.8.3
@@ -3063,7 +3065,7 @@ packages:
       http-proxy-agent: 4.0.1
       https-proxy-agent: 5.0.0
       make-dir: 3.1.0
-      node-fetch: 2.6.1
+      node-fetch: 2.6.6
       p-filter: 2.1.0
       p-map: 4.0.0
       p-retry: 4.6.1
@@ -4249,7 +4251,7 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       slice-ansi: 3.0.0
-      string-width: 4.2.2
+      string-width: 4.2.3
     dev: false
 
   /cli-width/3.0.0:
@@ -7456,6 +7458,16 @@ packages:
     resolution: {integrity: sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==}
     engines: {node: '>=6'}
 
+  /pablosz-prisma-dbml-generator/0.8.4:
+    resolution: {integrity: sha512-3Xa1Pssu5Uast6/NuAjprVFGZic2TiOZ0+5lHZKp45PoYphLutjJdEEEyJxwY56hg+5Q0JxfWhtEAAIiIyDZ3Q==}
+    hasBin: true
+    dependencies:
+      '@prisma/generator-helper': 3.0.2
+      '@prisma/sdk': 3.0.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /package-json/6.5.0:
     resolution: {integrity: sha512-k3bdm2n25tkyxcjSKzB5x8kfVxlMdgsbPr0GkZcwHsLpba6cBjqCt1KlcChKEvxHIcTB1FVMuwoijZ26xex5MQ==}
     engines: {node: '>=8'}
@@ -8857,7 +8869,7 @@ packages:
     dependencies:
       emoji-regex: 8.0.0
       is-fullwidth-code-point: 3.0.0
-      strip-ansi: 6.0.0
+      strip-ansi: 6.0.1
     dev: false
 
   /string-width/4.2.3:

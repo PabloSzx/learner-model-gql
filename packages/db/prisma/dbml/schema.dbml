@@ -9,7 +9,7 @@ Table User {
   email String [unique, not null]
   name String
   picture String
-  tags String [not null]
+  tags String[] [not null]
   locked Boolean [not null, default: false]
   active Boolean [not null, default: false]
   lastOnline DateTime
@@ -38,7 +38,7 @@ Table Group {
   id Int [pk, increment]
   code String [unique, not null]
   label String [not null]
-  tags String [not null]
+  tags String[] [not null]
   users User [not null]
   projects Project [not null]
   flags GroupFlags
@@ -86,7 +86,7 @@ Table Topic {
   code String [unique, not null]
   label String [not null]
   sortIndex Int
-  tags String [not null]
+  tags String[] [not null]
   project Project [not null]
   projectId Int [not null]
   parent Topic
@@ -149,7 +149,7 @@ Table Content {
   code String [unique, not null]
   label String [not null]
   sortIndex Int
-  tags String [not null]
+  tags String[] [not null]
   project Project [not null]
   projectId Int [not null]
   topics Topic [not null]
