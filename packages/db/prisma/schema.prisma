@@ -28,7 +28,6 @@ model User {
 
   locked Boolean @default(false)
 
-  active     Boolean   @default(false)
   lastOnline DateTime?
 
   role UserRole @default(USER)

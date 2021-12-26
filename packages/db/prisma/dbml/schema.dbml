@@ -10,7 +10,6 @@ Table User {
   picture String
   tags String[] [not null]
   locked Boolean [not null, default: false]
-  active Boolean [not null, default: false]
   lastOnline DateTime
   role UserRole [not null, default: 'USER']
   createdAt DateTime [default: `now()`, not null]

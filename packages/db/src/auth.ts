@@ -34,7 +34,6 @@ export function GetDBUser(auth0UserPromise: Promise<Auth0User | null>) {
                 name,
                 picture,
                 lastOnline,
-                active: true,
               },
             },
           },
@@ -54,7 +53,6 @@ export function GetDBUser(auth0UserPromise: Promise<Auth0User | null>) {
             },
             update: {
               lastOnline,
-              active: true,
             },
           },
         },

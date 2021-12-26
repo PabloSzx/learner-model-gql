@@ -164,6 +164,11 @@ export const usersModule = registerModule(
     id: "Users",
     dirname: import.meta.url,
     resolvers: {
+      User: {
+        active({ lastOnline }) {
+          return lastOnline != null;
+        },
+      },
       Mutation: {
         async adminUsers(_root, _args, { authorization }) {
           await authorization.expectAdmin;
