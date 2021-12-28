@@ -1,16 +1,10 @@
 import { baseServicesList, logger, pubSub, smartListen } from "api-base";
 import Fastify from "fastify";
-import { buildApp } from "./ez";
+import { ezApp } from "./app";
 
 const app = Fastify({
   logger,
   pluginTimeout: 30000,
-});
-
-const ezApp = buildApp({
-  async prepare() {
-    await import("./modules/index");
-  },
 });
 
 app.register(ezApp.fastifyPlugin);
