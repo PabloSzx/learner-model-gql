@@ -162,7 +162,7 @@ importers:
       react-datepicker: ^4.5.0
       react-dom: ^17.0.2
       react-icons: ^4.3.1
-      react-query: ^3.34.6
+      react-query: ^3.34.7
       react-select: ^5.2.1
       react-table: ^7.7.0
       react-use: ^17.3.1
@@ -341,7 +341,7 @@ importers:
       common: workspace:^0.0.1
       graphql: ^16.2.0
       prettier: ^2.5.1
-      react-query: ^3.34.6
+      react-query: ^3.34.7
       rq-gql: ^0.3.1
       valtio: ^1.2.7
     dependencies:
