@@ -151,7 +151,7 @@ importers:
       '@types/react-table': ^7.7.9
       common: workspace:^0.0.1
       cross-env: ^7.0.3
-      date-fns: ^2.27.0
+      date-fns: ^2.28.0
       framer-motion: 5.5.5
       graph: workspace:^0.0.1
       immer: ^9.0.7
@@ -211,7 +211,7 @@ importers:
 
   packages/common:
     specifiers:
-      date-fns: ^2.27.0
+      date-fns: ^2.28.0
     dependencies:
       date-fns: 2.28.0
 
