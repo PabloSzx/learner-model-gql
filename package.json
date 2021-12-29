@@ -44,7 +44,7 @@
     "@types/prettier": "^2.4.2",
     "@types/randomstring": "^1.1.8",
     "@types/react": "^17.0.38",
-    "bob-tsm": "^0.4.1",
+    "bob-tsm": "^0.4.2",
     "bob-watch": "^0.1.1",
     "c8": "^7.10.0",
     "concurrently": "^6.5.1",
