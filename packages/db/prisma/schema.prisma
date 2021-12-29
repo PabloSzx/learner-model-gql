@@ -230,7 +230,6 @@ model Content {
   project   Project @relation(fields: [projectId], references: [id])
   projectId Int
 
-
   topics Topic[]
 
   kcs KC[]
