@@ -19,9 +19,10 @@ import {
   expectDeepEqual,
   GetTestClient,
   gql,
+  TestClient,
 } from "../packages/testing/src/index";
 
-export const TestStitchedSchema = async () => {
+export const TestGatewayStitchedSchema = async (): Promise<TestClient> => {
   const ActionService = GetTestClient({
     async prepare({ registerModule }) {
       const { actionModule, projectsModule } = await import(
@@ -118,115 +119,128 @@ export const TestStitchedSchema = async () => {
     },
   ]);
 
-  const GatewayClient = await GetTestClient({
+  return GetTestClient({
     schema: stitchedSchema,
   });
-
-  return {
-    GatewayClient,
-  };
 };
 
-describe("Gateway", () => {
-  it("Gateway Hello World", async () => {
-    const { GatewayClient } = await TestStitchedSchema();
+export const TestMonoStitchedSchema = async (): Promise<TestClient> => {
+  const { schema } = await import("../packages/mono/src/schema");
 
-    expectDeepEqual(
-      await GatewayClient.query(
-        gql(/* GraphQL */ `
-          query hello {
-            hello
-          }
-        `)
-      ),
-      {
-        data: {
-          hello: "Hello World!",
-        },
-      }
-    );
+  return GetTestClient({
+    schema,
   });
+};
 
-  it("actions", async () => {
-    const { GatewayClient } = await TestStitchedSchema();
+function TestStitched(
+  TestStitchedClient: () => Promise<TestClient>,
+  name: string
+) {
+  describe(name, () => {
+    it("Hello World", async () => {
+      const GatewayClient = await TestStitchedClient();
 
-    await CheckActionsCreationRetrieval(GatewayClient);
-  });
-
-  it("content", async () => {
-    const { GatewayClient } = await TestStitchedSchema();
-
-    await CheckContentCreationRetrieval(GatewayClient);
-  });
-
-  describe("domain gateway", async () => {
-    it("domain", async () => {
-      const { GatewayClient } = await TestStitchedSchema();
-
-      await CheckDomainCreationRetrieval(GatewayClient);
-    });
-    it("topics", async () => {
-      const { GatewayClient } = await TestStitchedSchema();
-
-      await CheckTopicsCreationRetrieval(GatewayClient);
+      expectDeepEqual(
+        await GatewayClient.query(
+          gql(/* GraphQL */ `
+            query hello {
+              hello
+            }
+          `)
+        ),
+        {
+          data: {
+            hello: "Hello World!",
+          },
+        }
+      );
     });
 
-    it("projects", async () => {
-      const { GatewayClient } = await TestStitchedSchema();
+    it("actions", async () => {
+      const GatewayClient = await TestStitchedClient();
 
-      await CheckDomainsOfProjects(GatewayClient);
-    });
-
-    it("kcs", async () => {
-      const { GatewayClient } = await TestStitchedSchema();
-
-      await CheckKCs(GatewayClient);
-    });
-  });
-
-  describe("projects gateway", async () => {
-    it("projects", async () => {
-      const { GatewayClient } = await TestStitchedSchema();
-
-      await CheckProjectCreationRetrieval(GatewayClient);
+      await CheckActionsCreationRetrieval(GatewayClient);
     });
 
     it("content", async () => {
-      const { GatewayClient } = await TestStitchedSchema();
+      const GatewayClient = await TestStitchedClient();
 
-      await CheckProjectFromContent(GatewayClient);
+      await CheckContentCreationRetrieval(GatewayClient);
     });
-    it("domain", async () => {
-      const { GatewayClient } = await TestStitchedSchema();
 
-      await CheckProjectFromDomainAndTopic(GatewayClient);
+    describe("domain", async () => {
+      it("domain", async () => {
+        const GatewayClient = await TestStitchedClient();
+
+        await CheckDomainCreationRetrieval(GatewayClient);
+      });
+      it("topics", async () => {
+        const GatewayClient = await TestStitchedClient();
+
+        await CheckTopicsCreationRetrieval(GatewayClient);
+      });
+
+      it("projects", async () => {
+        const GatewayClient = await TestStitchedClient();
+
+        await CheckDomainsOfProjects(GatewayClient);
+      });
+
+      it("kcs", async () => {
+        const GatewayClient = await TestStitchedClient();
+
+        await CheckKCs(GatewayClient);
+      });
     });
-    it("user", async () => {
-      const { GatewayClient } = await TestStitchedSchema();
 
-      await CheckProjectFromUser(GatewayClient);
+    describe("projects", async () => {
+      it("projects", async () => {
+        const GatewayClient = await TestStitchedClient();
+
+        await CheckProjectCreationRetrieval(GatewayClient);
+      });
+
+      it("content", async () => {
+        const GatewayClient = await TestStitchedClient();
+
+        await CheckProjectFromContent(GatewayClient);
+      });
+      it("domain", async () => {
+        const GatewayClient = await TestStitchedClient();
+
+        await CheckProjectFromDomainAndTopic(GatewayClient);
+      });
+      it("user", async () => {
+        const GatewayClient = await TestStitchedClient();
+
+        await CheckProjectFromUser(GatewayClient);
+      });
+    });
+
+    describe("users", async () => {
+      it("users", async () => {
+        const GatewayClient = await TestStitchedClient();
+
+        await CheckUsers(GatewayClient);
+      });
+
+      it("groups", async () => {
+        const GatewayClient = await TestStitchedClient();
+
+        await CheckGroups(GatewayClient);
+      });
+    });
+
+    describe("state", async () => {
+      it("state", async () => {
+        const GatewayClient = await TestStitchedClient();
+
+        await CheckServiceState(GatewayClient);
+      });
     });
   });
+}
 
-  describe("users gateway", async () => {
-    it("users", async () => {
-      const { GatewayClient } = await TestStitchedSchema();
+TestStitched(TestGatewayStitchedSchema, "gateway service");
 
-      await CheckUsers(GatewayClient);
-    });
-
-    it("groups", async () => {
-      const { GatewayClient } = await TestStitchedSchema();
-
-      await CheckGroups(GatewayClient);
-    });
-  });
-
-  describe("state gateway", async () => {
-    it("state", async () => {
-      const { GatewayClient } = await TestStitchedSchema();
-
-      await CheckServiceState(GatewayClient);
-    });
-  });
-});
+TestStitched(TestMonoStitchedSchema, "mono service");

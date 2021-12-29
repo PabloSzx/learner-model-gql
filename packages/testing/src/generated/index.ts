@@ -103,6 +103,8 @@ const documents = {
     graphql.AdminUpdateGroupDocument,
   "\n      mutation SetUserProjects($projectIds: [IntID!]!, $userIds: [IntID!]!) {\n        adminUsers {\n          setProjectsToUsers(projectIds: $projectIds, userIds: $userIds) {\n            id\n            email\n            projectsIds\n          }\n        }\n      }\n    ":
     graphql.SetUserProjectsDocument,
+  "\n            query hello {\n              hello\n            }\n          ":
+    graphql.HelloDocument,
 };
 
 export function gql(
@@ -255,6 +257,9 @@ export function gql(
 export function gql(
   source: "\n      mutation SetUserProjects($projectIds: [IntID!]!, $userIds: [IntID!]!) {\n        adminUsers {\n          setProjectsToUsers(projectIds: $projectIds, userIds: $userIds) {\n            id\n            email\n            projectsIds\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation SetUserProjects($projectIds: [IntID!]!, $userIds: [IntID!]!) {\n        adminUsers {\n          setProjectsToUsers(projectIds: $projectIds, userIds: $userIds) {\n            id\n            email\n            projectsIds\n          }\n        }\n      }\n    "];
+export function gql(
+  source: "\n            query hello {\n              hello\n            }\n          "
+): typeof documents["\n            query hello {\n              hello\n            }\n          "];
 
 export function gql(source: string): DocumentNode;
 export function gql(source: string) {
