@@ -34,7 +34,7 @@ export * from "./connection";
 export * from "./listen";
 export * from "./utils";
 
-async function buildContext({ fastify }: BuildContextArgs) {
+export async function buildContext({ fastify }: BuildContextArgs) {
   const { Auth0UserPromise } = GetAuth0User(fastify?.request);
 
   const { UserPromise } = GetDBUser(Auth0UserPromise);

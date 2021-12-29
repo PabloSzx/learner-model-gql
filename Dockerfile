@@ -17,6 +17,7 @@ COPY packages/db ./packages/db
 COPY packages/gateway ./packages/gateway
 COPY packages/testing ./packages/testing
 COPY packages/services ./packages/services
+COPY packages/mono ./packages/mono
 
 ENV CI="true"
 

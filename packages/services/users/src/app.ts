@@ -5,3 +5,4 @@ export const ezApp = buildApp({
     await import("./modules/index");
   },
 });
+export * from "./ez";

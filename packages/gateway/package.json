@@ -7,7 +7,7 @@
     "start": "bob-tsm --node-env=prod src/index.ts"
   },
   "dependencies": {
-    "@graphql-ez/fastify": "^0.9.4",
+    "@graphql-ez/fastify": "^0.9.5",
     "@graphql-ez/plugin-altair": "^0.9.6",
     "@graphql-ez/plugin-codegen": "^0.7.6",
     "@graphql-ez/plugin-voyager": "^0.9.0",
@@ -24,7 +24,7 @@
     "fastify": "^3.25.3",
     "fastify-cors": "^6.0.2",
     "graphql": "^16.2.0",
-    "graphql-ez": "^0.13.6",
+    "graphql-ez": "^0.13.7",
     "graphql-ws": "^5.5.5",
     "lodash": "^4.17.21",
     "ms": "^3.0.0-canary.1",
