@@ -146,7 +146,7 @@ importers:
       '@types/mime': ^2.0.3
       '@types/nprogress': ^0.2.0
       '@types/react': ^17.0.38
-      '@types/react-datepicker': ^4.3.3
+      '@types/react-datepicker': ^4.3.4
       '@types/react-dom': ^17.0.11
       '@types/react-table': ^7.7.9
       common: workspace:^0.0.1
@@ -204,7 +204,7 @@ importers:
     devDependencies:
       '@types/mime': 2.0.3
       '@types/nprogress': 0.2.0
-      '@types/react-datepicker': 4.3.3_react@17.0.2
+      '@types/react-datepicker': 4.3.4_react@17.0.2
       '@types/react-table': 7.7.9
       cross-env: 7.0.3
       typescript: 4.5.4
@@ -3392,8 +3392,8 @@ packages:
     resolution: {integrity: sha512-NPOJcW+TTjT9Qiog0UjSoG3Sj24c7EfzZO39BU9E61D7fQtwNmBNblyQhSsK9+5s9Fm0o31rvX+ZyZkpE/c7jA==}
     dev: true
 
-  /@types/react-datepicker/4.3.3_react@17.0.2:
-    resolution: {integrity: sha512-xidLb4DVMCEIzptI+kvsuuTWkmAlCwc05QcwCNeJZaODonCR3q8WKuWpgHGwjdNwJVyMfUSyg4uv4DybY276xg==}
+  /@types/react-datepicker/4.3.4_react@17.0.2:
+    resolution: {integrity: sha512-5nTTz37KdTUgMZ1AAxztMWNtEnIMVRo8oCAEhIv0a6uUqDjvSKaMyPRpBV+8chi6f/A8wlTKJIpojpXca2dx3A==}
     dependencies:
       '@popperjs/core': 2.11.0
       '@types/react': 17.0.38
