@@ -71,6 +71,17 @@ services:
       AUTH0_SECRET: ${AUTH0_SECRET}
       ADMIN_USER_EMAIL: ${ADMIN_USER_EMAIL}
     command: pnpm -r start --filter=service-gateway
+  # mono:
+  #   restart: always
+  #   image: pabloszx/learner-model-gql
+  #   network_mode: host
+  #   environment:
+  #     DATABASE_URL: ${DATABASE_URL}
+  #     AUTH0_DOMAIN: ${AUTH0_DOMAIN}
+  #     AUTH0_CLIENT: ${AUTH0_CLIENT}
+  #     AUTH0_SECRET: ${AUTH0_SECRET}
+  #     ADMIN_USER_EMAIL: ${ADMIN_USER_EMAIL}
+  #   command: pnpm -r start --filter=mono
   migration:
     restart: "no"
     image: pabloszx/learner-model-gql
