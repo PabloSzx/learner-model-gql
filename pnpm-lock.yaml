@@ -2287,7 +2287,7 @@ packages:
       graphql-ws: 5.5.5_graphql@16.2.0
       isomorphic-ws: 4.0.1_ws@8.4.0
       node-fetch: 2.6.6
-      subscriptions-transport-ws-envelop: 2.0.1_graphql@16.2.0+ws@8.4.0
+      subscriptions-transport-ws-envelop: 2.0.2_graphql@16.2.0+ws@8.4.0
       undici: 4.12.1
       ws: 8.4.0
     transitivePeerDependencies:
@@ -2450,7 +2450,7 @@ packages:
       graphql: 16.2.0
       graphql-ez: 0.13.7_7e70af8425d7c515eda9f85c6be85888
       graphql-ws: 5.5.5_graphql@16.2.0
-      subscriptions-transport-ws-envelop: 2.0.1_graphql@16.2.0+ws@8.4.0
+      subscriptions-transport-ws-envelop: 2.0.2_graphql@16.2.0+ws@8.4.0
       ws: 8.4.0
     transitivePeerDependencies:
       - '@types/node'
@@ -8985,11 +8985,11 @@ packages:
     resolution: {integrity: sha512-xGPXiFVl4YED9Jh7Euv2V220mriG9u4B2TA6Ybjc1catrstKD2PpIdU3U0RKpkVBC2EhmL/F0sPCr9vrFTNRag==}
     dev: false
 
-  /subscriptions-transport-ws-envelop/2.0.1_graphql@16.2.0+ws@8.4.0:
-    resolution: {integrity: sha512-Y3olO759E5as/nTdFVkSC45q0TOe3OaEQIUzINg0mIXM6cggvJ4Tb0OExHVt6ASKJP7mXHmitFyI/XGkI1dYmw==}
+  /subscriptions-transport-ws-envelop/2.0.2_graphql@16.2.0+ws@8.4.0:
+    resolution: {integrity: sha512-HMwQgdiMBgWC48LplRtDsgrdQKnsns7VvLZTN1eIFNT01XJd6yuuudrl85TbO5QnTAiw6g2Sh5bjTFYKjFIGwQ==}
     peerDependencies:
       graphql: '>=0.10.0'
-      ws: ^7.5.0
+      ws: ^7.5.0 || ^8.4.0
     dependencies:
       backo2: 1.0.2
       eventemitter3: 4.0.7
