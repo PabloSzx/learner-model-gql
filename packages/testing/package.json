@@ -11,12 +11,12 @@
     "test:watch:generate": "graphql-codegen generate --config codegen.yaml --watch"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^2.3.0",
-    "@graphql-codegen/core": "^2.3.0",
-    "@graphql-codegen/gql-tag-operations-preset": "^1.2.1",
-    "@graphql-codegen/typed-document-node": "^2.2.1",
-    "@graphql-codegen/typescript": "^2.4.1",
-    "@graphql-codegen/typescript-operations": "^2.2.1",
+    "@graphql-codegen/cli": "^2.3.1",
+    "@graphql-codegen/core": "^2.4.0",
+    "@graphql-codegen/gql-tag-operations-preset": "^1.2.2",
+    "@graphql-codegen/typed-document-node": "^2.2.2",
+    "@graphql-codegen/typescript": "^2.4.2",
+    "@graphql-codegen/typescript-operations": "^2.2.2",
     "@graphql-ez/fastify": "^0.9.5",
     "@graphql-ez/fastify-testing": "^0.1.3",
     "@graphql-typed-document-node/core": "^3.1.1",
