@@ -22,7 +22,7 @@ importers:
       '@types/randomstring': ^1.1.8
       '@types/react': ^17.0.38
       api-base: workspace:^0.0.1
-      bob-tsm: ^0.4.2
+      bob-tsm: ^0.4.3
       bob-watch: ^0.1.1
       c8: ^7.11.0
       common: workspace:^0.0.1
@@ -64,7 +64,7 @@ importers:
       '@types/prettier': 2.4.2
       '@types/randomstring': 1.1.8
       '@types/react': 17.0.38
-      bob-tsm: 0.4.2_esbuild@0.14.9+typescript@4.5.4
+      bob-tsm: 0.4.3_esbuild@0.14.9+typescript@4.5.4
       bob-watch: 0.1.1
       c8: 7.11.0
       concurrently: 6.5.1
@@ -368,7 +368,7 @@ importers:
       '@graphql-ez/plugin-websockets': ^0.10.2
       '@graphql-tools/stitch': ^8.4.3
       api-base: workspace:^0.0.1
-      bob-tsm: ^0.4.2
+      bob-tsm: ^0.4.3
       esbuild: ^0.14.9
       fastify: ^3.25.3
       graphql: ^16.2.0
@@ -379,7 +379,7 @@ importers:
       '@graphql-ez/plugin-websockets': 0.10.2_22e1e5a79a4a852f461519d1ef41d30d
       '@graphql-tools/stitch': 8.4.3_graphql@16.2.0
       api-base: link:../api-base
-      bob-tsm: 0.4.2_esbuild@0.14.9+typescript@4.5.4
+      bob-tsm: 0.4.3_esbuild@0.14.9+typescript@4.5.4
       esbuild: 0.14.9
       fastify: 3.25.3
       graphql: 16.2.0
@@ -3828,8 +3828,8 @@ packages:
     resolution: {integrity: sha512-D7iWRBvnZE8ecXiLj/9wbxH7Tk79fAh8IHaTNq1RWRixsS02W+5qS+iE9yq6RYl0asXx5tw0bLhmT5pIfbSquw==}
     dev: false
 
-  /bob-tsm/0.4.2_esbuild@0.14.9+typescript@4.5.4:
-    resolution: {integrity: sha512-qVcx3wEoDSmv1CXl+f/MmQuGkjZR8R3YSUKntGm4Pgvon5Oi/wRptsewnLA54g7TrLXlgU6XEwkgLTEIMKacww==}
+  /bob-tsm/0.4.3_esbuild@0.14.9+typescript@4.5.4:
+    resolution: {integrity: sha512-4Ktj1DZdOKpMpzdSQLbHMRSPp4FzCqtvOPMvtDaTw0m8/HG6oVwc5r6uCMHYm7v2/9VknQBexukE8OiNwzBfZw==}
     engines: {node: ^12.20.0 || >=14.13.0}
     hasBin: true
     peerDependencies:
