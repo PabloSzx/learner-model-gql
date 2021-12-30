@@ -1,10 +1,14 @@
-FROM quay.io/bitnami/node:16.13.1-prod
+FROM node:16-alpine
 
 WORKDIR /home/learner-model-gql
 
 COPY pnpm-lock.yaml ./
 
 RUN npm install -g pnpm@latest
+
+RUN pnpm add -g bob-tsm esbuild typescript
+
+RUN pnpm config set ignore-scripts true
 
 RUN pnpm fetch
 
@@ -15,7 +19,6 @@ COPY packages/common ./packages/common
 COPY packages/common-api ./packages/common-api
 COPY packages/db ./packages/db
 COPY packages/gateway ./packages/gateway
-COPY packages/testing ./packages/testing
 COPY packages/services ./packages/services
 COPY packages/mono ./packages/mono
 
