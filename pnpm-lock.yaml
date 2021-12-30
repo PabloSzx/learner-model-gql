@@ -165,7 +165,7 @@ importers:
       react-query: ^3.34.7
       react-select: ^5.2.1
       react-table: ^7.7.0
-      react-use: ^17.3.1
+      react-use: ^17.3.2
       rq-gql: ^0.3.1
       serialize-error: ^9.0.0
       typescript: ^4.5.4
@@ -195,7 +195,7 @@ importers:
       react-query: 3.34.7_react-dom@17.0.2+react@17.0.2
       react-select: 5.2.1_b3482aaf5744fc7c2aeb7941b0e0a78f
       react-table: 7.7.0_react@17.0.2
-      react-use: 17.3.1_react-dom@17.0.2+react@17.0.2
+      react-use: 17.3.2_react-dom@17.0.2+react@17.0.2
       rq-gql: 0.3.1_ce4ffd2a91ade774ce9b6b8e8972decb
       serialize-error: 9.0.0
       use-immer: 0.6.0_immer@9.0.7+react@17.0.2
@@ -8308,8 +8308,8 @@ packages:
       react-dom: 17.0.2_react@17.0.2
     dev: false
 
-  /react-use/17.3.1_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-hs7+tS4rRm1QLHPfanLCqXIi632tP4V7Sai1ENUP2WTufU6am++tU9uSw9YrNCFqbABiEv0ndKU1XCUcfu2tXA==}
+  /react-use/17.3.2_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-bj7OD0/1wL03KyWmzFXAFe425zziuTf7q8olwCYBfOeFHY1qfO1FAMjROQLsLZYwG4Rx63xAfb7XAbBrJsZmEw==}
     peerDependencies:
       react: ^16.8.0  || ^17.0.0
       react-dom: ^16.8.0  || ^17.0.0
