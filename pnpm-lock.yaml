@@ -35,6 +35,7 @@ importers:
       graphql: ^16.2.0
       graphql-ez: ^0.13.7
       husky: ^7.0.4
+      is-ci: ^3.0.1
       json5: ^2.2.0
       lodash: ^4.17.21
       mocha: ^9.1.3
@@ -76,6 +77,7 @@ importers:
       graphql: 16.2.0
       graphql-ez: 0.13.7_7e70af8425d7c515eda9f85c6be85888
       husky: 7.0.4
+      is-ci: 3.0.1
       json5: 2.2.0
       lodash: 4.17.21
       mocha: 9.1.3
@@ -4214,7 +4216,6 @@ packages:
 
   /ci-info/3.3.0:
     resolution: {integrity: sha512-riT/3vI5YpVH6/qomlDnJow6TBee2PBKSEpx3O32EGPYbWGIRsIlGRms3Sm74wYE1JMo8RnO04Hb12+v1J5ICw==}
-    dev: false
 
   /cipher-base/1.0.4:
     resolution: {integrity: sha512-Kkht5ye6ZGmwv40uUDZztayT2ThLQGfnj/T71N/XzeZeo3nf8foyW7zGTsPYkEya3m5f3cAypH+qe7YOrM1U2Q==}
@@ -6214,6 +6215,13 @@ packages:
     dependencies:
       ci-info: 3.3.0
     dev: false
+
+  /is-ci/3.0.1:
+    resolution: {integrity: sha512-ZYvCgrefwqoQ6yTyYUbQu64HsITZ3NfKX1lzaEYdkTDcfKzzCI/wthRRYKkdjHKFVgNiXKAKm65Zo1pk2as/QQ==}
+    hasBin: true
+    dependencies:
+      ci-info: 3.3.0
+    dev: true
 
   /is-core-module/2.8.0:
     resolution: {integrity: sha512-vd15qHsaqrRL7dtH6QNuy0ndJmRDrS9HAM1CAiSifNUFv4x1a0CCVsj18hJ1mShxIG6T2i1sO78MkP56r0nYRw==}
