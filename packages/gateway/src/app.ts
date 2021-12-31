@@ -6,7 +6,6 @@ import { ezWebSockets } from "@graphql-ez/plugin-websockets";
 import {
   AltairIDEOptions,
   codegenOptions,
-  getDirname,
   logger,
   pubSub,
   voyagerOptions,
@@ -14,12 +13,10 @@ import {
 import debounce from "lodash/debounce.js";
 import ms from "ms";
 import { resolve } from "path";
+import { setTimeout } from "timers/promises";
 import waitOn from "wait-on";
 import { getServicesConfigFromEnv } from "./services";
 import { getStitchedSchema } from "./stitch";
-import { setTimeout } from "timers/promises";
-
-const __dirname = getDirname(import.meta.url);
 
 export const getGatewayPlugin = async () => {
   logger.info("Waiting for services!");

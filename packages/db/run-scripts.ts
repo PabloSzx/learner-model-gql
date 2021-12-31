@@ -1,11 +1,9 @@
 import { mkdir, readdir } from "fs/promises";
 import inquirer from "inquirer";
 import open from "open";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
 import { pubSub } from "./src";
 
-process.chdir(dirname(fileURLToPath(import.meta.url)));
+process.chdir(__dirname);
 
 Promise.allSettled([pubSub.close(), mkdir("scripts_data")]);
 
