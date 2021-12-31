@@ -22,7 +22,7 @@ importers:
       '@types/randomstring': ^1.1.8
       '@types/react': ^17.0.38
       api-base: workspace:^0.0.1
-      bob-tsm: ^0.4.4
+      bob-tsm: ^0.4.4-alpha-64b1348
       bob-watch: ^0.1.1
       c8: ^7.11.0
       common: workspace:^0.0.1
@@ -368,7 +368,7 @@ importers:
       '@graphql-ez/plugin-websockets': ^0.10.2
       '@graphql-tools/stitch': ^8.4.3
       api-base: workspace:^0.0.1
-      bob-tsm: ^0.4.4
+      bob-tsm: ^0.4.4-alpha-64b1348
       esbuild: ^0.14.10
       fastify: ^3.25.3
       graphql: ^16.2.0
