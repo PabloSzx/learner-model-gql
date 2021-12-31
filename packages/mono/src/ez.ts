@@ -3,6 +3,7 @@ import { ezVoyager } from "@graphql-ez/plugin-voyager";
 import { ezWebSockets } from "@graphql-ez/plugin-websockets";
 import {
   AltairIDEOptions,
+  Auth0Verify,
   buildContext,
   CreateApp,
   voyagerOptions,
@@ -17,6 +18,19 @@ export const ezApp = CreateApp({
       ezVoyager(voyagerOptions),
       ezAltairIDE(AltairIDEOptions),
       ezWebSockets("adaptive"),
+      {
+        name: "Learner Model GQL",
+        compatibilityList: {
+          fastify: true,
+        },
+        onIntegrationRegister() {
+          return {
+            fastify({ integration }) {
+              integration.register(Auth0Verify);
+            },
+          };
+        },
+      },
     ],
   },
   cors: true,
