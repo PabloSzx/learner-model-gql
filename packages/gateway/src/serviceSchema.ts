@@ -7,7 +7,6 @@ import { logger, ServiceName } from "api-base";
 import type { DocumentNode } from "graphql";
 import { OperationTypeNode, print } from "graphql";
 import { Client as WsClient, createClient as createWsClient } from "graphql-ws";
-import merge from "lodash/fp/merge.js";
 import { Client } from "undici";
 import ws from "ws";
 import { servicesSubschemaConfig } from "./stitchConfig";
@@ -151,12 +150,7 @@ export async function getServiceSchema({
     schema: await introspectSchema(remoteExecutor),
     executor: remoteExecutor,
     batch: true,
-    ...merge(
-      {
-        batch: true,
-      } as Partial<SubschemaConfig>,
-      config[name]
-    ),
+    ...config[name],
   };
 
   return serviceSubschema;
