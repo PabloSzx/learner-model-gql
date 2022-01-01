@@ -8,9 +8,7 @@ const app = Fastify({
 });
 
 app.get("/", (_req, reply) => {
-  reply.send({
-    Hello: "World",
-  });
+  reply.redirect("/voyager");
 });
 
 await Promise.all([DB_PREPARED, app.register(ezApp.fastifyPlugin)]);

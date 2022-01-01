@@ -11,9 +11,7 @@ async function main() {
   });
 
   app.get("/", (_req, reply) => {
-    reply.send({
-      Hello: "World",
-    });
+    reply.redirect("/voyager");
   });
 
   await Promise.all([DB_PREPARED, app.register(await getGatewayPlugin())]);

@@ -189,6 +189,9 @@ export const ezServicePreset = CreateApp({
           return {
             fastify({ integration }) {
               integration.register(Auth0Verify);
+              integration.get("/", (_req, reply) => {
+                reply.redirect("/voyager");
+              });
             },
           };
         },

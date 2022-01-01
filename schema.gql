@@ -1,3 +1,9 @@
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
 """
 User-emitted actions related to system, data mainly used for logging and modeling purposes
 """
@@ -6,67 +12,54 @@ type Action {
   Arbitrary numeric amount
   """
   amount: Float
-
   """
   Related content
   """
   content: Content
-
   """
   Timestamp of the action, set by the database on row creation
   """
   createdAt: DateTime!
-
   """
   Arbitrary string content detail
   """
   detail: String
-
   """
   Arbitrary JSON object data
   """
   extra: JSONObject
-
   """
   Arbitrary hint identifier
   """
   hintID: ID
-
   """
   Unique numeric identifier
   """
   id: IntID!
-
   """
   Related KCs
   """
   kcs: [KC!]!
-
   """
   Arbitrary numeric result
   """
   result: Float
-
   """
   Arbitrary step identifier
   """
   stepID: ID
-
   """
   Timestamp of the action, set by the action emitter
   """
   timestamp: Timestamp!
-
   """
   Related topic
   """
   topic: Topic
-
   """
   User that emitted the action
   """
   user: User
-
   """
   Type of action
   """
@@ -81,7 +74,6 @@ input ActionInput {
   Arbitrary numeric amount
   """
   amount: Float
-
   """
   Content identifier
 
@@ -90,22 +82,18 @@ input ActionInput {
   Validation of content presence/authorization is made before confirming action
   """
   contentID: ID
-
   """
   Arbitrary string content detail
   """
   detail: String
-
   """
   Arbitrary JSON object data
   """
   extra: JSONObject
-
   """
   Arbitrary hint identifier
   """
   hintID: ID
-
   """
   KCs identifiers
 
@@ -114,31 +102,26 @@ input ActionInput {
   Validation of kc presence/authorization is made before confirming action
   """
   kcsIDs: [ID!]
-
   """
   Identifier of project related to action.
 
   It's verified based on authenticated user, and attached validated ids are validated against the specified project
   """
   projectId: IntID!
-
   """
   Arbitrary numeric result
   """
   result: Float
-
   """
   Arbitrary step identifier
   """
   stepID: ID
-
   """
   Timestamp of the action.
 
   Format in number of milliseconds elapsed since January 1, 1970 00:00:00 UTC
   """
   timestamp: Timestamp!
-
   """
   Topic identifier
 
@@ -147,7 +130,6 @@ input ActionInput {
   Validation of topic presence/authorization is made before confirming action
   """
   topicID: ID
-
   """
   Type of action, if specified verb doesn't exist, it's automatically created
   """
@@ -164,7 +146,6 @@ type ActionVerb {
   Unique numeric identifier
   """
   id: IntID!
-
   """
   Name of the verb
   """
@@ -179,7 +160,6 @@ type ActionsConnection implements Connection {
   Nodes of the current page
   """
   nodes: [Action!]!
-
   """
   Pagination related information
   """
@@ -194,7 +174,6 @@ type ActionsVerbsConnection implements Connection {
   Nodes of the current page
   """
   nodes: [ActionVerb!]!
-
   """
   Pagination related information
   """
@@ -215,7 +194,6 @@ type AdminActionQueries {
     orderBy: AdminActionsOrderBy
     pagination: CursorConnectionArgs!
   ): ActionsConnection!
-
   """
   [ADMIN] Get all the action's verbs currently in the system
   """
@@ -232,49 +210,42 @@ input AdminActionsFilter {
   If action's content matches any of the specified content, the action is included
   """
   content: [IntID!]
-
   """
   Filter by the specified end date
 
   If action's timestamp is before the specified date, the action is included
   """
   endDate: DateTime
-
   """
   Filter by the specified KCs
 
   If any of the action's KCs matches any of the specified KCs, the action is included
   """
   kcs: [IntID!]
-
   """
   Filter by the specified projects
 
   If action's project matches any of the specified projects, the action is included
   """
   projects: [IntID!]
-
   """
   Filter by the specified starting date
 
   If action's timestamp is after the specified date, the action is included
   """
   startDate: DateTime
-
   """
   Filter by the specified topics
 
   If action's topic matches any of the specified topics, the action is included
   """
   topics: [IntID!]
-
   """
   Filter by the specified users
 
   If action's user matches any of the specified users, the action is included
   """
   users: [IntID!]
-
   """
   Filter by the specified verbs
 
@@ -307,7 +278,6 @@ input AdminContentFilter {
   If the content's project matches any of the specified projects, the content is included
   """
   projects: [IntID!]
-
   """
   Filter by the specified tags
 
@@ -324,7 +294,6 @@ type AdminContentMutations {
   [ADMIN] Create a new content entity
   """
   createContent(data: CreateContent!): Content!
-
   """
   [ADMIN] Update an existent content entity
   """
@@ -354,27 +323,22 @@ type AdminDomainMutations {
   [ADMIN] Create a new domain entity
   """
   createDomain(input: CreateDomain!): Domain!
-
   """
   [ADMIN] Create a new KC entity
   """
   createKC(data: CreateKCInput!): KC!
-
   """
   [ADMIN] Create a new topic entity
   """
   createTopic(input: CreateTopic!): Topic!
-
   """
   [ADMIN] Update an existent domain entity
   """
   updateDomain(input: UpdateDomain!): Domain!
-
   """
   [ADMIN] Update an existent KC entity
   """
   updateKC(data: UpdateKCInput!): KC!
-
   """
   [ADMIN] Update an existent topic entity
   """
@@ -394,7 +358,6 @@ type AdminDomainQueries {
     filters: AdminDomainsFilter
     pagination: CursorConnectionArgs!
   ): DomainsConnection!
-
   """
   [ADMIN] Get all the KCs currently in the system
 
@@ -404,7 +367,6 @@ type AdminDomainQueries {
     filters: AdminKCsFilter
     pagination: CursorConnectionArgs!
   ): KCsConnection!
-
   """
   [ADMIN] Get all the topics currently in the system
 
@@ -450,14 +412,12 @@ input AdminKCsFilter {
   If the KC's domain matches any of the specified projects, the KC is included
   """
   domains: [IntID!]
-
   """
   Filter by the specified projects
 
   If the KC's project matches any of the specified projects, the KC is included
   """
   projects: [IntID!]
-
   """
   Filter by the specified topics
 
@@ -474,7 +434,6 @@ type AdminProjectsMutations {
   [ADMIN] Create a new project entity
   """
   createProject(data: CreateProject!): Project!
-
   """
   [ADMIN] Update an existent project entity
   """
@@ -501,14 +460,12 @@ type AdminStateQueries {
   allModelStateCreators(
     pagination: CursorConnectionArgs!
   ): ModelStateCreatorConnection!
-
   """
   [ADMIN] Get all the model statestypes currently in the system
   """
   allModelStateTypes(
     pagination: CursorConnectionArgs!
   ): ModelStateTypeConnection!
-
   """
   [ADMIN] Get all the model states currently in the system
 
@@ -537,27 +494,22 @@ type AdminUserMutations {
   [ADMIN] Create a new group entity
   """
   createGroup(data: CreateGroupInput!): Group!
-
   """
   Set the projects of the specified users
   """
   setProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
-
   """
   [ADMIN] Set the users (by email) associated with the groups
   """
   setUserGroups(groupIds: [IntID!]!, usersEmails: [EmailAddress!]!): [Group!]!
-
   """
   [ADMIN] Update an existent group entity
   """
   updateGroup(data: UpdateGroupInput!): Group!
-
   """
   [ADMIN] Update an existent user entity
   """
   updateUser(data: UpdateUserInput!): User!
-
   """
   Upsert specified users with specified projects
   """
@@ -580,7 +532,6 @@ type AdminUserQueries {
     filters: AdminGroupsFilter
     pagination: CursorConnectionArgs!
   ): GroupsConnection!
-
   """
   [ADMIN] Get all the users currently in the system
 
@@ -624,7 +575,6 @@ type Content {
   If present, it's guaranteed to be present alongisde binaryFilename
   """
   binaryBase64: String
-
   """
   Binary content filename
 
@@ -633,69 +583,56 @@ type Content {
   It's required and guaranteed to contain an extension where the mimetype can be inferred
   """
   binaryFilename: String
-
   """
   Unique string identifier
   """
   code: String!
-
   """
   Date of creation
   """
   createdAt: DateTime!
-
   """
   Arbitrary content description
   """
   description: String!
-
   """
   Unique numeric identifier
   """
   id: IntID!
-
   """
   Arbitrary JSON object data
   """
   json: JSONObject
-
   """
   KCs associated with the content
   """
   kcs: [KC!]!
-
   """
   Human readable identifier
   """
   label: String!
-
   """
   Project associated with the content
   """
   project: Project!
-
   """
   Parameter that can be used to sort a list of content
   """
   sortIndex: Int
-
   """
   Tags associated with the content
 
   Tags can be used to categorize or filter
   """
   tags: [String!]!
-
   """
   Topics associated with the content
   """
   topics: [Topic!]!
-
   """
   Date of last update
   """
   updatedAt: DateTime!
-
   """
   External URL
   """
@@ -710,7 +647,6 @@ type ContentConnection implements Connection {
   Nodes of the current page
   """
   nodes: [Content!]!
-
   """
   Pagination related information
   """
@@ -727,56 +663,46 @@ input CreateContent {
   If present, binaryFilename has to be specified
   """
   binaryBase64: String
-
   """
   Binary content filename
 
   If present, it's required to contain an extension where the mimetype can be inferred
   """
   binaryFilename: String
-
   """
   Unique string identifier
   """
   code: String!
-
   """
   Arbitrary content description
   """
   description: String!
-
   """
   Arbitrary JSON object data
   """
   json: JSONObject
-
   """
   KCs associated with the content
   """
   kcs: [IntID!]!
-
   """
   Human readable identifier
   """
   label: String!
-
   """
   Project associated with new content
   """
   projectId: IntID!
-
   """
   Tags associated with the content
 
   Tags can be used to categorize or filter
   """
   tags: [String!]!
-
   """
   Topics associated with the content
   """
   topics: [IntID!]!
-
   """
   External URL
   """
@@ -791,12 +717,10 @@ input CreateDomain {
   Unique string identifier
   """
   code: String!
-
   """
   Human readable identifier
   """
   label: String!
-
   """
   Projects associated with domain
   """
@@ -811,22 +735,18 @@ input CreateGroupInput {
   Unique string identifier
   """
   code: String!
-
   """
   Permissions flags
   """
   flags: GroupFlagsInput
-
   """
   Human readable identifier
   """
   label: String!
-
   """
   Projects associated with the group
   """
   projectIds: [IntID!]!
-
   """
   Tags associated with the group
 
@@ -843,12 +763,10 @@ input CreateKCInput {
   Unique string identifier
   """
   code: String!
-
   """
   Domain associated with KC
   """
   domainId: IntID!
-
   """
   Human readable identifier
   """
@@ -863,12 +781,10 @@ input CreateProject {
   Unique string identifier
   """
   code: String!
-
   """
   Domains associated with project
   """
   domains: [IntID!]!
-
   """
   Human readable identifier
   """
@@ -883,34 +799,28 @@ input CreateTopic {
   Unique string identifier
   """
   code: String!
-
   """
   Content associated with topic
   """
   contentIds: [IntID!]!
-
   """
   Human readable identifier
   """
   label: String!
-
   """
   Parent topic
 
   Used to set the hierarchy of topics
   """
   parentTopicId: IntID
-
   """
   Project associated with topic
   """
   projectId: IntID!
-
   """
   Parameter that can be used to sort a list of topics
   """
   sortIndex: Int
-
   """
   Tags associated with the topic
 
@@ -935,21 +845,18 @@ input CursorConnectionArgs {
   Use the "endCursor" field of "pageInfo"
   """
   after: IntID
-
   """
   Set the maximum boundary
 
   Use the "startCursor" field of "pageInfo"
   """
   before: IntID
-
   """
   Set the limit of nodes to be fetched
 
   It can't be more than 50
   """
   first: NonNegativeInt
-
   """
   Set the limit of nodes to be fetched
 
@@ -971,37 +878,30 @@ type Domain {
   Unique string identifier
   """
   code: String!
-
   """
   Date of creation
   """
   createdAt: DateTime!
-
   """
   Unique numeric identifier
   """
   id: IntID!
-
   """
   KCs associated with the domain
   """
   kcs: [KC!]!
-
   """
   Human readable identifier
   """
   label: String!
-
   """
   Model States associated with domain
   """
   modelStates(input: ModelStateConnectionInput!): ModelStateConnection!
-
   """
   Projects associated with the domain
   """
   projects: [Project!]!
-
   """
   Date of last update
   """
@@ -1016,7 +916,6 @@ type DomainsConnection implements Connection {
   Nodes of the current page
   """
   nodes: [Domain!]!
-
   """
   Pagination related information
   """
@@ -1040,49 +939,40 @@ type Group {
   Unique string identifier
   """
   code: String!
-
   """
   Date of creation
   """
   createdAt: DateTime!
-
   """
   Permissions flags
   """
   flags: GroupFlags!
-
   """
   Unique numeric identifier
   """
   id: IntID!
-
   """
   Human readable identifier
   """
   label: String!
-
   """
   Projects associated with the group
   """
   projects: [Project!]!
-
   """
   IDs of projects associated with the group
   """
   projectsIds: [IntID!]!
-
   """
   Tags associated with the group
 
   Tags can be used to categorize or filter
   """
   tags: [String!]!
-
   """
   Date of last update
   """
   updatedAt: DateTime!
-
   """
   Users associated with the group
   """
@@ -1097,22 +987,18 @@ type GroupFlags {
   Date of creation
   """
   createdAt: DateTime!
-
   """
   Unique numeric identifier
   """
   id: IntID!
-
   """
   Allows the users part of the group to read all the actions of the projects of the group
   """
   readProjectActions: Boolean!
-
   """
   Allows the users part of the group to read all the model states of the projects of the group
   """
   readProjectModelStates: Boolean!
-
   """
   Date of last update
   """
@@ -1127,7 +1013,6 @@ input GroupFlagsInput {
   Allows the users part of the group to read all the actions of the projects of the group
   """
   readProjectActions: Boolean!
-
   """
   Allows the users part of the group to read all the model states of the projects of the group
   """
@@ -1142,7 +1027,6 @@ type GroupsConnection implements Connection {
   Nodes of the current page
   """
   nodes: [Group!]!
-
   """
   Pagination related information
   """
@@ -1172,32 +1056,26 @@ type KC {
   Unique string identifier
   """
   code: String!
-
   """
   Date of creation
   """
   createdAt: DateTime!
-
   """
   Domain associated with the KC
   """
   domain: Domain!
-
   """
   Unique numeric identifier
   """
   id: IntID!
-
   """
   Human readable identifier
   """
   label: String!
-
   """
   Topics associated with the KC
   """
   topics: [Topic!]!
-
   """
   Date of last update
   """
@@ -1212,7 +1090,6 @@ type KCsConnection implements Connection {
   Nodes of the current page
   """
   nodes: [KC!]!
-
   """
   Pagination related information
   """
@@ -1227,37 +1104,30 @@ type ModelState {
   Date of creation
   """
   createdAt: DateTime!
-
   """
   Creator of model state
   """
   creator: String!
-
   """
   Domain associated with Model State
   """
   domain: Domain!
-
   """
   Unique numeric identifier
   """
   id: IntID!
-
   """
   Arbitrary JSON Data
   """
   json: JSON!
-
   """
   Type / Category of model state
   """
   type: String
-
   """
   Date of last update
   """
   updatedAt: DateTime!
-
   """
   User associated with Model State
   """
@@ -1272,7 +1142,6 @@ type ModelStateConnection implements Connection {
   Nodes of the current page
   """
   nodes: [ModelState!]!
-
   """
   Pagination related information
   """
@@ -1287,12 +1156,10 @@ input ModelStateConnectionInput {
   Customize search/filter parameters
   """
   filters: ModelStateFilter
-
   """
   Customize order, by default it orders descendingly by id
   """
   orderBy: ModelStateOrderBy
-
   """
   Pagination-specific parameters
   """
@@ -1307,13 +1174,11 @@ type ModelStateCreator {
   Date of creation
   """
   createdAt: DateTime!
-
   """
   Unique numeric identifier
   """
   id: IntID!
   name: String!
-
   """
   Date of last update
   """
@@ -1328,7 +1193,6 @@ type ModelStateCreatorConnection implements Connection {
   Nodes of the current page
   """
   nodes: [ModelStateCreator!]!
-
   """
   Pagination related information
   """
@@ -1345,7 +1209,6 @@ input ModelStateFilter {
   If states's creator matches any of the specified creators, the state is included
   """
   creators: [String!]
-
   """
   Filter by the specified types
 
@@ -1376,17 +1239,14 @@ type ModelStateType {
   Date of creation
   """
   createdAt: DateTime!
-
   """
   Unique numeric identifier
   """
   id: IntID!
-
   """
   Name of the model type
   """
   name: String!
-
   """
   Date of last update
   """
@@ -1401,7 +1261,6 @@ type ModelStateTypeConnection implements Connection {
   Nodes of the current page
   """
   nodes: [ModelStateType!]!
-
   """
   Pagination related information
   """
@@ -1416,27 +1275,22 @@ type Mutation {
   - Authenticated user has to be associated with specified project
   """
   action(data: ActionInput!): Void
-
   """
   [ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access
   """
   adminContent: AdminContentMutations!
-
   """
   [ADMIN] Admin related domain mutations, only authenticated users with the role "ADMIN" can access
   """
   adminDomain: AdminDomainMutations!
-
   """
   [ADMIN] Admin related project mutations, only authenticated users with the role "ADMIN" can access
   """
   adminProjects: AdminProjectsMutations!
-
   """
   [ADMIN] Admin related user mutations, only authenticated users with the role "ADMIN" can access
   """
   adminUsers: AdminUserMutations!
-
   """
   Returns 'Hello World!'
   """
@@ -1474,17 +1328,14 @@ type PageInfo {
   Cursor parameter normally used for forward pagination
   """
   endCursor: String
-
   """
   Utility field that returns "true" if a next page can be fetched
   """
   hasNextPage: Boolean!
-
   """
   Utility field that returns "true" if a previous page can be fetched
   """
   hasPreviousPage: Boolean!
-
   """
   Cursor parameter normally used for backward pagination
   """
@@ -1504,12 +1355,10 @@ type Project {
     filters: ProjectActionsFilter
     pagination: CursorConnectionArgs!
   ): ActionsConnection!
-
   """
   Unique string identifier
   """
   code: String!
-
   """
   Content associated with project
   """
@@ -1517,32 +1366,26 @@ type Project {
     filters: ProjectContentFilter
     pagination: CursorConnectionArgs!
   ): ContentConnection!
-
   """
   Date of creation
   """
   createdAt: DateTime!
-
   """
   Domains associated with the project
   """
   domains: [Domain!]!
-
   """
   Unique numeric identifier
   """
   id: IntID!
-
   """
   Human readable identifier
   """
   label: String!
-
   """
   Topics associated with the project
   """
   topics: [Topic!]!
-
   """
   Date of last update
   """
@@ -1559,42 +1402,36 @@ input ProjectActionsFilter {
   If action's content matches any of the specified content, the action is included
   """
   content: [IntID!]
-
   """
   Filter by the specified end date
 
   If action's timestamp is before the specified date, the action is included
   """
   endDate: DateTime
-
   """
   Filter by the specified KCs
 
   If any of the action's KCs matches any of the specified KCs, the action is included
   """
   kcs: [IntID!]
-
   """
   Filter by the specified starting date
 
   If action's timestamp is after the specified date, the action is included
   """
   startDate: DateTime
-
   """
   Filter by the specified topics
 
   If action's topic matches any of the specified topics, the action is included
   """
   topics: [IntID!]
-
   """
   Filter by the specified users
 
   If action's user matches any of the specified users, the action is included
   """
   users: [IntID!]
-
   """
   Filter by the specified verbs
 
@@ -1613,42 +1450,36 @@ input ProjectContentFilter {
   If content's creation date is before the specified date, the content is included
   """
   createdEndDate: DateTime
-
   """
   Filter by the specified starting created date
 
   If content's creation date is after the specified date, the content is included
   """
   createdStartDate: DateTime
-
   """
   Filter by the specified KCs
 
   If any of the content's KCs matches any of the specified KCs, the content is included
   """
   kcs: [IntID!]
-
   """
   Filter by the specified tags
 
   If any of the content's tags matches any of the specified tags, the content is included
   """
   tags: [String!]
-
   """
   Filter by the specified topics
 
   If content's topic matches any of the specified topics, the content is included
   """
   topics: [IntID!]
-
   """
   Filter by the specified ending last updated date
 
   If content's last updated date is before the specified date, the content is included
   """
   updatedEndDate: DateTime
-
   """
   Filter by the specified starting last updated date
 
@@ -1665,7 +1496,6 @@ type ProjectsConnection implements Connection {
   Nodes of the current page
   """
   nodes: [Project!]!
-
   """
   Pagination related information
   """
@@ -1677,32 +1507,26 @@ type Query {
   [ADMIN] Admin related actions queries, only authenticated users with the role "ADMIN" can access
   """
   adminActions: AdminActionQueries!
-
   """
   [ADMIN] Admin related content queries, only authenticated users with the role "ADMIN" can access
   """
   adminContent: AdminContentQueries!
-
   """
   [ADMIN] Admin related domain queries, only authenticated users with the role "ADMIN" can access
   """
   adminDomain: AdminDomainQueries!
-
   """
   [ADMIN] Project related administration queries
   """
   adminProjects: AdminProjectsQueries!
-
   """
   [ADMIN] Admin related state queries, only authenticated users with the role "ADMIN" can access
   """
   adminState: AdminStateQueries!
-
   """
   [ADMIN] Admin related user queries, only authenticated users with the role "ADMIN" can access
   """
   adminUsers: AdminUserQueries!
-
   """
   Get all the content associated with the specified identifiers
 
@@ -1711,7 +1535,6 @@ type Query {
   If any of the specified identifiers is not found or forbidden, query fails
   """
   content(ids: [IntID!]!): [Content!]!
-
   """
   Get specified content by "code".
 
@@ -1719,12 +1542,10 @@ type Query {
   - If authenticated user has no permissions on the corresponding project it returns NULL.
   """
   contentByCode(code: String!): Content
-
   """
   Authenticated user information
   """
   currentUser: User
-
   """
   Get all the domains associated with the specified identifiers
 
@@ -1733,7 +1554,6 @@ type Query {
   If any of the specified identifiers is not found or forbidden, query fails
   """
   domains(ids: [IntID!]!): [Domain!]!
-
   """
   Get all the groups associated with the specified identifiers
 
@@ -1742,12 +1562,10 @@ type Query {
   If any of the specified identifiers is not found or forbidden, query fails
   """
   groups(ids: [IntID!]!): [Group!]!
-
   """
   Returns 'Hello World!'
   """
   hello: String!
-
   """
   Get all the KCs associated with the specified identifiers
 
@@ -1756,7 +1574,6 @@ type Query {
   If any of the specified identifiers is not found or forbidden, query fails
   """
   kcs(ids: [IntID!]!): [KC!]!
-
   """
   Get specified project by either "id" or "code".
 
@@ -1764,7 +1581,6 @@ type Query {
   - If authenticated user has no permissions on the specified project it returns NULL.
   """
   project(code: String, id: IntID): Project
-
   """
   Get all the projects associated with the specified identifiers
 
@@ -1773,7 +1589,6 @@ type Query {
   If any of the specified identifiers is not found or forbidden, query fails
   """
   projects(ids: [IntID!]!): [Project!]!
-
   """
   Get specified topic by "code".
 
@@ -1781,7 +1596,6 @@ type Query {
   - If authenticated user has no permissions on the corresponding project it returns NULL.
   """
   topicByCode(code: String!): Topic
-
   """
   Get all the topics associated with the specified identifiers
 
@@ -1790,7 +1604,6 @@ type Query {
   If any of the specified identifiers is not found or forbidden, query fails
   """
   topics(ids: [IntID!]!): [Topic!]!
-
   """
   Get all the users associated with the specified identifiers
 
@@ -1825,61 +1638,50 @@ type Topic {
   To build the topics tree, use the "parent" topic
   """
   childrens: [Topic!]!
-
   """
   Unique string identifier
   """
   code: String!
-
   """
   Content associated with topic
   """
   content: [Content!]!
-
   """
   Date of creation
   """
   createdAt: DateTime!
-
   """
   Unique numeric identifier
   """
   id: IntID!
-
   """
   KCs associated with the topic
   """
   kcs: [KC!]!
-
   """
   Human readable identifier
   """
   label: String!
-
   """
   Parent topic
 
   Used to set the hierarchy of topics
   """
   parent: Topic
-
   """
   Project associated with the topic
   """
   project: Project!
-
   """
   Parameter that can be used to sort a list of domains
   """
   sortIndex: Int
-
   """
   Tags associated with the domain
 
   Tags can be used to categorize or filter
   """
   tags: [String!]!
-
   """
   Date of last update
   """
@@ -1894,7 +1696,6 @@ type TopicsConnection implements Connection {
   Nodes of the current page
   """
   nodes: [Topic!]!
-
   """
   Pagination related information
   """
@@ -1916,61 +1717,50 @@ input UpdateContent {
   If present, binaryFilename has to be specified
   """
   binaryBase64: String
-
   """
   Binary content filename
 
   If present, it's required to contain an extension where the mimetype can be inferred
   """
   binaryFilename: String
-
   """
   Unique string identifier
   """
   code: String!
-
   """
   Arbitrary content description
   """
   description: String!
-
   """
   Current content identifier
   """
   id: IntID!
-
   """
   Arbitrary JSON object data
   """
   json: JSONObject
-
   """
   KCs associated with the content
   """
   kcs: [IntID!]!
-
   """
   Human readable identifier
   """
   label: String!
-
   """
   Project associated with content
   """
   projectId: IntID!
-
   """
   Tags associated with the content
 
   Tags can be used to categorize or filter
   """
   tags: [String!]!
-
   """
   Topics associated with the content
   """
   topics: [IntID!]!
-
   """
   External URL
   """
@@ -1985,12 +1775,10 @@ input UpdateDomain {
   Unique string identifier
   """
   code: String!
-
   """
   Current domain identifier
   """
   id: IntID!
-
   """
   Human readable identifier
   """
@@ -2005,27 +1793,22 @@ input UpdateGroupInput {
   Unique string identifier
   """
   code: String!
-
   """
   Permissions flags of group
   """
   flags: GroupFlagsInput
-
   """
   Current group identifier
   """
   id: IntID!
-
   """
   Human readable identifier
   """
   label: String!
-
   """
   Projects associated with the group
   """
   projectIds: [IntID!]!
-
   """
   Tags associated with the group
 
@@ -2039,12 +1822,10 @@ input UpdateKCInput {
   Unique string identifier
   """
   code: String!
-
   """
   Unique numeric identifier of the current KC
   """
   id: IntID!
-
   """
   Human readable identifier
   """
@@ -2059,17 +1840,14 @@ input UpdateProject {
   Unique string identifier
   """
   code: String!
-
   """
   Domains associated with project
   """
   domains: [IntID!]!
-
   """
   Current project identifier
   """
   id: IntID!
-
   """
   Human readable identifier
   """
@@ -2084,34 +1862,28 @@ input UpdateTopic {
   Unique string identifier
   """
   code: String!
-
   """
   Content associated with topic
   """
   contentIds: [IntID!]!
-
   """
   Current topic identifier
   """
   id: IntID!
-
   """
   Human readable identifier
   """
   label: String!
-
   """
   Parent topic
 
   Used to set the hierarchy of topics
   """
   parentTopicId: IntID
-
   """
   Parameter that can be used to sort a list of topics
   """
   sortIndex: Int
-
   """
   Tags associated with the topic
 
@@ -2128,27 +1900,22 @@ input UpdateUserInput {
   Current user identifier
   """
   id: IntID!
-
   """
   Locked flag
   """
   locked: Boolean!
-
   """
   Name of person
   """
   name: String
-
   """
   Projects associated with user
   """
   projectIds: [IntID!]!
-
   """
   Role of user
   """
   role: UserRole!
-
   """
   Tags associated with the user
 
@@ -2167,76 +1934,62 @@ type User {
   By default it starts as "false", and the first time the user accesses the system, it's set as "true"
   """
   active: Boolean!
-
   """
   Date of creation
   """
   createdAt: DateTime!
-
   """
   Email Address
   """
   email: String!
-
   """
   Groups associated with the user
   """
   groups: [Group!]!
-
   """
   Unique numeric identifier
   """
   id: IntID!
-
   """
   Date of latest user access
   """
   lastOnline: DateTime
-
   """
   Locked user authentication
 
   If set as "true", user won't be able to use the system
   """
   locked: Boolean!
-
   """
   Model States associated with user
   """
   modelStates(input: ModelStateConnectionInput!): ModelStateConnection!
-
   """
   Name of person
   """
   name: String
-
   """
   Picture of user, set by external authentication service
   """
   picture: String
-
   """
   Projects associated with the user
   """
   projects: [Project!]!
-
   """
   IDs of projects associated with the user
   """
   projectsIds: [IntID!]!
-
   """
   User role, by default is USER
   """
   role: UserRole!
-
   """
   Tags associated with the user
 
   Tags can be used to categorize or filter
   """
   tags: [String!]!
-
   """
   Date of last update
   """
@@ -2253,7 +2006,6 @@ enum UserRole {
   Most of the authorization logic is enabled
   """
   ADMIN
-
   """
   Default user role
   """
@@ -2268,7 +2020,6 @@ type UsersConnection implements Connection {
   Nodes of the current page
   """
   nodes: [User!]!
-
   """
   Pagination related information
   """
