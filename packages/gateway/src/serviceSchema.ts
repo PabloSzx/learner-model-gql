@@ -4,7 +4,6 @@ import type { AsyncExecutor } from "@graphql-tools/utils";
 import { observableToAsyncIterable } from "@graphql-tools/utils";
 import { introspectSchema } from "@graphql-tools/wrap";
 import { logger, ServiceName } from "api-base";
-import { parse } from "content-type";
 import type { DocumentNode } from "graphql";
 import { OperationTypeNode, print } from "graphql";
 import { Client as WsClient, createClient as createWsClient } from "graphql-ws";
@@ -16,19 +15,6 @@ import { servicesSubschemaConfig } from "./stitchConfig";
 export type ServicesSubSchemasConfig = {
   [k in ServiceName]?: Partial<SubschemaConfig>;
 };
-
-async function getStreamJSON<T>(
-  stream: import("stream").Readable,
-  encoding: BufferEncoding
-): Promise<T> {
-  const chunks: Uint8Array[] = [];
-
-  for await (const chunk of stream) {
-    chunks.push(chunk);
-  }
-
-  return JSON.parse(Buffer.concat(chunks).toString(encoding || "utf-8"));
-}
 
 export type ServiceSchemaConfig = {
   name: ServiceName;
@@ -144,7 +130,7 @@ export async function getServiceSchema({
 
       const authorization = context?.request?.headers.authorization;
 
-      const { body, headers } = await client.request({
+      const { body } = await client.request({
         path: pathname,
         body: JSON.stringify({ query, variables, operationName }),
         method: "POST",
@@ -154,20 +140,11 @@ export async function getServiceSchema({
         },
       });
 
-      if (!headers["content-type"]) throw Error("No content-type specified!");
-
-      const { type, parameters } = parse(headers["content-type"]);
-
-      if (type === "application/json")
-        return getStreamJSON(
-          body,
-          (parameters["charset"] as BufferEncoding) || "utf-8"
-        );
-
-      throw Error(
-        "Unexpected content-type, expected 'application/json', received: " +
-          type
-      );
+      try {
+        return await body.json();
+      } catch (err) {
+        return await body.text();
+      }
     };
 
   const serviceSubschema: SubschemaConfig = {
