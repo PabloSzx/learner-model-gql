@@ -1,5 +1,3 @@
-import { useRef } from "react";
-
 import { useAuth0 } from "@auth0/auth0-react";
 import {
   AlertDialog,
@@ -11,7 +9,7 @@ import {
   Button,
   useDisclosure,
 } from "@chakra-ui/react";
-
+import { useRef } from "react";
 import { AuthState } from "./Auth";
 
 export function Logout() {
@@ -19,7 +17,7 @@ export function Logout() {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const cancelRef = useRef<any>(null);
+  const cancelRef = useRef<HTMLButtonElement>(null);
 
   return (
     <>

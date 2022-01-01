@@ -14,10 +14,7 @@ import { BiTestTube } from "react-icons/bi";
 import { useMemo } from "react";
 
 export function Navigation() {
-  const {
-    user,
-    headers: { authorization },
-  } = useAuth();
+  const { user, authorization } = useAuth();
 
   const altairUrl = useMemo(() => {
     if (!authorization) return null;
