@@ -1,4 +1,6 @@
+import assert from "assert/strict";
 import type { PromiseOrValue } from "graphql-ez";
+import isNumeric from "validator/lib/isNumeric.js";
 
 export const getIdsIntersection = async (
   a: PromiseOrValue<number[]>,
@@ -37,4 +39,10 @@ export async function getNodeIdList<T extends { id: number }>(
 
     return data;
   });
+}
+
+export function assertNotNumericCode(value: string | number) {
+  if (typeof value !== "string") return;
+
+  assert(!isNumeric(value), `Code "${value}" can't be numeric.`);
 }
