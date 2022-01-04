@@ -21,7 +21,7 @@
     "@graphql-codegen/typescript": "^2.4.2",
     "@graphql-codegen/typescript-document-nodes": "2.2.2",
     "@graphql-codegen/typescript-operations": "^2.2.2",
-    "@graphql-codegen/typescript-react-query": "^3.2.3",
+    "@graphql-codegen/typescript-react-query": "^3.3.0",
     "react-query": "^3.34.7",
     "rq-gql": "^0.3.1",
     "valtio": "^1.2.7"
