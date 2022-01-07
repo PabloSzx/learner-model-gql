@@ -700,7 +700,7 @@ packages:
     dependencies:
       caniuse-lite: 1.0.30001297
       colorette: 1.4.0
-      electron-to-chromium: 1.4.37
+      electron-to-chromium: 1.4.38
       escalade: 3.1.1
       node-releases: 1.1.77
     dev: false
@@ -1275,8 +1275,8 @@ packages:
     resolution: {integrity: sha1-7gHdHKwO08vH/b6jfcCo8c4ALOI=}
     dev: false
 
-  /electron-to-chromium/1.4.37:
-    resolution: {integrity: sha512-XIvFB1omSAxYgHYX48sC+HR8i/p7lx7R+0cX9faElg1g++h9IilCrJ12+bQuY+d96Wp7zkBiJwMOv+AhLtLrTg==}
+  /electron-to-chromium/1.4.38:
+    resolution: {integrity: sha512-WhHt3sZazKj0KK/UpgsbGQnUUoFeAHVishzHFExMxagpZgjiGYSC9S0ZlbhCfSH2L2i+2A1yyqOIliTctMx7KQ==}
     dev: false
 
   /elliptic/6.5.4:
