@@ -1,6 +1,6 @@
 import type { BuildContextArgs, InferContext } from "@graphql-ez/fastify";
-import { GetDBUser, prisma, pubSub } from "db";
-import { Authorization, GetAuth0User } from "./auth";
+import { prisma, pubSub } from "db";
+import { Authorization, GetAuth0User, GetDBUser } from "./auth";
 import { ResolveCursorConnection } from "./connection";
 import {
   assertNotNumericCode,
