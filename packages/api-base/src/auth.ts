@@ -1,6 +1,6 @@
 import type { User as Auth0User } from "@auth0/auth0-react";
 import assert from "assert";
-import { ENV } from "common-api";
+import { ENV, logger } from "common-api";
 import type { DBUser } from "db";
 import { GroupFlags, prisma } from "db";
 import type { FastifyRequest } from "fastify";
@@ -28,7 +28,7 @@ export function GetAuth0User(request: FastifyRequest | undefined) {
           if (!request?.headers.authorization) return null;
 
           return request.jwtVerify<Auth0User>().catch((err) => {
-            console.error(err);
+            logger.error(err);
             return null;
           });
         });
