@@ -175,12 +175,12 @@ export type ActionsVerbsConnection = Connection & {
 export type AdminActionQueries = {
   __typename?: "AdminActionQueries";
   /**
-   * [ADMIN] Get all the actions currently in the system
+   * Get all the actions currently in the system
    *
    * Pagination parameters are mandatory, but filters and orderBy are optional, and therefore the search can be customized.
    */
   allActions: ActionsConnection;
-  /** [ADMIN] Get all the action's verbs currently in the system */
+  /** Get all the action's verbs currently in the system */
   allActionsVerbs: ActionsVerbsConnection;
 };
 
@@ -426,7 +426,7 @@ export type ProjectActionsFilter = {
 
 export type Query = {
   __typename?: "Query";
-  /** [ADMIN] Admin related actions queries, only authenticated users with the role "ADMIN" can access */
+  /** Admin related actions queries, only authenticated users with the role "ADMIN" can access */
   adminActions: AdminActionQueries;
   /** Returns 'Hello World!' */
   hello: Scalars["String"];

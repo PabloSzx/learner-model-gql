@@ -56,17 +56,17 @@ export type Scalars = {
 /** Admin Domain-Related Queries */
 export type AdminDomainMutations = {
   __typename?: "AdminDomainMutations";
-  /** [ADMIN] Create a new domain entity */
+  /** Create a new domain entity */
   createDomain: Domain;
-  /** [ADMIN] Create a new KC entity */
+  /** Create a new KC entity */
   createKC: Kc;
-  /** [ADMIN] Create a new topic entity */
+  /** Create a new topic entity */
   createTopic: Topic;
-  /** [ADMIN] Update an existent domain entity */
+  /** Update an existent domain entity */
   updateDomain: Domain;
-  /** [ADMIN] Update an existent KC entity */
+  /** Update an existent KC entity */
   updateKC: Kc;
-  /** [ADMIN] Update an existent topic entity */
+  /** Update an existent topic entity */
   updateTopic: Topic;
 };
 
@@ -104,19 +104,19 @@ export type AdminDomainMutationsUpdateTopicArgs = {
 export type AdminDomainQueries = {
   __typename?: "AdminDomainQueries";
   /**
-   * [ADMIN] Get all the domains currently in the system
+   * Get all the domains currently in the system
    *
    * Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
    */
   allDomains: DomainsConnection;
   /**
-   * [ADMIN] Get all the KCs currently in the system
+   * Get all the KCs currently in the system
    *
    * Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
    */
   allKCs: KCsConnection;
   /**
-   * [ADMIN] Get all the topics currently in the system
+   * Get all the topics currently in the system
    *
    * Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
    */
@@ -338,7 +338,7 @@ export type KCsConnection = Connection & {
 
 export type Mutation = {
   __typename?: "Mutation";
-  /** [ADMIN] Admin related domain mutations, only authenticated users with the role "ADMIN" can access */
+  /** Admin related domain mutations, only authenticated users with the role "ADMIN" can access */
   adminDomain: AdminDomainMutations;
   /** Returns 'Hello World!' */
   hello: Scalars["String"];
@@ -378,7 +378,7 @@ export type Project = {
 
 export type Query = {
   __typename?: "Query";
-  /** [ADMIN] Admin related domain queries, only authenticated users with the role "ADMIN" can access */
+  /** Admin related domain queries, only authenticated users with the role "ADMIN" can access */
   adminDomain: AdminDomainQueries;
   /**
    * Get all the content associated with the specified identifiers

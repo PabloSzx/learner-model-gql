@@ -21,19 +21,19 @@ input AdminContentFilter {
 }
 
 """
-[ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access
+Admin related content mutations, only authenticated users with the role "ADMIN" can access
 """
 type AdminContentMutations {
-  "[ADMIN] Create a new content entity"
+  "Create a new content entity"
   createContent(data: CreateContent!): Content!
-  "[ADMIN] Update an existent content entity"
+  "Update an existent content entity"
   updateContent(data: UpdateContent!): Content!
 }
 
 "Admin Content-Related Queries"
 type AdminContentQueries {
   """
-  [ADMIN] Get all the content currently in the system
+  Get all the content currently in the system
 
   Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
   """
@@ -208,7 +208,7 @@ scalar JSONObject
 
 type Mutation {
   """
-  [ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access
+  Admin related content mutations, only authenticated users with the role "ADMIN" can access
   """
   adminContent: AdminContentMutations!
   "Returns 'Hello World!'"
@@ -306,7 +306,7 @@ input ProjectContentFilter {
 
 type Query {
   """
-  [ADMIN] Admin related content queries, only authenticated users with the role "ADMIN" can access
+  Admin related content queries, only authenticated users with the role "ADMIN" can access
   """
   adminContent: AdminContentQueries!
   """

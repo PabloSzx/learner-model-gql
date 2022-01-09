@@ -127,7 +127,7 @@ type ActionsVerbsConnection implements Connection {
 "Admin Action-Related Queries"
 type AdminActionQueries {
   """
-  [ADMIN] Get all the actions currently in the system
+  Get all the actions currently in the system
 
   Pagination parameters are mandatory, but filters and orderBy are optional, and therefore the search can be customized.
   """
@@ -137,7 +137,7 @@ type AdminActionQueries {
     pagination: CursorConnectionArgs!
   ): ActionsConnection!
   """
-  [ADMIN] Get all the action's verbs currently in the system
+  Get all the action's verbs currently in the system
   """
   allActionsVerbs(pagination: CursorConnectionArgs!): ActionsVerbsConnection!
 }
@@ -405,7 +405,7 @@ input ProjectActionsFilter {
 
 type Query {
   """
-  [ADMIN] Admin related actions queries, only authenticated users with the role "ADMIN" can access
+  Admin related actions queries, only authenticated users with the role "ADMIN" can access
   """
   adminActions: AdminActionQueries!
   "Returns 'Hello World!'"

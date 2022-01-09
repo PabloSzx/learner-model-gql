@@ -69,21 +69,21 @@ export type AdminContentFilter = {
   tags?: InputMaybe<Array<Scalars["String"]>>;
 };
 
-/** [ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access */
+/** Admin related content mutations, only authenticated users with the role "ADMIN" can access */
 export type AdminContentMutations = {
   __typename?: "AdminContentMutations";
-  /** [ADMIN] Create a new content entity */
+  /** Create a new content entity */
   createContent: Content;
-  /** [ADMIN] Update an existent content entity */
+  /** Update an existent content entity */
   updateContent: Content;
 };
 
-/** [ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access */
+/** Admin related content mutations, only authenticated users with the role "ADMIN" can access */
 export type AdminContentMutationsCreateContentArgs = {
   data: CreateContent;
 };
 
-/** [ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access */
+/** Admin related content mutations, only authenticated users with the role "ADMIN" can access */
 export type AdminContentMutationsUpdateContentArgs = {
   data: UpdateContent;
 };
@@ -92,7 +92,7 @@ export type AdminContentMutationsUpdateContentArgs = {
 export type AdminContentQueries = {
   __typename?: "AdminContentQueries";
   /**
-   * [ADMIN] Get all the content currently in the system
+   * Get all the content currently in the system
    *
    * Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
    */
@@ -241,7 +241,7 @@ export type CursorConnectionArgs = {
 
 export type Mutation = {
   __typename?: "Mutation";
-  /** [ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access */
+  /** Admin related content mutations, only authenticated users with the role "ADMIN" can access */
   adminContent: AdminContentMutations;
   /** Returns 'Hello World!' */
   hello: Scalars["String"];
@@ -330,7 +330,7 @@ export type ProjectContentFilter = {
 
 export type Query = {
   __typename?: "Query";
-  /** [ADMIN] Admin related content queries, only authenticated users with the role "ADMIN" can access */
+  /** Admin related content queries, only authenticated users with the role "ADMIN" can access */
   adminContent: AdminContentQueries;
   /**
    * Get all the content associated with the specified identifiers

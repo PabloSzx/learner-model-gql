@@ -16,15 +16,15 @@ input AdminGroupsFilter {
 
 "Admin User-Related Queries"
 type AdminUserMutations {
-  "[ADMIN] Create a new group entity"
+  "Create a new group entity"
   createGroup(data: CreateGroupInput!): Group!
   "Set the projects of the specified users"
   setProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
-  "[ADMIN] Set the users (by email) associated with the groups"
+  "Set the users (by email) associated with the groups"
   setUserGroups(groupIds: [IntID!]!, usersEmails: [EmailAddress!]!): [Group!]!
-  "[ADMIN] Update an existent group entity"
+  "Update an existent group entity"
   updateGroup(data: UpdateGroupInput!): Group!
-  "[ADMIN] Update an existent user entity"
+  "Update an existent user entity"
   updateUser(data: UpdateUserInput!): User!
   "Upsert specified users with specified projects"
   upsertUsersWithProjects(
@@ -36,7 +36,7 @@ type AdminUserMutations {
 "Admin User-Related Queries"
 type AdminUserQueries {
   """
-  [ADMIN] Get all the groups currently in the system
+  Get all the groups currently in the system
 
   Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
   """
@@ -45,7 +45,7 @@ type AdminUserQueries {
     pagination: CursorConnectionArgs!
   ): GroupsConnection!
   """
-  [ADMIN] Get all the users currently in the system
+  Get all the users currently in the system
 
   Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
   """
@@ -220,7 +220,7 @@ scalar JSONObject
 
 type Mutation {
   """
-  [ADMIN] Admin related user mutations, only authenticated users with the role "ADMIN" can access
+  Admin related user mutations, only authenticated users with the role "ADMIN" can access
   """
   adminUsers: AdminUserMutations!
   "Returns 'Hello World!'"
@@ -262,7 +262,7 @@ type PageInfo {
 
 type Query {
   """
-  [ADMIN] Admin related user queries, only authenticated users with the role "ADMIN" can access
+  Admin related user queries, only authenticated users with the role "ADMIN" can access
   """
   adminUsers: AdminUserQueries!
   "Authenticated user information"

@@ -116,7 +116,7 @@ export const domainModule = registerModule(
     "Admin Domain-Related Queries"
     type AdminDomainQueries {
       """
-      [ADMIN] Get all the topics currently in the system
+      Get all the topics currently in the system
 
       Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
       """
@@ -126,7 +126,7 @@ export const domainModule = registerModule(
       ): TopicsConnection!
 
       """
-      [ADMIN] Get all the domains currently in the system
+      Get all the domains currently in the system
 
       Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
       """
@@ -226,16 +226,16 @@ export const domainModule = registerModule(
 
     "Admin Domain-Related Queries"
     type AdminDomainMutations {
-      "[ADMIN] Create a new domain entity"
+      "Create a new domain entity"
       createDomain(input: CreateDomain!): Domain!
 
-      "[ADMIN] Update an existent domain entity"
+      "Update an existent domain entity"
       updateDomain(input: UpdateDomain!): Domain!
 
-      "[ADMIN] Create a new topic entity"
+      "Create a new topic entity"
       createTopic(input: CreateTopic!): Topic!
 
-      "[ADMIN] Update an existent topic entity"
+      "Update an existent topic entity"
       updateTopic(input: UpdateTopic!): Topic!
     }
 
@@ -267,14 +267,14 @@ export const domainModule = registerModule(
       topicByCode(code: String!): Topic
 
       """
-      [ADMIN] Admin related domain queries, only authenticated users with the role "ADMIN" can access
+      Admin related domain queries, only authenticated users with the role "ADMIN" can access
       """
       adminDomain: AdminDomainQueries!
     }
 
     extend type Mutation {
       """
-      [ADMIN] Admin related domain mutations, only authenticated users with the role "ADMIN" can access
+      Admin related domain mutations, only authenticated users with the role "ADMIN" can access
       """
       adminDomain: AdminDomainMutations!
     }

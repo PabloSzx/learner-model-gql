@@ -66,15 +66,15 @@ export type AdminGroupsFilter = {
 /** Admin User-Related Queries */
 export type AdminUserMutations = {
   __typename?: "AdminUserMutations";
-  /** [ADMIN] Create a new group entity */
+  /** Create a new group entity */
   createGroup: Group;
   /** Set the projects of the specified users */
   setProjectsToUsers: Array<User>;
-  /** [ADMIN] Set the users (by email) associated with the groups */
+  /** Set the users (by email) associated with the groups */
   setUserGroups: Array<Group>;
-  /** [ADMIN] Update an existent group entity */
+  /** Update an existent group entity */
   updateGroup: Group;
-  /** [ADMIN] Update an existent user entity */
+  /** Update an existent user entity */
   updateUser: User;
   /** Upsert specified users with specified projects */
   upsertUsersWithProjects: Array<User>;
@@ -117,13 +117,13 @@ export type AdminUserMutationsUpsertUsersWithProjectsArgs = {
 export type AdminUserQueries = {
   __typename?: "AdminUserQueries";
   /**
-   * [ADMIN] Get all the groups currently in the system
+   * Get all the groups currently in the system
    *
    * Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
    */
   allGroups: GroupsConnection;
   /**
-   * [ADMIN] Get all the users currently in the system
+   * Get all the users currently in the system
    *
    * Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
    */
@@ -279,7 +279,7 @@ export type GroupsConnection = Connection & {
 
 export type Mutation = {
   __typename?: "Mutation";
-  /** [ADMIN] Admin related user mutations, only authenticated users with the role "ADMIN" can access */
+  /** Admin related user mutations, only authenticated users with the role "ADMIN" can access */
   adminUsers: AdminUserMutations;
   /** Returns 'Hello World!' */
   hello: Scalars["String"];
@@ -309,7 +309,7 @@ export type PageInfo = {
 
 export type Query = {
   __typename?: "Query";
-  /** [ADMIN] Admin related user queries, only authenticated users with the role "ADMIN" can access */
+  /** Admin related user queries, only authenticated users with the role "ADMIN" can access */
   adminUsers: AdminUserQueries;
   /** Authenticated user information */
   currentUser?: Maybe<User>;

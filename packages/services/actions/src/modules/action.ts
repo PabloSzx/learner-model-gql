@@ -256,7 +256,7 @@ export const actionModule = registerModule(
     "Admin Action-Related Queries"
     type AdminActionQueries {
       """
-      [ADMIN] Get all the actions currently in the system
+      Get all the actions currently in the system
 
       Pagination parameters are mandatory, but filters and orderBy are optional, and therefore the search can be customized.
       """
@@ -267,7 +267,7 @@ export const actionModule = registerModule(
       ): ActionsConnection!
 
       """
-      [ADMIN] Get all the action's verbs currently in the system
+      Get all the action's verbs currently in the system
       """
       allActionsVerbs(
         pagination: CursorConnectionArgs!
@@ -276,7 +276,7 @@ export const actionModule = registerModule(
 
     extend type Query {
       """
-      [ADMIN] Admin related actions queries, only authenticated users with the role "ADMIN" can access
+      Admin related actions queries, only authenticated users with the role "ADMIN" can access
       """
       adminActions: AdminActionQueries!
     }

@@ -175,12 +175,12 @@ export type ActionsVerbsConnection = Connection & {
 export type AdminActionQueries = {
   __typename?: "AdminActionQueries";
   /**
-   * [ADMIN] Get all the actions currently in the system
+   * Get all the actions currently in the system
    *
    * Pagination parameters are mandatory, but filters and orderBy are optional, and therefore the search can be customized.
    */
   allActions: ActionsConnection;
-  /** [ADMIN] Get all the action's verbs currently in the system */
+  /** Get all the action's verbs currently in the system */
   allActionsVerbs: ActionsVerbsConnection;
 };
 
@@ -276,21 +276,21 @@ export type AdminContentFilter = {
   tags?: InputMaybe<Array<Scalars["String"]>>;
 };
 
-/** [ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access */
+/** Admin related content mutations, only authenticated users with the role "ADMIN" can access */
 export type AdminContentMutations = {
   __typename?: "AdminContentMutations";
-  /** [ADMIN] Create a new content entity */
+  /** Create a new content entity */
   createContent: Content;
-  /** [ADMIN] Update an existent content entity */
+  /** Update an existent content entity */
   updateContent: Content;
 };
 
-/** [ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access */
+/** Admin related content mutations, only authenticated users with the role "ADMIN" can access */
 export type AdminContentMutationsCreateContentArgs = {
   data: CreateContent;
 };
 
-/** [ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access */
+/** Admin related content mutations, only authenticated users with the role "ADMIN" can access */
 export type AdminContentMutationsUpdateContentArgs = {
   data: UpdateContent;
 };
@@ -299,7 +299,7 @@ export type AdminContentMutationsUpdateContentArgs = {
 export type AdminContentQueries = {
   __typename?: "AdminContentQueries";
   /**
-   * [ADMIN] Get all the content currently in the system
+   * Get all the content currently in the system
    *
    * Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
    */
@@ -315,17 +315,17 @@ export type AdminContentQueriesAllContentArgs = {
 /** Admin Domain-Related Queries */
 export type AdminDomainMutations = {
   __typename?: "AdminDomainMutations";
-  /** [ADMIN] Create a new domain entity */
+  /** Create a new domain entity */
   createDomain: Domain;
-  /** [ADMIN] Create a new KC entity */
+  /** Create a new KC entity */
   createKC: Kc;
-  /** [ADMIN] Create a new topic entity */
+  /** Create a new topic entity */
   createTopic: Topic;
-  /** [ADMIN] Update an existent domain entity */
+  /** Update an existent domain entity */
   updateDomain: Domain;
-  /** [ADMIN] Update an existent KC entity */
+  /** Update an existent KC entity */
   updateKC: Kc;
-  /** [ADMIN] Update an existent topic entity */
+  /** Update an existent topic entity */
   updateTopic: Topic;
 };
 
@@ -363,19 +363,19 @@ export type AdminDomainMutationsUpdateTopicArgs = {
 export type AdminDomainQueries = {
   __typename?: "AdminDomainQueries";
   /**
-   * [ADMIN] Get all the domains currently in the system
+   * Get all the domains currently in the system
    *
    * Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
    */
   allDomains: DomainsConnection;
   /**
-   * [ADMIN] Get all the KCs currently in the system
+   * Get all the KCs currently in the system
    *
    * Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
    */
   allKCs: KCsConnection;
   /**
-   * [ADMIN] Get all the topics currently in the system
+   * Get all the topics currently in the system
    *
    * Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
    */
@@ -445,9 +445,9 @@ export type AdminKCsFilter = {
 /** Admin Project-Related Mutations */
 export type AdminProjectsMutations = {
   __typename?: "AdminProjectsMutations";
-  /** [ADMIN] Create a new project entity */
+  /** Create a new project entity */
   createProject: Project;
-  /** [ADMIN] Update an existent project entity */
+  /** Update an existent project entity */
   updateProject: Project;
 };
 
@@ -464,7 +464,7 @@ export type AdminProjectsMutationsUpdateProjectArgs = {
 /** Admin Project-Related Queries */
 export type AdminProjectsQueries = {
   __typename?: "AdminProjectsQueries";
-  /** [ADMIN] Get all the projects currently in the system */
+  /** Get all the projects currently in the system */
   allProjects: ProjectsConnection;
 };
 
@@ -476,12 +476,12 @@ export type AdminProjectsQueriesAllProjectsArgs = {
 /** Admin State-Related Queries */
 export type AdminStateQueries = {
   __typename?: "AdminStateQueries";
-  /** [ADMIN] Get all the model states creators currently in the system */
+  /** Get all the model states creators currently in the system */
   allModelStateCreators: ModelStateCreatorConnection;
-  /** [ADMIN] Get all the model statestypes currently in the system */
+  /** Get all the model statestypes currently in the system */
   allModelStateTypes: ModelStateTypeConnection;
   /**
-   * [ADMIN] Get all the model states currently in the system
+   * Get all the model states currently in the system
    *
    * Pagination parameters are mandatory, but filters and orderBy are optional, and therefore the search can be customized.
    */
@@ -516,15 +516,15 @@ export type AdminTopicsFilter = {
 /** Admin User-Related Queries */
 export type AdminUserMutations = {
   __typename?: "AdminUserMutations";
-  /** [ADMIN] Create a new group entity */
+  /** Create a new group entity */
   createGroup: Group;
   /** Set the projects of the specified users */
   setProjectsToUsers: Array<User>;
-  /** [ADMIN] Set the users (by email) associated with the groups */
+  /** Set the users (by email) associated with the groups */
   setUserGroups: Array<Group>;
-  /** [ADMIN] Update an existent group entity */
+  /** Update an existent group entity */
   updateGroup: Group;
-  /** [ADMIN] Update an existent user entity */
+  /** Update an existent user entity */
   updateUser: User;
   /** Upsert specified users with specified projects */
   upsertUsersWithProjects: Array<User>;
@@ -567,13 +567,13 @@ export type AdminUserMutationsUpsertUsersWithProjectsArgs = {
 export type AdminUserQueries = {
   __typename?: "AdminUserQueries";
   /**
-   * [ADMIN] Get all the groups currently in the system
+   * Get all the groups currently in the system
    *
    * Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
    */
   allGroups: GroupsConnection;
   /**
-   * [ADMIN] Get all the users currently in the system
+   * Get all the users currently in the system
    *
    * Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
    */
@@ -1064,13 +1064,13 @@ export type Mutation = {
    * - Authenticated user has to be associated with specified project
    */
   action?: Maybe<Scalars["Void"]>;
-  /** [ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access */
+  /** Admin related content mutations, only authenticated users with the role "ADMIN" can access */
   adminContent: AdminContentMutations;
-  /** [ADMIN] Admin related domain mutations, only authenticated users with the role "ADMIN" can access */
+  /** Admin related domain mutations, only authenticated users with the role "ADMIN" can access */
   adminDomain: AdminDomainMutations;
-  /** [ADMIN] Admin related project mutations, only authenticated users with the role "ADMIN" can access */
+  /** Admin related project mutations, only authenticated users with the role "ADMIN" can access */
   adminProjects: AdminProjectsMutations;
-  /** [ADMIN] Admin related user mutations, only authenticated users with the role "ADMIN" can access */
+  /** Admin related user mutations, only authenticated users with the role "ADMIN" can access */
   adminUsers: AdminUserMutations;
   /** Returns 'Hello World!' */
   hello: Scalars["String"];
@@ -1244,17 +1244,17 @@ export type ProjectsConnection = Connection & {
 
 export type Query = {
   __typename?: "Query";
-  /** [ADMIN] Admin related actions queries, only authenticated users with the role "ADMIN" can access */
+  /** Admin related actions queries, only authenticated users with the role "ADMIN" can access */
   adminActions: AdminActionQueries;
-  /** [ADMIN] Admin related content queries, only authenticated users with the role "ADMIN" can access */
+  /** Admin related content queries, only authenticated users with the role "ADMIN" can access */
   adminContent: AdminContentQueries;
-  /** [ADMIN] Admin related domain queries, only authenticated users with the role "ADMIN" can access */
+  /** Admin related domain queries, only authenticated users with the role "ADMIN" can access */
   adminDomain: AdminDomainQueries;
-  /** [ADMIN] Project related administration queries */
+  /** Project related administration queries */
   adminProjects: AdminProjectsQueries;
-  /** [ADMIN] Admin related state queries, only authenticated users with the role "ADMIN" can access */
+  /** Admin related state queries, only authenticated users with the role "ADMIN" can access */
   adminState: AdminStateQueries;
-  /** [ADMIN] Admin related user queries, only authenticated users with the role "ADMIN" can access */
+  /** Admin related user queries, only authenticated users with the role "ADMIN" can access */
   adminUsers: AdminUserQueries;
   /**
    * Get all the content associated with the specified identifiers

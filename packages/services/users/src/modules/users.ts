@@ -87,7 +87,7 @@ export const usersModule = registerModule(
     "Admin User-Related Queries"
     type AdminUserQueries {
       """
-      [ADMIN] Get all the users currently in the system
+      Get all the users currently in the system
 
       Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
       """
@@ -130,13 +130,13 @@ export const usersModule = registerModule(
         projectsIds: [IntID!]!
       ): [User!]!
 
-      "[ADMIN] Update an existent user entity"
+      "Update an existent user entity"
       updateUser(data: UpdateUserInput!): User!
     }
 
     extend type Query {
       """
-      [ADMIN] Admin related user queries, only authenticated users with the role "ADMIN" can access
+      Admin related user queries, only authenticated users with the role "ADMIN" can access
       """
       adminUsers: AdminUserQueries!
 
@@ -155,7 +155,7 @@ export const usersModule = registerModule(
 
     extend type Mutation {
       """
-      [ADMIN] Admin related user mutations, only authenticated users with the role "ADMIN" can access
+      Admin related user mutations, only authenticated users with the role "ADMIN" can access
       """
       adminUsers: AdminUserMutations!
     }

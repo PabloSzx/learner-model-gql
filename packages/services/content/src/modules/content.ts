@@ -167,13 +167,13 @@ export const contentModule = registerModule(
     }
 
     """
-    [ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access
+    Admin related content mutations, only authenticated users with the role "ADMIN" can access
     """
     type AdminContentMutations {
-      "[ADMIN] Create a new content entity"
+      "Create a new content entity"
       createContent(data: CreateContent!): Content!
 
-      "[ADMIN] Update an existent content entity"
+      "Update an existent content entity"
       updateContent(data: UpdateContent!): Content!
     }
 
@@ -197,7 +197,7 @@ export const contentModule = registerModule(
     "Admin Content-Related Queries"
     type AdminContentQueries {
       """
-      [ADMIN] Get all the content currently in the system
+      Get all the content currently in the system
 
       Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
       """
@@ -209,7 +209,7 @@ export const contentModule = registerModule(
 
     extend type Query {
       """
-      [ADMIN] Admin related content queries, only authenticated users with the role "ADMIN" can access
+      Admin related content queries, only authenticated users with the role "ADMIN" can access
       """
       adminContent: AdminContentQueries!
       """
@@ -230,7 +230,7 @@ export const contentModule = registerModule(
     }
     extend type Mutation {
       """
-      [ADMIN] Admin related content mutations, only authenticated users with the role "ADMIN" can access
+      Admin related content mutations, only authenticated users with the role "ADMIN" can access
       """
       adminContent: AdminContentMutations!
     }

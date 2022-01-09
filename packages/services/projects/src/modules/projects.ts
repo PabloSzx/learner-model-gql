@@ -37,7 +37,7 @@ export const projectsModule = registerModule(
     "Admin Project-Related Queries"
     type AdminProjectsQueries {
       """
-      [ADMIN] Get all the projects currently in the system
+      Get all the projects currently in the system
       """
       allProjects(pagination: CursorConnectionArgs!): ProjectsConnection!
     }
@@ -71,15 +71,15 @@ export const projectsModule = registerModule(
 
     "Admin Project-Related Mutations"
     type AdminProjectsMutations {
-      "[ADMIN] Create a new project entity"
+      "Create a new project entity"
       createProject(data: CreateProject!): Project!
 
-      "[ADMIN] Update an existent project entity"
+      "Update an existent project entity"
       updateProject(data: UpdateProject!): Project!
     }
 
     extend type Query {
-      "[ADMIN] Project related administration queries"
+      "Project related administration queries"
       adminProjects: AdminProjectsQueries!
 
       """
@@ -102,7 +102,7 @@ export const projectsModule = registerModule(
 
     extend type Mutation {
       """
-      [ADMIN] Admin related project mutations, only authenticated users with the role "ADMIN" can access
+      Admin related project mutations, only authenticated users with the role "ADMIN" can access
       """
       adminProjects: AdminProjectsMutations!
     }

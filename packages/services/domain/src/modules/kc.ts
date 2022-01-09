@@ -66,7 +66,7 @@ export const kcModule = registerModule(
 
     extend type AdminDomainQueries {
       """
-      [ADMIN] Get all the KCs currently in the system
+      Get all the KCs currently in the system
 
       Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
       """
@@ -100,10 +100,10 @@ export const kcModule = registerModule(
     }
 
     extend type AdminDomainMutations {
-      "[ADMIN] Create a new KC entity"
+      "Create a new KC entity"
       createKC(data: CreateKCInput!): KC!
 
-      "[ADMIN] Update an existent KC entity"
+      "Update an existent KC entity"
       updateKC(data: UpdateKCInput!): KC!
     }
 

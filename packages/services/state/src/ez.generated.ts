@@ -56,12 +56,12 @@ export type Scalars = {
 /** Admin State-Related Queries */
 export type AdminStateQueries = {
   __typename?: "AdminStateQueries";
-  /** [ADMIN] Get all the model states creators currently in the system */
+  /** Get all the model states creators currently in the system */
   allModelStateCreators: ModelStateCreatorConnection;
-  /** [ADMIN] Get all the model statestypes currently in the system */
+  /** Get all the model statestypes currently in the system */
   allModelStateTypes: ModelStateTypeConnection;
   /**
-   * [ADMIN] Get all the model states currently in the system
+   * Get all the model states currently in the system
    *
    * Pagination parameters are mandatory, but filters and orderBy are optional, and therefore the search can be customized.
    */
@@ -280,7 +280,7 @@ export type PageInfo = {
 
 export type Query = {
   __typename?: "Query";
-  /** [ADMIN] Admin related state queries, only authenticated users with the role "ADMIN" can access */
+  /** Admin related state queries, only authenticated users with the role "ADMIN" can access */
   adminState: AdminStateQueries;
   /**
    * Get all the domains associated with the specified identifiers

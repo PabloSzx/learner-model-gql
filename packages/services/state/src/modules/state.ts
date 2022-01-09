@@ -4,7 +4,7 @@ export const stateModule = registerModule(
   gql`
     extend type Query {
       """
-      [ADMIN] Admin related state queries, only authenticated users with the role "ADMIN" can access
+      Admin related state queries, only authenticated users with the role "ADMIN" can access
       """
       adminState: AdminStateQueries!
     }
@@ -41,21 +41,21 @@ export const stateModule = registerModule(
     "Admin State-Related Queries"
     type AdminStateQueries {
       """
-      [ADMIN] Get all the model states currently in the system
+      Get all the model states currently in the system
 
       Pagination parameters are mandatory, but filters and orderBy are optional, and therefore the search can be customized.
       """
       allModelStates(input: ModelStateConnectionInput!): ModelStateConnection!
 
       """
-      [ADMIN] Get all the model states creators currently in the system
+      Get all the model states creators currently in the system
       """
       allModelStateCreators(
         pagination: CursorConnectionArgs!
       ): ModelStateCreatorConnection!
 
       """
-      [ADMIN] Get all the model statestypes currently in the system
+      Get all the model statestypes currently in the system
       """
       allModelStateTypes(
         pagination: CursorConnectionArgs!

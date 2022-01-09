@@ -56,9 +56,9 @@ export type Scalars = {
 /** Admin Project-Related Mutations */
 export type AdminProjectsMutations = {
   __typename?: "AdminProjectsMutations";
-  /** [ADMIN] Create a new project entity */
+  /** Create a new project entity */
   createProject: Project;
-  /** [ADMIN] Update an existent project entity */
+  /** Update an existent project entity */
   updateProject: Project;
 };
 
@@ -75,7 +75,7 @@ export type AdminProjectsMutationsUpdateProjectArgs = {
 /** Admin Project-Related Queries */
 export type AdminProjectsQueries = {
   __typename?: "AdminProjectsQueries";
-  /** [ADMIN] Get all the projects currently in the system */
+  /** Get all the projects currently in the system */
   allProjects: ProjectsConnection;
 };
 
@@ -171,7 +171,7 @@ export type Group = {
 
 export type Mutation = {
   __typename?: "Mutation";
-  /** [ADMIN] Admin related project mutations, only authenticated users with the role "ADMIN" can access */
+  /** Admin related project mutations, only authenticated users with the role "ADMIN" can access */
   adminProjects: AdminProjectsMutations;
   /** Returns 'Hello World!' */
   hello: Scalars["String"];
@@ -225,7 +225,7 @@ export type ProjectsConnection = Connection & {
 
 export type Query = {
   __typename?: "Query";
-  /** [ADMIN] Project related administration queries */
+  /** Project related administration queries */
   adminProjects: AdminProjectsQueries;
   /**
    * Get all the content associated with the specified identifiers

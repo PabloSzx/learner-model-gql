@@ -122,16 +122,16 @@ export const groupsModule = registerModule(
     }
 
     extend type AdminUserMutations {
-      "[ADMIN] Set the users (by email) associated with the groups"
+      "Set the users (by email) associated with the groups"
       setUserGroups(
         usersEmails: [EmailAddress!]!
         groupIds: [IntID!]!
       ): [Group!]!
 
-      "[ADMIN] Create a new group entity"
+      "Create a new group entity"
       createGroup(data: CreateGroupInput!): Group!
 
-      "[ADMIN] Update an existent group entity"
+      "Update an existent group entity"
       updateGroup(data: UpdateGroupInput!): Group!
     }
 
@@ -167,7 +167,7 @@ export const groupsModule = registerModule(
 
     extend type AdminUserQueries {
       """
-      [ADMIN] Get all the groups currently in the system
+      Get all the groups currently in the system
 
       Pagination parameters are mandatory, but filters is optional, and therefore the search can be customized.
       """
