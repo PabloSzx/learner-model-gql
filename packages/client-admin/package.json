@@ -35,7 +35,7 @@
     "serialize-error": "^9.0.0",
     "use-immer": "^0.6.0",
     "valtio": "^1.2.7",
-    "zustand": "^3.6.8"
+    "zustand": "^3.6.9"
   },
   "devDependencies": {
     "@types/mime": "^2.0.3",
