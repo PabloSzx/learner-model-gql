@@ -4,5 +4,5 @@
   "rangeStrategy": "bump",
   "ignorePaths": ["**/node_modules/**"],
   "automerge": true,
-  "ignoreDeps": ["pnpm"]
+  "ignoreDeps": ["pnpm", "nextra", "nextra-theme-docs"]
 }
