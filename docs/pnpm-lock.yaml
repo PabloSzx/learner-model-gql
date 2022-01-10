@@ -9,7 +9,7 @@ importers:
       concurrently: ^7.0.0
       next: ^12.0.7
       nextra: ^2.0.0-alpha.12
-      nextra-theme-docs: ^2.0.0-alpha.12
+      nextra-theme-docs: ^2.0.0-beta.5
       open-cli: ^7.0.1
       react: ^17.0.2
       react-dom: ^17.0.2
@@ -74,7 +74,7 @@ packages:
     resolution: {integrity: sha512-99catp6bHCaxr4sJ/DbTGgHS4+Rs2RVd2g7iOap6SLGPDknRK9ztKNsE/Fg6QhSeh1FGE5f6gHGQmvvn3I3xhw==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      regenerator-runtime: 0.13.4
+      regenerator-runtime: 0.13.9
     dev: false
 
   /@babel/runtime/7.16.7:
