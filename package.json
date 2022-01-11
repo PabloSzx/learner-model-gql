@@ -41,7 +41,7 @@
     "@types/concurrently": "^6.4.0",
     "@types/mocha": "^9.0.0",
     "@types/node": "^16.11.19",
-    "@types/prettier": "^2.4.2",
+    "@types/prettier": "^2.4.3",
     "@types/randomstring": "^1.1.8",
     "@types/react": "^17.0.38",
     "bob-tsm": "^0.4.4",
