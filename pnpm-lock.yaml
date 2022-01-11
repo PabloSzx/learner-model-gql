@@ -417,6 +417,14 @@ importers:
       api-base: link:../../api-base
       db: link:../../db
 
+  packages/services/modeler:
+    specifiers:
+      api-base: workspace:^0.0.1
+      db: workspace:^0.0.1
+    dependencies:
+      api-base: link:../../api-base
+      db: link:../../db
+
   packages/services/projects:
     specifiers:
       api-base: workspace:^0.0.1

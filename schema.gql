@@ -1291,6 +1291,7 @@ type Mutation {
   Admin related user mutations, only authenticated users with the role "ADMIN" can access
   """
   adminUsers: AdminUserMutations!
+  createModel(domainId: IntID!, type: String!, userId: IntID!): Void
   """
   Returns 'Hello World!'
   """

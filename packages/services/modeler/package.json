@@ -1,0 +1,13 @@
+{
+  "name": "service-modeler",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "bob-tsm --node-env=dev --watch=src src/index.ts",
+    "start": "bob-tsm --node-env=prod src/index.ts"
+  },
+  "dependencies": {
+    "api-base": "workspace:^0.0.1",
+    "db": "workspace:^0.0.1"
+  }
+}

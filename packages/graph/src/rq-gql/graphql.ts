@@ -1057,12 +1057,19 @@ export type Mutation = {
   adminProjects: AdminProjectsMutations;
   /** Admin related user mutations, only authenticated users with the role "ADMIN" can access */
   adminUsers: AdminUserMutations;
+  createModel?: Maybe<Scalars["Void"]>;
   /** Returns 'Hello World!' */
   hello: Scalars["String"];
 };
 
 export type MutationActionArgs = {
   data: ActionInput;
+};
+
+export type MutationCreateModelArgs = {
+  domainId: Scalars["IntID"];
+  type: Scalars["String"];
+  userId: Scalars["IntID"];
 };
 
 /** Minimum Entity Information */

@@ -1072,12 +1072,19 @@ export type Mutation = {
   adminProjects: AdminProjectsMutations;
   /** Admin related user mutations, only authenticated users with the role "ADMIN" can access */
   adminUsers: AdminUserMutations;
+  createModel?: Maybe<Scalars["Void"]>;
   /** Returns 'Hello World!' */
   hello: Scalars["String"];
 };
 
 export type MutationActionArgs = {
   data: ActionInput;
+};
+
+export type MutationCreateModelArgs = {
+  domainId: Scalars["IntID"];
+  type: Scalars["String"];
+  userId: Scalars["IntID"];
 };
 
 /** Minimum Entity Information */
@@ -2552,6 +2559,12 @@ export type MutationResolvers<
     ResolversTypes["AdminUserMutations"],
     ParentType,
     ContextType
+  >;
+  createModel?: Resolver<
+    Maybe<ResolversTypes["Void"]>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreateModelArgs, "domainId" | "type" | "userId">
   >;
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 };
