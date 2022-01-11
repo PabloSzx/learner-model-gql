@@ -28,7 +28,7 @@ importers:
       common: workspace:^0.0.1
       concurrently: ^7.0.0
       cross-env: ^7.0.3
-      dotenv: ^10.0.0
+      dotenv: ^11.0.0
       esbuild: ^0.14.11
       execa: ^6.0.0
       fastify: ^3.25.3
@@ -70,7 +70,7 @@ importers:
       c8: 7.11.0
       concurrently: 7.0.0
       cross-env: 7.0.3
-      dotenv: 10.0.0
+      dotenv: 11.0.0
       esbuild: 0.14.11
       execa: 6.0.0
       fastify: 3.25.3
@@ -4873,6 +4873,11 @@ packages:
   /dotenv/10.0.0:
     resolution: {integrity: sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==}
     engines: {node: '>=10'}
+
+  /dotenv/11.0.0:
+    resolution: {integrity: sha512-Fp/b504Y5W+e+FpCxTFMUZ7ZEQkQYF0rx+KZtmwixJxGQbLHrhCwo3FjZgNC8vIfrSi29PABNbMoCGD9YoiXbQ==}
+    engines: {node: '>=12'}
+    dev: true
 
   /dset/3.1.1:
     resolution: {integrity: sha512-hYf+jZNNqJBD2GiMYb+5mqOIX4R4RRHXU3qWMWYN+rqcR2/YpRL2bUHr8C8fU+5DNvqYjJ8YvMGSLuVPWU1cNg==}
