@@ -167,7 +167,7 @@ importers:
       react-dom: ^17.0.2
       react-icons: ^4.3.1
       react-query: ^3.34.8
-      react-select: ^5.2.1
+      react-select: ^5.2.2
       react-table: ^7.7.0
       react-use: ^17.3.2
       rq-gql: ^0.3.1
@@ -197,7 +197,7 @@ importers:
       react-dom: 17.0.2_react@17.0.2
       react-icons: 4.3.1_react@17.0.2
       react-query: 3.34.8_react-dom@17.0.2+react@17.0.2
-      react-select: 5.2.1_b3482aaf5744fc7c2aeb7941b0e0a78f
+      react-select: 5.2.2_b3482aaf5744fc7c2aeb7941b0e0a78f
       react-table: 7.7.0_react@17.0.2
       react-use: 17.3.2_react-dom@17.0.2+react@17.0.2
       rq-gql: 0.3.1_d0ab864df638add18e68bbbc6173efac
@@ -325,7 +325,7 @@ importers:
       pg-gql-pubsub: 0.3.0
       undici: 4.12.2
       wait-on: 6.0.0
-      ws: 8.4.0
+      ws: 8.4.1
     devDependencies:
       '@types/concurrently': 6.4.0
       '@types/content-type': 1.1.5
@@ -2252,7 +2252,7 @@ packages:
   /@graphql-codegen/plugin-helpers/2.3.2_graphql@16.2.0:
     resolution: {integrity: sha512-19qFA5XMAWaAY64sBljjDPYfHjE+QMk/+oalCyY13WjSlcLDvYPfmFlCNgFSsydArDELlHR8T1GMbA7C42M8TA==}
     peerDependencies:
-      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0
     dependencies:
       '@graphql-tools/utils': 8.6.1_graphql@16.2.0
       change-case-all: 1.0.14
@@ -2362,7 +2362,7 @@ packages:
   /@graphql-codegen/visitor-plugin-common/2.5.2_graphql@16.2.0:
     resolution: {integrity: sha512-qDMraPmumG+vEGAz42/asRkdgIRmQWH5HTc320UX+I6CY6eE/Ey85cgzoqeQGLV8gu4sj3UkNx/3/r79eX4u+Q==}
     peerDependencies:
-      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0
     dependencies:
       '@graphql-codegen/plugin-helpers': 2.3.2_graphql@16.2.0
       '@graphql-tools/optimize': 1.1.1_graphql@16.2.0
@@ -2393,11 +2393,11 @@ packages:
       form-data: 4.0.0
       graphql: 16.2.0
       graphql-ws: 5.5.5_graphql@16.2.0
-      isomorphic-ws: 4.0.1_ws@8.4.0
+      isomorphic-ws: 4.0.1_ws@8.4.1
       node-fetch: 2.6.6
-      subscriptions-transport-ws-envelop: 2.0.2_graphql@16.2.0+ws@8.4.0
-      undici: 4.12.1
-      ws: 8.4.0
+      subscriptions-transport-ws-envelop: 2.0.2_graphql@16.2.0+ws@8.4.1
+      undici: 4.12.2
+      ws: 8.4.1
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -2558,8 +2558,8 @@ packages:
       graphql: 16.2.0
       graphql-ez: 0.13.8_d6d5a494764a44f8600ae0962e04398d
       graphql-ws: 5.5.5_graphql@16.2.0
-      subscriptions-transport-ws-envelop: 2.0.2_graphql@16.2.0+ws@8.4.0
-      ws: 8.4.0
+      subscriptions-transport-ws-envelop: 2.0.2_graphql@16.2.0+ws@8.4.1
+      ws: 8.4.1
     transitivePeerDependencies:
       - '@types/node'
       - bufferutil
@@ -2834,14 +2834,14 @@ packages:
       graphql: 16.2.0
       graphql-sse: 1.0.6_graphql@16.2.0
       graphql-ws: 5.5.5_graphql@16.2.0
-      isomorphic-ws: 4.0.1_ws@8.4.0
+      isomorphic-ws: 4.0.1_ws@8.4.1
       meros: 1.1.4_@types+node@16.11.19
       subscriptions-transport-ws: 0.11.0_graphql@16.2.0
       sync-fetch: 0.3.1
       tslib: 2.3.1
       valid-url: 1.0.9
       value-or-promise: 1.0.11
-      ws: 8.4.0
+      ws: 8.4.1
     transitivePeerDependencies:
       - '@types/node'
       - bufferutil
@@ -2851,7 +2851,7 @@ packages:
   /@graphql-tools/utils/8.6.1_graphql@16.2.0:
     resolution: {integrity: sha512-uxcfHCocp4ENoIiovPxUWZEHOnbXqj3ekWc0rm7fUhW93a1xheARNHcNKhwMTR+UKXVJbTFQdGI1Rl5XdyvDBg==}
     peerDependencies:
-      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0
+      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0
     dependencies:
       graphql: 16.2.0
       tslib: 2.3.1
@@ -3937,7 +3937,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001299
-      electron-to-chromium: 1.4.44
+      electron-to-chromium: 1.4.45
       escalade: 3.1.1
       node-releases: 2.0.1
       picocolors: 1.0.0
@@ -4443,7 +4443,7 @@ packages:
       abort-controller: 3.0.0
       form-data: 4.0.0
       node-fetch: 2.6.6
-      undici: 4.12.1
+      undici: 4.12.2
     dev: true
 
   /cross-undici-fetch/0.1.15:
@@ -4453,7 +4453,7 @@ packages:
       form-data-encoder: 1.7.1
       formdata-node: 4.3.2
       node-fetch: 2.6.6
-      undici: 4.12.1
+      undici: 4.12.2
       web-streams-polyfill: 3.2.0
     dev: true
 
@@ -4692,8 +4692,8 @@ packages:
     dependencies:
       safe-buffer: 5.2.1
 
-  /electron-to-chromium/1.4.44:
-    resolution: {integrity: sha512-tHGWiUUmY7GABK8+DNcr474cnZDTzD8x1736SlDosVH8+/vRJeqfaIBAEHFtMjddz/0T4rKKYsxEc8BwQRdBpw==}
+  /electron-to-chromium/1.4.45:
+    resolution: {integrity: sha512-czF9eYVuOmlY/vxyMQz2rGlNSjZpxNQYBe1gmQv7al171qOIhgyO9k7D5AKlgeTCSPKk+LHhj5ZyIdmEub9oNg==}
 
   /elegant-spinner/1.0.1:
     resolution: {integrity: sha1-2wQ1IcldfjA/2PNFvtwzSc+wcp4=}
@@ -6001,12 +6001,12 @@ packages:
       whatwg-fetch: 3.6.2
     dev: true
 
-  /isomorphic-ws/4.0.1_ws@8.4.0:
+  /isomorphic-ws/4.0.1_ws@8.4.1:
     resolution: {integrity: sha512-BhBvN2MBpWTaSHdWRb/bwdZJ1WaehQ2L1KngkCkfLUGF0mAWAT1sQUQacEmQ0jXkFw/czDXPNQSL5u2/Krsz1w==}
     peerDependencies:
       ws: '*'
     dependencies:
-      ws: 8.4.0
+      ws: 8.4.1
 
   /istanbul-lib-coverage/3.2.0:
     resolution: {integrity: sha512-eOeJ5BHCmHYvQK7xt9GkdHuzuCGS1Y6g9Gvnx3Ym33fz/HpLRYxiS0wHNr+m/MBC8B647Xt608vCDEvhl9c6Mw==}
@@ -7519,8 +7519,8 @@ packages:
       use-sidecar: 1.0.5_react@17.0.2
     dev: false
 
-  /react-select/5.2.1_b3482aaf5744fc7c2aeb7941b0e0a78f:
-    resolution: {integrity: sha512-OOyNzfKrhOcw/BlembyGWgdlJ2ObZRaqmQppPFut1RptJO423j+Y+JIsmxkvsZ4D/3CpOmwIlCvWbbAWEdh12A==}
+  /react-select/5.2.2_b3482aaf5744fc7c2aeb7941b0e0a78f:
+    resolution: {integrity: sha512-miGS2rT1XbFNjduMZT+V73xbJEeMzVkJOz727F6MeAr2hKE0uUSA8Ff7vD44H32x2PD3SRB6OXTY/L+fTV3z9w==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0
       react-dom: ^16.8.0 || ^17.0.0
@@ -8329,7 +8329,7 @@ packages:
     resolution: {integrity: sha512-xGPXiFVl4YED9Jh7Euv2V220mriG9u4B2TA6Ybjc1catrstKD2PpIdU3U0RKpkVBC2EhmL/F0sPCr9vrFTNRag==}
     dev: false
 
-  /subscriptions-transport-ws-envelop/2.0.2_graphql@16.2.0+ws@8.4.0:
+  /subscriptions-transport-ws-envelop/2.0.2_graphql@16.2.0+ws@8.4.1:
     resolution: {integrity: sha512-HMwQgdiMBgWC48LplRtDsgrdQKnsns7VvLZTN1eIFNT01XJd6yuuudrl85TbO5QnTAiw6g2Sh5bjTFYKjFIGwQ==}
     peerDependencies:
       graphql: '>=0.10.0 || ^16.0.0'
@@ -8338,10 +8338,10 @@ packages:
       backo2: 1.0.2
       eventemitter3: 4.0.7
       graphql: 16.2.0
-      isomorphic-ws: 4.0.1_ws@8.4.0
+      isomorphic-ws: 4.0.1_ws@8.4.1
       iterall: 1.3.0
       symbol-observable: 4.0.0
-      ws: 8.4.0
+      ws: 8.4.1
 
   /subscriptions-transport-ws/0.11.0_graphql@16.2.0:
     resolution: {integrity: sha512-8D4C6DIH5tGiAIpp5I0wD/xRlNiZAPGHygzCe7VzyzUoxHtawzjNAY9SUTXU05/EY2NMY9/9GF0ycizkXr1CWQ==}
@@ -8633,15 +8633,9 @@ packages:
     resolution: {integrity: sha512-/j3YTZ5AobMB4ZrTY72mzM54uFUX32v0R/JRW9G2vOyF1uSKYAx+WT8dMsAcRS13TOFISv094TxIyWYk+WEPsA==}
     dev: false
 
-  /undici/4.12.1:
-    resolution: {integrity: sha512-MSfap7YiQJqTPP12C11PFRs9raZuVicDbwsZHTjB0a8+SsCqt7KdUis54f373yf7ZFhJzAkGJLaKm0202OIxHg==}
-    engines: {node: '>=12.18'}
-    dev: true
-
   /undici/4.12.2:
     resolution: {integrity: sha512-RZj6SbkQFs5O/pJCboGEo6l5DTCe3Zg4r/8Z/0/2qnIv08+s6zL4akohOPMYWKc3mzwv15WTvsfMWaafZcvYoQ==}
     engines: {node: '>=12.18'}
-    dev: false
 
   /unfetch/4.2.0:
     resolution: {integrity: sha512-F9p7yYCn6cIW9El1zi0HI6vqpeIvBsr3dSuRO6Xuppb1u5rXpCPmMvLSyECLhybr9isec8Ohl0hPekMVrEinDA==}
@@ -8908,8 +8902,8 @@ packages:
         optional: true
     dev: true
 
-  /ws/8.4.0:
-    resolution: {integrity: sha512-IHVsKe2pjajSUIl4KYMQOdlyliovpEPquKkqbwswulszzI7r0SfQrxnXdWAEqOlDCLrVSJzo+O1hAwdog2sKSQ==}
+  /ws/8.4.1:
+    resolution: {integrity: sha512-6eqQ4yN2y2xv8b+BgbkUzPPyfo/PDl3VOWb06ZE0jIFYwuHMsMQN6F7o84yxJYCblfCRAxzpU59We4Rr4w0Luw==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1

@@ -2349,9 +2349,9 @@ packages:
   /nextra-theme-docs/2.0.0-beta.5_b0ad9bc5716d2ad838a2c2409ac1e025:
     resolution: {integrity: sha512-VUNdcyTBK5REuQNocWOeXaFY88RyZq9wsym4So0+6yQVJSpf8eYCLHKozQOC2v6cyqBP5zGFcaFq6rDRp3Zt9w==}
     peerDependencies:
-      next: '>=9.5.3 || * || *'
-      react: '>=16.13.1 || * || *'
-      react-dom: '>=16.13.1 || * || *'
+      next: '>=9.5.3 || *'
+      react: '>=16.13.1 || *'
+      react-dom: '>=16.13.1 || *'
     dependencies:
       '@mdx-js/react': 2.0.0-rc.2_react@17.0.2
       '@reach/skip-nav': 0.11.2_react-dom@17.0.2+react@17.0.2
@@ -2376,7 +2376,7 @@ packages:
   /nextra/2.0.0-beta.5_react@17.0.2:
     resolution: {integrity: sha512-RYhD/wMfTFXzshqe1GOovQR9n0YsvgW/TLsUzu0arTix+A9Eugl/urFVvtGFRahOWxWFOS9/YgYKjp4nRIuMhw==}
     peerDependencies:
-      react: '>=16.13.1 || * || *'
+      react: '>=16.13.1 || *'
     dependencies:
       '@mdx-js/loader': 2.0.0-rc.2
       '@mdx-js/mdx': 2.0.0-rc.2
