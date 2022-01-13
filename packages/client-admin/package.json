@@ -28,7 +28,7 @@
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "react-query": "^3.34.8",
-    "react-select": "^5.2.1",
+    "react-select": "^5.2.2",
     "react-table": "^7.7.0",
     "react-use": "^17.3.2",
     "rq-gql": "^0.3.1",
