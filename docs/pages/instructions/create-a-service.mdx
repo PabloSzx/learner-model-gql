@@ -6,8 +6,8 @@ title: Create a service
 
 To create a service, you have to:
 
-1. Create a new package in the directory [packages/services/](https://github.com/PabloSzx/learner-model-gql/tree/main/packages/services).
-2. Add the new service in [packages/services/list.ts](https://github.com/PabloSzx/learner-model-gql/blob/main/packages/services/list.ts) with the corresponding new unique port.
+1. Add the new service in [packages/services/list.ts](https://github.com/PabloSzx/learner-model-gql/blob/main/packages/services/list.ts) with the corresponding new unique port and name.
+2. Create a new package in the directory [packages/services/](https://github.com/PabloSzx/learner-model-gql/tree/main/packages/services).
 3. The new service's `package.json` should at least have this defined:
 
    ```json
@@ -29,7 +29,19 @@ To create a service, you have to:
    This will give the new service access to the [`db`](https://github.com/PabloSzx/learner-model-gql/tree/main/packages/db) package,
    which has the database connection and related code, and the [`api-base`](https://github.com/PabloSzx/learner-model-gql/tree/main/packages/api-base) package, which has useful shared code between services.
 
-4. The new service's `"src/index.ts"` file should look something like this:
+4. The new service needs a `tsconfig.json` alongside the just created `package.json`. It should be defined like this:
+
+> This configuration extends the main typescript configuration but isolates the service types
+
+```json
+{
+  "extends": "../../../tsconfig.json",
+  "include": ["**/*"],
+  "exclude": ["**/node_modules"]
+}
+```
+
+5. The new service's `"src/index.ts"` file should look something like this:
 
    ```ts
    import { baseServicesList, logger, pubSub, smartListen } from "api-base";
@@ -66,7 +78,7 @@ To create a service, you have to:
    });
    ```
 
-5. The new service's `"src/ez.ts"` file shoud look something like this:
+6. The new service's `"src/ez.ts"` file should look something like this:
 
    ```ts
    import { CreateApp } from "@graphql-ez/fastify";
@@ -83,7 +95,7 @@ To create a service, you have to:
    export * from "api-base";
    ```
 
-6. A new service module, let's call it `"src/modules/foo.ts"`, should start looking like this:
+7. A new service module, let's call it `"src/modules/foo.ts"`, should start looking like this:
 
    ```ts
    import { gql, registerModule } from "../ez";
@@ -110,10 +122,10 @@ To create a service, you have to:
    );
    ```
 
-7. And a new file `"src/modules/index.ts"` should start looking like this:
+8. And a new file `"src/modules/index.ts"` should start looking like this:
 
    ```ts
    export * from "./foo";
    ```
 
-8. Update the root [docker-compose.yaml](https://github.com/PabloSzx/learner-model-gql/blob/main/docker-compose.yml) to include the new service, you can follow the format of the existing services.
+9. Update the root [docker-compose.yaml](https://github.com/PabloSzx/learner-model-gql/blob/main/docker-compose.yml) to include the new service; you can follow the format of the existing services.
