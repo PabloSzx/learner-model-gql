@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "next": "^12.0.8",
-    "nextra": "^2.0.0-alpha.12",
-    "nextra-theme-docs": "^2.0.0-alpha.12",
+    "nextra": "2.0.0-beta.5",
+    "nextra-theme-docs": "2.0.0-beta.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
@@ -21,5 +21,18 @@
     "open-cli": "^7.0.1",
     "typescript": "^4.5.4",
     "wait-on": "^6.0.0"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "@babel/core",
+        "webpack"
+      ],
+      "allowedVersions": {
+        "react": "*",
+        "react-dom": "*",
+        "next": "*"
+      }
+    }
   }
 }

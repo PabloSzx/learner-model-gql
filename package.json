@@ -16,10 +16,10 @@
   "scripts": {
     "clean": "pnpm clean:install",
     "clean:install": "pnpm dlx rimraf \"**/{node_modules,.next,coverage,dist}\" pnpm-lock.yaml docs/pnpm-lock.yaml && pnpm dlx concurrently \"pnpm i\" \"pnpm i -C docs\" && pnpm generate",
+    "db:local": "docker-compose -f test/docker-compose.yml up -d",
     "predev": "pnpm -r db:generate",
     "dev": "concurrently -r \"cross-env NEXT_PUBLIC_API_URL=http://localhost:8080/graphql pnpm -r --no-bail dev\" \"tsc --watch\"",
     "generate": "pnpm -r generate",
-    "db:local": "docker-compose -f test/docker-compose.yml up -d",
     "migrate": "pnpm -r migrate:dev",
     "prepare": "is-ci || husky install",
     "pretty": "pretty-quick",
@@ -30,6 +30,7 @@
   "dependencies": {
     "api-base": "workspace:^0.0.1",
     "common": "workspace:^0.0.1",
+    "graphql-tag": "^2.12.6",
     "undici": "^4.12.1"
   },
   "devDependencies": {
@@ -72,7 +73,7 @@
   },
   "engines": {
     "node": "^16.13.2",
-    "pnpm": ">=6.23"
+    "pnpm": ">=6.26"
   },
   "pnpm": {
     "overrides": {
@@ -80,6 +81,16 @@
       "tar@<4.4.16 || >=5.0.0 <5.0.8 || >=6.0.0 <6.1.7": ">=4.4.16 <5.0.0 || >=5.0.8 <6.0.0 || >=6.1.7",
       "tar@<4.4.18 || >=5.0.0 <5.0.10 || >=6.0.0 <6.1.9": ">=4.4.18 <5.0.0 || >=5.0.10 <6.0.0 || >=6.1.9",
       "ansi-regex@>2.1.1 <5.0.1": "^5.0.1"
+    },
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "@envelop/core",
+        "@babel/core",
+        "react-dom"
+      ],
+      "allowedVersions": {
+        "graphql": "^16.0.0"
+      }
     }
   }
 }
