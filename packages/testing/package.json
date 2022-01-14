@@ -18,7 +18,7 @@
     "@graphql-codegen/typescript": "^2.4.2",
     "@graphql-codegen/typescript-operations": "^2.2.2",
     "@graphql-ez/fastify": "^0.9.5",
-    "@graphql-ez/fastify-testing": "^0.1.4",
+    "@graphql-ez/fastify-testing": "^0.1.5",
     "@graphql-typed-document-node/core": "^3.1.1",
     "api-base": "workspace:^0.0.1",
     "db": "workspace:^0.0.1"
