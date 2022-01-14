@@ -31,7 +31,7 @@
     "pg-gql-pubsub": "^0.3.0",
     "undici": "^4.12.2",
     "wait-on": "^6.0.0",
-    "ws": "^8.4.1"
+    "ws": "^8.4.2"
   },
   "devDependencies": {
     "@types/concurrently": "^6.4.0",
