@@ -322,7 +322,7 @@ export const kcs = await pMap(
   }
 );
 
-const nContent = 1500;
+const nContent = 500;
 
 const contentCodes = mapN(nContent, generate);
 
