@@ -18,7 +18,11 @@ import { serializeError } from "serialize-error";
 import { useImmer } from "use-immer";
 import { AsyncSelect, AsyncSelectProps } from "../components/AsyncSelect";
 import { withAdminAuth } from "../components/Auth";
-import { DataTable, getDateRow } from "../components/DataTable";
+import {
+  DataTable,
+  getDateRow,
+  useDebouncedDataTableSearchValue,
+} from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
 import { useJSONEditor } from "../components/jsonEditor";
 import { useTagsSelect } from "../components/TagsSelect";
@@ -509,11 +513,12 @@ const EditContent = ({
 export default withAdminAuth(function ContentPage() {
   const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination();
 
+  const textSearch = useDebouncedDataTableSearchValue();
   const { data } = useGQLQuery(
     gql(/* GraphQL */ `
       query AllContent(
         $pagination: CursorConnectionArgs!
-        $filters: AdminContentFilter
+        $filters: AdminContentFilter!
       ) {
         adminContent {
           allContent(pagination: $pagination, filters: $filters) {
@@ -527,6 +532,9 @@ export default withAdminAuth(function ContentPage() {
     `),
     {
       pagination,
+      filters: {
+        textSearch,
+      },
     }
   );
   pageInfo.current = data?.adminContent.allContent.pageInfo;
@@ -539,6 +547,7 @@ export default withAdminAuth(function ContentPage() {
         prevPage={prevPage}
         nextPage={nextPage}
         minH="80vh"
+        disableDefaultTextFilter
         columns={[
           {
             Header: "ID",

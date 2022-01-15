@@ -2200,7 +2200,7 @@ export type UpdateContentMutation = {
 
 export type AllContentQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
-  filters?: InputMaybe<AdminContentFilter>;
+  filters: AdminContentFilter;
 }>;
 
 export type AllContentQuery = {
@@ -2275,6 +2275,7 @@ export type DomainInfoFragment = {
 
 export type AllDomainsQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
+  filters: AdminDomainsFilter;
 }>;
 
 export type AllDomainsQuery = {
@@ -2462,7 +2463,7 @@ export type CreateKcMutation = {
 
 export type AllKCsQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
-  filters?: InputMaybe<AdminKCsFilter>;
+  filters: AdminKCsFilter;
 }>;
 
 export type AllKCsQuery = {
@@ -4266,8 +4267,11 @@ export const AllContentDocument = {
             name: { kind: "Name", value: "filters" },
           },
           type: {
-            kind: "NamedType",
-            name: { kind: "Name", value: "AdminContentFilter" },
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "AdminContentFilter" },
+            },
           },
         },
       ],
@@ -4418,6 +4422,20 @@ export const AllDomainsDocument = {
             },
           },
         },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "filters" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "AdminDomainsFilter" },
+            },
+          },
+        },
       ],
       selectionSet: {
         kind: "SelectionSet",
@@ -4438,6 +4456,14 @@ export const AllDomainsDocument = {
                       value: {
                         kind: "Variable",
                         name: { kind: "Name", value: "pagination" },
+                      },
+                    },
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "filters" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "filters" },
                       },
                     },
                   ],
@@ -4922,8 +4948,11 @@ export const AllKCsDocument = {
             name: { kind: "Name", value: "filters" },
           },
           type: {
-            kind: "NamedType",
-            name: { kind: "Name", value: "AdminKCsFilter" },
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "AdminKCsFilter" },
+            },
           },
         },
       ],

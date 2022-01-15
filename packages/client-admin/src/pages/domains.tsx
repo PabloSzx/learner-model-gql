@@ -11,7 +11,11 @@ import { useEffect, useRef } from "react";
 import { MdAdd, MdEdit, MdSave } from "react-icons/md";
 import { proxy, ref, useSnapshot } from "valtio";
 import { withAdminAuth } from "../components/Auth";
-import { DataTable, getDateRow } from "../components/DataTable";
+import {
+  DataTable,
+  getDateRow,
+  useDebouncedDataTableSearchValue,
+} from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
 import { useCursorPagination } from "../hooks/pagination";
 import { queryClient } from "../rqClient";
@@ -92,9 +96,12 @@ gql(/* GraphQL */ `
 `);
 
 const AdminDomains = gql(/* GraphQL */ `
-  query AllDomains($pagination: CursorConnectionArgs!) {
+  query AllDomains(
+    $pagination: CursorConnectionArgs!
+    $filters: AdminDomainsFilter!
+  ) {
     adminDomain {
-      allDomains(pagination: $pagination) {
+      allDomains(pagination: $pagination, filters: $filters) {
         nodes {
           ...DomainInfo
         }
@@ -117,7 +124,13 @@ const DomainsState = proxy<
 
 export default withAdminAuth(function DomainPage() {
   const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination();
-  const { data } = useGQLQuery(AdminDomains, { pagination });
+  const textSearch = useDebouncedDataTableSearchValue();
+  const { data } = useGQLQuery(AdminDomains, {
+    pagination,
+    filters: {
+      textSearch,
+    },
+  });
   pageInfo.current = data?.adminDomain.allDomains.pageInfo;
 
   useEffect(() => {
@@ -162,6 +175,7 @@ export default withAdminAuth(function DomainPage() {
         prevPage={prevPage}
         nextPage={nextPage}
         minH="80vh"
+        disableDefaultTextFilter
         columns={[
           {
             Header: "ID",

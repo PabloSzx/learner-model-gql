@@ -33,13 +33,13 @@ const documents = {
     graphql.CreateContentDocument,
   "\n      mutation UpdateContent($data: UpdateContent!) {\n        adminContent {\n          updateContent(data: $data) {\n            __typename\n          }\n        }\n      }\n    ":
     graphql.UpdateContentDocument,
-  "\n      query AllContent(\n        $pagination: CursorConnectionArgs!\n        $filters: AdminContentFilter\n      ) {\n        adminContent {\n          allContent(pagination: $pagination, filters: $filters) {\n            nodes {\n              ...ContentInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    ":
+  "\n      query AllContent(\n        $pagination: CursorConnectionArgs!\n        $filters: AdminContentFilter!\n      ) {\n        adminContent {\n          allContent(pagination: $pagination, filters: $filters) {\n            nodes {\n              ...ContentInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    ":
     graphql.AllContentDocument,
   "\n      mutation CreateDomain($data: CreateDomain!) {\n        adminDomain {\n          createDomain(input: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    ":
     graphql.CreateDomainDocument,
   "\n  fragment DomainInfo on Domain {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n  }\n":
     graphql.DomainInfoFragmentDoc,
-  "\n  query AllDomains($pagination: CursorConnectionArgs!) {\n    adminDomain {\n      allDomains(pagination: $pagination) {\n        nodes {\n          ...DomainInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n":
+  "\n  query AllDomains(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminDomainsFilter!\n  ) {\n    adminDomain {\n      allDomains(pagination: $pagination, filters: $filters) {\n        nodes {\n          ...DomainInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n":
     graphql.AllDomainsDocument,
   "\n      mutation UpdateDomain($data: UpdateDomain!) {\n        adminDomain {\n          updateDomain(input: $data) {\n            __typename\n          }\n        }\n      }\n    ":
     graphql.UpdateDomainDocument,
@@ -57,7 +57,7 @@ const documents = {
     graphql.KcInfoFragmentDoc,
   "\n      mutation CreateKC($data: CreateKCInput!) {\n        adminDomain {\n          createKC(data: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    ":
     graphql.CreateKcDocument,
-  "\n      query AllKCs(\n        $pagination: CursorConnectionArgs!\n        $filters: AdminKCsFilter\n      ) {\n        adminDomain {\n          allKCs(pagination: $pagination, filters: $filters) {\n            nodes {\n              ...KCInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    ":
+  "\n      query AllKCs(\n        $pagination: CursorConnectionArgs!\n        $filters: AdminKCsFilter!\n      ) {\n        adminDomain {\n          allKCs(pagination: $pagination, filters: $filters) {\n            nodes {\n              ...KCInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    ":
     graphql.AllKCsDocument,
   "\n      mutation UpdateKC($data: UpdateKCInput!) {\n        adminDomain {\n          updateKC(data: $data) {\n            __typename\n          }\n        }\n      }\n    ":
     graphql.UpdateKcDocument,
@@ -129,8 +129,8 @@ export function gql(
   source: "\n      mutation UpdateContent($data: UpdateContent!) {\n        adminContent {\n          updateContent(data: $data) {\n            __typename\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation UpdateContent($data: UpdateContent!) {\n        adminContent {\n          updateContent(data: $data) {\n            __typename\n          }\n        }\n      }\n    "];
 export function gql(
-  source: "\n      query AllContent(\n        $pagination: CursorConnectionArgs!\n        $filters: AdminContentFilter\n      ) {\n        adminContent {\n          allContent(pagination: $pagination, filters: $filters) {\n            nodes {\n              ...ContentInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    "
-): typeof documents["\n      query AllContent(\n        $pagination: CursorConnectionArgs!\n        $filters: AdminContentFilter\n      ) {\n        adminContent {\n          allContent(pagination: $pagination, filters: $filters) {\n            nodes {\n              ...ContentInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    "];
+  source: "\n      query AllContent(\n        $pagination: CursorConnectionArgs!\n        $filters: AdminContentFilter!\n      ) {\n        adminContent {\n          allContent(pagination: $pagination, filters: $filters) {\n            nodes {\n              ...ContentInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    "
+): typeof documents["\n      query AllContent(\n        $pagination: CursorConnectionArgs!\n        $filters: AdminContentFilter!\n      ) {\n        adminContent {\n          allContent(pagination: $pagination, filters: $filters) {\n            nodes {\n              ...ContentInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    "];
 export function gql(
   source: "\n      mutation CreateDomain($data: CreateDomain!) {\n        adminDomain {\n          createDomain(input: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation CreateDomain($data: CreateDomain!) {\n        adminDomain {\n          createDomain(input: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    "];
@@ -138,8 +138,8 @@ export function gql(
   source: "\n  fragment DomainInfo on Domain {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n  }\n"
 ): typeof documents["\n  fragment DomainInfo on Domain {\n    __typename\n    id\n    code\n    label\n    updatedAt\n    createdAt\n  }\n"];
 export function gql(
-  source: "\n  query AllDomains($pagination: CursorConnectionArgs!) {\n    adminDomain {\n      allDomains(pagination: $pagination) {\n        nodes {\n          ...DomainInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"
-): typeof documents["\n  query AllDomains($pagination: CursorConnectionArgs!) {\n    adminDomain {\n      allDomains(pagination: $pagination) {\n        nodes {\n          ...DomainInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"];
+  source: "\n  query AllDomains(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminDomainsFilter!\n  ) {\n    adminDomain {\n      allDomains(pagination: $pagination, filters: $filters) {\n        nodes {\n          ...DomainInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"
+): typeof documents["\n  query AllDomains(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminDomainsFilter!\n  ) {\n    adminDomain {\n      allDomains(pagination: $pagination, filters: $filters) {\n        nodes {\n          ...DomainInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"];
 export function gql(
   source: "\n      mutation UpdateDomain($data: UpdateDomain!) {\n        adminDomain {\n          updateDomain(input: $data) {\n            __typename\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation UpdateDomain($data: UpdateDomain!) {\n        adminDomain {\n          updateDomain(input: $data) {\n            __typename\n          }\n        }\n      }\n    "];
@@ -165,8 +165,8 @@ export function gql(
   source: "\n      mutation CreateKC($data: CreateKCInput!) {\n        adminDomain {\n          createKC(data: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation CreateKC($data: CreateKCInput!) {\n        adminDomain {\n          createKC(data: $data) {\n            id\n            label\n            code\n          }\n        }\n      }\n    "];
 export function gql(
-  source: "\n      query AllKCs(\n        $pagination: CursorConnectionArgs!\n        $filters: AdminKCsFilter\n      ) {\n        adminDomain {\n          allKCs(pagination: $pagination, filters: $filters) {\n            nodes {\n              ...KCInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    "
-): typeof documents["\n      query AllKCs(\n        $pagination: CursorConnectionArgs!\n        $filters: AdminKCsFilter\n      ) {\n        adminDomain {\n          allKCs(pagination: $pagination, filters: $filters) {\n            nodes {\n              ...KCInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    "];
+  source: "\n      query AllKCs(\n        $pagination: CursorConnectionArgs!\n        $filters: AdminKCsFilter!\n      ) {\n        adminDomain {\n          allKCs(pagination: $pagination, filters: $filters) {\n            nodes {\n              ...KCInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    "
+): typeof documents["\n      query AllKCs(\n        $pagination: CursorConnectionArgs!\n        $filters: AdminKCsFilter!\n      ) {\n        adminDomain {\n          allKCs(pagination: $pagination, filters: $filters) {\n            nodes {\n              ...KCInfo\n            }\n            ...Pagination\n          }\n        }\n      }\n    "];
 export function gql(
   source: "\n      mutation UpdateKC($data: UpdateKCInput!) {\n        adminDomain {\n          updateKC(data: $data) {\n            __typename\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation UpdateKC($data: UpdateKCInput!) {\n        adminDomain {\n          updateKC(data: $data) {\n            __typename\n          }\n        }\n      }\n    "];

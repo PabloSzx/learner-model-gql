@@ -12,7 +12,11 @@ import { memo, useEffect, useRef } from "react";
 import { MdAdd, MdEdit, MdSave } from "react-icons/md";
 import { proxy, ref, useSnapshot } from "valtio";
 import { withAdminAuth } from "../components/Auth";
-import { DataTable, getDateRow } from "../components/DataTable";
+import {
+  DataTable,
+  getDateRow,
+  useDebouncedDataTableSearchValue,
+} from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
 import { domainOptionLabel, useSelectSingleDomain } from "../hooks/domain";
 import { useCursorPagination } from "../hooks/pagination";
@@ -143,6 +147,8 @@ export default withAdminAuth(function KCPage() {
     }
   );
 
+  const textSearch = useDebouncedDataTableSearchValue();
+
   useUpdateEffect(() => {
     resetPagination();
   }, [selectedDomain]);
@@ -151,7 +157,7 @@ export default withAdminAuth(function KCPage() {
     gql(/* GraphQL */ `
       query AllKCs(
         $pagination: CursorConnectionArgs!
-        $filters: AdminKCsFilter
+        $filters: AdminKCsFilter!
       ) {
         adminDomain {
           allKCs(pagination: $pagination, filters: $filters) {
@@ -165,11 +171,10 @@ export default withAdminAuth(function KCPage() {
     `),
     {
       pagination,
-      filters: selectedDomain
-        ? {
-            domains: [selectedDomain.value],
-          }
-        : null,
+      filters: {
+        domains: selectedDomain ? [selectedDomain.value] : null,
+        textSearch,
+      },
     }
   );
   pageInfo.current = data?.adminDomain.allKCs.pageInfo;
@@ -219,6 +224,7 @@ export default withAdminAuth(function KCPage() {
         prevPage={prevPage}
         nextPage={nextPage}
         minH="80vh"
+        disableDefaultTextFilter
         columns={[
           {
             Header: "ID",
