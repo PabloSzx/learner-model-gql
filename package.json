@@ -19,6 +19,7 @@
     "db:local": "docker-compose -f test/docker-compose.yml up -d",
     "predev": "pnpm -r db:generate",
     "dev": "concurrently -r \"cross-env NEXT_PUBLIC_API_URL=http://localhost:8080/graphql pnpm -r --no-bail dev\" \"tsc --watch\"",
+    "docker:build": "docker build . -t pabloszx/learner-model-gql",
     "generate": "pnpm -r generate",
     "migrate": "pnpm -r migrate:dev",
     "prepare": "is-ci || husky install",
