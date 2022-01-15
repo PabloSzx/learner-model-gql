@@ -9,7 +9,7 @@
     "generate": "graphql-codegen generate --config codegen.yaml",
     "test:generate": "graphql-codegen generate --config codegen.yaml",
     "test:watch:generate": "graphql-codegen generate --config codegen.yaml --watch",
-    "load-test": "bob-tsm --node-env=dev src/loadTest/index.ts"
+    "load-test": "bob-tsm --node-env=prod src/loadTest/index.ts"
   },
   "devDependencies": {
     "@faker-js/faker": "^6.0.0-alpha.2",

@@ -1,7 +1,7 @@
 import faker from "@faker-js/faker";
 import assert from "assert";
 import { execaCommand } from "execa";
-import { random, sampleSize } from "lodash-es";
+import { random, sampleSize, sample, groupBy } from "lodash-es";
 import pMap from "p-map";
 import { resolve } from "path";
 import { generate } from "randomstring";
@@ -55,15 +55,19 @@ const nProjects = 20;
 
 const projectsCodes = mapN(nProjects, generate);
 
-export const projects = await Promise.all(
-  projectsCodes.map((code) => {
+export const projects = await pMap(
+  projectsCodes,
+  (code) => {
     return prisma.project.create({
       data: {
         code,
         label: generate(),
       },
     });
-  })
+  },
+  {
+    concurrency,
+  }
 );
 
 const nUsers = 10000;
@@ -73,7 +77,7 @@ const userTags = mapN(50, generate);
 export const users = await pMap(
   mapN(nUsers),
   async () => {
-    return await prisma.user.create({
+    return prisma.user.create({
       data: {
         email: faker.internet.email(generate(), generate()),
         uids: {
@@ -85,6 +89,9 @@ export const users = await pMap(
         picture: faker.internet.url(),
         tags: {
           set: sampleSize(userTags, random(0, 4)),
+        },
+        projects: {
+          connect: sampleSize(projects, random(0, 2)).map(({ id }) => ({ id })),
         },
       },
     });
@@ -103,7 +110,7 @@ const groupsTags = mapN(20, generate);
 export const groups = await pMap(
   groupsCodes,
   async (code) => {
-    return await prisma.group.create({
+    return prisma.group.create({
       data: {
         code,
         label: generate(),
@@ -135,7 +142,7 @@ const domainsCodes = mapN(nDomains, generate);
 export const domains = await pMap(
   domainsCodes,
   async (code) => {
-    return await prisma.domain.create({
+    return prisma.domain.create({
       data: {
         code,
         label: generate(),
@@ -145,6 +152,165 @@ export const domains = await pMap(
       },
       include: {
         projects: true,
+      },
+    });
+  },
+  {
+    concurrency,
+  }
+);
+
+const nTopics = 1500;
+
+const topicsCodes = mapN(nTopics, generate);
+
+export const topics = await pMap(
+  topicsCodes,
+  async (code) => {
+    return prisma.topic.create({
+      data: {
+        code,
+        label: generate(),
+        project: {
+          connect: {
+            id: sample(projects)!.id,
+          },
+        },
+      },
+    });
+  },
+  {
+    concurrency,
+  }
+);
+
+export const topicsByProject = groupBy(topics, (v) => v.projectId);
+
+export const topicsGrupedByProjectWithParent = await pMap(
+  Object.values(topicsByProject),
+  async (topics) => {
+    const topicsLeftToAssign = [...topics];
+    const topicsAssigned: typeof topicsLeftToAssign = [];
+
+    const topicsTags = mapN(Math.floor(topics.length / 3), generate);
+
+    function pickTopic() {
+      const topic = sample(topicsLeftToAssign);
+      if (!topic) return;
+
+      topicsLeftToAssign.splice(topicsLeftToAssign.indexOf(topic), 1);
+      topicsAssigned.push(topic);
+      return topic;
+    }
+
+    while (topicsLeftToAssign.length) {
+      const parent = sample(topicsAssigned) || pickTopic()!;
+
+      const child = pickTopic();
+
+      if (!child) continue;
+
+      await prisma.topic.update({
+        where: {
+          id: child.id,
+        },
+        data: {
+          parent: {
+            connect: {
+              id: parent.id,
+            },
+          },
+          tags: {
+            set: sampleSize(
+              topicsTags,
+              random(0, Math.min(4, topicsTags.length))
+            ),
+          },
+        },
+        select: null,
+      });
+    }
+
+    await Promise.all(
+      topicsAssigned.map(async (topic) => {
+        const childrens = (
+          await prisma.topic.findUnique({
+            where: {
+              id: topic.id,
+            },
+            select: {
+              childrens: {
+                select: {
+                  id: true,
+                },
+              },
+            },
+            rejectOnNotFound: true,
+          })
+        ).childrens;
+
+        if (childrens.length > 1) {
+          let index = 0;
+          await Promise.all(
+            childrens.map(async (topic) => {
+              await prisma.topic.update({
+                where: {
+                  id: topic.id,
+                },
+                data: {
+                  sortIndex: ++index,
+                },
+                select: null,
+              });
+            })
+          );
+        }
+      })
+    );
+
+    return {
+      projectId: topics[0].projectId,
+      topics: await prisma.topic.findMany({
+        where: {
+          id: {
+            in: topics.map((v) => v.id),
+          },
+        },
+        include: {
+          parent: true,
+          project: true,
+        },
+      }),
+    };
+  },
+  {
+    concurrency,
+  }
+);
+
+const nKcs = 500;
+
+const kcsCodes = mapN(nKcs, generate);
+
+export const kcs = await pMap(
+  kcsCodes,
+  async (code) => {
+    return prisma.kC.create({
+      data: {
+        code,
+        label: generate(),
+        domain: {
+          connect: {
+            id: sample(domains)!.id,
+          },
+        },
+      },
+      include: {
+        domain: {
+          include: {
+            projects: true,
+          },
+        },
       },
     });
   },
