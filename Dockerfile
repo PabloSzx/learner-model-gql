@@ -40,7 +40,7 @@ COPY packages/services ./packages/services
 COPY packages/mono ./packages/mono
 
 COPY packages/db ./packages/db
-COPY --from=prisma-build /home/prisma-build/prisma/prisma-client /home/learner-model-gql/packages/db/prisma/prisma-client
+COPY --from=prisma-build /home/prisma-build/src/generated/client /home/learner-model-gql/packages/db/src/generated/client
 
 ENV CI="true"
 

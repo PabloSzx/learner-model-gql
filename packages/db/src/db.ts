@@ -1,7 +1,7 @@
 import { LazyPromise } from "@graphql-ez/utils/promise";
 import assert from "assert/strict";
 import { ENV, logger } from "common-api";
-import * as Prisma from "../prisma/prisma-client/index.js";
+import * as Prisma from "./generated/client/index.js";
 import isEmail from "validator/lib/isEmail.js";
 
 export const prisma = new Prisma.PrismaClient({
@@ -43,6 +43,6 @@ export const DB_PREPARED = LazyPromise(async () => {
   }
 });
 
-export * from "../prisma/prisma-client/index.js";
+export * from "./generated/client/index.js";
 
-export type { Prisma as PrismaNS } from "../prisma/prisma-client";
+export type { Prisma as PrismaNS } from "./generated/client/index.js";
