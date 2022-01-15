@@ -6,7 +6,7 @@
   "main": "src/index.ts",
   "types": "src/index.ts",
   "scripts": {
-    "dev": "graphql-codegen --config codegen.yml --watch",
+    "graph:dev": "graphql-codegen --config codegen.yml --watch",
     "generate": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {

@@ -75,7 +75,7 @@ const documents = {
     graphql.UpdateTopicDocument,
   "\n  fragment UserInfo on User {\n    __typename\n    id\n    email\n    name\n    active\n    lastOnline\n    createdAt\n    role\n    updatedAt\n    locked\n    tags\n    projects {\n      id\n      code\n      label\n    }\n  }\n":
     graphql.UserInfoFragmentDoc,
-  "\n  query AdminUsers($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allUsers(pagination: $pagination) {\n        nodes {\n          ...UserInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n":
+  "\n  query AdminUsers(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminUsersFilter\n  ) {\n    adminUsers {\n      allUsers(pagination: $pagination, filters: $filters) {\n        nodes {\n          ...UserInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n":
     graphql.AdminUsersDocument,
   "\n      mutation UpsertUsersWithProjects(\n        $emails: [EmailAddress!]!\n        $projectsIds: [IntID!]!\n      ) {\n        adminUsers {\n          upsertUsersWithProjects(emails: $emails, projectsIds: $projectsIds) {\n            ...UserInfo\n          }\n        }\n      }\n    ":
     graphql.UpsertUsersWithProjectsDocument,
@@ -192,8 +192,8 @@ export function gql(
   source: "\n  fragment UserInfo on User {\n    __typename\n    id\n    email\n    name\n    active\n    lastOnline\n    createdAt\n    role\n    updatedAt\n    locked\n    tags\n    projects {\n      id\n      code\n      label\n    }\n  }\n"
 ): typeof documents["\n  fragment UserInfo on User {\n    __typename\n    id\n    email\n    name\n    active\n    lastOnline\n    createdAt\n    role\n    updatedAt\n    locked\n    tags\n    projects {\n      id\n      code\n      label\n    }\n  }\n"];
 export function gql(
-  source: "\n  query AdminUsers($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allUsers(pagination: $pagination) {\n        nodes {\n          ...UserInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"
-): typeof documents["\n  query AdminUsers($pagination: CursorConnectionArgs!) {\n    adminUsers {\n      allUsers(pagination: $pagination) {\n        nodes {\n          ...UserInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"];
+  source: "\n  query AdminUsers(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminUsersFilter\n  ) {\n    adminUsers {\n      allUsers(pagination: $pagination, filters: $filters) {\n        nodes {\n          ...UserInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"
+): typeof documents["\n  query AdminUsers(\n    $pagination: CursorConnectionArgs!\n    $filters: AdminUsersFilter\n  ) {\n    adminUsers {\n      allUsers(pagination: $pagination, filters: $filters) {\n        nodes {\n          ...UserInfo\n        }\n        ...Pagination\n      }\n    }\n  }\n"];
 export function gql(
   source: "\n      mutation UpsertUsersWithProjects(\n        $emails: [EmailAddress!]!\n        $projectsIds: [IntID!]!\n      ) {\n        adminUsers {\n          upsertUsersWithProjects(emails: $emails, projectsIds: $projectsIds) {\n            ...UserInfo\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation UpsertUsersWithProjects(\n        $emails: [EmailAddress!]!\n        $projectsIds: [IntID!]!\n      ) {\n        adminUsers {\n          upsertUsersWithProjects(emails: $emails, projectsIds: $projectsIds) {\n            ...UserInfo\n          }\n        }\n      }\n    "];

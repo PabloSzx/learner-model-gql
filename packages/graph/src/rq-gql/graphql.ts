@@ -2643,6 +2643,7 @@ export type UserInfoFragment = {
 
 export type AdminUsersQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
+  filters?: InputMaybe<AdminUsersFilter>;
 }>;
 
 export type AdminUsersQuery = {
@@ -5392,6 +5393,17 @@ export const AdminUsersDocument = {
             },
           },
         },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "filters" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "AdminUsersFilter" },
+          },
+        },
       ],
       selectionSet: {
         kind: "SelectionSet",
@@ -5412,6 +5424,14 @@ export const AdminUsersDocument = {
                       value: {
                         kind: "Variable",
                         name: { kind: "Name", value: "pagination" },
+                      },
+                    },
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "filters" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "filters" },
                       },
                     },
                   ],

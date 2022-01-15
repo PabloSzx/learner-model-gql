@@ -21,7 +21,7 @@ import {
 } from "@chakra-ui/react";
 import { formatSpanish } from "common";
 import get from "lodash/get.js";
-import { ReactNode, useCallback, useEffect } from "react";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
 import {
@@ -33,6 +33,7 @@ import {
   useSortBy,
   useTable,
 } from "react-table";
+import { useDebounce } from "react-use";
 import { proxy, useSnapshot } from "valtio";
 
 export interface DataTableProps<Data extends object> extends BoxProps {
@@ -49,11 +50,27 @@ export interface DataTableProps<Data extends object> extends BoxProps {
     onClick(): void;
   };
   initialState?: Partial<TableState<Data>>;
+  disableDefaultTextFilter?: boolean;
 }
 
 const searchValue = proxy({
   current: "",
 });
+
+export const useDebouncedDataTableSearchValue = () => {
+  const { current } = useSnapshot(searchValue);
+  const [value, setValue] = useState(current);
+
+  useDebounce(
+    () => {
+      setValue(current);
+    },
+    250,
+    [current]
+  );
+
+  return value;
+};
 
 export function DataTable<Data extends object>({
   data,
@@ -62,6 +79,7 @@ export function DataTable<Data extends object>({
   nextPage,
   initialState,
   height,
+  disableDefaultTextFilter,
   ...boxProps
 }: DataTableProps<Data>) {
   const {
@@ -73,14 +91,18 @@ export function DataTable<Data extends object>({
     setGlobalFilter,
   } = useTable({ columns, data, initialState }, useGlobalFilter, useSortBy);
 
+  useEffect(() => {
+    searchValue.current = "";
+  }, []);
+
   const tableBg = useColorModeValue("blue.700", "blue.200");
   const tableColor = useColorModeValue("gray.50", "gray.800");
 
   const { current: searchValueString } = useSnapshot(searchValue);
 
   useEffect(() => {
-    setGlobalFilter(searchValueString);
-  }, [searchValueString]);
+    if (!disableDefaultTextFilter) setGlobalFilter(searchValueString);
+  }, [searchValueString, disableDefaultTextFilter]);
 
   const MapRow = useCallback(
     (row: Row<Data>) => {

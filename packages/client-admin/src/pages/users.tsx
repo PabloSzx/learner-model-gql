@@ -30,7 +30,11 @@ import {
 import { proxy, ref, useSnapshot } from "valtio";
 import type { OptionValue, SelectRefType } from "../components/AsyncSelect";
 import { useAuth, withAdminAuth } from "../components/Auth";
-import { DataTable, getDateRow } from "../components/DataTable";
+import {
+  DataTable,
+  getDateRow,
+  useDebouncedDataTableSearchValue,
+} from "../components/DataTable";
 import { FormModal } from "../components/FormModal";
 import { useTagsSelect } from "../components/TagsSelect";
 import { useCursorPagination } from "../hooks/pagination";
@@ -59,9 +63,12 @@ gql(/* GraphQL */ `
 `);
 
 const AdminUsers = gql(/* GraphQL */ `
-  query AdminUsers($pagination: CursorConnectionArgs!) {
+  query AdminUsers(
+    $pagination: CursorConnectionArgs!
+    $filters: AdminUsersFilter
+  ) {
     adminUsers {
-      allUsers(pagination: $pagination) {
+      allUsers(pagination: $pagination, filters: $filters) {
         nodes {
           ...UserInfo
         }
@@ -168,7 +175,14 @@ export default withAdminAuth(function UsersPage() {
 
   const usersState = useSnapshot(UsersState);
 
-  const { data } = useGQLQuery(AdminUsers, { pagination });
+  const textSearch = useDebouncedDataTableSearchValue();
+
+  const { data } = useGQLQuery(AdminUsers, {
+    pagination,
+    filters: {
+      textSearch,
+    },
+  });
   pageInfo.current = data?.adminUsers.allUsers.pageInfo;
 
   useEffect(() => {
@@ -218,6 +232,7 @@ export default withAdminAuth(function UsersPage() {
         data={data?.adminUsers.allUsers.nodes || []}
         prevPage={prevPage}
         nextPage={nextPage}
+        disableDefaultTextFilter
         columns={[
           {
             Header: "ID",
