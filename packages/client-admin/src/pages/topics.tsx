@@ -499,9 +499,15 @@ export function getTopicChildrens(
 ): Array<TopicInfoWithChildrens> {
   return allTopics.reduce<Array<TopicInfoWithChildrens>>((acum, topicValue) => {
     if (topicValue.parent?.id === topic?.id) {
+      const childrens = getTopicChildrens(allTopics, topicValue);
+
+      childrens.sort(
+        (a, b) => (a.sortIndex || -Infinity) - (b.sortIndex || -Infinity)
+      );
+
       acum.push({
         ...topicValue,
-        childrens: getTopicChildrens(allTopics, topicValue),
+        childrens,
       });
     }
 
