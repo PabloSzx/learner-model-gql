@@ -1,4 +1,10 @@
-import { FormControl, FormLabel, HStack, VStack } from "@chakra-ui/react";
+import {
+  FormControl,
+  FormLabel,
+  HStack,
+  useUpdateEffect,
+  VStack,
+} from "@chakra-ui/react";
 import type { ActionsInfoFragment, AdminActionsFilter } from "graph";
 import { gql, useGQLQuery } from "graph";
 import { useMemo } from "react";
@@ -53,9 +59,10 @@ gql(/* GraphQL */ `
 `);
 
 export default withAdminAuth(function ActionsPage() {
-  const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination({
-    amount: 50,
-  });
+  const { pagination, prevPage, nextPage, pageInfo, resetPagination } =
+    useCursorPagination({
+      amount: 50,
+    });
 
   const { selectMultiContentComponent, selectedContent } =
     useSelectMultiContent();
@@ -96,6 +103,10 @@ export default withAdminAuth(function ActionsPage() {
     selectedUsers,
     selectedDate,
   ]);
+
+  useUpdateEffect(() => {
+    resetPagination();
+  }, [filters, resetPagination]);
 
   const { data } = useGQLQuery(
     gql(/* GraphQL */ `

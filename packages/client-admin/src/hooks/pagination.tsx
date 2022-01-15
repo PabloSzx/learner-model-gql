@@ -1,5 +1,5 @@
 import { CursorConnectionArgs, PageInfo, gql } from "graph";
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 gql(/* GraphQL */ `
   fragment Pagination on Connection {
@@ -13,11 +13,17 @@ gql(/* GraphQL */ `
 `);
 
 export function useCursorPagination({ amount = 20 }: { amount?: number } = {}) {
-  const [pagination, setPagination] = useState<CursorConnectionArgs>(() => {
+  const defaultPagination = useMemo<CursorConnectionArgs>(() => {
     return {
       first: amount,
     };
-  });
+  }, [amount]);
+  const [pagination, setPagination] =
+    useState<CursorConnectionArgs>(defaultPagination);
+
+  const resetPagination = useCallback(() => {
+    setPagination(defaultPagination);
+  }, [setPagination, defaultPagination]);
 
   const pageInfo = useRef<PageInfo | undefined>();
 
@@ -57,12 +63,14 @@ export function useCursorPagination({ amount = 20 }: { amount?: number } = {}) {
           });
         },
       },
-      setPagination,
-      resetPagination() {
-        setPagination({
-          first: amount,
-        });
-      },
+      resetPagination,
     };
-  }, [pagination, setPagination, pageInfo, setPagination, amount]);
+  }, [
+    pagination,
+    setPagination,
+    pageInfo,
+    setPagination,
+    amount,
+    resetPagination,
+  ]);
 }
