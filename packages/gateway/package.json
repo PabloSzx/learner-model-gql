@@ -34,7 +34,7 @@
     "ws": "^8.4.2"
   },
   "devDependencies": {
-    "@types/concurrently": "^6.4.0",
+    "@types/concurrently": "^7.0.0",
     "@types/content-type": "^1.1.5",
     "@types/lodash": "^4.14.178",
     "@types/wait-on": "^5.3.1",
