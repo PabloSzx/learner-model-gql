@@ -39,7 +39,6 @@
     "@graphql-tools/graphql-tag-pluck": "^7.1.5",
     "@graphql-typed-document-node/core": "^3.1.1",
     "@prisma/client": "^3.8.1",
-    "@types/concurrently": "^7.0.0",
     "@types/mocha": "^9.0.0",
     "@types/node": "^16.11.19",
     "@types/prettier": "^2.4.3",
