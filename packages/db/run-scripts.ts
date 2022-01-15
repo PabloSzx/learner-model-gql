@@ -1,11 +1,10 @@
 import { mkdir, readdir } from "fs/promises";
 import inquirer from "inquirer";
 import open from "open";
-import { pubSub } from "./src";
 
 process.chdir(__dirname);
 
-Promise.allSettled([pubSub.close(), mkdir("scripts_data")]);
+Promise.allSettled([mkdir("scripts_data")]);
 
 const scriptsNames = await readdir("scripts");
 

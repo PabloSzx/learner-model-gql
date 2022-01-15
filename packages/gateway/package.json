@@ -28,7 +28,7 @@
     "graphql-ws": "^5.5.5",
     "lodash": "^4.17.21",
     "ms": "^3.0.0-canary.1",
-    "pg-gql-pubsub": "^0.3.0",
+    "pg-gql-pubsub": "^0.4.0",
     "undici": "^4.12.2",
     "wait-on": "^6.0.0",
     "ws": "^8.4.2"

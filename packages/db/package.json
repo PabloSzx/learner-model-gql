@@ -20,7 +20,7 @@
     "@prisma/client": "^3.8.1",
     "common-api": "workspace:^1.0.0",
     "pablosz-prisma-dbml-generator": "^0.8.4",
-    "pg-gql-pubsub": "^0.3.0",
+    "pg-gql-pubsub": "^0.4.0",
     "prisma": "^3.8.1",
     "prisma-dbml-generator": "^0.8.3",
     "validator": "^13.7.0"
