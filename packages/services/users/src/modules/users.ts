@@ -82,6 +82,10 @@ export const usersModule = registerModule(
       If any of the user's tags matches any of the specified tags, the user is included
       """
       tags: [String!]
+      """
+      Filter by text search inside "email", "name" or "tags"
+      """
+      textSearch: String
     }
 
     "Admin User-Related Queries"
@@ -266,6 +270,25 @@ export const usersModule = registerModule(
                       ? {
                           hasSome: filters.tags,
                         }
+                      : undefined,
+                    OR: filters.textSearch
+                      ? [
+                          {
+                            email: {
+                              contains: filters.textSearch,
+                            },
+                          },
+                          {
+                            name: {
+                              contains: filters.textSearch,
+                            },
+                          },
+                          {
+                            tags: {
+                              has: filters.textSearch,
+                            },
+                          },
+                        ]
                       : undefined,
                   }
                 : undefined,

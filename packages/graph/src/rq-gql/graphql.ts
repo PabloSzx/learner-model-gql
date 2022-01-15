@@ -585,6 +585,8 @@ export type AdminUsersFilter = {
    * If any of the user's tags matches any of the specified tags, the user is included
    */
   tags?: InputMaybe<Array<Scalars["String"]>>;
+  /** Filter by text search inside "email", "name" or "tags" */
+  textSearch?: InputMaybe<Scalars["String"]>;
 };
 
 /** Pagination Interface */
@@ -2013,6 +2015,7 @@ export type AllTopicsBaseQuery = {
 
 export type AllUsersBaseQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
+  filters: AdminUsersFilter;
 }>;
 
 export type AllUsersBaseQuery = {
@@ -3906,6 +3909,20 @@ export const AllUsersBaseDocument = {
             },
           },
         },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "filters" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "AdminUsersFilter" },
+            },
+          },
+        },
       ],
       selectionSet: {
         kind: "SelectionSet",
@@ -3926,6 +3943,14 @@ export const AllUsersBaseDocument = {
                       value: {
                         kind: "Variable",
                         name: { kind: "Name", value: "pagination" },
+                      },
+                    },
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "filters" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "filters" },
                       },
                     },
                   ],

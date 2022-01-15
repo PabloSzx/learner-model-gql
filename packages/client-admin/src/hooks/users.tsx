@@ -1,17 +1,42 @@
-import { AllUsersBaseQuery, gql, useGQLInfiniteQuery } from "graph";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { AsyncSelect, OptionValue } from "../components/AsyncSelect";
+import { useLatestRef } from "@chakra-ui/react";
+import {
+  AdminUsersFilter,
+  AllUsersBaseDocument,
+  AllUsersBaseQuery,
+  AllUsersBaseQueryVariables,
+  getKey,
+  gql,
+  useGQLInfiniteQuery,
+} from "graph";
+import { useEffect, useMemo, useState } from "react";
+import { useImmer } from "use-immer";
+import { OptionValue, Select } from "../components/AsyncSelect";
 
 export type UserInfo =
   AllUsersBaseQuery["adminUsers"]["allUsers"]["nodes"][number];
 
-export const useUsersBase = () => {
+export interface UsersBaseOptions {
+  initialUsersFilter: AdminUsersFilter;
+  limit: number;
+}
+
+export const useUsersBase = ({
+  initialUsersFilter = {
+    textSearch: "",
+  },
+  limit,
+}: UsersBaseOptions) => {
+  const [usersFilter, produceUsersFilter] =
+    useImmer<UsersBaseOptions["initialUsersFilter"]>(initialUsersFilter);
   const { hasNextPage, fetchNextPage, isFetching, data, isLoading } =
     useGQLInfiniteQuery(
       gql(/* GraphQL */ `
-        query AllUsersBase($pagination: CursorConnectionArgs!) {
+        query AllUsersBase(
+          $pagination: CursorConnectionArgs!
+          $filters: AdminUsersFilter!
+        ) {
           adminUsers {
-            allUsers(pagination: $pagination) {
+            allUsers(pagination: $pagination, filters: $filters) {
               nodes {
                 id
                 name
@@ -28,6 +53,7 @@ export const useUsersBase = () => {
             first: 50,
             after,
           },
+          filters: usersFilter,
         };
       },
       {
@@ -41,16 +67,11 @@ export const useUsersBase = () => {
           return hasNextPage ? endCursor : null;
         },
         staleTime: 5000,
+        queryKey: getKey(AllUsersBaseDocument, {
+          filters: usersFilter,
+        } as AllUsersBaseQueryVariables),
       }
     );
-
-  useEffect(() => {
-    if (isFetching) return;
-
-    if (hasNextPage) {
-      fetchNextPage().catch(console.error);
-    }
-  }, [hasNextPage, fetchNextPage, isFetching]);
 
   const users = useMemo(() => {
     const users: Record<string, UserInfo> = {};
@@ -64,6 +85,16 @@ export const useUsersBase = () => {
     return Object.values(users);
   }, [data]);
 
+  const usersAmount = useLatestRef(users.length);
+
+  useEffect(() => {
+    if (isFetching) return;
+
+    if (hasNextPage && usersAmount.current < limit) {
+      fetchNextPage().catch(console.error);
+    }
+  }, [hasNextPage, fetchNextPage, isFetching, usersAmount, limit]);
+
   const asOptions = useMemo(() => {
     return users.map((user) => {
       return {
@@ -73,73 +104,50 @@ export const useUsersBase = () => {
     });
   }, [users]);
 
-  const filteredOptions = useCallback(
-    async (input: string) => {
-      return input
-        ? asOptions.filter((v) => v.label.includes(input))
-        : asOptions;
-    },
-    [asOptions]
-  );
-
   return {
     users,
     isFetching,
     isLoading,
     asOptions,
-    filteredOptions,
+    usersFilter,
+    produceUsersFilter,
   };
 };
 
 export const userOptionLabel = ({ name, email }: UserInfo) =>
   name ? `${name} : ${email}` : email;
 
-export const useSelectSingleUser = () => {
-  const { isFetching, isLoading, filteredOptions, asOptions } = useUsersBase();
-
-  const [selectedUser, setSelectedUsers] = useState<OptionValue | null>(null);
-
-  const selectSingleUserComponent = useMemo(() => {
-    return (
-      <AsyncSelect
-        key={isLoading ? -1 : asOptions.length}
-        isLoading={isFetching}
-        loadOptions={filteredOptions}
-        onChange={(selected) => {
-          setSelectedUsers(selected || null);
-        }}
-        value={selectedUser}
-        placeholder="Search a user"
-      />
-    );
-  }, [filteredOptions, isLoading, isFetching, asOptions, selectedUser]);
-
-  return {
-    selectedUser,
-    selectSingleUserComponent,
-  };
-};
-
 export const useSelectMultiUsers = () => {
-  const { isFetching, isLoading, filteredOptions, asOptions } = useUsersBase();
+  const { isFetching, asOptions, usersFilter, produceUsersFilter } =
+    useUsersBase({
+      initialUsersFilter: {
+        textSearch: "",
+      },
+      limit: 50,
+    });
 
   const [selectedUsers, setSelectedUsers] = useState<OptionValue[]>([]);
 
   const selectMultiUsersComponent = useMemo(() => {
     return (
-      <AsyncSelect
-        key={isLoading ? -1 : asOptions.length}
+      <Select
         isLoading={isFetching}
-        loadOptions={filteredOptions}
+        options={asOptions}
         onChange={(selected) => {
           setSelectedUsers(selected || []);
+        }}
+        inputValue={usersFilter.textSearch || ""}
+        onInputChange={(input) => {
+          produceUsersFilter((draft) => {
+            draft.textSearch = input;
+          });
         }}
         isMulti
         value={selectedUsers}
         placeholder="Search a user"
       />
     );
-  }, [filteredOptions, isLoading, isFetching, asOptions, selectedUsers]);
+  }, [isFetching, asOptions, selectedUsers, usersFilter]);
 
   return {
     selectedUsers,

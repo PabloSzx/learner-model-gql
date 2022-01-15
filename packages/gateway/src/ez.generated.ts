@@ -600,6 +600,8 @@ export type AdminUsersFilter = {
    * If any of the user's tags matches any of the specified tags, the user is included
    */
   tags?: InputMaybe<Array<Scalars["String"]>>;
+  /** Filter by text search inside "email", "name" or "tags" */
+  textSearch?: InputMaybe<Scalars["String"]>;
 };
 
 /** Pagination Interface */
