@@ -438,7 +438,7 @@ importers:
 
   packages/testing:
     specifiers:
-      '@faker-js/faker': ^6.0.0-alpha.2
+      '@faker-js/faker': 6.0.0-alpha.2
       '@graphql-codegen/cli': ^2.3.1
       '@graphql-codegen/core': ^2.4.0
       '@graphql-codegen/gql-tag-operations-preset': ^1.2.2
@@ -455,7 +455,7 @@ importers:
       '@types/randomstring': ^1.1.8
       api-base: workspace:^0.0.1
       autocannon: ^7.6.0
-      bob-tsm: ^0.4.4
+      bob-tsm: ^0.4.5
       cross-port-killer: ^1.4.0
       db: workspace:^0.0.1
       esbuild: ^0.14.11
@@ -463,9 +463,6 @@ importers:
       lodash-es: ^4.17.21
       p-map: ^5.3.0
       randomstring: ^1.2.1
-    dependencies:
-      '@graphql-ez/client': 0.4.0_f6d8665eb96e5eb40b86d7f6d506be88
-      lodash-es: 4.17.21
     devDependencies:
       '@faker-js/faker': 6.0.0-alpha.2
       '@graphql-codegen/cli': 2.3.1_f1c8288e56b492a9a33380eaae56dedc
@@ -474,6 +471,7 @@ importers:
       '@graphql-codegen/typed-document-node': 2.2.2_graphql@16.2.0
       '@graphql-codegen/typescript': 2.4.2_graphql@16.2.0
       '@graphql-codegen/typescript-operations': 2.2.2_graphql@16.2.0
+      '@graphql-ez/client': 0.4.0_f6d8665eb96e5eb40b86d7f6d506be88
       '@graphql-ez/fastify': 0.9.5_fad5cbd5d0258960b8bed437735560bc
       '@graphql-ez/fastify-testing': 0.1.5_f9eb50d486ca2487256545611ce1608d
       '@graphql-typed-document-node/core': 3.1.1_graphql@16.2.0
@@ -488,6 +486,7 @@ importers:
       db: link:../db
       esbuild: 0.14.11
       execa: 6.0.0
+      lodash-es: 4.17.21
       p-map: 5.3.0
       randomstring: 1.2.1
 
@@ -2222,7 +2221,7 @@ packages:
   /@graphql-codegen/add/3.1.1_graphql@16.2.0:
     resolution: {integrity: sha512-XkVwcqosa0CVBlL1HaQT0gp+EUfhuQE3LzrEpzMQLwchxaj/NPVYtOJL6MUHaYDsHzLqxWrufjfbeB3y2NQgRw==}
     peerDependencies:
-      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0
     dependencies:
       '@graphql-codegen/plugin-helpers': 2.3.2_graphql@16.2.0
       graphql: 16.2.0
@@ -2339,7 +2338,7 @@ packages:
   /@graphql-codegen/plugin-helpers/2.3.2_graphql@16.2.0:
     resolution: {integrity: sha512-19qFA5XMAWaAY64sBljjDPYfHjE+QMk/+oalCyY13WjSlcLDvYPfmFlCNgFSsydArDELlHR8T1GMbA7C42M8TA==}
     peerDependencies:
-      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0
     dependencies:
       '@graphql-tools/utils': 8.6.1_graphql@16.2.0
       change-case-all: 1.0.14
@@ -2454,7 +2453,7 @@ packages:
   /@graphql-codegen/visitor-plugin-common/2.5.2_graphql@16.2.0:
     resolution: {integrity: sha512-qDMraPmumG+vEGAz42/asRkdgIRmQWH5HTc320UX+I6CY6eE/Ey85cgzoqeQGLV8gu4sj3UkNx/3/r79eX4u+Q==}
     peerDependencies:
-      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0
     dependencies:
       '@graphql-codegen/plugin-helpers': 2.3.2_graphql@16.2.0
       '@graphql-tools/optimize': 1.1.1_graphql@16.2.0
@@ -2486,6 +2485,7 @@ packages:
       '@types/node': 16.11.19
       graphql: 16.2.0
       undici: 4.12.2
+    dev: true
 
   /@graphql-ez/fastify-testing/0.1.5_f9eb50d486ca2487256545611ce1608d:
     resolution: {integrity: sha512-2a1KIEshexsHlUA0ak7LbK0OFoyx15effNpVI2LotL3egZO83UWzfKCnNm9FTtuIAlbrwFkjHHfekNTNpI9ZSg==}
@@ -6576,7 +6576,7 @@ packages:
 
   /lodash-es/4.17.21:
     resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
-    dev: false
+    dev: true
 
   /lodash.chunk/4.2.0:
     resolution: {integrity: sha1-ZuXOH3btJ7QwPYxlEujRIW6BBrw=}
