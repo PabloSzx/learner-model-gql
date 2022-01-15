@@ -1,12 +1,13 @@
 import { CreateApp, gql } from "@graphql-ez/fastify";
 import { ezAltairIDE } from "@graphql-ez/plugin-altair/static";
-import { CodegenOptions, ezCodegen } from "@graphql-ez/plugin-codegen";
+import type { CodegenOptions } from "@graphql-ez/plugin-codegen";
 import { ezGraphQLModules } from "@graphql-ez/plugin-modules";
 import { ezScalars } from "@graphql-ez/plugin-scalars";
 import { ezSchema } from "@graphql-ez/plugin-schema";
 import { ezVoyager, VoyagerPluginOptions } from "@graphql-ez/plugin-voyager";
 import { ezWebSockets } from "@graphql-ez/plugin-websockets";
 import { makeExecutableSchema } from "@graphql-tools/schema";
+import { ENV } from "common-api";
 import { lexicographicSortSchema } from "graphql";
 import { AltairIDEOptions } from "./altair";
 import { Auth0Verify } from "./auth";
@@ -50,7 +51,8 @@ export const ezServicePreset = CreateApp({
       ezAltairIDE(AltairIDEOptions),
       ezWebSockets("new"),
       ezSchema(),
-      ezCodegen(codegenOptions),
+      ENV.IS_DEVELOPMENT &&
+        (await import("@graphql-ez/plugin-codegen")).ezCodegen(codegenOptions),
       ezGraphQLModules({
         schemaBuilder({ typeDefs, resolvers }) {
           return lexicographicSortSchema(

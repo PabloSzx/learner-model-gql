@@ -9,7 +9,6 @@
     "@auth0/auth0-react": "^1.9.0",
     "@graphql-ez/fastify": "^0.9.5",
     "@graphql-ez/plugin-altair": "^0.9.7",
-    "@graphql-ez/plugin-codegen": "^0.7.7",
     "@graphql-ez/plugin-modules": "^0.10.1",
     "@graphql-ez/plugin-scalars": "^0.7.3",
     "@graphql-ez/plugin-schema": "^0.8.2",
@@ -27,6 +26,7 @@
     "wait-on": "^6.0.0"
   },
   "devDependencies": {
+    "@graphql-ez/plugin-codegen": "^0.7.7",
     "@types/validator": "^13.7.1",
     "@types/wait-on": "^5.3.1"
   }

@@ -1,7 +1,6 @@
-import Prisma from "@prisma/client";
 import { getNodeIdList, ResolveCursorConnection } from "api-base";
 import assert from "assert";
-import type { Content as DBContent } from "db";
+import { Content as DBContent, Prisma } from "db";
 import mime from "mime";
 import { gql, registerModule } from "../ez";
 import type { Content } from "../ez.generated";
@@ -335,7 +334,7 @@ export const contentModule = registerModule(
               code,
               label,
               description,
-              json: json ?? Prisma.Prisma.DbNull,
+              json: json ?? Prisma.DbNull,
               url: url?.toString() || null,
               binary: binaryBase64 ? Buffer.from(binaryBase64, "base64") : null,
               binaryFilename: binaryBase64

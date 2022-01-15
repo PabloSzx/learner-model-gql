@@ -6,10 +6,11 @@ datasource db {
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch"]
+  output          = "./prisma-client"
 }
 
 generator dbml {
-  provider = "pablosz-prisma-dbml-generator"
+  provider = "prisma-dbml-generator"
 }
 
 enum UserRole {

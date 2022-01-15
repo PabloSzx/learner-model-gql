@@ -1,11 +1,11 @@
 import { CreateApp } from "@graphql-ez/fastify";
 import { ezAltairIDE } from "@graphql-ez/plugin-altair";
-import { ezCodegen } from "@graphql-ez/plugin-codegen";
 import { ezVoyager } from "@graphql-ez/plugin-voyager";
 import { ezWebSockets } from "@graphql-ez/plugin-websockets";
 import {
   AltairIDEOptions,
   codegenOptions,
+  ENV,
   logger,
   pubSub,
   voyagerOptions,
@@ -37,10 +37,11 @@ export const getGatewayPlugin = async () => {
     ez: {
       plugins: [
         ezVoyager(voyagerOptions),
-        ezCodegen({
-          outputSchema,
-          config: codegenOptions.config,
-        }),
+        ENV.IS_DEVELOPMENT &&
+          (await import("@graphql-ez/plugin-codegen")).ezCodegen({
+            outputSchema,
+            config: codegenOptions.config,
+          }),
         ezAltairIDE(AltairIDEOptions),
         ezWebSockets("adaptive"),
       ],

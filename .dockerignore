@@ -3,3 +3,5 @@
 **/.env
 **/coverage
 **/test
+**/prisma-client
+**/scripts_data
