@@ -53,8 +53,9 @@ export function SyncAuth() {
     if (user) {
       AuthState.isLoading = true;
       getIdTokenClaims().then((data) => {
-        AuthState.authorization =
-          rqGQLClient.headers.authorization = `Bearer ${data.__raw}`;
+        AuthState.authorization = rqGQLClient.headers.authorization = data
+          ? `Bearer ${data.__raw}`
+          : undefined;
 
         AuthState.isLoading = true;
       });
