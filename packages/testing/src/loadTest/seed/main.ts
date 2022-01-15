@@ -1,12 +1,13 @@
 import faker from "@faker-js/faker";
-import assert from "assert";
 import { execaCommand } from "execa";
-import { random, sampleSize, sample, groupBy } from "lodash-es";
+import { groupBy, random, sample, sampleSize } from "lodash-es";
 import pMap from "p-map";
 import { resolve } from "path";
 import { generate } from "randomstring";
+import Tinypool from "tinypool";
+import type { CreatedContent } from "./createContent";
 
-const testDir = resolve(__dirname, "../../../../test");
+const testDir = resolve(__dirname, "../../../../../test");
 
 await execaCommand("docker-compose up -d", {
   cwd: testDir,
@@ -32,15 +33,6 @@ await execaCommand("pnpm -r migrate:deploy", {
 });
 
 export const { prisma } = await import("db");
-
-export function probability(n: number): boolean {
-  assert(
-    n > 0 && n < 100,
-    "Invalid probability, it has to be between 0 and 100 exclusive"
-  );
-
-  return random(0, 100, true) < n;
-}
 
 const concurrency = 100;
 
@@ -322,95 +314,24 @@ export const kcs = await pMap(
   }
 );
 
-const nContent = 500;
+const nContent = 1500;
 
 const contentCodes = mapN(nContent, generate);
 
 const contentTags = mapN(100, generate);
 
-export const content = await pMap(
-  contentCodes,
-  async (code) => {
+const contentCreatePool = new Tinypool({
+  filename: resolve(__dirname, "./createContent.ts"),
+});
+
+export const content: CreatedContent[] = await Promise.all(
+  contentCodes.map((code) => {
     const projectId = sample(projects)!.id;
 
-    const [possibleKcs, possibleTopics] = await Promise.all([
-      prisma.kC.findMany({
-        where: {
-          domain: {
-            projects: {
-              some: {
-                id: projectId,
-              },
-            },
-          },
-        },
-      }),
-      prisma.topic.findMany({
-        where: {
-          projectId,
-        },
-      }),
-    ]);
-
-    const chosenTopic = sample(possibleTopics);
-
-    const percent = random(0, 100);
-
-    let contentType: "url" | "json" | "binary";
-
-    if (percent < 30) {
-      contentType = "url";
-    } else if (percent < 70) {
-      contentType = "json";
-    } else {
-      contentType = "binary";
-    }
-
-    return prisma.content.create({
-      data: {
-        code,
-        label: generate(),
-        description: generate(),
-        project: {
-          connect: {
-            id: projectId,
-          },
-        },
-        kcs: {
-          connect: sampleSize(possibleKcs, random(1, 4)).map(({ id }) => ({
-            id,
-          })),
-        },
-        topics: chosenTopic
-          ? {
-              connect: {
-                id: chosenTopic.id,
-              },
-            }
-          : undefined,
-        tags: {
-          set: sampleSize(contentTags, random(0, 3)),
-        },
-        url: contentType === "url" ? faker.internet.url() : undefined,
-        json:
-          contentType === "json"
-            ? JSON.parse(faker.datatype.json())
-            : undefined,
-        binary:
-          contentType === "binary"
-            ? Buffer.from(faker.lorem.paragraphs(random(10 ** 2, 10 ** 4)))
-            : undefined,
-        binaryFilename:
-          contentType === "binary" ? generate() + ".txt" : undefined,
-      },
-      include: {
-        project: true,
-        kcs: true,
-        topics: true,
-      },
+    return contentCreatePool.run({
+      code,
+      projectId,
+      contentTags,
     });
-  },
-  {
-    concurrency,
-  }
+  })
 );

@@ -1,7 +1,7 @@
 import { kill } from "cross-port-killer";
 import { execaCommand } from "execa";
 import { baseServicesList } from "../../../services/list";
-import { prisma } from "./seed";
+import { prisma } from "./seed/main";
 
 await prisma.$disconnect();
 
