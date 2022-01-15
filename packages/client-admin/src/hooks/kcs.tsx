@@ -1,3 +1,4 @@
+import { useLatestRef } from "@chakra-ui/react";
 import {
   AdminKCsFilter,
   AllKCsBaseQueryVariables,
@@ -5,19 +6,19 @@ import {
   gql,
   useGQLInfiniteQuery,
 } from "graph";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useImmer } from "use-immer";
 import {
-  AsyncSelect,
   AsyncSelectProps,
   OptionValue,
+  Select,
   SelectRefType,
 } from "../components/AsyncSelect";
 
 export const AllKCsBaseDoc = gql(/* GraphQL */ `
   query AllKCsBase(
     $pagination: CursorConnectionArgs!
-    $filters: AdminKCsFilter
+    $filters: AdminKCsFilter!
   ) {
     adminDomain {
       allKCs(pagination: $pagination, filters: $filters) {
@@ -32,8 +33,14 @@ export const AllKCsBaseDoc = gql(/* GraphQL */ `
   }
 `);
 
-export const useKCsBase = () => {
-  const [kcsFilter, produceKCsFilter] = useImmer<AdminKCsFilter | null>(null);
+export interface KCsBaseOptions {
+  initialKcsFilter: AdminKCsFilter;
+  limit: number;
+}
+
+export const useKCsBase = ({ initialKcsFilter, limit }: KCsBaseOptions) => {
+  const [kcsFilter, produceKCsFilter] =
+    useImmer<AdminKCsFilter>(initialKcsFilter);
   const { hasNextPage, fetchNextPage, isFetching, data, isLoading } =
     useGQLInfiniteQuery(
       AllKCsBaseDoc,
@@ -63,17 +70,7 @@ export const useKCsBase = () => {
       }
     );
 
-  useEffect(() => {
-    if (isFetching) return;
-
-    if (hasNextPage) {
-      fetchNextPage().catch(console.error);
-    }
-  }, [hasNextPage, fetchNextPage, isFetching]);
-
   const kcs = useMemo(() => {
-    if (hasNextPage) return [];
-
     const kcs: Record<
       string,
       {
@@ -91,6 +88,16 @@ export const useKCsBase = () => {
     return Object.values(kcs);
   }, [data, hasNextPage]);
 
+  const kcsAmount = useLatestRef(kcs.length);
+
+  useEffect(() => {
+    if (isFetching) return;
+
+    if (hasNextPage && kcsAmount.current < limit) {
+      fetchNextPage().catch(console.error);
+    }
+  }, [hasNextPage, fetchNextPage, isFetching, kcsAmount, limit]);
+
   const asOptions = useMemo(() => {
     return kcs.map(({ id, label, code }) => {
       return {
@@ -100,21 +107,11 @@ export const useKCsBase = () => {
     });
   }, [kcs]);
 
-  const filteredOptions = useCallback(
-    async (input: string) => {
-      return input
-        ? asOptions.filter((v) => v.label.includes(input))
-        : asOptions;
-    },
-    [asOptions]
-  );
-
   return {
     kcs,
     isFetching,
     isLoading,
     asOptions,
-    filteredOptions,
     kcsFilter,
     produceKCsFilter,
   };
@@ -131,18 +128,14 @@ export const kcOptionLabel = ({
 export const useSelectSingleKC = ({
   state,
   selectProps,
+  kcsBase,
 }: {
   state?: [OptionValue | null, (value: OptionValue | null) => void];
   selectProps?: Partial<AsyncSelectProps>;
-} = {}) => {
-  const {
-    isFetching,
-    isLoading,
-    filteredOptions,
-    asOptions,
-    kcsFilter,
-    produceKCsFilter,
-  } = useKCsBase();
+  kcsBase: KCsBaseOptions;
+}) => {
+  const { isFetching, isLoading, asOptions, kcsFilter, produceKCsFilter } =
+    useKCsBase(kcsBase);
 
   const selectRef = useRef<SelectRefType>(null);
 
@@ -151,26 +144,32 @@ export const useSelectSingleKC = ({
 
   const selectSingleKCComponent = useMemo(() => {
     return (
-      <AsyncSelect
-        key={isLoading ? -1 : asOptions.length}
+      <Select
         isLoading={isFetching}
-        loadOptions={filteredOptions}
+        options={asOptions}
         onChange={(selected) => {
           setSelectedKC(selected || null);
         }}
         value={selectedKC}
         placeholder="Search a KC"
         selectRef={selectRef}
+        inputValue={kcsFilter.textSearch || ""}
+        onInputChange={(v) => {
+          produceKCsFilter((draft) => {
+            draft.textSearch = v;
+          });
+        }}
         {...selectProps}
       />
     );
   }, [
-    filteredOptions,
     isLoading,
     isFetching,
     asOptions,
     selectedKC,
     selectProps,
+    kcsFilter,
+    produceKCsFilter,
   ]);
 
   return {
@@ -186,18 +185,14 @@ export const useSelectSingleKC = ({
 export const useSelectMultiKCs = ({
   state,
   selectProps,
+  kcsBase,
 }: {
   state?: [OptionValue[], (value: OptionValue[]) => void];
   selectProps?: Partial<AsyncSelectProps>;
-} = {}) => {
-  const {
-    isFetching,
-    isLoading,
-    filteredOptions,
-    asOptions,
-    kcsFilter,
-    produceKCsFilter,
-  } = useKCsBase();
+  kcsBase: KCsBaseOptions;
+}) => {
+  const { isFetching, isLoading, asOptions, kcsFilter, produceKCsFilter } =
+    useKCsBase(kcsBase);
 
   const selectRef = useRef<SelectRefType>(null);
 
@@ -205,10 +200,9 @@ export const useSelectMultiKCs = ({
 
   const selectMultiKCComponent = useMemo(() => {
     return (
-      <AsyncSelect
-        key={isLoading ? -1 : asOptions.length}
+      <Select
         isLoading={isFetching}
-        loadOptions={filteredOptions}
+        options={asOptions}
         onChange={(selected) => {
           setSelectedKCs(selected || []);
         }}
@@ -216,16 +210,23 @@ export const useSelectMultiKCs = ({
         value={selectedKCs}
         placeholder="Search a KC"
         selectRef={selectRef}
+        inputValue={kcsFilter.textSearch || ""}
+        onInputChange={(v) => {
+          produceKCsFilter((draft) => {
+            draft.textSearch = v;
+          });
+        }}
         {...selectProps}
       />
     );
   }, [
-    filteredOptions,
     isLoading,
     isFetching,
     asOptions,
     selectedKCs,
     selectProps,
+    kcsFilter,
+    produceKCsFilter,
   ]);
 
   return {

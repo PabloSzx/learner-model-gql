@@ -103,6 +103,7 @@ export const CreateTopic = () => {
       initialContentFilter: {
         projects: selectedProject ? [selectedProject.value] : [],
       },
+      limit: 100,
     },
   });
 
@@ -270,6 +271,10 @@ export const TopicCard = memo(function TopicCard({
           },
           [topic.id, deepChildrensAndSelfIds]
         ),
+        limit: 100,
+        initialTopicsFilter: {
+          textSearch: "",
+        },
       },
     });
 
@@ -290,6 +295,12 @@ export const TopicCard = memo(function TopicCard({
           ? "Search Content"
           : "No associated content",
       },
+      allContentBaseOptions: {
+        initialContentFilter: {
+          textSearch: "",
+        },
+        limit: 100,
+      },
     });
 
   useEffect(() => {
@@ -309,7 +320,7 @@ export const TopicCard = memo(function TopicCard({
   const isMounted = useMountedState();
 
   return (
-    <Card key={topic.id} margin="0.2em !important" overflow="visible">
+    <Card margin="0.2em !important" overflow="visible">
       <CardHeader
         title={topicOptionLabel(topic)}
         action={

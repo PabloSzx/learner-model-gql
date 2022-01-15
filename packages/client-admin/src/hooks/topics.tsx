@@ -1,3 +1,4 @@
+import { useLatestRef } from "@chakra-ui/react";
 import {
   AdminTopicsFilter,
   AllTopicsBaseQuery,
@@ -6,12 +7,12 @@ import {
   gql,
   useGQLInfiniteQuery,
 } from "graph";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useImmer } from "use-immer";
 import {
-  AsyncSelect,
   AsyncSelectProps,
   OptionValue,
+  Select,
 } from "../components/AsyncSelect";
 
 export type TopicInfo =
@@ -20,7 +21,7 @@ export type TopicInfo =
 export const AllTopicsBaseDoc = gql(/* GraphQL */ `
   query AllTopicsBase(
     $pagination: CursorConnectionArgs!
-    $filters: AdminTopicsFilter
+    $filters: AdminTopicsFilter!
   ) {
     adminDomain {
       allTopics(pagination: $pagination, filters: $filters) {
@@ -55,18 +56,21 @@ export const AllTopicsBaseDoc = gql(/* GraphQL */ `
   }
 `);
 
-export type AllTopicsOptions = {
+export interface AllTopicsOptions {
   jsFilter?: (topic: TopicInfo) => boolean;
 
-  initialTopicsFilter?: AdminTopicsFilter | null;
-};
+  initialTopicsFilter: AdminTopicsFilter;
+
+  limit?: number;
+}
 
 export const useAllTopics = ({
   jsFilter,
-  initialTopicsFilter = null,
-}: AllTopicsOptions = {}) => {
+  initialTopicsFilter,
+  limit,
+}: AllTopicsOptions) => {
   const [topicsFilter, produceTopicsFilter] =
-    useImmer<AdminTopicsFilter | null>(initialTopicsFilter);
+    useImmer<AdminTopicsFilter>(initialTopicsFilter);
   const { hasNextPage, fetchNextPage, isFetching, data, isLoading } =
     useGQLInfiniteQuery(
       AllTopicsBaseDoc,
@@ -96,14 +100,6 @@ export const useAllTopics = ({
       }
     );
 
-  useEffect(() => {
-    if (isFetching) return;
-
-    if (hasNextPage) {
-      fetchNextPage().catch(console.error);
-    }
-  }, [hasNextPage, fetchNextPage, isFetching]);
-
   const topics = useMemo(() => {
     const topics: Record<string, TopicInfo> = {};
 
@@ -122,6 +118,18 @@ export const useAllTopics = ({
     return Object.values(topics);
   }, [data, jsFilter]);
 
+  const topicsAmount = useLatestRef(topics.length);
+
+  useEffect(() => {
+    if (isFetching) return;
+
+    if (limit != null && topicsAmount.current >= limit) return;
+
+    if (hasNextPage) {
+      fetchNextPage().catch(console.error);
+    }
+  }, [hasNextPage, fetchNextPage, isFetching, topicsAmount, limit]);
+
   const asOptions = useMemo(() => {
     return topics.map(({ id, label, code }) => {
       return {
@@ -131,21 +139,11 @@ export const useAllTopics = ({
     });
   }, [topics]);
 
-  const filteredOptions = useCallback(
-    async (input: string) => {
-      return input
-        ? asOptions.filter((v) => v.label.includes(input))
-        : asOptions;
-    },
-    [asOptions]
-  );
-
   return {
     topics,
     isFetching,
     isLoading,
     asOptions,
-    filteredOptions,
     topicsFilter,
     produceTopicsFilter,
   };
@@ -165,13 +163,12 @@ export const useSelectSingleTopic = ({
   selectProps,
 }: {
   state?: [OptionValue | null, (value: OptionValue | null) => void];
-  topics?: AllTopicsOptions;
+  topics: AllTopicsOptions;
   selectProps?: Partial<AsyncSelectProps>;
-} = {}) => {
+}) => {
   const {
     isFetching,
     isLoading,
-    filteredOptions,
     asOptions,
     topicsFilter,
     produceTopicsFilter,
@@ -182,26 +179,24 @@ export const useSelectSingleTopic = ({
 
   const selectSingleTopicComponent = useMemo(() => {
     return (
-      <AsyncSelect
-        key={isLoading ? -1 : asOptions.length}
+      <Select
         isLoading={isFetching}
-        loadOptions={filteredOptions}
+        options={asOptions}
         onChange={(selected) => {
           setSelectedTopic(selected || null);
         }}
         value={selectedTopic}
         placeholder="Search a topic"
+        inputValue={topicsFilter.textSearch || ""}
+        onInputChange={(v) => {
+          produceTopicsFilter((draft) => {
+            draft.textSearch = v;
+          });
+        }}
         {...selectProps}
       />
     );
-  }, [
-    filteredOptions,
-    isLoading,
-    isFetching,
-    asOptions,
-    selectedTopic,
-    selectProps,
-  ]);
+  }, [isLoading, isFetching, asOptions, selectedTopic, selectProps]);
 
   return {
     selectedTopic,
@@ -218,12 +213,11 @@ export const useSelectMultiTopics = ({
   ...selectProps
 }: {
   state?: [OptionValue[], (value: OptionValue[]) => void];
-  topics?: AllTopicsOptions;
-} & Partial<AsyncSelectProps> = {}) => {
+  topics: AllTopicsOptions;
+} & Partial<AsyncSelectProps>) => {
   const {
     isFetching,
     isLoading,
-    filteredOptions,
     asOptions,
     topicsFilter,
     produceTopicsFilter,
@@ -234,20 +228,32 @@ export const useSelectMultiTopics = ({
 
   const selectMultiTopicComponent = useMemo(() => {
     return (
-      <AsyncSelect
-        key={isLoading ? -1 : asOptions.length}
+      <Select
         isLoading={isFetching}
-        loadOptions={filteredOptions}
+        options={asOptions}
         onChange={(selected) => {
           setSelectedTopics(selected || []);
         }}
         isMulti
         value={selectedTopics}
         placeholder="Search a topic"
+        inputValue={topicsFilter.textSearch || ""}
+        onInputChange={(v) => {
+          produceTopicsFilter((draft) => {
+            draft.textSearch = v;
+          });
+        }}
         {...selectProps}
       />
     );
-  }, [filteredOptions, isLoading, isFetching, asOptions, selectedTopics]);
+  }, [
+    isLoading,
+    isFetching,
+    asOptions,
+    selectedTopics,
+    topicsFilter,
+    produceTopicsFilter,
+  ]);
 
   return {
     selectedTopics,

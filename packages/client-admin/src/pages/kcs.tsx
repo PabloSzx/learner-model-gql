@@ -48,8 +48,16 @@ const CreateKC = memo(function CreateKC() {
   const codeRef = useRef<HTMLInputElement>(null);
   const labelRef = useRef<HTMLInputElement>(null);
 
-  const { selectedDomain, selectSingleDomainComponent } =
-    useSelectSingleDomain();
+  const { selectedDomain, selectSingleDomainComponent } = useSelectSingleDomain(
+    {
+      domainsBase: {
+        initialDomainsFilter: {
+          textSearch: "",
+        },
+        limit: 100,
+      },
+    }
+  );
 
   const { mutateAsync } = useGQLMutation(
     gql(/* GraphQL */ `
@@ -124,8 +132,16 @@ export default withAdminAuth(function KCPage() {
   const { pageInfo, pagination, prevPage, nextPage, resetPagination } =
     useCursorPagination();
 
-  const { selectedDomain, selectSingleDomainComponent } =
-    useSelectSingleDomain();
+  const { selectedDomain, selectSingleDomainComponent } = useSelectSingleDomain(
+    {
+      domainsBase: {
+        limit: 100,
+        initialDomainsFilter: {
+          textSearch: "",
+        },
+      },
+    }
+  );
 
   useUpdateEffect(() => {
     resetPagination();

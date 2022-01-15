@@ -1,3 +1,4 @@
+import { useLatestRef } from "@chakra-ui/react";
 import {
   AdminContentFilter,
   AllContentBaseQuery,
@@ -6,19 +7,19 @@ import {
   gql,
   useGQLInfiniteQuery,
 } from "graph";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useImmer } from "use-immer";
 import {
-  AsyncSelect,
   AsyncSelectProps,
   OptionValue,
+  Select,
   SelectRefType,
 } from "../components/AsyncSelect";
 
 export const AllContentBaseDoc = gql(/* GraphQL */ `
   query AllContentBase(
     $pagination: CursorConnectionArgs!
-    $filters: AdminContentFilter
+    $filters: AdminContentFilter!
   ) {
     adminContent {
       allContent(pagination: $pagination, filters: $filters) {
@@ -35,14 +36,16 @@ export const AllContentBaseDoc = gql(/* GraphQL */ `
 `);
 
 export interface AllContentBaseOptions {
-  initialContentFilter?: AdminContentFilter | null;
+  initialContentFilter: AdminContentFilter;
+  limit: number;
 }
 
 export const useAllContentBase = ({
-  initialContentFilter = null,
-}: AllContentBaseOptions = {}) => {
+  initialContentFilter,
+  limit,
+}: AllContentBaseOptions) => {
   const [contentFilter, produceContentFilter] =
-    useImmer<AdminContentFilter | null>(initialContentFilter);
+    useImmer<AdminContentFilter>(initialContentFilter);
 
   const { hasNextPage, fetchNextPage, isFetching, data, isLoading } =
     useGQLInfiniteQuery(
@@ -73,17 +76,7 @@ export const useAllContentBase = ({
       }
     );
 
-  useEffect(() => {
-    if (isFetching) return;
-
-    if (hasNextPage) {
-      fetchNextPage().catch(console.error);
-    }
-  }, [hasNextPage, fetchNextPage, isFetching]);
-
   const content = useMemo(() => {
-    if (hasNextPage) return [];
-
     const content: Record<
       string,
       AllContentBaseQuery["adminContent"]["allContent"]["nodes"][number]
@@ -98,6 +91,16 @@ export const useAllContentBase = ({
     return Object.values(content);
   }, [data, hasNextPage]);
 
+  const contentAmount = useLatestRef(content.length);
+
+  useEffect(() => {
+    if (isFetching) return;
+
+    if (hasNextPage && contentAmount.current < limit) {
+      fetchNextPage().catch(console.error);
+    }
+  }, [hasNextPage, fetchNextPage, isFetching, contentAmount, limit]);
+
   const asOptions = useMemo(() => {
     return content.map(({ id, label, code, tags }) => {
       return {
@@ -107,21 +110,11 @@ export const useAllContentBase = ({
     });
   }, [content]);
 
-  const filteredOptions = useCallback(
-    async (input: string) => {
-      return input
-        ? asOptions.filter((v) => v.label.includes(input))
-        : asOptions;
-    },
-    [asOptions]
-  );
-
   return {
     content,
     asOptions,
     isFetching,
     isLoading,
-    filteredOptions,
     contentFilter,
     produceContentFilter,
   };
@@ -147,12 +140,11 @@ export const useSelectMultiContent = ({
 }: {
   state?: [OptionValue[], (value: OptionValue[]) => void];
   selectProps?: Partial<AsyncSelectProps>;
-  allContentBaseOptions?: AllContentBaseOptions;
-} = {}) => {
+  allContentBaseOptions: AllContentBaseOptions;
+}) => {
   const {
     isFetching,
     isLoading,
-    filteredOptions,
     asOptions,
     contentFilter,
     produceContentFilter,
@@ -165,10 +157,9 @@ export const useSelectMultiContent = ({
 
   const selectMultiContentComponent = useMemo(() => {
     return (
-      <AsyncSelect
-        key={isLoading ? -1 : asOptions.length}
+      <Select
         isLoading={isFetching}
-        loadOptions={filteredOptions}
+        options={asOptions}
         onChange={(selected) => {
           setSelectedContent(selected || []);
         }}
@@ -176,16 +167,23 @@ export const useSelectMultiContent = ({
         value={selectedContent}
         placeholder="Search Content"
         selectRef={selectRef}
+        inputValue={contentFilter.textSearch || ""}
+        onInputChange={(value) => {
+          produceContentFilter((draft) => {
+            draft.textSearch = value;
+          });
+        }}
         {...selectProps}
       />
     );
   }, [
-    filteredOptions,
     isLoading,
     isFetching,
     asOptions,
     selectedContent,
     selectProps,
+    produceContentFilter,
+    contentFilter,
   ]);
 
   return {

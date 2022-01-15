@@ -1689,7 +1689,7 @@ export type AllVerbNamesQuery = {
 
 export type AllContentBaseQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
-  filters?: InputMaybe<AdminContentFilter>;
+  filters: AdminContentFilter;
 }>;
 
 export type AllContentBaseQuery = {
@@ -1718,7 +1718,7 @@ export type AllContentBaseQuery = {
 
 export type AllDomainsBaseQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
-  filters?: InputMaybe<AdminDomainsFilter>;
+  filters: AdminDomainsFilter;
 }>;
 
 export type AllDomainsBaseQuery = {
@@ -1773,7 +1773,7 @@ export type AllGroupsBaseQuery = {
 
 export type AllKCsBaseQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
-  filters?: InputMaybe<AdminKCsFilter>;
+  filters: AdminKCsFilter;
 }>;
 
 export type AllKCsBaseQuery = {
@@ -1974,7 +1974,7 @@ export type AllProjectsBaseQuery = {
 
 export type AllTopicsBaseQueryVariables = Exact<{
   pagination: CursorConnectionArgs;
-  filters?: InputMaybe<AdminTopicsFilter>;
+  filters: AdminTopicsFilter;
 }>;
 
 export type AllTopicsBaseQuery = {
@@ -3248,8 +3248,11 @@ export const AllContentBaseDocument = {
             name: { kind: "Name", value: "filters" },
           },
           type: {
-            kind: "NamedType",
-            name: { kind: "Name", value: "AdminContentFilter" },
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "AdminContentFilter" },
+            },
           },
         },
       ],
@@ -3356,8 +3359,11 @@ export const AllDomainsBaseDocument = {
             name: { kind: "Name", value: "filters" },
           },
           type: {
-            kind: "NamedType",
-            name: { kind: "Name", value: "AdminDomainsFilter" },
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "AdminDomainsFilter" },
+            },
           },
         },
       ],
@@ -3545,8 +3551,11 @@ export const AllKCsBaseDocument = {
             name: { kind: "Name", value: "filters" },
           },
           type: {
-            kind: "NamedType",
-            name: { kind: "Name", value: "AdminKCsFilter" },
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "AdminKCsFilter" },
+            },
           },
         },
       ],
@@ -3737,8 +3746,11 @@ export const AllTopicsBaseDocument = {
             name: { kind: "Name", value: "filters" },
           },
           type: {
-            kind: "NamedType",
-            name: { kind: "Name", value: "AdminTopicsFilter" },
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "AdminTopicsFilter" },
+            },
           },
         },
       ],

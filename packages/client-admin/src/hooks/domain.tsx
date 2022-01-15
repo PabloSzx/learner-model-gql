@@ -1,3 +1,4 @@
+import { useLatestRef } from "@chakra-ui/react";
 import {
   AdminDomainsFilter,
   AllDomainsBaseQueryVariables,
@@ -5,18 +6,18 @@ import {
   gql,
   useGQLInfiniteQuery,
 } from "graph";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useImmer } from "use-immer";
 import {
-  AsyncSelect,
   AsyncSelectProps,
   OptionValue,
+  Select,
 } from "../components/AsyncSelect";
 
 export const AllDomainsBaseDoc = gql(/* GraphQL */ `
   query AllDomainsBase(
     $pagination: CursorConnectionArgs!
-    $filters: AdminDomainsFilter
+    $filters: AdminDomainsFilter!
   ) {
     adminDomain {
       allDomains(pagination: $pagination, filters: $filters) {
@@ -31,9 +32,17 @@ export const AllDomainsBaseDoc = gql(/* GraphQL */ `
   }
 `);
 
-export const useDomainsBase = () => {
+export interface UseDomainsBaseOptions {
+  initialDomainsFilter: AdminDomainsFilter;
+  limit: number;
+}
+
+export const useDomainsBase = ({
+  initialDomainsFilter,
+  limit,
+}: UseDomainsBaseOptions) => {
   const [domainsFilter, produceDomainsFilter] =
-    useImmer<AdminDomainsFilter | null>(null);
+    useImmer<AdminDomainsFilter>(initialDomainsFilter);
   const { hasNextPage, fetchNextPage, isFetching, data, isLoading } =
     useGQLInfiniteQuery(
       AllDomainsBaseDoc,
@@ -63,14 +72,6 @@ export const useDomainsBase = () => {
       }
     );
 
-  useEffect(() => {
-    if (isFetching) return;
-
-    if (hasNextPage) {
-      fetchNextPage().catch(console.error);
-    }
-  }, [hasNextPage, fetchNextPage, isFetching]);
-
   const domains = useMemo(() => {
     const domains: Record<
       string,
@@ -90,6 +91,16 @@ export const useDomainsBase = () => {
     return Object.values(domains);
   }, [data]);
 
+  const domainsAmount = useLatestRef(domains.length);
+
+  useEffect(() => {
+    if (isFetching) return;
+
+    if (hasNextPage && domainsAmount.current < limit) {
+      fetchNextPage().catch(console.error);
+    }
+  }, [hasNextPage, fetchNextPage, isFetching, limit, domainsAmount]);
+
   const asOptions = useMemo(() => {
     return domains.map(({ id, label, code }) => {
       return {
@@ -99,21 +110,11 @@ export const useDomainsBase = () => {
     });
   }, [domains]);
 
-  const filteredOptions = useCallback(
-    async (input: string) => {
-      return input
-        ? asOptions.filter((v) => v.label.includes(input))
-        : asOptions;
-    },
-    [asOptions]
-  );
-
   return {
     domains,
     isFetching,
     isLoading,
     asOptions,
-    filteredOptions,
     domainsFilter,
     produceDomainsFilter,
   };
@@ -130,43 +131,50 @@ export const domainOptionLabel = ({
 export const useSelectSingleDomain = ({
   state,
   selectProps,
+  domainsBase,
 }: {
   state?: [OptionValue | null, (value: OptionValue | null) => void];
   selectProps?: Partial<AsyncSelectProps>;
-} = {}) => {
+  domainsBase: UseDomainsBaseOptions;
+}) => {
   const {
     isFetching,
     isLoading,
-    filteredOptions,
     asOptions,
     domainsFilter,
     produceDomainsFilter,
-  } = useDomainsBase();
+  } = useDomainsBase(domainsBase);
 
   const [selectedDomain, setSelectedDomain] =
     state || useState<OptionValue | null>(null);
 
   const selectSingleDomainComponent = useMemo(() => {
     return (
-      <AsyncSelect
-        key={isLoading ? -1 : asOptions.length}
+      <Select
         isLoading={isFetching}
-        loadOptions={filteredOptions}
+        options={asOptions}
         onChange={(selected) => {
           setSelectedDomain(selected || null);
         }}
         value={selectedDomain}
         placeholder="Search a domain"
+        inputValue={domainsFilter.textSearch || ""}
+        onInputChange={(value) => {
+          produceDomainsFilter((draft) => {
+            draft.textSearch = value;
+          });
+        }}
         {...selectProps}
       />
     );
   }, [
-    filteredOptions,
     isLoading,
     isFetching,
     asOptions,
     selectedDomain,
     selectProps,
+    domainsFilter,
+    produceDomainsFilter,
   ]);
 
   return {
@@ -181,38 +189,51 @@ export const useSelectSingleDomain = ({
 export const useSelectMultiDomains = ({
   state,
   selectProps,
+  domainsBase,
 }: {
   state?: [OptionValue[], (value: OptionValue[]) => void];
   selectProps?: Partial<AsyncSelectProps>;
-} = {}) => {
+  domainsBase: UseDomainsBaseOptions;
+}) => {
   const {
     isFetching,
     isLoading,
-    filteredOptions,
     asOptions,
     domainsFilter,
     produceDomainsFilter,
-  } = useDomainsBase();
+  } = useDomainsBase(domainsBase);
 
   const [selectedDomains, setSelectedDomains] =
     state || useState<OptionValue[]>([]);
 
   const selectMultiDomainComponent = useMemo(() => {
     return (
-      <AsyncSelect
-        key={isLoading ? -1 : asOptions.length}
+      <Select
         isLoading={isFetching}
-        loadOptions={filteredOptions}
+        options={asOptions}
         onChange={(selected) => {
           setSelectedDomains(selected || []);
         }}
         isMulti
         value={selectedDomains}
         placeholder="Search a domain"
+        inputValue={domainsFilter.textSearch || ""}
+        onInputChange={(v) => {
+          produceDomainsFilter((draft) => {
+            draft.textSearch = v;
+          });
+        }}
         {...selectProps}
       />
     );
-  }, [filteredOptions, isLoading, isFetching, asOptions, selectedDomains]);
+  }, [
+    isLoading,
+    isFetching,
+    asOptions,
+    selectedDomains,
+    domainsFilter,
+    produceDomainsFilter,
+  ]);
 
   return {
     selectedDomains,

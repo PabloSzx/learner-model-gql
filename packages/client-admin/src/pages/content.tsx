@@ -121,6 +121,12 @@ const CreateContent = memo(function CreateContent() {
     setSelectedKCs,
   } = useSelectMultiKCs({
     selectProps,
+    kcsBase: {
+      initialKcsFilter: {
+        textSearch: "",
+      },
+      limit: 100,
+    },
   });
 
   useEffect(() => {
@@ -130,13 +136,9 @@ const CreateContent = memo(function CreateContent() {
   }, [isKcsFetching || !selectedProject]);
 
   useEffect(() => {
-    produceKCsFilter(
-      selectedProject
-        ? {
-            projects: [selectedProject.value],
-          }
-        : null
-    );
+    produceKCsFilter((draft) => {
+      draft.projects = selectedProject ? [selectedProject.value] : null;
+    });
     setSelectedKCs([]);
   }, [selectedProject?.value]);
 
@@ -290,6 +292,12 @@ const EditContent = ({
           draft.kcs = value;
         }),
     ],
+    kcsBase: {
+      initialKcsFilter: {
+        textSearch: "",
+      },
+      limit: 100,
+    },
   });
 
   useEffect(() => {

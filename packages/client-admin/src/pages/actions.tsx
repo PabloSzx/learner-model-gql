@@ -65,11 +65,32 @@ export default withAdminAuth(function ActionsPage() {
     });
 
   const { selectMultiContentComponent, selectedContent } =
-    useSelectMultiContent();
-  const { selectMultiKCComponent, selectedKCs } = useSelectMultiKCs();
+    useSelectMultiContent({
+      allContentBaseOptions: {
+        initialContentFilter: {
+          textSearch: "",
+        },
+        limit: 100,
+      },
+    });
+  const { selectMultiKCComponent, selectedKCs } = useSelectMultiKCs({
+    kcsBase: {
+      initialKcsFilter: {
+        textSearch: "",
+      },
+      limit: 100,
+    },
+  });
   const { selectMultiProjectComponent, selectedProjects } =
     useSelectMultiProjects();
-  const { selectMultiTopicComponent, selectedTopics } = useSelectMultiTopics();
+  const { selectMultiTopicComponent, selectedTopics } = useSelectMultiTopics({
+    topics: {
+      initialTopicsFilter: {
+        textSearch: "",
+      },
+      limit: 100,
+    },
+  });
 
   const { selectMultiVerbComponent, selectedVerbs } = useSelectMultiVerbs();
 

@@ -69,8 +69,16 @@ function CreateProject() {
 
   const codeRef = useRef<HTMLInputElement>(null);
   const labelRef = useRef<HTMLInputElement>(null);
-  const { selectedDomains, selectMultiDomainComponent } =
-    useSelectMultiDomains();
+  const { selectedDomains, selectMultiDomainComponent } = useSelectMultiDomains(
+    {
+      domainsBase: {
+        limit: 100,
+        initialDomainsFilter: {
+          textSearch: "",
+        },
+      },
+    }
+  );
   return (
     <FormModal
       title="Create Project"
@@ -274,6 +282,12 @@ export default withAdminAuth(function ProjectsPage() {
                   placeholder: state.isEditing
                     ? "Search a domain"
                     : "No domains",
+                },
+                domainsBase: {
+                  initialDomainsFilter: {
+                    textSearch: "",
+                  },
+                  limit: 100,
                 },
               });
 
