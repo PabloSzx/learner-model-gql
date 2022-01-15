@@ -23,19 +23,25 @@ if (ADMIN_USER_EMAIL) {
 
 export const DB_PREPARED = LazyPromise(async () => {
   if (ADMIN_USER_EMAIL) {
-    await prisma.user.upsert({
-      create: {
-        email: ADMIN_USER_EMAIL,
-        role: "ADMIN",
-      },
-      update: {
-        role: "ADMIN",
-      },
-      where: {
-        email: ADMIN_USER_EMAIL,
-      },
-      select: null,
-    });
+    try {
+      await prisma.user.upsert({
+        create: {
+          email: ADMIN_USER_EMAIL,
+          role: "ADMIN",
+        },
+        update: {
+          role: "ADMIN",
+        },
+        where: {
+          email: ADMIN_USER_EMAIL,
+        },
+        select: null,
+      });
+    } catch (err: any) {
+      if (err.code === "P2002") return;
+
+      throw err;
+    }
 
     logger.warn(`EMAIL "${ADMIN_USER_EMAIL}" HAS BEEN SET AS ADMIN USER`);
   } else {

@@ -5,6 +5,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev -p 4010",
+    "dev:localhost": "cross-env NEXT_PUBLIC_API_URL=http://localhost:8080/graphql next dev -p 4010",
     "start": "next start"
   },
   "devDependencies": {

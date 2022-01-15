@@ -8,9 +8,11 @@
     "dev": "graphql-codegen generate --config codegen.yaml --watch",
     "generate": "graphql-codegen generate --config codegen.yaml",
     "test:generate": "graphql-codegen generate --config codegen.yaml",
-    "test:watch:generate": "graphql-codegen generate --config codegen.yaml --watch"
+    "test:watch:generate": "graphql-codegen generate --config codegen.yaml --watch",
+    "load-test": "bob-tsm --node-env=dev src/loadTest/index.ts"
   },
   "devDependencies": {
+    "@faker-js/faker": "^6.0.0-alpha.2",
     "@graphql-codegen/cli": "^2.3.1",
     "@graphql-codegen/core": "^2.4.0",
     "@graphql-codegen/gql-tag-operations-preset": "^1.2.2",
@@ -20,7 +22,22 @@
     "@graphql-ez/fastify": "^0.9.5",
     "@graphql-ez/fastify-testing": "^0.1.5",
     "@graphql-typed-document-node/core": "^3.1.1",
+    "@types/autocannon": "^4.1.1",
+    "@types/faker": "^5.5.9",
+    "@types/lodash-es": "^4.17.5",
+    "@types/randomstring": "^1.1.8",
     "api-base": "workspace:^0.0.1",
-    "db": "workspace:^0.0.1"
+    "autocannon": "^7.6.0",
+    "bob-tsm": "^0.4.4",
+    "cross-port-killer": "^1.4.0",
+    "db": "workspace:^0.0.1",
+    "esbuild": "^0.14.11",
+    "execa": "^6.0.0",
+    "p-map": "^5.3.0",
+    "randomstring": "^1.2.1"
+  },
+  "dependencies": {
+    "@graphql-ez/client": "^0.4.0",
+    "lodash-es": "^4.17.21"
   }
 }
