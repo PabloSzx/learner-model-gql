@@ -34,9 +34,15 @@ export const AllContentBaseDoc = gql(/* GraphQL */ `
   }
 `);
 
-export const useAllContentBase = () => {
+export interface AllContentBaseOptions {
+  initialContentFilter?: AdminContentFilter | null;
+}
+
+export const useAllContentBase = ({
+  initialContentFilter = null,
+}: AllContentBaseOptions = {}) => {
   const [contentFilter, produceContentFilter] =
-    useImmer<AdminContentFilter | null>(null);
+    useImmer<AdminContentFilter | null>(initialContentFilter);
 
   const { hasNextPage, fetchNextPage, isFetching, data, isLoading } =
     useGQLInfiniteQuery(
@@ -137,9 +143,11 @@ export const contentOptionLabel = ({
 export const useSelectMultiContent = ({
   state,
   selectProps,
+  allContentBaseOptions,
 }: {
   state?: [OptionValue[], (value: OptionValue[]) => void];
   selectProps?: Partial<AsyncSelectProps>;
+  allContentBaseOptions?: AllContentBaseOptions;
 } = {}) => {
   const {
     isFetching,
@@ -148,7 +156,7 @@ export const useSelectMultiContent = ({
     asOptions,
     contentFilter,
     produceContentFilter,
-  } = useAllContentBase();
+  } = useAllContentBase(allContentBaseOptions);
 
   const selectRef = useRef<SelectRefType>(null);
 

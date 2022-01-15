@@ -81,6 +81,11 @@ export const CreateTopic = () => {
         isDisabled: !selectedProject,
       };
     }, [!selectedProject]),
+    topics: {
+      initialTopicsFilter: {
+        projects: selectedProject ? [selectedProject.value] : [],
+      },
+    },
   });
 
   const { tagsRef, tagsSelect } = useTagsSelect();
@@ -93,6 +98,11 @@ export const CreateTopic = () => {
   } = useSelectMultiContent({
     selectProps: {
       isDisabled: !selectedProject,
+    },
+    allContentBaseOptions: {
+      initialContentFilter: {
+        projects: selectedProject ? [selectedProject.value] : [],
+      },
     },
   });
 
@@ -447,7 +457,11 @@ export const TopicsCards = ({
 };
 
 export default withAdminAuth(function TopicsPage() {
-  const { topics, isLoading, produceTopicsFilter } = useAllTopics();
+  const { topics, isLoading, produceTopicsFilter } = useAllTopics({
+    initialTopicsFilter: {
+      projects: [],
+    },
+  });
 
   const topicsTree = useMemo(() => {
     return getTopicChildrens(topics);
@@ -501,9 +515,10 @@ export function getTopicChildrens(
     if (topicValue.parent?.id === topic?.id) {
       const childrens = getTopicChildrens(allTopics, topicValue);
 
-      childrens.sort(
-        (a, b) => (a.sortIndex || -Infinity) - (b.sortIndex || -Infinity)
-      );
+      childrens.length > 1 &&
+        childrens.sort(
+          (a, b) => (a.sortIndex || -Infinity) - (b.sortIndex || -Infinity)
+        );
 
       acum.push({
         ...topicValue,

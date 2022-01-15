@@ -55,11 +55,18 @@ export const AllTopicsBaseDoc = gql(/* GraphQL */ `
   }
 `);
 
-export type AllTopicsOptions = { jsFilter?: (topic: TopicInfo) => boolean };
+export type AllTopicsOptions = {
+  jsFilter?: (topic: TopicInfo) => boolean;
 
-export const useAllTopics = ({ jsFilter }: AllTopicsOptions = {}) => {
+  initialTopicsFilter?: AdminTopicsFilter | null;
+};
+
+export const useAllTopics = ({
+  jsFilter,
+  initialTopicsFilter = null,
+}: AllTopicsOptions = {}) => {
   const [topicsFilter, produceTopicsFilter] =
-    useImmer<AdminTopicsFilter | null>(null);
+    useImmer<AdminTopicsFilter | null>(initialTopicsFilter);
   const { hasNextPage, fetchNextPage, isFetching, data, isLoading } =
     useGQLInfiniteQuery(
       AllTopicsBaseDoc,
