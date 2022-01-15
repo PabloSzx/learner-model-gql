@@ -57,6 +57,12 @@ export function useCursorPagination({ amount = 20 }: { amount?: number } = {}) {
           });
         },
       },
+      setPagination,
+      resetPagination() {
+        setPagination({
+          first: amount,
+        });
+      },
     };
-  }, [pagination, setPagination, pageInfo]);
+  }, [pagination, setPagination, pageInfo, setPagination, amount]);
 }

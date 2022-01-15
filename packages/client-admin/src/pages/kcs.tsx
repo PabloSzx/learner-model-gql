@@ -4,6 +4,7 @@ import {
   FormLabel,
   IconButton,
   Input,
+  useUpdateEffect,
   VStack,
 } from "@chakra-ui/react";
 import { gql, KcInfoFragment, useGQLMutation, useGQLQuery } from "graph";
@@ -120,10 +121,15 @@ const CreateKC = memo(function CreateKC() {
 });
 
 export default withAdminAuth(function KCPage() {
-  const { pageInfo, pagination, prevPage, nextPage } = useCursorPagination();
+  const { pageInfo, pagination, prevPage, nextPage, resetPagination } =
+    useCursorPagination();
 
   const { selectedDomain, selectSingleDomainComponent } =
     useSelectSingleDomain();
+
+  useUpdateEffect(() => {
+    resetPagination();
+  }, [selectedDomain]);
 
   const { data } = useGQLQuery(
     gql(/* GraphQL */ `
