@@ -59,6 +59,10 @@ input AdminDomainsFilter {
   If the domain's project matches any of the specified projects, the domain is included
   """
   projects: [IntID!]
+  """
+  Filter by text search inside "code" or "label"
+  """
+  textSearch: String
 }
 
 "Filter all KCs of admin query"
@@ -76,6 +80,10 @@ input AdminKCsFilter {
   """
   projects: [IntID!]
   """
+  Filter by text search inside "code" or "label"
+  """
+  textSearch: String
+  """
   Filter by the specified topics
 
   If any of the KC's topics matches any of the specified topics, the KC is included
@@ -91,6 +99,10 @@ input AdminTopicsFilter {
   If the topic's project matches any of the specified projects, the topic is included
   """
   projects: [IntID!]
+  """
+  Filter by text search inside "code", "label" or "tags"
+  """
+  textSearch: String
 }
 
 "Pagination Interface"

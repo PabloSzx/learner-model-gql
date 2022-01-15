@@ -284,6 +284,10 @@ input AdminContentFilter {
   If any of the content's tags matches any of the specified tags, the content is included
   """
   tags: [String!]
+  """
+  Filter by text search inside "code", "label" or "tags"
+  """
+  textSearch: String
 }
 
 """
@@ -388,6 +392,10 @@ input AdminDomainsFilter {
   If the domain's project matches any of the specified projects, the domain is included
   """
   projects: [IntID!]
+  """
+  Filter by text search inside "code" or "label"
+  """
+  textSearch: String
 }
 
 """
@@ -418,6 +426,10 @@ input AdminKCsFilter {
   If the KC's project matches any of the specified projects, the KC is included
   """
   projects: [IntID!]
+  """
+  Filter by text search inside "code" or "label"
+  """
+  textSearch: String
   """
   Filter by the specified topics
 
@@ -484,6 +496,10 @@ input AdminTopicsFilter {
   If the topic's project matches any of the specified projects, the topic is included
   """
   projects: [IntID!]
+  """
+  Filter by text search inside "code", "label" or "tags"
+  """
+  textSearch: String
 }
 
 """

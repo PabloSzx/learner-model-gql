@@ -62,6 +62,11 @@ export const kcModule = registerModule(
       If any of the KC's topics matches any of the specified topics, the KC is included
       """
       topics: [IntID!]
+
+      """
+      Filter by text search inside "code" or "label"
+      """
+      textSearch: String
     }
 
     extend type AdminDomainQueries {
@@ -152,36 +157,52 @@ export const kcModule = registerModule(
           return ResolveCursorConnection(pagination, (connection) => {
             return prisma.kC.findMany({
               ...connection,
-              where: {
-                domain:
-                  filters?.domains || filters?.projects || filters?.topics
-                    ? {
-                        id: filters?.domains
-                          ? {
-                              in: filters.domains,
-                            }
-                          : undefined,
-                        projects: filters?.projects
-                          ? {
-                              some: {
-                                id: {
-                                  in: filters.projects,
-                                },
-                              },
-                            }
-                          : undefined,
-                      }
-                    : undefined,
-                topics: filters?.topics
-                  ? {
-                      some: {
-                        id: {
-                          in: filters.topics,
-                        },
-                      },
-                    }
-                  : undefined,
-              },
+              where: filters
+                ? {
+                    domain:
+                      filters.domains || filters.projects || filters.topics
+                        ? {
+                            id: filters.domains
+                              ? {
+                                  in: filters.domains,
+                                }
+                              : undefined,
+                            projects: filters.projects
+                              ? {
+                                  some: {
+                                    id: {
+                                      in: filters.projects,
+                                    },
+                                  },
+                                }
+                              : undefined,
+                          }
+                        : undefined,
+                    topics: filters?.topics
+                      ? {
+                          some: {
+                            id: {
+                              in: filters.topics,
+                            },
+                          },
+                        }
+                      : undefined,
+                    OR: filters.textSearch
+                      ? [
+                          {
+                            code: {
+                              contains: filters.textSearch,
+                            },
+                          },
+                          {
+                            label: {
+                              contains: filters.textSearch,
+                            },
+                          },
+                        ]
+                      : undefined,
+                  }
+                : undefined,
             });
           });
         },

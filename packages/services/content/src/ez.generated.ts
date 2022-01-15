@@ -67,6 +67,8 @@ export type AdminContentFilter = {
    * If any of the content's tags matches any of the specified tags, the content is included
    */
   tags?: InputMaybe<Array<Scalars["String"]>>;
+  /** Filter by text search inside "code", "label" or "tags" */
+  textSearch?: InputMaybe<Scalars["String"]>;
 };
 
 /** Admin related content mutations, only authenticated users with the role "ADMIN" can access */

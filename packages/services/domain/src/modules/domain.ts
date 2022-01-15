@@ -101,6 +101,11 @@ export const domainModule = registerModule(
       If the domain's project matches any of the specified projects, the domain is included
       """
       projects: [IntID!]
+
+      """
+      Filter by text search inside "code" or "label"
+      """
+      textSearch: String
     }
 
     "Filter all topics of admin query"
@@ -111,6 +116,11 @@ export const domainModule = registerModule(
       If the topic's project matches any of the specified projects, the topic is included
       """
       projects: [IntID!]
+
+      """
+      Filter by text search inside "code", "label" or "tags"
+      """
+      textSearch: String
     }
 
     "Admin Domain-Related Queries"
@@ -423,13 +433,34 @@ export const domainModule = registerModule(
           return ResolveCursorConnection(pagination, (args) => {
             return prisma.topic.findMany({
               ...args,
-              where: {
-                projectId: filters?.projects
-                  ? {
-                      in: filters.projects,
-                    }
-                  : undefined,
-              },
+              where: filters
+                ? {
+                    projectId: filters.projects
+                      ? {
+                          in: filters.projects,
+                        }
+                      : undefined,
+                    OR: filters.textSearch
+                      ? [
+                          {
+                            code: {
+                              contains: filters.textSearch,
+                            },
+                          },
+                          {
+                            label: {
+                              contains: filters.textSearch,
+                            },
+                          },
+                          {
+                            tags: {
+                              has: filters.textSearch,
+                            },
+                          },
+                        ]
+                      : undefined,
+                  }
+                : undefined,
             });
           });
         },
@@ -437,17 +468,33 @@ export const domainModule = registerModule(
           return ResolveCursorConnection(pagination, (args) => {
             return prisma.domain.findMany({
               ...args,
-              where: {
-                projects: filters?.projects
-                  ? {
-                      some: {
-                        id: {
-                          in: filters.projects,
-                        },
-                      },
-                    }
-                  : undefined,
-              },
+              where: filters
+                ? {
+                    projects: filters.projects
+                      ? {
+                          some: {
+                            id: {
+                              in: filters.projects,
+                            },
+                          },
+                        }
+                      : undefined,
+                    OR: filters.textSearch
+                      ? [
+                          {
+                            code: {
+                              contains: filters.textSearch,
+                            },
+                          },
+                          {
+                            label: {
+                              contains: filters.textSearch,
+                            },
+                          },
+                        ]
+                      : undefined,
+                  }
+                : undefined,
             });
           });
         },

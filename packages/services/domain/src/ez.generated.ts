@@ -149,6 +149,8 @@ export type AdminDomainsFilter = {
    * If the domain's project matches any of the specified projects, the domain is included
    */
   projects?: InputMaybe<Array<Scalars["IntID"]>>;
+  /** Filter by text search inside "code" or "label" */
+  textSearch?: InputMaybe<Scalars["String"]>;
 };
 
 /** Filter all KCs of admin query */
@@ -165,6 +167,8 @@ export type AdminKCsFilter = {
    * If the KC's project matches any of the specified projects, the KC is included
    */
   projects?: InputMaybe<Array<Scalars["IntID"]>>;
+  /** Filter by text search inside "code" or "label" */
+  textSearch?: InputMaybe<Scalars["String"]>;
   /**
    * Filter by the specified topics
    *
@@ -181,6 +185,8 @@ export type AdminTopicsFilter = {
    * If the topic's project matches any of the specified projects, the topic is included
    */
   projects?: InputMaybe<Array<Scalars["IntID"]>>;
+  /** Filter by text search inside "code", "label" or "tags" */
+  textSearch?: InputMaybe<Scalars["String"]>;
 };
 
 /** Pagination Interface */
@@ -657,6 +663,7 @@ export type ResolversTypes = {
   AdminDomainMutations: ResolverTypeWrapper<AdminDomainMutations>;
   AdminDomainQueries: ResolverTypeWrapper<AdminDomainQueries>;
   AdminDomainsFilter: AdminDomainsFilter;
+  String: ResolverTypeWrapper<Scalars["String"]>;
   AdminKCsFilter: AdminKCsFilter;
   AdminTopicsFilter: AdminTopicsFilter;
   Connection:
@@ -665,7 +672,6 @@ export type ResolversTypes = {
     | ResolversTypes["TopicsConnection"];
   Content: ResolverTypeWrapper<Content>;
   CreateDomain: CreateDomain;
-  String: ResolverTypeWrapper<Scalars["String"]>;
   CreateKCInput: CreateKcInput;
   CreateTopic: CreateTopic;
   Int: ResolverTypeWrapper<Scalars["Int"]>;
@@ -703,6 +709,7 @@ export type ResolversParentTypes = {
   AdminDomainMutations: AdminDomainMutations;
   AdminDomainQueries: AdminDomainQueries;
   AdminDomainsFilter: AdminDomainsFilter;
+  String: Scalars["String"];
   AdminKCsFilter: AdminKCsFilter;
   AdminTopicsFilter: AdminTopicsFilter;
   Connection:
@@ -711,7 +718,6 @@ export type ResolversParentTypes = {
     | ResolversParentTypes["TopicsConnection"];
   Content: Content;
   CreateDomain: CreateDomain;
-  String: Scalars["String"];
   CreateKCInput: CreateKcInput;
   CreateTopic: CreateTopic;
   Int: Scalars["Int"];

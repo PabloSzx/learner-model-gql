@@ -192,6 +192,11 @@ export const contentModule = registerModule(
       If the content's project matches any of the specified projects, the content is included
       """
       projects: [IntID!]
+
+      """
+      Filter by text search inside "code", "label" or "tags"
+      """
+      textSearch: String
     }
 
     "Admin Content-Related Queries"
@@ -376,6 +381,26 @@ export const contentModule = registerModule(
                       ? {
                           in: filters.projects,
                         }
+                      : undefined,
+
+                    OR: filters.textSearch
+                      ? [
+                          {
+                            code: {
+                              contains: filters.textSearch,
+                            },
+                          },
+                          {
+                            label: {
+                              contains: filters.textSearch,
+                            },
+                          },
+                          {
+                            tags: {
+                              has: filters.textSearch,
+                            },
+                          },
+                        ]
                       : undefined,
                   }
                 : undefined,

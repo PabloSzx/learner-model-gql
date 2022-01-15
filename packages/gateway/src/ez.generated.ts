@@ -274,6 +274,8 @@ export type AdminContentFilter = {
    * If any of the content's tags matches any of the specified tags, the content is included
    */
   tags?: InputMaybe<Array<Scalars["String"]>>;
+  /** Filter by text search inside "code", "label" or "tags" */
+  textSearch?: InputMaybe<Scalars["String"]>;
 };
 
 /** Admin related content mutations, only authenticated users with the role "ADMIN" can access */
@@ -408,6 +410,8 @@ export type AdminDomainsFilter = {
    * If the domain's project matches any of the specified projects, the domain is included
    */
   projects?: InputMaybe<Array<Scalars["IntID"]>>;
+  /** Filter by text search inside "code" or "label" */
+  textSearch?: InputMaybe<Scalars["String"]>;
 };
 
 /** Filter all groups of admin query */
@@ -434,6 +438,8 @@ export type AdminKCsFilter = {
    * If the KC's project matches any of the specified projects, the KC is included
    */
   projects?: InputMaybe<Array<Scalars["IntID"]>>;
+  /** Filter by text search inside "code" or "label" */
+  textSearch?: InputMaybe<Scalars["String"]>;
   /**
    * Filter by the specified topics
    *
@@ -511,6 +517,8 @@ export type AdminTopicsFilter = {
    * If the topic's project matches any of the specified projects, the topic is included
    */
   projects?: InputMaybe<Array<Scalars["IntID"]>>;
+  /** Filter by text search inside "code", "label" or "tags" */
+  textSearch?: InputMaybe<Scalars["String"]>;
 };
 
 /** Admin User-Related Queries */
