@@ -49,7 +49,7 @@
     "c8": "^7.11.0",
     "concurrently": "^7.0.0",
     "cross-env": "^7.0.3",
-    "dotenv": "^12.0.0",
+    "dotenv": "^12.0.3",
     "esbuild": "^0.14.11",
     "execa": "^6.0.0",
     "fastify": "^3.25.3",
