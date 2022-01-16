@@ -171,7 +171,8 @@ function UpsertUsers() {
 }
 
 export default withAdminAuth(function UsersPage() {
-  const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination();
+  const { pagination, prevPage, nextPage, pageInfo, resetPagination } =
+    useCursorPagination();
 
   const usersState = useSnapshot(UsersState);
 
@@ -232,6 +233,7 @@ export default withAdminAuth(function UsersPage() {
         data={data?.adminUsers.allUsers.nodes || []}
         prevPage={prevPage}
         nextPage={nextPage}
+        resetPagination={resetPagination}
         disableDefaultTextFilter
         columns={[
           {

@@ -137,7 +137,8 @@ const ProjectsState = proxy<
 >({});
 
 export default withAdminAuth(function ProjectsPage() {
-  const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination();
+  const { pagination, prevPage, nextPage, pageInfo, resetPagination } =
+    useCursorPagination();
   const { data } = useGQLQuery(AdminProjects, { pagination });
   pageInfo.current = data?.adminProjects.allProjects.pageInfo;
 
@@ -186,6 +187,7 @@ export default withAdminAuth(function ProjectsPage() {
         data={data?.adminProjects.allProjects.nodes || []}
         prevPage={prevPage}
         nextPage={nextPage}
+        resetPagination={resetPagination}
         minH="80vh"
         columns={[
           {

@@ -188,6 +188,7 @@ export default withAdminAuth(function ActionsPage() {
         data={data?.adminActions.allActions.nodes || []}
         prevPage={prevPage}
         nextPage={nextPage}
+        resetPagination={resetPagination}
         minH="80vh"
         columns={[
           {

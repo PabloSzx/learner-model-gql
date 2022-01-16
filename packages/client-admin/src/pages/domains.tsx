@@ -123,7 +123,8 @@ const DomainsState = proxy<
 >({});
 
 export default withAdminAuth(function DomainPage() {
-  const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination();
+  const { pagination, prevPage, nextPage, pageInfo, resetPagination } =
+    useCursorPagination();
   const textSearch = useDebouncedDataTableSearchValue();
   const { data } = useGQLQuery(AdminDomains, {
     pagination,
@@ -174,6 +175,7 @@ export default withAdminAuth(function DomainPage() {
         data={data?.adminDomain.allDomains.nodes || []}
         prevPage={prevPage}
         nextPage={nextPage}
+        resetPagination={resetPagination}
         minH="80vh"
         disableDefaultTextFilter
         columns={[

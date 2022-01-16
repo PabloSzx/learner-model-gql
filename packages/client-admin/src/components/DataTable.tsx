@@ -18,6 +18,7 @@ import {
   Thead,
   Tr,
   useColorModeValue,
+  useLatestRef,
 } from "@chakra-ui/react";
 import { formatSpanish } from "common";
 import get from "lodash/get.js";
@@ -39,16 +40,17 @@ import { proxy, useSnapshot } from "valtio";
 export interface DataTableProps<Data extends object> extends BoxProps {
   data: Data[];
   columns: Column<Data>[];
-  prevPage?: {
+  prevPage: {
     isDisabled: boolean;
     isLoading: boolean;
     onClick(): void;
   };
-  nextPage?: {
+  nextPage: {
     isDisabled: boolean;
     isLoading: boolean;
     onClick(): void;
   };
+  resetPagination: () => void;
   initialState?: Partial<TableState<Data>>;
   disableDefaultTextFilter?: boolean;
 }
@@ -77,6 +79,7 @@ export function DataTable<Data extends object>({
   columns,
   prevPage,
   nextPage,
+  resetPagination,
   initialState,
   height,
   disableDefaultTextFilter,
@@ -100,9 +103,12 @@ export function DataTable<Data extends object>({
 
   const { current: searchValueString } = useSnapshot(searchValue);
 
+  const resetPaginationFn = useLatestRef(resetPagination);
+
   useEffect(() => {
     if (!disableDefaultTextFilter) setGlobalFilter(searchValueString);
-  }, [searchValueString, disableDefaultTextFilter]);
+    resetPaginationFn.current();
+  }, [searchValueString, disableDefaultTextFilter, resetPaginationFn]);
 
   const MapRow = useCallback(
     (row: Row<Data>) => {
@@ -127,14 +133,10 @@ export function DataTable<Data extends object>({
   );
 
   const pagination = (
-    <>
-      {prevPage && nextPage && (
-        <ButtonGroup variant="outline" size="sm">
-          <Button {...prevPage}>Previous</Button>
-          <Button {...nextPage}>Next</Button>
-        </ButtonGroup>
-      )}
-    </>
+    <ButtonGroup variant="outline" size="sm">
+      <Button {...prevPage}>Previous</Button>
+      <Button {...nextPage}>Next</Button>
+    </ButtonGroup>
   );
 
   return (

@@ -312,7 +312,8 @@ const GroupsState = proxy<
 >({});
 
 export default withAdminAuth(function GroupsPage() {
-  const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination();
+  const { pagination, prevPage, nextPage, pageInfo, resetPagination } =
+    useCursorPagination();
   const { data } = useGQLQuery(AdminGroups, { pagination });
   pageInfo.current = data?.adminUsers.allGroups.pageInfo;
 
@@ -368,6 +369,7 @@ export default withAdminAuth(function GroupsPage() {
         data={data?.adminUsers.allGroups.nodes || []}
         prevPage={prevPage}
         nextPage={nextPage}
+        resetPagination={resetPagination}
         minH="80vh"
         columns={[
           {

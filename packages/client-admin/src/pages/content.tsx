@@ -511,7 +511,8 @@ const EditContent = ({
 };
 
 export default withAdminAuth(function ContentPage() {
-  const { pagination, prevPage, nextPage, pageInfo } = useCursorPagination();
+  const { pagination, prevPage, nextPage, pageInfo, resetPagination } =
+    useCursorPagination();
 
   const textSearch = useDebouncedDataTableSearchValue();
   const { data } = useGQLQuery(
@@ -546,6 +547,7 @@ export default withAdminAuth(function ContentPage() {
         data={data?.adminContent.allContent.nodes || []}
         prevPage={prevPage}
         nextPage={nextPage}
+        resetPagination={resetPagination}
         minH="80vh"
         disableDefaultTextFilter
         columns={[

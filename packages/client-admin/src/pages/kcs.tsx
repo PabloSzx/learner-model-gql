@@ -223,6 +223,7 @@ export default withAdminAuth(function KCPage() {
         data={data?.adminDomain.allKCs.nodes || []}
         prevPage={prevPage}
         nextPage={nextPage}
+        resetPagination={resetPagination}
         minH="80vh"
         disableDefaultTextFilter
         columns={[
