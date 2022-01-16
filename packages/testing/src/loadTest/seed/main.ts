@@ -48,7 +48,13 @@ function mapN(n: number, cb?: () => unknown): Array<unknown> {
 
 const nProjects = 20;
 
-const projectsCodes = mapN(nProjects, generate);
+const generateAlphabetic15chars = () =>
+  generate({
+    length: 15,
+    charset: "alphabetic",
+  });
+
+const projectsCodes = mapN(nProjects, generateAlphabetic15chars);
 
 export const projects = await pMap(
   projectsCodes,
@@ -56,7 +62,7 @@ export const projects = await pMap(
     return prisma.project.create({
       data: {
         code,
-        label: generate(),
+        label: generateAlphabetic15chars(),
       },
     });
   },
@@ -67,20 +73,23 @@ export const projects = await pMap(
 
 const nUsers = 10000;
 
-const userTags = mapN(50, generate);
+const userTags = mapN(50, generateAlphabetic15chars);
 
 export const users = await pMap(
   mapN(nUsers),
   async () => {
     return prisma.user.create({
       data: {
-        email: faker.internet.email(generate(), generate()),
+        email: faker.internet.email(
+          generateAlphabetic15chars(),
+          faker.internet.domainName()
+        ),
         uids: {
           create: {
             uid: generate(),
           },
         },
-        name: generate(),
+        name: faker.name.firstName(),
         picture: faker.internet.url(),
         tags: {
           set: sampleSize(userTags, random(0, 4)),
@@ -98,9 +107,9 @@ export const users = await pMap(
 
 const nGroups = 100;
 
-const groupsCodes = mapN(nGroups, generate);
+const groupsCodes = mapN(nGroups, generateAlphabetic15chars);
 
-const groupsTags = mapN(20, generate);
+const groupsTags = mapN(20, generateAlphabetic15chars);
 
 export const groups = await pMap(
   groupsCodes,
@@ -108,7 +117,7 @@ export const groups = await pMap(
     return prisma.group.create({
       data: {
         code,
-        label: generate(),
+        label: generateAlphabetic15chars(),
         projects: {
           connect: sampleSize(projects, random(0, 2)).map(({ id }) => ({
             id,
@@ -132,7 +141,7 @@ export const groups = await pMap(
 
 const nDomains = 50;
 
-const domainsCodes = mapN(nDomains, generate);
+const domainsCodes = mapN(nDomains, generateAlphabetic15chars);
 
 export const domains = await pMap(
   domainsCodes,
@@ -140,7 +149,7 @@ export const domains = await pMap(
     return prisma.domain.create({
       data: {
         code,
-        label: generate(),
+        label: generateAlphabetic15chars(),
         projects: {
           connect: sampleSize(projects, random(1, 5)).map(({ id }) => ({ id })),
         },
@@ -157,7 +166,7 @@ export const domains = await pMap(
 
 const nTopics = 1500;
 
-const topicsCodes = mapN(nTopics, generate);
+const topicsCodes = mapN(nTopics, generateAlphabetic15chars);
 
 export const topics = await pMap(
   topicsCodes,
@@ -165,7 +174,7 @@ export const topics = await pMap(
     return prisma.topic.create({
       data: {
         code,
-        label: generate(),
+        label: generateAlphabetic15chars(),
         project: {
           connect: {
             id: sample(projects)!.id,
@@ -187,7 +196,10 @@ export const topicsGrupedByProjectWithParent = await pMap(
     const topicsLeftToAssign = [...topics];
     const topicsAssigned: typeof topicsLeftToAssign = [];
 
-    const topicsTags = mapN(Math.floor(topics.length / 3), generate);
+    const topicsTags = mapN(
+      Math.floor(topics.length / 3),
+      generateAlphabetic15chars
+    );
 
     function pickTopic() {
       const topic = sample(topicsLeftToAssign);
@@ -285,7 +297,7 @@ export const topicsGrupedByProjectWithParent = await pMap(
 
 const nKcs = 500;
 
-const kcsCodes = mapN(nKcs, generate);
+const kcsCodes = mapN(nKcs, generateAlphabetic15chars);
 
 export const kcs = await pMap(
   kcsCodes,
@@ -293,7 +305,7 @@ export const kcs = await pMap(
     return prisma.kC.create({
       data: {
         code,
-        label: generate(),
+        label: generateAlphabetic15chars(),
         domain: {
           connect: {
             id: sample(domains)!.id,
@@ -316,9 +328,9 @@ export const kcs = await pMap(
 
 const nContent = 1500;
 
-const contentCodes = mapN(nContent, generate);
+const contentCodes = mapN(nContent, generateAlphabetic15chars);
 
-const contentTags = mapN(100, generate);
+const contentTags = mapN(100, generateAlphabetic15chars);
 
 const contentCreatePool = new Tinypool({
   filename: resolve(__dirname, "./createContent.ts"),
