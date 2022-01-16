@@ -61,7 +61,7 @@ export interface AllTopicsOptions {
 
   initialTopicsFilter: AdminTopicsFilter;
 
-  limit?: number;
+  limit: number;
 }
 
 export const useAllTopics = ({
@@ -123,9 +123,7 @@ export const useAllTopics = ({
   useEffect(() => {
     if (isFetching) return;
 
-    if (limit != null && topicsAmount.current >= limit) return;
-
-    if (hasNextPage) {
+    if (hasNextPage && topicsAmount.current < limit) {
       fetchNextPage().catch(console.error);
     }
   }, [hasNextPage, fetchNextPage, isFetching, topicsAmount, limit]);

@@ -1,4 +1,5 @@
 import {
+  Flex,
   FormControl,
   FormHelperText,
   FormLabel,
@@ -10,9 +11,9 @@ import {
 } from "@chakra-ui/react";
 import { formatSpanish } from "common";
 import { gql, useGQLMutation } from "graph";
-import { memo, useCallback, useEffect, useMemo, useRef } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MdEdit, MdOutlineTopic, MdSave } from "react-icons/md";
-import { useUpdateEffect } from "react-use";
+import { useDebounce, useUpdateEffect } from "react-use";
 import useMountedState from "react-use/lib/useMountedState.js";
 import { useImmer } from "use-immer";
 import type { OptionValue } from "../components/AsyncSelect";
@@ -39,22 +40,6 @@ export const CreateTopic = () => {
 
   const { selectSingleProjectComponent, selectedProject } =
     useSelectSingleProject();
-
-  useEffect(() => {
-    parentTopic.setSelectedTopic(null);
-    parentTopic.produceTopicsFilter((draft) => {
-      if (!selectedProject) return null;
-
-      if (!draft)
-        return {
-          projects: [selectedProject.value],
-        };
-
-      draft.projects = [selectedProject.value];
-
-      return;
-    });
-  }, [selectedProject]);
 
   const { mutateAsync, isLoading } = useGQLMutation(
     gql(/* GraphQL */ `
@@ -84,7 +69,9 @@ export const CreateTopic = () => {
     topics: {
       initialTopicsFilter: {
         projects: selectedProject ? [selectedProject.value] : [],
+        textSearch: "",
       },
+      limit: 100,
     },
   });
 
@@ -102,18 +89,19 @@ export const CreateTopic = () => {
     allContentBaseOptions: {
       initialContentFilter: {
         projects: selectedProject ? [selectedProject.value] : [],
+        textSearch: "",
       },
       limit: 100,
     },
   });
 
   useEffect(() => {
-    produceContentFilter({
-      projects: selectedProject ? [selectedProject.value] : [],
+    produceContentFilter((draft) => {
+      draft.projects = selectedProject ? [selectedProject.value] : [];
     });
     setSelectedContent([]);
-    parentTopic.produceTopicsFilter({
-      projects: selectedProject ? [selectedProject.value] : [],
+    parentTopic.produceTopicsFilter((draft) => {
+      draft.projects = selectedProject ? [selectedProject.value] : [];
     });
     parentTopic.setSelectedTopic(null);
   }, [selectedProject]);
@@ -186,8 +174,10 @@ export const CreateTopic = () => {
 
 export const TopicCard = memo(function TopicCard({
   topic,
+  disableParentEdit,
 }: {
   topic: TopicInfoWithChildrens;
+  disableParentEdit: boolean;
 }) {
   const { mutateAsync, isLoading } = useGQLMutation(
     gql(/* GraphQL */ `
@@ -232,7 +222,7 @@ export const TopicCard = memo(function TopicCard({
   const deepChildrensAndSelfIds = useMemo(() => {
     const ids = new Set<string>([topic.id]);
 
-    const pendingChildrensList = [topic.childrens];
+    const pendingChildrensList = topic.childrens ? [topic.childrens] : [];
 
     while (pendingChildrensList.length) {
       const childrenList = pendingChildrensList.shift();
@@ -242,7 +232,7 @@ export const TopicCard = memo(function TopicCard({
       for (const children of childrenList) {
         ids.add(children.id);
 
-        if (children.childrens.length) {
+        if (children.childrens?.length) {
           pendingChildrensList.push(children.childrens);
         }
       }
@@ -258,55 +248,50 @@ export const TopicCard = memo(function TopicCard({
     },
   });
 
-  const { selectSingleTopicComponent, produceTopicsFilter } =
-    useSelectSingleTopic({
-      state: [
-        selectedTopic,
-        (selected) => edit((draft) => void (draft.selectedTopic = selected)),
-      ],
-      topics: {
-        jsFilter: useCallback(
-          (topicValue: TopicInfo) => {
-            return !deepChildrensAndSelfIds.has(topicValue.id);
-          },
-          [topic.id, deepChildrensAndSelfIds]
-        ),
-        limit: 100,
-        initialTopicsFilter: {
-          textSearch: "",
+  const { selectSingleTopicComponent } = useSelectSingleTopic({
+    state: [
+      selectedTopic,
+      (selected) => edit((draft) => void (draft.selectedTopic = selected)),
+    ],
+    topics: {
+      jsFilter: useCallback(
+        (topicValue: TopicInfo) => {
+          return !deepChildrensAndSelfIds.has(topicValue.id);
         },
+        [topic.id, deepChildrensAndSelfIds]
+      ),
+      limit: 100,
+      initialTopicsFilter: {
+        textSearch: "",
+        projects: [topic.project.id],
       },
-    });
+    },
+  });
 
-  const { selectMultiContentComponent, produceContentFilter } =
-    useSelectMultiContent({
-      state: [
-        selectedContent,
-        (value) =>
-          edit((draft) => {
-            draft.selectedContent = value;
-          }),
-      ],
-      selectProps: {
-        isDisabled: !isEditing,
-        placeholder: isEditing
-          ? "Search Content"
-          : selectedContent.length
-          ? "Search Content"
-          : "No associated content",
+  const { selectMultiContentComponent } = useSelectMultiContent({
+    state: [
+      selectedContent,
+      (value) =>
+        edit((draft) => {
+          draft.selectedContent = value;
+        }),
+    ],
+    selectProps: {
+      isDisabled: !isEditing,
+      placeholder: isEditing
+        ? "Search Content"
+        : selectedContent.length
+        ? "Search Content"
+        : "No associated content",
+    },
+    allContentBaseOptions: {
+      initialContentFilter: {
+        textSearch: "",
+        projects: [topic.project.id],
       },
-      allContentBaseOptions: {
-        initialContentFilter: {
-          textSearch: "",
-        },
-        limit: 100,
-      },
-    });
-
-  useEffect(() => {
-    produceTopicsFilter({ projects: [topic.project.id] });
-    produceContentFilter({ projects: [topic.project.id] });
-  }, [topic.project.id]);
+      limit: 100,
+    },
+  });
 
   useUpdateEffect(() => {
     edit((draft) => {
@@ -442,11 +427,18 @@ export const TopicCard = memo(function TopicCard({
           value={selectMultiContentComponent}
           maxW="min(70ch, 80vw)"
         />
-        {isEditing && (
+        {isEditing && !disableParentEdit && (
           <Property label="Parent" value={selectSingleTopicComponent} />
         )}
-        {topic.childrens.length ? (
-          <Property value={<TopicsCards topics={topic.childrens} />} />
+        {topic.childrens?.length ? (
+          <Property
+            value={
+              <TopicsCards
+                topics={topic.childrens}
+                disableParentEdit={disableParentEdit}
+              />
+            }
+          />
         ) : null}
       </CardContent>
     </Card>
@@ -455,51 +447,91 @@ export const TopicCard = memo(function TopicCard({
 
 export const TopicsCards = ({
   topics,
+  disableParentEdit,
 }: {
   topics: Array<TopicInfoWithChildrens>;
+  disableParentEdit: boolean;
 }) => {
   return (
     <>
       {topics.map((topic) => {
-        return <TopicCard key={topic.id} topic={topic} />;
+        return (
+          <TopicCard
+            key={topic.id}
+            topic={topic}
+            disableParentEdit={disableParentEdit}
+          />
+        );
       })}
     </>
   );
 };
 
 export default withAdminAuth(function TopicsPage() {
-  const { topics, isLoading, produceTopicsFilter } = useAllTopics({
+  const [textSearchValue, setTextSearchValue] = useState("");
+  const [textSearch, setTextSearch] = useState("");
+
+  const { topics, isFetching, produceTopicsFilter } = useAllTopics({
     initialTopicsFilter: {
       projects: [],
+      textSearch,
     },
+    limit: Infinity,
   });
 
+  useDebounce(
+    () => {
+      setTextSearch(textSearchValue);
+    },
+    200,
+    [textSearchValue]
+  );
+
   const topicsTree = useMemo(() => {
-    return getTopicChildrens(topics);
-  }, [topics]);
+    return textSearch ? topics : getTopicChildrens(topics);
+  }, [topics, textSearch]);
 
   const { selectedProject, selectSingleProjectComponent } =
     useSelectSingleProject();
 
   useEffect(() => {
     produceTopicsFilter((draft) => {
-      if (!draft)
-        return {
-          projects: selectedProject ? [selectedProject.value] : [],
-        };
-
       draft.projects = selectedProject ? [selectedProject.value] : [];
-      return;
+      draft.textSearch = textSearch;
     });
-  }, [selectedProject]);
+  }, [selectedProject, textSearch]);
 
   return (
     <VStack>
       <CreateTopic />
 
-      {selectSingleProjectComponent}
+      <Flex>
+        <FormControl>
+          <FormLabel htmlFor="text-filter" textAlign="center">
+            Specify Project
+          </FormLabel>
+          {selectSingleProjectComponent}
+        </FormControl>
+      </Flex>
 
-      {isLoading ? (
+      <Flex alignItems="center">
+        <FormControl>
+          <FormLabel htmlFor="text-filter">
+            Filter by text in code or label, or by specific tag
+          </FormLabel>
+          <Input
+            id="text-filter"
+            type="text"
+            value={textSearchValue}
+            onChange={(ev) => {
+              setTextSearchValue(ev.target.value);
+            }}
+            maxW="50ch"
+          />
+        </FormControl>
+      </Flex>
+
+      {isFetching && !topicsTree.length ? (
         <Spinner />
       ) : (
         <HStack
@@ -507,7 +539,7 @@ export default withAdminAuth(function TopicsPage() {
           justifyContent="space-around"
           alignItems="flex-start"
         >
-          <TopicsCards topics={topicsTree} />
+          <TopicsCards topics={topicsTree} disableParentEdit={!!textSearch} />
         </HStack>
       )}
     </VStack>
@@ -515,7 +547,7 @@ export default withAdminAuth(function TopicsPage() {
 });
 
 export type TopicInfoWithChildrens = TopicInfo & {
-  childrens: Array<TopicInfoWithChildrens>;
+  childrens?: Array<TopicInfoWithChildrens>;
 };
 
 export function getTopicChildrens(
