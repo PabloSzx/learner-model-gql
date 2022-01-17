@@ -2,6 +2,7 @@ schema: ../../schema.gql
 documents:
   - "../services/*/test/**/*.ts"
   - "../../test/*.ts"
+  - "./src/loadTest/**/*.ts"
 generates:
   ./src/generated/:
     preset: gql-tag-operations-preset

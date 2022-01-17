@@ -103,6 +103,10 @@ const documents = {
     graphql.AdminUpdateGroupDocument,
   "\n      mutation SetUserProjects($projectIds: [IntID!]!, $userIds: [IntID!]!) {\n        adminUsers {\n          setProjectsToUsers(projectIds: $projectIds, userIds: $userIds) {\n            id\n            email\n            projectsIds\n          }\n        }\n      }\n    ":
     graphql.SetUserProjectsDocument,
+  "\n      query LoadTestCurrentUser($projectId: IntID!) {\n        currentUser {\n          id\n          email\n        }\n        project(id: $projectId) {\n          id\n          code\n          label\n          topics {\n            id\n            code\n            label\n          }\n          content(pagination: { first: 50 }) {\n            nodes {\n              id\n              code\n              label\n              tags\n              kcs {\n                id\n                code\n                label\n              }\n            }\n          }\n        }\n      }\n    ":
+    graphql.LoadTestCurrentUserDocument,
+  "\n        mutation LoadTestAction($data: ActionInput!) {\n          action(data: $data)\n        }\n      ":
+    graphql.LoadTestActionDocument,
   "\n            query hello {\n              hello\n            }\n          ":
     graphql.HelloDocument,
 };
@@ -257,6 +261,12 @@ export function gql(
 export function gql(
   source: "\n      mutation SetUserProjects($projectIds: [IntID!]!, $userIds: [IntID!]!) {\n        adminUsers {\n          setProjectsToUsers(projectIds: $projectIds, userIds: $userIds) {\n            id\n            email\n            projectsIds\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation SetUserProjects($projectIds: [IntID!]!, $userIds: [IntID!]!) {\n        adminUsers {\n          setProjectsToUsers(projectIds: $projectIds, userIds: $userIds) {\n            id\n            email\n            projectsIds\n          }\n        }\n      }\n    "];
+export function gql(
+  source: "\n      query LoadTestCurrentUser($projectId: IntID!) {\n        currentUser {\n          id\n          email\n        }\n        project(id: $projectId) {\n          id\n          code\n          label\n          topics {\n            id\n            code\n            label\n          }\n          content(pagination: { first: 50 }) {\n            nodes {\n              id\n              code\n              label\n              tags\n              kcs {\n                id\n                code\n                label\n              }\n            }\n          }\n        }\n      }\n    "
+): typeof documents["\n      query LoadTestCurrentUser($projectId: IntID!) {\n        currentUser {\n          id\n          email\n        }\n        project(id: $projectId) {\n          id\n          code\n          label\n          topics {\n            id\n            code\n            label\n          }\n          content(pagination: { first: 50 }) {\n            nodes {\n              id\n              code\n              label\n              tags\n              kcs {\n                id\n                code\n                label\n              }\n            }\n          }\n        }\n      }\n    "];
+export function gql(
+  source: "\n        mutation LoadTestAction($data: ActionInput!) {\n          action(data: $data)\n        }\n      "
+): typeof documents["\n        mutation LoadTestAction($data: ActionInput!) {\n          action(data: $data)\n        }\n      "];
 export function gql(
   source: "\n            query hello {\n              hello\n            }\n          "
 ): typeof documents["\n            query hello {\n              hello\n            }\n          "];

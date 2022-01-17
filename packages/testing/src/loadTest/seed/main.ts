@@ -71,7 +71,7 @@ export const projects = await pMap(
   }
 );
 
-const nUsers = 10000;
+export const nUsers = 10000;
 
 const userTags = mapN(50, generateAlphabetic15chars);
 
@@ -95,7 +95,7 @@ export const users = await pMap(
           set: sampleSize(userTags, random(0, 4)),
         },
         projects: {
-          connect: sampleSize(projects, random(0, 2)).map(({ id }) => ({ id })),
+          connect: sampleSize(projects, random(1, 2)).map(({ id }) => ({ id })),
         },
       },
     });
@@ -347,3 +347,5 @@ export const content: CreatedContent[] = await Promise.all(
     });
   })
 );
+
+export const verbNames = mapN(1000, generateAlphabetic15chars);
