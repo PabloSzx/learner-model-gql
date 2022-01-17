@@ -143,7 +143,7 @@ export const useSelectMultiProjects = ({
   state,
   selectProps,
 }: {
-  state?: [OptionValue[], (value: OptionValue[]) => void];
+  state?: [readonly OptionValue[], (value: OptionValue[]) => void];
   selectProps?: Partial<AsyncSelectProps>;
 } = {}) => {
   const { isFetching, isLoading, filteredOptions, asOptions } =
