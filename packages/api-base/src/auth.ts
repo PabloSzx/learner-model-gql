@@ -20,22 +20,30 @@ export const MockAuthUser: {
       user: null,
     });
 
-export function GetAuth0User(request: FastifyRequest | undefined) {
-  const Auth0UserPromise =
-    ENV.IS_TEST && MockAuthUser.user
-      ? Promise.resolve(MockAuthUser.user)
-      : LazyPromise(() => {
-          if (!request?.headers.authorization) return null;
+export function GetAuth0User(
+  request: FastifyRequest | undefined
+): Promise<Auth0User | null> {
+  if (ENV.IS_TEST) {
+    if (MockAuthUser.user) return Promise.resolve(MockAuthUser.user);
 
-          return request.jwtVerify<Auth0User>().catch((err) => {
-            logger.error(err);
-            return null;
-          });
-        });
+    const { "auth-email": email, "auth-uid": sub } = request?.headers || {};
 
-  return {
-    Auth0UserPromise,
-  };
+    if (typeof email === "string" && typeof sub === "string") {
+      return Promise.resolve({
+        sub,
+        email,
+      });
+    }
+  }
+
+  return LazyPromise(() => {
+    if (!request?.headers.authorization) return null;
+
+    return request.jwtVerify<Auth0User>().catch((err) => {
+      logger.error(err);
+      return null;
+    });
+  });
 }
 
 export const Auth0Verify = fp(async (app) => {
@@ -253,10 +261,10 @@ export const Authorization = (userPromise: Promise<DBUser | null>) => {
   };
 };
 
-export type DBUser = PromiseType<ReturnType<typeof GetDBUser>["UserPromise"]>;
+export type DBUser = PromiseType<ReturnType<typeof GetDBUser>>;
 
 export function GetDBUser(auth0UserPromise: Promise<Auth0User | null>) {
-  const UserPromise = LazyPromise(async () => {
+  return LazyPromise(async () => {
     const user = await auth0UserPromise;
 
     if (!user) return null;
@@ -354,8 +362,4 @@ export function GetDBUser(auth0UserPromise: Promise<Auth0User | null>) {
 
     return userDb;
   });
-
-  return {
-    UserPromise,
-  };
 }

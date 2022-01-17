@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "bob-tsm --node-env=dev --watch src ../api-base/src -- src/index.ts",
-    "start": "bob-tsm --node-env=prod src/index.ts"
+    "start": "bob-tsm src/index.ts"
   },
   "dependencies": {
     "@graphql-ez/fastify": "^0.9.5",

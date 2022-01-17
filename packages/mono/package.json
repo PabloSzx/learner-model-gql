@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "bob-tsm --node-env=prod src/index.ts",
-    "mono:dev": "bob-tsm --node-env=dev --watch=src src/index.ts"
+    "mono:dev": "bob-tsm --node-env=dev --watch=src src/index.ts",
+    "start": "bob-tsm src/index.ts"
   },
   "dependencies": {
     "@graphql-ez/plugin-altair": "^0.9.7",

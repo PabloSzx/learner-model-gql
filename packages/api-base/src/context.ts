@@ -9,9 +9,9 @@ import {
 } from "./utils";
 
 export async function buildContext({ fastify }: BuildContextArgs) {
-  const { Auth0UserPromise } = GetAuth0User(fastify?.request);
+  const Auth0UserPromise = GetAuth0User(fastify?.request);
 
-  const { UserPromise } = GetDBUser(Auth0UserPromise);
+  const UserPromise = GetDBUser(Auth0UserPromise);
 
   const authorization = Authorization(UserPromise);
 

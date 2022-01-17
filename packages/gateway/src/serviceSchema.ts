@@ -3,10 +3,11 @@ import type { SubschemaConfig } from "@graphql-tools/delegate";
 import type { AsyncExecutor } from "@graphql-tools/utils";
 import { observableToAsyncIterable } from "@graphql-tools/utils";
 import { introspectSchema } from "@graphql-tools/wrap";
-import { logger, ServiceName } from "api-base";
+import { ENV, logger, ServiceName } from "api-base";
 import type { DocumentNode } from "graphql";
 import { OperationTypeNode, print } from "graphql";
 import { Client as WsClient, createClient as createWsClient } from "graphql-ws";
+import type { IncomingHttpHeaders } from "http";
 import { Client } from "undici";
 import ws from "ws";
 import { servicesSubschemaConfig } from "./stitchConfig";
@@ -129,14 +130,25 @@ export async function getServiceSchema({
 
       const authorization = context?.request?.headers.authorization;
 
+      const headers: IncomingHttpHeaders = {
+        "Content-Type": "application/json",
+        authorization,
+      };
+
+      if (ENV.IS_TEST) {
+        const { "auth-email": authEmail, "auth-uid": authUid } =
+          context?.request?.headers || {};
+        Object.assign(headers, {
+          "auth-email": authEmail,
+          "auth-uid": authUid,
+        });
+      }
+
       const { body } = await client.request({
         path: pathname,
         body: JSON.stringify({ query, variables, operationName }),
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          authorization,
-        },
+        headers,
       });
 
       try {
