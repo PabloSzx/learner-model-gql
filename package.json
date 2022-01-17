@@ -68,7 +68,7 @@
     "rimraf": "^3.0.2",
     "testing": "workspace:*",
     "typescript": "^4.5.4",
-    "valtio": "^1.2.8",
+    "valtio": "^1.2.9",
     "wait-on": "^6.0.0"
   },
   "engines": {
