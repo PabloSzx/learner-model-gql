@@ -5,7 +5,8 @@ import { ezWebSockets } from "@graphql-ez/plugin-websockets";
 import {
   AltairIDEOptions,
   codegenOptions,
-  ENV,
+  IS_DEVELOPMENT,
+  IS_PRODUCTION,
   logger,
   pubSub,
   voyagerOptions,
@@ -37,7 +38,7 @@ export const getGatewayPlugin = async () => {
     ez: {
       plugins: [
         ezVoyager(voyagerOptions),
-        ENV.IS_DEVELOPMENT &&
+        IS_DEVELOPMENT &&
           (await import("@graphql-ez/plugin-codegen")).ezCodegen({
             outputSchema,
             config: codegenOptions.config,
@@ -48,7 +49,7 @@ export const getGatewayPlugin = async () => {
     },
     envelop: {
       plugins: [
-        ENV.IS_PRODUCTION && {
+        IS_PRODUCTION && {
           onPluginInit({ setSchema }) {
             const debounceUpdateStitchedSchema = debounce(
               () => {

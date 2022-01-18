@@ -1,4 +1,4 @@
-import { DB_PREPARED, ENV, logger, smartListen } from "api-base";
+import { DB_PREPARED, IS_DEVELOPMENT, logger, smartListen } from "api-base";
 import Fastify from "fastify";
 import { setTimeout } from "timers/promises";
 import { getGatewayPlugin } from "./app";
@@ -25,7 +25,7 @@ declare module "pg-gql-pubsub" {
   interface Channels extends PubSubData {}
 }
 
-if (ENV.IS_DEVELOPMENT) {
+if (IS_DEVELOPMENT) {
   while (true) {
     try {
       await main();

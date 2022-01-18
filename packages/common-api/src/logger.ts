@@ -1,10 +1,9 @@
+import { IS_DEVELOPMENT, IS_TEST } from "common";
 import Pino from "pino";
 
-import { ENV } from "common";
-
 export const logger = Pino({
-  level: ENV.IS_TEST ? "error" : "info",
-  transport: ENV.IS_DEVELOPMENT
+  level: IS_TEST ? "error" : "info",
+  transport: IS_DEVELOPMENT
     ? {
         target: "pino-pretty",
         options: {

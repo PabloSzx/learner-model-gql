@@ -1,7 +1,7 @@
 import type { User as Auth0User } from "@auth0/auth0-react";
 import type { PromiseType } from "@graphql-ez/fastify";
 import assert from "assert";
-import { ENV, logger } from "common-api";
+import { IS_TEST, logger } from "common-api";
 import { GroupFlags, prisma } from "db";
 import type { FastifyRequest } from "fastify";
 import FastifyAuth0 from "fastify-auth0-verify";
@@ -12,7 +12,7 @@ export type { Auth0User };
 
 export const MockAuthUser: {
   user: Auth0User | null;
-} = ENV.IS_TEST
+} = IS_TEST
   ? {
       user: null,
     }
@@ -20,23 +20,10 @@ export const MockAuthUser: {
       user: null,
     });
 
-export function GetAuth0User(
+const GetAuth0UserFromAuthorizationHeader = (
   request: FastifyRequest | undefined
-): Promise<Auth0User | null> {
-  if (ENV.IS_TEST) {
-    if (MockAuthUser.user) return Promise.resolve(MockAuthUser.user);
-
-    const { "auth-email": email, "auth-uid": sub } = request?.headers || {};
-
-    if (typeof email === "string" && typeof sub === "string") {
-      return Promise.resolve({
-        sub,
-        email,
-      });
-    }
-  }
-
-  return LazyPromise(() => {
+) =>
+  LazyPromise(() => {
     if (!request?.headers.authorization) return null;
 
     return request.jwtVerify<Auth0User>().catch((err) => {
@@ -44,7 +31,24 @@ export function GetAuth0User(
       return null;
     });
   });
-}
+export const GetAuth0User: (
+  request: FastifyRequest | undefined
+) => Promise<Auth0User | null> = IS_TEST
+  ? (request) => {
+      if (MockAuthUser.user) return Promise.resolve(MockAuthUser.user);
+
+      const { "auth-email": email, "auth-uid": sub } = request?.headers || {};
+
+      if (typeof email === "string" && typeof sub === "string") {
+        return Promise.resolve({
+          sub,
+          email,
+        });
+      }
+
+      return GetAuth0UserFromAuthorizationHeader(request);
+    }
+  : GetAuth0UserFromAuthorizationHeader;
 
 export const Auth0Verify = fp(async (app) => {
   const { AUTH0_DOMAIN, AUTH0_CLIENT, AUTH0_SECRET } = process.env;
@@ -56,7 +60,7 @@ export const Auth0Verify = fp(async (app) => {
       secret: AUTH0_SECRET,
       secretsTtl: 1000 * 60,
     });
-  } else if (!ENV.IS_TEST) {
+  } else if (!IS_TEST) {
     console.warn(
       "NO AUTH0_DOMAIN, AUTH0_CLIENT, AUTH0_SECRET PROVIDED, NO AUTH0 VERIFICATION ENABLED"
     );

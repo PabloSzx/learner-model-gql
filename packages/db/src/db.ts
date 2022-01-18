@@ -1,13 +1,13 @@
 import { LazyPromise } from "@graphql-ez/utils/promise";
 import assert from "assert/strict";
-import { ENV, logger } from "common-api";
-import * as Prisma from "./generated/client/index.js";
+import { IS_DEVELOPMENT, IS_TEST, logger } from "common-api";
 import isEmail from "validator/lib/isEmail.js";
+import * as Prisma from "./generated/client/index.js";
 
 export const prisma = new Prisma.PrismaClient({
-  log: ENV.IS_DEVELOPMENT
+  log: IS_DEVELOPMENT
     ? ["info", "query", "error", "warn"]
-    : ENV.IS_TEST
+    : IS_TEST
     ? ["error", "warn"]
     : ["info", "error", "warn"],
 });
@@ -50,5 +50,4 @@ export const DB_PREPARED = LazyPromise(async () => {
 });
 
 export * from "./generated/client/index.js";
-
 export type { Prisma as PrismaNS } from "./generated/client/index.js";

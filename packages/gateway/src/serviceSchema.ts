@@ -3,7 +3,7 @@ import type { SubschemaConfig } from "@graphql-tools/delegate";
 import type { AsyncExecutor } from "@graphql-tools/utils";
 import { observableToAsyncIterable } from "@graphql-tools/utils";
 import { introspectSchema } from "@graphql-tools/wrap";
-import { ENV, logger, ServiceName } from "api-base";
+import { IS_TEST, logger, ServiceName } from "api-base";
 import type { DocumentNode } from "graphql";
 import { OperationTypeNode, print } from "graphql";
 import { Client as WsClient, createClient as createWsClient } from "graphql-ws";
@@ -135,7 +135,7 @@ export async function getServiceSchema({
         authorization,
       };
 
-      if (ENV.IS_TEST) {
+      if (IS_TEST) {
         const { "auth-email": authEmail, "auth-uid": authUid } =
           context?.request?.headers || {};
         Object.assign(headers, {

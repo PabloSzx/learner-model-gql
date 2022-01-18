@@ -7,7 +7,7 @@ import { ezSchema } from "@graphql-ez/plugin-schema";
 import { ezVoyager, VoyagerPluginOptions } from "@graphql-ez/plugin-voyager";
 import { ezWebSockets } from "@graphql-ez/plugin-websockets";
 import { makeExecutableSchema } from "@graphql-tools/schema";
-import { ENV } from "common-api";
+import { IS_DEVELOPMENT } from "common-api";
 import { lexicographicSortSchema } from "graphql";
 import { AltairIDEOptions } from "./altair";
 import { Auth0Verify } from "./auth";
@@ -51,7 +51,7 @@ export const ezServicePreset = CreateApp({
       ezAltairIDE(AltairIDEOptions),
       ezWebSockets("new"),
       ezSchema(),
-      ENV.IS_DEVELOPMENT &&
+      IS_DEVELOPMENT &&
         (await import("@graphql-ez/plugin-codegen")).ezCodegen(codegenOptions),
       ezGraphQLModules({
         schemaBuilder({ typeDefs, resolvers }) {

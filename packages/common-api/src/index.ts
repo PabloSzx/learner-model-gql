@@ -1,6 +1,6 @@
 import { inspect } from "util";
 
-inspect.defaultOptions.depth = 10;
+inspect.defaultOptions.depth = 6;
 
 export * from "common";
 export * from "./env";
