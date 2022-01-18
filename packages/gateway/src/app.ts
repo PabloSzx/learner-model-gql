@@ -48,7 +48,7 @@ export const getGatewayPlugin = async () => {
     },
     envelop: {
       plugins: [
-        {
+        ENV.IS_PRODUCTION && {
           onPluginInit({ setSchema }) {
             const debounceUpdateStitchedSchema = debounce(
               () => {
