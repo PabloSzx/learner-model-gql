@@ -23,8 +23,8 @@ if (URL_DATABASE.hostname !== "localhost" || URL_DATABASE.port !== "5789") {
   throw Error(`Unexpected database used for testing! ` + DATABASE_URL);
 }
 
-typeof after !== "undefined" &&
-  after(() => {
+typeof afterEach !== "undefined" &&
+  afterEach(() => {
     GlobalTeardown();
   });
 
