@@ -36,7 +36,7 @@
     "common-api": "workspace:^1.0.0",
     "dotenv": "^14.2.0",
     "esbuild": "^0.14.11",
-    "fastify": "^3.26.0",
+    "fastify": "^3.27.0",
     "graphql": "^16.2.0",
     "graphql-ez": "^0.13.8",
     "graphql-tag": "^2.12.6",
