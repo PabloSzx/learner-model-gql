@@ -443,7 +443,7 @@ importers:
       '@faker-js/faker': 6.0.0-alpha.2
       '@graphql-codegen/cli': ^2.3.1
       '@graphql-codegen/core': ^2.4.0
-      '@graphql-codegen/gql-tag-operations-preset': ^1.2.2
+      '@graphql-codegen/gql-tag-operations-preset': ^1.2.3
       '@graphql-codegen/typed-document-node': ^2.2.2
       '@graphql-codegen/typescript': ^2.4.2
       '@graphql-codegen/typescript-operations': ^2.2.2
@@ -470,7 +470,7 @@ importers:
       '@faker-js/faker': 6.0.0-alpha.2
       '@graphql-codegen/cli': 2.3.1_7308af4dde32476701f370f4ee462e4d
       '@graphql-codegen/core': 2.4.0_graphql@16.2.0
-      '@graphql-codegen/gql-tag-operations-preset': 1.2.2_401d6065eaf5e49c8f9188bbd71d6697
+      '@graphql-codegen/gql-tag-operations-preset': 1.2.3_401d6065eaf5e49c8f9188bbd71d6697
       '@graphql-codegen/typed-document-node': 2.2.2_graphql@16.2.0
       '@graphql-codegen/typescript': 2.4.2_graphql@16.2.0
       '@graphql-codegen/typescript-operations': 2.2.2_graphql@16.2.0
@@ -2301,8 +2301,8 @@ packages:
       tslib: 2.3.1
     dev: true
 
-  /@graphql-codegen/gql-tag-operations-preset/1.2.2_401d6065eaf5e49c8f9188bbd71d6697:
-    resolution: {integrity: sha512-sIK25v4Y4udeJq4oyFi0tNIOyzUdSrH9sr0toqkJzTPM6i/eX6ZRH0x3SB9ELqjVG6cV5oodnZMHmNut/Qww/A==}
+  /@graphql-codegen/gql-tag-operations-preset/1.2.3_401d6065eaf5e49c8f9188bbd71d6697:
+    resolution: {integrity: sha512-7CpArCgOhEpQXJdak7E1N4btytNEaKAW8UZqwpDprxNambu6i0ixKyO2iFKHjOdXGpqim8iB0Mhb+weB7Ey3oA==}
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0
     dependencies:
@@ -2458,7 +2458,7 @@ packages:
   /@graphql-codegen/visitor-plugin-common/2.5.2_graphql@16.2.0:
     resolution: {integrity: sha512-qDMraPmumG+vEGAz42/asRkdgIRmQWH5HTc320UX+I6CY6eE/Ey85cgzoqeQGLV8gu4sj3UkNx/3/r79eX4u+Q==}
     peerDependencies:
-      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0
     dependencies:
       '@graphql-codegen/plugin-helpers': 2.3.2_graphql@16.2.0
       '@graphql-tools/optimize': 1.1.1_graphql@16.2.0
@@ -2828,7 +2828,7 @@ packages:
   /@graphql-tools/merge/8.2.1_graphql@16.2.0:
     resolution: {integrity: sha512-Q240kcUszhXiAYudjuJgNuLgy9CryDP3wp83NOZQezfA6h3ByYKU7xI6DiKrdjyVaGpYN3ppUmdj0uf5GaXzMA==}
     peerDependencies:
-      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0
+      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0
     dependencies:
       '@graphql-tools/utils': 8.6.1_graphql@16.2.0
       graphql: 16.2.0
