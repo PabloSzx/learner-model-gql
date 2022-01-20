@@ -110,7 +110,7 @@ importers:
       fastify-auth0-verify: ^0.7.0
       fastify-plugin: ^3.0.0
       pino: ^7.6.4
-      pino-pretty: ^7.4.0
+      pino-pretty: ^7.5.0
       serialize-error: ^9.0.0
       validator: ^13.7.0
       wait-on: ^6.0.0
@@ -129,7 +129,7 @@ importers:
       fastify-auth0-verify: 0.7.0
       fastify-plugin: 3.0.0
       pino: 7.6.4
-      pino-pretty: 7.4.0
+      pino-pretty: 7.5.0
       serialize-error: 9.0.0
       validator: 13.7.0
       wait-on: 6.0.0
@@ -222,13 +222,13 @@ importers:
     specifiers:
       common: workspace:^0.0.1
       pino: ^7.6.4
-      pino-pretty: ^7.4.0
+      pino-pretty: ^7.5.0
       require-env-variable: ^4.0.0
       serialize-error: ^9.0.0
     dependencies:
       common: link:../common
       pino: 7.6.4
-      pino-pretty: 7.4.0
+      pino-pretty: 7.5.0
       require-env-variable: 4.0.0
       serialize-error: 9.0.0
 
@@ -2828,7 +2828,7 @@ packages:
   /@graphql-tools/merge/8.2.1_graphql@16.2.0:
     resolution: {integrity: sha512-Q240kcUszhXiAYudjuJgNuLgy9CryDP3wp83NOZQezfA6h3ByYKU7xI6DiKrdjyVaGpYN3ppUmdj0uf5GaXzMA==}
     peerDependencies:
-      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0
+      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0
     dependencies:
       '@graphql-tools/utils': 8.6.1_graphql@16.2.0
       graphql: 16.2.0
@@ -7484,8 +7484,8 @@ packages:
       split2: 4.1.0
     dev: false
 
-  /pino-pretty/7.4.0:
-    resolution: {integrity: sha512-4jERNvGogMIySUhCRPzn7TZm41A05XgW5gLBVUty1tIC6q1RmX6nmJgU92nVuiNK7yjm3dxJnWHebbok1QgzyQ==}
+  /pino-pretty/7.5.0:
+    resolution: {integrity: sha512-vhGvWhb8SZcmO/q8G0NyWTJ6UTfjHzIzHd6kC5Ob8UJH3FIP6f0nJ5+KglmThYTJXjGaaOGe06ulNrNDohCneQ==}
     hasBin: true
     dependencies:
       args: 5.0.1
