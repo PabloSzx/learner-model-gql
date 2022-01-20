@@ -89,7 +89,8 @@
         "react-dom"
       ],
       "allowedVersions": {
-        "graphql": "^16.0.0"
+        "graphql": "^16.0.0",
+        "framer-motion": "*"
       }
     }
   }
