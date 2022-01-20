@@ -109,7 +109,7 @@ importers:
       db: workspace:^0.0.1
       fastify-auth0-verify: ^0.7.0
       fastify-plugin: ^3.0.0
-      pino: ^7.6.3
+      pino: ^7.6.4
       pino-pretty: ^7.4.0
       serialize-error: ^9.0.0
       validator: ^13.7.0
@@ -128,7 +128,7 @@ importers:
       db: link:../db
       fastify-auth0-verify: 0.7.0
       fastify-plugin: 3.0.0
-      pino: 7.6.3
+      pino: 7.6.4
       pino-pretty: 7.4.0
       serialize-error: 9.0.0
       validator: 13.7.0
@@ -221,13 +221,13 @@ importers:
   packages/common-api:
     specifiers:
       common: workspace:^0.0.1
-      pino: ^7.6.3
+      pino: ^7.6.4
       pino-pretty: ^7.4.0
       require-env-variable: ^4.0.0
       serialize-error: ^9.0.0
     dependencies:
       common: link:../common
-      pino: 7.6.3
+      pino: 7.6.4
       pino-pretty: 7.4.0
       require-env-variable: 4.0.0
       serialize-error: 9.0.0
@@ -2343,7 +2343,7 @@ packages:
   /@graphql-codegen/plugin-helpers/2.3.2_graphql@16.2.0:
     resolution: {integrity: sha512-19qFA5XMAWaAY64sBljjDPYfHjE+QMk/+oalCyY13WjSlcLDvYPfmFlCNgFSsydArDELlHR8T1GMbA7C42M8TA==}
     peerDependencies:
-      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0
     dependencies:
       '@graphql-tools/utils': 8.6.1_graphql@16.2.0
       change-case-all: 1.0.14
@@ -2368,7 +2368,7 @@ packages:
   /@graphql-codegen/typed-document-node/2.2.2_graphql@16.2.0:
     resolution: {integrity: sha512-FOqXcH8mL91Wjvh57VzayjP1WSFPNOii6P4BqJ42j88wsVV7RpO/eQoQjQX1ltAjHGSny8UZJDKA/8It5QaboQ==}
     peerDependencies:
-      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0
     dependencies:
       '@graphql-codegen/plugin-helpers': 2.3.2_graphql@16.2.0
       '@graphql-codegen/visitor-plugin-common': 2.5.2_graphql@16.2.0
@@ -2458,7 +2458,7 @@ packages:
   /@graphql-codegen/visitor-plugin-common/2.5.2_graphql@16.2.0:
     resolution: {integrity: sha512-qDMraPmumG+vEGAz42/asRkdgIRmQWH5HTc320UX+I6CY6eE/Ey85cgzoqeQGLV8gu4sj3UkNx/3/r79eX4u+Q==}
     peerDependencies:
-      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0
     dependencies:
       '@graphql-codegen/plugin-helpers': 2.3.2_graphql@16.2.0
       '@graphql-tools/optimize': 1.1.1_graphql@16.2.0
@@ -7523,8 +7523,8 @@ packages:
       sonic-boom: 1.4.1
     dev: false
 
-  /pino/7.6.3:
-    resolution: {integrity: sha512-TCUDiN0QmzruJ5UE4mIFkTcfCSROV7IVRp5SEUH77UnjDHbeoFntj9jQexvYZhCHp1yhjYCH6vZ8rV85L04KaA==}
+  /pino/7.6.4:
+    resolution: {integrity: sha512-ktibPg3ttWONxYQ2Efk1zYbIvofD5zdd/ReoujK84ggEp0REflb9TsXavSjt8u1CdT2mMJe9QQ3ZpyOQxUKipA==}
     hasBin: true
     dependencies:
       fast-redact: 3.0.2
