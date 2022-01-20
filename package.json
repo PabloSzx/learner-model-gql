@@ -67,7 +67,7 @@
     "react": "^17.0.2",
     "rimraf": "^3.0.2",
     "testing": "workspace:*",
-    "typescript": "^4.5.4",
+    "typescript": "^4.5.5",
     "valtio": "^1.2.9",
     "wait-on": "^6.0.0"
   },
