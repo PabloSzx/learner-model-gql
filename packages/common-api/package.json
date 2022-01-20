@@ -6,7 +6,7 @@
   "types": "src/index.ts",
   "dependencies": {
     "common": "workspace:^0.0.1",
-    "pino": "^7.6.3",
+    "pino": "^7.6.4",
     "pino-pretty": "^7.4.0",
     "require-env-variable": "^4.0.0",
     "serialize-error": "^9.0.0"
