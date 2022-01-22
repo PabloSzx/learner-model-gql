@@ -96,26 +96,32 @@ export const TestGatewayStitchedSchema = async (): Promise<TestClient> => {
     {
       name: "actions",
       href: (await ActionService).endpoint,
+      port: -1,
     },
     {
       name: "content",
       href: (await ContentService).endpoint,
+      port: -1,
     },
     {
       name: "domain",
       href: (await DomainService).endpoint,
+      port: -1,
     },
     {
       name: "projects",
       href: (await ProjectsService).endpoint,
+      port: -1,
     },
     {
       name: "users",
       href: (await UsersService).endpoint,
+      port: -1,
     },
     {
       name: "state",
       href: (await StateService).endpoint,
+      port: -1,
     },
   ]);
 

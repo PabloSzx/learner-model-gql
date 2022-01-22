@@ -19,7 +19,7 @@ export type ServicesSubSchemasConfig = {
 export type ServiceSchemaConfig = {
   name: ServiceName;
   href?: string;
-  port?: number;
+  port: number;
   config?: ServicesSubSchemasConfig;
 };
 
@@ -31,10 +31,15 @@ export const WSServicesClients: Record<string, WsClient> = {};
 if (typeof after !== "undefined") {
   after(() => {
     Promise.allSettled(Object.values(ServicesClients).map((v) => v.close()));
+    Promise.allSettled(
+      Object.values(WSServicesClients).map((v) => v.dispose())
+    );
   });
 }
 
-export function getWsExecutor(serviceUrl: URL) {
+export function getWsExecutor(
+  serviceUrl: URL
+): AsyncExecutor<Partial<EZContext>> {
   const wsServiceUrl = new URL(serviceUrl);
   wsServiceUrl.protocol = wsServiceUrl.protocol.replace("http", "ws");
 
@@ -44,11 +49,7 @@ export function getWsExecutor(serviceUrl: URL) {
       webSocketImpl: ws,
     }));
 
-  const wsExecutor: AsyncExecutor<Partial<EZContext>> = async ({
-    document,
-    variables,
-    operationName,
-  }) =>
+  return async ({ document, variables, operationName }) =>
     observableToAsyncIterable({
       subscribe: (observer) => {
         let query = DocumentPrintCache.get(document);
@@ -88,8 +89,6 @@ export function getWsExecutor(serviceUrl: URL) {
         };
       },
     });
-
-  return wsExecutor;
 }
 
 export async function getServiceSchema({
@@ -98,15 +97,7 @@ export async function getServiceSchema({
   port,
   config = servicesSubschemaConfig,
 }: ServiceSchemaConfig) {
-  const serviceUrl = new URL(
-    href ||
-      `http://127.0.0.1:${
-        port ||
-        (() => {
-          throw Error(`Missing port for service ${name}`);
-        })()
-      }/graphql`
-  );
+  const serviceUrl = new URL(href || `http://127.0.0.1:${port}/graphql`);
 
   const pathname = serviceUrl.pathname;
 
