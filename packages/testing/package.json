@@ -32,7 +32,7 @@
     "bob-tsm": "^0.4.5",
     "cross-port-killer": "^1.4.0",
     "db": "workspace:^0.0.1",
-    "esbuild": "^0.14.12",
+    "esbuild": "^0.14.13",
     "execa": "^6.0.0",
     "lodash-es": "^4.17.21",
     "p-map": "^5.3.0",
