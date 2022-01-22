@@ -34,31 +34,7 @@ if (typeof after !== "undefined") {
   });
 }
 
-export async function getServiceSchema({
-  name,
-  href,
-  port,
-  config = servicesSubschemaConfig,
-}: ServiceSchemaConfig) {
-  const serviceUrl = new URL(
-    href ||
-      `http://127.0.0.1:${
-        port ||
-        (() => {
-          throw Error(`Missing port for service ${name}`);
-        })()
-      }/graphql`
-  );
-
-  const pathname = serviceUrl.pathname;
-
-  const client = (ServicesClients[serviceUrl.origin] ||= new Client(
-    serviceUrl.origin,
-    {
-      pipelining: 10,
-    }
-  ));
-
+export function getWsExecutor(serviceUrl: URL) {
   const wsServiceUrl = new URL(serviceUrl);
   wsServiceUrl.protocol = wsServiceUrl.protocol.replace("http", "ws");
 
@@ -113,6 +89,36 @@ export async function getServiceSchema({
       },
     });
 
+  return wsExecutor;
+}
+
+export async function getServiceSchema({
+  name,
+  href,
+  port,
+  config = servicesSubschemaConfig,
+}: ServiceSchemaConfig) {
+  const serviceUrl = new URL(
+    href ||
+      `http://127.0.0.1:${
+        port ||
+        (() => {
+          throw Error(`Missing port for service ${name}`);
+        })()
+      }/graphql`
+  );
+
+  const pathname = serviceUrl.pathname;
+
+  const client = (ServicesClients[serviceUrl.origin] ||= new Client(
+    serviceUrl.origin,
+    {
+      pipelining: 10,
+    }
+  ));
+
+  const wsExecutor = getWsExecutor(serviceUrl);
+
   const remoteExecutor: AsyncExecutor<Partial<EZContext>> =
     async function remoteExecutor(args) {
       const { document, variables, context, operationName, operationType } =
@@ -154,7 +160,7 @@ export async function getServiceSchema({
       try {
         return await body.json();
       } catch (err) {
-        return await body.text();
+        throw Error(await body.text().catch((err) => err.message));
       }
     };
 
