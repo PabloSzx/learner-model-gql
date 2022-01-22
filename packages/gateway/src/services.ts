@@ -8,7 +8,7 @@ export const getServicesConfigFromEnv = () => {
   >;
 
   const servicesConfig: ServiceSchemaConfig[] = services.map(([name, port]) => {
-    const href = process.env[`${name.toString()}_URL`];
+    const href = process.env[`${name.toUpperCase()}_URL`];
 
     return {
       config: servicesSubschemaConfig,
