@@ -41,7 +41,7 @@ importers:
       mocha: ^9.1.4
       prettier: ^2.5.1
       pretty-quick: ^3.1.3
-      randomstring: ^1.2.1
+      randomstring: ^1.2.2
       react: ^17.0.2
       rimraf: ^3.0.2
       testing: workspace:*
@@ -83,7 +83,7 @@ importers:
       mocha: 9.1.4
       prettier: 2.5.1
       pretty-quick: 3.1.3_prettier@2.5.1
-      randomstring: 1.2.1
+      randomstring: 1.2.2
       react: 17.0.2
       rimraf: 3.0.2
       testing: link:packages/testing
@@ -464,7 +464,7 @@ importers:
       execa: ^6.0.0
       lodash-es: ^4.17.21
       p-map: ^5.3.0
-      randomstring: ^1.2.1
+      randomstring: ^1.2.2
       tinypool: ^0.1.1
     devDependencies:
       '@faker-js/faker': 6.0.0-alpha.2
@@ -491,7 +491,7 @@ importers:
       execa: 6.0.0
       lodash-es: 4.17.21
       p-map: 5.3.0
-      randomstring: 1.2.1
+      randomstring: 1.2.2
       tinypool: 0.1.1
 
 packages:
@@ -7734,8 +7734,8 @@ packages:
       safe-buffer: 5.2.1
     dev: true
 
-  /randomstring/1.2.1:
-    resolution: {integrity: sha512-eMnfell9XuU3jfCx3f4xCaFAt0YMFPZhx9R3PSStmLarDKg5j5vivqKhf/8pvG+VX/YkxsckHK/VPUrKa5V07A==}
+  /randomstring/1.2.2:
+    resolution: {integrity: sha512-9FByiB8guWZLbE+akdQiWE3I1I6w7Vn5El4o4y7o5bWQ6DWPcEOp+aLG7Jezc8BVRKKpgJd2ppRX0jnKu1YCfg==}
     hasBin: true
     dependencies:
       array-uniq: 1.0.2
