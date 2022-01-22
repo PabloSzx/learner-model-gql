@@ -16,7 +16,7 @@
     "@graphql-tools/utils": "^8.6.1",
     "api-base": "workspace:^0.0.1",
     "bob-tsm": "^0.4.5",
-    "esbuild": "^0.14.12",
+    "esbuild": "^0.14.13",
     "fastify": "^3.27.0",
     "graphql": "^16.2.0"
   }
