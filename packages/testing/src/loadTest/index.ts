@@ -3,11 +3,11 @@ import { kill } from "cross-port-killer";
 import { execaCommand } from "execa";
 import { sampleSize, uniqBy } from "lodash-es";
 import ms from "ms";
+import pMap from "p-map";
 import { resolve } from "path";
 import Tinypool from "tinypool";
 import waitOn from "wait-on";
 import { baseServicesList } from "../../../services/list";
-import { n, prisma, users, verbNames } from "./seed/main";
 import type { CreateUserActionsParams, UserActionsResult } from "./userActions";
 
 async function killServices() {
@@ -18,44 +18,11 @@ async function killServices() {
 
 await killServices();
 
-process.on("SIGINT", killServices);
+const { n, prisma, users, verbNames } = await import("./seed/main");
 
-Promise.all([
-  execaCommand("pnpm -r start --filter=service-*", {
-    stdio: "inherit",
-    env: {
-      ...process.env,
-      NODE_ENV: "test",
-      ADMIN_USER_EMAIL: "pablosaez1995@gmail.com",
-    },
-  }),
-  execaCommand("pnpm -r dev:localhost", {
-    stdio: "inherit",
-    env: {
-      ...process.env,
-      NODE_ENV: "development",
-    },
-  }),
-  execaCommand("pnpm -r test:watch:generate", {
-    stdio: "inherit",
-  }),
-]).catch((err) => {
-  console.error(err);
-  killServices().finally(() => {
-    process.exit(0);
-  });
-});
-
-await waitOn({
-  resources: ["tcp:8080"],
-});
-
-const concurrentUsersN = 100;
-
-assert(concurrentUsersN < n.users);
-
-const usersActionsParameters = await Promise.all(
-  users.map(async (user): Promise<CreateUserActionsParams> => {
+const usersActionsParameters = await pMap(
+  users,
+  async (user): Promise<CreateUserActionsParams> => {
     const { email, uids, projects, groups } = await prisma.user.findUnique({
       where: {
         id: user.id,
@@ -95,12 +62,53 @@ const usersActionsParameters = await Promise.all(
       projects: projectsFlat.map((v) => v.id),
       verbNames,
     };
-  })
+  },
+  {
+    concurrency: 10,
+  }
 );
 
-console.log("---Action creation started---");
-
 await prisma.$disconnect();
+
+process.on("SIGINT", killServices);
+
+Promise.all([
+  execaCommand("pnpm -r start --filter=service-*", {
+    stdio: "inherit",
+    env: {
+      ...process.env,
+      NODE_ENV: "test",
+      ADMIN_USER_EMAIL: "pablosaez1995@gmail.com",
+    },
+  }),
+  execaCommand("pnpm -r dev:localhost", {
+    stdio: "inherit",
+    env: {
+      ...process.env,
+      NODE_ENV: "development",
+    },
+  }),
+  execaCommand("pnpm -r test:watch:generate", {
+    stdio: "inherit",
+  }),
+]).catch((err) => {
+  console.error(err);
+  killServices().finally(() => {
+    process.exit(0);
+  });
+});
+
+await waitOn({
+  resources: ["tcp:8080"],
+});
+
+console.log("Gateway ready!");
+
+const concurrentUsersN = 100;
+
+assert(concurrentUsersN < n.users);
+
+console.log("---Action creation started---");
 
 const usersActionsPool = new Tinypool({
   filename: resolve(__dirname, "./userActions.ts"),

@@ -21,6 +21,7 @@
     "dev": "concurrently -r \"cross-env NEXT_PUBLIC_API_URL=http://localhost:8080/graphql pnpm -r --no-bail dev\" \"tsc --watch\"",
     "docker:build": "docker build . -t pabloszx/learner-model-gql",
     "generate": "pnpm -r generate",
+    "load-test": "pnpm run -C ./packages/testing load-test",
     "migrate": "pnpm -r migrate:dev",
     "prepare": "is-ci || husky install",
     "pretty": "pretty-quick",

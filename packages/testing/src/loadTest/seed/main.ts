@@ -17,7 +17,7 @@ await execaCommand("docker-compose logs", {
   cwd: testDir,
 });
 
-const DATABASE_URL =
+export const DATABASE_URL =
   (process.env.DATABASE_URL = `postgresql://postgres:postgres@localhost:5789/test_${generate(
     {
       length: Math.floor(Math.random() * 25) + 20,
@@ -67,6 +67,8 @@ const generateAlphabetic15chars = () =>
 
 const projectsCodes = mapN(n.projects, generateAlphabetic15chars);
 
+console.log("Creating projects");
+
 export const projects = await pMap(
   projectsCodes,
   (code) => {
@@ -82,12 +84,18 @@ export const projects = await pMap(
   }
 );
 
+console.log(`${n.projects} projects created`);
+
 const userTags = mapN(50, generateAlphabetic15chars);
+
+console.log("Creating users...");
+
+let currentUsersProgress = 0;
 
 export const users = await pMap(
   mapN(n.users),
   async () => {
-    return prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         email: faker.internet.email(
           generateAlphabetic15chars(),
@@ -108,15 +116,27 @@ export const users = await pMap(
         },
       },
     });
+
+    const percentProgress = (++currentUsersProgress / n.users) * 100;
+
+    if (percentProgress % 10 === 0) {
+      console.log(`${percentProgress}% of users created`);
+    }
+
+    return user;
   },
   {
     concurrency,
   }
 );
 
+console.log(`${n.users} users created`);
+
 const groupsCodes = mapN(n.groups, generateAlphabetic15chars);
 
 const groupsTags = mapN(n.groupTags, generateAlphabetic15chars);
+
+console.log("Creating groups...");
 
 export const groups = await pMap(
   groupsCodes,
@@ -146,7 +166,11 @@ export const groups = await pMap(
   }
 );
 
+console.log(`${n.groups} groups created`);
+
 const domainsCodes = mapN(n.domains, generateAlphabetic15chars);
+
+console.log("Creating domains...");
 
 export const domains = await pMap(
   domainsCodes,
@@ -169,6 +193,10 @@ export const domains = await pMap(
   }
 );
 
+console.log(`${n.domains} domains created`);
+
+console.log("Creating topics...");
+
 const topicsCodes = mapN(n.topics, generateAlphabetic15chars);
 
 export const topics = await pMap(
@@ -190,6 +218,10 @@ export const topics = await pMap(
     concurrency,
   }
 );
+
+console.log(`${n.topics} topics created`);
+
+console.log("Associating topics...");
 
 export const topicsByProject = groupBy(topics, (v) => v.projectId);
 
@@ -298,6 +330,10 @@ export const topicsGrupedByProjectWithParent = await pMap(
   }
 );
 
+console.log(`${n.topics} topics associated`);
+
+console.log("Creating KCs...");
+
 const kcsCodes = mapN(n.kcs, generateAlphabetic15chars);
 
 export const kcs = await pMap(
@@ -327,6 +363,10 @@ export const kcs = await pMap(
   }
 );
 
+console.log(`${n.kcs} KCs created`);
+
+console.log("Creating content...");
+
 const contentCodes = mapN(n.content, generateAlphabetic15chars);
 
 const contentTags = mapN(n.contentTags, generateAlphabetic15chars);
@@ -337,16 +377,28 @@ const contentCreatePool = new Tinypool({
   filename: resolve(__dirname, "./createContent.ts"),
 });
 
+let currentContentProgress = 0;
+
 export const content: CreatedContent[] = await Promise.all(
-  contentCodes.map((code) => {
+  contentCodes.map(async (code) => {
     const projectId = sample(projects)!.id;
 
-    return contentCreatePool.run({
+    const content = await contentCreatePool.run({
       code,
       projectId,
       contentTags,
     });
+
+    const percentProgress = (++currentContentProgress / n.content) * 100;
+
+    if (percentProgress % 10 === 0) {
+      console.log(`${percentProgress}% of content created`);
+    }
+
+    return content;
   })
 );
+
+console.log(`${n.content} content created`);
 
 export const verbNames = mapN(n.verbNames, generateAlphabetic15chars);
