@@ -18,7 +18,9 @@ async function killServices() {
 
 await killServices();
 
-const { n, prisma, users, verbNames } = await import("./seed/main");
+const { n, prisma, users, verbNames, DATABASE_URL } = await import(
+  "./seed/main"
+);
 
 const usersActionsParameters = await pMap(
   users,
@@ -86,6 +88,7 @@ Promise.all([
         NODE_ENV: "test",
         ADMIN_USER_EMAIL: "pablosaez1995@gmail.com",
         CLUSTER_MODE: "1",
+        DATABASE_URL: `${DATABASE_URL}?connection_limit=2`,
       },
     }
   ),

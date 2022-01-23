@@ -17,6 +17,7 @@
     "clean": "pnpm clean:install",
     "clean:install": "pnpm dlx rimraf \"**/{node_modules,.next,coverage,dist}\" pnpm-lock.yaml docs/pnpm-lock.yaml && pnpm dlx concurrently \"pnpm i\" \"pnpm i -C docs\" && pnpm generate",
     "db:local": "docker-compose -f test/docker-compose.yml up -d",
+    "db:local:rm": "docker-compose -f test/docker-compose.yml -v down",
     "predev": "pnpm -r db:generate",
     "dev": "concurrently -r \"cross-env NEXT_PUBLIC_API_URL=http://localhost:8080/graphql pnpm -r --no-bail dev\" \"tsc --watch\"",
     "docker:build": "docker build . -t pabloszx/learner-model-gql",

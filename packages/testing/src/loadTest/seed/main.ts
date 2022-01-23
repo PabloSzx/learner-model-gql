@@ -17,12 +17,10 @@ await execaCommand("docker-compose logs", {
   cwd: testDir,
 });
 
-export const DATABASE_URL =
-  (process.env.DATABASE_URL = `postgresql://postgres:postgres@localhost:5789/test_${generate(
-    {
-      length: Math.floor(Math.random() * 25) + 20,
-    }
-  )}`);
+export const DATABASE_URL = (process.env.DATABASE_URL =
+  `postgresql://postgres:postgres@localhost:5789/test_${generate({
+    length: Math.floor(Math.random() * 25) + 20,
+  })}` as const);
 
 await execaCommand("pnpm -r migrate:deploy", {
   env: {
