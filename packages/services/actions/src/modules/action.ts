@@ -1,10 +1,10 @@
 import {
+  isInt,
   logger,
+  PrismaNS,
   PromiseAllCallbacks,
   ResolveCursorConnection,
   serializeError,
-  isInt,
-  PrismaNS,
 } from "api-base";
 import assert from "assert";
 import { gql, registerModule } from "../ez";
@@ -625,17 +625,14 @@ export const actionModule = registerModule(
             throw Error("Forbidden!");
           });
 
+          await prisma.$executeRaw`INSERT INTO "ActionVerb" ("name") VALUES (${verbName}) ON CONFLICT DO NOTHING;`;
+
           await prisma.action.create({
             data: {
               timestamp,
               verb: {
-                connectOrCreate: {
-                  create: {
-                    name: verbName,
-                  },
-                  where: {
-                    name: verbName,
-                  },
+                connect: {
+                  name: verbName,
                 },
               },
               project: {
