@@ -39,7 +39,7 @@ const concurrency = 100;
 export const n = {
   projects: 20,
   users: 10000,
-  groups: 100,
+  groups: 500,
   groupTags: 20,
   domains: 50,
   topics: 1500,
