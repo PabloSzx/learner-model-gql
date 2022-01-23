@@ -36,6 +36,19 @@ export const { prisma } = await import("db");
 
 const concurrency = 100;
 
+export const n = {
+  projects: 20,
+  users: 10000,
+  groups: 100,
+  groupTags: 20,
+  domains: 50,
+  topics: 1500,
+  kcs: 500,
+  content: 1500,
+  contentTags: 100,
+  verbNames: 1000,
+} as const;
+
 function mapN(n: number): Array<undefined>;
 function mapN<T>(n: number, cb: () => T): Array<T>;
 function mapN(n: number, cb?: () => unknown): Array<unknown> {
@@ -46,15 +59,13 @@ function mapN(n: number, cb?: () => unknown): Array<unknown> {
   return list;
 }
 
-const nProjects = 20;
-
 const generateAlphabetic15chars = () =>
   generate({
     length: 15,
     charset: "alphabetic",
   });
 
-const projectsCodes = mapN(nProjects, generateAlphabetic15chars);
+const projectsCodes = mapN(n.projects, generateAlphabetic15chars);
 
 export const projects = await pMap(
   projectsCodes,
@@ -71,12 +82,10 @@ export const projects = await pMap(
   }
 );
 
-export const nUsers = 10000;
-
 const userTags = mapN(50, generateAlphabetic15chars);
 
 export const users = await pMap(
-  mapN(nUsers),
+  mapN(n.users),
   async () => {
     return prisma.user.create({
       data: {
@@ -105,11 +114,9 @@ export const users = await pMap(
   }
 );
 
-const nGroups = 100;
+const groupsCodes = mapN(n.groups, generateAlphabetic15chars);
 
-const groupsCodes = mapN(nGroups, generateAlphabetic15chars);
-
-const groupsTags = mapN(20, generateAlphabetic15chars);
+const groupsTags = mapN(n.groupTags, generateAlphabetic15chars);
 
 export const groups = await pMap(
   groupsCodes,
@@ -139,9 +146,7 @@ export const groups = await pMap(
   }
 );
 
-const nDomains = 50;
-
-const domainsCodes = mapN(nDomains, generateAlphabetic15chars);
+const domainsCodes = mapN(n.domains, generateAlphabetic15chars);
 
 export const domains = await pMap(
   domainsCodes,
@@ -164,9 +169,7 @@ export const domains = await pMap(
   }
 );
 
-const nTopics = 1500;
-
-const topicsCodes = mapN(nTopics, generateAlphabetic15chars);
+const topicsCodes = mapN(n.topics, generateAlphabetic15chars);
 
 export const topics = await pMap(
   topicsCodes,
@@ -295,9 +298,7 @@ export const topicsGrupedByProjectWithParent = await pMap(
   }
 );
 
-const nKcs = 500;
-
-const kcsCodes = mapN(nKcs, generateAlphabetic15chars);
+const kcsCodes = mapN(n.kcs, generateAlphabetic15chars);
 
 export const kcs = await pMap(
   kcsCodes,
@@ -326,11 +327,11 @@ export const kcs = await pMap(
   }
 );
 
-const nContent = 1500;
+const contentCodes = mapN(n.content, generateAlphabetic15chars);
 
-const contentCodes = mapN(nContent, generateAlphabetic15chars);
+const contentTags = mapN(n.contentTags, generateAlphabetic15chars);
 
-const contentTags = mapN(100, generateAlphabetic15chars);
+process.env.SILENT = "true";
 
 const contentCreatePool = new Tinypool({
   filename: resolve(__dirname, "./createContent.ts"),
@@ -348,4 +349,4 @@ export const content: CreatedContent[] = await Promise.all(
   })
 );
 
-export const verbNames = mapN(1000, generateAlphabetic15chars);
+export const verbNames = mapN(n.verbNames, generateAlphabetic15chars);

@@ -1,14 +1,14 @@
 import assert from "assert";
 import { kill } from "cross-port-killer";
 import { execaCommand } from "execa";
-import { sampleSize } from "lodash-es";
+import { sampleSize, uniqBy } from "lodash-es";
+import ms from "ms";
 import { resolve } from "path";
 import Tinypool from "tinypool";
 import waitOn from "wait-on";
 import { baseServicesList } from "../../../services/list";
-import { nUsers, prisma, users, verbNames } from "./seed/main";
-
-await prisma.$disconnect();
+import { n, prisma, users, verbNames } from "./seed/main";
+import type { CreateUserActionsParams, UserActionsResult } from "./userActions";
 
 async function killServices() {
   await Promise.allSettled(
@@ -52,21 +52,114 @@ await waitOn({
 
 const concurrentUsersN = 100;
 
-assert(concurrentUsersN < nUsers);
+assert(concurrentUsersN < n.users);
+
+const usersActionsParameters = await Promise.all(
+  users.map(async (user): Promise<CreateUserActionsParams> => {
+    const { email, uids, projects, groups } = await prisma.user.findUnique({
+      where: {
+        id: user.id,
+      },
+      select: {
+        email: true,
+        uids: {
+          select: {
+            uid: true,
+          },
+        },
+        projects: {
+          select: {
+            id: true,
+          },
+        },
+        groups: {
+          select: {
+            projects: true,
+          },
+        },
+      },
+      rejectOnNotFound: true,
+    });
+
+    const uid = uids[0]?.uid;
+    assert(uid, "UID not found for: " + email);
+
+    const projectsFlat = uniqBy(
+      [...projects, ...groups.flatMap((v) => v.projects)],
+      (v) => v.id
+    );
+
+    return {
+      uid,
+      email,
+      projects: projectsFlat.map((v) => v.id),
+      verbNames,
+    };
+  })
+);
+
+console.log("---Action creation started---");
+
+await prisma.$disconnect();
 
 const usersActionsPool = new Tinypool({
   filename: resolve(__dirname, "./userActions.ts"),
 });
 
 while (true) {
-  const concurrentUsers = sampleSize(users, concurrentUsersN);
+  const concurrentUsers = sampleSize(usersActionsParameters, concurrentUsersN);
 
-  await Promise.all(
-    concurrentUsers.map(({ id }) => {
-      return usersActionsPool.run({
-        userId: id,
-        verbNames,
-      });
+  const start = performance.now();
+
+  const results = await Promise.all(
+    concurrentUsers.map((params): Promise<UserActionsResult> => {
+      return usersActionsPool.run(params);
     })
   );
+
+  const end = performance.now();
+
+  const total = results.reduce(
+    (acc, value) => {
+      acc.requests += value.results.length;
+
+      acc.duration += value.results.reduce((acc, value) => {
+        return acc + value.duration;
+      }, 0);
+
+      return acc;
+    },
+    {
+      requests: 0,
+      duration: 0,
+    }
+  );
+
+  const requestsFlat = results
+    .flatMap((v) => v.results)
+    .map((v) => v.duration)
+    .sort((a, b) => a - b);
+
+  const medianActionLatency = ms(
+    requestsFlat[Math.floor(requestsFlat.length / 2)]!,
+    {
+      long: true,
+    }
+  );
+
+  const averageActionLatency = ms(total.duration / total.requests, {
+    long: true,
+  });
+
+  const resultsTime = ms(end - start, {
+    long: true,
+  });
+
+  console.log({
+    averageActionLatency,
+    medianActionLatency,
+    resultsTime,
+    resultsAmount: total.requests,
+    actionsPerSecond: total.requests / ((end - start) / 1000),
+  });
 }

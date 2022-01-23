@@ -5,10 +5,11 @@ export const { DATABASE_URL } = requireEnv("DATABASE_URL");
 
 export const GATEWAY_URL = process.env.GATEWAY_URL || "http://localhost:8080";
 
-console.log({
-  DATABASE_URL,
-  GATEWAY_URL,
-});
+!process.env.SILENT &&
+  console.log({
+    DATABASE_URL,
+    GATEWAY_URL,
+  });
 
 export const URL_DATABASE = new URL(DATABASE_URL);
 

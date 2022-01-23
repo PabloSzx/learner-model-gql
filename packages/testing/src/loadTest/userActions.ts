@@ -1,50 +1,26 @@
 import faker from "@faker-js/faker";
 import { EZClient } from "@graphql-ez/client";
 import assert from "assert/strict";
-import { prisma } from "db";
 import { random, sample, sampleSize, uniqBy } from "lodash-es";
 import { generate } from "randomstring";
 import { gql } from "../generated";
 
-export default async function createUserActions({
-  userId,
-  verbNames,
-}: {
-  userId: number;
+export type CreateUserActionsParams = {
   verbNames: string[];
-}) {
-  const { email, uids, projects, groups } = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-    select: {
-      email: true,
-      uids: {
-        select: {
-          uid: true,
-        },
-      },
-      projects: true,
-      groups: {
-        select: {
-          projects: true,
-        },
-      },
-    },
-    rejectOnNotFound: true,
-  });
+  email: string;
+  uid: string;
+  projects: number[];
+};
 
-  await prisma.$disconnect();
+export type UserActionsResult = Awaited<ReturnType<typeof createUserActions>>;
 
-  const uid = uids[0]?.uid;
-  assert(uid, "UID not found for: " + email);
-
-  const projectsFlat = uniqBy(
-    [...projects, ...groups.flatMap((v) => v.projects)],
-    (v) => v.id
-  );
-
-  const chosenProject = sample(projectsFlat);
+export default async function createUserActions({
+  verbNames,
+  projects,
+  email,
+  uid,
+}: CreateUserActionsParams) {
+  const chosenProject = sample(projects);
 
   assert(chosenProject);
 
@@ -90,7 +66,7 @@ export default async function createUserActions({
     `),
     {
       variables: {
-        projectId: chosenProject.id.toString(),
+        projectId: chosenProject.toString(),
       },
     }
   );
