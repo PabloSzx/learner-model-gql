@@ -29,7 +29,7 @@
     "@types/randomstring": "^1.1.8",
     "api-base": "workspace:^0.0.1",
     "autocannon": "^7.6.0",
-    "bob-tsm": "^0.4.5",
+    "bob-tsm": "^0.4.6",
     "cross-port-killer": "^1.4.0",
     "db": "workspace:^0.0.1",
     "esbuild": "^0.14.13",

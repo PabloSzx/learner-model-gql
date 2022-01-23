@@ -85,6 +85,7 @@ Promise.all([
         ...process.env,
         NODE_ENV: "test",
         ADMIN_USER_EMAIL: "pablosaez1995@gmail.com",
+        CLUSTER_MODE: "1",
       },
     }
   ),
