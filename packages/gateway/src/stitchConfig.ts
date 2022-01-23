@@ -1,50 +1,55 @@
-import type { SubschemaConfig } from "@graphql-tools/delegate";
+import type {
+  MergedTypeConfig,
+  SubschemaConfig,
+} from "@graphql-tools/delegate";
 import { ServiceName, servicesNames } from "api-base";
 import type { Node } from "./ez.generated";
 
-export const ProjectMerge: NonNullable<SubschemaConfig["merge"]>[string] = {
+export type MergeConfig = MergedTypeConfig<any, any, Record<string, any>>;
+
+export const ProjectMerge: MergeConfig = {
   fieldName: "projects",
   selectionSet: "{ id }",
   key: ({ id }: Node) => id,
   argsFromKeys: (ids) => ({ ids }),
 };
 
-export const DomainMerge: NonNullable<SubschemaConfig["merge"]>[string] = {
+export const DomainMerge: MergeConfig = {
   fieldName: "domains",
   selectionSet: "{ id }",
   key: ({ id }: Node) => id,
   argsFromKeys: (ids) => ({ ids }),
 };
 
-export const TopicMerge: NonNullable<SubschemaConfig["merge"]>[string] = {
+export const TopicMerge: MergeConfig = {
   fieldName: "topics",
   selectionSet: "{ id }",
   key: ({ id }: Node) => id,
   argsFromKeys: (ids) => ({ ids }),
 };
 
-export const ContentMerge: NonNullable<SubschemaConfig["merge"]>[string] = {
+export const ContentMerge: MergeConfig = {
   fieldName: "content",
   selectionSet: "{ id }",
   key: ({ id }: Node) => id,
   argsFromKeys: (ids) => ({ ids }),
 };
 
-export const UsersMerge: NonNullable<SubschemaConfig["merge"]>[string] = {
+export const UsersMerge: MergeConfig = {
   fieldName: "users",
   selectionSet: "{ id }",
   key: ({ id }: Node) => id,
   argsFromKeys: (ids) => ({ ids }),
 };
 
-export const GroupsMerge: NonNullable<SubschemaConfig["merge"]>[string] = {
+export const GroupsMerge: MergeConfig = {
   fieldName: "groups",
   selectionSet: "{ id }",
   key: ({ id }: Node) => id,
   argsFromKeys: (ids) => ({ ids }),
 };
 
-export const KCMerge: NonNullable<SubschemaConfig["merge"]>[string] = {
+export const KCMerge: MergeConfig = {
   fieldName: "kcs",
   selectionSet: "{ id }",
   key: ({ id }: Node) => id,
