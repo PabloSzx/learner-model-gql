@@ -71,25 +71,29 @@ const usersActionsParameters = await pMap(
 await prisma.$disconnect();
 
 process.on("SIGINT", killServices);
+process.on("beforeExit", killServices);
+process.on("exit", killServices);
+
+const useMonoService = true;
 
 Promise.all([
-  execaCommand("pnpm -r start --filter=service-*", {
-    stdio: "inherit",
-    env: {
-      ...process.env,
-      NODE_ENV: "test",
-      ADMIN_USER_EMAIL: "pablosaez1995@gmail.com",
-    },
-  }),
+  execaCommand(
+    `pnpm -r start --filter=${useMonoService ? "mono" : "service-*"}`,
+    {
+      stdio: "inherit",
+      env: {
+        ...process.env,
+        NODE_ENV: "test",
+        ADMIN_USER_EMAIL: "pablosaez1995@gmail.com",
+      },
+    }
+  ),
   execaCommand("pnpm -r dev:localhost", {
     stdio: "inherit",
     env: {
       ...process.env,
       NODE_ENV: "development",
     },
-  }),
-  execaCommand("pnpm -r test:watch:generate", {
-    stdio: "inherit",
   }),
 ]).catch((err) => {
   console.error(err);
@@ -102,7 +106,7 @@ await waitOn({
   resources: ["tcp:8080"],
 });
 
-console.log("Gateway ready!");
+console.log("---Gateway ready---");
 
 const concurrentUsersN = 100;
 
