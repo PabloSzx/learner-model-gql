@@ -24,11 +24,11 @@
     "prettier": "^2.5.1",
     "react-query": "^3.34.12",
     "rq-gql": "^0.3.2",
-    "valtio": "^1.2.9"
+    "valtio": "^1.2.10"
   },
   "peerDependencies": {
     "react-query": "^3.34.12",
     "rq-gql": "^0.3.2",
-    "valtio": "^1.2.9"
+    "valtio": "^1.2.10"
   }
 }

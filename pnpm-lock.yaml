@@ -47,7 +47,7 @@ importers:
       testing: workspace:*
       typescript: ^4.5.5
       undici: ^4.12.2
-      valtio: ^1.2.9
+      valtio: ^1.2.10
       wait-on: ^6.0.0
     dependencies:
       '@graphql-ez/fastify': 0.9.5_496ea3e9fbeecdfb14347595709247f8
@@ -88,7 +88,7 @@ importers:
       rimraf: 3.0.2
       testing: link:packages/testing
       typescript: 4.5.5
-      valtio: 1.2.9_react@17.0.2
+      valtio: 1.2.10_react@17.0.2
       wait-on: 6.0.0
 
   packages/api-base:
@@ -173,7 +173,7 @@ importers:
       serialize-error: ^9.0.0
       typescript: ^4.5.5
       use-immer: ^0.6.0
-      valtio: ^1.2.9
+      valtio: ^1.2.10
       zustand: ^3.6.9
     devDependencies:
       '@auth0/auth0-react': 1.9.0_react-dom@17.0.2+react@17.0.2
@@ -209,7 +209,7 @@ importers:
       serialize-error: 9.0.0
       typescript: 4.5.5
       use-immer: 0.6.0_immer@9.0.12+react@17.0.2
-      valtio: 1.2.9_react@17.0.2
+      valtio: 1.2.10_react@17.0.2
       zustand: 3.6.9_react@17.0.2
 
   packages/common:
@@ -340,7 +340,7 @@ importers:
       prettier: ^2.5.1
       react-query: ^3.34.12
       rq-gql: ^0.3.2
-      valtio: ^1.2.9
+      valtio: ^1.2.10
     dependencies:
       common: link:../common
       graphql: 16.2.0
@@ -355,7 +355,7 @@ importers:
       prettier: 2.5.1
       react-query: 3.34.12_react@17.0.2
       rq-gql: 0.3.2_7fda237f0a2db0b1500e866d0f041a1d
-      valtio: 1.2.9_react@17.0.2
+      valtio: 1.2.10_react@17.0.2
 
   packages/mono:
     specifiers:
@@ -2372,7 +2372,7 @@ packages:
   /@graphql-codegen/typed-document-node/2.2.2_graphql@16.2.0:
     resolution: {integrity: sha512-FOqXcH8mL91Wjvh57VzayjP1WSFPNOii6P4BqJ42j88wsVV7RpO/eQoQjQX1ltAjHGSny8UZJDKA/8It5QaboQ==}
     peerDependencies:
-      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0
     dependencies:
       '@graphql-codegen/plugin-helpers': 2.3.2_graphql@16.2.0
       '@graphql-codegen/visitor-plugin-common': 2.5.2_graphql@16.2.0
@@ -2468,7 +2468,7 @@ packages:
   /@graphql-codegen/visitor-plugin-common/2.5.2_graphql@16.2.0:
     resolution: {integrity: sha512-qDMraPmumG+vEGAz42/asRkdgIRmQWH5HTc320UX+I6CY6eE/Ey85cgzoqeQGLV8gu4sj3UkNx/3/r79eX4u+Q==}
     peerDependencies:
-      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0
     dependencies:
       '@graphql-codegen/plugin-helpers': 2.3.2_graphql@16.2.0
       '@graphql-tools/optimize': 1.1.1_graphql@16.2.0
@@ -2841,7 +2841,7 @@ packages:
   /@graphql-tools/merge/8.2.1_graphql@16.2.0:
     resolution: {integrity: sha512-Q240kcUszhXiAYudjuJgNuLgy9CryDP3wp83NOZQezfA6h3ByYKU7xI6DiKrdjyVaGpYN3ppUmdj0uf5GaXzMA==}
     peerDependencies:
-      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0
+      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0
     dependencies:
       '@graphql-tools/utils': 8.6.1_graphql@16.2.0
       graphql: 16.2.0
@@ -2918,7 +2918,7 @@ packages:
   /@graphql-tools/stitch/8.4.3_graphql@16.2.0:
     resolution: {integrity: sha512-IOgKgMu/TeB0ZHOFHW147I/9LUo4NgRs7vqTqmTPVutiTR1YPYDdBWoQh+rhDBQN6gvxKq6EI/RcMGslbOMLvQ==}
     peerDependencies:
-      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0
+      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0
     dependencies:
       '@graphql-tools/batch-delegate': 8.2.3_graphql@16.2.0
       '@graphql-tools/delegate': 8.4.3_graphql@16.2.0
@@ -2985,7 +2985,7 @@ packages:
   /@graphql-typed-document-node/core/3.1.1_graphql@16.2.0:
     resolution: {integrity: sha512-NQ17ii0rK1b34VZonlmT2QMJFI70m0TRwbknO/ihlbatXyaktDhN/98vBiUU6kNBPljqGqyIrl2T4nY2RpFANg==}
     peerDependencies:
-      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^16.0.0 || ^16.0.0
     dependencies:
       graphql: 16.2.0
 
@@ -8291,7 +8291,7 @@ packages:
       commander: 8.3.0
       graphql: 16.2.0
       react-query: 3.34.12_react-dom@17.0.2+react@17.0.2
-      valtio: 1.2.9_react@17.0.2
+      valtio: 1.2.10_react@17.0.2
     transitivePeerDependencies:
       - '@babel/helper-module-imports'
       - '@babel/types'
@@ -9248,8 +9248,8 @@ packages:
     engines: {node: '>= 0.10'}
     dev: false
 
-  /valtio/1.2.9_react@17.0.2:
-    resolution: {integrity: sha512-S7FJTffcXNrgzEXGxMo9TvTtNXehrNSCoV9HjxcEVqsvHFORW+PbAhJU/HN27mUkPCDL9vX0QTgzbZF9eW5+Nw==}
+  /valtio/1.2.10_react@17.0.2:
+    resolution: {integrity: sha512-jIVaa6udqFoexUOeOS9Lr2GAvm+bW70eTgbg449mZ+Ya7v6LJc1ccZ3qYSXa/ruppUtbvU0CdPsv2BlQk0Q/xQ==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
       '@babel/helper-module-imports': '>=7.12'
