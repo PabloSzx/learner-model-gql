@@ -98,7 +98,7 @@ export default async function createUserActions({
             timestamp: Date.now(),
             verbName: sample(verbNames)!,
             amount: probability(33) ? random(0, 100) : null,
-            contentID: probability(200) ? sample(content)?.id : null,
+            contentID: probability(20) ? sample(content)?.id : null,
             kcsIDs: sampleSize(kcs, random(0, 3)).map((v) => v.id),
             topicID: probability(20) ? sample(topics)?.id : null,
             detail: probability(50)
@@ -138,5 +138,6 @@ export default async function createUserActions({
 }
 
 function probability(n: number) {
+  assert(n < 100, "Invalid N");
   return random(0, 100) < n;
 }
