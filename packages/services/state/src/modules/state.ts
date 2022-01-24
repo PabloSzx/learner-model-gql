@@ -14,7 +14,7 @@ export const stateModule = registerModule(
       """
       Order the model states ascendingly or descendingly
 
-      Following the cursor pagination's nature, ordering by "id" tends to follow the state creation date, but it can't be guaranteed
+      Following the cursor pagination's nature, ordering by "id" which should follow the state creation date
 
       By default the states are ordered descendingly, showing the newer states first
       """
@@ -26,14 +26,14 @@ export const stateModule = registerModule(
       """
       Filter by the specified types
 
-      If state's type matches any of the specified types, the state is included
+      If the state's type matches any of the specified types, the state is included
       """
       type: [String!]
 
       """
       Filter by the specified creators
 
-      If states's creator matches any of the specified creators, the state is included
+      If the states's creator matches any of the specified creators, the state is included
       """
       creators: [String!]
     }

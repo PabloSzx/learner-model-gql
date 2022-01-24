@@ -253,7 +253,7 @@ export type AdminActionsOrderBy = {
   /**
    * Order the actions ascendingly or descendingly
    *
-   * Following the cursor pagination's nature, ordering by "id" tends to follow the action creation date, but it can't be guaranteed
+   * Following the cursor pagination's nature, ordering by "id" tends to follow the action creation date
    *
    * By default the actions are ordered descendingly, showing the newer actions first
    */
@@ -1036,7 +1036,7 @@ export type ModelStateOrderBy = {
   /**
    * Order the model states ascendingly or descendingly
    *
-   * Following the cursor pagination's nature, ordering by "id" tends to follow the state creation date, but it can't be guaranteed
+   * Following the cursor pagination's nature, ordering by "id" which should follow the state creation date
    *
    * By default the states are ordered descendingly, showing the newer states first
    */
