@@ -32,6 +32,8 @@ export default async function createUserActions({
     },
   });
 
+  const userInfoStart = performance.now();
+
   const { currentUser, project } = await assertedQuery(
     gql(/* GraphQL */ `
       query LoadTestCurrentUser($projectId: IntID!) {
@@ -70,6 +72,8 @@ export default async function createUserActions({
       },
     }
   );
+
+  const userInfoEnd = performance.now();
 
   assert(currentUser);
   assert(project);
@@ -134,6 +138,7 @@ export default async function createUserActions({
   return {
     results,
     duration,
+    userInfoDuration: userInfoEnd - userInfoStart,
   };
 }
 

@@ -151,13 +151,22 @@ while (true) {
     }
   );
 
-  const requestsFlat = results
+  const averageUserInfoLatency =
+    results.reduce((acc, value) => {
+      return acc + value.userInfoDuration;
+    }, 0) / results.length;
+
+  const medianUserInfoLatency = results
+    .map((v) => v.userInfoDuration)
+    .sort((a, b) => a - b)[Math.floor(results.length / 2)]!;
+
+  const actionsRequestsFlat = results
     .flatMap((v) => v.results)
     .map((v) => v.duration)
     .sort((a, b) => a - b);
 
   const medianActionLatency = ms(
-    requestsFlat[Math.floor(requestsFlat.length / 2)]!,
+    actionsRequestsFlat[Math.floor(actionsRequestsFlat.length / 2)]!,
     {
       long: true,
     }
@@ -177,5 +186,11 @@ while (true) {
     resultsTime,
     resultsAmount: total.requests,
     actionsPerSecond: total.requests / ((end - start) / 1000),
+    averageUserInfoLatency: ms(averageUserInfoLatency, {
+      long: true,
+    }),
+    medianUserInfoLatency: ms(medianUserInfoLatency, {
+      long: true,
+    }),
   });
 }
