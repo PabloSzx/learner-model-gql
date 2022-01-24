@@ -38,11 +38,11 @@
     "react-select": "^5.2.2",
     "react-table": "^7.7.0",
     "react-use": "^17.3.2",
-    "rq-gql": "^0.3.2",
+    "rq-gql": "^0.4.3",
     "serialize-error": "^9.0.0",
     "typescript": "^4.5.5",
     "use-immer": "^0.6.0",
-    "valtio": "^1.2.9",
+    "valtio": "1.2.9",
     "zustand": "^3.6.9"
   }
 }
