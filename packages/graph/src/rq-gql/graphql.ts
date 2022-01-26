@@ -248,6 +248,12 @@ export type AdminActionsOrderBy = {
 /** Filter all content of admin query */
 export type AdminContentFilter = {
   /**
+   * Filter by the specified KCs
+   *
+   * If any of the content's KCs matches any of the specified KCs, the content is included
+   */
+  kcs?: InputMaybe<Array<Scalars["IntID"]>>;
+  /**
    * Filter by the specified projects
    *
    * If the content's project matches any of the specified projects, the content is included
@@ -1005,13 +1011,13 @@ export type ModelStateFilter = {
   /**
    * Filter by the specified creators
    *
-   * If states's creator matches any of the specified creators, the state is included
+   * If the states's creator matches any of the specified creators, the state is included
    */
   creators?: InputMaybe<Array<Scalars["String"]>>;
   /**
    * Filter by the specified types
    *
-   * If state's type matches any of the specified types, the state is included
+   * If the state's type matches any of the specified types, the state is included
    */
   type?: InputMaybe<Array<Scalars["String"]>>;
 };

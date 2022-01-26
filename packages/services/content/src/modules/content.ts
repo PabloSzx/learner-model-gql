@@ -193,6 +193,13 @@ export const contentModule = registerModule(
       projects: [IntID!]
 
       """
+      Filter by the specified KCs
+
+      If any of the content's KCs matches any of the specified KCs, the content is included
+      """
+      kcs: [IntID!]
+
+      """
       Filter by text search inside "code", "label" or "tags"
       """
       textSearch: String
@@ -400,6 +407,16 @@ export const contentModule = registerModule(
                             },
                           },
                         ]
+                      : undefined,
+
+                    kcs: filters?.kcs
+                      ? {
+                          some: {
+                            id: {
+                              in: filters.kcs,
+                            },
+                          },
+                        }
                       : undefined,
                   }
                 : undefined,

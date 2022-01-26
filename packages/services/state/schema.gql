@@ -169,13 +169,13 @@ input ModelStateFilter {
   """
   Filter by the specified creators
 
-  If states's creator matches any of the specified creators, the state is included
+  If the states's creator matches any of the specified creators, the state is included
   """
   creators: [String!]
   """
   Filter by the specified types
 
-  If state's type matches any of the specified types, the state is included
+  If the state's type matches any of the specified types, the state is included
   """
   type: [String!]
 }
