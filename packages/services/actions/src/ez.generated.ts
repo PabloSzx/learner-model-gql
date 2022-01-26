@@ -309,13 +309,6 @@ export type CursorConnectionArgs = {
   last?: InputMaybe<Scalars["NonNegativeInt"]>;
 };
 
-/** Domain entity */
-export type Domain = {
-  __typename?: "Domain";
-  /** Unique numeric identifier */
-  id: Scalars["IntID"];
-};
-
 export type Kc = {
   __typename?: "KC";
   /** Unique numeric identifier */
@@ -581,7 +574,6 @@ export type ResolversTypes = {
   Content: ResolverTypeWrapper<Content>;
   CursorConnectionArgs: CursorConnectionArgs;
   DateTime: ResolverTypeWrapper<Scalars["DateTime"]>;
-  Domain: ResolverTypeWrapper<Domain>;
   EmailAddress: ResolverTypeWrapper<Scalars["EmailAddress"]>;
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
   JSON: ResolverTypeWrapper<Scalars["JSON"]>;
@@ -623,7 +615,6 @@ export type ResolversParentTypes = {
   Content: Content;
   CursorConnectionArgs: CursorConnectionArgs;
   DateTime: Scalars["DateTime"];
-  Domain: Domain;
   EmailAddress: Scalars["EmailAddress"];
   IntID: Scalars["IntID"];
   JSON: Scalars["JSON"];
@@ -744,14 +735,6 @@ export interface DateTimeScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["DateTime"], any> {
   name: "DateTime";
 }
-
-export type DomainResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Domain"] = ResolversParentTypes["Domain"]
-> = {
-  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
 
 export interface EmailAddressScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["EmailAddress"], any> {
@@ -914,7 +897,6 @@ export type Resolvers<ContextType = EZContext> = {
   Connection?: ConnectionResolvers<ContextType>;
   Content?: ContentResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
-  Domain?: DomainResolvers<ContextType>;
   EmailAddress?: GraphQLScalarType;
   IntID?: GraphQLScalarType;
   JSON?: GraphQLScalarType;
