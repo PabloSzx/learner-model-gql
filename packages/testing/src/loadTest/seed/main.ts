@@ -309,7 +309,7 @@ export const topicsGrupedByProjectWithParent = await pMap(
     );
 
     return {
-      projectId: topics[0].projectId,
+      projectId: topics[0]!.projectId,
       topics: await prisma.topic.findMany({
         where: {
           id: {

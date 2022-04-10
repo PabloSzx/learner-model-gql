@@ -11,24 +11,24 @@
   },
   "dependencies": {
     "common": "workspace:^0.0.1",
-    "graphql": "^16.2.0"
+    "graphql": "^16.3.0"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^2.4.0",
-    "@graphql-codegen/core": "^2.4.0",
-    "@graphql-codegen/typed-document-node": "^2.2.2",
-    "@graphql-codegen/typescript": "^2.4.2",
-    "@graphql-codegen/typescript-document-nodes": "2.2.2",
-    "@graphql-codegen/typescript-operations": "^2.2.2",
-    "@graphql-codegen/typescript-react-query": "^3.3.1",
-    "prettier": "^2.5.1",
-    "react-query": "^3.34.12",
-    "rq-gql": "^0.4.3",
-    "valtio": "1.2.9"
+    "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/core": "^2.5.1",
+    "@graphql-codegen/typed-document-node": "^2.2.8",
+    "@graphql-codegen/typescript": "^2.4.8",
+    "@graphql-codegen/typescript-document-nodes": "2.2.8",
+    "@graphql-codegen/typescript-operations": "^2.3.5",
+    "@graphql-codegen/typescript-react-query": "^3.5.9",
+    "prettier": "^2.6.2",
+    "react-query": "^3.34.19",
+    "rq-gql": "^0.5.0",
+    "valtio": "1.5.2"
   },
   "peerDependencies": {
     "react-query": "^3.34.12",
-    "rq-gql": "^0.4.3",
+    "rq-gql": "^0.5.0",
     "valtio": "1.2.9"
   }
 }

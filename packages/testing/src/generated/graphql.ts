@@ -1664,7 +1664,7 @@ export type CreateActionMutationVariables = Exact<{
 
 export type CreateActionMutation = {
   __typename?: "Mutation";
-  action?: void | undefined | null | null | undefined;
+  action?: void | undefined | null | null;
 };
 
 export type AllActionsQueryVariables = Exact<{
@@ -1679,9 +1679,9 @@ export type AllActionsQuery = {
       __typename?: "ActionsConnection";
       nodes: Array<{
         __typename?: "Action";
-        result?: number | null | undefined;
+        result?: number | null;
         verb: { __typename?: "ActionVerb"; name: string };
-        user?: { __typename?: "User"; id: string } | null | undefined;
+        user?: { __typename?: "User"; id: string } | null;
       }>;
       pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean };
     };
@@ -1725,8 +1725,8 @@ export type AllContentQuery = {
         __typename?: "Content";
         id: string;
         description: string;
-        binaryBase64?: string | null | undefined;
-        json?: Record<string, unknown> | null | undefined;
+        binaryBase64?: string | null;
+        json?: Record<string, unknown> | null;
       }>;
       pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean };
     };
@@ -1745,8 +1745,8 @@ export type CreateContentMutation = {
       __typename?: "Content";
       id: string;
       description: string;
-      binaryBase64?: string | null | undefined;
-      json?: Record<string, unknown> | null | undefined;
+      binaryBase64?: string | null;
+      json?: Record<string, unknown> | null;
       code: string;
       label: string;
     };
@@ -1766,8 +1766,8 @@ export type ContentFromTopicQuery = {
       __typename?: "Content";
       id: string;
       description: string;
-      binaryBase64?: string | null | undefined;
-      json?: Record<string, unknown> | null | undefined;
+      binaryBase64?: string | null;
+      json?: Record<string, unknown> | null;
     }>;
   }>;
 };
@@ -1784,7 +1784,7 @@ export type IsolatedTopicFieldsFragment = {
   id: string;
   code: string;
   label: string;
-  parent?: { __typename?: "Topic"; id: string } | null | undefined;
+  parent?: { __typename?: "Topic"; id: string } | null;
   childrens: Array<{ __typename?: "Topic"; id: string }>;
 };
 
@@ -1856,7 +1856,7 @@ export type CreateTopicMutation = {
       id: string;
       code: string;
       label: string;
-      parent?: { __typename?: "Topic"; id: string } | null | undefined;
+      parent?: { __typename?: "Topic"; id: string } | null;
       childrens: Array<{ __typename?: "Topic"; id: string }>;
     };
   };
@@ -1877,7 +1877,7 @@ export type AllTopicsQuery = {
         id: string;
         code: string;
         label: string;
-        parent?: { __typename?: "Topic"; id: string } | null | undefined;
+        parent?: { __typename?: "Topic"; id: string } | null;
         childrens: Array<{ __typename?: "Topic"; id: string }>;
       }>;
       pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean };
@@ -1898,7 +1898,7 @@ export type UpdateTopicMutation = {
       id: string;
       code: string;
       label: string;
-      parent?: { __typename?: "Topic"; id: string } | null | undefined;
+      parent?: { __typename?: "Topic"; id: string } | null;
       childrens: Array<{ __typename?: "Topic"; id: string }>;
     };
   };
@@ -2126,7 +2126,7 @@ export type AllStatesTestQuery = {
         id: string;
         json: unknown;
         creator: string;
-        type?: string | null | undefined;
+        type?: string | null;
         user: { __typename?: "User"; id: string };
         domain: { __typename?: "Domain"; id: string };
       }>;
@@ -2138,10 +2138,10 @@ export type UserInfoFragment = {
   __typename?: "User";
   id: string;
   email: string;
-  name?: string | null | undefined;
+  name?: string | null;
   locked: boolean;
   active: boolean;
-  lastOnline?: string | null | undefined;
+  lastOnline?: string | null;
   role: UserRole;
   createdAt: string;
   updatedAt: string;
@@ -2180,10 +2180,10 @@ export type UsersByIdQuery = {
     __typename?: "User";
     id: string;
     email: string;
-    name?: string | null | undefined;
+    name?: string | null;
     locked: boolean;
     active: boolean;
-    lastOnline?: string | null | undefined;
+    lastOnline?: string | null;
     role: UserRole;
     createdAt: string;
     updatedAt: string;
@@ -2204,10 +2204,10 @@ export type AdminAllUsersQuery = {
         __typename?: "User";
         id: string;
         email: string;
-        name?: string | null | undefined;
+        name?: string | null;
         locked: boolean;
         active: boolean;
-        lastOnline?: string | null | undefined;
+        lastOnline?: string | null;
         role: UserRole;
         createdAt: string;
         updatedAt: string;
@@ -2230,10 +2230,10 @@ export type UpsertUsersWithProjectsMutation = {
       __typename?: "User";
       id: string;
       email: string;
-      name?: string | null | undefined;
+      name?: string | null;
       locked: boolean;
       active: boolean;
-      lastOnline?: string | null | undefined;
+      lastOnline?: string | null;
       role: UserRole;
       createdAt: string;
       updatedAt: string;
@@ -2245,21 +2245,18 @@ export type CurrentUserQueryVariables = Exact<{ [key: string]: never }>;
 
 export type CurrentUserQuery = {
   __typename?: "Query";
-  currentUser?:
-    | {
-        __typename?: "User";
-        id: string;
-        email: string;
-        name?: string | null | undefined;
-        locked: boolean;
-        active: boolean;
-        lastOnline?: string | null | undefined;
-        role: UserRole;
-        createdAt: string;
-        updatedAt: string;
-      }
-    | null
-    | undefined;
+  currentUser?: {
+    __typename?: "User";
+    id: string;
+    email: string;
+    name?: string | null;
+    locked: boolean;
+    active: boolean;
+    lastOnline?: string | null;
+    role: UserRole;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
 };
 
 export type AdminAllGroupsQueryVariables = Exact<{
@@ -2404,41 +2401,35 @@ export type LoadTestCurrentUserQueryVariables = Exact<{
 
 export type LoadTestCurrentUserQuery = {
   __typename?: "Query";
-  currentUser?:
-    | { __typename?: "User"; id: string; email: string }
-    | null
-    | undefined;
-  project?:
-    | {
-        __typename?: "Project";
+  currentUser?: { __typename?: "User"; id: string; email: string } | null;
+  project?: {
+    __typename?: "Project";
+    id: string;
+    code: string;
+    label: string;
+    topics: Array<{
+      __typename?: "Topic";
+      id: string;
+      code: string;
+      label: string;
+    }>;
+    content: {
+      __typename?: "ContentConnection";
+      nodes: Array<{
+        __typename?: "Content";
         id: string;
         code: string;
         label: string;
-        topics: Array<{
-          __typename?: "Topic";
+        tags: Array<string>;
+        kcs: Array<{
+          __typename?: "KC";
           id: string;
           code: string;
           label: string;
         }>;
-        content: {
-          __typename?: "ContentConnection";
-          nodes: Array<{
-            __typename?: "Content";
-            id: string;
-            code: string;
-            label: string;
-            tags: Array<string>;
-            kcs: Array<{
-              __typename?: "KC";
-              id: string;
-              code: string;
-              label: string;
-            }>;
-          }>;
-        };
-      }
-    | null
-    | undefined;
+      }>;
+    };
+  } | null;
 };
 
 export type LoadTestActionMutationVariables = Exact<{
@@ -2447,7 +2438,7 @@ export type LoadTestActionMutationVariables = Exact<{
 
 export type LoadTestActionMutation = {
   __typename?: "Mutation";
-  action?: void | undefined | null | null | undefined;
+  action?: void | undefined | null | null;
 };
 
 export const IsolatedDomainFieldsFragmentDoc = {
