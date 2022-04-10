@@ -1,7 +1,13 @@
 import { useToast } from "@chakra-ui/react";
 import { API_URL } from "common";
 import { memo, useEffect } from "react";
-import { QueryClient } from "react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+} from "react-query";
 import { RQGQLClient } from "rq-gql";
 import { serializeError } from "serialize-error";
 import { proxy, useSnapshot } from "valtio";
@@ -34,6 +40,11 @@ export const queryClient = new QueryClient({
 
 export const rqGQLClient = new RQGQLClient({
   endpoint: API_URL,
+  QueryClientProvider,
+  useQuery,
+  useMutation,
+  useInfiniteQuery,
+  proxy,
 });
 
 const errorState = proxy({

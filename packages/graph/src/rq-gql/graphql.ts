@@ -1658,17 +1658,14 @@ export type CurrentUserQueryVariables = Exact<{ [key: string]: never }>;
 
 export type CurrentUserQuery = {
   __typename?: "Query";
-  currentUser?:
-    | {
-        __typename?: "User";
-        id: string;
-        email: string;
-        name?: string | null | undefined;
-        role: UserRole;
-        picture?: string | null | undefined;
-      }
-    | null
-    | undefined;
+  currentUser?: {
+    __typename?: "User";
+    id: string;
+    email: string;
+    name?: string | null;
+    role: UserRole;
+    picture?: string | null;
+  } | null;
 };
 
 export type AllVerbNamesQueryVariables = Exact<{
@@ -1686,8 +1683,8 @@ export type AllVerbNamesQuery = {
         __typename?: "PageInfo";
         hasNextPage: boolean;
         hasPreviousPage: boolean;
-        startCursor?: string | null | undefined;
-        endCursor?: string | null | undefined;
+        startCursor?: string | null;
+        endCursor?: string | null;
       };
     };
   };
@@ -1715,8 +1712,8 @@ export type AllContentBaseQuery = {
         __typename?: "PageInfo";
         hasNextPage: boolean;
         hasPreviousPage: boolean;
-        startCursor?: string | null | undefined;
-        endCursor?: string | null | undefined;
+        startCursor?: string | null;
+        endCursor?: string | null;
       };
     };
   };
@@ -1743,8 +1740,8 @@ export type AllDomainsBaseQuery = {
         __typename?: "PageInfo";
         hasNextPage: boolean;
         hasPreviousPage: boolean;
-        startCursor?: string | null | undefined;
-        endCursor?: string | null | undefined;
+        startCursor?: string | null;
+        endCursor?: string | null;
       };
     };
   };
@@ -1770,8 +1767,8 @@ export type AllGroupsBaseQuery = {
         __typename?: "PageInfo";
         hasNextPage: boolean;
         hasPreviousPage: boolean;
-        startCursor?: string | null | undefined;
-        endCursor?: string | null | undefined;
+        startCursor?: string | null;
+        endCursor?: string | null;
       };
     };
   };
@@ -1798,8 +1795,8 @@ export type AllKCsBaseQuery = {
         __typename?: "PageInfo";
         hasNextPage: boolean;
         hasPreviousPage: boolean;
-        startCursor?: string | null | undefined;
-        endCursor?: string | null | undefined;
+        startCursor?: string | null;
+        endCursor?: string | null;
       };
     };
   };
@@ -1811,8 +1808,8 @@ type Pagination_ActionsConnection_Fragment = {
     __typename?: "PageInfo";
     hasNextPage: boolean;
     hasPreviousPage: boolean;
-    startCursor?: string | null | undefined;
-    endCursor?: string | null | undefined;
+    startCursor?: string | null;
+    endCursor?: string | null;
   };
 };
 
@@ -1822,8 +1819,8 @@ type Pagination_ActionsVerbsConnection_Fragment = {
     __typename?: "PageInfo";
     hasNextPage: boolean;
     hasPreviousPage: boolean;
-    startCursor?: string | null | undefined;
-    endCursor?: string | null | undefined;
+    startCursor?: string | null;
+    endCursor?: string | null;
   };
 };
 
@@ -1833,8 +1830,8 @@ type Pagination_ContentConnection_Fragment = {
     __typename?: "PageInfo";
     hasNextPage: boolean;
     hasPreviousPage: boolean;
-    startCursor?: string | null | undefined;
-    endCursor?: string | null | undefined;
+    startCursor?: string | null;
+    endCursor?: string | null;
   };
 };
 
@@ -1844,8 +1841,8 @@ type Pagination_DomainsConnection_Fragment = {
     __typename?: "PageInfo";
     hasNextPage: boolean;
     hasPreviousPage: boolean;
-    startCursor?: string | null | undefined;
-    endCursor?: string | null | undefined;
+    startCursor?: string | null;
+    endCursor?: string | null;
   };
 };
 
@@ -1855,8 +1852,8 @@ type Pagination_GroupsConnection_Fragment = {
     __typename?: "PageInfo";
     hasNextPage: boolean;
     hasPreviousPage: boolean;
-    startCursor?: string | null | undefined;
-    endCursor?: string | null | undefined;
+    startCursor?: string | null;
+    endCursor?: string | null;
   };
 };
 
@@ -1866,8 +1863,8 @@ type Pagination_KCsConnection_Fragment = {
     __typename?: "PageInfo";
     hasNextPage: boolean;
     hasPreviousPage: boolean;
-    startCursor?: string | null | undefined;
-    endCursor?: string | null | undefined;
+    startCursor?: string | null;
+    endCursor?: string | null;
   };
 };
 
@@ -1877,8 +1874,8 @@ type Pagination_ModelStateConnection_Fragment = {
     __typename?: "PageInfo";
     hasNextPage: boolean;
     hasPreviousPage: boolean;
-    startCursor?: string | null | undefined;
-    endCursor?: string | null | undefined;
+    startCursor?: string | null;
+    endCursor?: string | null;
   };
 };
 
@@ -1888,8 +1885,8 @@ type Pagination_ModelStateCreatorConnection_Fragment = {
     __typename?: "PageInfo";
     hasNextPage: boolean;
     hasPreviousPage: boolean;
-    startCursor?: string | null | undefined;
-    endCursor?: string | null | undefined;
+    startCursor?: string | null;
+    endCursor?: string | null;
   };
 };
 
@@ -1899,8 +1896,8 @@ type Pagination_ModelStateTypeConnection_Fragment = {
     __typename?: "PageInfo";
     hasNextPage: boolean;
     hasPreviousPage: boolean;
-    startCursor?: string | null | undefined;
-    endCursor?: string | null | undefined;
+    startCursor?: string | null;
+    endCursor?: string | null;
   };
 };
 
@@ -1910,8 +1907,8 @@ type Pagination_ProjectsConnection_Fragment = {
     __typename?: "PageInfo";
     hasNextPage: boolean;
     hasPreviousPage: boolean;
-    startCursor?: string | null | undefined;
-    endCursor?: string | null | undefined;
+    startCursor?: string | null;
+    endCursor?: string | null;
   };
 };
 
@@ -1921,8 +1918,8 @@ type Pagination_TopicsConnection_Fragment = {
     __typename?: "PageInfo";
     hasNextPage: boolean;
     hasPreviousPage: boolean;
-    startCursor?: string | null | undefined;
-    endCursor?: string | null | undefined;
+    startCursor?: string | null;
+    endCursor?: string | null;
   };
 };
 
@@ -1932,8 +1929,8 @@ type Pagination_UsersConnection_Fragment = {
     __typename?: "PageInfo";
     hasNextPage: boolean;
     hasPreviousPage: boolean;
-    startCursor?: string | null | undefined;
-    endCursor?: string | null | undefined;
+    startCursor?: string | null;
+    endCursor?: string | null;
   };
 };
 
@@ -1971,8 +1968,8 @@ export type AllProjectsBaseQuery = {
         __typename?: "PageInfo";
         hasNextPage: boolean;
         hasPreviousPage: boolean;
-        startCursor?: string | null | undefined;
-        endCursor?: string | null | undefined;
+        startCursor?: string | null;
+        endCursor?: string | null;
       };
     };
   };
@@ -1994,14 +1991,16 @@ export type AllTopicsBaseQuery = {
         id: string;
         code: string;
         label: string;
-        sortIndex?: number | null | undefined;
+        sortIndex?: number | null;
         tags: Array<string>;
         updatedAt: string;
         createdAt: string;
-        parent?:
-          | { __typename?: "Topic"; id: string; code: string; label: string }
-          | null
-          | undefined;
+        parent?: {
+          __typename?: "Topic";
+          id: string;
+          code: string;
+          label: string;
+        } | null;
         project: {
           __typename?: "Project";
           id: string;
@@ -2020,8 +2019,8 @@ export type AllTopicsBaseQuery = {
         __typename?: "PageInfo";
         hasNextPage: boolean;
         hasPreviousPage: boolean;
-        startCursor?: string | null | undefined;
-        endCursor?: string | null | undefined;
+        startCursor?: string | null;
+        endCursor?: string | null;
       };
     };
   };
@@ -2041,15 +2040,15 @@ export type AllUsersBaseQuery = {
       nodes: Array<{
         __typename?: "User";
         id: string;
-        name?: string | null | undefined;
+        name?: string | null;
         email: string;
       }>;
       pageInfo: {
         __typename?: "PageInfo";
         hasNextPage: boolean;
         hasPreviousPage: boolean;
-        startCursor?: string | null | undefined;
-        endCursor?: string | null | undefined;
+        startCursor?: string | null;
+        endCursor?: string | null;
       };
     };
   };
@@ -2059,37 +2058,33 @@ export type ActionsInfoFragment = {
   __typename?: "Action";
   id: string;
   timestamp: number;
-  result?: number | null | undefined;
-  stepID?: string | null | undefined;
-  hintID?: string | null | undefined;
-  amount?: number | null | undefined;
-  detail?: string | null | undefined;
-  extra?: Record<string, unknown> | null | undefined;
+  result?: number | null;
+  stepID?: string | null;
+  hintID?: string | null;
+  amount?: number | null;
+  detail?: string | null;
+  extra?: Record<string, unknown> | null;
   createdAt: string;
   verb: { __typename?: "ActionVerb"; name: string };
-  user?:
-    | {
-        __typename?: "User";
-        id: string;
-        name?: string | null | undefined;
-        email: string;
-      }
-    | null
-    | undefined;
-  content?:
-    | {
-        __typename?: "Content";
-        id: string;
-        code: string;
-        label: string;
-        tags: Array<string>;
-      }
-    | null
-    | undefined;
-  topic?:
-    | { __typename?: "Topic"; id: string; code: string; label: string }
-    | null
-    | undefined;
+  user?: {
+    __typename?: "User";
+    id: string;
+    name?: string | null;
+    email: string;
+  } | null;
+  content?: {
+    __typename?: "Content";
+    id: string;
+    code: string;
+    label: string;
+    tags: Array<string>;
+  } | null;
+  topic?: {
+    __typename?: "Topic";
+    id: string;
+    code: string;
+    label: string;
+  } | null;
   kcs: Array<{ __typename?: "KC"; id: string; code: string; label: string }>;
 };
 
@@ -2108,37 +2103,33 @@ export type AllActionsQuery = {
         __typename?: "Action";
         id: string;
         timestamp: number;
-        result?: number | null | undefined;
-        stepID?: string | null | undefined;
-        hintID?: string | null | undefined;
-        amount?: number | null | undefined;
-        detail?: string | null | undefined;
-        extra?: Record<string, unknown> | null | undefined;
+        result?: number | null;
+        stepID?: string | null;
+        hintID?: string | null;
+        amount?: number | null;
+        detail?: string | null;
+        extra?: Record<string, unknown> | null;
         createdAt: string;
         verb: { __typename?: "ActionVerb"; name: string };
-        user?:
-          | {
-              __typename?: "User";
-              id: string;
-              name?: string | null | undefined;
-              email: string;
-            }
-          | null
-          | undefined;
-        content?:
-          | {
-              __typename?: "Content";
-              id: string;
-              code: string;
-              label: string;
-              tags: Array<string>;
-            }
-          | null
-          | undefined;
-        topic?:
-          | { __typename?: "Topic"; id: string; code: string; label: string }
-          | null
-          | undefined;
+        user?: {
+          __typename?: "User";
+          id: string;
+          name?: string | null;
+          email: string;
+        } | null;
+        content?: {
+          __typename?: "Content";
+          id: string;
+          code: string;
+          label: string;
+          tags: Array<string>;
+        } | null;
+        topic?: {
+          __typename?: "Topic";
+          id: string;
+          code: string;
+          label: string;
+        } | null;
         kcs: Array<{
           __typename?: "KC";
           id: string;
@@ -2150,8 +2141,8 @@ export type AllActionsQuery = {
         __typename?: "PageInfo";
         hasNextPage: boolean;
         hasPreviousPage: boolean;
-        startCursor?: string | null | undefined;
-        endCursor?: string | null | undefined;
+        startCursor?: string | null;
+        endCursor?: string | null;
       };
     };
   };
@@ -2164,10 +2155,10 @@ export type ContentInfoFragment = {
   label: string;
   description: string;
   tags: Array<string>;
-  binaryBase64?: string | null | undefined;
-  binaryFilename?: string | null | undefined;
-  json?: Record<string, unknown> | null | undefined;
-  url?: string | null | undefined;
+  binaryBase64?: string | null;
+  binaryFilename?: string | null;
+  json?: Record<string, unknown> | null;
+  url?: string | null;
   updatedAt: string;
   createdAt: string;
   project: { __typename?: "Project"; id: string; code: string; label: string };
@@ -2222,10 +2213,10 @@ export type AllContentQuery = {
         label: string;
         description: string;
         tags: Array<string>;
-        binaryBase64?: string | null | undefined;
-        binaryFilename?: string | null | undefined;
-        json?: Record<string, unknown> | null | undefined;
-        url?: string | null | undefined;
+        binaryBase64?: string | null;
+        binaryFilename?: string | null;
+        json?: Record<string, unknown> | null;
+        url?: string | null;
         updatedAt: string;
         createdAt: string;
         project: {
@@ -2246,8 +2237,8 @@ export type AllContentQuery = {
         __typename?: "PageInfo";
         hasNextPage: boolean;
         hasPreviousPage: boolean;
-        startCursor?: string | null | undefined;
-        endCursor?: string | null | undefined;
+        startCursor?: string | null;
+        endCursor?: string | null;
       };
     };
   };
@@ -2302,8 +2293,8 @@ export type AllDomainsQuery = {
         __typename?: "PageInfo";
         hasNextPage: boolean;
         hasPreviousPage: boolean;
-        startCursor?: string | null | undefined;
-        endCursor?: string | null | undefined;
+        startCursor?: string | null;
+        endCursor?: string | null;
       };
     };
   };
@@ -2345,10 +2336,10 @@ export type GroupInfoFragment = {
     __typename?: "User";
     id: string;
     email: string;
-    name?: string | null | undefined;
+    name?: string | null;
     role: UserRole;
     active: boolean;
-    lastOnline?: string | null | undefined;
+    lastOnline?: string | null;
   }>;
 };
 
@@ -2386,18 +2377,18 @@ export type AllGroupsQuery = {
           __typename?: "User";
           id: string;
           email: string;
-          name?: string | null | undefined;
+          name?: string | null;
           role: UserRole;
           active: boolean;
-          lastOnline?: string | null | undefined;
+          lastOnline?: string | null;
         }>;
       }>;
       pageInfo: {
         __typename?: "PageInfo";
         hasNextPage: boolean;
         hasPreviousPage: boolean;
-        startCursor?: string | null | undefined;
-        endCursor?: string | null | undefined;
+        startCursor?: string | null;
+        endCursor?: string | null;
       };
     };
   };
@@ -2496,8 +2487,8 @@ export type AllKCsQuery = {
         __typename?: "PageInfo";
         hasNextPage: boolean;
         hasPreviousPage: boolean;
-        startCursor?: string | null | undefined;
-        endCursor?: string | null | undefined;
+        startCursor?: string | null;
+        endCursor?: string | null;
       };
     };
   };
@@ -2558,8 +2549,8 @@ export type AllProjectsQuery = {
         __typename?: "PageInfo";
         hasNextPage: boolean;
         hasPreviousPage: boolean;
-        startCursor?: string | null | undefined;
-        endCursor?: string | null | undefined;
+        startCursor?: string | null;
+        endCursor?: string | null;
       };
     };
   };
@@ -2632,9 +2623,9 @@ export type UserInfoFragment = {
   __typename: "User";
   id: string;
   email: string;
-  name?: string | null | undefined;
+  name?: string | null;
   active: boolean;
-  lastOnline?: string | null | undefined;
+  lastOnline?: string | null;
   createdAt: string;
   role: UserRole;
   updatedAt: string;
@@ -2663,9 +2654,9 @@ export type AdminUsersQuery = {
         __typename: "User";
         id: string;
         email: string;
-        name?: string | null | undefined;
+        name?: string | null;
         active: boolean;
-        lastOnline?: string | null | undefined;
+        lastOnline?: string | null;
         createdAt: string;
         role: UserRole;
         updatedAt: string;
@@ -2682,8 +2673,8 @@ export type AdminUsersQuery = {
         __typename?: "PageInfo";
         hasNextPage: boolean;
         hasPreviousPage: boolean;
-        startCursor?: string | null | undefined;
-        endCursor?: string | null | undefined;
+        startCursor?: string | null;
+        endCursor?: string | null;
       };
     };
   };
@@ -2702,9 +2693,9 @@ export type UpsertUsersWithProjectsMutation = {
       __typename: "User";
       id: string;
       email: string;
-      name?: string | null | undefined;
+      name?: string | null;
       active: boolean;
-      lastOnline?: string | null | undefined;
+      lastOnline?: string | null;
       createdAt: string;
       role: UserRole;
       updatedAt: string;
