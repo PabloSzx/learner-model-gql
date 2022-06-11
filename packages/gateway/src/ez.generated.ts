@@ -1326,6 +1326,7 @@ export type Query = {
    * If any of the specified identifiers is not found or forbidden, query fails
    */
   domains: Array<Domain>;
+  foo: Scalars["String"];
   /**
    * Get all the groups associated with the specified identifiers
    *
@@ -2758,6 +2759,7 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryDomainsArgs, "ids">
   >;
+  foo?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   groups?: Resolver<
     Array<ResolversTypes["Group"]>,
     ParentType,

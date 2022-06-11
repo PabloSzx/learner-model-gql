@@ -5,6 +5,7 @@ export const baseServicesList = {
   domain: 3005,
   projects: 3006,
   state: 3007,
+  exampleservice: 3008,
 } as const;
 
 export const servicesNames = Object.keys(baseServicesList) as ServiceName[];

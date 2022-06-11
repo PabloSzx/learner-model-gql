@@ -26,7 +26,7 @@ export const getGatewayPlugin = async () => {
 
   await waitOn({
     resources: servicesConfig.map(({ port, href }) => href || `tcp:${port}`),
-    timeout: ms("30 seconds"),
+    timeout: ms("60 seconds"),
   });
 
   const schema = getStitchedSchema(servicesConfig);
