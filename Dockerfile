@@ -20,10 +20,6 @@ RUN npm i --location=global pnpm
 
 WORKDIR /home/learner-model-gql
 
-COPY pnpm-lock.yaml ./
-
-RUN pnpm fetch --prod
-
 COPY tsconfig.json package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc schema.gql ./
 
 COPY packages/api-base ./packages/api-base
