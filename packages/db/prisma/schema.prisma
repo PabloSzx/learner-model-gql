@@ -184,7 +184,8 @@ model KcRelation {
   domain   Domain @relation(fields: [domainId], references: [id])
   domainId Int
 
-  label String
+  label   String?
+  comment String?
 
   kcA   KC  @relation(fields: [kcAId], references: [id], name: "kcA", onDelete: Cascade)
   kcAId Int

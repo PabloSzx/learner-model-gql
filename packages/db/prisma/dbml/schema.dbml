@@ -114,7 +114,8 @@ Table KcRelation {
   relation String [not null]
   domain Domain [not null]
   domainId Int [not null]
-  label String [not null]
+  label String
+  comment String
   kcA KC [not null]
   kcAId Int [not null]
   kcB KC [not null]
