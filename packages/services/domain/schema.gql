@@ -270,10 +270,42 @@ type KC {
   id: IntID!
   "Human readable identifier"
   label: String!
+  "All relations of KC"
+  relations: [KCRelation!]!
   "Topics associated with the KC"
   topics: [Topic!]!
   "Date of last update"
   updatedAt: DateTime!
+}
+
+"Relations between KCs"
+type KCRelation {
+  "Custom Comment of KC Relation"
+  comment: String
+  "Domain shared by both KCs"
+  domain: Domain!
+  "Domain id shared by both KCs"
+  domainId: IntID!
+  "Unique numeric identifier"
+  id: IntID!
+  "KC A"
+  kcA: KC!
+  "KC A id"
+  kcAId: IntID!
+  "KC B"
+  kcB: KC!
+  "KC B id"
+  kcBId: IntID!
+  "Custom Label of KC Relation"
+  label: String
+  "Type of relation"
+  relation: KCRelationType!
+}
+
+enum KCRelationType {
+  INTERACT
+  PARTOF
+  PREREQUISITE
 }
 
 "Paginated KCs"

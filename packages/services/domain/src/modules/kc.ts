@@ -1,4 +1,8 @@
-import { getNodeIdList, ResolveCursorConnection } from "api-base";
+import {
+  getNodeIdList,
+  ResolveCursorConnection,
+  parseKCRelation,
+} from "api-base";
 import { gql, registerModule } from "../ez";
 
 export const kcModule = registerModule(
@@ -19,6 +23,45 @@ export const kcModule = registerModule(
 
       "Date of last update"
       updatedAt: DateTime!
+
+      "All relations of KC"
+      relations: [KCRelation!]!
+    }
+
+    enum KCRelationType {
+      PARTOF
+      INTERACT
+      PREREQUISITE
+    }
+
+    "Relations between KCs"
+    type KCRelation {
+      "Unique numeric identifier"
+      id: IntID!
+
+      "Type of relation"
+      relation: KCRelationType!
+
+      "Domain shared by both KCs"
+      domain: Domain!
+      "Domain id shared by both KCs"
+      domainId: IntID!
+
+      "Custom Label of KC Relation"
+      label: String
+
+      "Custom Comment of KC Relation"
+      comment: String
+
+      "KC A"
+      kcA: KC!
+      "KC A id"
+      kcAId: IntID!
+
+      "KC B"
+      kcB: KC!
+      "KC B id"
+      kcBId: IntID!
     }
 
     extend type Topic {
@@ -126,6 +169,57 @@ export const kcModule = registerModule(
   {
     id: "KC",
     resolvers: {
+      KCRelation: {
+        domain({ domainId }, _args, { prisma }) {
+          return prisma.domain.findUnique({
+            where: {
+              id: domainId,
+            },
+            rejectOnNotFound: true,
+          });
+        },
+        kcA({ kcAId }, _args, { prisma }) {
+          return prisma.kC.findUnique({
+            where: {
+              id: kcAId,
+            },
+            rejectOnNotFound: true,
+          });
+        },
+        kcB({ kcBId }, _args, { prisma }) {
+          return prisma.kC.findUnique({
+            where: {
+              id: kcBId,
+            },
+            rejectOnNotFound: true,
+          });
+        },
+      },
+      KC: {
+        async relations({ id }, _args, { prisma }) {
+          const [ARelations, BRelations] = await Promise.all([
+            prisma.kC
+              .findUnique({
+                where: {
+                  id,
+                },
+              })
+              .kcARelations(),
+            prisma.kC
+              .findUnique({
+                where: {
+                  id,
+                },
+              })
+              .kcBRelations(),
+          ]);
+
+          return [...ARelations, ...BRelations].map((value) => ({
+            ...value,
+            relation: parseKCRelation(value.relation),
+          }));
+        },
+      },
       Topic: {
         async kcs({ id }, _args, { prisma }) {
           return (

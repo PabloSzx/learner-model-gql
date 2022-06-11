@@ -930,12 +930,46 @@ export type Kc = {
   id: Scalars["IntID"];
   /** Human readable identifier */
   label: Scalars["String"];
+  /** All relations of KC */
+  relations: Array<KcRelation>;
   /** Topics associated with the KC */
   topics: Array<Topic>;
   /** Date of last update */
   updatedAt: Scalars["DateTime"];
 };
 
+/** Relations between KCs */
+export type KcRelation = {
+  __typename?: "KCRelation";
+  /** Custom Comment of KC Relation */
+  comment?: Maybe<Scalars["String"]>;
+  /** Domain shared by both KCs */
+  domain: Domain;
+  /** Domain id shared by both KCs */
+  domainId: Scalars["IntID"];
+  /** Unique numeric identifier */
+  id: Scalars["IntID"];
+  /** KC A */
+  kcA: Kc;
+  /** KC A id */
+  kcAId: Scalars["IntID"];
+  /** KC B */
+  kcB: Kc;
+  /** KC B id */
+  kcBId: Scalars["IntID"];
+  /** Custom Label of KC Relation */
+  label?: Maybe<Scalars["String"]>;
+  /** Type of relation */
+  relation: KcRelationType;
+};
+
+export const KcRelationType = {
+  Interact: "INTERACT",
+  Partof: "PARTOF",
+  Prerequisite: "PREREQUISITE",
+} as const;
+
+export type KcRelationType = typeof KcRelationType[keyof typeof KcRelationType];
 /** Paginated KCs */
 export type KCsConnection = Connection & {
   __typename?: "KCsConnection";

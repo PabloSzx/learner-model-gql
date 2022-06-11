@@ -945,11 +945,40 @@ export type Kc = {
   id: Scalars["IntID"];
   /** Human readable identifier */
   label: Scalars["String"];
+  /** All relations of KC */
+  relations: Array<KcRelation>;
   /** Topics associated with the KC */
   topics: Array<Topic>;
   /** Date of last update */
   updatedAt: Scalars["DateTime"];
 };
+
+/** Relations between KCs */
+export type KcRelation = {
+  __typename?: "KCRelation";
+  /** Custom Comment of KC Relation */
+  comment?: Maybe<Scalars["String"]>;
+  /** Domain shared by both KCs */
+  domain: Domain;
+  /** Domain id shared by both KCs */
+  domainId: Scalars["IntID"];
+  /** Unique numeric identifier */
+  id: Scalars["IntID"];
+  /** KC A */
+  kcA: Kc;
+  /** KC A id */
+  kcAId: Scalars["IntID"];
+  /** KC B */
+  kcB: Kc;
+  /** KC B id */
+  kcBId: Scalars["IntID"];
+  /** Custom Label of KC Relation */
+  label?: Maybe<Scalars["String"]>;
+  /** Type of relation */
+  relation: KcRelationType;
+};
+
+export type KcRelationType = "INTERACT" | "PARTOF" | "PREREQUISITE";
 
 /** Paginated KCs */
 export type KCsConnection = Connection & {
@@ -1825,6 +1854,8 @@ export type ResolversTypes = {
   JSON: ResolverTypeWrapper<Scalars["JSON"]>;
   JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
   KC: ResolverTypeWrapper<Kc>;
+  KCRelation: ResolverTypeWrapper<KcRelation>;
+  KCRelationType: KcRelationType;
   KCsConnection: ResolverTypeWrapper<KCsConnection>;
   ModelState: ResolverTypeWrapper<ModelState>;
   ModelStateConnection: ResolverTypeWrapper<ModelStateConnection>;
@@ -1927,6 +1958,7 @@ export type ResolversParentTypes = {
   JSON: Scalars["JSON"];
   JSONObject: Scalars["JSONObject"];
   KC: Kc;
+  KCRelation: KcRelation;
   KCsConnection: KCsConnection;
   ModelState: ModelState;
   ModelStateConnection: ModelStateConnection;
@@ -2449,8 +2481,34 @@ export type KcResolvers<
   domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
   id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
   label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  relations?: Resolver<
+    Array<ResolversTypes["KCRelation"]>,
+    ParentType,
+    ContextType
+  >;
   topics?: Resolver<Array<ResolversTypes["Topic"]>, ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type KcRelationResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["KCRelation"] = ResolversParentTypes["KCRelation"]
+> = {
+  comment?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
+  domainId?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  kcA?: Resolver<ResolversTypes["KC"], ParentType, ContextType>;
+  kcAId?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  kcB?: Resolver<ResolversTypes["KC"], ParentType, ContextType>;
+  kcBId?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  label?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  relation?: Resolver<
+    ResolversTypes["KCRelationType"],
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -2877,6 +2935,7 @@ export type Resolvers<ContextType = EZContext> = {
   JSON?: GraphQLScalarType;
   JSONObject?: GraphQLScalarType;
   KC?: KcResolvers<ContextType>;
+  KCRelation?: KcRelationResolvers<ContextType>;
   KCsConnection?: KCsConnectionResolvers<ContextType>;
   ModelState?: ModelStateResolvers<ContextType>;
   ModelStateConnection?: ModelStateConnectionResolvers<ContextType>;
