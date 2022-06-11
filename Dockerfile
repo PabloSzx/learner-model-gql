@@ -24,8 +24,6 @@ COPY pnpm-lock.yaml ./
 
 RUN npm install -g pnpm@latest
 
-RUN pnpm add -g bob-tsm esbuild
-
 RUN pnpm config set ignore-scripts true
 
 RUN pnpm fetch --prod
