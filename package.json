@@ -20,11 +20,11 @@
     "db:local:rm": "docker-compose -f test/docker-compose.yml -v down",
     "predev": "pnpm -r db:generate",
     "dev": "concurrently -r \"cross-env NEXT_PUBLIC_API_URL=http://localhost:8080/graphql pnpm -r --no-bail dev\" \"tsc --watch\"",
-    "docker:build": "docker build . -t pabloszx/learner-model-gql --platform=linux/amd64",
+    "docker:build": "docker build . -t pabloszx/learner-model-gql --platform=linux/x86_64",
     "generate": "pnpm -r generate",
     "load-test": "pnpm run -C ./packages/testing load-test",
     "migrate": "pnpm -r migrate:dev",
-    "prepare": "is-ci || husky install",
+    "prepare": "node prepare.mjs",
     "pretty": "pretty-quick",
     "pretty:all": "prettier --write \"**/*.{ts,tsx,gql,json}\"",
     "test": "c8 mocha",
@@ -42,7 +42,6 @@
     "graphql": "^16.3.0",
     "graphql-ez": "^0.15.0",
     "graphql-tag": "^2.12.6",
-    "is-ci": "^3.0.1",
     "lodash": "^4.17.21",
     "undici": "^5.0.0"
   },
@@ -82,7 +81,7 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "fsevents",
-      "esbuild"
+      "murmurhash-native"
     ],
     "overrides": {
       "ws@>=5.0.0 <5.2.3 || >=6.0.0 <6.2.2 || >=7.0.0 <7.4.6": ">=5.2.3 <6.0.0 || >=6.2.2 <7.0.0 || >=7.4.6",

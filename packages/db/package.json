@@ -8,11 +8,11 @@
   "scripts": {
     "build": "prisma db push",
     "db:generate": "prisma generate",
+    "db:link-env": "touch ../../.env && ln -f ../../.env prisma/.env",
     "generate": "prisma generate",
     "migrate:deploy": "npx -y prisma migrate deploy",
     "migrate:dev": "prisma migrate dev",
     "migrate:push": "prisma db push",
-    "prepare": "touch ../../.env && ln -f ../../.env prisma/.env && prisma generate",
     "scripts": "bob-tsm --node-env=dev run-scripts.ts"
   },
   "dependencies": {
@@ -38,8 +38,7 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "fsevents",
-      "esbuild"
+      "fsevents"
     ]
   }
 }
