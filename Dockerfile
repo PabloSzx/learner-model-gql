@@ -4,9 +4,9 @@ FROM node:16-alpine as prisma-build
 
 WORKDIR /home/prisma-build
 
-COPY packages/db .
+RUN npm i --location=global pnpm@latest
 
-RUN npm i -g pnpm
+COPY packages/db .
 
 RUN pnpm config set ignore-scripts true
 
@@ -18,11 +18,11 @@ RUN pnpm generate
 
 FROM node:16-alpine
 
+RUN npm i --location=global pnpm
+
 WORKDIR /home/learner-model-gql
 
 COPY pnpm-lock.yaml ./
-
-RUN npm install -g pnpm@latest
 
 RUN pnpm config set ignore-scripts true
 
