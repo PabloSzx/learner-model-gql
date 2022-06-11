@@ -23,15 +23,15 @@ importers:
       '@types/react': ^17.0.44
       '@types/wait-on': ^5.3.1
       api-base: workspace:^0.0.1
-      bob-tsm: ^0.4.8
+      bob-tsm: ^1.0.0
       bob-watch: ^0.1.1
       c8: ^7.11.0
       common: workspace:^0.0.1
       common-api: workspace:^1.0.0
       concurrently: ^7.1.0
       cross-env: ^7.0.3
-      dotenv: ^16.0.0
-      esbuild: ^0.14.34
+      dotenv: ^16.0.1
+      esbuild: ^0.14.43
       execa: ^6.1.0
       fastify: ^3.28.0
       graphql: ^16.3.0
@@ -55,7 +55,7 @@ importers:
     dependencies:
       '@graphql-ez/fastify': 0.10.0_2m6xcvblrgcvqgdgxateuuxc7m
       api-base: link:packages/api-base
-      bob-tsm: 0.4.8_rfzdi44t3f7d4pftnjts7dki7e
+      bob-tsm: 1.0.0_rfzdi44t3f7d4pftnjts7dki7e
       common: link:packages/common
       common-api: link:packages/common-api
       dotenv: 16.0.1
@@ -430,8 +430,8 @@ importers:
       '@graphql-tools/utils': ^8.6.6
       '@types/node': ^17.0.42
       api-base: workspace:^0.0.1
-      bob-tsm: ^0.4.8
-      esbuild: ^0.14.34
+      bob-tsm: ^1.0.0
+      esbuild: ^0.14.43
       fastify: ^3.28.0
       graphql: ^16.5.0
       graphql-ez: ^0.15.0
@@ -444,7 +444,7 @@ importers:
       '@graphql-tools/stitch': 8.6.13_graphql@16.5.0
       '@graphql-tools/utils': 8.6.13_graphql@16.5.0
       api-base: link:../api-base
-      bob-tsm: 0.4.8_rfzdi44t3f7d4pftnjts7dki7e
+      bob-tsm: 1.0.0_rfzdi44t3f7d4pftnjts7dki7e
       esbuild: 0.14.43
       fastify: 3.29.0
     devDependencies:
@@ -580,10 +580,10 @@ importers:
       '@types/randomstring': ^1.1.8
       api-base: workspace:^0.0.1
       autocannon: ^7.8.1
-      bob-tsm: ^0.4.8
+      bob-tsm: ^1.0.0
       cross-port-killer: ^1.4.0
       db: workspace:^0.0.1
-      esbuild: ^0.14.34
+      esbuild: ^0.14.43
       execa: ^6.1.0
       fastify: ^3.28.0
       graphql: ^16.3.0
@@ -613,7 +613,7 @@ importers:
       '@types/randomstring': 1.1.8
       api-base: link:../api-base
       autocannon: 7.9.0
-      bob-tsm: 0.4.8_rfzdi44t3f7d4pftnjts7dki7e
+      bob-tsm: 1.0.0_rfzdi44t3f7d4pftnjts7dki7e
       cross-port-killer: 1.4.0
       db: link:../db
       esbuild: 0.14.43
@@ -4300,12 +4300,12 @@ packages:
     resolution: {integrity: sha512-c98Bf3tPniI+scsdk237ku1Dc3ujXQTSgyiPUDEOe7tRkhrqridvh8klBv0HCEso1OLOYcHuCv/cS6DNxKH+ZA==}
     dev: false
 
-  /bob-tsm/0.4.8_rfzdi44t3f7d4pftnjts7dki7e:
-    resolution: {integrity: sha512-HctV79VMhh8xh5+plIJbkghL9H0pi+euZvLSjvhgqkm3uQ73ebPUh3k7u/bYyXkhiVC/O0gs/I0alw7WOkZ3kw==}
-    engines: {node: ^12.20.0 || >=14.13.0}
+  /bob-tsm/1.0.0_rfzdi44t3f7d4pftnjts7dki7e:
+    resolution: {integrity: sha512-pyCeEpgm7+2VcklvUsTfdNOMtfOpuJwh0W/f7T2iNJqNxFfyyqOhAtQK4lxZC77lx5NigpbshLBHlf6fQ33NjQ==}
+    engines: {node: '>=14.13.1'}
     hasBin: true
     peerDependencies:
-      esbuild: '>=0.14.13'
+      esbuild: '>=0.14.39'
       typescript: '>=4.1.2'
     peerDependenciesMeta:
       typescript:
