@@ -119,6 +119,8 @@ model Domain {
 
   modelStates ModelState[]
 
+  kcRelations KcRelation[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 }
@@ -167,8 +169,34 @@ model KC {
 
   actions Action[]
 
+  kcARelations KcRelation[] @relation(name: "kcA")
+  kcBRelations KcRelation[] @relation(name: "kcB")
+
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+}
+
+model KcRelation {
+  id Int @id @default(autoincrement())
+
+  relation String
+
+  domain   Domain @relation(fields: [domainId], references: [id])
+  domainId Int
+
+  label String
+
+  kcA   KC  @relation(fields: [kcAId], references: [id], name: "kcA", onDelete: Cascade)
+  kcAId Int
+
+  kcB   KC  @relation(fields: [kcBId], references: [id], name: "kcB", onDelete: Cascade)
+  kcBId Int
+
+  @@unique([kcAId, kcBId, relation])
+  @@index([domainId])
+  @@index([relation, domainId])
+  @@index([kcAId])
+  @@index([kcBId])
 }
 
 model ActionVerb {
