@@ -8,8 +8,6 @@ RUN npm i --location=global pnpm@latest
 
 COPY packages/db .
 
-RUN pnpm config set ignore-scripts true
-
 RUN pnpm i
 
 RUN pnpm generate
@@ -23,8 +21,6 @@ RUN npm i --location=global pnpm
 WORKDIR /home/learner-model-gql
 
 COPY pnpm-lock.yaml ./
-
-RUN pnpm config set ignore-scripts true
 
 RUN pnpm fetch --prod
 
