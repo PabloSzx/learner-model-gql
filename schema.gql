@@ -1194,10 +1194,7 @@ type ModelState {
   Domain associated with Model State
   """
   domain: Domain!
-  """
-  Unique numeric identifier
-  """
-  id: IntID!
+  id: ID!
   """
   Arbitrary JSON Data
   """
@@ -1214,6 +1211,13 @@ type ModelState {
   User associated with Model State
   """
   user: User!
+}
+
+"""
+Different types of Model State
+"""
+enum ModelStateAlgorithm {
+  BKT
 }
 
 """
@@ -1377,6 +1381,10 @@ type Mutation {
   Returns 'Hello World!'
   """
   hello: String!
+  """
+  Update model state with new state
+  """
+  updateModelState(input: UpdateModelStateInput!): Void
 }
 
 """
@@ -1636,7 +1644,6 @@ type Query {
   If any of the specified identifiers is not found or forbidden, query fails
   """
   domains(ids: [IntID!]!): [Domain!]!
-  foo: String!
   """
   Get all the groups associated with the specified identifiers
 
@@ -1913,6 +1920,15 @@ input UpdateKCInput {
   Human readable identifier
   """
   label: String!
+}
+
+"""
+Input to update model state
+"""
+input UpdateModelStateInput {
+  domainID: IntID!
+  typeModel: ModelStateAlgorithm!
+  userID: IntID!
 }
 
 """

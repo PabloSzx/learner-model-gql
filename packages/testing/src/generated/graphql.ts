@@ -988,8 +988,7 @@ export type ModelState = {
   creator: Scalars["String"];
   /** Domain associated with Model State */
   domain: Domain;
-  /** Unique numeric identifier */
-  id: Scalars["IntID"];
+  id: Scalars["ID"];
   /** Arbitrary JSON Data */
   json: Scalars["JSON"];
   /** Type / Category of model state */
@@ -1000,6 +999,13 @@ export type ModelState = {
   user: User;
 };
 
+/** Different types of Model State */
+export const ModelStateAlgorithm = {
+  Bkt: "BKT",
+} as const;
+
+export type ModelStateAlgorithm =
+  typeof ModelStateAlgorithm[keyof typeof ModelStateAlgorithm];
 /** Paginated Model States */
 export type ModelStateConnection = Connection & {
   __typename?: "ModelStateConnection";
@@ -1109,10 +1115,16 @@ export type Mutation = {
   adminUsers: AdminUserMutations;
   /** Returns 'Hello World!' */
   hello: Scalars["String"];
+  /** Update model state with new state */
+  updateModelState?: Maybe<Scalars["Void"]>;
 };
 
 export type MutationActionArgs = {
   data: ActionInput;
+};
+
+export type MutationUpdateModelStateArgs = {
+  input: UpdateModelStateInput;
 };
 
 /** Minimum Entity Information */
@@ -1320,7 +1332,6 @@ export type Query = {
    * If any of the specified identifiers is not found or forbidden, query fails
    */
   domains: Array<Domain>;
-  foo: Scalars["String"];
   /**
    * Get all the groups associated with the specified identifiers
    *
@@ -1555,6 +1566,13 @@ export type UpdateKcInput = {
   id: Scalars["IntID"];
   /** Human readable identifier */
   label: Scalars["String"];
+};
+
+/** Input to update model state */
+export type UpdateModelStateInput = {
+  domainID: Scalars["IntID"];
+  typeModel: ModelStateAlgorithm;
+  userID: Scalars["IntID"];
 };
 
 /** Project update input data */

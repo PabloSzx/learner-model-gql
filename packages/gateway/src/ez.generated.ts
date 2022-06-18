@@ -998,8 +998,7 @@ export type ModelState = {
   creator: Scalars["String"];
   /** Domain associated with Model State */
   domain: Domain;
-  /** Unique numeric identifier */
-  id: Scalars["IntID"];
+  id: Scalars["ID"];
   /** Arbitrary JSON Data */
   json: Scalars["JSON"];
   /** Type / Category of model state */
@@ -1009,6 +1008,9 @@ export type ModelState = {
   /** User associated with Model State */
   user: User;
 };
+
+/** Different types of Model State */
+export type ModelStateAlgorithm = "BKT";
 
 /** Paginated Model States */
 export type ModelStateConnection = Connection & {
@@ -1119,10 +1121,16 @@ export type Mutation = {
   adminUsers: AdminUserMutations;
   /** Returns 'Hello World!' */
   hello: Scalars["String"];
+  /** Update model state with new state */
+  updateModelState?: Maybe<Scalars["Void"]>;
 };
 
 export type MutationActionArgs = {
   data: ActionInput;
+};
+
+export type MutationUpdateModelStateArgs = {
+  input: UpdateModelStateInput;
 };
 
 /** Minimum Entity Information */
@@ -1326,7 +1334,6 @@ export type Query = {
    * If any of the specified identifiers is not found or forbidden, query fails
    */
   domains: Array<Domain>;
-  foo: Scalars["String"];
   /**
    * Get all the groups associated with the specified identifiers
    *
@@ -1561,6 +1568,13 @@ export type UpdateKcInput = {
   id: Scalars["IntID"];
   /** Human readable identifier */
   label: Scalars["String"];
+};
+
+/** Input to update model state */
+export type UpdateModelStateInput = {
+  domainID: Scalars["IntID"];
+  typeModel: ModelStateAlgorithm;
+  userID: Scalars["IntID"];
 };
 
 /** Project update input data */
@@ -1859,6 +1873,7 @@ export type ResolversTypes = {
   KCRelationType: KcRelationType;
   KCsConnection: ResolverTypeWrapper<KCsConnection>;
   ModelState: ResolverTypeWrapper<ModelState>;
+  ModelStateAlgorithm: ModelStateAlgorithm;
   ModelStateConnection: ResolverTypeWrapper<ModelStateConnection>;
   ModelStateConnectionInput: ModelStateConnectionInput;
   ModelStateCreator: ResolverTypeWrapper<ModelStateCreator>;
@@ -1886,6 +1901,7 @@ export type ResolversTypes = {
   UpdateDomain: UpdateDomain;
   UpdateGroupInput: UpdateGroupInput;
   UpdateKCInput: UpdateKcInput;
+  UpdateModelStateInput: UpdateModelStateInput;
   UpdateProject: UpdateProject;
   UpdateTopic: UpdateTopic;
   UpdateUserInput: UpdateUserInput;
@@ -1988,6 +2004,7 @@ export type ResolversParentTypes = {
   UpdateDomain: UpdateDomain;
   UpdateGroupInput: UpdateGroupInput;
   UpdateKCInput: UpdateKcInput;
+  UpdateModelStateInput: UpdateModelStateInput;
   UpdateProject: UpdateProject;
   UpdateTopic: UpdateTopic;
   UpdateUserInput: UpdateUserInput;
@@ -2529,7 +2546,7 @@ export type ModelStateResolvers<
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   creator?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   json?: Resolver<ResolversTypes["JSON"], ParentType, ContextType>;
   type?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
@@ -2629,6 +2646,12 @@ export type MutationResolvers<
     ContextType
   >;
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  updateModelState?: Resolver<
+    Maybe<ResolversTypes["Void"]>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateModelStateArgs, "input">
+  >;
 };
 
 export type NodeResolvers<
@@ -2759,7 +2782,6 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryDomainsArgs, "ids">
   >;
-  foo?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   groups?: Resolver<
     Array<ResolversTypes["Group"]>,
     ParentType,

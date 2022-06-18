@@ -23,6 +23,9 @@ export type ResolverFn<TResult, TParent, TContext, TArgs> = (
 ) =>
   | Promise<import("graphql-ez").DeepPartial<TResult>>
   | import("graphql-ez").DeepPartial<TResult>;
+export type RequireFields<T, K extends keyof T> = Omit<T, K> & {
+  [P in K]-?: NonNullable<T[P]>;
+};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -92,10 +95,25 @@ export type CursorConnectionArgs = {
   last?: InputMaybe<Scalars["NonNegativeInt"]>;
 };
 
+/** Model State Entity */
+export type ModelState = {
+  __typename?: "ModelState";
+  id: Scalars["IntID"];
+};
+
+/** Different types of Model State */
+export type ModelStateAlgorithm = "BKT";
+
 export type Mutation = {
   __typename?: "Mutation";
   /** Returns 'Hello World!' */
   hello: Scalars["String"];
+  /** Update model state with new state */
+  updateModelState?: Maybe<Scalars["Void"]>;
+};
+
+export type MutationUpdateModelStateArgs = {
+  input: UpdateModelStateInput;
 };
 
 /** Minimum Entity Information */
@@ -122,7 +140,6 @@ export type PageInfo = {
 
 export type Query = {
   __typename?: "Query";
-  foo: Scalars["String"];
   /** Returns 'Hello World!' */
   hello: Scalars["String"];
 };
@@ -131,6 +148,13 @@ export type Subscription = {
   __typename?: "Subscription";
   /** Emits 'Hello World1', 'Hello World2', 'Hello World3', 'Hello World4' and 'Hello World5' */
   hello: Scalars["String"];
+};
+
+/** Input to update model state */
+export type UpdateModelStateInput = {
+  domainID: Scalars["IntID"];
+  typeModel: ModelStateAlgorithm;
+  userID: Scalars["IntID"];
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -240,6 +264,8 @@ export type ResolversTypes = {
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
   JSON: ResolverTypeWrapper<Scalars["JSON"]>;
   JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
+  ModelState: ResolverTypeWrapper<ModelState>;
+  ModelStateAlgorithm: ModelStateAlgorithm;
   Mutation: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars["String"]>;
   Node: never;
@@ -251,6 +277,7 @@ export type ResolversTypes = {
   Subscription: ResolverTypeWrapper<{}>;
   Timestamp: ResolverTypeWrapper<Scalars["Timestamp"]>;
   URL: ResolverTypeWrapper<Scalars["URL"]>;
+  UpdateModelStateInput: UpdateModelStateInput;
   Void: ResolverTypeWrapper<Scalars["Void"]>;
 };
 
@@ -263,6 +290,7 @@ export type ResolversParentTypes = {
   IntID: Scalars["IntID"];
   JSON: Scalars["JSON"];
   JSONObject: Scalars["JSONObject"];
+  ModelState: ModelState;
   Mutation: {};
   String: Scalars["String"];
   Node: never;
@@ -273,6 +301,7 @@ export type ResolversParentTypes = {
   Subscription: {};
   Timestamp: Scalars["Timestamp"];
   URL: Scalars["URL"];
+  UpdateModelStateInput: UpdateModelStateInput;
   Void: Scalars["Void"];
 };
 
@@ -309,11 +338,25 @@ export interface JsonObjectScalarConfig
   name: "JSONObject";
 }
 
+export type ModelStateResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["ModelState"] = ResolversParentTypes["ModelState"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type MutationResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
 > = {
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  updateModelState?: Resolver<
+    Maybe<ResolversTypes["Void"]>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateModelStateArgs, "input">
+  >;
 };
 
 export type NodeResolvers<
@@ -356,7 +399,6 @@ export type QueryResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = {
-  foo?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 };
 
@@ -394,6 +436,7 @@ export type Resolvers<ContextType = EZContext> = {
   IntID?: GraphQLScalarType;
   JSON?: GraphQLScalarType;
   JSONObject?: GraphQLScalarType;
+  ModelState?: ModelStateResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Node?: NodeResolvers<ContextType>;
   NonNegativeInt?: GraphQLScalarType;

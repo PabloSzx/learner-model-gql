@@ -510,7 +510,7 @@ importers:
       graphql-ez: 0.15.0_ktyfus2ew2mivokf2tyoeqjo6a
       typescript: 4.7.3
 
-  packages/services/exampleService:
+  packages/services/model:
     specifiers:
       api-base: workspace:^0.0.1
       db: workspace:^0.0.1

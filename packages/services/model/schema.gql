@@ -77,9 +77,21 @@ scalar JSONObject
     url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf"
   )
 
+"Model State Entity"
+type ModelState {
+  id: IntID!
+}
+
+"Different types of Model State"
+enum ModelStateAlgorithm {
+  BKT
+}
+
 type Mutation {
   "Returns 'Hello World!'"
   hello: String!
+  "Update model state with new state"
+  updateModelState(input: UpdateModelStateInput!): Void
 }
 
 "Minimum Entity Information"
@@ -116,7 +128,6 @@ type PageInfo {
 }
 
 type Query {
-  foo: String!
   "Returns 'Hello World!'"
   hello: String!
 }
@@ -135,6 +146,13 @@ scalar Timestamp
 A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt.
 """
 scalar URL
+
+"Input to update model state"
+input UpdateModelStateInput {
+  domainID: IntID!
+  typeModel: ModelStateAlgorithm!
+  userID: IntID!
+}
 
 """
 Represents NULL values
