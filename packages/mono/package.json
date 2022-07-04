@@ -17,7 +17,7 @@
     "api-base": "workspace:^0.0.1",
     "bob-tsm": "^1.0.0",
     "esbuild": "^0.14.48",
-    "fastify": "^3.29.1"
+    "fastify": "^4.2.0"
   },
   "devDependencies": {
     "@types/node": "^17.0.45",

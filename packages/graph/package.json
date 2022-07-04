@@ -18,7 +18,7 @@
     "@graphql-codegen/core": "^2.5.1",
     "@graphql-codegen/typed-document-node": "^2.2.14",
     "@graphql-codegen/typescript": "^2.6.0",
-    "@graphql-codegen/typescript-document-nodes": "2.2.8",
+    "@graphql-codegen/typescript-document-nodes": "2.2.14",
     "@graphql-codegen/typescript-operations": "^2.4.3",
     "@graphql-codegen/typescript-react-query": "^3.5.15",
     "@graphql-typed-document-node/core": "^3.1.1",
@@ -29,7 +29,7 @@
     "react-query": "^3.39.1",
     "rq-gql": "^0.5.0",
     "typescript": "^4.7.4",
-    "valtio": "1.5.2"
+    "valtio": "1.6.1"
   },
   "peerDependencies": {
     "react-query": "^3.34.12",
