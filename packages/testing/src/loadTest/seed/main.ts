@@ -1,4 +1,4 @@
-import faker from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 import { execaCommand } from "execa";
 import { groupBy, random, sample, sampleSize } from "lodash-es";
 import pMap from "p-map";

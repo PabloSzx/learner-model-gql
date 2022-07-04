@@ -1,4 +1,4 @@
-import faker from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 import { EZClient } from "@graphql-ez/client";
 import assert from "assert/strict";
 import { random, sample, sampleSize, uniqBy } from "lodash-es";

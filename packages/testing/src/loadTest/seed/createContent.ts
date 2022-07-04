@@ -1,4 +1,4 @@
-import faker from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 import { prisma } from "db";
 import { random, sample, sampleSize } from "lodash-es";
 import { generate } from "randomstring";
