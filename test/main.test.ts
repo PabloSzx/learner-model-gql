@@ -5,6 +5,7 @@ import {
   CheckDomainCreationRetrieval,
   CheckDomainsOfProjects,
   CheckKCs,
+  CheckKCsRelations,
   CheckTopicsCreationRetrieval,
 } from "../packages/services/domain/test/test";
 import {
@@ -196,6 +197,12 @@ function TestStitched(
         const GatewayClient = await TestStitchedClient();
 
         await CheckKCs(GatewayClient);
+      });
+
+      it("kcs relations", async () => {
+        const GatewayClient = await TestStitchedClient();
+
+        await CheckKCsRelations(GatewayClient);
       });
     });
 
