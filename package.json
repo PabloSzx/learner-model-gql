@@ -80,8 +80,7 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "fsevents",
-      "murmurhash-native"
+      "fsevents"
     ],
     "overrides": {
       "ws@>=5.0.0 <5.2.3 || >=6.0.0 <6.2.2 || >=7.0.0 <7.4.6": ">=5.2.3 <6.0.0 || >=6.2.2 <7.0.0 || >=7.4.6",

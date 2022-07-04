@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@graphql-ez/utils": "^0.1.4",
-    "pg-gql-pubsub": "^0.4.0",
+    "pg-gql-pubsub": "^0.4.1",
     "validator": "^13.7.0"
   },
   "devDependencies": {
