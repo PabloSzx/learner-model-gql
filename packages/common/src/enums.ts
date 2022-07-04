@@ -6,9 +6,11 @@ export const KCRelationType = {
 
 export type KCRelationType = keyof typeof KCRelationType;
 
-export function parseKCRelation(relation: string) {
+const KcRelationTypeValues = Object.values(KCRelationType);
+
+export function parseKCRelation(relation: string | undefined) {
   return (
-    Object.values(KCRelationType).find((v) => v === relation) ||
+    KcRelationTypeValues.find((v) => v === relation) ||
     (() => {
       throw Error("Unexpected relation type: " + relation);
     })()

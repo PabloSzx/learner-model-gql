@@ -62,6 +62,10 @@ export type AdminDomainMutations = {
   createKC: Kc;
   /** Create a new topic entity */
   createTopic: Topic;
+  /** Set KC Relation */
+  setKCRelation: KcRelation;
+  /** Unset KC Relation */
+  unsetKCRelation?: Maybe<Scalars["Void"]>;
   /** Update an existent domain entity */
   updateDomain: Domain;
   /** Update an existent KC entity */
@@ -83,6 +87,16 @@ export type AdminDomainMutationsCreateKcArgs = {
 /** Admin Domain-Related Queries */
 export type AdminDomainMutationsCreateTopicArgs = {
   input: CreateTopic;
+};
+
+/** Admin Domain-Related Queries */
+export type AdminDomainMutationsSetKcRelationArgs = {
+  data: KcRelationInput;
+};
+
+/** Admin Domain-Related Queries */
+export type AdminDomainMutationsUnsetKcRelationArgs = {
+  data: KcRelationInput;
 };
 
 /** Admin Domain-Related Queries */
@@ -357,9 +371,23 @@ export type KcRelation = {
   /** Custom Label of KC Relation */
   label?: Maybe<Scalars["String"]>;
   /** Type of relation */
-  relation: KcRelationType;
+  type: KcRelationType;
 };
 
+export type KcRelationInput = {
+  /** Custom comment text */
+  comment?: InputMaybe<Scalars["String"]>;
+  /** KC A */
+  kcA: Scalars["IntID"];
+  /** KC B */
+  kcB: Scalars["IntID"];
+  /** Relation readable label */
+  label?: InputMaybe<Scalars["String"]>;
+  /** Type of KC Relation */
+  type: KcRelationType;
+};
+
+/** Type of KC Relationship */
 export type KcRelationType = "INTERACT" | "PARTOF" | "PREREQUISITE";
 
 /** Paginated KCs */
@@ -714,6 +742,7 @@ export type ResolversTypes = {
   JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
   KC: ResolverTypeWrapper<Kc>;
   KCRelation: ResolverTypeWrapper<KcRelation>;
+  KCRelationInput: KcRelationInput;
   KCRelationType: KcRelationType;
   KCsConnection: ResolverTypeWrapper<KCsConnection>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -762,6 +791,7 @@ export type ResolversParentTypes = {
   JSONObject: Scalars["JSONObject"];
   KC: Kc;
   KCRelation: KcRelation;
+  KCRelationInput: KcRelationInput;
   KCsConnection: KCsConnection;
   Mutation: {};
   Node: never;
@@ -802,6 +832,18 @@ export type AdminDomainMutationsResolvers<
     ParentType,
     ContextType,
     RequireFields<AdminDomainMutationsCreateTopicArgs, "input">
+  >;
+  setKCRelation?: Resolver<
+    ResolversTypes["KCRelation"],
+    ParentType,
+    ContextType,
+    RequireFields<AdminDomainMutationsSetKcRelationArgs, "data">
+  >;
+  unsetKCRelation?: Resolver<
+    Maybe<ResolversTypes["Void"]>,
+    ParentType,
+    ContextType,
+    RequireFields<AdminDomainMutationsUnsetKcRelationArgs, "data">
   >;
   updateDomain?: Resolver<
     ResolversTypes["Domain"],
@@ -950,11 +992,7 @@ export type KcRelationResolvers<
   kcB?: Resolver<ResolversTypes["KC"], ParentType, ContextType>;
   kcBId?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
   label?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  relation?: Resolver<
-    ResolversTypes["KCRelationType"],
-    ParentType,
-    ContextType
-  >;
+  type?: Resolver<ResolversTypes["KCRelationType"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
