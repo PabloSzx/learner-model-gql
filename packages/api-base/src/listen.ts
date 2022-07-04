@@ -6,5 +6,8 @@ export async function smartListen(app: FastifyInstance, port: number) {
 
   await Promise.all([DB_PREPARED]);
 
-  await app.listen(listenPort, "0.0.0.0");
+  await app.listen({
+    port: listenPort,
+    host: "0.0.0.0",
+  });
 }
