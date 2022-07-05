@@ -314,6 +314,10 @@ export type AdminDomainMutations = {
   createKC: Kc;
   /** Create a new topic entity */
   createTopic: Topic;
+  /** Set KC Relation */
+  setKCRelation: KcRelation;
+  /** Unset KC Relation */
+  unsetKCRelation?: Maybe<Scalars["Void"]>;
   /** Update an existent domain entity */
   updateDomain: Domain;
   /** Update an existent KC entity */
@@ -335,6 +339,16 @@ export type AdminDomainMutationsCreateKcArgs = {
 /** Admin Domain-Related Queries */
 export type AdminDomainMutationsCreateTopicArgs = {
   input: CreateTopic;
+};
+
+/** Admin Domain-Related Queries */
+export type AdminDomainMutationsSetKcRelationArgs = {
+  data: KcRelationInput;
+};
+
+/** Admin Domain-Related Queries */
+export type AdminDomainMutationsUnsetKcRelationArgs = {
+  data: KcRelationInput;
 };
 
 /** Admin Domain-Related Queries */
@@ -960,9 +974,23 @@ export type KcRelation = {
   /** Custom Label of KC Relation */
   label?: Maybe<Scalars["String"]>;
   /** Type of relation */
-  relation: KcRelationType;
+  type: KcRelationType;
 };
 
+export type KcRelationInput = {
+  /** Custom comment text */
+  comment?: InputMaybe<Scalars["String"]>;
+  /** KC A */
+  kcA: Scalars["IntID"];
+  /** KC B */
+  kcB: Scalars["IntID"];
+  /** Relation readable label */
+  label?: InputMaybe<Scalars["String"]>;
+  /** Type of KC Relation */
+  type: KcRelationType;
+};
+
+/** Type of KC Relationship */
 export const KcRelationType = {
   Interact: "INTERACT",
   Partof: "PARTOF",

@@ -342,6 +342,14 @@ type AdminDomainMutations {
   """
   createTopic(input: CreateTopic!): Topic!
   """
+  Set KC Relation
+  """
+  setKCRelation(data: KCRelationInput!): KCRelation!
+  """
+  Unset KC Relation
+  """
+  unsetKCRelation(data: KCRelationInput!): Void
+  """
   Update an existent domain entity
   """
   updateDomain(input: UpdateDomain!): Domain!
@@ -1155,9 +1163,35 @@ type KCRelation {
   """
   Type of relation
   """
-  relation: KCRelationType!
+  type: KCRelationType!
 }
 
+input KCRelationInput {
+  """
+  Custom comment text
+  """
+  comment: String
+  """
+  KC A
+  """
+  kcA: IntID!
+  """
+  KC B
+  """
+  kcB: IntID!
+  """
+  Relation readable label
+  """
+  label: String
+  """
+  Type of KC Relation
+  """
+  type: KCRelationType!
+}
+
+"""
+Type of KC Relationship
+"""
 enum KCRelationType {
   INTERACT
   PARTOF

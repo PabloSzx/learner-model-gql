@@ -314,6 +314,10 @@ export type AdminDomainMutations = {
   createKC: Kc;
   /** Create a new topic entity */
   createTopic: Topic;
+  /** Set KC Relation */
+  setKCRelation: KcRelation;
+  /** Unset KC Relation */
+  unsetKCRelation?: Maybe<Scalars["Void"]>;
   /** Update an existent domain entity */
   updateDomain: Domain;
   /** Update an existent KC entity */
@@ -335,6 +339,16 @@ export type AdminDomainMutationsCreateKcArgs = {
 /** Admin Domain-Related Queries */
 export type AdminDomainMutationsCreateTopicArgs = {
   input: CreateTopic;
+};
+
+/** Admin Domain-Related Queries */
+export type AdminDomainMutationsSetKcRelationArgs = {
+  data: KcRelationInput;
+};
+
+/** Admin Domain-Related Queries */
+export type AdminDomainMutationsUnsetKcRelationArgs = {
+  data: KcRelationInput;
 };
 
 /** Admin Domain-Related Queries */
@@ -960,9 +974,23 @@ export type KcRelation = {
   /** Custom Label of KC Relation */
   label?: Maybe<Scalars["String"]>;
   /** Type of relation */
-  relation: KcRelationType;
+  type: KcRelationType;
 };
 
+export type KcRelationInput = {
+  /** Custom comment text */
+  comment?: InputMaybe<Scalars["String"]>;
+  /** KC A */
+  kcA: Scalars["IntID"];
+  /** KC B */
+  kcB: Scalars["IntID"];
+  /** Relation readable label */
+  label?: InputMaybe<Scalars["String"]>;
+  /** Type of KC Relation */
+  type: KcRelationType;
+};
+
+/** Type of KC Relationship */
 export const KcRelationType = {
   Interact: "INTERACT",
   Partof: "PARTOF",
@@ -2022,6 +2050,70 @@ export type UpdateKcMutation = {
       label: string;
       domain: { __typename?: "Domain"; id: string };
     };
+  };
+};
+
+export type ChecksKcsWithoutRelationsQueryVariables = Exact<{
+  ids: Array<Scalars["IntID"]> | Scalars["IntID"];
+}>;
+
+export type ChecksKcsWithoutRelationsQuery = {
+  __typename?: "Query";
+  kcs: Array<{
+    __typename?: "KC";
+    id: string;
+    relations: Array<{ __typename?: "KCRelation"; id: string }>;
+  }>;
+};
+
+export type SetKcRelationsMutationVariables = Exact<{
+  data: KcRelationInput;
+}>;
+
+export type SetKcRelationsMutation = {
+  __typename?: "Mutation";
+  adminDomain: {
+    __typename?: "AdminDomainMutations";
+    setKCRelation: {
+      __typename?: "KCRelation";
+      id: string;
+      type: KcRelationType;
+      label?: string | null;
+      comment?: string | null;
+      kcA: { __typename?: "KC"; id: string };
+      kcB: { __typename?: "KC"; id: string };
+    };
+  };
+};
+
+export type ChecksKcsWithRelationsQueryVariables = Exact<{
+  ids: Array<Scalars["IntID"]> | Scalars["IntID"];
+}>;
+
+export type ChecksKcsWithRelationsQuery = {
+  __typename?: "Query";
+  kcs: Array<{
+    __typename?: "KC";
+    id: string;
+    relations: Array<{
+      __typename?: "KCRelation";
+      id: string;
+      type: KcRelationType;
+      kcA: { __typename?: "KC"; id: string };
+      kcB: { __typename?: "KC"; id: string };
+    }>;
+  }>;
+};
+
+export type UnsetKcRelationsMutationVariables = Exact<{
+  data: KcRelationInput;
+}>;
+
+export type UnsetKcRelationsMutation = {
+  __typename?: "Mutation";
+  adminDomain: {
+    __typename?: "AdminDomainMutations";
+    unsetKCRelation?: void | undefined | null | null;
   };
 };
 
@@ -3942,6 +4034,313 @@ export const UpdateKcDocument = {
     },
   ],
 } as unknown as DocumentNode<UpdateKcMutation, UpdateKcMutationVariables>;
+export const ChecksKcsWithoutRelationsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "ChecksKcsWithoutRelations" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "ids" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "ListType",
+              type: {
+                kind: "NonNullType",
+                type: {
+                  kind: "NamedType",
+                  name: { kind: "Name", value: "IntID" },
+                },
+              },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "kcs" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "ids" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "ids" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "relations" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  ChecksKcsWithoutRelationsQuery,
+  ChecksKcsWithoutRelationsQueryVariables
+>;
+export const SetKcRelationsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "SetKCRelations" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "KCRelationInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminDomain" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "setKCRelation" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "data" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "data" },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "kcA" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "kcB" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                          ],
+                        },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "type" } },
+                      { kind: "Field", name: { kind: "Name", value: "label" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "comment" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  SetKcRelationsMutation,
+  SetKcRelationsMutationVariables
+>;
+export const ChecksKcsWithRelationsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "ChecksKcsWithRelations" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "ids" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "ListType",
+              type: {
+                kind: "NonNullType",
+                type: {
+                  kind: "NamedType",
+                  name: { kind: "Name", value: "IntID" },
+                },
+              },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "kcs" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "ids" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "ids" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "relations" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "kcA" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "kcB" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                          ],
+                        },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "type" } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  ChecksKcsWithRelationsQuery,
+  ChecksKcsWithRelationsQueryVariables
+>;
+export const UnsetKcRelationsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UnsetKCRelations" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "KCRelationInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "adminDomain" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "unsetKCRelation" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "data" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "data" },
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  UnsetKcRelationsMutation,
+  UnsetKcRelationsMutationVariables
+>;
 export const AdminCreateProjectDocument = {
   kind: "Document",
   definitions: [

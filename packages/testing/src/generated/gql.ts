@@ -53,6 +53,14 @@ const documents = {
     graphql.CreateKcDocument,
   "\n      mutation UpdateKC($data: UpdateKCInput!) {\n        adminDomain {\n          updateKC(data: $data) {\n            id\n            code\n            label\n            domain {\n              id\n            }\n          }\n        }\n      }\n    ":
     graphql.UpdateKcDocument,
+  "\n      query ChecksKcsWithoutRelations($ids: [IntID!]!) {\n        kcs(ids: $ids) {\n          id\n          relations {\n            id\n          }\n        }\n      }\n    ":
+    graphql.ChecksKcsWithoutRelationsDocument,
+  "\n      mutation SetKCRelations($data: KCRelationInput!) {\n        adminDomain {\n          setKCRelation(data: $data) {\n            id\n            kcA {\n              id\n            }\n            kcB {\n              id\n            }\n            type\n            label\n            comment\n          }\n        }\n      }\n    ":
+    graphql.SetKcRelationsDocument,
+  "\n      query ChecksKcsWithRelations($ids: [IntID!]!) {\n        kcs(ids: $ids) {\n          id\n          relations {\n            id\n            kcA {\n              id\n            }\n            kcB {\n              id\n            }\n            type\n          }\n        }\n      }\n    ":
+    graphql.ChecksKcsWithRelationsDocument,
+  "\n      mutation UnsetKCRelations($data: KCRelationInput!) {\n        adminDomain {\n          unsetKCRelation(data: $data)\n        }\n      }\n    ":
+    graphql.UnsetKcRelationsDocument,
   "\n      mutation AdminCreateProject($data: CreateProject!) {\n        adminProjects {\n          createProject(data: $data) {\n            id\n            code\n            label\n          }\n        }\n      }\n    ":
     graphql.AdminCreateProjectDocument,
   "\n      query AdminAllProjects($pagination: CursorConnectionArgs!) {\n        adminProjects {\n          allProjects(pagination: $pagination) {\n            nodes {\n              id\n              code\n              label\n            }\n            pageInfo {\n              hasNextPage\n            }\n          }\n        }\n      }\n    ":
@@ -186,6 +194,18 @@ export function gql(
 export function gql(
   source: "\n      mutation UpdateKC($data: UpdateKCInput!) {\n        adminDomain {\n          updateKC(data: $data) {\n            id\n            code\n            label\n            domain {\n              id\n            }\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation UpdateKC($data: UpdateKCInput!) {\n        adminDomain {\n          updateKC(data: $data) {\n            id\n            code\n            label\n            domain {\n              id\n            }\n          }\n        }\n      }\n    "];
+export function gql(
+  source: "\n      query ChecksKcsWithoutRelations($ids: [IntID!]!) {\n        kcs(ids: $ids) {\n          id\n          relations {\n            id\n          }\n        }\n      }\n    "
+): typeof documents["\n      query ChecksKcsWithoutRelations($ids: [IntID!]!) {\n        kcs(ids: $ids) {\n          id\n          relations {\n            id\n          }\n        }\n      }\n    "];
+export function gql(
+  source: "\n      mutation SetKCRelations($data: KCRelationInput!) {\n        adminDomain {\n          setKCRelation(data: $data) {\n            id\n            kcA {\n              id\n            }\n            kcB {\n              id\n            }\n            type\n            label\n            comment\n          }\n        }\n      }\n    "
+): typeof documents["\n      mutation SetKCRelations($data: KCRelationInput!) {\n        adminDomain {\n          setKCRelation(data: $data) {\n            id\n            kcA {\n              id\n            }\n            kcB {\n              id\n            }\n            type\n            label\n            comment\n          }\n        }\n      }\n    "];
+export function gql(
+  source: "\n      query ChecksKcsWithRelations($ids: [IntID!]!) {\n        kcs(ids: $ids) {\n          id\n          relations {\n            id\n            kcA {\n              id\n            }\n            kcB {\n              id\n            }\n            type\n          }\n        }\n      }\n    "
+): typeof documents["\n      query ChecksKcsWithRelations($ids: [IntID!]!) {\n        kcs(ids: $ids) {\n          id\n          relations {\n            id\n            kcA {\n              id\n            }\n            kcB {\n              id\n            }\n            type\n          }\n        }\n      }\n    "];
+export function gql(
+  source: "\n      mutation UnsetKCRelations($data: KCRelationInput!) {\n        adminDomain {\n          unsetKCRelation(data: $data)\n        }\n      }\n    "
+): typeof documents["\n      mutation UnsetKCRelations($data: KCRelationInput!) {\n        adminDomain {\n          unsetKCRelation(data: $data)\n        }\n      }\n    "];
 export function gql(
   source: "\n      mutation AdminCreateProject($data: CreateProject!) {\n        adminProjects {\n          createProject(data: $data) {\n            id\n            code\n            label\n          }\n        }\n      }\n    "
 ): typeof documents["\n      mutation AdminCreateProject($data: CreateProject!) {\n        adminProjects {\n          createProject(data: $data) {\n            id\n            code\n            label\n          }\n        }\n      }\n    "];

@@ -2,6 +2,7 @@ import {
   getNodeIdList,
   ResolveCursorConnection,
   parseKCRelation,
+  KcRelation,
 } from "api-base";
 import { gql, registerModule } from "../ez";
 
@@ -28,6 +29,7 @@ export const kcModule = registerModule(
       relations: [KCRelation!]!
     }
 
+    "Type of KC Relationship"
     enum KCRelationType {
       PARTOF
       INTERACT
@@ -40,7 +42,7 @@ export const kcModule = registerModule(
       id: IntID!
 
       "Type of relation"
-      relation: KCRelationType!
+      type: KCRelationType!
 
       "Domain shared by both KCs"
       domain: Domain!
@@ -147,12 +149,35 @@ export const kcModule = registerModule(
       label: String!
     }
 
+    input KCRelationInput {
+      "Type of KC Relation"
+      type: KCRelationType!
+
+      "KC A"
+      kcA: IntID!
+
+      "KC B"
+      kcB: IntID!
+
+      "Relation readable label"
+      label: String
+
+      "Custom comment text"
+      comment: String
+    }
+
     extend type AdminDomainMutations {
       "Create a new KC entity"
       createKC(data: CreateKCInput!): KC!
 
       "Update an existent KC entity"
       updateKC(data: UpdateKCInput!): KC!
+
+      "Set KC Relation"
+      setKCRelation(data: KCRelationInput!): KCRelation!
+
+      "Unset KC Relation"
+      unsetKCRelation(data: KCRelationInput!): Void
     }
 
     extend type Query {
@@ -194,30 +219,23 @@ export const kcModule = registerModule(
             rejectOnNotFound: true,
           });
         },
+        type({ relation }: Partial<KcRelation>) {
+          return parseKCRelation(relation);
+        },
       },
       KC: {
         async relations({ id }, _args, { prisma }) {
+          const kc = prisma.kC.findUnique({
+            where: {
+              id,
+            },
+          });
           const [ARelations, BRelations] = await Promise.all([
-            prisma.kC
-              .findUnique({
-                where: {
-                  id,
-                },
-              })
-              .kcARelations(),
-            prisma.kC
-              .findUnique({
-                where: {
-                  id,
-                },
-              })
-              .kcBRelations(),
+            kc.kcARelations(),
+            kc.kcBRelations(),
           ]);
 
-          return [...ARelations, ...BRelations].map((value) => ({
-            ...value,
-            relation: parseKCRelation(value.relation),
-          }));
+          return [...ARelations, ...BRelations];
         },
       },
       Topic: {
@@ -333,6 +351,86 @@ export const kcModule = registerModule(
             },
             data: {
               ...data,
+            },
+          });
+        },
+        async setKCRelation(
+          _root,
+          { data: { type, kcA, kcB, label = null, comment = null } },
+          { prisma }
+        ) {
+          const kcsDomain = await prisma.domain.findFirst({
+            where: {
+              AND: [
+                {
+                  kcs: {
+                    some: {
+                      id: kcA,
+                    },
+                  },
+                },
+                {
+                  kcs: {
+                    some: {
+                      id: kcB,
+                    },
+                  },
+                },
+              ],
+            },
+            select: {
+              id: true,
+            },
+          });
+
+          if (kcsDomain == null) {
+            throw Error(
+              `Shared domain could not be found between KCs "${kcA}" and "${kcB}"`
+            );
+          }
+
+          return await prisma.kcRelation.upsert({
+            create: {
+              domain: {
+                connect: {
+                  id: kcsDomain.id,
+                },
+              },
+              relation: type,
+              kcA: {
+                connect: {
+                  id: kcA,
+                },
+              },
+              kcB: {
+                connect: {
+                  id: kcB,
+                },
+              },
+              comment,
+              label,
+            },
+            update: {
+              comment,
+              label,
+            },
+            where: {
+              kcAId_kcBId_relation: {
+                kcAId: kcA,
+                kcBId: kcB,
+                relation: type,
+              },
+            },
+          });
+        },
+        async unsetKCRelation(_root, { data: { kcA, kcB, type } }, { prisma }) {
+          await prisma.kcRelation.delete({
+            where: {
+              kcAId_kcBId_relation: {
+                kcAId: kcA,
+                kcBId: kcB,
+                relation: type,
+              },
             },
           });
         },

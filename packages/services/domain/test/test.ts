@@ -1,3 +1,4 @@
+import { KCRelationType } from "common";
 import {
   assert,
   CreateDomain,
@@ -600,14 +601,25 @@ export async function CheckDomainsOfProjects({
   });
 }
 
-export async function CheckKCs({ query }: Pick<TestClient, "query">) {
-  const { project } = await CreateProject();
+export async function CheckKCs(
+  { query }: Pick<TestClient, "query">,
+  {
+    testProject,
+    testUser,
+    testDomain,
+  }: {
+    testProject?: Awaited<ReturnType<typeof CreateProject>>;
+    testUser?: Awaited<ReturnType<typeof CreateUser>>;
+    testDomain?: Awaited<ReturnType<typeof CreateDomain>>;
+  } = {}
+) {
+  const { project } = (testProject ??= await CreateProject());
 
-  const { authUser } = await CreateUser({ project });
+  const { authUser } = (testUser ??= await CreateUser({ project }));
 
-  const { domain } = await CreateDomain({
+  const { domain } = (testDomain ??= await CreateDomain({
     project,
-  });
+  }));
 
   MockAuthUser.user = authUser;
   {
@@ -750,4 +762,227 @@ export async function CheckKCs({ query }: Pick<TestClient, "query">) {
       },
     },
   });
+
+  return {
+    kc: newKc.data.adminDomain.createKC,
+    testDomain,
+    testProject,
+    testUser,
+  };
+}
+
+export async function CheckKCsRelations({
+  query,
+  assertedQuery,
+}: Pick<TestClient, "query" | "assertedQuery">) {
+  await prisma.$transaction([prisma.kC.deleteMany({})]);
+  const { kc, testDomain } = await CheckKCs({ query });
+
+  const kc2 = await prisma.kC.create({
+    data: {
+      code: generate(),
+      label: generate(),
+      domain: {
+        connect: {
+          id: testDomain.domain.id,
+        },
+      },
+    },
+  });
+
+  const bothKcsWithoutRelations = await assertedQuery(
+    gql(/* GraphQL */ `
+      query ChecksKcsWithoutRelations($ids: [IntID!]!) {
+        kcs(ids: $ids) {
+          id
+          relations {
+            id
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        ids: [kc.id, kc2.id.toString()],
+      },
+    }
+  );
+
+  expectDeepEqual(bothKcsWithoutRelations, {
+    kcs: [
+      {
+        id: kc.id,
+        relations: [],
+      },
+      {
+        id: kc2.id.toString(),
+        relations: [],
+      },
+    ],
+  });
+
+  const kcRelation = await assertedQuery(
+    gql(/* GraphQL */ `
+      mutation SetKCRelations($data: KCRelationInput!) {
+        adminDomain {
+          setKCRelation(data: $data) {
+            id
+            kcA {
+              id
+            }
+            kcB {
+              id
+            }
+            type
+            label
+            comment
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        data: {
+          type: KCRelationType.PARTOF,
+          kcA: kc.id,
+          kcB: kc2.id.toString(),
+          label: "test-label",
+          comment: "test-comment",
+        },
+      },
+    }
+  );
+
+  const kcRelationDb = await prisma.kcRelation.findFirst({
+    rejectOnNotFound: true,
+  });
+
+  expectDeepEqual(kcRelation, {
+    adminDomain: {
+      setKCRelation: {
+        id: kcRelationDb.id.toString(),
+        kcA: {
+          id: kc.id,
+        },
+        kcB: {
+          id: kc2.id.toString(),
+        },
+        type: KCRelationType.PARTOF,
+        label: "test-label",
+        comment: "test-comment",
+      },
+    },
+  });
+
+  const bothKcsWithRelations = await assertedQuery(
+    gql(/* GraphQL */ `
+      query ChecksKcsWithRelations($ids: [IntID!]!) {
+        kcs(ids: $ids) {
+          id
+          relations {
+            id
+            kcA {
+              id
+            }
+            kcB {
+              id
+            }
+            type
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        ids: [kc.id, kc2.id.toString()],
+      },
+    }
+  );
+
+  expectDeepEqual(bothKcsWithRelations, {
+    kcs: [
+      {
+        id: kc.id,
+        relations: [
+          {
+            id: kcRelation.adminDomain.setKCRelation.id,
+            kcA: {
+              id: kc.id.toString(),
+            },
+            kcB: {
+              id: kc2.id.toString(),
+            },
+            type: KCRelationType.PARTOF,
+          },
+        ],
+      },
+      {
+        id: kc2.id.toString(),
+        relations: [
+          {
+            id: kcRelation.adminDomain.setKCRelation.id,
+            kcA: {
+              id: kc.id.toString(),
+            },
+            kcB: {
+              id: kc2.id.toString(),
+            },
+            type: KCRelationType.PARTOF,
+          },
+        ],
+      },
+    ],
+  });
+
+  await assertedQuery(
+    gql(/* GraphQL */ `
+      mutation UnsetKCRelations($data: KCRelationInput!) {
+        adminDomain {
+          unsetKCRelation(data: $data)
+        }
+      }
+    `),
+    {
+      variables: {
+        data: {
+          type: KCRelationType.PARTOF,
+          kcA: kc.id,
+          kcB: kc2.id.toString(),
+        },
+      },
+    }
+  );
+
+  const bothKcsWithoutRelations2 = await assertedQuery(
+    gql(/* GraphQL */ `
+      query ChecksKcsWithoutRelations($ids: [IntID!]!) {
+        kcs(ids: $ids) {
+          id
+          relations {
+            id
+          }
+        }
+      }
+    `),
+    {
+      variables: {
+        ids: [kc.id, kc2.id.toString()],
+      },
+    }
+  );
+
+  expectDeepEqual(bothKcsWithoutRelations2, {
+    kcs: [
+      {
+        id: kc.id,
+        relations: [],
+      },
+      {
+        id: kc2.id.toString(),
+        relations: [],
+      },
+    ],
+  });
+
+  expectDeepEqual(await prisma.kcRelation.findFirst(), null);
 }
