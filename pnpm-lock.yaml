@@ -507,6 +507,14 @@ importers:
       graphql-ez: 0.15.1_exvfdlvhcng26fz4bmdxzrzhyu
       typescript: 4.7.4
 
+  packages/services/model:
+    specifiers:
+      api-base: workspace:^0.0.1
+      db: workspace:^0.0.1
+    dependencies:
+      api-base: link:../../api-base
+      db: link:../../db
+
   packages/services/projects:
     specifiers:
       '@types/node': ^17.0.45
@@ -682,6 +690,7 @@ packages:
     dependencies:
       '@auth0/auth0-spa-js': 1.22.1
       react: 17.0.2
+    dev: false
 
   /@auth0/auth0-react/1.10.2_sfoxds7t5ydpegc3knd667wn6m:
     resolution: {integrity: sha512-s622ac/gLZ9pUX7d5dOhRggF4VI3MaLLCPVBFR5CKOGcPtPG80/4w2jMoBQtRRn6uKS6IVMWAUAFKWB7yATAoQ==}
