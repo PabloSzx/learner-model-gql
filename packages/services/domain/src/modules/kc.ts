@@ -235,7 +235,7 @@ export const kcModule = registerModule(
             kc.kcBRelations(),
           ]);
 
-          return [...ARelations, ...BRelations];
+          return [...(ARelations || []), ...(BRelations || [])];
         },
       },
       Topic: {
