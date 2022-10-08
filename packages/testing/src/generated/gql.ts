@@ -1,122 +1,122 @@
 /* eslint-disable */
-import * as graphql from "./graphql";
+import * as types from "./graphql";
 import type { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/core";
 
 const documents = {
   "\n          query hello {\n            hello\n          }\n        ":
-    graphql.HelloDocument,
+    types.HelloDocument,
   "\n            mutation CreateAction($data: ActionInput!) {\n              action(data: $data)\n            }\n          ":
-    graphql.CreateActionDocument,
+    types.CreateActionDocument,
   "\n            query AllActions($pagination: CursorConnectionArgs!) {\n              adminActions {\n                allActions(pagination: $pagination) {\n                  nodes {\n                    verb {\n                      name\n                    }\n                    result\n                    user {\n                      id\n                    }\n                  }\n                  pageInfo {\n                    hasNextPage\n                  }\n                }\n              }\n            }\n          ":
-    graphql.AllActionsDocument,
+    types.AllActionsDocument,
   "\n  mutation CreateAction($data: ActionInput!) {\n    action(data: $data)\n  }\n":
-    graphql.CreateActionDocument,
+    types.CreateActionDocument,
   "\n      query AllActions($pagination: CursorConnectionArgs!) {\n        adminActions {\n          allActions(pagination: $pagination) {\n            nodes {\n              verb {\n                name\n              }\n              result\n              user {\n                id\n              }\n            }\n            pageInfo {\n              hasNextPage\n            }\n          }\n        }\n      }\n    ":
-    graphql.AllActionsDocument,
+    types.AllActionsDocument,
   "\n      query ProjectActions(\n        $projectId: IntID!\n        $pagination: CursorConnectionArgs!\n        $filters: ProjectActionsFilter\n      ) {\n        projects(ids: [$projectId]) {\n          id\n          actions(pagination: $pagination, filters: $filters) {\n            nodes {\n              id\n              verb {\n                name\n              }\n            }\n            pageInfo {\n              hasNextPage\n            }\n          }\n        }\n      }\n    ":
-    graphql.ProjectActionsDocument,
+    types.ProjectActionsDocument,
   "\n          query AllContent($pagination: CursorConnectionArgs!) {\n            adminContent {\n              allContent(pagination: $pagination) {\n                nodes {\n                  id\n                  description\n                  binaryBase64\n                  json\n                }\n                pageInfo {\n                  hasNextPage\n                }\n              }\n            }\n          }\n        ":
-    graphql.AllContentDocument,
+    types.AllContentDocument,
   "\n          mutation CreateContent($data: CreateContent!) {\n            adminContent {\n              createContent(data: $data) {\n                id\n                description\n                binaryBase64\n                json\n                code\n                label\n              }\n            }\n          }\n        ":
-    graphql.CreateContentDocument,
+    types.CreateContentDocument,
   "\n          query ContentFromTopic($ids: [IntID!]!) {\n            topics(ids: $ids) {\n              id\n              content {\n                id\n                description\n                binaryBase64\n                json\n              }\n            }\n          }\n        ":
-    graphql.ContentFromTopicDocument,
+    types.ContentFromTopicDocument,
   "\n      mutation CreateContent($data: CreateContent!) {\n        adminContent {\n          createContent(data: $data) {\n            id\n            description\n            binaryBase64\n            json\n            code\n            label\n          }\n        }\n      }\n    ":
-    graphql.CreateContentDocument,
+    types.CreateContentDocument,
   "\n        query AllContent($pagination: CursorConnectionArgs!) {\n          adminContent {\n            allContent(pagination: $pagination) {\n              nodes {\n                id\n                description\n                binaryBase64\n                json\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      ":
-    graphql.AllContentDocument,
+    types.AllContentDocument,
   "\n        query ContentFromTopic($ids: [IntID!]!) {\n          topics(ids: $ids) {\n            id\n            content {\n              id\n              description\n              binaryBase64\n              json\n            }\n          }\n        }\n      ":
-    graphql.ContentFromTopicDocument,
+    types.ContentFromTopicDocument,
   "\n  fragment IsolatedDomainFields on Domain {\n    id\n    code\n    label\n  }\n":
-    graphql.IsolatedDomainFieldsFragmentDoc,
+    types.IsolatedDomainFieldsFragmentDoc,
   "\n  fragment IsolatedTopicFields on Topic {\n    id\n    code\n    label\n    parent {\n      id\n    }\n    childrens {\n      id\n    }\n  }\n":
-    graphql.IsolatedTopicFieldsFragmentDoc,
+    types.IsolatedTopicFieldsFragmentDoc,
   "\n      mutation CreateDomain($input: CreateDomain!) {\n        adminDomain {\n          createDomain(input: $input) {\n            ...IsolatedDomainFields\n          }\n        }\n      }\n    ":
-    graphql.CreateDomainDocument,
+    types.CreateDomainDocument,
   "\n        query AllDomains($pagination: CursorConnectionArgs!) {\n          adminDomain {\n            allDomains(pagination: $pagination) {\n              nodes {\n                ...IsolatedDomainFields\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      ":
-    graphql.AllDomainsDocument,
+    types.AllDomainsDocument,
   "\n      mutation UpdateDomain($input: UpdateDomain!) {\n        adminDomain {\n          updateDomain(input: $input) {\n            ...IsolatedDomainFields\n          }\n        }\n      }\n    ":
-    graphql.UpdateDomainDocument,
+    types.UpdateDomainDocument,
   "\n      mutation CreateTopic($input: CreateTopic!) {\n        adminDomain {\n          createTopic(input: $input) {\n            ...IsolatedTopicFields\n          }\n        }\n      }\n    ":
-    graphql.CreateTopicDocument,
+    types.CreateTopicDocument,
   "\n      query AllTopics($pagination: CursorConnectionArgs!) {\n        adminDomain {\n          allTopics(pagination: $pagination) {\n            nodes {\n              ...IsolatedTopicFields\n            }\n            pageInfo {\n              hasNextPage\n            }\n          }\n        }\n      }\n    ":
-    graphql.AllTopicsDocument,
+    types.AllTopicsDocument,
   "\n        mutation UpdateTopic($input: UpdateTopic!) {\n          adminDomain {\n            updateTopic(input: $input) {\n              ...IsolatedTopicFields\n            }\n          }\n        }\n      ":
-    graphql.UpdateTopicDocument,
+    types.UpdateTopicDocument,
   "\n        query AllTopics($pagination: CursorConnectionArgs!) {\n          adminDomain {\n            allTopics(pagination: $pagination) {\n              nodes {\n                ...IsolatedTopicFields\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      ":
-    graphql.AllTopicsDocument,
+    types.AllTopicsDocument,
   "\n      query DomainsFromProjects($ids: [IntID!]!) {\n        projects(ids: $ids) {\n          id\n          domains {\n            id\n          }\n        }\n      }\n    ":
-    graphql.DomainsFromProjectsDocument,
+    types.DomainsFromProjectsDocument,
   "\n        query AllKcsFirst10 {\n          adminDomain {\n            allKCs(pagination: { first: 10 }) {\n              nodes {\n                id\n                code\n                label\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      ":
-    graphql.AllKcsFirst10Document,
+    types.AllKcsFirst10Document,
   "\n      mutation CreateKC($data: CreateKCInput!) {\n        adminDomain {\n          createKC(data: $data) {\n            id\n            code\n            label\n            domain {\n              id\n            }\n          }\n        }\n      }\n    ":
-    graphql.CreateKcDocument,
+    types.CreateKcDocument,
   "\n      mutation UpdateKC($data: UpdateKCInput!) {\n        adminDomain {\n          updateKC(data: $data) {\n            id\n            code\n            label\n            domain {\n              id\n            }\n          }\n        }\n      }\n    ":
-    graphql.UpdateKcDocument,
+    types.UpdateKcDocument,
   "\n      query ChecksKcsWithoutRelations($ids: [IntID!]!) {\n        kcs(ids: $ids) {\n          id\n          relations {\n            id\n          }\n        }\n      }\n    ":
-    graphql.ChecksKcsWithoutRelationsDocument,
+    types.ChecksKcsWithoutRelationsDocument,
   "\n      mutation SetKCRelations($data: KCRelationInput!) {\n        adminDomain {\n          setKCRelation(data: $data) {\n            id\n            kcA {\n              id\n            }\n            kcB {\n              id\n            }\n            type\n            label\n            comment\n          }\n        }\n      }\n    ":
-    graphql.SetKcRelationsDocument,
+    types.SetKcRelationsDocument,
   "\n      query ChecksKcsWithRelations($ids: [IntID!]!) {\n        kcs(ids: $ids) {\n          id\n          relations {\n            id\n            kcA {\n              id\n            }\n            kcB {\n              id\n            }\n            type\n          }\n        }\n      }\n    ":
-    graphql.ChecksKcsWithRelationsDocument,
+    types.ChecksKcsWithRelationsDocument,
   "\n      mutation UnsetKCRelations($data: KCRelationInput!) {\n        adminDomain {\n          unsetKCRelation(data: $data)\n        }\n      }\n    ":
-    graphql.UnsetKcRelationsDocument,
+    types.UnsetKcRelationsDocument,
   "\n      mutation AdminCreateProject($data: CreateProject!) {\n        adminProjects {\n          createProject(data: $data) {\n            id\n            code\n            label\n          }\n        }\n      }\n    ":
-    graphql.AdminCreateProjectDocument,
+    types.AdminCreateProjectDocument,
   "\n      query AdminAllProjects($pagination: CursorConnectionArgs!) {\n        adminProjects {\n          allProjects(pagination: $pagination) {\n            nodes {\n              id\n              code\n              label\n            }\n            pageInfo {\n              hasNextPage\n            }\n          }\n        }\n      }\n    ":
-    graphql.AdminAllProjectsDocument,
+    types.AdminAllProjectsDocument,
   "\n        mutation AdminUpdateProject($data: UpdateProject!) {\n          adminProjects {\n            updateProject(data: $data) {\n              id\n              code\n              label\n            }\n          }\n        }\n      ":
-    graphql.AdminUpdateProjectDocument,
+    types.AdminUpdateProjectDocument,
   "\n        query AdminAllProjects($pagination: CursorConnectionArgs!) {\n          adminProjects {\n            allProjects(pagination: $pagination) {\n              nodes {\n                id\n                code\n                label\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      ":
-    graphql.AdminAllProjectsDocument,
+    types.AdminAllProjectsDocument,
   "\n      query AdminProjectFromContent($ids: [IntID!]!) {\n        content(ids: $ids) {\n          id\n          project {\n            id\n            code\n            label\n          }\n        }\n      }\n    ":
-    graphql.AdminProjectFromContentDocument,
+    types.AdminProjectFromContentDocument,
   "\n        query AdminProjectFromDomain($ids: [IntID!]!) {\n          domains(ids: $ids) {\n            id\n            projects {\n              id\n              code\n              label\n            }\n          }\n        }\n      ":
-    graphql.AdminProjectFromDomainDocument,
+    types.AdminProjectFromDomainDocument,
   "\n        query AdminProjectFromTopic($ids: [IntID!]!) {\n          topics(ids: $ids) {\n            id\n            project {\n              id\n              code\n              label\n            }\n          }\n        }\n      ":
-    graphql.AdminProjectFromTopicDocument,
+    types.AdminProjectFromTopicDocument,
   "\n          query AdminProjectFromUser($ids: [IntID!]!) {\n            users(ids: $ids) {\n              id\n              projects {\n                id\n                code\n                label\n              }\n            }\n          }\n        ":
-    graphql.AdminProjectFromUserDocument,
+    types.AdminProjectFromUserDocument,
   "\n          query AdminProjectFromGroup($ids: [IntID!]!) {\n            groups(ids: $ids) {\n              id\n              projects {\n                id\n              }\n            }\n          }\n        ":
-    graphql.AdminProjectFromGroupDocument,
+    types.AdminProjectFromGroupDocument,
   "\n      query AllStatesTest {\n        adminState {\n          allModelStates(input: { pagination: { first: 10 } }) {\n            pageInfo {\n              hasNextPage\n            }\n            nodes {\n              id\n              json\n              creator\n              type\n              user {\n                id\n              }\n              domain {\n                id\n              }\n            }\n          }\n        }\n      }\n    ":
-    graphql.AllStatesTestDocument,
+    types.AllStatesTestDocument,
   "\n  fragment UserInfo on User {\n    id\n    email\n    name\n    locked\n    active\n    lastOnline\n    role\n    createdAt\n    updatedAt\n  }\n":
-    graphql.UserInfoFragmentDoc,
+    types.UserInfoFragmentDoc,
   "\n  fragment GroupInfo on Group {\n    id\n    code\n    label\n    users {\n      id\n      email\n    }\n    projectsIds\n  }\n":
-    graphql.GroupInfoFragmentDoc,
+    types.GroupInfoFragmentDoc,
   "\n  fragment UserGroupsInfo on User {\n    id\n    email\n    groups {\n      ...GroupInfo\n    }\n  }\n":
-    graphql.UserGroupsInfoFragmentDoc,
+    types.UserGroupsInfoFragmentDoc,
   "\n          query UsersById($ids: [IntID!]!) {\n            users(ids: $ids) {\n              ...UserInfo\n            }\n          }\n        ":
-    graphql.UsersByIdDocument,
+    types.UsersByIdDocument,
   "\n          query AdminAllUsers($pagination: CursorConnectionArgs!) {\n            adminUsers {\n              allUsers(pagination: $pagination) {\n                nodes {\n                  ...UserInfo\n                }\n                pageInfo {\n                  hasNextPage\n                }\n              }\n            }\n          }\n        ":
-    graphql.AdminAllUsersDocument,
+    types.AdminAllUsersDocument,
   "\n      mutation UpsertUsersWithProjects(\n        $emails: [EmailAddress!]!\n        $projectsIds: [IntID!]!\n      ) {\n        adminUsers {\n          upsertUsersWithProjects(emails: $emails, projectsIds: $projectsIds) {\n            ...UserInfo\n          }\n        }\n      }\n    ":
-    graphql.UpsertUsersWithProjectsDocument,
+    types.UpsertUsersWithProjectsDocument,
   "\n        query AdminAllUsers($pagination: CursorConnectionArgs!) {\n          adminUsers {\n            allUsers(pagination: $pagination) {\n              nodes {\n                ...UserInfo\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      ":
-    graphql.AdminAllUsersDocument,
+    types.AdminAllUsersDocument,
   "\n        query CurrentUser {\n          currentUser {\n            ...UserInfo\n          }\n        }\n      ":
-    graphql.CurrentUserDocument,
+    types.CurrentUserDocument,
   "\n          query AdminAllGroups($pagination: CursorConnectionArgs!) {\n            adminUsers {\n              allGroups(pagination: $pagination) {\n                nodes {\n                  ...GroupInfo\n                }\n                pageInfo {\n                  hasNextPage\n                }\n              }\n            }\n          }\n        ":
-    graphql.AdminAllGroupsDocument,
+    types.AdminAllGroupsDocument,
   "\n          query GetGroups($ids: [IntID!]!) {\n            groups(ids: $ids) {\n              ...GroupInfo\n            }\n          }\n        ":
-    graphql.GetGroupsDocument,
+    types.GetGroupsDocument,
   "\n          query UsersGroups($ids: [IntID!]!) {\n            users(ids: $ids) {\n              ...UserGroupsInfo\n            }\n          }\n        ":
-    graphql.UsersGroupsDocument,
+    types.UsersGroupsDocument,
   "\n      mutation SetUserGroups(\n        $usersEmails: [EmailAddress!]!\n        $groupIds: [IntID!]!\n      ) {\n        adminUsers {\n          setUserGroups(usersEmails: $usersEmails, groupIds: $groupIds) {\n            id\n            code\n            label\n            projectsIds\n            users {\n              id\n              email\n            }\n          }\n        }\n      }\n    ":
-    graphql.SetUserGroupsDocument,
+    types.SetUserGroupsDocument,
   "\n      mutation AdminCreateGroup($data: CreateGroupInput!) {\n        adminUsers {\n          createGroup(data: $data) {\n            ...GroupInfo\n          }\n        }\n      }\n    ":
-    graphql.AdminCreateGroupDocument,
+    types.AdminCreateGroupDocument,
   "\n      mutation AdminUpdateGroup($data: UpdateGroupInput!) {\n        adminUsers {\n          updateGroup(data: $data) {\n            ...GroupInfo\n          }\n        }\n      }\n    ":
-    graphql.AdminUpdateGroupDocument,
+    types.AdminUpdateGroupDocument,
   "\n      mutation SetUserProjects($projectIds: [IntID!]!, $userIds: [IntID!]!) {\n        adminUsers {\n          setProjectsToUsers(projectIds: $projectIds, userIds: $userIds) {\n            id\n            email\n            projectsIds\n          }\n        }\n      }\n    ":
-    graphql.SetUserProjectsDocument,
+    types.SetUserProjectsDocument,
   "\n      query LoadTestCurrentUser($projectId: IntID!) {\n        currentUser {\n          id\n          email\n        }\n        project(id: $projectId) {\n          id\n          code\n          label\n          topics {\n            id\n            code\n            label\n          }\n          content(pagination: { first: 50 }) {\n            nodes {\n              id\n              code\n              label\n              tags\n              kcs {\n                id\n                code\n                label\n              }\n            }\n          }\n        }\n      }\n    ":
-    graphql.LoadTestCurrentUserDocument,
+    types.LoadTestCurrentUserDocument,
   "\n        mutation LoadTestAction($data: ActionInput!) {\n          action(data: $data)\n        }\n      ":
-    graphql.LoadTestActionDocument,
+    types.LoadTestActionDocument,
   "\n            query hello {\n              hello\n            }\n          ":
-    graphql.HelloDocument,
+    types.HelloDocument,
 };
 
 export function gql(
