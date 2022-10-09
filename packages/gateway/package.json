@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "@graphql-ez/fastify": "^0.11.0",
-    "@graphql-ez/plugin-altair": "^0.9.11",
-    "@graphql-ez/plugin-voyager": "^0.9.4",
+    "@graphql-ez/plugin-altair": "^0.9.12",
+    "@graphql-ez/plugin-voyager": "^0.9.5",
     "@graphql-ez/plugin-websockets": "^0.10.5",
     "@graphql-tools/delegate": "^9.0.8",
     "@graphql-tools/stitch": "^8.7.13",
@@ -38,7 +38,7 @@
     "@types/ws": "^8.5.3",
     "concurrently": "^7.4.0",
     "graphql": "^16.6.0",
-    "graphql-ez": "^0.15.1",
+    "graphql-ez": "^0.15.2",
     "typescript": "^4.8.4"
   }
 }

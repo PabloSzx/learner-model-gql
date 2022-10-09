@@ -23,7 +23,7 @@
     "@graphql-codegen/typescript-react-query": "^4.0.1",
     "@graphql-typed-document-node/core": "^3.1.1",
     "@types/node": "^18.8.3",
-    "graphql-ez": "^0.15.1",
+    "graphql-ez": "^0.15.2",
     "prettier": "^2.7.1",
     "react": "^17.0.2",
     "react-query": "^3.39.2",

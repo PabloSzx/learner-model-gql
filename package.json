@@ -40,7 +40,7 @@
     "esbuild": "^0.15.10",
     "fastify": "^4.7.0",
     "graphql": "^16.6.0",
-    "graphql-ez": "^0.15.1",
+    "graphql-ez": "^0.15.2",
     "graphql-tag": "^2.12.6",
     "lodash": "^4.17.21",
     "undici": "^5.11.0"

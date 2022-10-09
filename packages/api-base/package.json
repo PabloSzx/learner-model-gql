@@ -8,11 +8,11 @@
   "dependencies": {
     "@auth0/auth0-react": "^1.11.0",
     "@graphql-ez/fastify": "^0.11.0",
-    "@graphql-ez/plugin-altair": "^0.9.11",
+    "@graphql-ez/plugin-altair": "^0.9.12",
     "@graphql-ez/plugin-modules": "^0.11.1",
     "@graphql-ez/plugin-scalars": "^0.7.5",
     "@graphql-ez/plugin-schema": "^0.8.5",
-    "@graphql-ez/plugin-voyager": "^0.9.4",
+    "@graphql-ez/plugin-voyager": "^0.9.5",
     "@graphql-ez/plugin-websockets": "^0.10.5",
     "@graphql-tools/schema": "^9.0.4",
     "common-api": "workspace:^1.0.0",
@@ -31,7 +31,7 @@
     "@types/validator": "^13.7.7",
     "@types/wait-on": "^5.3.1",
     "graphql": "^16.6.0",
-    "graphql-ez": "^0.15.1",
+    "graphql-ez": "^0.15.2",
     "react": "^17.0.2",
     "typescript": "^4.8.4"
   }
