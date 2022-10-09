@@ -106,7 +106,7 @@ export async function ResolveCursorConnection<
           id: number;
         }
       | undefined;
-  }) => Promise<T[]>
+  }) => Promise<T[] | null>
 ) {
   const {
     after,
@@ -151,29 +151,28 @@ export async function ResolveCursorConnection<
   let nodes: T[];
 
   if (forwardPagination) {
-    nodes = await cb({
-      take,
-      skip: after ? 1 : undefined,
-      cursor: after
-        ? {
-            id: toNonNegativeInteger(after),
-          }
-        : undefined,
-    });
+    nodes =
+      (await cb({
+        take,
+        skip: after ? 1 : undefined,
+        cursor: after
+          ? {
+              id: toNonNegativeInteger(after),
+            }
+          : undefined,
+      })) || [];
   } else {
-    nodes = await cb({
-      take: -take,
-      skip: before ? 1 : undefined,
-      cursor: before
-        ? {
-            id: toNonNegativeInteger(before),
-          }
-        : undefined,
-    });
+    nodes =
+      (await cb({
+        take: -take,
+        skip: before ? 1 : undefined,
+        cursor: before
+          ? {
+              id: toNonNegativeInteger(before),
+            }
+          : undefined,
+      })) || [];
   }
-
-  // This is in case the callback returns an unexpected null instead of an array
-  nodes ||= [];
 
   if (nodes.length > originalLength) {
     hasExtraNode = forwardPagination ? !!nodes.pop() : !!nodes.shift();

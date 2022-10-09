@@ -8,21 +8,21 @@
     "start": "bob-tsm --keep-esm-loader src/index.ts"
   },
   "dependencies": {
-    "@graphql-ez/plugin-altair": "^0.9.10",
+    "@graphql-ez/plugin-altair": "^0.9.12",
     "@graphql-ez/plugin-modules": "^0.11.1",
-    "@graphql-ez/plugin-voyager": "^0.9.4",
+    "@graphql-ez/plugin-voyager": "^0.9.5",
     "@graphql-ez/plugin-websockets": "^0.10.5",
-    "@graphql-tools/stitch": "^8.7.0",
-    "@graphql-tools/utils": "^8.8.0",
+    "@graphql-tools/stitch": "^8.7.13",
+    "@graphql-tools/utils": "^8.12.0",
     "api-base": "workspace:^0.0.1",
-    "bob-tsm": "^1.0.0",
-    "esbuild": "^0.14.48",
-    "fastify": "^4.2.0"
+    "bob-tsm": "^1.1.2",
+    "esbuild": "^0.15.10",
+    "fastify": "^4.7.0"
   },
   "devDependencies": {
-    "@types/node": "^17.0.45",
-    "graphql": "^16.5.0",
-    "graphql-ez": "^0.15.1",
-    "typescript": "^4.7.4"
+    "@types/node": "^18.8.3",
+    "graphql": "^16.6.0",
+    "graphql-ez": "^0.15.2",
+    "typescript": "^4.8.4"
   }
 }
