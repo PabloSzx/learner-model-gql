@@ -199,27 +199,24 @@ export const kcModule = registerModule(
     resolvers: {
       KCRelation: {
         domain({ domainId }, _args, { prisma }) {
-          return prisma.domain.findUnique({
+          return prisma.domain.findUniqueOrThrow({
             where: {
               id: domainId,
             },
-            rejectOnNotFound: true,
           });
         },
         kcA({ kcAId }, _args, { prisma }) {
-          return prisma.kC.findUnique({
+          return prisma.kC.findUniqueOrThrow({
             where: {
               id: kcAId,
             },
-            rejectOnNotFound: true,
           });
         },
         kcB({ kcBId }, _args, { prisma }) {
-          return prisma.kC.findUnique({
+          return prisma.kC.findUniqueOrThrow({
             where: {
               id: kcBId,
             },
-            rejectOnNotFound: true,
           });
         },
         type({ relation = "null" }: Partial<KcRelation>) {

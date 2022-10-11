@@ -274,7 +274,7 @@ export const topicsGrupedByProjectWithParent = await pMap(
     await Promise.all(
       topicsAssigned.map(async (topic) => {
         const childrens = (
-          await prisma.topic.findUnique({
+          await prisma.topic.findUniqueOrThrow({
             where: {
               id: topic.id,
             },
@@ -285,7 +285,6 @@ export const topicsGrupedByProjectWithParent = await pMap(
                 },
               },
             },
-            rejectOnNotFound: true,
           })
         ).childrens;
 

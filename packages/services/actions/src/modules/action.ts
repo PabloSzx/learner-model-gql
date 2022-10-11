@@ -497,7 +497,7 @@ export const actionModule = registerModule(
                     ? {
                         connect: {
                           id: (
-                            await prisma.content.findFirst({
+                            await prisma.content.findFirstOrThrow({
                               where: isInt(contentID)
                                 ? {
                                     projectId: userProjectId,
@@ -507,7 +507,6 @@ export const actionModule = registerModule(
                                     projectId: userProjectId,
                                     code: contentID.toString(),
                                   },
-                              rejectOnNotFound: true,
                               select: {
                                 id: true,
                               },
@@ -525,7 +524,7 @@ export const actionModule = registerModule(
                     ? {
                         connect: {
                           id: (
-                            await prisma.topic.findFirst({
+                            await prisma.topic.findFirstOrThrow({
                               where: isInt(topicID)
                                 ? {
                                     projectId: userProjectId,
@@ -535,7 +534,6 @@ export const actionModule = registerModule(
                                     projectId: userProjectId,
                                     code: topicID,
                                   },
-                              rejectOnNotFound: true,
                               select: {
                                 id: true,
                               },

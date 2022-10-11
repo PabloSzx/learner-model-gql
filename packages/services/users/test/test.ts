@@ -290,11 +290,10 @@ export async function CheckUsers({
       }
     );
 
-    const authUserUpdatedDates = await prisma.user.findUnique({
+    const authUserUpdatedDates = await prisma.user.findUniqueOrThrow({
       where: {
         id: authUser.user.id,
       },
-      rejectOnNotFound: true,
       select: {
         lastOnline: true,
         updatedAt: true,
@@ -335,11 +334,10 @@ export async function CheckUsers({
       `)
     );
 
-    const authUserUpdatedDates = await prisma.user.findUnique({
+    const authUserUpdatedDates = await prisma.user.findUniqueOrThrow({
       where: {
         id: authUser.user.id,
       },
-      rejectOnNotFound: true,
       select: {
         lastOnline: true,
         updatedAt: true,

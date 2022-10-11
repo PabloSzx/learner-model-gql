@@ -852,9 +852,7 @@ export async function CheckKCsRelations({
     }
   );
 
-  const kcRelationDb = await prisma.kcRelation.findFirst({
-    rejectOnNotFound: true,
-  });
+  const kcRelationDb = await prisma.kcRelation.findFirstOrThrow({});
 
   expectDeepEqual(kcRelation, {
     adminDomain: {
