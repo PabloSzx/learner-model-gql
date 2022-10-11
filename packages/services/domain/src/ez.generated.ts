@@ -59,58 +59,58 @@ export type AdminDomainMutations = {
   /** Create a new domain entity */
   createDomain: Domain;
   /** Create a new KC entity */
-  createKC: Kc;
+  createKC: KC;
   /** Create a new topic entity */
   createTopic: Topic;
   /** Set KC Relation */
-  setKCRelation: KcRelation;
+  setKCRelation: KCRelation;
   /** Unset KC Relation */
   unsetKCRelation?: Maybe<Scalars["Void"]>;
   /** Update an existent domain entity */
   updateDomain: Domain;
   /** Update an existent KC entity */
-  updateKC: Kc;
+  updateKC: KC;
   /** Update an existent topic entity */
   updateTopic: Topic;
 };
 
 /** Admin Domain-Related Queries */
-export type AdminDomainMutationsCreateDomainArgs = {
+export type AdminDomainMutationscreateDomainArgs = {
   input: CreateDomain;
 };
 
 /** Admin Domain-Related Queries */
-export type AdminDomainMutationsCreateKcArgs = {
-  data: CreateKcInput;
+export type AdminDomainMutationscreateKCArgs = {
+  data: CreateKCInput;
 };
 
 /** Admin Domain-Related Queries */
-export type AdminDomainMutationsCreateTopicArgs = {
+export type AdminDomainMutationscreateTopicArgs = {
   input: CreateTopic;
 };
 
 /** Admin Domain-Related Queries */
-export type AdminDomainMutationsSetKcRelationArgs = {
-  data: KcRelationInput;
+export type AdminDomainMutationssetKCRelationArgs = {
+  data: KCRelationInput;
 };
 
 /** Admin Domain-Related Queries */
-export type AdminDomainMutationsUnsetKcRelationArgs = {
-  data: KcRelationInput;
+export type AdminDomainMutationsunsetKCRelationArgs = {
+  data: KCRelationInput;
 };
 
 /** Admin Domain-Related Queries */
-export type AdminDomainMutationsUpdateDomainArgs = {
+export type AdminDomainMutationsupdateDomainArgs = {
   input: UpdateDomain;
 };
 
 /** Admin Domain-Related Queries */
-export type AdminDomainMutationsUpdateKcArgs = {
-  data: UpdateKcInput;
+export type AdminDomainMutationsupdateKCArgs = {
+  data: UpdateKCInput;
 };
 
 /** Admin Domain-Related Queries */
-export type AdminDomainMutationsUpdateTopicArgs = {
+export type AdminDomainMutationsupdateTopicArgs = {
   input: UpdateTopic;
 };
 
@@ -138,19 +138,19 @@ export type AdminDomainQueries = {
 };
 
 /** Admin Domain-Related Queries */
-export type AdminDomainQueriesAllDomainsArgs = {
+export type AdminDomainQueriesallDomainsArgs = {
   filters?: InputMaybe<AdminDomainsFilter>;
   pagination: CursorConnectionArgs;
 };
 
 /** Admin Domain-Related Queries */
-export type AdminDomainQueriesAllKCsArgs = {
+export type AdminDomainQueriesallKCsArgs = {
   filters?: InputMaybe<AdminKCsFilter>;
   pagination: CursorConnectionArgs;
 };
 
 /** Admin Domain-Related Queries */
-export type AdminDomainQueriesAllTopicsArgs = {
+export type AdminDomainQueriesallTopicsArgs = {
   filters?: InputMaybe<AdminTopicsFilter>;
   pagination: CursorConnectionArgs;
 };
@@ -215,7 +215,7 @@ export type Content = {
   /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** KCs associated with the content */
-  kcs: Array<Kc>;
+  kcs: Array<KC>;
   /** Topics associated with the content */
   topics: Array<Topic>;
 };
@@ -231,7 +231,7 @@ export type CreateDomain = {
 };
 
 /** KC creation input data */
-export type CreateKcInput = {
+export type CreateKCInput = {
   /** Unique string identifier */
   code: Scalars["String"];
   /** Domain associated with KC */
@@ -312,7 +312,7 @@ export type Domain = {
   /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** KCs associated with the domain */
-  kcs: Array<Kc>;
+  kcs: Array<KC>;
   /** Human readable identifier */
   label: Scalars["String"];
   /** Date of last update */
@@ -329,7 +329,7 @@ export type DomainsConnection = Connection & {
 };
 
 /** KC / Knowledge Component Entity */
-export type Kc = {
+export type KC = {
   __typename?: "KC";
   /** Unique string identifier */
   code: Scalars["String"];
@@ -342,7 +342,7 @@ export type Kc = {
   /** Human readable identifier */
   label: Scalars["String"];
   /** All relations of KC */
-  relations: Array<KcRelation>;
+  relations: Array<KCRelation>;
   /** Topics associated with the KC */
   topics: Array<Topic>;
   /** Date of last update */
@@ -350,7 +350,7 @@ export type Kc = {
 };
 
 /** Relations between KCs */
-export type KcRelation = {
+export type KCRelation = {
   __typename?: "KCRelation";
   /** Custom Comment of KC Relation */
   comment?: Maybe<Scalars["String"]>;
@@ -361,20 +361,20 @@ export type KcRelation = {
   /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** KC A */
-  kcA: Kc;
+  kcA: KC;
   /** KC A id */
   kcAId: Scalars["IntID"];
   /** KC B */
-  kcB: Kc;
+  kcB: KC;
   /** KC B id */
   kcBId: Scalars["IntID"];
   /** Custom Label of KC Relation */
   label?: Maybe<Scalars["String"]>;
   /** Type of relation */
-  type: KcRelationType;
+  type: KCRelationType;
 };
 
-export type KcRelationInput = {
+export type KCRelationInput = {
   /** Custom comment text */
   comment?: InputMaybe<Scalars["String"]>;
   /** KC A */
@@ -384,17 +384,22 @@ export type KcRelationInput = {
   /** Relation readable label */
   label?: InputMaybe<Scalars["String"]>;
   /** Type of KC Relation */
-  type: KcRelationType;
+  type: KCRelationType;
 };
 
 /** Type of KC Relationship */
-export type KcRelationType = "INTERACT" | "PARTOF" | "PREREQUISITE";
+export const KCRelationType = {
+  INTERACT: "INTERACT",
+  PARTOF: "PARTOF",
+  PREREQUISITE: "PREREQUISITE",
+} as const;
 
+export type KCRelationType = typeof KCRelationType[keyof typeof KCRelationType];
 /** Paginated KCs */
 export type KCsConnection = Connection & {
   __typename?: "KCsConnection";
   /** Nodes of the current page */
-  nodes: Array<Kc>;
+  nodes: Array<KC>;
   /** Pagination related information */
   pageInfo: PageInfo;
 };
@@ -414,8 +419,12 @@ export type Node = {
 };
 
 /** Order ascendingly or descendingly */
-export type Order_By = "ASC" | "DESC";
+export const ORDER_BY = {
+  ASC: "ASC",
+  DESC: "DESC",
+} as const;
 
+export type ORDER_BY = typeof ORDER_BY[keyof typeof ORDER_BY];
 /** Paginated related information */
 export type PageInfo = {
   __typename?: "PageInfo";
@@ -468,7 +477,7 @@ export type Query = {
    *
    * If any of the specified identifiers is not found or forbidden, query fails
    */
-  kcs: Array<Kc>;
+  kcs: Array<KC>;
   /**
    * Get all the projects associated with the specified identifiers
    *
@@ -494,27 +503,27 @@ export type Query = {
   topics: Array<Topic>;
 };
 
-export type QueryContentArgs = {
+export type QuerycontentArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-export type QueryDomainsArgs = {
+export type QuerydomainsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-export type QueryKcsArgs = {
+export type QuerykcsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-export type QueryProjectsArgs = {
+export type QueryprojectsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-export type QueryTopicByCodeArgs = {
+export type QuerytopicByCodeArgs = {
   code: Scalars["String"];
 };
 
-export type QueryTopicsArgs = {
+export type QuerytopicsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
@@ -542,7 +551,7 @@ export type Topic = {
   /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** KCs associated with the topic */
-  kcs: Array<Kc>;
+  kcs: Array<KC>;
   /** Human readable identifier */
   label: Scalars["String"];
   /**
@@ -582,7 +591,7 @@ export type UpdateDomain = {
   label: Scalars["String"];
 };
 
-export type UpdateKcInput = {
+export type UpdateKCInput = {
   /** Unique string identifier */
   code: Scalars["String"];
   /** Unique numeric identifier of the current KC */
@@ -729,7 +738,7 @@ export type ResolversTypes = {
     | ResolversTypes["TopicsConnection"];
   Content: ResolverTypeWrapper<Content>;
   CreateDomain: CreateDomain;
-  CreateKCInput: CreateKcInput;
+  CreateKCInput: CreateKCInput;
   CreateTopic: CreateTopic;
   Int: ResolverTypeWrapper<Scalars["Int"]>;
   CursorConnectionArgs: CursorConnectionArgs;
@@ -740,15 +749,15 @@ export type ResolversTypes = {
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
   JSON: ResolverTypeWrapper<Scalars["JSON"]>;
   JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
-  KC: ResolverTypeWrapper<Kc>;
-  KCRelation: ResolverTypeWrapper<KcRelation>;
-  KCRelationInput: KcRelationInput;
-  KCRelationType: KcRelationType;
+  KC: ResolverTypeWrapper<KC>;
+  KCRelation: ResolverTypeWrapper<KCRelation>;
+  KCRelationInput: KCRelationInput;
+  KCRelationType: KCRelationType;
   KCsConnection: ResolverTypeWrapper<KCsConnection>;
   Mutation: ResolverTypeWrapper<{}>;
   Node: never;
   NonNegativeInt: ResolverTypeWrapper<Scalars["NonNegativeInt"]>;
-  ORDER_BY: Order_By;
+  ORDER_BY: ORDER_BY;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   Project: ResolverTypeWrapper<Project>;
@@ -759,7 +768,7 @@ export type ResolversTypes = {
   TopicsConnection: ResolverTypeWrapper<TopicsConnection>;
   URL: ResolverTypeWrapper<Scalars["URL"]>;
   UpdateDomain: UpdateDomain;
-  UpdateKCInput: UpdateKcInput;
+  UpdateKCInput: UpdateKCInput;
   UpdateTopic: UpdateTopic;
   Void: ResolverTypeWrapper<Scalars["Void"]>;
 };
@@ -778,7 +787,7 @@ export type ResolversParentTypes = {
     | ResolversParentTypes["TopicsConnection"];
   Content: Content;
   CreateDomain: CreateDomain;
-  CreateKCInput: CreateKcInput;
+  CreateKCInput: CreateKCInput;
   CreateTopic: CreateTopic;
   Int: Scalars["Int"];
   CursorConnectionArgs: CursorConnectionArgs;
@@ -789,9 +798,9 @@ export type ResolversParentTypes = {
   IntID: Scalars["IntID"];
   JSON: Scalars["JSON"];
   JSONObject: Scalars["JSONObject"];
-  KC: Kc;
-  KCRelation: KcRelation;
-  KCRelationInput: KcRelationInput;
+  KC: KC;
+  KCRelation: KCRelation;
+  KCRelationInput: KCRelationInput;
   KCsConnection: KCsConnection;
   Mutation: {};
   Node: never;
@@ -806,7 +815,7 @@ export type ResolversParentTypes = {
   TopicsConnection: TopicsConnection;
   URL: Scalars["URL"];
   UpdateDomain: UpdateDomain;
-  UpdateKCInput: UpdateKcInput;
+  UpdateKCInput: UpdateKCInput;
   UpdateTopic: UpdateTopic;
   Void: Scalars["Void"];
 };
@@ -819,49 +828,49 @@ export type AdminDomainMutationsResolvers<
     ResolversTypes["Domain"],
     ParentType,
     ContextType,
-    RequireFields<AdminDomainMutationsCreateDomainArgs, "input">
+    RequireFields<AdminDomainMutationscreateDomainArgs, "input">
   >;
   createKC?: Resolver<
     ResolversTypes["KC"],
     ParentType,
     ContextType,
-    RequireFields<AdminDomainMutationsCreateKcArgs, "data">
+    RequireFields<AdminDomainMutationscreateKCArgs, "data">
   >;
   createTopic?: Resolver<
     ResolversTypes["Topic"],
     ParentType,
     ContextType,
-    RequireFields<AdminDomainMutationsCreateTopicArgs, "input">
+    RequireFields<AdminDomainMutationscreateTopicArgs, "input">
   >;
   setKCRelation?: Resolver<
     ResolversTypes["KCRelation"],
     ParentType,
     ContextType,
-    RequireFields<AdminDomainMutationsSetKcRelationArgs, "data">
+    RequireFields<AdminDomainMutationssetKCRelationArgs, "data">
   >;
   unsetKCRelation?: Resolver<
     Maybe<ResolversTypes["Void"]>,
     ParentType,
     ContextType,
-    RequireFields<AdminDomainMutationsUnsetKcRelationArgs, "data">
+    RequireFields<AdminDomainMutationsunsetKCRelationArgs, "data">
   >;
   updateDomain?: Resolver<
     ResolversTypes["Domain"],
     ParentType,
     ContextType,
-    RequireFields<AdminDomainMutationsUpdateDomainArgs, "input">
+    RequireFields<AdminDomainMutationsupdateDomainArgs, "input">
   >;
   updateKC?: Resolver<
     ResolversTypes["KC"],
     ParentType,
     ContextType,
-    RequireFields<AdminDomainMutationsUpdateKcArgs, "data">
+    RequireFields<AdminDomainMutationsupdateKCArgs, "data">
   >;
   updateTopic?: Resolver<
     ResolversTypes["Topic"],
     ParentType,
     ContextType,
-    RequireFields<AdminDomainMutationsUpdateTopicArgs, "input">
+    RequireFields<AdminDomainMutationsupdateTopicArgs, "input">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -874,19 +883,19 @@ export type AdminDomainQueriesResolvers<
     ResolversTypes["DomainsConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminDomainQueriesAllDomainsArgs, "pagination">
+    RequireFields<AdminDomainQueriesallDomainsArgs, "pagination">
   >;
   allKCs?: Resolver<
     ResolversTypes["KCsConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminDomainQueriesAllKCsArgs, "pagination">
+    RequireFields<AdminDomainQueriesallKCsArgs, "pagination">
   >;
   allTopics?: Resolver<
     ResolversTypes["TopicsConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminDomainQueriesAllTopicsArgs, "pagination">
+    RequireFields<AdminDomainQueriesallTopicsArgs, "pagination">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -945,22 +954,22 @@ export interface EmailAddressScalarConfig
   name: "EmailAddress";
 }
 
-export interface IntIdScalarConfig
+export interface IntIDScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["IntID"], any> {
   name: "IntID";
 }
 
-export interface JsonScalarConfig
+export interface JSONScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["JSON"], any> {
   name: "JSON";
 }
 
-export interface JsonObjectScalarConfig
+export interface JSONObjectScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["JSONObject"], any> {
   name: "JSONObject";
 }
 
-export type KcResolvers<
+export type KCResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["KC"] = ResolversParentTypes["KC"]
 > = {
@@ -979,7 +988,7 @@ export type KcResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type KcRelationResolvers<
+export type KCRelationResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["KCRelation"] = ResolversParentTypes["KCRelation"]
 > = {
@@ -1076,38 +1085,38 @@ export type QueryResolvers<
     Array<ResolversTypes["Content"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryContentArgs, "ids">
+    RequireFields<QuerycontentArgs, "ids">
   >;
   domains?: Resolver<
     Array<ResolversTypes["Domain"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryDomainsArgs, "ids">
+    RequireFields<QuerydomainsArgs, "ids">
   >;
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   kcs?: Resolver<
     Array<ResolversTypes["KC"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryKcsArgs, "ids">
+    RequireFields<QuerykcsArgs, "ids">
   >;
   projects?: Resolver<
     Array<ResolversTypes["Project"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryProjectsArgs, "ids">
+    RequireFields<QueryprojectsArgs, "ids">
   >;
   topicByCode?: Resolver<
     Maybe<ResolversTypes["Topic"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryTopicByCodeArgs, "code">
+    RequireFields<QuerytopicByCodeArgs, "code">
   >;
   topics?: Resolver<
     Array<ResolversTypes["Topic"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryTopicsArgs, "ids">
+    RequireFields<QuerytopicsArgs, "ids">
   >;
 };
 
@@ -1154,7 +1163,7 @@ export type TopicsConnectionResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export interface UrlScalarConfig
+export interface URLScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["URL"], any> {
   name: "URL";
 }
@@ -1176,8 +1185,8 @@ export type Resolvers<ContextType = EZContext> = {
   IntID?: GraphQLScalarType;
   JSON?: GraphQLScalarType;
   JSONObject?: GraphQLScalarType;
-  KC?: KcResolvers<ContextType>;
-  KCRelation?: KcRelationResolvers<ContextType>;
+  KC?: KCResolvers<ContextType>;
+  KCRelation?: KCRelationResolvers<ContextType>;
   KCsConnection?: KCsConnectionResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Node?: NodeResolvers<ContextType>;

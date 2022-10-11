@@ -63,12 +63,12 @@ export type AdminProjectsMutations = {
 };
 
 /** Admin Project-Related Mutations */
-export type AdminProjectsMutationsCreateProjectArgs = {
+export type AdminProjectsMutationscreateProjectArgs = {
   data: CreateProject;
 };
 
 /** Admin Project-Related Mutations */
-export type AdminProjectsMutationsUpdateProjectArgs = {
+export type AdminProjectsMutationsupdateProjectArgs = {
   data: UpdateProject;
 };
 
@@ -80,7 +80,7 @@ export type AdminProjectsQueries = {
 };
 
 /** Admin Project-Related Queries */
-export type AdminProjectsQueriesAllProjectsArgs = {
+export type AdminProjectsQueriesallProjectsArgs = {
   pagination: CursorConnectionArgs;
 };
 
@@ -184,8 +184,12 @@ export type Node = {
 };
 
 /** Order ascendingly or descendingly */
-export type Order_By = "ASC" | "DESC";
+export const ORDER_BY = {
+  ASC: "ASC",
+  DESC: "DESC",
+} as const;
 
+export type ORDER_BY = typeof ORDER_BY[keyof typeof ORDER_BY];
 /** Paginated related information */
 export type PageInfo = {
   __typename?: "PageInfo";
@@ -286,32 +290,32 @@ export type Query = {
   users: Array<User>;
 };
 
-export type QueryContentArgs = {
+export type QuerycontentArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-export type QueryDomainsArgs = {
+export type QuerydomainsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-export type QueryGroupsArgs = {
+export type QuerygroupsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-export type QueryProjectArgs = {
+export type QueryprojectArgs = {
   code?: InputMaybe<Scalars["String"]>;
   id?: InputMaybe<Scalars["IntID"]>;
 };
 
-export type QueryProjectsArgs = {
+export type QueryprojectsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-export type QueryTopicsArgs = {
+export type QuerytopicsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-export type QueryUsersArgs = {
+export type QueryusersArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
@@ -468,7 +472,7 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   Node: never;
   NonNegativeInt: ResolverTypeWrapper<Scalars["NonNegativeInt"]>;
-  ORDER_BY: Order_By;
+  ORDER_BY: ORDER_BY;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   Project: ResolverTypeWrapper<Project>;
@@ -524,13 +528,13 @@ export type AdminProjectsMutationsResolvers<
     ResolversTypes["Project"],
     ParentType,
     ContextType,
-    RequireFields<AdminProjectsMutationsCreateProjectArgs, "data">
+    RequireFields<AdminProjectsMutationscreateProjectArgs, "data">
   >;
   updateProject?: Resolver<
     ResolversTypes["Project"],
     ParentType,
     ContextType,
-    RequireFields<AdminProjectsMutationsUpdateProjectArgs, "data">
+    RequireFields<AdminProjectsMutationsupdateProjectArgs, "data">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -543,7 +547,7 @@ export type AdminProjectsQueriesResolvers<
     ResolversTypes["ProjectsConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminProjectsQueriesAllProjectsArgs, "pagination">
+    RequireFields<AdminProjectsQueriesallProjectsArgs, "pagination">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -601,17 +605,17 @@ export type GroupResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export interface IntIdScalarConfig
+export interface IntIDScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["IntID"], any> {
   name: "IntID";
 }
 
-export interface JsonScalarConfig
+export interface JSONScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["JSON"], any> {
   name: "JSON";
 }
 
-export interface JsonObjectScalarConfig
+export interface JSONObjectScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["JSONObject"], any> {
   name: "JSONObject";
 }
@@ -698,44 +702,44 @@ export type QueryResolvers<
     Array<ResolversTypes["Content"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryContentArgs, "ids">
+    RequireFields<QuerycontentArgs, "ids">
   >;
   domains?: Resolver<
     Array<ResolversTypes["Domain"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryDomainsArgs, "ids">
+    RequireFields<QuerydomainsArgs, "ids">
   >;
   groups?: Resolver<
     Array<ResolversTypes["Group"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryGroupsArgs, "ids">
+    RequireFields<QuerygroupsArgs, "ids">
   >;
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   project?: Resolver<
     Maybe<ResolversTypes["Project"]>,
     ParentType,
     ContextType,
-    Partial<QueryProjectArgs>
+    Partial<QueryprojectArgs>
   >;
   projects?: Resolver<
     Array<ResolversTypes["Project"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryProjectsArgs, "ids">
+    RequireFields<QueryprojectsArgs, "ids">
   >;
   topics?: Resolver<
     Array<ResolversTypes["Topic"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryTopicsArgs, "ids">
+    RequireFields<QuerytopicsArgs, "ids">
   >;
   users?: Resolver<
     Array<ResolversTypes["User"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryUsersArgs, "ids">
+    RequireFields<QueryusersArgs, "ids">
   >;
 };
 
@@ -765,7 +769,7 @@ export type TopicResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export interface UrlScalarConfig
+export interface URLScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["URL"], any> {
   name: "URL";
 }

@@ -29,7 +29,8 @@ export const codegenOptions: CodegenOptions = {
       JSON: "unknown",
     },
     deepPartialResolvers: true,
-    enumsAsTypes: true,
+    enumsAsConst: true,
+    namingConvention: "keep",
   },
   outputSchema: true,
 };

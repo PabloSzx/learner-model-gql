@@ -69,17 +69,17 @@ export type AdminStateQueries = {
 };
 
 /** Admin State-Related Queries */
-export type AdminStateQueriesAllModelStateCreatorsArgs = {
+export type AdminStateQueriesallModelStateCreatorsArgs = {
   pagination: CursorConnectionArgs;
 };
 
 /** Admin State-Related Queries */
-export type AdminStateQueriesAllModelStateTypesArgs = {
+export type AdminStateQueriesallModelStateTypesArgs = {
   pagination: CursorConnectionArgs;
 };
 
 /** Admin State-Related Queries */
-export type AdminStateQueriesAllModelStatesArgs = {
+export type AdminStateQueriesallModelStatesArgs = {
   input: ModelStateConnectionInput;
 };
 
@@ -135,7 +135,7 @@ export type Domain = {
 };
 
 /** Domain entity */
-export type DomainModelStatesArgs = {
+export type DomainmodelStatesArgs = {
   input: ModelStateConnectionInput;
 };
 
@@ -225,7 +225,7 @@ export type ModelStateOrderBy = {
    *
    * By default the states are ordered descendingly, showing the newer states first
    */
-  id?: InputMaybe<Order_By>;
+  id?: InputMaybe<ORDER_BY>;
 };
 
 /** Types/Categories of Model States */
@@ -263,8 +263,12 @@ export type Node = {
 };
 
 /** Order ascendingly or descendingly */
-export type Order_By = "ASC" | "DESC";
+export const ORDER_BY = {
+  ASC: "ASC",
+  DESC: "DESC",
+} as const;
 
+export type ORDER_BY = typeof ORDER_BY[keyof typeof ORDER_BY];
 /** Paginated related information */
 export type PageInfo = {
   __typename?: "PageInfo";
@@ -302,11 +306,11 @@ export type Query = {
   users: Array<User>;
 };
 
-export type QueryDomainsArgs = {
+export type QuerydomainsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-export type QueryUsersArgs = {
+export type QueryusersArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
@@ -326,7 +330,7 @@ export type User = {
 };
 
 /** User entity */
-export type UserModelStatesArgs = {
+export type UsermodelStatesArgs = {
   input: ModelStateConnectionInput;
 };
 
@@ -455,7 +459,7 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   Node: never;
   NonNegativeInt: ResolverTypeWrapper<Scalars["NonNegativeInt"]>;
-  ORDER_BY: Order_By;
+  ORDER_BY: ORDER_BY;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   Query: ResolverTypeWrapper<{}>;
@@ -511,19 +515,19 @@ export type AdminStateQueriesResolvers<
     ResolversTypes["ModelStateCreatorConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminStateQueriesAllModelStateCreatorsArgs, "pagination">
+    RequireFields<AdminStateQueriesallModelStateCreatorsArgs, "pagination">
   >;
   allModelStateTypes?: Resolver<
     ResolversTypes["ModelStateTypeConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminStateQueriesAllModelStateTypesArgs, "pagination">
+    RequireFields<AdminStateQueriesallModelStateTypesArgs, "pagination">
   >;
   allModelStates?: Resolver<
     ResolversTypes["ModelStateConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminStateQueriesAllModelStatesArgs, "input">
+    RequireFields<AdminStateQueriesallModelStatesArgs, "input">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -556,7 +560,7 @@ export type DomainResolvers<
     ResolversTypes["ModelStateConnection"],
     ParentType,
     ContextType,
-    RequireFields<DomainModelStatesArgs, "input">
+    RequireFields<DomainmodelStatesArgs, "input">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -566,17 +570,17 @@ export interface EmailAddressScalarConfig
   name: "EmailAddress";
 }
 
-export interface IntIdScalarConfig
+export interface IntIDScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["IntID"], any> {
   name: "IntID";
 }
 
-export interface JsonScalarConfig
+export interface JSONScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["JSON"], any> {
   name: "JSON";
 }
 
-export interface JsonObjectScalarConfig
+export interface JSONObjectScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["JSONObject"], any> {
   name: "JSONObject";
 }
@@ -713,14 +717,14 @@ export type QueryResolvers<
     Array<ResolversTypes["Domain"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryDomainsArgs, "ids">
+    RequireFields<QuerydomainsArgs, "ids">
   >;
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   users?: Resolver<
     Array<ResolversTypes["User"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryUsersArgs, "ids">
+    RequireFields<QueryusersArgs, "ids">
   >;
 };
 
@@ -741,7 +745,7 @@ export interface TimestampScalarConfig
   name: "Timestamp";
 }
 
-export interface UrlScalarConfig
+export interface URLScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["URL"], any> {
   name: "URL";
 }
@@ -755,7 +759,7 @@ export type UserResolvers<
     ResolversTypes["ModelStateConnection"],
     ParentType,
     ContextType,
-    RequireFields<UserModelStatesArgs, "input">
+    RequireFields<UsermodelStatesArgs, "input">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

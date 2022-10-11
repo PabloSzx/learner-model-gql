@@ -1,10 +1,13 @@
 import {
   getNodeIdList,
   ResolveCursorConnection,
-  parseKCRelation,
   KcRelation,
+  enumParser,
 } from "api-base";
 import { gql, registerModule } from "../ez";
+import { KCRelationType } from "../ez.generated";
+
+const parseKCRelationType = enumParser(KCRelationType);
 
 export const kcModule = registerModule(
   gql`
@@ -219,8 +222,8 @@ export const kcModule = registerModule(
             rejectOnNotFound: true,
           });
         },
-        type({ relation }: Partial<KcRelation>) {
-          return parseKCRelation(relation);
+        type({ relation = "null" }: Partial<KcRelation>) {
+          return parseKCRelationType(relation);
         },
       },
       KC: {
