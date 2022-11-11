@@ -638,7 +638,6 @@ export type Connection = {
   pageInfo: PageInfo;
 };
 
-/** Content entity */
 export type Content = {
   __typename?: "Content";
   /**
@@ -661,7 +660,6 @@ export type Content = {
   createdAt: Scalars["DateTime"];
   /** Arbitrary content description */
   description: Scalars["String"];
-  /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** Arbitrary JSON object data */
   json?: Maybe<Scalars["JSONObject"]>;
@@ -694,6 +692,21 @@ export type ContentConnection = Connection & {
   nodes: Array<Content>;
   /** Pagination related information */
   pageInfo: PageInfo;
+};
+
+export type ContentSelectionInput = {
+  projectId: Scalars["IntID"];
+  topicId: Scalars["IntID"];
+  userId: Scalars["IntID"];
+};
+
+export type ContentSelectionQueries = {
+  __typename?: "ContentSelectionQueries";
+  allContent: Array<Content>;
+};
+
+export type ContentSelectionQueriesAllContentArgs = {
+  input: ContentSelectionInput;
 };
 
 /** Content creation input data */
@@ -1026,7 +1039,7 @@ export type ModelState = {
   creator: Scalars["String"];
   /** Domain associated with Model State */
   domain: Domain;
-  id: Scalars["ID"];
+  id: Scalars["IntID"];
   /** Arbitrary JSON Data */
   json: Scalars["JSON"];
   /** Type / Category of model state */
@@ -1352,6 +1365,7 @@ export type Query = {
    * - If authenticated user has no permissions on the corresponding project it returns NULL.
    */
   contentByCode?: Maybe<Content>;
+  contentSelection: ContentSelectionQueries;
   /** Authenticated user information */
   currentUser?: Maybe<User>;
   /**
@@ -1877,6 +1891,8 @@ export type ResolversTypes = {
   Content: ResolverTypeWrapper<Content>;
   Int: ResolverTypeWrapper<Scalars["Int"]>;
   ContentConnection: ResolverTypeWrapper<ContentConnection>;
+  ContentSelectionInput: ContentSelectionInput;
+  ContentSelectionQueries: ResolverTypeWrapper<ContentSelectionQueries>;
   CreateContent: CreateContent;
   CreateDomain: CreateDomain;
   CreateGroupInput: CreateGroupInput;
@@ -1984,6 +2000,8 @@ export type ResolversParentTypes = {
   Content: Content;
   Int: Scalars["Int"];
   ContentConnection: ContentConnection;
+  ContentSelectionInput: ContentSelectionInput;
+  ContentSelectionQueries: ContentSelectionQueries;
   CreateContent: CreateContent;
   CreateDomain: CreateDomain;
   CreateGroupInput: CreateGroupInput;
@@ -2420,6 +2438,19 @@ export type ContentConnectionResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type ContentSelectionQueriesResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["ContentSelectionQueries"] = ResolversParentTypes["ContentSelectionQueries"]
+> = {
+  allContent?: Resolver<
+    Array<ResolversTypes["Content"]>,
+    ParentType,
+    ContextType,
+    RequireFields<ContentSelectionQueriesAllContentArgs, "input">
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export interface DateTimeScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["DateTime"], any> {
   name: "DateTime";
@@ -2584,7 +2615,7 @@ export type ModelStateResolvers<
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   creator?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   domain?: Resolver<ResolversTypes["Domain"], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
   json?: Resolver<ResolversTypes["JSON"], ParentType, ContextType>;
   type?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
@@ -2809,6 +2840,11 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryContentByCodeArgs, "code">
   >;
+  contentSelection?: Resolver<
+    ResolversTypes["ContentSelectionQueries"],
+    ParentType,
+    ContextType
+  >;
   currentUser?: Resolver<
     Maybe<ResolversTypes["User"]>,
     ParentType,
@@ -2986,6 +3022,7 @@ export type Resolvers<ContextType = EZContext> = {
   Connection?: ConnectionResolvers<ContextType>;
   Content?: ContentResolvers<ContextType>;
   ContentConnection?: ContentConnectionResolvers<ContextType>;
+  ContentSelectionQueries?: ContentSelectionQueriesResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
   Domain?: DomainResolvers<ContextType>;
   DomainsConnection?: DomainsConnectionResolvers<ContextType>;

@@ -599,9 +599,6 @@ interface Connection {
   pageInfo: PageInfo!
 }
 
-"""
-Content entity
-"""
 type Content {
   """
   Binary content encoded in base64
@@ -629,9 +626,6 @@ type Content {
   Arbitrary content description
   """
   description: String!
-  """
-  Unique numeric identifier
-  """
   id: IntID!
   """
   Arbitrary JSON object data
@@ -685,6 +679,16 @@ type ContentConnection implements Connection {
   Pagination related information
   """
   pageInfo: PageInfo!
+}
+
+input ContentSelectionInput {
+  projectId: IntID!
+  topicId: IntID!
+  userId: IntID!
+}
+
+type ContentSelectionQueries {
+  allContent(input: ContentSelectionInput!): [Content!]!
 }
 
 """
@@ -1228,7 +1232,7 @@ type ModelState {
   Domain associated with Model State
   """
   domain: Domain!
-  id: ID!
+  id: IntID!
   """
   Arbitrary JSON Data
   """
@@ -1666,6 +1670,7 @@ type Query {
   - If authenticated user has no permissions on the corresponding project it returns NULL.
   """
   contentByCode(code: String!): Content
+  contentSelection: ContentSelectionQueries!
   """
   Authenticated user information
   """

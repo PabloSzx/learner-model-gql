@@ -1,4 +1,7 @@
+//import { UniqueArgumentDefinitionNamesRule } from "graphql";
+//import { actionExtras } from "common-api/src/schemas";
 import { gql, registerModule } from "../ez";
+import { bkt } from "./models/bkt";
 
 export const modelModule = registerModule(
   gql`
@@ -33,7 +36,8 @@ export const modelModule = registerModule(
           { input: { domainID, userID, typeModel } },
           { prisma }
         ) {
-          const [domain, user] = await Promise.all([
+          const [domain, user, state] = await Promise.all([
+            //kcs jerarquia
             prisma.domain.findUnique({
               where: { id: domainID },
               rejectOnNotFound: true,
@@ -49,6 +53,7 @@ export const modelModule = registerModule(
                   },
                   where: {
                     domainId: domainID,
+                    type: typeModel,
                   },
                   take: 1,
                   orderBy: { createdAt: "desc" },
@@ -59,10 +64,49 @@ export const modelModule = registerModule(
                 },
               },
             }),
+            prisma.modelState.findFirst({
+              where: {
+                userId: userID,
+              },
+            }),
           ]);
-          user.actions;
-          //logica
-          //insert/update state
+
+          const D = domain.kcs.map((code) => code.code); // array of code of KCs
+          const M = state; //last state of student
+          const A = user.actions.filter(
+            (action) =>
+              action.verbName == "tryStep" &&
+              action.createdAt > (M?.createdAt ?? 0) //&&
+            //Schemas.actionExtras.parse(action.extra).attemps == 0 //primer attemps
+          );
+
+          const BKT = bkt(D, M, A);
+
+          //await prisma.$executeRaw`INSERT INTO "ModelState" ("type") VALUES (${typeModel}) ON CONFLICT DO NOTHING;`;
+          await prisma.modelState.create({
+            data: {
+              //domainId: domainID,
+              //userId: userID,
+              //type: typeModel,
+              //creator: "BKT v1",
+              json: BKT,
+              stateType: {
+                connectOrCreate: {
+                  where: { name: typeModel },
+                  create: { name: typeModel },
+                },
+              },
+              stateCreator: {
+                connectOrCreate: {
+                  where: { name: "BKT v1" },
+                  create: { name: "BKT v1" },
+                },
+              },
+              user: { connect: { id: userID } },
+              domain: { connect: { id: domainID } },
+            },
+            select: null,
+          });
         },
       },
     },

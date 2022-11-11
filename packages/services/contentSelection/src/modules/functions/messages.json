@@ -1,0 +1,8 @@
+{
+  "message1": "diff:easier, sim:similar",
+  "message2": "diff:easier, sim:different",
+  "message3": "diff:similar, sim:similar",
+  "message4": "diff:similar, sim:different",
+  "message5": "diff:similar, sim:similar",
+  "message6": "diff:harder, sim:similar"
+}
