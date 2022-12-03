@@ -688,7 +688,13 @@ input ContentSelectionInput {
 }
 
 type ContentSelectionQueries {
-  allContent(input: ContentSelectionInput!): [Content!]!
+  contentSelected(input: ContentSelectionInput!): [Content!]!
+}
+
+type ContentsReturn {
+  P: Content!
+  Preferred: Boolean!
+  msg: String!
 }
 
 """

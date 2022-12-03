@@ -702,11 +702,18 @@ export type ContentSelectionInput = {
 
 export type ContentSelectionQueries = {
   __typename?: "ContentSelectionQueries";
-  allContent: Array<Content>;
+  contentSelected: Array<Content>;
 };
 
-export type ContentSelectionQueriesAllContentArgs = {
+export type ContentSelectionQueriesContentSelectedArgs = {
   input: ContentSelectionInput;
+};
+
+export type ContentsReturn = {
+  __typename?: "ContentsReturn";
+  P: Content;
+  Preferred: Scalars["Boolean"];
+  msg: Scalars["String"];
 };
 
 /** Content creation input data */
@@ -1893,6 +1900,8 @@ export type ResolversTypes = {
   ContentConnection: ResolverTypeWrapper<ContentConnection>;
   ContentSelectionInput: ContentSelectionInput;
   ContentSelectionQueries: ResolverTypeWrapper<ContentSelectionQueries>;
+  ContentsReturn: ResolverTypeWrapper<ContentsReturn>;
+  Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   CreateContent: CreateContent;
   CreateDomain: CreateDomain;
   CreateGroupInput: CreateGroupInput;
@@ -1906,7 +1915,6 @@ export type ResolversTypes = {
   EmailAddress: ResolverTypeWrapper<Scalars["EmailAddress"]>;
   Group: ResolverTypeWrapper<Group>;
   GroupFlags: ResolverTypeWrapper<GroupFlags>;
-  Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   GroupFlagsInput: GroupFlagsInput;
   GroupsConnection: ResolverTypeWrapper<GroupsConnection>;
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
@@ -2002,6 +2010,8 @@ export type ResolversParentTypes = {
   ContentConnection: ContentConnection;
   ContentSelectionInput: ContentSelectionInput;
   ContentSelectionQueries: ContentSelectionQueries;
+  ContentsReturn: ContentsReturn;
+  Boolean: Scalars["Boolean"];
   CreateContent: CreateContent;
   CreateDomain: CreateDomain;
   CreateGroupInput: CreateGroupInput;
@@ -2015,7 +2025,6 @@ export type ResolversParentTypes = {
   EmailAddress: Scalars["EmailAddress"];
   Group: Group;
   GroupFlags: GroupFlags;
-  Boolean: Scalars["Boolean"];
   GroupFlagsInput: GroupFlagsInput;
   GroupsConnection: GroupsConnection;
   IntID: Scalars["IntID"];
@@ -2442,12 +2451,22 @@ export type ContentSelectionQueriesResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["ContentSelectionQueries"] = ResolversParentTypes["ContentSelectionQueries"]
 > = {
-  allContent?: Resolver<
+  contentSelected?: Resolver<
     Array<ResolversTypes["Content"]>,
     ParentType,
     ContextType,
-    RequireFields<ContentSelectionQueriesAllContentArgs, "input">
+    RequireFields<ContentSelectionQueriesContentSelectedArgs, "input">
   >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ContentsReturnResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["ContentsReturn"] = ResolversParentTypes["ContentsReturn"]
+> = {
+  P?: Resolver<ResolversTypes["Content"], ParentType, ContextType>;
+  Preferred?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  msg?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -3023,6 +3042,7 @@ export type Resolvers<ContextType = EZContext> = {
   Content?: ContentResolvers<ContextType>;
   ContentConnection?: ContentConnectionResolvers<ContextType>;
   ContentSelectionQueries?: ContentSelectionQueriesResolvers<ContextType>;
+  ContentsReturn?: ContentsReturnResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
   Domain?: DomainResolvers<ContextType>;
   DomainsConnection?: DomainsConnectionResolvers<ContextType>;

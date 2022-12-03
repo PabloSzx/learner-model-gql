@@ -72,11 +72,18 @@ export type ContentSelectionInput = {
 
 export type ContentSelectionQueries = {
   __typename?: "ContentSelectionQueries";
-  allContent: Array<Content>;
+  contentSelected: Array<Content>;
 };
 
-export type ContentSelectionQueriesAllContentArgs = {
+export type ContentSelectionQueriesContentSelectedArgs = {
   input: ContentSelectionInput;
+};
+
+export type ContentsReturn = {
+  __typename?: "ContentsReturn";
+  P: Content;
+  Preferred: Scalars["Boolean"];
+  msg: Scalars["String"];
 };
 
 /**
@@ -260,6 +267,9 @@ export type ResolversTypes = {
   Content: ResolverTypeWrapper<Content>;
   ContentSelectionInput: ContentSelectionInput;
   ContentSelectionQueries: ResolverTypeWrapper<ContentSelectionQueries>;
+  ContentsReturn: ResolverTypeWrapper<ContentsReturn>;
+  Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
+  String: ResolverTypeWrapper<Scalars["String"]>;
   CursorConnectionArgs: CursorConnectionArgs;
   DateTime: ResolverTypeWrapper<Scalars["DateTime"]>;
   EmailAddress: ResolverTypeWrapper<Scalars["EmailAddress"]>;
@@ -267,12 +277,10 @@ export type ResolversTypes = {
   JSON: ResolverTypeWrapper<Scalars["JSON"]>;
   JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
   Mutation: ResolverTypeWrapper<{}>;
-  String: ResolverTypeWrapper<Scalars["String"]>;
   Node: never;
   NonNegativeInt: ResolverTypeWrapper<Scalars["NonNegativeInt"]>;
   ORDER_BY: Order_By;
   PageInfo: ResolverTypeWrapper<PageInfo>;
-  Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   Query: ResolverTypeWrapper<{}>;
   Subscription: ResolverTypeWrapper<{}>;
   Timestamp: ResolverTypeWrapper<Scalars["Timestamp"]>;
@@ -286,6 +294,9 @@ export type ResolversParentTypes = {
   Content: Content;
   ContentSelectionInput: ContentSelectionInput;
   ContentSelectionQueries: ContentSelectionQueries;
+  ContentsReturn: ContentsReturn;
+  Boolean: Scalars["Boolean"];
+  String: Scalars["String"];
   CursorConnectionArgs: CursorConnectionArgs;
   DateTime: Scalars["DateTime"];
   EmailAddress: Scalars["EmailAddress"];
@@ -293,11 +304,9 @@ export type ResolversParentTypes = {
   JSON: Scalars["JSON"];
   JSONObject: Scalars["JSONObject"];
   Mutation: {};
-  String: Scalars["String"];
   Node: never;
   NonNegativeInt: Scalars["NonNegativeInt"];
   PageInfo: PageInfo;
-  Boolean: Scalars["Boolean"];
   Query: {};
   Subscription: {};
   Timestamp: Scalars["Timestamp"];
@@ -325,12 +334,22 @@ export type ContentSelectionQueriesResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["ContentSelectionQueries"] = ResolversParentTypes["ContentSelectionQueries"]
 > = {
-  allContent?: Resolver<
+  contentSelected?: Resolver<
     Array<ResolversTypes["Content"]>,
     ParentType,
     ContextType,
-    RequireFields<ContentSelectionQueriesAllContentArgs, "input">
+    RequireFields<ContentSelectionQueriesContentSelectedArgs, "input">
   >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ContentsReturnResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["ContentsReturn"] = ResolversParentTypes["ContentsReturn"]
+> = {
+  P?: Resolver<ResolversTypes["Content"], ParentType, ContextType>;
+  Preferred?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  msg?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -445,6 +464,7 @@ export type Resolvers<ContextType = EZContext> = {
   Connection?: ConnectionResolvers<ContextType>;
   Content?: ContentResolvers<ContextType>;
   ContentSelectionQueries?: ContentSelectionQueriesResolvers<ContextType>;
+  ContentsReturn?: ContentsReturnResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
   EmailAddress?: GraphQLScalarType;
   IntID?: GraphQLScalarType;

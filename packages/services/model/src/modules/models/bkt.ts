@@ -18,7 +18,7 @@ export const bkt = (
       (a, v) => ({
         ...a,
         [v]: {
-          level: 0,
+          level: params[v]?.known ?? parameters.default.known,
           mth: params[v]?.mth ?? parameters.default.mth,
         },
       }),
@@ -26,11 +26,7 @@ export const bkt = (
     ); //si ya existe el nuevo json es el json anterior y se actualizan los kcs utilizados, si no se crea un JSON con valores vacios
 
   let newModelJSON = Schemas.newModel.parse(newMJSON); //json del modelo que es retornado con BKT aplicado
-  //const stateJson = M ? Schemas.stateJson.parse(M?.json) : null;
 
-  //console.log("newModelJSON:");
-  //console.log(newModelJSON);
-  //let counter = 0;
   A.map((act) => {
     //array of action from oldest to most recent (.slice(0).reverse() innecesary)
     act.kcs.map((kc) => {
@@ -50,19 +46,15 @@ export const bkt = (
         : (k_posterior = (k * s) / (k * s + (1 - k) * (1 - g)));
 
       const bkt = k_posterior * (1 - f) + (1 - k_posterior) * l;
-      /*console.log("kc:");
-      console.log(kc.code);*/
-      //console.log("bkt:");
-      //console.log(bkt);
+
       console.log("id, kc.code, k, g, s, l, f, k_posterior");
       console.log(act.id, kc.code, k, g, s, l, f, k_posterior);
 
       if (newModelJSON[kc.code] != undefined) {
-        newModelJSON[kc.code].level = bkt;
+        newModelJSON[kc.code]!.level = bkt;
       }
 
       console.log("newModelJSON:");
-      //console.log(newModelJSON[kc.code]);
       console.log(newModelJSON[kc.code]?.level);
     });
   });

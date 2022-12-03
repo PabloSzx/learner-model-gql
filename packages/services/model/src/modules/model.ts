@@ -79,16 +79,12 @@ export const modelModule = registerModule(
               action.createdAt > (M?.createdAt ?? 0) //&&
             //Schemas.actionExtras.parse(action.extra).attemps == 0 //primer attemps
           );
-
+          console.log("acciones: ");
+          console.log(A);
           const BKT = bkt(D, M, A);
 
-          //await prisma.$executeRaw`INSERT INTO "ModelState" ("type") VALUES (${typeModel}) ON CONFLICT DO NOTHING;`;
           await prisma.modelState.create({
             data: {
-              //domainId: domainID,
-              //userId: userID,
-              //type: typeModel,
-              //creator: "BKT v1",
               json: BKT,
               stateType: {
                 connectOrCreate: {

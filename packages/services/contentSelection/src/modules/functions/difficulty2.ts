@@ -1,6 +1,6 @@
 import { ModelState, Content, KC, Schemas } from "api-base";
 //sumatoria de 1-level del KC_i de todos los KC de cada contenido
-export const difficulty = (
+export const difficulty2 = (
   C: (Content & {
     kcs: KC[];
   })[],

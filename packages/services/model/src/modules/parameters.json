@@ -30,5 +30,13 @@
     "learn": 0.2,
     "forget": 0.0,
     "mth": 0.93
+  },
+  "IdeTer2": {
+    "known": 0.2,
+    "guess": 0.3,
+    "slip": 0.25,
+    "learn": 0.1,
+    "forget": 0.0,
+    "mth": 0.93
   }
 }

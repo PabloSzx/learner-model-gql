@@ -1,6 +1,5 @@
 import { gql, registerModule } from "../ez";
-//import { difficulty } from "./functions/difficulty";
-//import { similarity } from "./functions/similarity";
+//import { selectionCriterion } from "./functions/selectionCriterion";
 //import { subtraction } from "./functions/subtraction";
 
 export const contentSelectionModule = registerModule(
@@ -10,7 +9,7 @@ export const contentSelectionModule = registerModule(
       contentSelection: ContentSelectionQueries!
     }
     type ContentSelectionQueries {
-      allContent(input: ContentSelectionInput!): [Content!]!
+      contentSelected(input: ContentSelectionInput!): [Content!]! #change allContent to contentSelected? return :[ContentsReturns]!
     }
     input ContentSelectionInput {
       projectId: IntID!
@@ -20,13 +19,18 @@ export const contentSelectionModule = registerModule(
     type Content {
       id: IntID!
     }
+    type ContentsReturn {
+      P: Content!
+      msg: String!
+      Preferred: Boolean!
+    }
   `,
   {
     id: "ContentSelection",
     dirname: import.meta.url,
     resolvers: {
       ContentSelectionQueries: {
-        async allContent(
+        async contentSelected(
           _root,
           { input: { projectId, topicId, userId } },
           { prisma }
@@ -56,21 +60,16 @@ export const contentSelectionModule = registerModule(
             }),
           ]);
 
-          return PU;
-          //console.log(P);
-          //console.log(PU);
-          //console.log(M);
-          //quitar el ultimo problema hecho porsiacaso
-          /* vistas últimamente por implementar */
+          /*console.log(P.map((p) => p.code));
+          console.log(PU.map((p) => p.code));
+          console.log(M?.json);*/
 
-          //const difficultyLevel = difficulty(P, M);
-          //const lastExerciseDone = PU[0]?.kcs; //lastExerciseDone será el último timestamps
-          //const similitud = similarity(P, M, lastExerciseDone); //PU[0] último ejercicio realizado
+          //let Problems = subtraction(P,PU);
+          //const contentSelection = selectionCriterion(Problems,PU,M);
+          console.log(PU);
+          console.log(M);
 
-          /*por implementar
-           * tabla
-           * devolver Json con ejercicios más el mensaje
-           */
+          return P;
         },
       },
     },

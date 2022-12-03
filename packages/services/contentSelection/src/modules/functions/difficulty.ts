@@ -7,21 +7,20 @@ export const difficulty = (
   M: ModelState | null
 ) => {
   const stateJSON = Schemas.stateJson.parse(M?.json);
-  const difficultyLevels = C.map((c) => {
-    c.kcs.reduce(
-      (kcFirst, kcSecond) =>
-        Math.max(
-          (stateJSON?.[kcFirst]?.mth ?? 0) - (stateJSON?.[kcFirst]?.level ?? 0),
-          0
-        ) +
-        Math.max(
-          (stateJSON?.[kcSecond.code]?.mth ?? 0) -
-            (stateJSON?.[kcSecond.code]?.level ?? 0),
-          0
-        ),
-      //(stateJSON?.[kcFirst]?.mth ?? 0)+(1 - (stateJSON?.[kcSecond.code]?.level ?? 0)),
-      0
+
+  const kcsCode = C.map((p) => {
+    //[c1,c2,..., c_n] => c1 = [kc1Level, kc2level, ...]
+    return p.kcs.map((kc) =>
+      Math.max(
+        (stateJSON?.[kc.code]?.mth ?? 0.95) -
+          (stateJSON?.[kc.code]?.level ?? 0),
+        0
+      )
     );
+  }); //array of array
+
+  const difficultyLevels = kcsCode.map((c) => {
+    return c.reduce((a, b) => a + b, 0);
   });
 
   return difficultyLevels;

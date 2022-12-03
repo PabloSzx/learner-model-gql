@@ -687,11 +687,18 @@ export type ContentSelectionInput = {
 
 export type ContentSelectionQueries = {
   __typename?: "ContentSelectionQueries";
-  allContent: Array<Content>;
+  contentSelected: Array<Content>;
 };
 
-export type ContentSelectionQueriesAllContentArgs = {
+export type ContentSelectionQueriesContentSelectedArgs = {
   input: ContentSelectionInput;
+};
+
+export type ContentsReturn = {
+  __typename?: "ContentsReturn";
+  P: Content;
+  Preferred: Scalars["Boolean"];
+  msg: Scalars["String"];
 };
 
 /** Content creation input data */
