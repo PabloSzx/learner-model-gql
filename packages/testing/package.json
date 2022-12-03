@@ -34,7 +34,7 @@
     "db": "workspace:^0.0.1",
     "esbuild": "^0.15.10",
     "execa": "^6.1.0",
-    "fastify": "^4.7.0",
+    "fastify": "^4.10.2",
     "graphql": "^16.6.0",
     "graphql-ez": "^0.15.2",
     "graphql-tag": "^2.12.6",
