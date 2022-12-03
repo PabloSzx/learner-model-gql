@@ -25,30 +25,30 @@ const { n, prisma, users, verbNames, DATABASE_URL } = await import(
 const usersActionsParameters = await pMap(
   users,
   async (user): Promise<CreateUserActionsParams> => {
-    const { email, uids, projects, groups } = await prisma.user.findUnique({
-      where: {
-        id: user.id,
-      },
-      select: {
-        email: true,
-        uids: {
-          select: {
-            uid: true,
+    const { email, uids, projects, groups } =
+      await prisma.user.findUniqueOrThrow({
+        where: {
+          id: user.id,
+        },
+        select: {
+          email: true,
+          uids: {
+            select: {
+              uid: true,
+            },
+          },
+          projects: {
+            select: {
+              id: true,
+            },
+          },
+          groups: {
+            select: {
+              projects: true,
+            },
           },
         },
-        projects: {
-          select: {
-            id: true,
-          },
-        },
-        groups: {
-          select: {
-            projects: true,
-          },
-        },
-      },
-      rejectOnNotFound: true,
-    });
+      });
 
     const uid = uids[0]?.uid;
     assert(uid, "UID not found for: " + email);

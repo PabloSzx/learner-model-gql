@@ -4,7 +4,7 @@ import type { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-
 
 const documents = {
   "\n          query hello {\n            hello\n          }\n        ":
-    types.HelloDocument,
+    types.helloDocument,
   "\n            mutation CreateAction($data: ActionInput!) {\n              action(data: $data)\n            }\n          ":
     types.CreateActionDocument,
   "\n            query AllActions($pagination: CursorConnectionArgs!) {\n              adminActions {\n                allActions(pagination: $pagination) {\n                  nodes {\n                    verb {\n                      name\n                    }\n                    result\n                    user {\n                      id\n                    }\n                  }\n                  pageInfo {\n                    hasNextPage\n                  }\n                }\n              }\n            }\n          ":
@@ -50,17 +50,17 @@ const documents = {
   "\n        query AllKcsFirst10 {\n          adminDomain {\n            allKCs(pagination: { first: 10 }) {\n              nodes {\n                id\n                code\n                label\n              }\n              pageInfo {\n                hasNextPage\n              }\n            }\n          }\n        }\n      ":
     types.AllKcsFirst10Document,
   "\n      mutation CreateKC($data: CreateKCInput!) {\n        adminDomain {\n          createKC(data: $data) {\n            id\n            code\n            label\n            domain {\n              id\n            }\n          }\n        }\n      }\n    ":
-    types.CreateKcDocument,
+    types.CreateKCDocument,
   "\n      mutation UpdateKC($data: UpdateKCInput!) {\n        adminDomain {\n          updateKC(data: $data) {\n            id\n            code\n            label\n            domain {\n              id\n            }\n          }\n        }\n      }\n    ":
-    types.UpdateKcDocument,
+    types.UpdateKCDocument,
   "\n      query ChecksKcsWithoutRelations($ids: [IntID!]!) {\n        kcs(ids: $ids) {\n          id\n          relations {\n            id\n          }\n        }\n      }\n    ":
     types.ChecksKcsWithoutRelationsDocument,
   "\n      mutation SetKCRelations($data: KCRelationInput!) {\n        adminDomain {\n          setKCRelation(data: $data) {\n            id\n            kcA {\n              id\n            }\n            kcB {\n              id\n            }\n            type\n            label\n            comment\n          }\n        }\n      }\n    ":
-    types.SetKcRelationsDocument,
+    types.SetKCRelationsDocument,
   "\n      query ChecksKcsWithRelations($ids: [IntID!]!) {\n        kcs(ids: $ids) {\n          id\n          relations {\n            id\n            kcA {\n              id\n            }\n            kcB {\n              id\n            }\n            type\n          }\n        }\n      }\n    ":
     types.ChecksKcsWithRelationsDocument,
   "\n      mutation UnsetKCRelations($data: KCRelationInput!) {\n        adminDomain {\n          unsetKCRelation(data: $data)\n        }\n      }\n    ":
-    types.UnsetKcRelationsDocument,
+    types.UnsetKCRelationsDocument,
   "\n      mutation AdminCreateProject($data: CreateProject!) {\n        adminProjects {\n          createProject(data: $data) {\n            id\n            code\n            label\n          }\n        }\n      }\n    ":
     types.AdminCreateProjectDocument,
   "\n      query AdminAllProjects($pagination: CursorConnectionArgs!) {\n        adminProjects {\n          allProjects(pagination: $pagination) {\n            nodes {\n              id\n              code\n              label\n            }\n            pageInfo {\n              hasNextPage\n            }\n          }\n        }\n      }\n    ":
@@ -116,7 +116,7 @@ const documents = {
   "\n        mutation LoadTestAction($data: ActionInput!) {\n          action(data: $data)\n        }\n      ":
     types.LoadTestActionDocument,
   "\n            query hello {\n              hello\n            }\n          ":
-    types.HelloDocument,
+    types.helloDocument,
 };
 
 export function gql(

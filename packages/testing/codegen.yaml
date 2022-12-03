@@ -22,6 +22,7 @@ generates:
         Latitude: "number"
         Longitude: "number"
         JSON: "unknown"
+      namingConvention: "keep"
 hooks:
   afterAllFileWrite:
     - node after-codegen-write.mjs

@@ -1,4 +1,3 @@
-import { KCRelationType } from "common";
 import {
   assert,
   CreateDomain,
@@ -843,7 +842,7 @@ export async function CheckKCsRelations({
     {
       variables: {
         data: {
-          type: KCRelationType.PARTOF,
+          type: "PARTOF",
           kcA: kc.id,
           kcB: kc2.id.toString(),
           label: "test-label",
@@ -853,9 +852,7 @@ export async function CheckKCsRelations({
     }
   );
 
-  const kcRelationDb = await prisma.kcRelation.findFirst({
-    rejectOnNotFound: true,
-  });
+  const kcRelationDb = await prisma.kcRelation.findFirstOrThrow({});
 
   expectDeepEqual(kcRelation, {
     adminDomain: {
@@ -867,7 +864,7 @@ export async function CheckKCsRelations({
         kcB: {
           id: kc2.id.toString(),
         },
-        type: KCRelationType.PARTOF,
+        type: "PARTOF",
         label: "test-label",
         comment: "test-comment",
       },
@@ -912,7 +909,7 @@ export async function CheckKCsRelations({
             kcB: {
               id: kc2.id.toString(),
             },
-            type: KCRelationType.PARTOF,
+            type: "PARTOF",
           },
         ],
       },
@@ -927,7 +924,7 @@ export async function CheckKCsRelations({
             kcB: {
               id: kc2.id.toString(),
             },
-            type: KCRelationType.PARTOF,
+            type: "PARTOF",
           },
         ],
       },
@@ -945,7 +942,7 @@ export async function CheckKCsRelations({
     {
       variables: {
         data: {
-          type: KCRelationType.PARTOF,
+          type: "PARTOF",
           kcA: kc.id,
           kcB: kc2.id.toString(),
         },

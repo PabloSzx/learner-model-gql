@@ -111,14 +111,13 @@ export const Authorization = (userPromise: Promise<DBUser | null>) => {
     const projectIdKey = await projectIdPromise;
     return (projectIdCheckCache[projectIdKey] ||= LazyPromise(() =>
       prisma.project
-        .findUnique({
+        .findUniqueOrThrow({
           where: {
             id: projectIdKey,
           },
           select: {
             id: true,
           },
-          rejectOnNotFound: true,
         })
         .then((v) => v.id)
     ));

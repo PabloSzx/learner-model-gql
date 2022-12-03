@@ -1,10 +1,13 @@
 import {
   getNodeIdList,
   ResolveCursorConnection,
-  parseKCRelation,
   KcRelation,
+  enumParser,
 } from "api-base";
 import { gql, registerModule } from "../ez";
+import { KCRelationType } from "../ez.generated";
+
+const parseKCRelationType = enumParser(KCRelationType);
 
 export const kcModule = registerModule(
   gql`
@@ -196,31 +199,28 @@ export const kcModule = registerModule(
     resolvers: {
       KCRelation: {
         domain({ domainId }, _args, { prisma }) {
-          return prisma.domain.findUnique({
+          return prisma.domain.findUniqueOrThrow({
             where: {
               id: domainId,
             },
-            rejectOnNotFound: true,
           });
         },
         kcA({ kcAId }, _args, { prisma }) {
-          return prisma.kC.findUnique({
+          return prisma.kC.findUniqueOrThrow({
             where: {
               id: kcAId,
             },
-            rejectOnNotFound: true,
           });
         },
         kcB({ kcBId }, _args, { prisma }) {
-          return prisma.kC.findUnique({
+          return prisma.kC.findUniqueOrThrow({
             where: {
               id: kcBId,
             },
-            rejectOnNotFound: true,
           });
         },
-        type({ relation }: Partial<KcRelation>) {
-          return parseKCRelation(relation);
+        type({ relation = "null" }: Partial<KcRelation>) {
+          return parseKCRelationType(relation);
         },
       },
       KC: {

@@ -71,7 +71,7 @@ export type Action = {
   /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** Related KCs */
-  kcs: Array<Kc>;
+  kcs: Array<KC>;
   /** Arbitrary numeric result */
   result?: Maybe<Scalars["Float"]>;
   /** Arbitrary step identifier */
@@ -185,14 +185,14 @@ export type AdminActionQueries = {
 };
 
 /** Admin Action-Related Queries */
-export type AdminActionQueriesAllActionsArgs = {
+export type AdminActionQueriesallActionsArgs = {
   filters?: InputMaybe<AdminActionsFilter>;
   orderBy?: InputMaybe<AdminActionsOrderBy>;
   pagination: CursorConnectionArgs;
 };
 
 /** Admin Action-Related Queries */
-export type AdminActionQueriesAllActionsVerbsArgs = {
+export type AdminActionQueriesallActionsVerbsArgs = {
   pagination: CursorConnectionArgs;
 };
 
@@ -257,7 +257,7 @@ export type AdminActionsOrderBy = {
    *
    * By default the actions are ordered descendingly, showing the newer actions first
    */
-  id?: InputMaybe<Order_By>;
+  id?: InputMaybe<ORDER_BY>;
 };
 
 /** Filter all content of admin query */
@@ -294,12 +294,12 @@ export type AdminContentMutations = {
 };
 
 /** Admin related content mutations, only authenticated users with the role "ADMIN" can access */
-export type AdminContentMutationsCreateContentArgs = {
+export type AdminContentMutationscreateContentArgs = {
   data: CreateContent;
 };
 
 /** Admin related content mutations, only authenticated users with the role "ADMIN" can access */
-export type AdminContentMutationsUpdateContentArgs = {
+export type AdminContentMutationsupdateContentArgs = {
   data: UpdateContent;
 };
 
@@ -315,7 +315,7 @@ export type AdminContentQueries = {
 };
 
 /** Admin Content-Related Queries */
-export type AdminContentQueriesAllContentArgs = {
+export type AdminContentQueriesallContentArgs = {
   filters?: InputMaybe<AdminContentFilter>;
   pagination: CursorConnectionArgs;
 };
@@ -326,58 +326,58 @@ export type AdminDomainMutations = {
   /** Create a new domain entity */
   createDomain: Domain;
   /** Create a new KC entity */
-  createKC: Kc;
+  createKC: KC;
   /** Create a new topic entity */
   createTopic: Topic;
   /** Set KC Relation */
-  setKCRelation: KcRelation;
+  setKCRelation: KCRelation;
   /** Unset KC Relation */
   unsetKCRelation?: Maybe<Scalars["Void"]>;
   /** Update an existent domain entity */
   updateDomain: Domain;
   /** Update an existent KC entity */
-  updateKC: Kc;
+  updateKC: KC;
   /** Update an existent topic entity */
   updateTopic: Topic;
 };
 
 /** Admin Domain-Related Queries */
-export type AdminDomainMutationsCreateDomainArgs = {
+export type AdminDomainMutationscreateDomainArgs = {
   input: CreateDomain;
 };
 
 /** Admin Domain-Related Queries */
-export type AdminDomainMutationsCreateKcArgs = {
-  data: CreateKcInput;
+export type AdminDomainMutationscreateKCArgs = {
+  data: CreateKCInput;
 };
 
 /** Admin Domain-Related Queries */
-export type AdminDomainMutationsCreateTopicArgs = {
+export type AdminDomainMutationscreateTopicArgs = {
   input: CreateTopic;
 };
 
 /** Admin Domain-Related Queries */
-export type AdminDomainMutationsSetKcRelationArgs = {
-  data: KcRelationInput;
+export type AdminDomainMutationssetKCRelationArgs = {
+  data: KCRelationInput;
 };
 
 /** Admin Domain-Related Queries */
-export type AdminDomainMutationsUnsetKcRelationArgs = {
-  data: KcRelationInput;
+export type AdminDomainMutationsunsetKCRelationArgs = {
+  data: KCRelationInput;
 };
 
 /** Admin Domain-Related Queries */
-export type AdminDomainMutationsUpdateDomainArgs = {
+export type AdminDomainMutationsupdateDomainArgs = {
   input: UpdateDomain;
 };
 
 /** Admin Domain-Related Queries */
-export type AdminDomainMutationsUpdateKcArgs = {
-  data: UpdateKcInput;
+export type AdminDomainMutationsupdateKCArgs = {
+  data: UpdateKCInput;
 };
 
 /** Admin Domain-Related Queries */
-export type AdminDomainMutationsUpdateTopicArgs = {
+export type AdminDomainMutationsupdateTopicArgs = {
   input: UpdateTopic;
 };
 
@@ -405,19 +405,19 @@ export type AdminDomainQueries = {
 };
 
 /** Admin Domain-Related Queries */
-export type AdminDomainQueriesAllDomainsArgs = {
+export type AdminDomainQueriesallDomainsArgs = {
   filters?: InputMaybe<AdminDomainsFilter>;
   pagination: CursorConnectionArgs;
 };
 
 /** Admin Domain-Related Queries */
-export type AdminDomainQueriesAllKCsArgs = {
+export type AdminDomainQueriesallKCsArgs = {
   filters?: InputMaybe<AdminKCsFilter>;
   pagination: CursorConnectionArgs;
 };
 
 /** Admin Domain-Related Queries */
-export type AdminDomainQueriesAllTopicsArgs = {
+export type AdminDomainQueriesallTopicsArgs = {
   filters?: InputMaybe<AdminTopicsFilter>;
   pagination: CursorConnectionArgs;
 };
@@ -478,12 +478,12 @@ export type AdminProjectsMutations = {
 };
 
 /** Admin Project-Related Mutations */
-export type AdminProjectsMutationsCreateProjectArgs = {
+export type AdminProjectsMutationscreateProjectArgs = {
   data: CreateProject;
 };
 
 /** Admin Project-Related Mutations */
-export type AdminProjectsMutationsUpdateProjectArgs = {
+export type AdminProjectsMutationsupdateProjectArgs = {
   data: UpdateProject;
 };
 
@@ -495,7 +495,7 @@ export type AdminProjectsQueries = {
 };
 
 /** Admin Project-Related Queries */
-export type AdminProjectsQueriesAllProjectsArgs = {
+export type AdminProjectsQueriesallProjectsArgs = {
   pagination: CursorConnectionArgs;
 };
 
@@ -515,17 +515,17 @@ export type AdminStateQueries = {
 };
 
 /** Admin State-Related Queries */
-export type AdminStateQueriesAllModelStateCreatorsArgs = {
+export type AdminStateQueriesallModelStateCreatorsArgs = {
   pagination: CursorConnectionArgs;
 };
 
 /** Admin State-Related Queries */
-export type AdminStateQueriesAllModelStateTypesArgs = {
+export type AdminStateQueriesallModelStateTypesArgs = {
   pagination: CursorConnectionArgs;
 };
 
 /** Admin State-Related Queries */
-export type AdminStateQueriesAllModelStatesArgs = {
+export type AdminStateQueriesallModelStatesArgs = {
   input: ModelStateConnectionInput;
 };
 
@@ -559,34 +559,34 @@ export type AdminUserMutations = {
 };
 
 /** Admin User-Related Queries */
-export type AdminUserMutationsCreateGroupArgs = {
+export type AdminUserMutationscreateGroupArgs = {
   data: CreateGroupInput;
 };
 
 /** Admin User-Related Queries */
-export type AdminUserMutationsSetProjectsToUsersArgs = {
+export type AdminUserMutationssetProjectsToUsersArgs = {
   projectIds: Array<Scalars["IntID"]>;
   userIds: Array<Scalars["IntID"]>;
 };
 
 /** Admin User-Related Queries */
-export type AdminUserMutationsSetUserGroupsArgs = {
+export type AdminUserMutationssetUserGroupsArgs = {
   groupIds: Array<Scalars["IntID"]>;
   usersEmails: Array<Scalars["EmailAddress"]>;
 };
 
 /** Admin User-Related Queries */
-export type AdminUserMutationsUpdateGroupArgs = {
+export type AdminUserMutationsupdateGroupArgs = {
   data: UpdateGroupInput;
 };
 
 /** Admin User-Related Queries */
-export type AdminUserMutationsUpdateUserArgs = {
+export type AdminUserMutationsupdateUserArgs = {
   data: UpdateUserInput;
 };
 
 /** Admin User-Related Queries */
-export type AdminUserMutationsUpsertUsersWithProjectsArgs = {
+export type AdminUserMutationsupsertUsersWithProjectsArgs = {
   emails: Array<Scalars["EmailAddress"]>;
   projectsIds: Array<Scalars["IntID"]>;
 };
@@ -609,13 +609,13 @@ export type AdminUserQueries = {
 };
 
 /** Admin User-Related Queries */
-export type AdminUserQueriesAllGroupsArgs = {
+export type AdminUserQueriesallGroupsArgs = {
   filters?: InputMaybe<AdminGroupsFilter>;
   pagination: CursorConnectionArgs;
 };
 
 /** Admin User-Related Queries */
-export type AdminUserQueriesAllUsersArgs = {
+export type AdminUserQueriesallUsersArgs = {
   filters?: InputMaybe<AdminUsersFilter>;
   pagination: CursorConnectionArgs;
 };
@@ -666,7 +666,7 @@ export type Content = {
   /** Arbitrary JSON object data */
   json?: Maybe<Scalars["JSONObject"]>;
   /** KCs associated with the content */
-  kcs: Array<Kc>;
+  kcs: Array<KC>;
   /** Human readable identifier */
   label: Scalars["String"];
   /** Project associated with the content */
@@ -763,7 +763,7 @@ export type CreateGroupInput = {
 };
 
 /** KC creation input data */
-export type CreateKcInput = {
+export type CreateKCInput = {
   /** Unique string identifier */
   code: Scalars["String"];
   /** Domain associated with KC */
@@ -854,7 +854,7 @@ export type Domain = {
   /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** KCs associated with the domain */
-  kcs: Array<Kc>;
+  kcs: Array<KC>;
   /** Human readable identifier */
   label: Scalars["String"];
   /** Model States associated with domain */
@@ -866,7 +866,7 @@ export type Domain = {
 };
 
 /** Domain entity */
-export type DomainModelStatesArgs = {
+export type DomainmodelStatesArgs = {
   input: ModelStateConnectionInput;
 };
 
@@ -947,7 +947,7 @@ export type GroupsConnection = Connection & {
 };
 
 /** KC / Knowledge Component Entity */
-export type Kc = {
+export type KC = {
   __typename?: "KC";
   /** Unique string identifier */
   code: Scalars["String"];
@@ -960,7 +960,7 @@ export type Kc = {
   /** Human readable identifier */
   label: Scalars["String"];
   /** All relations of KC */
-  relations: Array<KcRelation>;
+  relations: Array<KCRelation>;
   /** Topics associated with the KC */
   topics: Array<Topic>;
   /** Date of last update */
@@ -968,7 +968,7 @@ export type Kc = {
 };
 
 /** Relations between KCs */
-export type KcRelation = {
+export type KCRelation = {
   __typename?: "KCRelation";
   /** Custom Comment of KC Relation */
   comment?: Maybe<Scalars["String"]>;
@@ -979,20 +979,20 @@ export type KcRelation = {
   /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** KC A */
-  kcA: Kc;
+  kcA: KC;
   /** KC A id */
   kcAId: Scalars["IntID"];
   /** KC B */
-  kcB: Kc;
+  kcB: KC;
   /** KC B id */
   kcBId: Scalars["IntID"];
   /** Custom Label of KC Relation */
   label?: Maybe<Scalars["String"]>;
   /** Type of relation */
-  type: KcRelationType;
+  type: KCRelationType;
 };
 
-export type KcRelationInput = {
+export type KCRelationInput = {
   /** Custom comment text */
   comment?: InputMaybe<Scalars["String"]>;
   /** KC A */
@@ -1002,17 +1002,22 @@ export type KcRelationInput = {
   /** Relation readable label */
   label?: InputMaybe<Scalars["String"]>;
   /** Type of KC Relation */
-  type: KcRelationType;
+  type: KCRelationType;
 };
 
 /** Type of KC Relationship */
-export type KcRelationType = "INTERACT" | "PARTOF" | "PREREQUISITE";
+export const KCRelationType = {
+  INTERACT: "INTERACT",
+  PARTOF: "PARTOF",
+  PREREQUISITE: "PREREQUISITE",
+} as const;
 
+export type KCRelationType = typeof KCRelationType[keyof typeof KCRelationType];
 /** Paginated KCs */
 export type KCsConnection = Connection & {
   __typename?: "KCsConnection";
   /** Nodes of the current page */
-  nodes: Array<Kc>;
+  nodes: Array<KC>;
   /** Pagination related information */
   pageInfo: PageInfo;
 };
@@ -1103,7 +1108,7 @@ export type ModelStateOrderBy = {
    *
    * By default the states are ordered descendingly, showing the newer states first
    */
-  id?: InputMaybe<Order_By>;
+  id?: InputMaybe<ORDER_BY>;
 };
 
 /** Types/Categories of Model States */
@@ -1149,7 +1154,7 @@ export type Mutation = {
   hello: Scalars["String"];
 };
 
-export type MutationActionArgs = {
+export type MutationactionArgs = {
   data: ActionInput;
 };
 
@@ -1160,8 +1165,12 @@ export type Node = {
 };
 
 /** Order ascendingly or descendingly */
-export type Order_By = "ASC" | "DESC";
+export const ORDER_BY = {
+  ASC: "ASC",
+  DESC: "DESC",
+} as const;
 
+export type ORDER_BY = typeof ORDER_BY[keyof typeof ORDER_BY];
 /** Paginated related information */
 export type PageInfo = {
   __typename?: "PageInfo";
@@ -1203,13 +1212,13 @@ export type Project = {
 };
 
 /** Project entity */
-export type ProjectActionsArgs = {
+export type ProjectactionsArgs = {
   filters?: InputMaybe<ProjectActionsFilter>;
   pagination: CursorConnectionArgs;
 };
 
 /** Project entity */
-export type ProjectContentArgs = {
+export type ProjectcontentArgs = {
   filters?: InputMaybe<ProjectContentFilter>;
   pagination: CursorConnectionArgs;
 };
@@ -1371,7 +1380,7 @@ export type Query = {
    *
    * If any of the specified identifiers is not found or forbidden, query fails
    */
-  kcs: Array<Kc>;
+  kcs: Array<KC>;
   /**
    * Get specified project by either "id" or "code".
    *
@@ -1412,44 +1421,44 @@ export type Query = {
   users: Array<User>;
 };
 
-export type QueryContentArgs = {
+export type QuerycontentArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-export type QueryContentByCodeArgs = {
+export type QuerycontentByCodeArgs = {
   code: Scalars["String"];
 };
 
-export type QueryDomainsArgs = {
+export type QuerydomainsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-export type QueryGroupsArgs = {
+export type QuerygroupsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-export type QueryKcsArgs = {
+export type QuerykcsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-export type QueryProjectArgs = {
+export type QueryprojectArgs = {
   code?: InputMaybe<Scalars["String"]>;
   id?: InputMaybe<Scalars["IntID"]>;
 };
 
-export type QueryProjectsArgs = {
+export type QueryprojectsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-export type QueryTopicByCodeArgs = {
+export type QuerytopicByCodeArgs = {
   code: Scalars["String"];
 };
 
-export type QueryTopicsArgs = {
+export type QuerytopicsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-export type QueryUsersArgs = {
+export type QueryusersArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
@@ -1479,7 +1488,7 @@ export type Topic = {
   /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** KCs associated with the topic */
-  kcs: Array<Kc>;
+  kcs: Array<KC>;
   /** Human readable identifier */
   label: Scalars["String"];
   /**
@@ -1581,7 +1590,7 @@ export type UpdateGroupInput = {
   tags: Array<Scalars["String"]>;
 };
 
-export type UpdateKcInput = {
+export type UpdateKCInput = {
   /** Unique string identifier */
   code: Scalars["String"];
   /** Unique numeric identifier of the current KC */
@@ -1696,21 +1705,23 @@ export type User = {
 };
 
 /** User entity */
-export type UserModelStatesArgs = {
+export type UsermodelStatesArgs = {
   input: ModelStateConnectionInput;
 };
 
 /** Possible roles of an authenticated user */
-export type UserRole =
+export const UserRole = {
   /**
    * Administrator of the system
    *
    * Most of the authorization logic is enabled
    */
-  | "ADMIN"
+  ADMIN: "ADMIN",
   /** Default user role */
-  | "USER";
+  USER: "USER",
+} as const;
 
+export type UserRole = typeof UserRole[keyof typeof UserRole];
 /** Paginated Users */
 export type UsersConnection = Connection & {
   __typename?: "UsersConnection";
@@ -1865,7 +1876,7 @@ export type ResolversTypes = {
   CreateContent: CreateContent;
   CreateDomain: CreateDomain;
   CreateGroupInput: CreateGroupInput;
-  CreateKCInput: CreateKcInput;
+  CreateKCInput: CreateKCInput;
   CreateProject: CreateProject;
   CreateTopic: CreateTopic;
   CursorConnectionArgs: CursorConnectionArgs;
@@ -1881,10 +1892,10 @@ export type ResolversTypes = {
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
   JSON: ResolverTypeWrapper<Scalars["JSON"]>;
   JSONObject: ResolverTypeWrapper<Scalars["JSONObject"]>;
-  KC: ResolverTypeWrapper<Kc>;
-  KCRelation: ResolverTypeWrapper<KcRelation>;
-  KCRelationInput: KcRelationInput;
-  KCRelationType: KcRelationType;
+  KC: ResolverTypeWrapper<KC>;
+  KCRelation: ResolverTypeWrapper<KCRelation>;
+  KCRelationInput: KCRelationInput;
+  KCRelationType: KCRelationType;
   KCsConnection: ResolverTypeWrapper<KCsConnection>;
   ModelState: ResolverTypeWrapper<ModelState>;
   ModelStateConnection: ResolverTypeWrapper<ModelStateConnection>;
@@ -1898,7 +1909,7 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   Node: never;
   NonNegativeInt: ResolverTypeWrapper<Scalars["NonNegativeInt"]>;
-  ORDER_BY: Order_By;
+  ORDER_BY: ORDER_BY;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Project: ResolverTypeWrapper<Project>;
   ProjectActionsFilter: ProjectActionsFilter;
@@ -1913,7 +1924,7 @@ export type ResolversTypes = {
   UpdateContent: UpdateContent;
   UpdateDomain: UpdateDomain;
   UpdateGroupInput: UpdateGroupInput;
-  UpdateKCInput: UpdateKcInput;
+  UpdateKCInput: UpdateKCInput;
   UpdateProject: UpdateProject;
   UpdateTopic: UpdateTopic;
   UpdateUserInput: UpdateUserInput;
@@ -1970,7 +1981,7 @@ export type ResolversParentTypes = {
   CreateContent: CreateContent;
   CreateDomain: CreateDomain;
   CreateGroupInput: CreateGroupInput;
-  CreateKCInput: CreateKcInput;
+  CreateKCInput: CreateKCInput;
   CreateProject: CreateProject;
   CreateTopic: CreateTopic;
   CursorConnectionArgs: CursorConnectionArgs;
@@ -1986,9 +1997,9 @@ export type ResolversParentTypes = {
   IntID: Scalars["IntID"];
   JSON: Scalars["JSON"];
   JSONObject: Scalars["JSONObject"];
-  KC: Kc;
-  KCRelation: KcRelation;
-  KCRelationInput: KcRelationInput;
+  KC: KC;
+  KCRelation: KCRelation;
+  KCRelationInput: KCRelationInput;
   KCsConnection: KCsConnection;
   ModelState: ModelState;
   ModelStateConnection: ModelStateConnection;
@@ -2016,7 +2027,7 @@ export type ResolversParentTypes = {
   UpdateContent: UpdateContent;
   UpdateDomain: UpdateDomain;
   UpdateGroupInput: UpdateGroupInput;
-  UpdateKCInput: UpdateKcInput;
+  UpdateKCInput: UpdateKCInput;
   UpdateProject: UpdateProject;
   UpdateTopic: UpdateTopic;
   UpdateUserInput: UpdateUserInput;
@@ -2089,13 +2100,13 @@ export type AdminActionQueriesResolvers<
     ResolversTypes["ActionsConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminActionQueriesAllActionsArgs, "pagination">
+    RequireFields<AdminActionQueriesallActionsArgs, "pagination">
   >;
   allActionsVerbs?: Resolver<
     ResolversTypes["ActionsVerbsConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminActionQueriesAllActionsVerbsArgs, "pagination">
+    RequireFields<AdminActionQueriesallActionsVerbsArgs, "pagination">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -2108,13 +2119,13 @@ export type AdminContentMutationsResolvers<
     ResolversTypes["Content"],
     ParentType,
     ContextType,
-    RequireFields<AdminContentMutationsCreateContentArgs, "data">
+    RequireFields<AdminContentMutationscreateContentArgs, "data">
   >;
   updateContent?: Resolver<
     ResolversTypes["Content"],
     ParentType,
     ContextType,
-    RequireFields<AdminContentMutationsUpdateContentArgs, "data">
+    RequireFields<AdminContentMutationsupdateContentArgs, "data">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -2127,7 +2138,7 @@ export type AdminContentQueriesResolvers<
     ResolversTypes["ContentConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminContentQueriesAllContentArgs, "pagination">
+    RequireFields<AdminContentQueriesallContentArgs, "pagination">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -2140,49 +2151,49 @@ export type AdminDomainMutationsResolvers<
     ResolversTypes["Domain"],
     ParentType,
     ContextType,
-    RequireFields<AdminDomainMutationsCreateDomainArgs, "input">
+    RequireFields<AdminDomainMutationscreateDomainArgs, "input">
   >;
   createKC?: Resolver<
     ResolversTypes["KC"],
     ParentType,
     ContextType,
-    RequireFields<AdminDomainMutationsCreateKcArgs, "data">
+    RequireFields<AdminDomainMutationscreateKCArgs, "data">
   >;
   createTopic?: Resolver<
     ResolversTypes["Topic"],
     ParentType,
     ContextType,
-    RequireFields<AdminDomainMutationsCreateTopicArgs, "input">
+    RequireFields<AdminDomainMutationscreateTopicArgs, "input">
   >;
   setKCRelation?: Resolver<
     ResolversTypes["KCRelation"],
     ParentType,
     ContextType,
-    RequireFields<AdminDomainMutationsSetKcRelationArgs, "data">
+    RequireFields<AdminDomainMutationssetKCRelationArgs, "data">
   >;
   unsetKCRelation?: Resolver<
     Maybe<ResolversTypes["Void"]>,
     ParentType,
     ContextType,
-    RequireFields<AdminDomainMutationsUnsetKcRelationArgs, "data">
+    RequireFields<AdminDomainMutationsunsetKCRelationArgs, "data">
   >;
   updateDomain?: Resolver<
     ResolversTypes["Domain"],
     ParentType,
     ContextType,
-    RequireFields<AdminDomainMutationsUpdateDomainArgs, "input">
+    RequireFields<AdminDomainMutationsupdateDomainArgs, "input">
   >;
   updateKC?: Resolver<
     ResolversTypes["KC"],
     ParentType,
     ContextType,
-    RequireFields<AdminDomainMutationsUpdateKcArgs, "data">
+    RequireFields<AdminDomainMutationsupdateKCArgs, "data">
   >;
   updateTopic?: Resolver<
     ResolversTypes["Topic"],
     ParentType,
     ContextType,
-    RequireFields<AdminDomainMutationsUpdateTopicArgs, "input">
+    RequireFields<AdminDomainMutationsupdateTopicArgs, "input">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -2195,19 +2206,19 @@ export type AdminDomainQueriesResolvers<
     ResolversTypes["DomainsConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminDomainQueriesAllDomainsArgs, "pagination">
+    RequireFields<AdminDomainQueriesallDomainsArgs, "pagination">
   >;
   allKCs?: Resolver<
     ResolversTypes["KCsConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminDomainQueriesAllKCsArgs, "pagination">
+    RequireFields<AdminDomainQueriesallKCsArgs, "pagination">
   >;
   allTopics?: Resolver<
     ResolversTypes["TopicsConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminDomainQueriesAllTopicsArgs, "pagination">
+    RequireFields<AdminDomainQueriesallTopicsArgs, "pagination">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -2220,13 +2231,13 @@ export type AdminProjectsMutationsResolvers<
     ResolversTypes["Project"],
     ParentType,
     ContextType,
-    RequireFields<AdminProjectsMutationsCreateProjectArgs, "data">
+    RequireFields<AdminProjectsMutationscreateProjectArgs, "data">
   >;
   updateProject?: Resolver<
     ResolversTypes["Project"],
     ParentType,
     ContextType,
-    RequireFields<AdminProjectsMutationsUpdateProjectArgs, "data">
+    RequireFields<AdminProjectsMutationsupdateProjectArgs, "data">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -2239,7 +2250,7 @@ export type AdminProjectsQueriesResolvers<
     ResolversTypes["ProjectsConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminProjectsQueriesAllProjectsArgs, "pagination">
+    RequireFields<AdminProjectsQueriesallProjectsArgs, "pagination">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -2252,19 +2263,19 @@ export type AdminStateQueriesResolvers<
     ResolversTypes["ModelStateCreatorConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminStateQueriesAllModelStateCreatorsArgs, "pagination">
+    RequireFields<AdminStateQueriesallModelStateCreatorsArgs, "pagination">
   >;
   allModelStateTypes?: Resolver<
     ResolversTypes["ModelStateTypeConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminStateQueriesAllModelStateTypesArgs, "pagination">
+    RequireFields<AdminStateQueriesallModelStateTypesArgs, "pagination">
   >;
   allModelStates?: Resolver<
     ResolversTypes["ModelStateConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminStateQueriesAllModelStatesArgs, "input">
+    RequireFields<AdminStateQueriesallModelStatesArgs, "input">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -2277,14 +2288,14 @@ export type AdminUserMutationsResolvers<
     ResolversTypes["Group"],
     ParentType,
     ContextType,
-    RequireFields<AdminUserMutationsCreateGroupArgs, "data">
+    RequireFields<AdminUserMutationscreateGroupArgs, "data">
   >;
   setProjectsToUsers?: Resolver<
     Array<ResolversTypes["User"]>,
     ParentType,
     ContextType,
     RequireFields<
-      AdminUserMutationsSetProjectsToUsersArgs,
+      AdminUserMutationssetProjectsToUsersArgs,
       "projectIds" | "userIds"
     >
   >;
@@ -2293,7 +2304,7 @@ export type AdminUserMutationsResolvers<
     ParentType,
     ContextType,
     RequireFields<
-      AdminUserMutationsSetUserGroupsArgs,
+      AdminUserMutationssetUserGroupsArgs,
       "groupIds" | "usersEmails"
     >
   >;
@@ -2301,20 +2312,20 @@ export type AdminUserMutationsResolvers<
     ResolversTypes["Group"],
     ParentType,
     ContextType,
-    RequireFields<AdminUserMutationsUpdateGroupArgs, "data">
+    RequireFields<AdminUserMutationsupdateGroupArgs, "data">
   >;
   updateUser?: Resolver<
     ResolversTypes["User"],
     ParentType,
     ContextType,
-    RequireFields<AdminUserMutationsUpdateUserArgs, "data">
+    RequireFields<AdminUserMutationsupdateUserArgs, "data">
   >;
   upsertUsersWithProjects?: Resolver<
     Array<ResolversTypes["User"]>,
     ParentType,
     ContextType,
     RequireFields<
-      AdminUserMutationsUpsertUsersWithProjectsArgs,
+      AdminUserMutationsupsertUsersWithProjectsArgs,
       "emails" | "projectsIds"
     >
   >;
@@ -2329,13 +2340,13 @@ export type AdminUserQueriesResolvers<
     ResolversTypes["GroupsConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminUserQueriesAllGroupsArgs, "pagination">
+    RequireFields<AdminUserQueriesallGroupsArgs, "pagination">
   >;
   allUsers?: Resolver<
     ResolversTypes["UsersConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminUserQueriesAllUsersArgs, "pagination">
+    RequireFields<AdminUserQueriesallUsersArgs, "pagination">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -2420,7 +2431,7 @@ export type DomainResolvers<
     ResolversTypes["ModelStateConnection"],
     ParentType,
     ContextType,
-    RequireFields<DomainModelStatesArgs, "input">
+    RequireFields<DomainmodelStatesArgs, "input">
   >;
   projects?: Resolver<
     Array<ResolversTypes["Project"]>,
@@ -2499,22 +2510,22 @@ export type GroupsConnectionResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export interface IntIdScalarConfig
+export interface IntIDScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["IntID"], any> {
   name: "IntID";
 }
 
-export interface JsonScalarConfig
+export interface JSONScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["JSON"], any> {
   name: "JSON";
 }
 
-export interface JsonObjectScalarConfig
+export interface JSONObjectScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["JSONObject"], any> {
   name: "JSONObject";
 }
 
-export type KcResolvers<
+export type KCResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["KC"] = ResolversParentTypes["KC"]
 > = {
@@ -2533,7 +2544,7 @@ export type KcResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type KcRelationResolvers<
+export type KCRelationResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["KCRelation"] = ResolversParentTypes["KCRelation"]
 > = {
@@ -2643,7 +2654,7 @@ export type MutationResolvers<
     Maybe<ResolversTypes["Void"]>,
     ParentType,
     ContextType,
-    RequireFields<MutationActionArgs, "data">
+    RequireFields<MutationactionArgs, "data">
   >;
   adminContent?: Resolver<
     ResolversTypes["AdminContentMutations"],
@@ -2712,14 +2723,14 @@ export type ProjectResolvers<
     ResolversTypes["ActionsConnection"],
     ParentType,
     ContextType,
-    RequireFields<ProjectActionsArgs, "pagination">
+    RequireFields<ProjectactionsArgs, "pagination">
   >;
   code?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   content?: Resolver<
     ResolversTypes["ContentConnection"],
     ParentType,
     ContextType,
-    RequireFields<ProjectContentArgs, "pagination">
+    RequireFields<ProjectcontentArgs, "pagination">
   >;
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   domains?: Resolver<Array<ResolversTypes["Domain"]>, ParentType, ContextType>;
@@ -2777,13 +2788,13 @@ export type QueryResolvers<
     Array<ResolversTypes["Content"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryContentArgs, "ids">
+    RequireFields<QuerycontentArgs, "ids">
   >;
   contentByCode?: Resolver<
     Maybe<ResolversTypes["Content"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryContentByCodeArgs, "code">
+    RequireFields<QuerycontentByCodeArgs, "code">
   >;
   currentUser?: Resolver<
     Maybe<ResolversTypes["User"]>,
@@ -2794,50 +2805,50 @@ export type QueryResolvers<
     Array<ResolversTypes["Domain"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryDomainsArgs, "ids">
+    RequireFields<QuerydomainsArgs, "ids">
   >;
   groups?: Resolver<
     Array<ResolversTypes["Group"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryGroupsArgs, "ids">
+    RequireFields<QuerygroupsArgs, "ids">
   >;
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   kcs?: Resolver<
     Array<ResolversTypes["KC"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryKcsArgs, "ids">
+    RequireFields<QuerykcsArgs, "ids">
   >;
   project?: Resolver<
     Maybe<ResolversTypes["Project"]>,
     ParentType,
     ContextType,
-    Partial<QueryProjectArgs>
+    Partial<QueryprojectArgs>
   >;
   projects?: Resolver<
     Array<ResolversTypes["Project"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryProjectsArgs, "ids">
+    RequireFields<QueryprojectsArgs, "ids">
   >;
   topicByCode?: Resolver<
     Maybe<ResolversTypes["Topic"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryTopicByCodeArgs, "code">
+    RequireFields<QuerytopicByCodeArgs, "code">
   >;
   topics?: Resolver<
     Array<ResolversTypes["Topic"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryTopicsArgs, "ids">
+    RequireFields<QuerytopicsArgs, "ids">
   >;
   users?: Resolver<
     Array<ResolversTypes["User"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryUsersArgs, "ids">
+    RequireFields<QueryusersArgs, "ids">
   >;
 };
 
@@ -2886,7 +2897,7 @@ export type TopicsConnectionResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export interface UrlScalarConfig
+export interface URLScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["URL"], any> {
   name: "URL";
 }
@@ -2910,7 +2921,7 @@ export type UserResolvers<
     ResolversTypes["ModelStateConnection"],
     ParentType,
     ContextType,
-    RequireFields<UserModelStatesArgs, "input">
+    RequireFields<UsermodelStatesArgs, "input">
   >;
   name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   picture?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
@@ -2972,8 +2983,8 @@ export type Resolvers<ContextType = EZContext> = {
   IntID?: GraphQLScalarType;
   JSON?: GraphQLScalarType;
   JSONObject?: GraphQLScalarType;
-  KC?: KcResolvers<ContextType>;
-  KCRelation?: KcRelationResolvers<ContextType>;
+  KC?: KCResolvers<ContextType>;
+  KCRelation?: KCRelationResolvers<ContextType>;
   KCsConnection?: KCsConnectionResolvers<ContextType>;
   ModelState?: ModelStateResolvers<ContextType>;
   ModelStateConnection?: ModelStateConnectionResolvers<ContextType>;

@@ -81,34 +81,34 @@ export type AdminUserMutations = {
 };
 
 /** Admin User-Related Queries */
-export type AdminUserMutationsCreateGroupArgs = {
+export type AdminUserMutationscreateGroupArgs = {
   data: CreateGroupInput;
 };
 
 /** Admin User-Related Queries */
-export type AdminUserMutationsSetProjectsToUsersArgs = {
+export type AdminUserMutationssetProjectsToUsersArgs = {
   projectIds: Array<Scalars["IntID"]>;
   userIds: Array<Scalars["IntID"]>;
 };
 
 /** Admin User-Related Queries */
-export type AdminUserMutationsSetUserGroupsArgs = {
+export type AdminUserMutationssetUserGroupsArgs = {
   groupIds: Array<Scalars["IntID"]>;
   usersEmails: Array<Scalars["EmailAddress"]>;
 };
 
 /** Admin User-Related Queries */
-export type AdminUserMutationsUpdateGroupArgs = {
+export type AdminUserMutationsupdateGroupArgs = {
   data: UpdateGroupInput;
 };
 
 /** Admin User-Related Queries */
-export type AdminUserMutationsUpdateUserArgs = {
+export type AdminUserMutationsupdateUserArgs = {
   data: UpdateUserInput;
 };
 
 /** Admin User-Related Queries */
-export type AdminUserMutationsUpsertUsersWithProjectsArgs = {
+export type AdminUserMutationsupsertUsersWithProjectsArgs = {
   emails: Array<Scalars["EmailAddress"]>;
   projectsIds: Array<Scalars["IntID"]>;
 };
@@ -131,13 +131,13 @@ export type AdminUserQueries = {
 };
 
 /** Admin User-Related Queries */
-export type AdminUserQueriesAllGroupsArgs = {
+export type AdminUserQueriesallGroupsArgs = {
   filters?: InputMaybe<AdminGroupsFilter>;
   pagination: CursorConnectionArgs;
 };
 
 /** Admin User-Related Queries */
-export type AdminUserQueriesAllUsersArgs = {
+export type AdminUserQueriesallUsersArgs = {
   filters?: InputMaybe<AdminUsersFilter>;
   pagination: CursorConnectionArgs;
 };
@@ -294,8 +294,12 @@ export type Node = {
 };
 
 /** Order ascendingly or descendingly */
-export type Order_By = "ASC" | "DESC";
+export const ORDER_BY = {
+  ASC: "ASC",
+  DESC: "DESC",
+} as const;
 
+export type ORDER_BY = typeof ORDER_BY[keyof typeof ORDER_BY];
 /** Paginated related information */
 export type PageInfo = {
   __typename?: "PageInfo";
@@ -335,11 +339,11 @@ export type Query = {
   users: Array<User>;
 };
 
-export type QueryGroupsArgs = {
+export type QuerygroupsArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
-export type QueryUsersArgs = {
+export type QueryusersArgs = {
   ids: Array<Scalars["IntID"]>;
 };
 
@@ -433,16 +437,18 @@ export type User = {
 };
 
 /** Possible roles of an authenticated user */
-export type UserRole =
+export const UserRole = {
   /**
    * Administrator of the system
    *
    * Most of the authorization logic is enabled
    */
-  | "ADMIN"
+  ADMIN: "ADMIN",
   /** Default user role */
-  | "USER";
+  USER: "USER",
+} as const;
 
+export type UserRole = typeof UserRole[keyof typeof UserRole];
 /** Paginated Users */
 export type UsersConnection = Connection & {
   __typename?: "UsersConnection";
@@ -575,7 +581,7 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   Node: never;
   NonNegativeInt: ResolverTypeWrapper<Scalars["NonNegativeInt"]>;
-  ORDER_BY: Order_By;
+  ORDER_BY: ORDER_BY;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Query: ResolverTypeWrapper<{}>;
   Subscription: ResolverTypeWrapper<{}>;
@@ -634,14 +640,14 @@ export type AdminUserMutationsResolvers<
     ResolversTypes["Group"],
     ParentType,
     ContextType,
-    RequireFields<AdminUserMutationsCreateGroupArgs, "data">
+    RequireFields<AdminUserMutationscreateGroupArgs, "data">
   >;
   setProjectsToUsers?: Resolver<
     Array<ResolversTypes["User"]>,
     ParentType,
     ContextType,
     RequireFields<
-      AdminUserMutationsSetProjectsToUsersArgs,
+      AdminUserMutationssetProjectsToUsersArgs,
       "projectIds" | "userIds"
     >
   >;
@@ -650,7 +656,7 @@ export type AdminUserMutationsResolvers<
     ParentType,
     ContextType,
     RequireFields<
-      AdminUserMutationsSetUserGroupsArgs,
+      AdminUserMutationssetUserGroupsArgs,
       "groupIds" | "usersEmails"
     >
   >;
@@ -658,20 +664,20 @@ export type AdminUserMutationsResolvers<
     ResolversTypes["Group"],
     ParentType,
     ContextType,
-    RequireFields<AdminUserMutationsUpdateGroupArgs, "data">
+    RequireFields<AdminUserMutationsupdateGroupArgs, "data">
   >;
   updateUser?: Resolver<
     ResolversTypes["User"],
     ParentType,
     ContextType,
-    RequireFields<AdminUserMutationsUpdateUserArgs, "data">
+    RequireFields<AdminUserMutationsupdateUserArgs, "data">
   >;
   upsertUsersWithProjects?: Resolver<
     Array<ResolversTypes["User"]>,
     ParentType,
     ContextType,
     RequireFields<
-      AdminUserMutationsUpsertUsersWithProjectsArgs,
+      AdminUserMutationsupsertUsersWithProjectsArgs,
       "emails" | "projectsIds"
     >
   >;
@@ -686,13 +692,13 @@ export type AdminUserQueriesResolvers<
     ResolversTypes["GroupsConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminUserQueriesAllGroupsArgs, "pagination">
+    RequireFields<AdminUserQueriesallGroupsArgs, "pagination">
   >;
   allUsers?: Resolver<
     ResolversTypes["UsersConnection"],
     ParentType,
     ContextType,
-    RequireFields<AdminUserQueriesAllUsersArgs, "pagination">
+    RequireFields<AdminUserQueriesallUsersArgs, "pagination">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -768,17 +774,17 @@ export type GroupsConnectionResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export interface IntIdScalarConfig
+export interface IntIDScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["IntID"], any> {
   name: "IntID";
 }
 
-export interface JsonScalarConfig
+export interface JSONScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["JSON"], any> {
   name: "JSON";
 }
 
-export interface JsonObjectScalarConfig
+export interface JSONObjectScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["JSONObject"], any> {
   name: "JSONObject";
 }
@@ -849,14 +855,14 @@ export type QueryResolvers<
     Array<ResolversTypes["Group"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryGroupsArgs, "ids">
+    RequireFields<QuerygroupsArgs, "ids">
   >;
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   users?: Resolver<
     Array<ResolversTypes["User"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryUsersArgs, "ids">
+    RequireFields<QueryusersArgs, "ids">
   >;
 };
 
@@ -877,7 +883,7 @@ export interface TimestampScalarConfig
   name: "Timestamp";
 }
 
-export interface UrlScalarConfig
+export interface URLScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["URL"], any> {
   name: "URL";
 }
