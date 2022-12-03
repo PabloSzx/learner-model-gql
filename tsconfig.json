@@ -19,7 +19,8 @@
     "skipLibCheck": true /* Skip type checking of declaration files. */,
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */,
     "importsNotUsedAsValues": "error",
-    "types": ["@types/mocha"]
+    "types": ["@types/mocha"],
+    "resolveJsonModule": true
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/.jsx"],
   "exclude": ["**/node_modules", "**/.next", "docs"]

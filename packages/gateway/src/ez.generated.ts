@@ -638,7 +638,6 @@ export type Connection = {
   pageInfo: PageInfo;
 };
 
-/** Content entity */
 export type Content = {
   __typename?: "Content";
   /**
@@ -661,7 +660,6 @@ export type Content = {
   createdAt: Scalars["DateTime"];
   /** Arbitrary content description */
   description: Scalars["String"];
-  /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** Arbitrary JSON object data */
   json?: Maybe<Scalars["JSONObject"]>;
@@ -694,6 +692,28 @@ export type ContentConnection = Connection & {
   nodes: Array<Content>;
   /** Pagination related information */
   pageInfo: PageInfo;
+};
+
+export type ContentSelectionInput = {
+  projectId: Scalars["IntID"];
+  topicId: Scalars["IntID"];
+  userId: Scalars["IntID"];
+};
+
+export type ContentSelectionQueries = {
+  __typename?: "ContentSelectionQueries";
+  contentSelected: Array<Content>;
+};
+
+export type ContentSelectionQueriesContentSelectedArgs = {
+  input: ContentSelectionInput;
+};
+
+export type ContentsReturn = {
+  __typename?: "ContentsReturn";
+  P: Content;
+  Preferred: Scalars["Boolean"];
+  msg: Scalars["String"];
 };
 
 /** Content creation input data */
@@ -1026,7 +1046,6 @@ export type ModelState = {
   creator: Scalars["String"];
   /** Domain associated with Model State */
   domain: Domain;
-  /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** Arbitrary JSON Data */
   json: Scalars["JSON"];
@@ -1037,6 +1056,9 @@ export type ModelState = {
   /** User associated with Model State */
   user: User;
 };
+
+/** Different types of Model State */
+export type ModelStateAlgorithm = "BKT";
 
 /** Paginated Model States */
 export type ModelStateConnection = Connection & {
@@ -1147,10 +1169,16 @@ export type Mutation = {
   adminUsers: AdminUserMutations;
   /** Returns 'Hello World!' */
   hello: Scalars["String"];
+  /** Update model state with new state */
+  updateModelState?: Maybe<Scalars["Void"]>;
 };
 
 export type MutationActionArgs = {
   data: ActionInput;
+};
+
+export type MutationUpdateModelStateArgs = {
+  input: UpdateModelStateInput;
 };
 
 /** Minimum Entity Information */
@@ -1344,6 +1372,7 @@ export type Query = {
    * - If authenticated user has no permissions on the corresponding project it returns NULL.
    */
   contentByCode?: Maybe<Content>;
+  contentSelection: ContentSelectionQueries;
   /** Authenticated user information */
   currentUser?: Maybe<User>;
   /**
@@ -1588,6 +1617,13 @@ export type UpdateKcInput = {
   id: Scalars["IntID"];
   /** Human readable identifier */
   label: Scalars["String"];
+};
+
+/** Input to update model state */
+export type UpdateModelStateInput = {
+  domainID: Scalars["IntID"];
+  typeModel: ModelStateAlgorithm;
+  userID: Scalars["IntID"];
 };
 
 /** Project update input data */
@@ -1862,6 +1898,10 @@ export type ResolversTypes = {
   Content: ResolverTypeWrapper<Content>;
   Int: ResolverTypeWrapper<Scalars["Int"]>;
   ContentConnection: ResolverTypeWrapper<ContentConnection>;
+  ContentSelectionInput: ContentSelectionInput;
+  ContentSelectionQueries: ResolverTypeWrapper<ContentSelectionQueries>;
+  ContentsReturn: ResolverTypeWrapper<ContentsReturn>;
+  Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   CreateContent: CreateContent;
   CreateDomain: CreateDomain;
   CreateGroupInput: CreateGroupInput;
@@ -1875,7 +1915,6 @@ export type ResolversTypes = {
   EmailAddress: ResolverTypeWrapper<Scalars["EmailAddress"]>;
   Group: ResolverTypeWrapper<Group>;
   GroupFlags: ResolverTypeWrapper<GroupFlags>;
-  Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   GroupFlagsInput: GroupFlagsInput;
   GroupsConnection: ResolverTypeWrapper<GroupsConnection>;
   IntID: ResolverTypeWrapper<Scalars["IntID"]>;
@@ -1887,6 +1926,7 @@ export type ResolversTypes = {
   KCRelationType: KcRelationType;
   KCsConnection: ResolverTypeWrapper<KCsConnection>;
   ModelState: ResolverTypeWrapper<ModelState>;
+  ModelStateAlgorithm: ModelStateAlgorithm;
   ModelStateConnection: ResolverTypeWrapper<ModelStateConnection>;
   ModelStateConnectionInput: ModelStateConnectionInput;
   ModelStateCreator: ResolverTypeWrapper<ModelStateCreator>;
@@ -1914,6 +1954,7 @@ export type ResolversTypes = {
   UpdateDomain: UpdateDomain;
   UpdateGroupInput: UpdateGroupInput;
   UpdateKCInput: UpdateKcInput;
+  UpdateModelStateInput: UpdateModelStateInput;
   UpdateProject: UpdateProject;
   UpdateTopic: UpdateTopic;
   UpdateUserInput: UpdateUserInput;
@@ -1967,6 +2008,10 @@ export type ResolversParentTypes = {
   Content: Content;
   Int: Scalars["Int"];
   ContentConnection: ContentConnection;
+  ContentSelectionInput: ContentSelectionInput;
+  ContentSelectionQueries: ContentSelectionQueries;
+  ContentsReturn: ContentsReturn;
+  Boolean: Scalars["Boolean"];
   CreateContent: CreateContent;
   CreateDomain: CreateDomain;
   CreateGroupInput: CreateGroupInput;
@@ -1980,7 +2025,6 @@ export type ResolversParentTypes = {
   EmailAddress: Scalars["EmailAddress"];
   Group: Group;
   GroupFlags: GroupFlags;
-  Boolean: Scalars["Boolean"];
   GroupFlagsInput: GroupFlagsInput;
   GroupsConnection: GroupsConnection;
   IntID: Scalars["IntID"];
@@ -2017,6 +2061,7 @@ export type ResolversParentTypes = {
   UpdateDomain: UpdateDomain;
   UpdateGroupInput: UpdateGroupInput;
   UpdateKCInput: UpdateKcInput;
+  UpdateModelStateInput: UpdateModelStateInput;
   UpdateProject: UpdateProject;
   UpdateTopic: UpdateTopic;
   UpdateUserInput: UpdateUserInput;
@@ -2402,6 +2447,29 @@ export type ContentConnectionResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type ContentSelectionQueriesResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["ContentSelectionQueries"] = ResolversParentTypes["ContentSelectionQueries"]
+> = {
+  contentSelected?: Resolver<
+    Array<ResolversTypes["Content"]>,
+    ParentType,
+    ContextType,
+    RequireFields<ContentSelectionQueriesContentSelectedArgs, "input">
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ContentsReturnResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["ContentsReturn"] = ResolversParentTypes["ContentsReturn"]
+> = {
+  P?: Resolver<ResolversTypes["Content"], ParentType, ContextType>;
+  Preferred?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  msg?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export interface DateTimeScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["DateTime"], any> {
   name: "DateTime";
@@ -2666,6 +2734,12 @@ export type MutationResolvers<
     ContextType
   >;
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  updateModelState?: Resolver<
+    Maybe<ResolversTypes["Void"]>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateModelStateArgs, "input">
+  >;
 };
 
 export type NodeResolvers<
@@ -2784,6 +2858,11 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     RequireFields<QueryContentByCodeArgs, "code">
+  >;
+  contentSelection?: Resolver<
+    ResolversTypes["ContentSelectionQueries"],
+    ParentType,
+    ContextType
   >;
   currentUser?: Resolver<
     Maybe<ResolversTypes["User"]>,
@@ -2962,6 +3041,8 @@ export type Resolvers<ContextType = EZContext> = {
   Connection?: ConnectionResolvers<ContextType>;
   Content?: ContentResolvers<ContextType>;
   ContentConnection?: ContentConnectionResolvers<ContextType>;
+  ContentSelectionQueries?: ContentSelectionQueriesResolvers<ContextType>;
+  ContentsReturn?: ContentsReturnResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
   Domain?: DomainResolvers<ContextType>;
   DomainsConnection?: DomainsConnectionResolvers<ContextType>;

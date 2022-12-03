@@ -623,7 +623,6 @@ export type Connection = {
   pageInfo: PageInfo;
 };
 
-/** Content entity */
 export type Content = {
   __typename?: "Content";
   /**
@@ -646,7 +645,6 @@ export type Content = {
   createdAt: Scalars["DateTime"];
   /** Arbitrary content description */
   description: Scalars["String"];
-  /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** Arbitrary JSON object data */
   json?: Maybe<Scalars["JSONObject"]>;
@@ -679,6 +677,28 @@ export type ContentConnection = Connection & {
   nodes: Array<Content>;
   /** Pagination related information */
   pageInfo: PageInfo;
+};
+
+export type ContentSelectionInput = {
+  projectId: Scalars["IntID"];
+  topicId: Scalars["IntID"];
+  userId: Scalars["IntID"];
+};
+
+export type ContentSelectionQueries = {
+  __typename?: "ContentSelectionQueries";
+  contentSelected: Array<Content>;
+};
+
+export type ContentSelectionQueriesContentSelectedArgs = {
+  input: ContentSelectionInput;
+};
+
+export type ContentsReturn = {
+  __typename?: "ContentsReturn";
+  P: Content;
+  Preferred: Scalars["Boolean"];
+  msg: Scalars["String"];
 };
 
 /** Content creation input data */
@@ -1016,7 +1036,6 @@ export type ModelState = {
   creator: Scalars["String"];
   /** Domain associated with Model State */
   domain: Domain;
-  /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** Arbitrary JSON Data */
   json: Scalars["JSON"];
@@ -1028,6 +1047,13 @@ export type ModelState = {
   user: User;
 };
 
+/** Different types of Model State */
+export const ModelStateAlgorithm = {
+  Bkt: "BKT",
+} as const;
+
+export type ModelStateAlgorithm =
+  typeof ModelStateAlgorithm[keyof typeof ModelStateAlgorithm];
 /** Paginated Model States */
 export type ModelStateConnection = Connection & {
   __typename?: "ModelStateConnection";
@@ -1137,10 +1163,16 @@ export type Mutation = {
   adminUsers: AdminUserMutations;
   /** Returns 'Hello World!' */
   hello: Scalars["String"];
+  /** Update model state with new state */
+  updateModelState?: Maybe<Scalars["Void"]>;
 };
 
 export type MutationActionArgs = {
   data: ActionInput;
+};
+
+export type MutationUpdateModelStateArgs = {
+  input: UpdateModelStateInput;
 };
 
 /** Minimum Entity Information */
@@ -1338,6 +1370,7 @@ export type Query = {
    * - If authenticated user has no permissions on the corresponding project it returns NULL.
    */
   contentByCode?: Maybe<Content>;
+  contentSelection: ContentSelectionQueries;
   /** Authenticated user information */
   currentUser?: Maybe<User>;
   /**
@@ -1582,6 +1615,13 @@ export type UpdateKcInput = {
   id: Scalars["IntID"];
   /** Human readable identifier */
   label: Scalars["String"];
+};
+
+/** Input to update model state */
+export type UpdateModelStateInput = {
+  domainID: Scalars["IntID"];
+  typeModel: ModelStateAlgorithm;
+  userID: Scalars["IntID"];
 };
 
 /** Project update input data */

@@ -10,6 +10,6 @@ execSync("pnpm -r db:generate", {
   stdio: "inherit",
 });
 
-execSync("pnpm -r db:link-env", {
-  stdio: "inherit",
-});
+try {
+  execSync("pnpm -r db:link-env", {});
+} catch {}

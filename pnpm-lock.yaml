@@ -260,12 +260,14 @@ importers:
       require-env-variable: ^4.0.1
       serialize-error: ^11.0.0
       typescript: ^4.8.4
+      zod: ^3.19.1
     dependencies:
       common: link:../common
       pino: 8.6.1
       pino-pretty: 9.1.1
       require-env-variable: 4.0.1
       serialize-error: 11.0.0
+      zod: 3.19.1
     devDependencies:
       '@types/node': 18.8.3
       graphql: 16.6.0
@@ -490,6 +492,14 @@ importers:
       graphql-ez: 0.15.2_5stvgedl36bc3tcgqzqdj5yobu
       typescript: 4.8.4
 
+  packages/services/contentSelection:
+    specifiers:
+      api-base: workspace:^0.0.1
+      db: workspace:^0.0.1
+    dependencies:
+      api-base: link:../../api-base
+      db: link:../../db
+
   packages/services/domain:
     specifiers:
       '@types/node': ^18.8.3
@@ -506,6 +516,14 @@ importers:
       graphql: 16.6.0
       graphql-ez: 0.15.2_5stvgedl36bc3tcgqzqdj5yobu
       typescript: 4.8.4
+
+  packages/services/model:
+    specifiers:
+      api-base: workspace:^0.0.1
+      db: workspace:^0.0.1
+    dependencies:
+      api-base: link:../../api-base
+      db: link:../../db
 
   packages/services/projects:
     specifiers:
@@ -2321,10 +2339,7 @@ packages:
   /@emotion/use-insertion-effect-with-fallbacks/1.0.0_react@17.0.2:
     resolution: {integrity: sha512-1eEgUGmkaljiBnRMTdksDV1W4kUnmwgp7X9G8B++9GYwl1lUdqSndSriIrTJ0N7LQaoauY9JJ2yhiOYK5+NI4A==}
     peerDependencies:
-      react: '*'
-    peerDependenciesMeta:
-      react:
-        optional: true
+      react: '>=16.8.0'
     dependencies:
       react: 17.0.2
     dev: true
@@ -3686,11 +3701,9 @@ packages:
   /@reach/alert/0.13.2_sfoxds7t5ydpegc3knd667wn6m:
     resolution: {integrity: sha512-LDz83AXCrClyq/MWe+0vaZfHp1Ytqn+kgL5VxG7rirUvmluWaj/snxzfNPWn0Ma4K2YENmXXRC/iHt5X95SqIg==}
     peerDependencies:
-      react: '*'
+      react: ^16.8.0 || 17.x
       react-dom: ^16.8.0 || 17.x
     peerDependenciesMeta:
-      react:
-        optional: true
       react-dom:
         optional: true
     dependencies:
@@ -8378,7 +8391,7 @@ packages:
       '@graphql-typed-document-node/core': 3.1.1_graphql@16.6.0
       commander: 9.4.1
       graphql: 16.6.0
-      react-query: 3.39.2_sfoxds7t5ydpegc3knd667wn6m
+      react-query: 3.39.2_react@17.0.2
       valtio: 1.7.1_react@17.0.2
     transitivePeerDependencies:
       - encoding
@@ -9499,3 +9512,7 @@ packages:
       compress-commons: 4.1.1
       readable-stream: 3.6.0
     dev: true
+
+  /zod/3.19.1:
+    resolution: {integrity: sha512-LYjZsEDhCdYET9ikFu6dVPGp2YH9DegXjdJToSzD9rO6fy4qiRYFoyEYwps88OseJlPyl2NOe2iJuhEhL7IpEA==}
+    dev: false

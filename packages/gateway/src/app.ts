@@ -20,14 +20,16 @@ import { getServicesConfigFromEnv } from "./services";
 import { getStitchedSchema } from "./stitch";
 
 export const getGatewayPlugin = async () => {
-  logger.info("Waiting for services!");
-
   const servicesConfig = getServicesConfigFromEnv();
 
-  await waitOn({
-    resources: servicesConfig.map(({ port, href }) => href || `tcp:${port}`),
-    timeout: ms("30 seconds"),
-  });
+  if (!IS_DEVELOPMENT) {
+    logger.info("Waiting for services!");
+
+    await waitOn({
+      resources: servicesConfig.map(({ port, href }) => href || `tcp:${port}`),
+      timeout: ms("60 seconds"),
+    });
+  }
 
   const schema = getStitchedSchema(servicesConfig);
 

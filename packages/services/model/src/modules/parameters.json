@@ -1,0 +1,42 @@
+{
+  "default": {
+    "known": 0.2,
+    "guess": 0.2,
+    "slip": 0.2,
+    "learn": 0.2,
+    "forget": 0.0,
+    "mth": 0.95
+  },
+  "DetFacCom": {
+    "known": 0.3,
+    "guess": 0.3,
+    "slip": 0.1,
+    "learn": 0.3,
+    "forget": 0.0,
+    "mth": 0.96
+  },
+  "DetFacComGrup": {
+    "known": 0.2,
+    "guess": 0.2,
+    "slip": 0.2,
+    "learn": 0.2,
+    "forget": 0.0,
+    "mth": 0.9
+  },
+  "CalDis": {
+    "known": 0.2,
+    "guess": 0.2,
+    "slip": 0.2,
+    "learn": 0.2,
+    "forget": 0.0,
+    "mth": 0.93
+  },
+  "IdeTer2": {
+    "known": 0.2,
+    "guess": 0.3,
+    "slip": 0.25,
+    "learn": 0.1,
+    "forget": 0.0,
+    "mth": 0.93
+  }
+}
