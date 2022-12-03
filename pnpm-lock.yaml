@@ -10,6 +10,11 @@ overrides:
   ansi-regex@>2.1.1 <5.0.1: ^5.0.1
   '@types/react': ^17.0.50
 
+patchedDependencies:
+  fastify-auth0-verify@1.0.0:
+    hash: 2panpeip4bhgazvchykghbkbqq
+    path: patches/fastify-auth0-verify@1.0.0.patch
+
 importers:
 
   .:
@@ -137,7 +142,7 @@ importers:
       '@graphql-tools/schema': 9.0.4_graphql@16.6.0
       common-api: link:../common-api
       db: link:../db
-      fastify-auth0-verify: 1.0.0
+      fastify-auth0-verify: 1.0.0_2panpeip4bhgazvchykghbkbqq
       fastify-plugin: 4.4.0
       pino: 8.7.0
       pino-pretty: 9.1.1
@@ -5627,7 +5632,7 @@ packages:
       reusify: 1.0.4
     dev: false
 
-  /fastify-auth0-verify/1.0.0:
+  /fastify-auth0-verify/1.0.0_2panpeip4bhgazvchykghbkbqq:
     resolution: {integrity: sha512-/nrfkq6qGgRoe72wwa7wE85aWajIbB/z2CYRXUDzQCd5OgvgsO/RRBGK33ZovuQ52DmjOJvNtqHQAPbcsPMK/Q==}
     engines: {node: '>= 14.0.0'}
     dependencies:
@@ -5640,6 +5645,7 @@ packages:
     transitivePeerDependencies:
       - encoding
     dev: false
+    patched: true
 
   /fastify-cors/6.0.3:
     resolution: {integrity: sha512-fMbXubKKyBHHCfSBtsCi3+7VyVRdhJQmGes5gM+eGKkRErCdm0NaYO0ozd31BQBL1ycoTIjbqOZhJo4RTF/Vlg==}

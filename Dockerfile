@@ -24,6 +24,7 @@ WORKDIR /home/learner-model-gql
 
 COPY tsconfig.json package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc schema.gql prepare.mjs ./
 
+COPY patches ./patches
 COPY packages/api-base ./packages/api-base
 COPY packages/common ./packages/common
 COPY packages/common-api ./packages/common-api

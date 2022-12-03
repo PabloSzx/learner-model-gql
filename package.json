@@ -1,6 +1,6 @@
 {
   "name": "learner-model-gql",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "homepage": "https://github.com/PabloSzx/learner-model-gql#readme",
   "bugs": {
@@ -20,7 +20,7 @@
     "db:local:rm": "docker-compose -f test/docker-compose.yml -v down",
     "predev": "pnpm -r db:generate",
     "dev": "concurrently -r \"cross-env NEXT_PUBLIC_API_URL=http://localhost:8080/graphql pnpm -r --no-bail dev\" \"tsc --watch\"",
-    "docker:build": "docker build . -t pabloszx/learner-model-gql --platform=linux/x86_64",
+    "docker:build": "docker build . -t pabloszx/learner-model-gql --platform=linux/x86_64 --progress=plain",
     "generate": "pnpm -r generate",
     "load-test": "pnpm run -C ./packages/testing load-test",
     "migrate": "pnpm -r migrate:dev",
@@ -100,6 +100,9 @@
         "graphql": "^16.0.0",
         "framer-motion": "*"
       }
+    },
+    "patchedDependencies": {
+      "fastify-auth0-verify@1.0.0": "patches/fastify-auth0-verify@1.0.0.patch"
     }
   }
 }
