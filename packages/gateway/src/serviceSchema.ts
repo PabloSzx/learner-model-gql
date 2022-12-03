@@ -160,9 +160,12 @@ export async function getServiceSchema({
   const schemaGraphqlFile =
     IS_DEVELOPMENT &&
     (await readFile(
-      resolve(__dirname, "../services/", name, "schema.gql"),
+      resolve(__dirname, "../../services/", name, "schema.gql"),
       "utf-8"
-    ).catch(() => null));
+    ).catch((err) => {
+      console.error(err);
+      return null;
+    }));
 
   const schema =
     IS_DEVELOPMENT && schemaGraphqlFile
