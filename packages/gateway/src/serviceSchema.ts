@@ -3,11 +3,13 @@ import type { SubschemaConfig } from "@graphql-tools/delegate";
 import type { AsyncExecutor } from "@graphql-tools/utils";
 import { observableToAsyncIterable } from "@graphql-tools/utils";
 import { introspectSchema } from "@graphql-tools/wrap";
-import { IS_TEST, logger, ServiceName } from "api-base";
-import type { DocumentNode } from "graphql";
+import { IS_TEST, logger, ServiceName, IS_DEVELOPMENT } from "api-base";
+import { readFile } from "fs/promises";
+import { buildSchema, DocumentNode } from "graphql";
 import { OperationTypeNode, print } from "graphql";
 import { Client as WsClient, createClient as createWsClient } from "graphql-ws";
 import type { IncomingHttpHeaders } from "http";
+import { resolve } from "path";
 import { Client } from "undici";
 import ws from "ws";
 import { servicesSubschemaConfig } from "./stitchConfig";
@@ -155,8 +157,20 @@ export async function getServiceSchema({
       }
     };
 
+  const schemaGraphqlFile =
+    IS_DEVELOPMENT &&
+    (await readFile(
+      resolve(__dirname, "../services/", name, "schema.gql"),
+      "utf-8"
+    ).catch(() => null));
+
+  const schema =
+    IS_DEVELOPMENT && schemaGraphqlFile
+      ? buildSchema(schemaGraphqlFile)
+      : await introspectSchema(remoteExecutor);
+
   const serviceSubschema: SubschemaConfig = {
-    schema: await introspectSchema(remoteExecutor),
+    schema,
     executor: remoteExecutor,
     batch: true,
     ...config[name],
