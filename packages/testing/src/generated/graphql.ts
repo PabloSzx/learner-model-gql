@@ -623,6 +623,7 @@ export type Connection = {
   pageInfo: PageInfo;
 };
 
+/** Content entity */
 export type Content = {
   __typename?: "Content";
   /**
@@ -687,7 +688,7 @@ export type ContentSelectionInput = {
 
 export type ContentSelectionQueries = {
   __typename?: "ContentSelectionQueries";
-  contentSelected: Array<Content>;
+  contentSelected: Array<ContentsReturn>;
 };
 
 export type ContentSelectionQueriesContentSelectedArgs = {

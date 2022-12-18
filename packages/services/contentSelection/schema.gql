@@ -15,19 +15,23 @@ type Content {
 }
 
 input ContentSelectionInput {
+  discardLast: Int! = 10
+  domainId: IntID!
   projectId: IntID!
-  topicId: IntID!
+  topicId: [IntID!]!
   userId: IntID!
+  zpdRange: [Float!] = [0.4, 0.6]
 }
 
 type ContentSelectionQueries {
-  contentSelected(input: ContentSelectionInput!): [Content!]!
+  contentSelected(input: ContentSelectionInput!): [ContentsReturn!]!
 }
 
 type ContentsReturn {
+  Msg: String!
+  Order: IntID!
   P: Content!
   Preferred: Boolean!
-  msg: String!
 }
 
 """

@@ -65,14 +65,17 @@ export type Content = {
 };
 
 export type ContentSelectionInput = {
+  discardLast?: Scalars["Int"];
+  domainId: Scalars["IntID"];
   projectId: Scalars["IntID"];
-  topicId: Scalars["IntID"];
+  topicId: Array<Scalars["IntID"]>;
   userId: Scalars["IntID"];
+  zpdRange?: InputMaybe<Array<Scalars["Float"]>>;
 };
 
 export type ContentSelectionQueries = {
   __typename?: "ContentSelectionQueries";
-  contentSelected: Array<Content>;
+  contentSelected: Array<ContentsReturn>;
 };
 
 export type ContentSelectionQueriesContentSelectedArgs = {
@@ -81,9 +84,10 @@ export type ContentSelectionQueriesContentSelectedArgs = {
 
 export type ContentsReturn = {
   __typename?: "ContentsReturn";
+  Msg: Scalars["String"];
+  Order: Scalars["IntID"];
   P: Content;
   Preferred: Scalars["Boolean"];
-  msg: Scalars["String"];
 };
 
 /**
@@ -266,10 +270,12 @@ export type ResolversTypes = {
   Connection: never;
   Content: ResolverTypeWrapper<Content>;
   ContentSelectionInput: ContentSelectionInput;
+  Int: ResolverTypeWrapper<Scalars["Int"]>;
+  Float: ResolverTypeWrapper<Scalars["Float"]>;
   ContentSelectionQueries: ResolverTypeWrapper<ContentSelectionQueries>;
   ContentsReturn: ResolverTypeWrapper<ContentsReturn>;
-  Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   String: ResolverTypeWrapper<Scalars["String"]>;
+  Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   CursorConnectionArgs: CursorConnectionArgs;
   DateTime: ResolverTypeWrapper<Scalars["DateTime"]>;
   EmailAddress: ResolverTypeWrapper<Scalars["EmailAddress"]>;
@@ -293,10 +299,12 @@ export type ResolversParentTypes = {
   Connection: never;
   Content: Content;
   ContentSelectionInput: ContentSelectionInput;
+  Int: Scalars["Int"];
+  Float: Scalars["Float"];
   ContentSelectionQueries: ContentSelectionQueries;
   ContentsReturn: ContentsReturn;
-  Boolean: Scalars["Boolean"];
   String: Scalars["String"];
+  Boolean: Scalars["Boolean"];
   CursorConnectionArgs: CursorConnectionArgs;
   DateTime: Scalars["DateTime"];
   EmailAddress: Scalars["EmailAddress"];
@@ -335,7 +343,7 @@ export type ContentSelectionQueriesResolvers<
   ParentType extends ResolversParentTypes["ContentSelectionQueries"] = ResolversParentTypes["ContentSelectionQueries"]
 > = {
   contentSelected?: Resolver<
-    Array<ResolversTypes["Content"]>,
+    Array<ResolversTypes["ContentsReturn"]>,
     ParentType,
     ContextType,
     RequireFields<ContentSelectionQueriesContentSelectedArgs, "input">
@@ -347,9 +355,10 @@ export type ContentsReturnResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["ContentsReturn"] = ResolversParentTypes["ContentsReturn"]
 > = {
+  Msg?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  Order?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
   P?: Resolver<ResolversTypes["Content"], ParentType, ContextType>;
   Preferred?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
-  msg?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

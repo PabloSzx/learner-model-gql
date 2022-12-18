@@ -623,6 +623,7 @@ export type Connection = {
   pageInfo: PageInfo;
 };
 
+/** Content entity */
 export type Content = {
   __typename?: "Content";
   /**
@@ -680,14 +681,17 @@ export type ContentConnection = Connection & {
 };
 
 export type ContentSelectionInput = {
+  discardLast?: Scalars["Int"];
+  domainId: Scalars["IntID"];
   projectId: Scalars["IntID"];
-  topicId: Scalars["IntID"];
+  topicId: Array<Scalars["IntID"]>;
   userId: Scalars["IntID"];
+  zpdRange?: InputMaybe<Array<Scalars["Float"]>>;
 };
 
 export type ContentSelectionQueries = {
   __typename?: "ContentSelectionQueries";
-  contentSelected: Array<Content>;
+  contentSelected: Array<ContentsReturn>;
 };
 
 export type ContentSelectionQueriesContentSelectedArgs = {
@@ -696,9 +700,10 @@ export type ContentSelectionQueriesContentSelectedArgs = {
 
 export type ContentsReturn = {
   __typename?: "ContentsReturn";
+  Msg: Scalars["String"];
+  Order: Scalars["IntID"];
   P: Content;
   Preferred: Scalars["Boolean"];
-  msg: Scalars["String"];
 };
 
 /** Content creation input data */

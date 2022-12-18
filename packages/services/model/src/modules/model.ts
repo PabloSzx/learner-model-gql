@@ -34,8 +34,9 @@ export const modelModule = registerModule(
         async updateModelState(
           _root,
           { input: { domainID, userID, typeModel } },
-          { prisma }
+          { prisma, authorization }
         ) {
+          await authorization.expectUser;
           const [domain, user, state] = await Promise.all([
             //kcs jerarquia
             prisma.domain.findUnique({
@@ -67,6 +68,8 @@ export const modelModule = registerModule(
             prisma.modelState.findFirst({
               where: {
                 userId: userID,
+                type: typeModel,
+                domainId: domainID,
               },
             }),
           ]);
@@ -79,6 +82,8 @@ export const modelModule = registerModule(
               action.createdAt > (M?.createdAt ?? 0) //&&
             //Schemas.actionExtras.parse(action.extra).attemps == 0 //primer attemps
           );
+          console.log("model");
+          console.log(M);
           console.log("acciones: ");
           console.log(A);
           const BKT = bkt(D, M, A);

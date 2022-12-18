@@ -18,7 +18,11 @@ export const bkt = (
       (a, v) => ({
         ...a,
         [v]: {
-          level: params[v]?.known ?? parameters.default.known,
+          level:
+            params[v]?.known ??
+            params["default"]?.known ??
+            parameters.default.known ??
+            0.1,
           mth: params[v]?.mth ?? parameters.default.mth,
         },
       }),

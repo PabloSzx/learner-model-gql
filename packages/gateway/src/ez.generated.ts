@@ -638,6 +638,7 @@ export type Connection = {
   pageInfo: PageInfo;
 };
 
+/** Content entity */
 export type Content = {
   __typename?: "Content";
   /**
@@ -695,14 +696,17 @@ export type ContentConnection = Connection & {
 };
 
 export type ContentSelectionInput = {
+  discardLast?: Scalars["Int"];
+  domainId: Scalars["IntID"];
   projectId: Scalars["IntID"];
-  topicId: Scalars["IntID"];
+  topicId: Array<Scalars["IntID"]>;
   userId: Scalars["IntID"];
+  zpdRange?: InputMaybe<Array<Scalars["Float"]>>;
 };
 
 export type ContentSelectionQueries = {
   __typename?: "ContentSelectionQueries";
-  contentSelected: Array<Content>;
+  contentSelected: Array<ContentsReturn>;
 };
 
 export type ContentSelectionQueriesContentSelectedArgs = {
@@ -711,9 +715,10 @@ export type ContentSelectionQueriesContentSelectedArgs = {
 
 export type ContentsReturn = {
   __typename?: "ContentsReturn";
+  Msg: Scalars["String"];
+  Order: Scalars["IntID"];
   P: Content;
   Preferred: Scalars["Boolean"];
-  msg: Scalars["String"];
 };
 
 /** Content creation input data */
@@ -2452,7 +2457,7 @@ export type ContentSelectionQueriesResolvers<
   ParentType extends ResolversParentTypes["ContentSelectionQueries"] = ResolversParentTypes["ContentSelectionQueries"]
 > = {
   contentSelected?: Resolver<
-    Array<ResolversTypes["Content"]>,
+    Array<ResolversTypes["ContentsReturn"]>,
     ParentType,
     ContextType,
     RequireFields<ContentSelectionQueriesContentSelectedArgs, "input">
@@ -2464,9 +2469,10 @@ export type ContentsReturnResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["ContentsReturn"] = ResolversParentTypes["ContentsReturn"]
 > = {
+  Msg?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  Order?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
   P?: Resolver<ResolversTypes["Content"], ParentType, ContextType>;
   Preferred?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
-  msg?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
