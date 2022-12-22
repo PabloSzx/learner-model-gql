@@ -4,6 +4,20 @@ schema {
   subscription: Subscription
 }
 
+type AllReturn {
+  PU: [String]
+  contentResult: [ContentsReturn!]!
+  model: JSON!
+  newP: [String]
+  oldP: [String]
+  pAVGdif: Float!
+  pAVGsim: Float!
+  table: [TableReturn!]!
+  tableDifEasy: [TableReturn!]!
+  tableDifHarder: [TableReturn!]!
+  tableSim: [TableReturn!]!
+}
+
 "Pagination Interface"
 interface Connection {
   "Pagination information"
@@ -24,7 +38,7 @@ input ContentSelectionInput {
 }
 
 type ContentSelectionQueries {
-  contentSelected(input: ContentSelectionInput!): [ContentsReturn!]!
+  contentSelected(input: ContentSelectionInput!): AllReturn!
 }
 
 type ContentsReturn {
@@ -148,6 +162,14 @@ type Query {
 type Subscription {
   "Emits 'Hello World1', 'Hello World2', 'Hello World3', 'Hello World4' and 'Hello World5'"
   hello: String!
+}
+
+type TableReturn {
+  contentCode: String
+  diff: Float
+  probSuccessAvg: Float
+  probSuccessMult: Float
+  sim: Float
 }
 
 """

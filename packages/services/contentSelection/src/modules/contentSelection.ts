@@ -9,7 +9,7 @@ export const contentSelectionModule = registerModule(
       contentSelection: ContentSelectionQueries!
     }
     type ContentSelectionQueries {
-      contentSelected(input: ContentSelectionInput!): [ContentsReturn!]! #change allContent to contentSelected? return :[ContentsReturns]!
+      contentSelected(input: ContentSelectionInput!): AllReturn! #change allContent to contentSelected? return :[ContentsReturns]!
     }
     input ContentSelectionInput {
       projectId: IntID!
@@ -23,11 +23,34 @@ export const contentSelectionModule = registerModule(
     type Content {
       id: IntID!
     }
+
     type ContentsReturn {
       P: Content!
       Msg: String!
       Preferred: Boolean!
       Order: IntID!
+    }
+
+    type TableReturn {
+      contentCode: String
+      sim: Float
+      diff: Float
+      probSuccessAvg: Float
+      probSuccessMult: Float
+    }
+
+    type AllReturn {
+      contentResult: [ContentsReturn!]!
+      model: JSON!
+      oldP: [String]
+      newP: [String]
+      PU: [String]
+      pAVGsim: Float!
+      pAVGdif: Float!
+      table: [TableReturn!]!
+      tableSim: [TableReturn!]!
+      tableDifEasy: [TableReturn!]!
+      tableDifHarder: [TableReturn!]!
     }
   `,
   {
@@ -93,6 +116,9 @@ export const contentSelectionModule = registerModule(
                 type: "BKT",
                 domainId: domainId,
               },
+              orderBy: {
+                createdAt: "desc",
+              },
             }),
 
             prisma.user.findUnique({
@@ -121,7 +147,7 @@ export const contentSelectionModule = registerModule(
             .filter(
               (action) =>
                 action.verbName == "completeContent" &&
-                topicId.includes(action.topicId ?? 0) //(in)
+                topicId.includes(action.topicId ?? 0)
             )
             .map((x) => {
               return x.contentId;
@@ -138,26 +164,34 @@ export const contentSelectionModule = registerModule(
             return !!x;
           });
 
-          console.log("PU new");
-          console.log(PU); //first undefined because dc1 not in P
-
-          let Problems = subtraction(P, PU);
-          //console.log("***array P-PU***");
-          //console.log(Problems);
+          let newP = subtraction(P, PU);
 
           if (zpdRange && zpdRange[0] && zpdRange[1]) {
             const contentSelection = selectionCriterion(
-              Problems,
+              P,
+              newP,
               PU,
               M,
               zpdRange[0],
               zpdRange[1]
             );
 
-            return contentSelection;
+            return contentSelection; //, contentSelection.zpdSim;
           }
 
-          return [];
+          return {
+            contentResult: [],
+            model: {},
+            oldP: [],
+            newP: [],
+            PU: [],
+            pAVGsim: 0.0,
+            pAVGdif: 0.0,
+            table: [],
+            tableSim: [],
+            tableDifEasy: [],
+            tableDifHarder: [],
+          };
         },
       },
     },

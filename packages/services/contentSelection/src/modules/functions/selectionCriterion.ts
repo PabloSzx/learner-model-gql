@@ -6,22 +6,53 @@ import { similarity } from "./similarity";
 import messages from "../functions/messages.json";
 
 export const selectionCriterion = (
+  oldP: (Content & {
+    kcs: KC[];
+  })[],
   P: (Content & {
     kcs: KC[];
   })[],
-  PU: (
-    | Content & {
-        kcs: KC[];
-      }
-  )[],
+  PU: (Content & {
+    kcs: KC[];
+  })[],
   M: ModelState | null,
   zpd1: number,
   zpd2: number
 ) => {
   const lastExerciseDone = PU[0]?.kcs;
-  //console.log("lastExerciseDone");
-  //console.log(lastExerciseDone);
   let contentSelected = []; //array of object with content selected return
+  let pAVGsim = 0.0;
+  let pAVGdif = 0.0;
+
+  let table: {
+    P: Content & { kcs: KC[] };
+    sim: number | undefined;
+    diff: number | undefined;
+    probSuccessMult: number | undefined;
+    probSuccessAvg: number | undefined;
+  }[] = [];
+
+  let tableSim: {
+    P: Content & { kcs: KC[] };
+    sim: number | undefined;
+    diff: number | undefined;
+    probSuccessMult: number | undefined;
+    probSuccessAvg: number | undefined;
+  }[] = [];
+  let tableDifEasy: {
+    P: Content & { kcs: KC[] };
+    sim: number | undefined;
+    diff: number | undefined;
+    probSuccessMult: number | undefined;
+    probSuccessAvg: number | undefined;
+  }[] = [];
+  let tableDifHarder: {
+    P: Content & { kcs: KC[] };
+    sim: number | undefined;
+    diff: number | undefined;
+    probSuccessMult: number | undefined;
+    probSuccessAvg: number | undefined;
+  }[] = [];
 
   if (lastExerciseDone && M) {
     //preguntar lo de M!!!
@@ -29,14 +60,7 @@ export const selectionCriterion = (
     const simi = similarity(P, M, lastExerciseDone);
     const pSM = probSuccessMult(P, M);
     const pSA = probSuccessAvg(P, M);
-    //const pAVGlastExerciseDone =
-    let table: {
-      P: Content & { kcs: KC[] };
-      sim: number | undefined;
-      diff: number | undefined;
-      probSuccessMult: number | undefined;
-      probSuccessAvg: number | undefined;
-    }[] = [];
+
     P.map((p, i) =>
       table.push({
         P: p,
@@ -46,85 +70,68 @@ export const selectionCriterion = (
         probSuccessAvg: pSA[i],
       })
     );
-    //console.log("table!!");
-    //console.log(table);
     //similaridad ESTRUCTURAL (cosine similarity [0,1])
     table = table
       .filter((x) => (x.diff ?? 0) > 0)
       .sort((a, b) => (b.sim ?? 0) - (a.sim ?? 0));
 
-    const tableSim = table.filter((x) => x.sim == 1);
-    //console.log("model");
-    //console.log(M);
-    //console.log("table filter similarity!!");
-    //console.log(table);
-    console.log("zpd new");
-    console.log(zpd1);
-    console.log(zpd2);
-    console.log("zpd similar");
-    let zpdSimilar = 0.0;
-    //console.log(zpdSimilar);
+    tableSim = table.filter((x) => x.sim == 1);
+
     if (tableSim.length > 0) {
-      zpdSimilar = tableSim[0]?.probSuccessAvg ?? 0.0;
-      console.log(zpdSimilar);
+      pAVGsim = tableSim[0]?.probSuccessAvg ?? 0.0;
+      console.log(pAVGsim);
       contentSelected.push({
         P: tableSim[0]?.P,
         Msg: messages.messageSimilar,
-        Preferred: zpd1 <= zpdSimilar && zpdSimilar <= zpd2 ? true : false,
+        Preferred: zpd1 <= pAVGsim && pAVGsim <= zpd2 ? true : false,
         Order: 2,
       });
     }
     //most easier
     const dif2 = difficulty(PU, M); //dif2 difficultad ultimo ejercicio
-    const tableDifEasy = table
-      .filter((x) => x.sim || 1 < 1)
+    tableDifEasy = table
+      .filter((x) => (x.sim ?? 1) < 1)
       .filter((c) => (c.diff ?? 0) < (dif2[0] ?? 0));
     if (tableDifEasy.length > 0) {
       contentSelected.push({
         P: tableDifEasy[0]?.P,
         Msg: messages.messageEasy,
-        Preferred: zpdSimilar > zpd2 && zpdSimilar != 0.0 ? true : false, //si zpd = 0.0 se prefiere la opción más fácil????
+        Preferred: pAVGsim < zpd1 && pAVGsim != 0.0 ? true : false, //si zpd = 0.0 se prefiere la opción más fácil????
         Order: 1,
       });
     }
     //most harder
-    const tableDifHarder = table
-      .filter((x) => x.sim || 1 < 1)
+    tableDifHarder = table
+      .filter((x) => (x.sim ?? 1) < 1)
       .filter((c) => (c.diff ?? 0) > (dif2[0] ?? 0));
     if (tableDifHarder.length > 0) {
+      pAVGdif = tableDifHarder[0]?.probSuccessAvg ?? 0.0;
       contentSelected.push({
         P: tableDifHarder[0]?.P,
         Msg: messages.messageHarder,
-        Preferred: zpd1 > zpdSimilar && zpdSimilar != 0.0 ? true : false,
+        Preferred:
+          zpd2 < pAVGsim && pAVGsim != 0.0 && pAVGdif > zpd1 ? true : false,
         Order: 3,
       });
     }
   } else {
     //first
     if (M) {
-      let table: {
-        P: Content & { kcs: KC[] };
-        diff: number | undefined;
-        probSuccessMult: number | undefined;
-        probSuccessAvg: number | undefined;
-      }[] = [];
       const dif = difficulty(P, M);
       const pSM = probSuccessMult(P, M);
       const pSA = probSuccessAvg(P, M);
       P.map((p, i) =>
         table.push({
           P: p,
+          sim: undefined,
           diff: dif[i],
           probSuccessMult: pSM[i],
           probSuccessAvg: pSA[i],
         })
       );
 
-      console.log(table);
-      console.log("table");
       table = table.sort((a, b) => (a.diff ?? 0) - (b.diff ?? 0)); //menor a mayor difficulty
-      //console.log("table order by difficulty");
-      //console.log(table);
+
       const ejercicio1 = table[Math.floor(Math.random() * table.length) / 4]?.P; //primero!!
       contentSelected.push({
         P: ejercicio1,
@@ -143,7 +150,57 @@ export const selectionCriterion = (
   if (!Preferred && contentSelected[0] != undefined) {
     contentSelected[0].Preferred = true;
   }
-  //console.log("paso por el if");
-  //console.log(contentSelected);
-  return contentSelected;
+
+  return {
+    contentResult: contentSelected,
+    model: M?.json,
+    oldP: oldP.map((p) => {
+      return p.code;
+    }),
+    newP: P.map((p) => {
+      return p.code;
+    }),
+    PU: PU.map((p) => {
+      return p.code;
+    }),
+
+    pAVGsim: pAVGsim,
+    pAVGdif: pAVGdif,
+    table: table.map((x) => {
+      return {
+        contentCode: x.P.code,
+        sim: x.sim,
+        diff: x.diff,
+        probSuccessAvg: x.probSuccessAvg,
+        probSuccessMult: x.probSuccessMult,
+      };
+    }),
+    tableSim: tableSim.map((x) => {
+      return {
+        contentCode: x.P.code,
+        sim: x.sim,
+        diff: x.diff,
+        probSuccessAvg: x.probSuccessAvg,
+        probSuccessMult: x.probSuccessMult,
+      };
+    }),
+    tableDifEasy: tableDifEasy.map((x) => {
+      return {
+        contentCode: x.P.code,
+        sim: x.sim,
+        diff: x.diff,
+        probSuccessAvg: x.probSuccessAvg,
+        probSuccessMult: x.probSuccessMult,
+      };
+    }),
+    tableDifHarder: tableDifHarder.map((x) => {
+      return {
+        contentCode: x.P.code,
+        sim: x.sim,
+        diff: x.diff,
+        probSuccessAvg: x.probSuccessAvg,
+        probSuccessMult: x.probSuccessMult,
+      };
+    }),
+  };
 };

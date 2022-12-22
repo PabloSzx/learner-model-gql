@@ -632,6 +632,21 @@ export type AdminUsersFilter = {
   textSearch?: InputMaybe<Scalars["String"]>;
 };
 
+export type AllReturn = {
+  __typename?: "AllReturn";
+  PU?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  contentResult: Array<ContentsReturn>;
+  model: Scalars["JSON"];
+  newP?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  oldP?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  pAVGdif: Scalars["Float"];
+  pAVGsim: Scalars["Float"];
+  table: Array<TableReturn>;
+  tableDifEasy: Array<TableReturn>;
+  tableDifHarder: Array<TableReturn>;
+  tableSim: Array<TableReturn>;
+};
+
 /** Pagination Interface */
 export type Connection = {
   /** Pagination information */
@@ -706,7 +721,7 @@ export type ContentSelectionInput = {
 
 export type ContentSelectionQueries = {
   __typename?: "ContentSelectionQueries";
-  contentSelected: Array<ContentsReturn>;
+  contentSelected: AllReturn;
 };
 
 export type ContentSelectionQueriesContentSelectedArgs = {
@@ -1493,6 +1508,15 @@ export type Subscription = {
   hello: Scalars["String"];
 };
 
+export type TableReturn = {
+  __typename?: "TableReturn";
+  contentCode?: Maybe<Scalars["String"]>;
+  diff?: Maybe<Scalars["Float"]>;
+  probSuccessAvg?: Maybe<Scalars["Float"]>;
+  probSuccessMult?: Maybe<Scalars["Float"]>;
+  sim?: Maybe<Scalars["Float"]>;
+};
+
 /** Topic entity */
 export type Topic = {
   __typename?: "Topic";
@@ -1887,6 +1911,7 @@ export type ResolversTypes = {
   AdminUserMutations: ResolverTypeWrapper<AdminUserMutations>;
   AdminUserQueries: ResolverTypeWrapper<AdminUserQueries>;
   AdminUsersFilter: AdminUsersFilter;
+  AllReturn: ResolverTypeWrapper<AllReturn>;
   Connection:
     | ResolversTypes["ActionsConnection"]
     | ResolversTypes["ActionsVerbsConnection"]
@@ -1951,6 +1976,7 @@ export type ResolversTypes = {
   ProjectsConnection: ResolverTypeWrapper<ProjectsConnection>;
   Query: ResolverTypeWrapper<{}>;
   Subscription: ResolverTypeWrapper<{}>;
+  TableReturn: ResolverTypeWrapper<TableReturn>;
   Timestamp: ResolverTypeWrapper<Scalars["Timestamp"]>;
   Topic: ResolverTypeWrapper<Topic>;
   TopicsConnection: ResolverTypeWrapper<TopicsConnection>;
@@ -1997,6 +2023,7 @@ export type ResolversParentTypes = {
   AdminUserMutations: AdminUserMutations;
   AdminUserQueries: AdminUserQueries;
   AdminUsersFilter: AdminUsersFilter;
+  AllReturn: AllReturn;
   Connection:
     | ResolversParentTypes["ActionsConnection"]
     | ResolversParentTypes["ActionsVerbsConnection"]
@@ -2058,6 +2085,7 @@ export type ResolversParentTypes = {
   ProjectsConnection: ProjectsConnection;
   Query: {};
   Subscription: {};
+  TableReturn: TableReturn;
   Timestamp: Scalars["Timestamp"];
   Topic: Topic;
   TopicsConnection: TopicsConnection;
@@ -2390,6 +2418,56 @@ export type AdminUserQueriesResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type AllReturnResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["AllReturn"] = ResolversParentTypes["AllReturn"]
+> = {
+  PU?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["String"]>>>,
+    ParentType,
+    ContextType
+  >;
+  contentResult?: Resolver<
+    Array<ResolversTypes["ContentsReturn"]>,
+    ParentType,
+    ContextType
+  >;
+  model?: Resolver<ResolversTypes["JSON"], ParentType, ContextType>;
+  newP?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["String"]>>>,
+    ParentType,
+    ContextType
+  >;
+  oldP?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["String"]>>>,
+    ParentType,
+    ContextType
+  >;
+  pAVGdif?: Resolver<ResolversTypes["Float"], ParentType, ContextType>;
+  pAVGsim?: Resolver<ResolversTypes["Float"], ParentType, ContextType>;
+  table?: Resolver<
+    Array<ResolversTypes["TableReturn"]>,
+    ParentType,
+    ContextType
+  >;
+  tableDifEasy?: Resolver<
+    Array<ResolversTypes["TableReturn"]>,
+    ParentType,
+    ContextType
+  >;
+  tableDifHarder?: Resolver<
+    Array<ResolversTypes["TableReturn"]>,
+    ParentType,
+    ContextType
+  >;
+  tableSim?: Resolver<
+    Array<ResolversTypes["TableReturn"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type ConnectionResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["Connection"] = ResolversParentTypes["Connection"]
@@ -2457,7 +2535,7 @@ export type ContentSelectionQueriesResolvers<
   ParentType extends ResolversParentTypes["ContentSelectionQueries"] = ResolversParentTypes["ContentSelectionQueries"]
 > = {
   contentSelected?: Resolver<
-    Array<ResolversTypes["ContentsReturn"]>,
+    ResolversTypes["AllReturn"],
     ParentType,
     ContextType,
     RequireFields<ContentSelectionQueriesContentSelectedArgs, "input">
@@ -2938,6 +3016,30 @@ export type SubscriptionResolvers<
   >;
 };
 
+export type TableReturnResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["TableReturn"] = ResolversParentTypes["TableReturn"]
+> = {
+  contentCode?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  diff?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  probSuccessAvg?: Resolver<
+    Maybe<ResolversTypes["Float"]>,
+    ParentType,
+    ContextType
+  >;
+  probSuccessMult?: Resolver<
+    Maybe<ResolversTypes["Float"]>,
+    ParentType,
+    ContextType
+  >;
+  sim?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export interface TimestampScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["Timestamp"], any> {
   name: "Timestamp";
@@ -3044,6 +3146,7 @@ export type Resolvers<ContextType = EZContext> = {
   AdminStateQueries?: AdminStateQueriesResolvers<ContextType>;
   AdminUserMutations?: AdminUserMutationsResolvers<ContextType>;
   AdminUserQueries?: AdminUserQueriesResolvers<ContextType>;
+  AllReturn?: AllReturnResolvers<ContextType>;
   Connection?: ConnectionResolvers<ContextType>;
   Content?: ContentResolvers<ContextType>;
   ContentConnection?: ContentConnectionResolvers<ContextType>;
@@ -3076,6 +3179,7 @@ export type Resolvers<ContextType = EZContext> = {
   ProjectsConnection?: ProjectsConnectionResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
+  TableReturn?: TableReturnResolvers<ContextType>;
   Timestamp?: GraphQLScalarType;
   Topic?: TopicResolvers<ContextType>;
   TopicsConnection?: TopicsConnectionResolvers<ContextType>;

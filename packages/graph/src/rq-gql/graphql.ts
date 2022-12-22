@@ -617,6 +617,21 @@ export type AdminUsersFilter = {
   textSearch?: InputMaybe<Scalars["String"]>;
 };
 
+export type AllReturn = {
+  __typename?: "AllReturn";
+  PU?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  contentResult: Array<ContentsReturn>;
+  model: Scalars["JSON"];
+  newP?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  oldP?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  pAVGdif: Scalars["Float"];
+  pAVGsim: Scalars["Float"];
+  table: Array<TableReturn>;
+  tableDifEasy: Array<TableReturn>;
+  tableDifHarder: Array<TableReturn>;
+  tableSim: Array<TableReturn>;
+};
+
 /** Pagination Interface */
 export type Connection = {
   /** Pagination information */
@@ -691,7 +706,7 @@ export type ContentSelectionInput = {
 
 export type ContentSelectionQueries = {
   __typename?: "ContentSelectionQueries";
-  contentSelected: Array<ContentsReturn>;
+  contentSelected: AllReturn;
 };
 
 export type ContentSelectionQueriesContentSelectedArgs = {
@@ -1489,6 +1504,15 @@ export type Subscription = {
   __typename?: "Subscription";
   /** Emits 'Hello World1', 'Hello World2', 'Hello World3', 'Hello World4' and 'Hello World5' */
   hello: Scalars["String"];
+};
+
+export type TableReturn = {
+  __typename?: "TableReturn";
+  contentCode?: Maybe<Scalars["String"]>;
+  diff?: Maybe<Scalars["Float"]>;
+  probSuccessAvg?: Maybe<Scalars["Float"]>;
+  probSuccessMult?: Maybe<Scalars["Float"]>;
+  sim?: Maybe<Scalars["Float"]>;
 };
 
 /** Topic entity */
