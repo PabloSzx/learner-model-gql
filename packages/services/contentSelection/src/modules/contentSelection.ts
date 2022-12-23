@@ -6,50 +6,90 @@ export const contentSelectionModule = registerModule(
   // This defines the types
   gql`
     extend type Query {
+      "ContentSelection Query"
       contentSelection: ContentSelectionQueries!
     }
+
+    "ContentSelection Queries"
     type ContentSelectionQueries {
-      contentSelected(input: ContentSelectionInput!): AllReturn! #change allContent to contentSelected? return :[ContentsReturns]!
-    }
-    input ContentSelectionInput {
-      projectId: IntID!
-      topicId: [IntID!]!
-      userId: IntID!
-      domainId: IntID!
-      discardLast: Int! = 10
-      zpdRange: [Float!] = [0.4, 0.6]
+      """
+      Get all contentSelected properties associated with the specified ContentSelectionInput
+      """
+      contentSelected(
+        input: ContentSelectionInput!
+      ): ContentSelectedPropsReturn!
     }
 
+    "ContentSelection input data"
+    input ContentSelectionInput {
+      "Project identifier"
+      projectId: IntID!
+      "Topic identifier"
+      topicId: [IntID!]!
+      "User identifier"
+      userId: IntID!
+      "Domain identifier"
+      domainId: IntID!
+      "Discard last N contents done (optional in query), default N= 10"
+      discardLast: Int! = 10
+      "Range Zone proximal development(ZPD) (optional in query), default [0.4,0.6]"
+      zpdRange: [Float!] = [0.4, 0.6]
+    }
+    "Content entity"
     type Content {
+      "Unique numeric identifier"
       id: IntID!
     }
 
-    type ContentsReturn {
+    "Main structure of content selected return"
+    type ContentsSelectedReturn {
+      "Content P"
       P: Content!
+      "Message associated to Content"
       Msg: String!
+      "Preferred is true when Content is the best option for learner, else false"
       Preferred: Boolean!
+      "Order is 1 when Content is selected for easy criterion, 2 when Content is selected for similar criterion and 3 when Content is selected for hard criterion"
       Order: IntID!
     }
 
+    "Structure of TableReturn for check result of criterion and further analysis"
     type TableReturn {
+      "Code of content"
       contentCode: String
+      "Value of similarity of content"
       sim: Float
+      "Value of difficulty of content"
       diff: Float
+      "Probability of success by average of KCs levels of the Content"
       probSuccessAvg: Float
+      "Probability of success by multiplication of KCs levels of the Content"
       probSuccessMult: Float
     }
 
-    type AllReturn {
-      contentResult: [ContentsReturn!]!
+    "Return selected content and properties for further analysis (model, codes of content, probabilities and tables)"
+    type ContentSelectedPropsReturn {
+      "Content selected for learner"
+      contentResult: [ContentsSelectedReturn!]!
+      "Model structure of learner composed for KC level and KC threshold"
       model: JSON!
+      "All codes of contents of topic chapters"
       oldP: [String]
+      "All codes of contents without last N contents and content dominated"
       newP: [String]
+      "All code of contents of last N contents done"
       PU: [String]
+      "Probability of success by average"
       pAVGsim: Float!
+      "Probability of success by average"
       pAVGdif: Float!
+      "table of newP with TableReturn attributes"
       table: [TableReturn!]!
+      "table filter with similarity equals to 1"
       tableSim: [TableReturn!]!
+      "table filter with similarity less than 1 and difficulty less than difficulty of last content done (PU[0])"
       tableDifEasy: [TableReturn!]!
+      "table filter with similarity less than 1 and difficulty greater than difficulty of last content done (PU[0])"
       tableDifHarder: [TableReturn!]!
     }
   `,

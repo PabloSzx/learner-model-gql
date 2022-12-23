@@ -53,55 +53,84 @@ export type Scalars = {
   Void: unknown;
 };
 
-export type AllReturn = {
-  __typename?: "AllReturn";
-  PU?: Maybe<Array<Maybe<Scalars["String"]>>>;
-  contentResult: Array<ContentsReturn>;
-  model: Scalars["JSON"];
-  newP?: Maybe<Array<Maybe<Scalars["String"]>>>;
-  oldP?: Maybe<Array<Maybe<Scalars["String"]>>>;
-  pAVGdif: Scalars["Float"];
-  pAVGsim: Scalars["Float"];
-  table: Array<TableReturn>;
-  tableDifEasy: Array<TableReturn>;
-  tableDifHarder: Array<TableReturn>;
-  tableSim: Array<TableReturn>;
-};
-
 /** Pagination Interface */
 export type Connection = {
   /** Pagination information */
   pageInfo: PageInfo;
 };
 
+/** Content entity */
 export type Content = {
   __typename?: "Content";
+  /** Unique numeric identifier */
   id: Scalars["IntID"];
 };
 
+/** Return selected content and properties for further analysis (model, codes of content, probabilities and tables) */
+export type ContentSelectedPropsReturn = {
+  __typename?: "ContentSelectedPropsReturn";
+  /** All code of contents of last N contents done */
+  PU?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  /** Content selected for learner */
+  contentResult: Array<ContentsSelectedReturn>;
+  /** Model structure of learner composed for KC level and KC threshold */
+  model: Scalars["JSON"];
+  /** All codes of contents without last N contents and content dominated */
+  newP?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  /** All codes of contents of topic chapters */
+  oldP?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  /** Probability of success by average */
+  pAVGdif: Scalars["Float"];
+  /** Probability of success by average */
+  pAVGsim: Scalars["Float"];
+  /** table of newP with TableReturn attributes */
+  table: Array<TableReturn>;
+  /** table filter with similarity less than 1 and difficulty less than difficulty of last content done (PU[0]) */
+  tableDifEasy: Array<TableReturn>;
+  /** table filter with similarity less than 1 and difficulty greater than difficulty of last content done (PU[0]) */
+  tableDifHarder: Array<TableReturn>;
+  /** table filter with similarity equals to 1 */
+  tableSim: Array<TableReturn>;
+};
+
+/** ContentSelection input data */
 export type ContentSelectionInput = {
+  /** Discard last N contents done (optional in query), default N= 10 */
   discardLast?: Scalars["Int"];
+  /** Domain identifier */
   domainId: Scalars["IntID"];
+  /** Project identifier */
   projectId: Scalars["IntID"];
+  /** Topic identifier */
   topicId: Array<Scalars["IntID"]>;
+  /** User identifier */
   userId: Scalars["IntID"];
+  /** Range Zone proximal development(ZPD) (optional in query), default [0.4,0.6] */
   zpdRange?: InputMaybe<Array<Scalars["Float"]>>;
 };
 
+/** ContentSelection Queries */
 export type ContentSelectionQueries = {
   __typename?: "ContentSelectionQueries";
-  contentSelected: AllReturn;
+  /** Get all contentSelected properties associated with the specified ContentSelectionInput */
+  contentSelected: ContentSelectedPropsReturn;
 };
 
+/** ContentSelection Queries */
 export type ContentSelectionQueriesContentSelectedArgs = {
   input: ContentSelectionInput;
 };
 
-export type ContentsReturn = {
-  __typename?: "ContentsReturn";
+/** Main structure of content selected return */
+export type ContentsSelectedReturn = {
+  __typename?: "ContentsSelectedReturn";
+  /** Message associated to Content */
   Msg: Scalars["String"];
+  /** Order is 1 when Content is selected for easy criterion, 2 when Content is selected for similar criterion and 3 when Content is selected for hard criterion */
   Order: Scalars["IntID"];
+  /** Content P */
   P: Content;
+  /** Preferred is true when Content is the best option for learner, else false */
   Preferred: Scalars["Boolean"];
 };
 
@@ -171,6 +200,7 @@ export type PageInfo = {
 
 export type Query = {
   __typename?: "Query";
+  /** ContentSelection Query */
   contentSelection: ContentSelectionQueries;
   /** Returns 'Hello World!' */
   hello: Scalars["String"];
@@ -182,12 +212,18 @@ export type Subscription = {
   hello: Scalars["String"];
 };
 
+/** Structure of TableReturn for check result of criterion and further analysis */
 export type TableReturn = {
   __typename?: "TableReturn";
+  /** Code of content */
   contentCode?: Maybe<Scalars["String"]>;
+  /** Value of difficulty of content */
   diff?: Maybe<Scalars["Float"]>;
+  /** Probability of success by average of KCs levels of the Content */
   probSuccessAvg?: Maybe<Scalars["Float"]>;
+  /** Probability of success by multiplication of KCs levels of the Content */
   probSuccessMult?: Maybe<Scalars["Float"]>;
+  /** Value of similarity of content */
   sim?: Maybe<Scalars["Float"]>;
 };
 
@@ -291,15 +327,15 @@ export type DirectiveResolverFn<
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  AllReturn: ResolverTypeWrapper<AllReturn>;
-  String: ResolverTypeWrapper<Scalars["String"]>;
-  Float: ResolverTypeWrapper<Scalars["Float"]>;
   Connection: never;
   Content: ResolverTypeWrapper<Content>;
+  ContentSelectedPropsReturn: ResolverTypeWrapper<ContentSelectedPropsReturn>;
+  String: ResolverTypeWrapper<Scalars["String"]>;
+  Float: ResolverTypeWrapper<Scalars["Float"]>;
   ContentSelectionInput: ContentSelectionInput;
   Int: ResolverTypeWrapper<Scalars["Int"]>;
   ContentSelectionQueries: ResolverTypeWrapper<ContentSelectionQueries>;
-  ContentsReturn: ResolverTypeWrapper<ContentsReturn>;
+  ContentsSelectedReturn: ResolverTypeWrapper<ContentsSelectedReturn>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   CursorConnectionArgs: CursorConnectionArgs;
   DateTime: ResolverTypeWrapper<Scalars["DateTime"]>;
@@ -322,15 +358,15 @@ export type ResolversTypes = {
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  AllReturn: AllReturn;
-  String: Scalars["String"];
-  Float: Scalars["Float"];
   Connection: never;
   Content: Content;
+  ContentSelectedPropsReturn: ContentSelectedPropsReturn;
+  String: Scalars["String"];
+  Float: Scalars["Float"];
   ContentSelectionInput: ContentSelectionInput;
   Int: Scalars["Int"];
   ContentSelectionQueries: ContentSelectionQueries;
-  ContentsReturn: ContentsReturn;
+  ContentsSelectedReturn: ContentsSelectedReturn;
   Boolean: Scalars["Boolean"];
   CursorConnectionArgs: CursorConnectionArgs;
   DateTime: Scalars["DateTime"];
@@ -350,9 +386,25 @@ export type ResolversParentTypes = {
   Void: Scalars["Void"];
 };
 
-export type AllReturnResolvers<
+export type ConnectionResolvers<
   ContextType = EZContext,
-  ParentType extends ResolversParentTypes["AllReturn"] = ResolversParentTypes["AllReturn"]
+  ParentType extends ResolversParentTypes["Connection"] = ResolversParentTypes["Connection"]
+> = {
+  __resolveType: TypeResolveFn<null, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
+};
+
+export type ContentResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Content"] = ResolversParentTypes["Content"]
+> = {
+  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ContentSelectedPropsReturnResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["ContentSelectedPropsReturn"] = ResolversParentTypes["ContentSelectedPropsReturn"]
 > = {
   PU?: Resolver<
     Maybe<Array<Maybe<ResolversTypes["String"]>>>,
@@ -360,7 +412,7 @@ export type AllReturnResolvers<
     ContextType
   >;
   contentResult?: Resolver<
-    Array<ResolversTypes["ContentsReturn"]>,
+    Array<ResolversTypes["ContentsSelectedReturn"]>,
     ParentType,
     ContextType
   >;
@@ -400,28 +452,12 @@ export type AllReturnResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ConnectionResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Connection"] = ResolversParentTypes["Connection"]
-> = {
-  __resolveType: TypeResolveFn<null, ParentType, ContextType>;
-  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
-};
-
-export type ContentResolvers<
-  ContextType = EZContext,
-  ParentType extends ResolversParentTypes["Content"] = ResolversParentTypes["Content"]
-> = {
-  id?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type ContentSelectionQueriesResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["ContentSelectionQueries"] = ResolversParentTypes["ContentSelectionQueries"]
 > = {
   contentSelected?: Resolver<
-    ResolversTypes["AllReturn"],
+    ResolversTypes["ContentSelectedPropsReturn"],
     ParentType,
     ContextType,
     RequireFields<ContentSelectionQueriesContentSelectedArgs, "input">
@@ -429,9 +465,9 @@ export type ContentSelectionQueriesResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ContentsReturnResolvers<
+export type ContentsSelectedReturnResolvers<
   ContextType = EZContext,
-  ParentType extends ResolversParentTypes["ContentsReturn"] = ResolversParentTypes["ContentsReturn"]
+  ParentType extends ResolversParentTypes["ContentsSelectedReturn"] = ResolversParentTypes["ContentsSelectedReturn"]
 > = {
   Msg?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   Order?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
@@ -572,11 +608,11 @@ export interface VoidScalarConfig
 }
 
 export type Resolvers<ContextType = EZContext> = {
-  AllReturn?: AllReturnResolvers<ContextType>;
   Connection?: ConnectionResolvers<ContextType>;
   Content?: ContentResolvers<ContextType>;
+  ContentSelectedPropsReturn?: ContentSelectedPropsReturnResolvers<ContextType>;
   ContentSelectionQueries?: ContentSelectionQueriesResolvers<ContextType>;
-  ContentsReturn?: ContentsReturnResolvers<ContextType>;
+  ContentsSelectedReturn?: ContentsSelectedReturnResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
   EmailAddress?: GraphQLScalarType;
   IntID?: GraphQLScalarType;
