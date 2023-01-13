@@ -19,6 +19,7 @@ importers:
       '@graphql-tools/graphql-tag-pluck': ^7.3.6
       '@graphql-typed-document-node/core': ^3.1.1
       '@types/lodash': ^4.14.186
+      '@types/lodash-es': ^4.17.6
       '@types/mocha': ^10.0.0
       '@types/node': ^18.8.3
       '@types/prettier': ^2.7.1
@@ -43,6 +44,7 @@ importers:
       husky: ^8.0.1
       json5: ^2.2.1
       lodash: ^4.17.21
+      lodash-es: ^4.17.21
       mocha: ^10.0.0
       prettier: ^2.7.1
       pretty-quick: ^3.1.3
@@ -67,12 +69,14 @@ importers:
       graphql-ez: 0.15.2_5stvgedl36bc3tcgqzqdj5yobu
       graphql-tag: 2.12.6_graphql@16.6.0
       lodash: 4.17.21
+      lodash-es: 4.17.21
       undici: 5.11.0
     devDependencies:
       '@graphql-tools/code-file-loader': 7.3.6_graphql@16.6.0
       '@graphql-tools/graphql-tag-pluck': 7.3.6_graphql@16.6.0
       '@graphql-typed-document-node/core': 3.1.1_graphql@16.6.0
       '@types/lodash': 4.14.186
+      '@types/lodash-es': 4.17.6
       '@types/mocha': 10.0.0
       '@types/node': 18.8.3
       '@types/prettier': 2.7.1
@@ -6801,7 +6805,6 @@ packages:
 
   /lodash-es/4.17.21:
     resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
-    dev: true
 
   /lodash.chunk/4.2.0:
     resolution: {integrity: sha512-ZzydJKfUHJwHa+hF5X66zLFCBrWn5GeF28OHEr4WVWtNDXlQ/IjWKPBiikqKo2ne0+v6JgCgJ0GzJp8k8bHC7w==}

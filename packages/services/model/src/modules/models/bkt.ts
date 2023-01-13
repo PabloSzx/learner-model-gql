@@ -1,5 +1,3 @@
-//import { ModelState, Content, KC, Schemas } from "api-base";
-
 import { ModelState, Action, KC, Schemas } from "api-base";
 import parameters from "../parameters.json";
 
@@ -27,11 +25,34 @@ export const bkt = (
         },
       }),
       {}
-    ); //si ya existe el nuevo json es el json anterior y se actualizan los kcs utilizados, si no se crea un JSON con valores vacios
+    );
 
   let newModelJSON = Schemas.newModel.parse(newMJSON); //json del modelo que es retornado con BKT aplicado
 
-  A.map((act) => {
+  if (Object.keys(newModelJSON).length < D.length) {
+    //if new kcs are added in the platform, they are added to the model
+    newModelJSON = {
+      ...newModelJSON,
+      ...D.filter(
+        (value) => Object.keys(M?.json ?? 0).indexOf(value) < 0
+      ).reduce(
+        (a, v) => ({
+          ...a,
+          [v]: {
+            level:
+              params[v]?.known ??
+              params["default"]?.known ??
+              parameters.default.known ??
+              0.1,
+            mth: params[v]?.mth ?? parameters.default.mth,
+          },
+        }),
+        {}
+      ),
+    };
+  }
+
+  for (const act of A) {
     //array of action from oldest to most recent (.slice(0).reverse() innecesary)
     act.kcs.map((kc) => {
       //obtain parameters of knowledge(k), guess(g), slip(s), learn or transference(l) and forget(f) of JSON
@@ -51,19 +72,11 @@ export const bkt = (
 
       const bkt = k_posterior * (1 - f) + (1 - k_posterior) * l;
 
-      console.log("id, kc.code, k, g, s, l, f, k_posterior");
-      console.log(act.id, kc.code, k, g, s, l, f, k_posterior);
-
       if (newModelJSON[kc.code] != undefined) {
         newModelJSON[kc.code]!.level = bkt;
-      }
-
-      console.log("newModelJSON:");
-      console.log(newModelJSON[kc.code]?.level);
+      } //add new kcs
     });
-  });
-  console.log("newModelJSON:");
-  console.log(newModelJSON);
+  }
 
   return newModelJSON;
 };

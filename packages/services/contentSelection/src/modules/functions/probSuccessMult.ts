@@ -12,8 +12,6 @@ export const probSuccessMult = (
       return stateJSON?.[kc.code]?.level;
     });
   });
-  console.log("arrayKClevel");
-  console.log(arrayKClevel);
 
   const probSM = arrayKClevel.map((c) => {
     return c.reduce((a, b) => (a ?? 1) * (b ?? 1), 1);

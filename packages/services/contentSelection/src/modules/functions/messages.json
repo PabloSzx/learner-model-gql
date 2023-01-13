@@ -1,6 +1,22 @@
 {
-  "messageFirst": "Primer ejercicio",
-  "messageEasy": "Ejercicio más fácil",
-  "messageSimilar": "Ejercicio similar",
-  "messageHarder": "Ejercicio más difícil"
+  "messageFirst": {
+    "label": "Más fácil",
+    "text": "Comenzaremos este capítulo con un ejercicio relativamente fácil"
+  },
+  "messageEasy": {
+    "label": "Más fácil",
+    "text": "Para adquidir conocimientos pre-requisito o practicar con menos complejidad"
+  },
+  "messageSimilar": {
+    "label": "Similar",
+    "text": "Para adquirir fluidez en las habilidades que estás aprendiendo"
+  },
+  "messageHarder": {
+    "label": "Más dificil",
+    "text": "Para nuevos aprendizajes o combinar conocimientos"
+  },
+  "messageTopicCompleted": {
+    "label": "Felicidades",
+    "text": "Has completado el tópico"
+  }
 }

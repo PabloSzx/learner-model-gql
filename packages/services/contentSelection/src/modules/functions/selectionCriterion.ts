@@ -1,5 +1,6 @@
 import type { Content, KC, ModelState } from "api-base";
 import { difficulty } from "./difficulty";
+import { shuffle, maxBy, minBy } from "lodash-es";
 import { probSuccessAvg } from "./probSuccessAvg";
 import { probSuccessMult } from "./probSuccessMult";
 import { similarity } from "./similarity";
@@ -60,6 +61,7 @@ export const selectionCriterion = (
     const simi = similarity(P, M, lastExerciseDone);
     const pSM = probSuccessMult(P, M);
     const pSA = probSuccessAvg(P, M);
+    let preferredFlag = false;
 
     P.map((p, i) =>
       table.push({
@@ -75,17 +77,23 @@ export const selectionCriterion = (
       .filter((x) => (x.diff ?? 0) > 0)
       .sort((a, b) => (b.sim ?? 0) - (a.sim ?? 0));
 
-    tableSim = table.filter((x) => x.sim == 1);
+    tableSim = table.filter((x) => (x.sim ?? 0) > 0.99);
 
     if (tableSim.length > 0) {
-      pAVGsim = tableSim[0]?.probSuccessAvg ?? 0.0;
-      console.log(pAVGsim);
+      tableSim = shuffle(tableSim);
+      pAVGsim = tableSim[0]?.probSuccessAvg ?? 0.0; //consultar que pasa con esta variable cuando no hay similares (en este caso si no hay similar no se prefiere nada)
       contentSelected.push({
         P: tableSim[0]?.P,
-        Msg: messages.messageSimilar,
+        Msg: {
+          label: messages.messageSimilar.label,
+          text: messages.messageSimilar.text,
+        },
         Preferred: zpd1 <= pAVGsim && pAVGsim <= zpd2 ? true : false,
         Order: 2,
       });
+      if (zpd1 <= pAVGsim && pAVGsim <= zpd2) {
+        preferredFlag = true;
+      }
     }
     //most easier
     const dif2 = difficulty(PU, M); //dif2 difficultad ultimo ejercicio
@@ -93,24 +101,59 @@ export const selectionCriterion = (
       .filter((x) => (x.sim ?? 1) < 1)
       .filter((c) => (c.diff ?? 0) < (dif2[0] ?? 0));
     if (tableDifEasy.length > 0) {
+      const maxSim = maxBy(tableDifEasy, function (o) {
+        return o.sim;
+      })?.sim; //max value similarity
+      let newTableDifEasy = tableDifEasy.filter((x) => x.sim == maxSim); //most easiers and similarity
+      const maxDiff = maxBy(newTableDifEasy, function (o) {
+        return o.diff;
+      })?.diff; //max value difficulty of most similarity
+      newTableDifEasy = shuffle(
+        newTableDifEasy.filter((x) => x.diff == maxDiff)
+      ); //value random of most similarity and most difficulty
+
       contentSelected.push({
-        P: tableDifEasy[0]?.P,
-        Msg: messages.messageEasy,
-        Preferred: pAVGsim < zpd1 && pAVGsim != 0.0 ? true : false, //si zpd = 0.0 se prefiere la opción más fácil????
+        P: newTableDifEasy[0]?.P,
+        Msg: {
+          label: messages.messageEasy.label,
+          text: messages.messageEasy.text,
+        },
+        Preferred:
+          pAVGsim < zpd1 && pAVGsim != 0.0 && !preferredFlag ? true : false,
         Order: 1,
       });
+      if (pAVGsim < zpd1 && pAVGsim != 0.0 && !preferredFlag) {
+        preferredFlag = true;
+      }
     }
     //most harder
     tableDifHarder = table
       .filter((x) => (x.sim ?? 1) < 1)
       .filter((c) => (c.diff ?? 0) > (dif2[0] ?? 0));
+
     if (tableDifHarder.length > 0) {
-      pAVGdif = tableDifHarder[0]?.probSuccessAvg ?? 0.0;
+      const maxSim = maxBy(tableDifHarder, function (o) {
+        return o.sim;
+      })?.sim; //max value similarity
+      let newTableDifHarder = tableDifHarder.filter((x) => x.sim == maxSim); //most difficulties and similarity
+      const minDiff = minBy(newTableDifHarder, function (o) {
+        return o.diff;
+      })?.diff; //minim value difficulty of most similarity
+      newTableDifHarder = shuffle(
+        newTableDifHarder.filter((x) => x.diff == minDiff)
+      );
+
+      pAVGdif = newTableDifHarder[0]?.probSuccessAvg ?? 0.0;
       contentSelected.push({
-        P: tableDifHarder[0]?.P,
-        Msg: messages.messageHarder,
+        P: newTableDifHarder[0]?.P,
+        Msg: {
+          label: messages.messageHarder.label,
+          text: messages.messageHarder.text,
+        },
         Preferred:
-          zpd2 < pAVGsim && pAVGsim != 0.0 && pAVGdif > zpd1 ? true : false,
+          zpd2 < pAVGsim && pAVGsim != 0.0 && pAVGdif > zpd1 && !preferredFlag
+            ? true
+            : false,
         Order: 3,
       });
     }
@@ -131,11 +174,15 @@ export const selectionCriterion = (
       );
 
       table = table.sort((a, b) => (a.diff ?? 0) - (b.diff ?? 0)); //menor a mayor difficulty
-
-      const ejercicio1 = table[Math.floor(Math.random() * table.length) / 4]?.P; //primero!!
+      table = table.filter((x) => (x.diff ?? 0) > 0);
+      const ejercicio1 =
+        table[Math.floor((Math.random() * table.length) / 4)]?.P; //primero!!
       contentSelected.push({
         P: ejercicio1,
-        Msg: messages.messageFirst,
+        Msg: {
+          label: messages.messageFirst.label,
+          text: messages.messageFirst.text,
+        },
         Preferred: true,
         Order: 1,
       });
@@ -153,6 +200,13 @@ export const selectionCriterion = (
 
   return {
     contentResult: contentSelected,
+    topicCompletedMsg:
+      contentSelected[0] != undefined
+        ? { label: "", text: "" }
+        : {
+            label: messages.messageTopicCompleted.label,
+            text: messages.messageTopicCompleted.text,
+          },
     model: M?.json,
     oldP: oldP.map((p) => {
       return p.code;

@@ -43,6 +43,7 @@
     "graphql-ez": "^0.15.2",
     "graphql-tag": "^2.12.6",
     "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "undici": "^5.11.0"
   },
   "devDependencies": {
@@ -50,6 +51,7 @@
     "@graphql-tools/graphql-tag-pluck": "^7.3.6",
     "@graphql-typed-document-node/core": "^3.1.1",
     "@types/lodash": "^4.14.186",
+    "@types/lodash-es": "^4.17.6",
     "@types/mocha": "^10.0.0",
     "@types/node": "^18.8.3",
     "@types/prettier": "^2.7.1",

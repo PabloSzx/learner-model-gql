@@ -685,18 +685,18 @@ export type ContentConnection = Connection & {
 export type ContentSelectedPropsReturn = {
   __typename?: "ContentSelectedPropsReturn";
   /** All code of contents of last N contents done */
-  PU?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  PU: Array<Scalars["String"]>;
   /** Content selected for learner */
   contentResult: Array<ContentsSelectedReturn>;
   /** Model structure of learner composed for KC level and KC threshold */
   model: Scalars["JSON"];
   /** All codes of contents without last N contents and content dominated */
-  newP?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  newP: Array<Scalars["String"]>;
   /** All codes of contents of topic chapters */
-  oldP?: Maybe<Array<Maybe<Scalars["String"]>>>;
-  /** Probability of success by average */
+  oldP: Array<Scalars["String"]>;
+  /** Probability of success by average PK of exercise most difficult */
   pAVGdif: Scalars["Float"];
-  /** Probability of success by average */
+  /** Probability of success by average PK of exercise most similar */
   pAVGsim: Scalars["Float"];
   /** table of newP with TableReturn attributes */
   table: Array<TableReturn>;
@@ -706,6 +706,8 @@ export type ContentSelectedPropsReturn = {
   tableDifHarder: Array<TableReturn>;
   /** table filter with similarity equals to 1 */
   tableSim: Array<TableReturn>;
+  /** Return message of service */
+  topicCompletedMsg: Message;
 };
 
 /** ContentSelection input data */
@@ -740,7 +742,7 @@ export type ContentSelectionQueriesContentSelectedArgs = {
 export type ContentsSelectedReturn = {
   __typename?: "ContentsSelectedReturn";
   /** Message associated to Content */
-  Msg: Scalars["String"];
+  Msg: Message;
   /** Order is 1 when Content is selected for easy criterion, 2 when Content is selected for similar criterion and 3 when Content is selected for hard criterion */
   Order: Scalars["IntID"];
   /** Content P */
@@ -1073,6 +1075,15 @@ export type KCsConnection = Connection & {
   nodes: Array<Kc>;
   /** Pagination related information */
   pageInfo: PageInfo;
+};
+
+/** Structure of message return in content selected */
+export type Message = {
+  __typename?: "Message";
+  /** Label of message of content selected */
+  label: Scalars["String"];
+  /** Text of message of content selected */
+  text: Scalars["String"];
 };
 
 /** Model State Entity */

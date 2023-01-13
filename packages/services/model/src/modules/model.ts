@@ -1,6 +1,6 @@
 //import { UniqueArgumentDefinitionNamesRule } from "graphql";
 //import { actionExtras } from "common-api/src/schemas";
-import { gql, registerModule } from "../ez";
+import { gql, registerModule, Schemas } from "../ez";
 import { bkt } from "./models/bkt";
 
 export const modelModule = registerModule(
@@ -71,6 +71,7 @@ export const modelModule = registerModule(
                 type: typeModel,
                 domainId: domainID,
               },
+              orderBy: { createdAt: "desc" },
             }),
           ]);
 
@@ -79,13 +80,10 @@ export const modelModule = registerModule(
           const A = user.actions.filter(
             (action) =>
               action.verbName == "tryStep" &&
-              action.createdAt > (M?.createdAt ?? 0) //&&
-            //Schemas.actionExtras.parse(action.extra).attemps == 0 //primer attemps
+              (Schemas.actionExtras.parse(action.extra).attemps ?? 0) == 0 &&
+              action.createdAt > (M?.createdAt ?? 0)
           );
-          console.log("model");
-          console.log(M);
-          console.log("acciones: ");
-          console.log(A);
+
           const BKT = bkt(D, M, A);
 
           await prisma.modelState.create({

@@ -10,17 +10,6 @@ export const subtraction = (
       }
   )[]
 ) => {
-  console.log(
-    P.map((p) => {
-      return p.id;
-    })
-  );
-  console.log(
-    PU.map((p) => {
-      return p?.id;
-    })
-  );
-
   const pIndex = P.map((p) => {
     return p.id;
   });
@@ -33,12 +22,6 @@ export const subtraction = (
   });
 
   const subtractionContent = P.filter((x) => subtractionIndex.includes(x.id));
-
-  console.log(
-    subtractionContent.map((x) => {
-      return x.id;
-    })
-  );
 
   return subtractionContent;
 };

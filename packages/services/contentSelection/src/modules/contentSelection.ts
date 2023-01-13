@@ -1,9 +1,8 @@
 import { Content, gql, KC, registerModule } from "../ez";
 import { selectionCriterion } from "./functions/selectionCriterion";
 import { subtraction } from "./functions/subtraction";
-
+import messages from "./functions/messages.json";
 export const contentSelectionModule = registerModule(
-  // This defines the types
   gql`
     extend type Query {
       "ContentSelection Query"
@@ -41,12 +40,20 @@ export const contentSelectionModule = registerModule(
       id: IntID!
     }
 
+    "Structure of message return in content selected"
+    type Message {
+      "Label of message of content selected"
+      label: String!
+      "Text of message of content selected"
+      text: String!
+    }
+
     "Main structure of content selected return"
     type ContentsSelectedReturn {
       "Content P"
       P: Content!
       "Message associated to Content"
-      Msg: String!
+      Msg: Message!
       "Preferred is true when Content is the best option for learner, else false"
       Preferred: Boolean!
       "Order is 1 when Content is selected for easy criterion, 2 when Content is selected for similar criterion and 3 when Content is selected for hard criterion"
@@ -71,17 +78,19 @@ export const contentSelectionModule = registerModule(
     type ContentSelectedPropsReturn {
       "Content selected for learner"
       contentResult: [ContentsSelectedReturn!]!
+      "Return message of service"
+      topicCompletedMsg: Message!
       "Model structure of learner composed for KC level and KC threshold"
       model: JSON!
       "All codes of contents of topic chapters"
-      oldP: [String]
+      oldP: [String!]!
       "All codes of contents without last N contents and content dominated"
-      newP: [String]
+      newP: [String!]!
       "All code of contents of last N contents done"
-      PU: [String]
-      "Probability of success by average"
+      PU: [String!]!
+      "Probability of success by average PK of exercise most similar"
       pAVGsim: Float!
-      "Probability of success by average"
+      "Probability of success by average PK of exercise most difficult"
       pAVGdif: Float!
       "table of newP with TableReturn attributes"
       table: [TableReturn!]!
@@ -119,14 +128,6 @@ export const contentSelectionModule = registerModule(
           { prisma }
         ) {
           const [P, M, U] = await Promise.all([
-            //All content to topicId
-            /*prisma.content.findMany({
-              where: {
-                topics: { some: { id: topicId } },
-                projectId: projectId,
-              },
-              include: { kcs: true },
-            }),*/
             prisma.content.findMany({
               where: {
                 topics: {
@@ -141,15 +142,6 @@ export const contentSelectionModule = registerModule(
               include: { kcs: true },
             }),
 
-            /*All content of student to resolve (por implementar)*/
-            /*prisma.content.findMany({
-              where: {
-                topics: { some: { id: topicId } },
-                projectId: projectId,
-                id: { notIn: [1] },
-              },
-              include: { kcs: true },
-            }),*/
             prisma.modelState.findFirst({
               where: {
                 userId: userId,
@@ -189,11 +181,15 @@ export const contentSelectionModule = registerModule(
                 action.verbName == "completeContent" &&
                 topicId.includes(action.topicId ?? 0)
             )
+            .sort(function (x, y) {
+              //sometimes array is desorder
+              return y.createdAt.valueOf() - x.createdAt.valueOf();
+            })
             .map((x) => {
               return x.contentId;
             })
-            .reverse()
             .filter(
+              //preguntar si se mantiene !!!!!
               (value, index, self) => self.indexOf(value) == index
             ) /*unique values*/
             .slice(0, discardLast);
@@ -206,7 +202,7 @@ export const contentSelectionModule = registerModule(
 
           let newP = subtraction(P, PU);
 
-          if (zpdRange && zpdRange[0] && zpdRange[1]) {
+          if (zpdRange && zpdRange[0] && zpdRange[1] && P.length > 0) {
             const contentSelection = selectionCriterion(
               P,
               newP,
@@ -221,6 +217,10 @@ export const contentSelectionModule = registerModule(
 
           return {
             contentResult: [],
+            topicCompletedMsg: {
+              label: messages.messageTopicCompleted.label,
+              text: messages.messageTopicCompleted.text,
+            },
             model: {},
             oldP: [],
             newP: [],

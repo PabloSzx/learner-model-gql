@@ -700,18 +700,18 @@ export type ContentConnection = Connection & {
 export type ContentSelectedPropsReturn = {
   __typename?: "ContentSelectedPropsReturn";
   /** All code of contents of last N contents done */
-  PU?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  PU: Array<Scalars["String"]>;
   /** Content selected for learner */
   contentResult: Array<ContentsSelectedReturn>;
   /** Model structure of learner composed for KC level and KC threshold */
   model: Scalars["JSON"];
   /** All codes of contents without last N contents and content dominated */
-  newP?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  newP: Array<Scalars["String"]>;
   /** All codes of contents of topic chapters */
-  oldP?: Maybe<Array<Maybe<Scalars["String"]>>>;
-  /** Probability of success by average */
+  oldP: Array<Scalars["String"]>;
+  /** Probability of success by average PK of exercise most difficult */
   pAVGdif: Scalars["Float"];
-  /** Probability of success by average */
+  /** Probability of success by average PK of exercise most similar */
   pAVGsim: Scalars["Float"];
   /** table of newP with TableReturn attributes */
   table: Array<TableReturn>;
@@ -721,6 +721,8 @@ export type ContentSelectedPropsReturn = {
   tableDifHarder: Array<TableReturn>;
   /** table filter with similarity equals to 1 */
   tableSim: Array<TableReturn>;
+  /** Return message of service */
+  topicCompletedMsg: Message;
 };
 
 /** ContentSelection input data */
@@ -755,7 +757,7 @@ export type ContentSelectionQueriesContentSelectedArgs = {
 export type ContentsSelectedReturn = {
   __typename?: "ContentsSelectedReturn";
   /** Message associated to Content */
-  Msg: Scalars["String"];
+  Msg: Message;
   /** Order is 1 when Content is selected for easy criterion, 2 when Content is selected for similar criterion and 3 when Content is selected for hard criterion */
   Order: Scalars["IntID"];
   /** Content P */
@@ -1083,6 +1085,15 @@ export type KCsConnection = Connection & {
   nodes: Array<Kc>;
   /** Pagination related information */
   pageInfo: PageInfo;
+};
+
+/** Structure of message return in content selected */
+export type Message = {
+  __typename?: "Message";
+  /** Label of message of content selected */
+  label: Scalars["String"];
+  /** Text of message of content selected */
+  text: Scalars["String"];
 };
 
 /** Model State Entity */
@@ -1990,6 +2001,7 @@ export type ResolversTypes = {
   KCRelationInput: KcRelationInput;
   KCRelationType: KcRelationType;
   KCsConnection: ResolverTypeWrapper<KCsConnection>;
+  Message: ResolverTypeWrapper<Message>;
   ModelState: ResolverTypeWrapper<ModelState>;
   ModelStateAlgorithm: ModelStateAlgorithm;
   ModelStateConnection: ResolverTypeWrapper<ModelStateConnection>;
@@ -2101,6 +2113,7 @@ export type ResolversParentTypes = {
   KCRelation: KcRelation;
   KCRelationInput: KcRelationInput;
   KCsConnection: KCsConnection;
+  Message: Message;
   ModelState: ModelState;
   ModelStateConnection: ModelStateConnection;
   ModelStateConnectionInput: ModelStateConnectionInput;
@@ -2519,27 +2532,15 @@ export type ContentSelectedPropsReturnResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["ContentSelectedPropsReturn"] = ResolversParentTypes["ContentSelectedPropsReturn"]
 > = {
-  PU?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes["String"]>>>,
-    ParentType,
-    ContextType
-  >;
+  PU?: Resolver<Array<ResolversTypes["String"]>, ParentType, ContextType>;
   contentResult?: Resolver<
     Array<ResolversTypes["ContentsSelectedReturn"]>,
     ParentType,
     ContextType
   >;
   model?: Resolver<ResolversTypes["JSON"], ParentType, ContextType>;
-  newP?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes["String"]>>>,
-    ParentType,
-    ContextType
-  >;
-  oldP?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes["String"]>>>,
-    ParentType,
-    ContextType
-  >;
+  newP?: Resolver<Array<ResolversTypes["String"]>, ParentType, ContextType>;
+  oldP?: Resolver<Array<ResolversTypes["String"]>, ParentType, ContextType>;
   pAVGdif?: Resolver<ResolversTypes["Float"], ParentType, ContextType>;
   pAVGsim?: Resolver<ResolversTypes["Float"], ParentType, ContextType>;
   table?: Resolver<
@@ -2559,6 +2560,11 @@ export type ContentSelectedPropsReturnResolvers<
   >;
   tableSim?: Resolver<
     Array<ResolversTypes["TableReturn"]>,
+    ParentType,
+    ContextType
+  >;
+  topicCompletedMsg?: Resolver<
+    ResolversTypes["Message"],
     ParentType,
     ContextType
   >;
@@ -2582,7 +2588,7 @@ export type ContentsSelectedReturnResolvers<
   ContextType = EZContext,
   ParentType extends ResolversParentTypes["ContentsSelectedReturn"] = ResolversParentTypes["ContentsSelectedReturn"]
 > = {
-  Msg?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  Msg?: Resolver<ResolversTypes["Message"], ParentType, ContextType>;
   Order?: Resolver<ResolversTypes["IntID"], ParentType, ContextType>;
   P?: Resolver<ResolversTypes["Content"], ParentType, ContextType>;
   Preferred?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
@@ -2743,6 +2749,15 @@ export type KCsConnectionResolvers<
 > = {
   nodes?: Resolver<Array<ResolversTypes["KC"]>, ParentType, ContextType>;
   pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type MessageResolvers<
+  ContextType = EZContext,
+  ParentType extends ResolversParentTypes["Message"] = ResolversParentTypes["Message"]
+> = {
+  label?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  text?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -3200,6 +3215,7 @@ export type Resolvers<ContextType = EZContext> = {
   KC?: KcResolvers<ContextType>;
   KCRelation?: KcRelationResolvers<ContextType>;
   KCsConnection?: KCsConnectionResolvers<ContextType>;
+  Message?: MessageResolvers<ContextType>;
   ModelState?: ModelStateResolvers<ContextType>;
   ModelStateConnection?: ModelStateConnectionResolvers<ContextType>;
   ModelStateCreator?: ModelStateCreatorResolvers<ContextType>;

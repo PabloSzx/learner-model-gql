@@ -528,18 +528,18 @@ type ContentConnection implements Connection {
 "Return selected content and properties for further analysis (model, codes of content, probabilities and tables)"
 type ContentSelectedPropsReturn {
   "All code of contents of last N contents done"
-  PU: [String]
+  PU: [String!]!
   "Content selected for learner"
   contentResult: [ContentsSelectedReturn!]!
   "Model structure of learner composed for KC level and KC threshold"
   model: JSON!
   "All codes of contents without last N contents and content dominated"
-  newP: [String]
+  newP: [String!]!
   "All codes of contents of topic chapters"
-  oldP: [String]
-  "Probability of success by average"
+  oldP: [String!]!
+  "Probability of success by average PK of exercise most difficult"
   pAVGdif: Float!
-  "Probability of success by average"
+  "Probability of success by average PK of exercise most similar"
   pAVGsim: Float!
   "table of newP with TableReturn attributes"
   table: [TableReturn!]!
@@ -549,6 +549,8 @@ type ContentSelectedPropsReturn {
   tableDifHarder: [TableReturn!]!
   "table filter with similarity equals to 1"
   tableSim: [TableReturn!]!
+  "Return message of service"
+  topicCompletedMsg: Message!
 }
 
 "ContentSelection input data"
@@ -578,7 +580,7 @@ type ContentSelectionQueries {
 "Main structure of content selected return"
 type ContentsSelectedReturn {
   "Message associated to Content"
-  Msg: String!
+  Msg: Message!
   "Order is 1 when Content is selected for easy criterion, 2 when Content is selected for similar criterion and 3 when Content is selected for hard criterion"
   Order: IntID!
   "Content P"
@@ -928,6 +930,14 @@ type KCsConnection implements Connection {
   nodes: [KC!]!
   "Pagination related information"
   pageInfo: PageInfo!
+}
+
+"Structure of message return in content selected"
+type Message {
+  "Label of message of content selected"
+  label: String!
+  "Text of message of content selected"
+  text: String!
 }
 
 "Model State Entity"
